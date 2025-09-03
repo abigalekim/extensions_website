@@ -1,0 +1,55 @@
+set client_min_messages = debug;
+set extwlist.custom_path = '/dummy';
+LOG:  statement: set extwlist.custom_path = '/dummy';
+DEBUG:  pg_query_rewrite: pgqr_analyze: entry: set extwlist.custom_path = '/dummy';
+DEBUG:  pg_query_rewrite: pgqr_analyze: set extwlist.custom_path = '/dummy';
+DEBUG:  pg_query_rewrite: pgqr_to_rewrite set extwlist.custom_path = '/dummy';: rc=false
+DEBUG:  pg_query_rewrite: pgqr_analyze: exit
+set role mere_mortal;
+LOG:  statement: set role mere_mortal;
+DEBUG:  pg_query_rewrite: pgqr_analyze: entry: set role mere_mortal;
+DEBUG:  pg_query_rewrite: pgqr_analyze: set role mere_mortal;
+DEBUG:  pg_query_rewrite: pgqr_to_rewrite set role mere_mortal;: rc=false
+DEBUG:  pg_query_rewrite: pgqr_analyze: exit
+-- in the hope refint stays at version 1.0 in PostgreSQL
+create extension refint;
+LOG:  statement: create extension refint;
+DEBUG:  pg_query_rewrite: pgqr_analyze: entry: create extension refint;
+DEBUG:  pg_query_rewrite: pgqr_analyze: create extension refint;
+DEBUG:  pg_query_rewrite: pgqr_to_rewrite create extension refint;: rc=false
+DEBUG:  pg_query_rewrite: pgqr_analyze: exit
+DEBUG:  Considering custom script "/dummy/refint/before--1.0.sql"
+DEBUG:  Considering custom script "/dummy/refint/before-create.sql"
+DEBUG:  Considering custom script "/dummy/refint/after--1.0.sql"
+DEBUG:  Considering custom script "/dummy/refint/after-create.sql"
+alter extension refint update;
+LOG:  statement: alter extension refint update;
+DEBUG:  pg_query_rewrite: pgqr_analyze: entry: alter extension refint update;
+DEBUG:  pg_query_rewrite: pgqr_analyze: alter extension refint update;
+DEBUG:  pg_query_rewrite: pgqr_to_rewrite alter extension refint update;: rc=false
+DEBUG:  pg_query_rewrite: pgqr_analyze: exit
+DEBUG:  Considering custom script "/dummy/refint/before--1.0--1.0.sql"
+DEBUG:  Considering custom script "/dummy/refint/before-update.sql"
+NOTICE:  version "1.0" of extension "refint" is already installed
+DEBUG:  Considering custom script "/dummy/refint/after--1.0--1.0.sql"
+DEBUG:  Considering custom script "/dummy/refint/after-update.sql"
+comment on extension refint is 'snarky remark';
+LOG:  statement: comment on extension refint is 'snarky remark';
+DEBUG:  pg_query_rewrite: pgqr_analyze: entry: comment on extension refint is 'snarky remark';
+DEBUG:  pg_query_rewrite: pgqr_analyze: comment on extension refint is 'snarky remark';
+DEBUG:  pg_query_rewrite: pgqr_to_rewrite comment on extension refint is 'snarky remark';: rc=false
+DEBUG:  pg_query_rewrite: pgqr_analyze: exit
+DEBUG:  Considering custom script "/dummy/refint/before-comment.sql"
+DEBUG:  Considering custom script "/dummy/refint/after-comment.sql"
+drop extension refint, refint;
+LOG:  statement: drop extension refint, refint;
+DEBUG:  pg_query_rewrite: pgqr_analyze: entry: drop extension refint, refint;
+DEBUG:  pg_query_rewrite: pgqr_analyze: drop extension refint, refint;
+DEBUG:  pg_query_rewrite: pgqr_to_rewrite drop extension refint, refint;: rc=false
+DEBUG:  pg_query_rewrite: pgqr_analyze: exit
+DEBUG:  Considering custom script "/dummy/refint/before-drop.sql"
+DEBUG:  Considering custom script "/dummy/refint/before-drop.sql"
+DEBUG:  drop auto-cascades to function check_primary_key()
+DEBUG:  drop auto-cascades to function check_foreign_key()
+DEBUG:  Considering custom script "/dummy/refint/after-drop.sql"
+DEBUG:  Considering custom script "/dummy/refint/after-drop.sql"

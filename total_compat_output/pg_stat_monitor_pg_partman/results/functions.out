@@ -1,0 +1,132 @@
+DROP ROLE IF EXISTS su;
+NOTICE:  role "su" does not exist, skipping
+CREATE USER su WITH SUPERUSER;
+SET ROLE su;
+CREATE EXTENSION pg_stat_monitor;
+CREATE USER u1;
+SELECT pg_stat_monitor_reset();
+ pg_stat_monitor_reset 
+-----------------------
+ 
+(1 row)
+
+SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+ routine_schema |           routine_name            | routine_type |  data_type   
+----------------+-----------------------------------+--------------+--------------
+ public         | apply_cluster                     | FUNCTION     | void
+ public         | apply_constraints                 | FUNCTION     | void
+ public         | apply_foreign_keys                | FUNCTION     | void
+ public         | apply_privileges                  | FUNCTION     | void
+ public         | apply_publications                | FUNCTION     | void
+ public         | autovacuum_off                    | FUNCTION     | boolean
+ public         | autovacuum_reset                  | FUNCTION     | boolean
+ public         | check_automatic_maintenance_value | FUNCTION     | boolean
+ public         | check_control_type                | FUNCTION     | record
+ public         | check_default                     | FUNCTION     | USER-DEFINED
+ public         | check_epoch_type                  | FUNCTION     | boolean
+ public         | check_name_length                 | FUNCTION     | text
+ public         | check_partition_type              | FUNCTION     | boolean
+ public         | check_subpart_sameconfig          | FUNCTION     | record
+ public         | check_subpartition_limits         | FUNCTION     | record
+ public         | create_function_id                | FUNCTION     | void
+ public         | create_function_time              | FUNCTION     | void
+ public         | create_parent                     | FUNCTION     | boolean
+ public         | create_partition_id               | FUNCTION     | boolean
+ public         | create_partition_time             | FUNCTION     | boolean
+ public         | create_sub_parent                 | FUNCTION     | boolean
+ public         | create_trigger                    | FUNCTION     | void
+ public         | decode_error_level                | FUNCTION     | text
+ public         | drop_constraints                  | FUNCTION     | void
+ public         | drop_partition_column             | FUNCTION     | void
+ public         | drop_partition_id                 | FUNCTION     | integer
+ public         | drop_partition_time               | FUNCTION     | integer
+ public         | dump_partitioned_table_definition | FUNCTION     | text
+ public         | get_cmd_type                      | FUNCTION     | text
+ public         | get_histogram_timings             | FUNCTION     | text
+ public         | histogram                         | FUNCTION     | record
+ public         | inherit_template_properties       | FUNCTION     | boolean
+ public         | partition_data_id                 | FUNCTION     | bigint
+ public         | partition_data_proc               | PROCEDURE    | 
+ public         | partition_data_time               | FUNCTION     | bigint
+ public         | partition_gap_fill                | FUNCTION     | integer
+ public         | pg_stat_monitor_internal          | FUNCTION     | record
+ public         | pg_stat_monitor_reset             | FUNCTION     | void
+ public         | pg_stat_monitor_version           | FUNCTION     | text
+ public         | pgsm_create_11_view               | FUNCTION     | integer
+ public         | pgsm_create_13_view               | FUNCTION     | integer
+ public         | pgsm_create_14_view               | FUNCTION     | integer
+ public         | pgsm_create_15_view               | FUNCTION     | integer
+ public         | pgsm_create_view                  | FUNCTION     | integer
+ public         | range                             | FUNCTION     | ARRAY
+ public         | reapply_constraints_proc          | PROCEDURE    | 
+ public         | reapply_privileges                | FUNCTION     | void
+ public         | run_maintenance                   | FUNCTION     | void
+ public         | run_maintenance_proc              | PROCEDURE    | 
+ public         | show_partition_info               | FUNCTION     | record
+ public         | show_partition_name               | FUNCTION     | record
+ public         | show_partitions                   | FUNCTION     | record
+ public         | stop_sub_partition                | FUNCTION     | boolean
+ public         | undo_partition                    | FUNCTION     | record
+ public         | undo_partition_proc               | PROCEDURE    | 
+(55 rows)
+
+SET ROLE u1;
+SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+ routine_schema |           routine_name            | routine_type |  data_type   
+----------------+-----------------------------------+--------------+--------------
+ public         | apply_cluster                     | FUNCTION     | void
+ public         | apply_constraints                 | FUNCTION     | void
+ public         | apply_foreign_keys                | FUNCTION     | void
+ public         | apply_privileges                  | FUNCTION     | void
+ public         | apply_publications                | FUNCTION     | void
+ public         | autovacuum_off                    | FUNCTION     | boolean
+ public         | autovacuum_reset                  | FUNCTION     | boolean
+ public         | check_automatic_maintenance_value | FUNCTION     | boolean
+ public         | check_control_type                | FUNCTION     | record
+ public         | check_default                     | FUNCTION     | USER-DEFINED
+ public         | check_epoch_type                  | FUNCTION     | boolean
+ public         | check_name_length                 | FUNCTION     | text
+ public         | check_partition_type              | FUNCTION     | boolean
+ public         | check_subpart_sameconfig          | FUNCTION     | record
+ public         | check_subpartition_limits         | FUNCTION     | record
+ public         | create_function_id                | FUNCTION     | void
+ public         | create_function_time              | FUNCTION     | void
+ public         | create_parent                     | FUNCTION     | boolean
+ public         | create_partition_id               | FUNCTION     | boolean
+ public         | create_partition_time             | FUNCTION     | boolean
+ public         | create_sub_parent                 | FUNCTION     | boolean
+ public         | create_trigger                    | FUNCTION     | void
+ public         | decode_error_level                | FUNCTION     | text
+ public         | drop_constraints                  | FUNCTION     | void
+ public         | drop_partition_column             | FUNCTION     | void
+ public         | drop_partition_id                 | FUNCTION     | integer
+ public         | drop_partition_time               | FUNCTION     | integer
+ public         | dump_partitioned_table_definition | FUNCTION     | text
+ public         | get_cmd_type                      | FUNCTION     | text
+ public         | get_histogram_timings             | FUNCTION     | text
+ public         | histogram                         | FUNCTION     | record
+ public         | inherit_template_properties       | FUNCTION     | boolean
+ public         | partition_data_id                 | FUNCTION     | bigint
+ public         | partition_data_proc               | PROCEDURE    | 
+ public         | partition_data_time               | FUNCTION     | bigint
+ public         | partition_gap_fill                | FUNCTION     | integer
+ public         | pg_stat_monitor_internal          | FUNCTION     | record
+ public         | pg_stat_monitor_version           | FUNCTION     | text
+ public         | range                             | FUNCTION     | ARRAY
+ public         | reapply_constraints_proc          | PROCEDURE    | 
+ public         | reapply_privileges                | FUNCTION     | void
+ public         | run_maintenance                   | FUNCTION     | void
+ public         | run_maintenance_proc              | PROCEDURE    | 
+ public         | show_partition_info               | FUNCTION     | record
+ public         | show_partition_name               | FUNCTION     | record
+ public         | show_partitions                   | FUNCTION     | record
+ public         | stop_sub_partition                | FUNCTION     | boolean
+ public         | undo_partition                    | FUNCTION     | record
+ public         | undo_partition_proc               | PROCEDURE    | 
+(49 rows)
+
+SET ROLE su;
+DROP USER u1;
+DROP EXTENSION pg_stat_monitor;
+DROP USER su;
+ERROR:  current user cannot be dropped

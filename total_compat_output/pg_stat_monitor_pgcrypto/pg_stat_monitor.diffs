@@ -1,0 +1,111 @@
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/functions.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/functions.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/functions.out	2023-07-24 22:04:18.934416284 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/functions.out	2023-07-25 00:49:42.469663222 +0000
+@@ -13,33 +13,105 @@
+ SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+  routine_schema |       routine_name       | routine_type | data_type 
+ ----------------+--------------------------+--------------+-----------
++ public         | armor                    | FUNCTION     | text
++ public         | armor                    | FUNCTION     | text
++ public         | crypt                    | FUNCTION     | text
++ public         | dearmor                  | FUNCTION     | bytea
+  public         | decode_error_level       | FUNCTION     | text
++ public         | decrypt                  | FUNCTION     | bytea
++ public         | decrypt_iv               | FUNCTION     | bytea
++ public         | digest                   | FUNCTION     | bytea
++ public         | digest                   | FUNCTION     | bytea
++ public         | encrypt                  | FUNCTION     | bytea
++ public         | encrypt_iv               | FUNCTION     | bytea
++ public         | gen_random_bytes         | FUNCTION     | bytea
++ public         | gen_random_uuid          | FUNCTION     | uuid
++ public         | gen_salt                 | FUNCTION     | text
++ public         | gen_salt                 | FUNCTION     | text
+  public         | get_cmd_type             | FUNCTION     | text
+  public         | get_histogram_timings    | FUNCTION     | text
+  public         | histogram                | FUNCTION     | record
++ public         | hmac                     | FUNCTION     | bytea
++ public         | hmac                     | FUNCTION     | bytea
+  public         | pg_stat_monitor_internal | FUNCTION     | record
+  public         | pg_stat_monitor_reset    | FUNCTION     | void
+  public         | pg_stat_monitor_version  | FUNCTION     | text
++ public         | pgp_armor_headers        | FUNCTION     | record
++ public         | pgp_key_id               | FUNCTION     | text
++ public         | pgp_pub_decrypt          | FUNCTION     | text
++ public         | pgp_pub_decrypt          | FUNCTION     | text
++ public         | pgp_pub_decrypt          | FUNCTION     | text
++ public         | pgp_pub_decrypt_bytea    | FUNCTION     | bytea
++ public         | pgp_pub_decrypt_bytea    | FUNCTION     | bytea
++ public         | pgp_pub_decrypt_bytea    | FUNCTION     | bytea
++ public         | pgp_pub_encrypt          | FUNCTION     | bytea
++ public         | pgp_pub_encrypt          | FUNCTION     | bytea
++ public         | pgp_pub_encrypt_bytea    | FUNCTION     | bytea
++ public         | pgp_pub_encrypt_bytea    | FUNCTION     | bytea
++ public         | pgp_sym_decrypt          | FUNCTION     | text
++ public         | pgp_sym_decrypt          | FUNCTION     | text
++ public         | pgp_sym_decrypt_bytea    | FUNCTION     | bytea
++ public         | pgp_sym_decrypt_bytea    | FUNCTION     | bytea
++ public         | pgp_sym_encrypt          | FUNCTION     | bytea
++ public         | pgp_sym_encrypt          | FUNCTION     | bytea
++ public         | pgp_sym_encrypt_bytea    | FUNCTION     | bytea
++ public         | pgp_sym_encrypt_bytea    | FUNCTION     | bytea
+  public         | pgsm_create_11_view      | FUNCTION     | integer
+  public         | pgsm_create_13_view      | FUNCTION     | integer
+  public         | pgsm_create_14_view      | FUNCTION     | integer
+  public         | pgsm_create_15_view      | FUNCTION     | integer
+  public         | pgsm_create_view         | FUNCTION     | integer
+  public         | range                    | FUNCTION     | ARRAY
+-(13 rows)
++(49 rows)
+ 
+ SET ROLE u1;
+ SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+  routine_schema |       routine_name       | routine_type | data_type 
+ ----------------+--------------------------+--------------+-----------
++ public         | armor                    | FUNCTION     | text
++ public         | armor                    | FUNCTION     | text
++ public         | crypt                    | FUNCTION     | text
++ public         | dearmor                  | FUNCTION     | bytea
+  public         | decode_error_level       | FUNCTION     | text
++ public         | decrypt                  | FUNCTION     | bytea
++ public         | decrypt_iv               | FUNCTION     | bytea
++ public         | digest                   | FUNCTION     | bytea
++ public         | digest                   | FUNCTION     | bytea
++ public         | encrypt                  | FUNCTION     | bytea
++ public         | encrypt_iv               | FUNCTION     | bytea
++ public         | gen_random_bytes         | FUNCTION     | bytea
++ public         | gen_random_uuid          | FUNCTION     | uuid
++ public         | gen_salt                 | FUNCTION     | text
++ public         | gen_salt                 | FUNCTION     | text
+  public         | get_cmd_type             | FUNCTION     | text
+  public         | get_histogram_timings    | FUNCTION     | text
+  public         | histogram                | FUNCTION     | record
++ public         | hmac                     | FUNCTION     | bytea
++ public         | hmac                     | FUNCTION     | bytea
+  public         | pg_stat_monitor_internal | FUNCTION     | record
+  public         | pg_stat_monitor_version  | FUNCTION     | text
++ public         | pgp_armor_headers        | FUNCTION     | record
++ public         | pgp_key_id               | FUNCTION     | text
++ public         | pgp_pub_decrypt          | FUNCTION     | text
++ public         | pgp_pub_decrypt          | FUNCTION     | text
++ public         | pgp_pub_decrypt          | FUNCTION     | text
++ public         | pgp_pub_decrypt_bytea    | FUNCTION     | bytea
++ public         | pgp_pub_decrypt_bytea    | FUNCTION     | bytea
++ public         | pgp_pub_decrypt_bytea    | FUNCTION     | bytea
++ public         | pgp_pub_encrypt          | FUNCTION     | bytea
++ public         | pgp_pub_encrypt          | FUNCTION     | bytea
++ public         | pgp_pub_encrypt_bytea    | FUNCTION     | bytea
++ public         | pgp_pub_encrypt_bytea    | FUNCTION     | bytea
++ public         | pgp_sym_decrypt          | FUNCTION     | text
++ public         | pgp_sym_decrypt          | FUNCTION     | text
++ public         | pgp_sym_decrypt_bytea    | FUNCTION     | bytea
++ public         | pgp_sym_decrypt_bytea    | FUNCTION     | bytea
++ public         | pgp_sym_encrypt          | FUNCTION     | bytea
++ public         | pgp_sym_encrypt          | FUNCTION     | bytea
++ public         | pgp_sym_encrypt_bytea    | FUNCTION     | bytea
++ public         | pgp_sym_encrypt_bytea    | FUNCTION     | bytea
+  public         | range                    | FUNCTION     | ARRAY
+-(7 rows)
++(43 rows)
+ 
+ SET ROLE su;
+ DROP USER u1;

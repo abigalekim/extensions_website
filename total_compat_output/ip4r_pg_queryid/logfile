@@ -1,0 +1,1698 @@
+2023-07-26 15:59:26.688 UTC [2119479] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 15:59:26.689 UTC [2119479] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 15:59:26.703 UTC [2119479] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 15:59:26.719 UTC [2119482] LOG:  database system was shut down at 2023-07-26 15:59:26 UTC
+2023-07-26 15:59:26.729 UTC [2119479] LOG:  database system is ready to accept connections
+2023-07-26 15:59:27.066 UTC [2119501] ERROR:  cache lookup failed for type 19
+2023-07-26 15:59:27.066 UTC [2119501] CONTEXT:  SQL statement "SELECT amname,
+	                      CASE amname WHEN 'btree' THEN 6
+			                  WHEN 'hash' THEN 6
+					  WHEN 'gist' THEN 3
+					  ELSE 0 END as expected,
+			      count(nullif(amvalidate(opc.oid),false)) as actual
+	                 FROM pg_opclass opc
+	                      LEFT JOIN pg_am am ON am.oid = opcmethod
+	                WHERE opcintype IN ('ip4'::regtype,
+	                                    'ip4r'::regtype,
+	                                    'ip6'::regtype,
+	                                    'ip6r'::regtype,
+	                                    'ipaddress'::regtype,
+	                                    'iprange'::regtype)
+	                GROUP BY amname
+	                ORDER BY amname"
+	PL/pgSQL function inline_code_block line 6 at FOR over SELECT rows
+2023-07-26 15:59:27.066 UTC [2119501] STATEMENT:  DO $d$
+	  DECLARE
+	    r record;
+	  BEGIN
+	    IF current_setting('server_version_num')::integer >= 90600 THEN
+	      FOR r IN SELECT amname,
+	                      CASE amname WHEN 'btree' THEN 6
+			                  WHEN 'hash' THEN 6
+					  WHEN 'gist' THEN 3
+					  ELSE 0 END as expected,
+			      count(nullif(amvalidate(opc.oid),false)) as actual
+	                 FROM pg_opclass opc
+	                      LEFT JOIN pg_am am ON am.oid = opcmethod
+	                WHERE opcintype IN ('ip4'::regtype,
+	                                    'ip4r'::regtype,
+	                                    'ip6'::regtype,
+	                                    'ip6r'::regtype,
+	                                    'ipaddress'::regtype,
+	                                    'iprange'::regtype)
+	                GROUP BY amname
+	                ORDER BY amname
+	      LOOP
+	         IF r.expected IS DISTINCT FROM r.actual THEN
+	           RAISE INFO '% % operator classes did not validate', r.expected - r.actual, r.amname;
+	         END IF;
+	      END LOOP;
+	    END IF;
+	  END;
+	$d$;
+2023-07-26 15:59:27.069 UTC [2119501] ERROR:  invalid IP4 value: '1.2.3' at character 8
+2023-07-26 15:59:27.069 UTC [2119501] STATEMENT:  select '1.2.3'::ip4;
+2023-07-26 15:59:27.070 UTC [2119501] ERROR:  invalid IP4 value: '0' at character 8
+2023-07-26 15:59:27.070 UTC [2119501] STATEMENT:  select '0'::ip4;
+2023-07-26 15:59:27.070 UTC [2119501] ERROR:  invalid IP4 value: ' 1.2.3.4' at character 8
+2023-07-26 15:59:27.070 UTC [2119501] STATEMENT:  select ' 1.2.3.4'::ip4;
+2023-07-26 15:59:27.070 UTC [2119501] ERROR:  invalid IP4 value: '1.2.3.4 ' at character 8
+2023-07-26 15:59:27.070 UTC [2119501] STATEMENT:  select '1.2.3.4 '::ip4;
+2023-07-26 15:59:27.070 UTC [2119501] ERROR:  invalid IP4 value: '0.0.0.256' at character 8
+2023-07-26 15:59:27.070 UTC [2119501] STATEMENT:  select '0.0.0.256'::ip4;
+2023-07-26 15:59:27.071 UTC [2119501] ERROR:  invalid IP4 value: '0.0.256' at character 8
+2023-07-26 15:59:27.071 UTC [2119501] STATEMENT:  select '0.0.256'::ip4;
+2023-07-26 15:59:27.071 UTC [2119501] ERROR:  invalid IP4 value: '0..255.0' at character 8
+2023-07-26 15:59:27.071 UTC [2119501] STATEMENT:  select '0..255.0'::ip4;
+2023-07-26 15:59:27.071 UTC [2119501] ERROR:  invalid IP4 value: '+0.255.0.0' at character 8
+2023-07-26 15:59:27.071 UTC [2119501] STATEMENT:  select '+0.255.0.0'::ip4;
+2023-07-26 15:59:27.071 UTC [2119501] ERROR:  invalid IP4 value: '1.2.3.4-1.2.3.4' at character 8
+2023-07-26 15:59:27.071 UTC [2119501] STATEMENT:  select '1.2.3.4-1.2.3.4'::ip4;
+2023-07-26 15:59:27.079 UTC [2119501] ERROR:  invalid IP6 value: '' at character 8
+2023-07-26 15:59:27.079 UTC [2119501] STATEMENT:  select ''::ip6;
+2023-07-26 15:59:27.080 UTC [2119501] ERROR:  invalid IP6 value: '02001:0000:1234:0000:0000:C1C0:ABCD:0876' at character 8
+2023-07-26 15:59:27.080 UTC [2119501] STATEMENT:  select '02001:0000:1234:0000:0000:C1C0:ABCD:0876'::ip6;
+2023-07-26 15:59:27.080 UTC [2119501] ERROR:  invalid IP6 value: '1.2.3.4:1111:2222:3333:4444::5555' at character 8
+2023-07-26 15:59:27.080 UTC [2119501] STATEMENT:  select '1.2.3.4:1111:2222:3333:4444::5555'::ip6;
+2023-07-26 15:59:27.080 UTC [2119501] ERROR:  invalid IP6 value: '1.2.3.4:1111:2222:3333::5555' at character 8
+2023-07-26 15:59:27.080 UTC [2119501] STATEMENT:  select '1.2.3.4:1111:2222:3333::5555'::ip6;
+2023-07-26 15:59:27.080 UTC [2119501] ERROR:  invalid IP6 value: '1.2.3.4:1111:2222::5555' at character 8
+2023-07-26 15:59:27.080 UTC [2119501] STATEMENT:  select '1.2.3.4:1111:2222::5555'::ip6;
+2023-07-26 15:59:27.080 UTC [2119501] ERROR:  invalid IP6 value: '1.2.3.4:1111::5555' at character 8
+2023-07-26 15:59:27.080 UTC [2119501] STATEMENT:  select '1.2.3.4:1111::5555'::ip6;
+2023-07-26 15:59:27.080 UTC [2119501] ERROR:  invalid IP6 value: '1.2.3.4::' at character 8
+2023-07-26 15:59:27.080 UTC [2119501] STATEMENT:  select '1.2.3.4::'::ip6;
+2023-07-26 15:59:27.080 UTC [2119501] ERROR:  invalid IP6 value: '1.2.3.4::5555' at character 8
+2023-07-26 15:59:27.080 UTC [2119501] STATEMENT:  select '1.2.3.4::5555'::ip6;
+2023-07-26 15:59:27.080 UTC [2119501] ERROR:  invalid IP6 value: '1111:' at character 8
+2023-07-26 15:59:27.080 UTC [2119501] STATEMENT:  select '1111:'::ip6;
+2023-07-26 15:59:27.080 UTC [2119501] ERROR:  invalid IP6 value: '1111:2222:3333:4444::5555:' at character 8
+2023-07-26 15:59:27.080 UTC [2119501] STATEMENT:  select '1111:2222:3333:4444::5555:'::ip6;
+2023-07-26 15:59:27.080 UTC [2119501] ERROR:  invalid IP6 value: '1111:2222:3333::5555:' at character 8
+2023-07-26 15:59:27.080 UTC [2119501] STATEMENT:  select '1111:2222:3333::5555:'::ip6;
+2023-07-26 15:59:27.080 UTC [2119501] ERROR:  invalid IP6 value: '1111:2222::5555:' at character 8
+2023-07-26 15:59:27.080 UTC [2119501] STATEMENT:  select '1111:2222::5555:'::ip6;
+2023-07-26 15:59:27.080 UTC [2119501] ERROR:  invalid IP6 value: '1111::5555:' at character 8
+2023-07-26 15:59:27.080 UTC [2119501] STATEMENT:  select '1111::5555:'::ip6;
+2023-07-26 15:59:27.080 UTC [2119501] ERROR:  invalid IP6 value: '123' at character 8
+2023-07-26 15:59:27.080 UTC [2119501] STATEMENT:  select '123'::ip6;
+2023-07-26 15:59:27.080 UTC [2119501] ERROR:  invalid IP6 value: '12345::6:7:8' at character 8
+2023-07-26 15:59:27.080 UTC [2119501] STATEMENT:  select '12345::6:7:8'::ip6;
+2023-07-26 15:59:27.080 UTC [2119501] ERROR:  invalid IP6 value: '127.0.0.1' at character 8
+2023-07-26 15:59:27.080 UTC [2119501] STATEMENT:  select '127.0.0.1'::ip6;
+2023-07-26 15:59:27.080 UTC [2119501] ERROR:  invalid IP6 value: '1:2:3:4:5:6:7:8:9' at character 8
+2023-07-26 15:59:27.080 UTC [2119501] STATEMENT:  select '1:2:3:4:5:6:7:8:9'::ip6;
+2023-07-26 15:59:27.080 UTC [2119501] ERROR:  invalid IP6 value: '1:2:3::4:5:6:7:8:9' at character 8
+2023-07-26 15:59:27.080 UTC [2119501] STATEMENT:  select '1:2:3::4:5:6:7:8:9'::ip6;
+2023-07-26 15:59:27.080 UTC [2119501] ERROR:  invalid IP6 value: '1:2:3::4:5::7:8' at character 8
+2023-07-26 15:59:27.080 UTC [2119501] STATEMENT:  select '1:2:3::4:5::7:8'::ip6;
+2023-07-26 15:59:27.080 UTC [2119501] ERROR:  invalid IP6 value: '1::1.2.256.4' at character 8
+2023-07-26 15:59:27.080 UTC [2119501] STATEMENT:  select '1::1.2.256.4'::ip6;
+2023-07-26 15:59:27.080 UTC [2119501] ERROR:  invalid IP6 value: '1::1.2.3.256' at character 8
+2023-07-26 15:59:27.080 UTC [2119501] STATEMENT:  select '1::1.2.3.256'::ip6;
+2023-07-26 15:59:27.080 UTC [2119501] ERROR:  invalid IP6 value: '1::1.2.3.300' at character 8
+2023-07-26 15:59:27.080 UTC [2119501] STATEMENT:  select '1::1.2.3.300'::ip6;
+2023-07-26 15:59:27.081 UTC [2119501] ERROR:  invalid IP6 value: '1::1.2.3.900' at character 8
+2023-07-26 15:59:27.081 UTC [2119501] STATEMENT:  select '1::1.2.3.900'::ip6;
+2023-07-26 15:59:27.081 UTC [2119501] ERROR:  invalid IP6 value: '1::1.2.300.4' at character 8
+2023-07-26 15:59:27.081 UTC [2119501] STATEMENT:  select '1::1.2.300.4'::ip6;
+2023-07-26 15:59:27.081 UTC [2119501] ERROR:  invalid IP6 value: '1::1.2.900.4' at character 8
+2023-07-26 15:59:27.081 UTC [2119501] STATEMENT:  select '1::1.2.900.4'::ip6;
+2023-07-26 15:59:27.081 UTC [2119501] ERROR:  invalid IP6 value: '1::1.256.3.4' at character 8
+2023-07-26 15:59:27.081 UTC [2119501] STATEMENT:  select '1::1.256.3.4'::ip6;
+2023-07-26 15:59:27.081 UTC [2119501] ERROR:  invalid IP6 value: '1::1.300.3.4' at character 8
+2023-07-26 15:59:27.081 UTC [2119501] STATEMENT:  select '1::1.300.3.4'::ip6;
+2023-07-26 15:59:27.081 UTC [2119501] ERROR:  invalid IP6 value: '1::1.900.3.4' at character 8
+2023-07-26 15:59:27.081 UTC [2119501] STATEMENT:  select '1::1.900.3.4'::ip6;
+2023-07-26 15:59:27.081 UTC [2119501] ERROR:  invalid IP6 value: '1::256.2.3.4' at character 8
+2023-07-26 15:59:27.081 UTC [2119501] STATEMENT:  select '1::256.2.3.4'::ip6;
+2023-07-26 15:59:27.081 UTC [2119501] ERROR:  invalid IP6 value: '1::260.2.3.4' at character 8
+2023-07-26 15:59:27.081 UTC [2119501] STATEMENT:  select '1::260.2.3.4'::ip6;
+2023-07-26 15:59:27.081 UTC [2119501] ERROR:  invalid IP6 value: '1::2::3' at character 8
+2023-07-26 15:59:27.081 UTC [2119501] STATEMENT:  select '1::2::3'::ip6;
+2023-07-26 15:59:27.081 UTC [2119501] ERROR:  invalid IP6 value: '1::300.2.3.4' at character 8
+2023-07-26 15:59:27.081 UTC [2119501] STATEMENT:  select '1::300.2.3.4'::ip6;
+2023-07-26 15:59:27.081 UTC [2119501] ERROR:  invalid IP6 value: '1::300.300.300.300' at character 8
+2023-07-26 15:59:27.081 UTC [2119501] STATEMENT:  select '1::300.300.300.300'::ip6;
+2023-07-26 15:59:27.081 UTC [2119501] ERROR:  invalid IP6 value: '1::3000.30.30.30' at character 8
+2023-07-26 15:59:27.081 UTC [2119501] STATEMENT:  select '1::3000.30.30.30'::ip6;
+2023-07-26 15:59:27.081 UTC [2119501] ERROR:  invalid IP6 value: '1::400.2.3.4' at character 8
+2023-07-26 15:59:27.081 UTC [2119501] STATEMENT:  select '1::400.2.3.4'::ip6;
+2023-07-26 15:59:27.081 UTC [2119501] ERROR:  invalid IP6 value: '1::5:1.2.256.4' at character 8
+2023-07-26 15:59:27.081 UTC [2119501] STATEMENT:  select '1::5:1.2.256.4'::ip6;
+2023-07-26 15:59:27.081 UTC [2119501] ERROR:  invalid IP6 value: '1::5:1.2.3.256' at character 8
+2023-07-26 15:59:27.081 UTC [2119501] STATEMENT:  select '1::5:1.2.3.256'::ip6;
+2023-07-26 15:59:27.081 UTC [2119501] ERROR:  invalid IP6 value: '1::5:1.2.3.300' at character 8
+2023-07-26 15:59:27.081 UTC [2119501] STATEMENT:  select '1::5:1.2.3.300'::ip6;
+2023-07-26 15:59:27.081 UTC [2119501] ERROR:  invalid IP6 value: '1::5:1.2.3.900' at character 8
+2023-07-26 15:59:27.081 UTC [2119501] STATEMENT:  select '1::5:1.2.3.900'::ip6;
+2023-07-26 15:59:27.081 UTC [2119501] ERROR:  invalid IP6 value: '1::5:1.2.300.4' at character 8
+2023-07-26 15:59:27.081 UTC [2119501] STATEMENT:  select '1::5:1.2.300.4'::ip6;
+2023-07-26 15:59:27.081 UTC [2119501] ERROR:  invalid IP6 value: '1::5:1.2.900.4' at character 8
+2023-07-26 15:59:27.081 UTC [2119501] STATEMENT:  select '1::5:1.2.900.4'::ip6;
+2023-07-26 15:59:27.081 UTC [2119501] ERROR:  invalid IP6 value: '1::5:1.256.3.4' at character 8
+2023-07-26 15:59:27.081 UTC [2119501] STATEMENT:  select '1::5:1.256.3.4'::ip6;
+2023-07-26 15:59:27.081 UTC [2119501] ERROR:  invalid IP6 value: '1::5:1.300.3.4' at character 8
+2023-07-26 15:59:27.081 UTC [2119501] STATEMENT:  select '1::5:1.300.3.4'::ip6;
+2023-07-26 15:59:27.081 UTC [2119501] ERROR:  invalid IP6 value: '1::5:1.900.3.4' at character 8
+2023-07-26 15:59:27.081 UTC [2119501] STATEMENT:  select '1::5:1.900.3.4'::ip6;
+2023-07-26 15:59:27.082 UTC [2119501] ERROR:  invalid IP6 value: '1::5:256.2.3.4' at character 8
+2023-07-26 15:59:27.082 UTC [2119501] STATEMENT:  select '1::5:256.2.3.4'::ip6;
+2023-07-26 15:59:27.082 UTC [2119501] ERROR:  invalid IP6 value: '1::5:260.2.3.4' at character 8
+2023-07-26 15:59:27.082 UTC [2119501] STATEMENT:  select '1::5:260.2.3.4'::ip6;
+2023-07-26 15:59:27.082 UTC [2119501] ERROR:  invalid IP6 value: '1::5:300.2.3.4' at character 8
+2023-07-26 15:59:27.082 UTC [2119501] STATEMENT:  select '1::5:300.2.3.4'::ip6;
+2023-07-26 15:59:27.082 UTC [2119501] ERROR:  invalid IP6 value: '1::5:300.300.300.300' at character 8
+2023-07-26 15:59:27.082 UTC [2119501] STATEMENT:  select '1::5:300.300.300.300'::ip6;
+2023-07-26 15:59:27.082 UTC [2119501] ERROR:  invalid IP6 value: '1::5:3000.30.30.30' at character 8
+2023-07-26 15:59:27.082 UTC [2119501] STATEMENT:  select '1::5:3000.30.30.30'::ip6;
+2023-07-26 15:59:27.082 UTC [2119501] ERROR:  invalid IP6 value: '1::5:400.2.3.4' at character 8
+2023-07-26 15:59:27.082 UTC [2119501] STATEMENT:  select '1::5:400.2.3.4'::ip6;
+2023-07-26 15:59:27.082 UTC [2119501] ERROR:  invalid IP6 value: '1::5:900.2.3.4' at character 8
+2023-07-26 15:59:27.082 UTC [2119501] STATEMENT:  select '1::5:900.2.3.4'::ip6;
+2023-07-26 15:59:27.082 UTC [2119501] ERROR:  invalid IP6 value: '1::900.2.3.4' at character 8
+2023-07-26 15:59:27.082 UTC [2119501] STATEMENT:  select '1::900.2.3.4'::ip6;
+2023-07-26 15:59:27.082 UTC [2119501] ERROR:  invalid IP6 value: '1:::3:4:5' at character 8
+2023-07-26 15:59:27.082 UTC [2119501] STATEMENT:  select '1:::3:4:5'::ip6;
+2023-07-26 15:59:27.082 UTC [2119501] ERROR:  invalid IP6 value: '2001:0000:1234: 0000:0000:C1C0:ABCD:0876' at character 8
+2023-07-26 15:59:27.082 UTC [2119501] STATEMENT:  select '2001:0000:1234: 0000:0000:C1C0:ABCD:0876'::ip6;
+2023-07-26 15:59:27.082 UTC [2119501] ERROR:  invalid IP6 value: '2001:0000:1234:0000:00001:C1C0:ABCD:0876' at character 8
+2023-07-26 15:59:27.082 UTC [2119501] STATEMENT:  select '2001:0000:1234:0000:00001:C1C0:ABCD:0876'::ip6;
+2023-07-26 15:59:27.082 UTC [2119501] ERROR:  invalid IP6 value: '2001:0000:1234:0000:0000:C1C0:ABCD:0876 0' at character 8
+2023-07-26 15:59:27.082 UTC [2119501] STATEMENT:  select '2001:0000:1234:0000:0000:C1C0:ABCD:0876 0'::ip6;
+2023-07-26 15:59:27.082 UTC [2119501] ERROR:  invalid IP6 value: '2001::FFD3::57ab' at character 8
+2023-07-26 15:59:27.082 UTC [2119501] STATEMENT:  select '2001::FFD3::57ab'::ip6;
+2023-07-26 15:59:27.082 UTC [2119501] ERROR:  invalid IP6 value: '2001:DB8:0:0:8:800:200C:417A:221' at character 8
+2023-07-26 15:59:27.082 UTC [2119501] STATEMENT:  select '2001:DB8:0:0:8:800:200C:417A:221'::ip6;
+2023-07-26 15:59:27.082 UTC [2119501] ERROR:  invalid IP6 value: '2001:db8:85a3::8a2e:37023:7334' at character 8
+2023-07-26 15:59:27.082 UTC [2119501] STATEMENT:  select '2001:db8:85a3::8a2e:37023:7334'::ip6;
+2023-07-26 15:59:27.082 UTC [2119501] ERROR:  invalid IP6 value: '2001:db8:85a3::8a2e:370k:7334' at character 8
+2023-07-26 15:59:27.082 UTC [2119501] STATEMENT:  select '2001:db8:85a3::8a2e:370k:7334'::ip6;
+2023-07-26 15:59:27.082 UTC [2119501] ERROR:  invalid IP6 value: '3ffe:0b00:0000:0001:0000:0000:000a' at character 8
+2023-07-26 15:59:27.082 UTC [2119501] STATEMENT:  select '3ffe:0b00:0000:0001:0000:0000:000a'::ip6;
+2023-07-26 15:59:27.082 UTC [2119501] ERROR:  invalid IP6 value: '3ffe:b00::1::a' at character 8
+2023-07-26 15:59:27.082 UTC [2119501] STATEMENT:  select '3ffe:b00::1::a'::ip6;
+2023-07-26 15:59:27.082 UTC [2119501] ERROR:  invalid IP6 value: ':' at character 8
+2023-07-26 15:59:27.082 UTC [2119501] STATEMENT:  select ':'::ip6;
+2023-07-26 15:59:27.082 UTC [2119501] ERROR:  invalid IP6 value: ':1111:2222:3333:4444::5555' at character 8
+2023-07-26 15:59:27.082 UTC [2119501] STATEMENT:  select ':1111:2222:3333:4444::5555'::ip6;
+2023-07-26 15:59:27.082 UTC [2119501] ERROR:  invalid IP6 value: ':1111:2222:3333::5555' at character 8
+2023-07-26 15:59:27.082 UTC [2119501] STATEMENT:  select ':1111:2222:3333::5555'::ip6;
+2023-07-26 15:59:27.083 UTC [2119501] ERROR:  invalid IP6 value: ':1111:2222::5555' at character 8
+2023-07-26 15:59:27.083 UTC [2119501] STATEMENT:  select ':1111:2222::5555'::ip6;
+2023-07-26 15:59:27.083 UTC [2119501] ERROR:  invalid IP6 value: ':1111::5555' at character 8
+2023-07-26 15:59:27.083 UTC [2119501] STATEMENT:  select ':1111::5555'::ip6;
+2023-07-26 15:59:27.083 UTC [2119501] ERROR:  invalid IP6 value: '::1.2.256.4' at character 8
+2023-07-26 15:59:27.083 UTC [2119501] STATEMENT:  select '::1.2.256.4'::ip6;
+2023-07-26 15:59:27.083 UTC [2119501] ERROR:  invalid IP6 value: '::1.2.3.256' at character 8
+2023-07-26 15:59:27.083 UTC [2119501] STATEMENT:  select '::1.2.3.256'::ip6;
+2023-07-26 15:59:27.083 UTC [2119501] ERROR:  invalid IP6 value: '::1.2.3.300' at character 8
+2023-07-26 15:59:27.083 UTC [2119501] STATEMENT:  select '::1.2.3.300'::ip6;
+2023-07-26 15:59:27.083 UTC [2119501] ERROR:  invalid IP6 value: '::1.2.3.900' at character 8
+2023-07-26 15:59:27.083 UTC [2119501] STATEMENT:  select '::1.2.3.900'::ip6;
+2023-07-26 15:59:27.083 UTC [2119501] ERROR:  invalid IP6 value: '::1.2.300.4' at character 8
+2023-07-26 15:59:27.083 UTC [2119501] STATEMENT:  select '::1.2.300.4'::ip6;
+2023-07-26 15:59:27.083 UTC [2119501] ERROR:  invalid IP6 value: '::1.2.900.4' at character 8
+2023-07-26 15:59:27.083 UTC [2119501] STATEMENT:  select '::1.2.900.4'::ip6;
+2023-07-26 15:59:27.083 UTC [2119501] ERROR:  invalid IP6 value: '::1.256.3.4' at character 8
+2023-07-26 15:59:27.083 UTC [2119501] STATEMENT:  select '::1.256.3.4'::ip6;
+2023-07-26 15:59:27.083 UTC [2119501] ERROR:  invalid IP6 value: '::1.300.3.4' at character 8
+2023-07-26 15:59:27.083 UTC [2119501] STATEMENT:  select '::1.300.3.4'::ip6;
+2023-07-26 15:59:27.083 UTC [2119501] ERROR:  invalid IP6 value: '::1.900.3.4' at character 8
+2023-07-26 15:59:27.083 UTC [2119501] STATEMENT:  select '::1.900.3.4'::ip6;
+2023-07-26 15:59:27.083 UTC [2119501] ERROR:  invalid IP6 value: '::1111:2222:3333:4444:5555:6666::' at character 8
+2023-07-26 15:59:27.083 UTC [2119501] STATEMENT:  select '::1111:2222:3333:4444:5555:6666::'::ip6;
+2023-07-26 15:59:27.083 UTC [2119501] ERROR:  invalid IP6 value: '::256.2.3.4' at character 8
+2023-07-26 15:59:27.083 UTC [2119501] STATEMENT:  select '::256.2.3.4'::ip6;
+2023-07-26 15:59:27.083 UTC [2119501] ERROR:  invalid IP6 value: '::260.2.3.4' at character 8
+2023-07-26 15:59:27.083 UTC [2119501] STATEMENT:  select '::260.2.3.4'::ip6;
+2023-07-26 15:59:27.083 UTC [2119501] ERROR:  invalid IP6 value: '::300.2.3.4' at character 8
+2023-07-26 15:59:27.083 UTC [2119501] STATEMENT:  select '::300.2.3.4'::ip6;
+2023-07-26 15:59:27.083 UTC [2119501] ERROR:  invalid IP6 value: '::300.300.300.300' at character 8
+2023-07-26 15:59:27.083 UTC [2119501] STATEMENT:  select '::300.300.300.300'::ip6;
+2023-07-26 15:59:27.083 UTC [2119501] ERROR:  invalid IP6 value: '::3000.30.30.30' at character 8
+2023-07-26 15:59:27.083 UTC [2119501] STATEMENT:  select '::3000.30.30.30'::ip6;
+2023-07-26 15:59:27.083 UTC [2119501] ERROR:  invalid IP6 value: '::400.2.3.4' at character 8
+2023-07-26 15:59:27.083 UTC [2119501] STATEMENT:  select '::400.2.3.4'::ip6;
+2023-07-26 15:59:27.083 UTC [2119501] ERROR:  invalid IP6 value: '::5555:' at character 8
+2023-07-26 15:59:27.083 UTC [2119501] STATEMENT:  select '::5555:'::ip6;
+2023-07-26 15:59:27.083 UTC [2119501] ERROR:  invalid IP6 value: '::900.2.3.4' at character 8
+2023-07-26 15:59:27.083 UTC [2119501] STATEMENT:  select '::900.2.3.4'::ip6;
+2023-07-26 15:59:27.083 UTC [2119501] ERROR:  invalid IP6 value: ':::' at character 8
+2023-07-26 15:59:27.083 UTC [2119501] STATEMENT:  select ':::'::ip6;
+2023-07-26 15:59:27.084 UTC [2119501] ERROR:  invalid IP6 value: ':::5555' at character 8
+2023-07-26 15:59:27.084 UTC [2119501] STATEMENT:  select ':::5555'::ip6;
+2023-07-26 15:59:27.084 UTC [2119501] ERROR:  invalid IP6 value: '::ffff:2.3.4' at character 8
+2023-07-26 15:59:27.084 UTC [2119501] STATEMENT:  select '::ffff:2.3.4'::ip6;
+2023-07-26 15:59:27.084 UTC [2119501] ERROR:  invalid IP6 value: '::ffff:257.1.2.3' at character 8
+2023-07-26 15:59:27.084 UTC [2119501] STATEMENT:  select '::ffff:257.1.2.3'::ip6;
+2023-07-26 15:59:27.084 UTC [2119501] ERROR:  invalid IP6 value: 'FF01::101::2' at character 8
+2023-07-26 15:59:27.084 UTC [2119501] STATEMENT:  select 'FF01::101::2'::ip6;
+2023-07-26 15:59:27.084 UTC [2119501] ERROR:  invalid IP6 value: 'FF02:0000:0000:0000:0000:0000:0000:0000:0001' at character 8
+2023-07-26 15:59:27.084 UTC [2119501] STATEMENT:  select 'FF02:0000:0000:0000:0000:0000:0000:0000:0001'::ip6;
+2023-07-26 15:59:27.084 UTC [2119501] ERROR:  invalid IP6 value: 'ldkfj' at character 8
+2023-07-26 15:59:27.084 UTC [2119501] STATEMENT:  select 'ldkfj'::ip6;
+2023-07-26 15:59:27.086 UTC [2119501] ERROR:  invalid IP4R value: "1.2.3" at character 8
+2023-07-26 15:59:27.086 UTC [2119501] STATEMENT:  select '1.2.3'::ip4r;
+2023-07-26 15:59:27.086 UTC [2119501] ERROR:  invalid IP4R value: "255.255.255.255.255.255.255.255.255" at character 8
+2023-07-26 15:59:27.086 UTC [2119501] STATEMENT:  select '255.255.255.255.255.255.255.255.255'::ip4r;
+2023-07-26 15:59:27.086 UTC [2119501] ERROR:  invalid IP4R value: "255.255.255.255.255-255.255.255.255.255" at character 8
+2023-07-26 15:59:27.086 UTC [2119501] STATEMENT:  select '255.255.255.255.255-255.255.255.255.255'::ip4r;
+2023-07-26 15:59:27.086 UTC [2119501] ERROR:  invalid IP4R value: "255.255.255.255-1.2.3.4.5" at character 8
+2023-07-26 15:59:27.086 UTC [2119501] STATEMENT:  select '255.255.255.255-1.2.3.4.5'::ip4r;
+2023-07-26 15:59:27.086 UTC [2119501] ERROR:  invalid IP4R value: "255.255.255.255-1.2.3" at character 8
+2023-07-26 15:59:27.086 UTC [2119501] STATEMENT:  select '255.255.255.255-1.2.3'::ip4r;
+2023-07-26 15:59:27.086 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/31" at character 8
+2023-07-26 15:59:27.086 UTC [2119501] STATEMENT:  select '0.0.0.1/31'::ip4r;
+2023-07-26 15:59:27.086 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/30" at character 8
+2023-07-26 15:59:27.086 UTC [2119501] STATEMENT:  select '0.0.0.1/30'::ip4r;
+2023-07-26 15:59:27.086 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/29" at character 8
+2023-07-26 15:59:27.086 UTC [2119501] STATEMENT:  select '0.0.0.1/29'::ip4r;
+2023-07-26 15:59:27.086 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/28" at character 8
+2023-07-26 15:59:27.086 UTC [2119501] STATEMENT:  select '0.0.0.1/28'::ip4r;
+2023-07-26 15:59:27.086 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/27" at character 8
+2023-07-26 15:59:27.086 UTC [2119501] STATEMENT:  select '0.0.0.1/27'::ip4r;
+2023-07-26 15:59:27.086 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/26" at character 8
+2023-07-26 15:59:27.086 UTC [2119501] STATEMENT:  select '0.0.0.1/26'::ip4r;
+2023-07-26 15:59:27.086 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/25" at character 8
+2023-07-26 15:59:27.086 UTC [2119501] STATEMENT:  select '0.0.0.1/25'::ip4r;
+2023-07-26 15:59:27.086 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/24" at character 8
+2023-07-26 15:59:27.086 UTC [2119501] STATEMENT:  select '0.0.0.1/24'::ip4r;
+2023-07-26 15:59:27.086 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/23" at character 8
+2023-07-26 15:59:27.086 UTC [2119501] STATEMENT:  select '0.0.0.1/23'::ip4r;
+2023-07-26 15:59:27.086 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/22" at character 8
+2023-07-26 15:59:27.086 UTC [2119501] STATEMENT:  select '0.0.0.1/22'::ip4r;
+2023-07-26 15:59:27.086 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/21" at character 8
+2023-07-26 15:59:27.086 UTC [2119501] STATEMENT:  select '0.0.0.1/21'::ip4r;
+2023-07-26 15:59:27.087 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/20" at character 8
+2023-07-26 15:59:27.087 UTC [2119501] STATEMENT:  select '0.0.0.1/20'::ip4r;
+2023-07-26 15:59:27.087 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/19" at character 8
+2023-07-26 15:59:27.087 UTC [2119501] STATEMENT:  select '0.0.0.1/19'::ip4r;
+2023-07-26 15:59:27.087 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/18" at character 8
+2023-07-26 15:59:27.087 UTC [2119501] STATEMENT:  select '0.0.0.1/18'::ip4r;
+2023-07-26 15:59:27.087 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/17" at character 8
+2023-07-26 15:59:27.087 UTC [2119501] STATEMENT:  select '0.0.0.1/17'::ip4r;
+2023-07-26 15:59:27.087 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/16" at character 8
+2023-07-26 15:59:27.087 UTC [2119501] STATEMENT:  select '0.0.0.1/16'::ip4r;
+2023-07-26 15:59:27.087 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/15" at character 8
+2023-07-26 15:59:27.087 UTC [2119501] STATEMENT:  select '0.0.0.1/15'::ip4r;
+2023-07-26 15:59:27.087 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/14" at character 8
+2023-07-26 15:59:27.087 UTC [2119501] STATEMENT:  select '0.0.0.1/14'::ip4r;
+2023-07-26 15:59:27.087 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/13" at character 8
+2023-07-26 15:59:27.087 UTC [2119501] STATEMENT:  select '0.0.0.1/13'::ip4r;
+2023-07-26 15:59:27.087 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/12" at character 8
+2023-07-26 15:59:27.087 UTC [2119501] STATEMENT:  select '0.0.0.1/12'::ip4r;
+2023-07-26 15:59:27.087 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/11" at character 8
+2023-07-26 15:59:27.087 UTC [2119501] STATEMENT:  select '0.0.0.1/11'::ip4r;
+2023-07-26 15:59:27.087 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/10" at character 8
+2023-07-26 15:59:27.087 UTC [2119501] STATEMENT:  select '0.0.0.1/10'::ip4r;
+2023-07-26 15:59:27.087 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/9" at character 8
+2023-07-26 15:59:27.087 UTC [2119501] STATEMENT:  select '0.0.0.1/9'::ip4r;
+2023-07-26 15:59:27.087 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/8" at character 8
+2023-07-26 15:59:27.087 UTC [2119501] STATEMENT:  select '0.0.0.1/8'::ip4r;
+2023-07-26 15:59:27.087 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/7" at character 8
+2023-07-26 15:59:27.087 UTC [2119501] STATEMENT:  select '0.0.0.1/7'::ip4r;
+2023-07-26 15:59:27.087 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/6" at character 8
+2023-07-26 15:59:27.087 UTC [2119501] STATEMENT:  select '0.0.0.1/6'::ip4r;
+2023-07-26 15:59:27.087 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/5" at character 8
+2023-07-26 15:59:27.087 UTC [2119501] STATEMENT:  select '0.0.0.1/5'::ip4r;
+2023-07-26 15:59:27.087 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/4" at character 8
+2023-07-26 15:59:27.087 UTC [2119501] STATEMENT:  select '0.0.0.1/4'::ip4r;
+2023-07-26 15:59:27.087 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/3" at character 8
+2023-07-26 15:59:27.087 UTC [2119501] STATEMENT:  select '0.0.0.1/3'::ip4r;
+2023-07-26 15:59:27.087 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/2" at character 8
+2023-07-26 15:59:27.087 UTC [2119501] STATEMENT:  select '0.0.0.1/2'::ip4r;
+2023-07-26 15:59:27.087 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/1" at character 8
+2023-07-26 15:59:27.087 UTC [2119501] STATEMENT:  select '0.0.0.1/1'::ip4r;
+2023-07-26 15:59:27.087 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/0" at character 8
+2023-07-26 15:59:27.087 UTC [2119501] STATEMENT:  select '0.0.0.1/0'::ip4r;
+2023-07-26 15:59:27.087 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.2/30" at character 8
+2023-07-26 15:59:27.087 UTC [2119501] STATEMENT:  select '0.0.0.2/30'::ip4r;
+2023-07-26 15:59:27.087 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.4/29" at character 8
+2023-07-26 15:59:27.087 UTC [2119501] STATEMENT:  select '0.0.0.4/29'::ip4r;
+2023-07-26 15:59:27.087 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.8/28" at character 8
+2023-07-26 15:59:27.087 UTC [2119501] STATEMENT:  select '0.0.0.8/28'::ip4r;
+2023-07-26 15:59:27.087 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.16/27" at character 8
+2023-07-26 15:59:27.087 UTC [2119501] STATEMENT:  select '0.0.0.16/27'::ip4r;
+2023-07-26 15:59:27.088 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.32/26" at character 8
+2023-07-26 15:59:27.088 UTC [2119501] STATEMENT:  select '0.0.0.32/26'::ip4r;
+2023-07-26 15:59:27.088 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.64/25" at character 8
+2023-07-26 15:59:27.088 UTC [2119501] STATEMENT:  select '0.0.0.64/25'::ip4r;
+2023-07-26 15:59:27.088 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.128/24" at character 8
+2023-07-26 15:59:27.088 UTC [2119501] STATEMENT:  select '0.0.0.128/24'::ip4r;
+2023-07-26 15:59:27.088 UTC [2119501] ERROR:  invalid IP4R value: "0.0.1.0/23" at character 8
+2023-07-26 15:59:27.088 UTC [2119501] STATEMENT:  select '0.0.1.0/23'::ip4r;
+2023-07-26 15:59:27.088 UTC [2119501] ERROR:  invalid IP4R value: "0.0.2.0/22" at character 8
+2023-07-26 15:59:27.088 UTC [2119501] STATEMENT:  select '0.0.2.0/22'::ip4r;
+2023-07-26 15:59:27.088 UTC [2119501] ERROR:  invalid IP4R value: "0.0.4.0/21" at character 8
+2023-07-26 15:59:27.088 UTC [2119501] STATEMENT:  select '0.0.4.0/21'::ip4r;
+2023-07-26 15:59:27.088 UTC [2119501] ERROR:  invalid IP4R value: "0.0.8.0/20" at character 8
+2023-07-26 15:59:27.088 UTC [2119501] STATEMENT:  select '0.0.8.0/20'::ip4r;
+2023-07-26 15:59:27.088 UTC [2119501] ERROR:  invalid IP4R value: "0.0.16.0/19" at character 8
+2023-07-26 15:59:27.088 UTC [2119501] STATEMENT:  select '0.0.16.0/19'::ip4r;
+2023-07-26 15:59:27.088 UTC [2119501] ERROR:  invalid IP4R value: "0.0.32.0/18" at character 8
+2023-07-26 15:59:27.088 UTC [2119501] STATEMENT:  select '0.0.32.0/18'::ip4r;
+2023-07-26 15:59:27.088 UTC [2119501] ERROR:  invalid IP4R value: "0.0.64.0/17" at character 8
+2023-07-26 15:59:27.088 UTC [2119501] STATEMENT:  select '0.0.64.0/17'::ip4r;
+2023-07-26 15:59:27.088 UTC [2119501] ERROR:  invalid IP4R value: "0.0.128.0/16" at character 8
+2023-07-26 15:59:27.088 UTC [2119501] STATEMENT:  select '0.0.128.0/16'::ip4r;
+2023-07-26 15:59:27.088 UTC [2119501] ERROR:  invalid IP4R value: "0.1.0.0/15" at character 8
+2023-07-26 15:59:27.088 UTC [2119501] STATEMENT:  select '0.1.0.0/15'::ip4r;
+2023-07-26 15:59:27.088 UTC [2119501] ERROR:  invalid IP4R value: "0.2.0.0/14" at character 8
+2023-07-26 15:59:27.088 UTC [2119501] STATEMENT:  select '0.2.0.0/14'::ip4r;
+2023-07-26 15:59:27.088 UTC [2119501] ERROR:  invalid IP4R value: "0.4.0.0/13" at character 8
+2023-07-26 15:59:27.088 UTC [2119501] STATEMENT:  select '0.4.0.0/13'::ip4r;
+2023-07-26 15:59:27.088 UTC [2119501] ERROR:  invalid IP4R value: "0.8.0.0/12" at character 8
+2023-07-26 15:59:27.088 UTC [2119501] STATEMENT:  select '0.8.0.0/12'::ip4r;
+2023-07-26 15:59:27.088 UTC [2119501] ERROR:  invalid IP4R value: "0.16.0.0/11" at character 8
+2023-07-26 15:59:27.088 UTC [2119501] STATEMENT:  select '0.16.0.0/11'::ip4r;
+2023-07-26 15:59:27.088 UTC [2119501] ERROR:  invalid IP4R value: "0.32.0.0/10" at character 8
+2023-07-26 15:59:27.088 UTC [2119501] STATEMENT:  select '0.32.0.0/10'::ip4r;
+2023-07-26 15:59:27.088 UTC [2119501] ERROR:  invalid IP4R value: "0.64.0.0/9" at character 8
+2023-07-26 15:59:27.088 UTC [2119501] STATEMENT:  select '0.64.0.0/9'::ip4r;
+2023-07-26 15:59:27.088 UTC [2119501] ERROR:  invalid IP4R value: "0.128.0.0/8" at character 8
+2023-07-26 15:59:27.088 UTC [2119501] STATEMENT:  select '0.128.0.0/8'::ip4r;
+2023-07-26 15:59:27.088 UTC [2119501] ERROR:  invalid IP4R value: "1.0.0.0/7" at character 8
+2023-07-26 15:59:27.088 UTC [2119501] STATEMENT:  select '1.0.0.0/7'::ip4r;
+2023-07-26 15:59:27.088 UTC [2119501] ERROR:  invalid IP4R value: "2.0.0.0/6" at character 8
+2023-07-26 15:59:27.088 UTC [2119501] STATEMENT:  select '2.0.0.0/6'::ip4r;
+2023-07-26 15:59:27.088 UTC [2119501] ERROR:  invalid IP4R value: "4.0.0.0/5" at character 8
+2023-07-26 15:59:27.088 UTC [2119501] STATEMENT:  select '4.0.0.0/5'::ip4r;
+2023-07-26 15:59:27.088 UTC [2119501] ERROR:  invalid IP4R value: "8.0.0.0/4" at character 8
+2023-07-26 15:59:27.088 UTC [2119501] STATEMENT:  select '8.0.0.0/4'::ip4r;
+2023-07-26 15:59:27.088 UTC [2119501] ERROR:  invalid IP4R value: "16.0.0.0/3" at character 8
+2023-07-26 15:59:27.088 UTC [2119501] STATEMENT:  select '16.0.0.0/3'::ip4r;
+2023-07-26 15:59:27.089 UTC [2119501] ERROR:  invalid IP4R value: "32.0.0.0/2" at character 8
+2023-07-26 15:59:27.089 UTC [2119501] STATEMENT:  select '32.0.0.0/2'::ip4r;
+2023-07-26 15:59:27.089 UTC [2119501] ERROR:  invalid IP4R value: "64.0.0.0/1" at character 8
+2023-07-26 15:59:27.089 UTC [2119501] STATEMENT:  select '64.0.0.0/1'::ip4r;
+2023-07-26 15:59:27.089 UTC [2119501] ERROR:  invalid IP4R value: "128.0.0.0/0" at character 8
+2023-07-26 15:59:27.089 UTC [2119501] STATEMENT:  select '128.0.0.0/0'::ip4r;
+2023-07-26 15:59:27.089 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.0/33" at character 8
+2023-07-26 15:59:27.089 UTC [2119501] STATEMENT:  select '0.0.0.0/33'::ip4r;
+2023-07-26 15:59:27.089 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.0/3.0" at character 8
+2023-07-26 15:59:27.089 UTC [2119501] STATEMENT:  select '0.0.0.0/3.0'::ip4r;
+2023-07-26 15:59:27.089 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.0/+33" at character 8
+2023-07-26 15:59:27.089 UTC [2119501] STATEMENT:  select '0.0.0.0/+33'::ip4r;
+2023-07-26 15:59:27.091 UTC [2119501] ERROR:  invalid IP6R value: "::-::-::" at character 8
+2023-07-26 15:59:27.091 UTC [2119501] STATEMENT:  select '::-::-::'::ip6r;
+2023-07-26 15:59:27.091 UTC [2119501] ERROR:  invalid IP6R value: "ffff:ffff:ffff:ffff:ffff:ffff:ffff-ffff" at character 8
+2023-07-26 15:59:27.091 UTC [2119501] STATEMENT:  select 'ffff:ffff:ffff:ffff:ffff:ffff:ffff-ffff'::ip6r;
+2023-07-26 15:59:27.091 UTC [2119501] ERROR:  invalid IP6R value: "::-ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff" at character 8
+2023-07-26 15:59:27.091 UTC [2119501] STATEMENT:  select '::-ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff'::ip6r;
+2023-07-26 15:59:27.091 UTC [2119501] ERROR:  invalid IP6R value: "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff-::" at character 8
+2023-07-26 15:59:27.091 UTC [2119501] STATEMENT:  select 'ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff-::'::ip6r;
+2023-07-26 15:59:27.091 UTC [2119501] ERROR:  invalid IP6R value: "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff/128" at character 8
+2023-07-26 15:59:27.091 UTC [2119501] STATEMENT:  select 'ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff/128'::ip6r;
+2023-07-26 15:59:27.091 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:0000:0000:0001/127" at character 8
+2023-07-26 15:59:27.091 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/127'::ip6r;
+2023-07-26 15:59:27.091 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:0000:0000:0001/120" at character 8
+2023-07-26 15:59:27.091 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/120'::ip6r;
+2023-07-26 15:59:27.091 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:0000:0000:0001/112" at character 8
+2023-07-26 15:59:27.091 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/112'::ip6r;
+2023-07-26 15:59:27.091 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:0000:0000:0001/96" at character 8
+2023-07-26 15:59:27.091 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/96'::ip6r;
+2023-07-26 15:59:27.091 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:0000:0000:0001/80" at character 8
+2023-07-26 15:59:27.091 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/80'::ip6r;
+2023-07-26 15:59:27.091 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:0000:0000:0001/64" at character 8
+2023-07-26 15:59:27.091 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/64'::ip6r;
+2023-07-26 15:59:27.091 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:0000:0000:0001/48" at character 8
+2023-07-26 15:59:27.091 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/48'::ip6r;
+2023-07-26 15:59:27.091 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:0000:0000:0001/32" at character 8
+2023-07-26 15:59:27.091 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/32'::ip6r;
+2023-07-26 15:59:27.091 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:0000:0000:0001/16" at character 8
+2023-07-26 15:59:27.091 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/16'::ip6r;
+2023-07-26 15:59:27.091 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:0000:0000:0001/8" at character 8
+2023-07-26 15:59:27.091 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/8'::ip6r;
+2023-07-26 15:59:27.091 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:0000:0000:0001/4" at character 8
+2023-07-26 15:59:27.091 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/4'::ip6r;
+2023-07-26 15:59:27.091 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:0000:0000:0001/0" at character 8
+2023-07-26 15:59:27.091 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/0'::ip6r;
+2023-07-26 15:59:27.091 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:0000:0000:0008/124" at character 8
+2023-07-26 15:59:27.091 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0008/124'::ip6r;
+2023-07-26 15:59:27.091 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:0000:0000:0080/120" at character 8
+2023-07-26 15:59:27.091 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0080/120'::ip6r;
+2023-07-26 15:59:27.091 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:0000:0000:8000/112" at character 8
+2023-07-26 15:59:27.091 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:8000/112'::ip6r;
+2023-07-26 15:59:27.091 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:0000:8000:0000/96" at character 8
+2023-07-26 15:59:27.091 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:8000:0000/96'::ip6r;
+2023-07-26 15:59:27.092 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:8000:0000:0000/80" at character 8
+2023-07-26 15:59:27.092 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:8000:0000:0000/80'::ip6r;
+2023-07-26 15:59:27.092 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:8000:0000:0000:0000/64" at character 8
+2023-07-26 15:59:27.092 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:8000:0000:0000:0000/64'::ip6r;
+2023-07-26 15:59:27.092 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:8000:0000:0000:0000:0000/48" at character 8
+2023-07-26 15:59:27.092 UTC [2119501] STATEMENT:  select '0000:0000:0000:8000:0000:0000:0000:0000/48'::ip6r;
+2023-07-26 15:59:27.092 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:8000:0000:0000:0000:0000:0000/32" at character 8
+2023-07-26 15:59:27.092 UTC [2119501] STATEMENT:  select '0000:0000:8000:0000:0000:0000:0000:0000/32'::ip6r;
+2023-07-26 15:59:27.092 UTC [2119501] ERROR:  invalid IP6R value: "0000:8000:0000:0000:0000:0000:0000:0000/16" at character 8
+2023-07-26 15:59:27.092 UTC [2119501] STATEMENT:  select '0000:8000:0000:0000:0000:0000:0000:0000/16'::ip6r;
+2023-07-26 15:59:27.092 UTC [2119501] ERROR:  invalid IP6R value: "0080:0000:0000:0000:0000:0000:0000:0000/8" at character 8
+2023-07-26 15:59:27.092 UTC [2119501] STATEMENT:  select '0080:0000:0000:0000:0000:0000:0000:0000/8'::ip6r;
+2023-07-26 15:59:27.092 UTC [2119501] ERROR:  invalid IP6R value: "0800:0000:0000:0000:0000:0000:0000:0000/4" at character 8
+2023-07-26 15:59:27.092 UTC [2119501] STATEMENT:  select '0800:0000:0000:0000:0000:0000:0000:0000/4'::ip6r;
+2023-07-26 15:59:27.092 UTC [2119501] ERROR:  invalid IP6R value: "8000:0000:0000:0000:0000:0000:0000:0000/0" at character 8
+2023-07-26 15:59:27.092 UTC [2119501] STATEMENT:  select '8000:0000:0000:0000:0000:0000:0000:0000/0'::ip6r;
+2023-07-26 15:59:27.092 UTC [2119501] ERROR:  invalid IP6R value: "::/129" at character 8
+2023-07-26 15:59:27.092 UTC [2119501] STATEMENT:  select '::/129'::ip6r;
+2023-07-26 15:59:27.092 UTC [2119501] ERROR:  invalid IP6R value: "::/255" at character 8
+2023-07-26 15:59:27.092 UTC [2119501] STATEMENT:  select '::/255'::ip6r;
+2023-07-26 15:59:27.092 UTC [2119501] ERROR:  invalid IP6R value: "::/256" at character 8
+2023-07-26 15:59:27.092 UTC [2119501] STATEMENT:  select '::/256'::ip6r;
+2023-07-26 15:59:27.092 UTC [2119501] ERROR:  invalid IP6R value: "::/+0" at character 8
+2023-07-26 15:59:27.092 UTC [2119501] STATEMENT:  select '::/+0'::ip6r;
+2023-07-26 15:59:27.092 UTC [2119501] ERROR:  invalid IP6R value: "::/0-0" at character 8
+2023-07-26 15:59:27.092 UTC [2119501] STATEMENT:  select '::/0-0'::ip6r;
+2023-07-26 15:59:27.092 UTC [2119501] ERROR:  invalid IP6R value: "::-::/0" at character 8
+2023-07-26 15:59:27.092 UTC [2119501] STATEMENT:  select '::-::/0'::ip6r;
+2023-07-26 15:59:27.098 UTC [2119501] ERROR:  invalid IP value: '1.2.3' at character 8
+2023-07-26 15:59:27.098 UTC [2119501] STATEMENT:  select '1.2.3'::ipaddress;
+2023-07-26 15:59:27.098 UTC [2119501] ERROR:  invalid IP value: '0' at character 8
+2023-07-26 15:59:27.098 UTC [2119501] STATEMENT:  select '0'::ipaddress;
+2023-07-26 15:59:27.098 UTC [2119501] ERROR:  invalid IP value: ' 1.2.3.4' at character 8
+2023-07-26 15:59:27.098 UTC [2119501] STATEMENT:  select ' 1.2.3.4'::ipaddress;
+2023-07-26 15:59:27.098 UTC [2119501] ERROR:  invalid IP value: '1.2.3.4 ' at character 8
+2023-07-26 15:59:27.098 UTC [2119501] STATEMENT:  select '1.2.3.4 '::ipaddress;
+2023-07-26 15:59:27.098 UTC [2119501] ERROR:  invalid IP value: '0.0.0.256' at character 8
+2023-07-26 15:59:27.098 UTC [2119501] STATEMENT:  select '0.0.0.256'::ipaddress;
+2023-07-26 15:59:27.098 UTC [2119501] ERROR:  invalid IP value: '0.0.256' at character 8
+2023-07-26 15:59:27.098 UTC [2119501] STATEMENT:  select '0.0.256'::ipaddress;
+2023-07-26 15:59:27.098 UTC [2119501] ERROR:  invalid IP value: '0..255.0' at character 8
+2023-07-26 15:59:27.098 UTC [2119501] STATEMENT:  select '0..255.0'::ipaddress;
+2023-07-26 15:59:27.098 UTC [2119501] ERROR:  invalid IP value: '+0.255.0.0' at character 8
+2023-07-26 15:59:27.098 UTC [2119501] STATEMENT:  select '+0.255.0.0'::ipaddress;
+2023-07-26 15:59:27.098 UTC [2119501] ERROR:  invalid IP value: '1.2.3.4-1.2.3.4' at character 8
+2023-07-26 15:59:27.098 UTC [2119501] STATEMENT:  select '1.2.3.4-1.2.3.4'::ipaddress;
+2023-07-26 15:59:27.098 UTC [2119501] ERROR:  invalid IP value: '' at character 8
+2023-07-26 15:59:27.098 UTC [2119501] STATEMENT:  select ''::ipaddress;
+2023-07-26 15:59:27.098 UTC [2119501] ERROR:  invalid IP value: '02001:0000:1234:0000:0000:C1C0:ABCD:0876' at character 8
+2023-07-26 15:59:27.098 UTC [2119501] STATEMENT:  select '02001:0000:1234:0000:0000:C1C0:ABCD:0876'::ipaddress;
+2023-07-26 15:59:27.098 UTC [2119501] ERROR:  invalid IP value: '1.2.3.4:1111:2222:3333:4444::5555' at character 8
+2023-07-26 15:59:27.098 UTC [2119501] STATEMENT:  select '1.2.3.4:1111:2222:3333:4444::5555'::ipaddress;
+2023-07-26 15:59:27.098 UTC [2119501] ERROR:  invalid IP value: '1.2.3.4:1111:2222:3333::5555' at character 8
+2023-07-26 15:59:27.098 UTC [2119501] STATEMENT:  select '1.2.3.4:1111:2222:3333::5555'::ipaddress;
+2023-07-26 15:59:27.098 UTC [2119501] ERROR:  invalid IP value: '1.2.3.4:1111:2222::5555' at character 8
+2023-07-26 15:59:27.098 UTC [2119501] STATEMENT:  select '1.2.3.4:1111:2222::5555'::ipaddress;
+2023-07-26 15:59:27.098 UTC [2119501] ERROR:  invalid IP value: '1.2.3.4:1111::5555' at character 8
+2023-07-26 15:59:27.098 UTC [2119501] STATEMENT:  select '1.2.3.4:1111::5555'::ipaddress;
+2023-07-26 15:59:27.098 UTC [2119501] ERROR:  invalid IP value: '1.2.3.4::' at character 8
+2023-07-26 15:59:27.098 UTC [2119501] STATEMENT:  select '1.2.3.4::'::ipaddress;
+2023-07-26 15:59:27.098 UTC [2119501] ERROR:  invalid IP value: '1.2.3.4::5555' at character 8
+2023-07-26 15:59:27.098 UTC [2119501] STATEMENT:  select '1.2.3.4::5555'::ipaddress;
+2023-07-26 15:59:27.098 UTC [2119501] ERROR:  invalid IP value: '1111:' at character 8
+2023-07-26 15:59:27.098 UTC [2119501] STATEMENT:  select '1111:'::ipaddress;
+2023-07-26 15:59:27.098 UTC [2119501] ERROR:  invalid IP value: '1111:2222:3333:4444::5555:' at character 8
+2023-07-26 15:59:27.098 UTC [2119501] STATEMENT:  select '1111:2222:3333:4444::5555:'::ipaddress;
+2023-07-26 15:59:27.098 UTC [2119501] ERROR:  invalid IP value: '1111:2222:3333::5555:' at character 8
+2023-07-26 15:59:27.098 UTC [2119501] STATEMENT:  select '1111:2222:3333::5555:'::ipaddress;
+2023-07-26 15:59:27.098 UTC [2119501] ERROR:  invalid IP value: '1111:2222::5555:' at character 8
+2023-07-26 15:59:27.098 UTC [2119501] STATEMENT:  select '1111:2222::5555:'::ipaddress;
+2023-07-26 15:59:27.098 UTC [2119501] ERROR:  invalid IP value: '1111::5555:' at character 8
+2023-07-26 15:59:27.098 UTC [2119501] STATEMENT:  select '1111::5555:'::ipaddress;
+2023-07-26 15:59:27.098 UTC [2119501] ERROR:  invalid IP value: '123' at character 8
+2023-07-26 15:59:27.098 UTC [2119501] STATEMENT:  select '123'::ipaddress;
+2023-07-26 15:59:27.098 UTC [2119501] ERROR:  invalid IP value: '12345::6:7:8' at character 8
+2023-07-26 15:59:27.098 UTC [2119501] STATEMENT:  select '12345::6:7:8'::ipaddress;
+2023-07-26 15:59:27.098 UTC [2119501] ERROR:  invalid IP value: '1:2:3:4:5:6:7:8:9' at character 8
+2023-07-26 15:59:27.098 UTC [2119501] STATEMENT:  select '1:2:3:4:5:6:7:8:9'::ipaddress;
+2023-07-26 15:59:27.098 UTC [2119501] ERROR:  invalid IP value: '1:2:3::4:5:6:7:8:9' at character 8
+2023-07-26 15:59:27.098 UTC [2119501] STATEMENT:  select '1:2:3::4:5:6:7:8:9'::ipaddress;
+2023-07-26 15:59:27.098 UTC [2119501] ERROR:  invalid IP value: '1:2:3::4:5::7:8' at character 8
+2023-07-26 15:59:27.098 UTC [2119501] STATEMENT:  select '1:2:3::4:5::7:8'::ipaddress;
+2023-07-26 15:59:27.099 UTC [2119501] ERROR:  invalid IP value: '1::1.2.256.4' at character 8
+2023-07-26 15:59:27.099 UTC [2119501] STATEMENT:  select '1::1.2.256.4'::ipaddress;
+2023-07-26 15:59:27.099 UTC [2119501] ERROR:  invalid IP value: '1::1.2.3.256' at character 8
+2023-07-26 15:59:27.099 UTC [2119501] STATEMENT:  select '1::1.2.3.256'::ipaddress;
+2023-07-26 15:59:27.099 UTC [2119501] ERROR:  invalid IP value: '1::1.2.3.300' at character 8
+2023-07-26 15:59:27.099 UTC [2119501] STATEMENT:  select '1::1.2.3.300'::ipaddress;
+2023-07-26 15:59:27.099 UTC [2119501] ERROR:  invalid IP value: '1::1.2.3.900' at character 8
+2023-07-26 15:59:27.099 UTC [2119501] STATEMENT:  select '1::1.2.3.900'::ipaddress;
+2023-07-26 15:59:27.099 UTC [2119501] ERROR:  invalid IP value: '1::1.2.300.4' at character 8
+2023-07-26 15:59:27.099 UTC [2119501] STATEMENT:  select '1::1.2.300.4'::ipaddress;
+2023-07-26 15:59:27.099 UTC [2119501] ERROR:  invalid IP value: '1::1.2.900.4' at character 8
+2023-07-26 15:59:27.099 UTC [2119501] STATEMENT:  select '1::1.2.900.4'::ipaddress;
+2023-07-26 15:59:27.099 UTC [2119501] ERROR:  invalid IP value: '1::1.256.3.4' at character 8
+2023-07-26 15:59:27.099 UTC [2119501] STATEMENT:  select '1::1.256.3.4'::ipaddress;
+2023-07-26 15:59:27.099 UTC [2119501] ERROR:  invalid IP value: '1::1.300.3.4' at character 8
+2023-07-26 15:59:27.099 UTC [2119501] STATEMENT:  select '1::1.300.3.4'::ipaddress;
+2023-07-26 15:59:27.099 UTC [2119501] ERROR:  invalid IP value: '1::1.900.3.4' at character 8
+2023-07-26 15:59:27.099 UTC [2119501] STATEMENT:  select '1::1.900.3.4'::ipaddress;
+2023-07-26 15:59:27.099 UTC [2119501] ERROR:  invalid IP value: '1::256.2.3.4' at character 8
+2023-07-26 15:59:27.099 UTC [2119501] STATEMENT:  select '1::256.2.3.4'::ipaddress;
+2023-07-26 15:59:27.099 UTC [2119501] ERROR:  invalid IP value: '1::260.2.3.4' at character 8
+2023-07-26 15:59:27.099 UTC [2119501] STATEMENT:  select '1::260.2.3.4'::ipaddress;
+2023-07-26 15:59:27.099 UTC [2119501] ERROR:  invalid IP value: '1::2::3' at character 8
+2023-07-26 15:59:27.099 UTC [2119501] STATEMENT:  select '1::2::3'::ipaddress;
+2023-07-26 15:59:27.099 UTC [2119501] ERROR:  invalid IP value: '1::300.2.3.4' at character 8
+2023-07-26 15:59:27.099 UTC [2119501] STATEMENT:  select '1::300.2.3.4'::ipaddress;
+2023-07-26 15:59:27.099 UTC [2119501] ERROR:  invalid IP value: '1::300.300.300.300' at character 8
+2023-07-26 15:59:27.099 UTC [2119501] STATEMENT:  select '1::300.300.300.300'::ipaddress;
+2023-07-26 15:59:27.099 UTC [2119501] ERROR:  invalid IP value: '1::3000.30.30.30' at character 8
+2023-07-26 15:59:27.099 UTC [2119501] STATEMENT:  select '1::3000.30.30.30'::ipaddress;
+2023-07-26 15:59:27.099 UTC [2119501] ERROR:  invalid IP value: '1::400.2.3.4' at character 8
+2023-07-26 15:59:27.099 UTC [2119501] STATEMENT:  select '1::400.2.3.4'::ipaddress;
+2023-07-26 15:59:27.099 UTC [2119501] ERROR:  invalid IP value: '1::5:1.2.256.4' at character 8
+2023-07-26 15:59:27.099 UTC [2119501] STATEMENT:  select '1::5:1.2.256.4'::ipaddress;
+2023-07-26 15:59:27.099 UTC [2119501] ERROR:  invalid IP value: '1::5:1.2.3.256' at character 8
+2023-07-26 15:59:27.099 UTC [2119501] STATEMENT:  select '1::5:1.2.3.256'::ipaddress;
+2023-07-26 15:59:27.099 UTC [2119501] ERROR:  invalid IP value: '1::5:1.2.3.300' at character 8
+2023-07-26 15:59:27.099 UTC [2119501] STATEMENT:  select '1::5:1.2.3.300'::ipaddress;
+2023-07-26 15:59:27.099 UTC [2119501] ERROR:  invalid IP value: '1::5:1.2.3.900' at character 8
+2023-07-26 15:59:27.099 UTC [2119501] STATEMENT:  select '1::5:1.2.3.900'::ipaddress;
+2023-07-26 15:59:27.099 UTC [2119501] ERROR:  invalid IP value: '1::5:1.2.300.4' at character 8
+2023-07-26 15:59:27.099 UTC [2119501] STATEMENT:  select '1::5:1.2.300.4'::ipaddress;
+2023-07-26 15:59:27.099 UTC [2119501] ERROR:  invalid IP value: '1::5:1.2.900.4' at character 8
+2023-07-26 15:59:27.099 UTC [2119501] STATEMENT:  select '1::5:1.2.900.4'::ipaddress;
+2023-07-26 15:59:27.099 UTC [2119501] ERROR:  invalid IP value: '1::5:1.256.3.4' at character 8
+2023-07-26 15:59:27.099 UTC [2119501] STATEMENT:  select '1::5:1.256.3.4'::ipaddress;
+2023-07-26 15:59:27.099 UTC [2119501] ERROR:  invalid IP value: '1::5:1.300.3.4' at character 8
+2023-07-26 15:59:27.099 UTC [2119501] STATEMENT:  select '1::5:1.300.3.4'::ipaddress;
+2023-07-26 15:59:27.099 UTC [2119501] ERROR:  invalid IP value: '1::5:1.900.3.4' at character 8
+2023-07-26 15:59:27.099 UTC [2119501] STATEMENT:  select '1::5:1.900.3.4'::ipaddress;
+2023-07-26 15:59:27.099 UTC [2119501] ERROR:  invalid IP value: '1::5:256.2.3.4' at character 8
+2023-07-26 15:59:27.099 UTC [2119501] STATEMENT:  select '1::5:256.2.3.4'::ipaddress;
+2023-07-26 15:59:27.099 UTC [2119501] ERROR:  invalid IP value: '1::5:260.2.3.4' at character 8
+2023-07-26 15:59:27.099 UTC [2119501] STATEMENT:  select '1::5:260.2.3.4'::ipaddress;
+2023-07-26 15:59:27.099 UTC [2119501] ERROR:  invalid IP value: '1::5:300.2.3.4' at character 8
+2023-07-26 15:59:27.099 UTC [2119501] STATEMENT:  select '1::5:300.2.3.4'::ipaddress;
+2023-07-26 15:59:27.099 UTC [2119501] ERROR:  invalid IP value: '1::5:300.300.300.300' at character 8
+2023-07-26 15:59:27.099 UTC [2119501] STATEMENT:  select '1::5:300.300.300.300'::ipaddress;
+2023-07-26 15:59:27.099 UTC [2119501] ERROR:  invalid IP value: '1::5:3000.30.30.30' at character 8
+2023-07-26 15:59:27.099 UTC [2119501] STATEMENT:  select '1::5:3000.30.30.30'::ipaddress;
+2023-07-26 15:59:27.099 UTC [2119501] ERROR:  invalid IP value: '1::5:400.2.3.4' at character 8
+2023-07-26 15:59:27.099 UTC [2119501] STATEMENT:  select '1::5:400.2.3.4'::ipaddress;
+2023-07-26 15:59:27.099 UTC [2119501] ERROR:  invalid IP value: '1::5:900.2.3.4' at character 8
+2023-07-26 15:59:27.099 UTC [2119501] STATEMENT:  select '1::5:900.2.3.4'::ipaddress;
+2023-07-26 15:59:27.099 UTC [2119501] ERROR:  invalid IP value: '1::900.2.3.4' at character 8
+2023-07-26 15:59:27.099 UTC [2119501] STATEMENT:  select '1::900.2.3.4'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: '1:::3:4:5' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select '1:::3:4:5'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: '2001:0000:1234: 0000:0000:C1C0:ABCD:0876' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select '2001:0000:1234: 0000:0000:C1C0:ABCD:0876'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: '2001:0000:1234:0000:00001:C1C0:ABCD:0876' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select '2001:0000:1234:0000:00001:C1C0:ABCD:0876'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: '2001:0000:1234:0000:0000:C1C0:ABCD:0876 0' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select '2001:0000:1234:0000:0000:C1C0:ABCD:0876 0'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: '2001::FFD3::57ab' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select '2001::FFD3::57ab'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: '2001:DB8:0:0:8:800:200C:417A:221' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select '2001:DB8:0:0:8:800:200C:417A:221'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: '2001:db8:85a3::8a2e:37023:7334' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select '2001:db8:85a3::8a2e:37023:7334'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: '2001:db8:85a3::8a2e:370k:7334' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select '2001:db8:85a3::8a2e:370k:7334'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: '3ffe:0b00:0000:0001:0000:0000:000a' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select '3ffe:0b00:0000:0001:0000:0000:000a'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: '3ffe:b00::1::a' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select '3ffe:b00::1::a'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: ':' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select ':'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: ':1111:2222:3333:4444::5555' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select ':1111:2222:3333:4444::5555'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: ':1111:2222:3333::5555' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select ':1111:2222:3333::5555'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: ':1111:2222::5555' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select ':1111:2222::5555'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: ':1111::5555' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select ':1111::5555'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: '::1.2.256.4' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select '::1.2.256.4'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: '::1.2.3.256' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select '::1.2.3.256'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: '::1.2.3.300' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select '::1.2.3.300'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: '::1.2.3.900' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select '::1.2.3.900'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: '::1.2.300.4' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select '::1.2.300.4'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: '::1.2.900.4' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select '::1.2.900.4'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: '::1.256.3.4' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select '::1.256.3.4'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: '::1.300.3.4' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select '::1.300.3.4'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: '::1.900.3.4' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select '::1.900.3.4'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: '::1111:2222:3333:4444:5555:6666::' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select '::1111:2222:3333:4444:5555:6666::'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: '::256.2.3.4' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select '::256.2.3.4'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: '::260.2.3.4' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select '::260.2.3.4'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: '::300.2.3.4' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select '::300.2.3.4'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: '::300.300.300.300' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select '::300.300.300.300'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: '::3000.30.30.30' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select '::3000.30.30.30'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: '::400.2.3.4' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select '::400.2.3.4'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: '::5555:' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select '::5555:'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: '::900.2.3.4' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select '::900.2.3.4'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: ':::' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select ':::'::ipaddress;
+2023-07-26 15:59:27.100 UTC [2119501] ERROR:  invalid IP value: ':::5555' at character 8
+2023-07-26 15:59:27.100 UTC [2119501] STATEMENT:  select ':::5555'::ipaddress;
+2023-07-26 15:59:27.101 UTC [2119501] ERROR:  invalid IP value: '::ffff:2.3.4' at character 8
+2023-07-26 15:59:27.101 UTC [2119501] STATEMENT:  select '::ffff:2.3.4'::ipaddress;
+2023-07-26 15:59:27.101 UTC [2119501] ERROR:  invalid IP value: '::ffff:257.1.2.3' at character 8
+2023-07-26 15:59:27.101 UTC [2119501] STATEMENT:  select '::ffff:257.1.2.3'::ipaddress;
+2023-07-26 15:59:27.101 UTC [2119501] ERROR:  invalid IP value: 'FF01::101::2' at character 8
+2023-07-26 15:59:27.101 UTC [2119501] STATEMENT:  select 'FF01::101::2'::ipaddress;
+2023-07-26 15:59:27.101 UTC [2119501] ERROR:  invalid IP value: 'FF02:0000:0000:0000:0000:0000:0000:0000:0001' at character 8
+2023-07-26 15:59:27.101 UTC [2119501] STATEMENT:  select 'FF02:0000:0000:0000:0000:0000:0000:0000:0001'::ipaddress;
+2023-07-26 15:59:27.101 UTC [2119501] ERROR:  invalid IP value: 'ldkfj' at character 8
+2023-07-26 15:59:27.101 UTC [2119501] STATEMENT:  select 'ldkfj'::ipaddress;
+2023-07-26 15:59:27.105 UTC [2119501] ERROR:  invalid IP4R value: "1.2.3" at character 8
+2023-07-26 15:59:27.105 UTC [2119501] STATEMENT:  select '1.2.3'::iprange;
+2023-07-26 15:59:27.105 UTC [2119501] ERROR:  invalid IP4R value: "255.255.255.255.255.255.255.255.255" at character 8
+2023-07-26 15:59:27.105 UTC [2119501] STATEMENT:  select '255.255.255.255.255.255.255.255.255'::iprange;
+2023-07-26 15:59:27.105 UTC [2119501] ERROR:  invalid IP4R value: "255.255.255.255.255-255.255.255.255.255" at character 8
+2023-07-26 15:59:27.105 UTC [2119501] STATEMENT:  select '255.255.255.255.255-255.255.255.255.255'::iprange;
+2023-07-26 15:59:27.105 UTC [2119501] ERROR:  invalid IP4R value: "255.255.255.255-1.2.3.4.5" at character 8
+2023-07-26 15:59:27.105 UTC [2119501] STATEMENT:  select '255.255.255.255-1.2.3.4.5'::iprange;
+2023-07-26 15:59:27.105 UTC [2119501] ERROR:  invalid IP4R value: "255.255.255.255-1.2.3" at character 8
+2023-07-26 15:59:27.105 UTC [2119501] STATEMENT:  select '255.255.255.255-1.2.3'::iprange;
+2023-07-26 15:59:27.105 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/31" at character 8
+2023-07-26 15:59:27.105 UTC [2119501] STATEMENT:  select '0.0.0.1/31'::iprange;
+2023-07-26 15:59:27.105 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/30" at character 8
+2023-07-26 15:59:27.105 UTC [2119501] STATEMENT:  select '0.0.0.1/30'::iprange;
+2023-07-26 15:59:27.105 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/29" at character 8
+2023-07-26 15:59:27.105 UTC [2119501] STATEMENT:  select '0.0.0.1/29'::iprange;
+2023-07-26 15:59:27.105 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/28" at character 8
+2023-07-26 15:59:27.105 UTC [2119501] STATEMENT:  select '0.0.0.1/28'::iprange;
+2023-07-26 15:59:27.105 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/27" at character 8
+2023-07-26 15:59:27.105 UTC [2119501] STATEMENT:  select '0.0.0.1/27'::iprange;
+2023-07-26 15:59:27.105 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/26" at character 8
+2023-07-26 15:59:27.105 UTC [2119501] STATEMENT:  select '0.0.0.1/26'::iprange;
+2023-07-26 15:59:27.105 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/25" at character 8
+2023-07-26 15:59:27.105 UTC [2119501] STATEMENT:  select '0.0.0.1/25'::iprange;
+2023-07-26 15:59:27.105 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/24" at character 8
+2023-07-26 15:59:27.105 UTC [2119501] STATEMENT:  select '0.0.0.1/24'::iprange;
+2023-07-26 15:59:27.105 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/23" at character 8
+2023-07-26 15:59:27.105 UTC [2119501] STATEMENT:  select '0.0.0.1/23'::iprange;
+2023-07-26 15:59:27.105 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/22" at character 8
+2023-07-26 15:59:27.105 UTC [2119501] STATEMENT:  select '0.0.0.1/22'::iprange;
+2023-07-26 15:59:27.105 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/21" at character 8
+2023-07-26 15:59:27.105 UTC [2119501] STATEMENT:  select '0.0.0.1/21'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/20" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.0.1/20'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/19" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.0.1/19'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/18" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.0.1/18'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/17" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.0.1/17'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/16" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.0.1/16'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/15" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.0.1/15'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/14" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.0.1/14'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/13" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.0.1/13'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/12" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.0.1/12'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/11" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.0.1/11'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/10" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.0.1/10'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/9" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.0.1/9'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/8" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.0.1/8'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/7" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.0.1/7'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/6" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.0.1/6'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/5" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.0.1/5'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/4" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.0.1/4'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/3" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.0.1/3'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/2" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.0.1/2'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/1" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.0.1/1'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.1/0" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.0.1/0'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.2/30" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.0.2/30'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.4/29" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.0.4/29'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.8/28" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.0.8/28'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.16/27" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.0.16/27'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.32/26" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.0.32/26'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.64/25" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.0.64/25'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.128/24" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.0.128/24'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.1.0/23" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.1.0/23'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.2.0/22" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.2.0/22'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.4.0/21" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.4.0/21'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.8.0/20" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.8.0/20'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.16.0/19" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.16.0/19'::iprange;
+2023-07-26 15:59:27.106 UTC [2119501] ERROR:  invalid IP4R value: "0.0.32.0/18" at character 8
+2023-07-26 15:59:27.106 UTC [2119501] STATEMENT:  select '0.0.32.0/18'::iprange;
+2023-07-26 15:59:27.107 UTC [2119501] ERROR:  invalid IP4R value: "0.0.64.0/17" at character 8
+2023-07-26 15:59:27.107 UTC [2119501] STATEMENT:  select '0.0.64.0/17'::iprange;
+2023-07-26 15:59:27.107 UTC [2119501] ERROR:  invalid IP4R value: "0.0.128.0/16" at character 8
+2023-07-26 15:59:27.107 UTC [2119501] STATEMENT:  select '0.0.128.0/16'::iprange;
+2023-07-26 15:59:27.107 UTC [2119501] ERROR:  invalid IP4R value: "0.1.0.0/15" at character 8
+2023-07-26 15:59:27.107 UTC [2119501] STATEMENT:  select '0.1.0.0/15'::iprange;
+2023-07-26 15:59:27.107 UTC [2119501] ERROR:  invalid IP4R value: "0.2.0.0/14" at character 8
+2023-07-26 15:59:27.107 UTC [2119501] STATEMENT:  select '0.2.0.0/14'::iprange;
+2023-07-26 15:59:27.107 UTC [2119501] ERROR:  invalid IP4R value: "0.4.0.0/13" at character 8
+2023-07-26 15:59:27.107 UTC [2119501] STATEMENT:  select '0.4.0.0/13'::iprange;
+2023-07-26 15:59:27.107 UTC [2119501] ERROR:  invalid IP4R value: "0.8.0.0/12" at character 8
+2023-07-26 15:59:27.107 UTC [2119501] STATEMENT:  select '0.8.0.0/12'::iprange;
+2023-07-26 15:59:27.107 UTC [2119501] ERROR:  invalid IP4R value: "0.16.0.0/11" at character 8
+2023-07-26 15:59:27.107 UTC [2119501] STATEMENT:  select '0.16.0.0/11'::iprange;
+2023-07-26 15:59:27.107 UTC [2119501] ERROR:  invalid IP4R value: "0.32.0.0/10" at character 8
+2023-07-26 15:59:27.107 UTC [2119501] STATEMENT:  select '0.32.0.0/10'::iprange;
+2023-07-26 15:59:27.107 UTC [2119501] ERROR:  invalid IP4R value: "0.64.0.0/9" at character 8
+2023-07-26 15:59:27.107 UTC [2119501] STATEMENT:  select '0.64.0.0/9'::iprange;
+2023-07-26 15:59:27.107 UTC [2119501] ERROR:  invalid IP4R value: "0.128.0.0/8" at character 8
+2023-07-26 15:59:27.107 UTC [2119501] STATEMENT:  select '0.128.0.0/8'::iprange;
+2023-07-26 15:59:27.107 UTC [2119501] ERROR:  invalid IP4R value: "1.0.0.0/7" at character 8
+2023-07-26 15:59:27.107 UTC [2119501] STATEMENT:  select '1.0.0.0/7'::iprange;
+2023-07-26 15:59:27.107 UTC [2119501] ERROR:  invalid IP4R value: "2.0.0.0/6" at character 8
+2023-07-26 15:59:27.107 UTC [2119501] STATEMENT:  select '2.0.0.0/6'::iprange;
+2023-07-26 15:59:27.107 UTC [2119501] ERROR:  invalid IP4R value: "4.0.0.0/5" at character 8
+2023-07-26 15:59:27.107 UTC [2119501] STATEMENT:  select '4.0.0.0/5'::iprange;
+2023-07-26 15:59:27.107 UTC [2119501] ERROR:  invalid IP4R value: "8.0.0.0/4" at character 8
+2023-07-26 15:59:27.107 UTC [2119501] STATEMENT:  select '8.0.0.0/4'::iprange;
+2023-07-26 15:59:27.107 UTC [2119501] ERROR:  invalid IP4R value: "16.0.0.0/3" at character 8
+2023-07-26 15:59:27.107 UTC [2119501] STATEMENT:  select '16.0.0.0/3'::iprange;
+2023-07-26 15:59:27.107 UTC [2119501] ERROR:  invalid IP4R value: "32.0.0.0/2" at character 8
+2023-07-26 15:59:27.107 UTC [2119501] STATEMENT:  select '32.0.0.0/2'::iprange;
+2023-07-26 15:59:27.107 UTC [2119501] ERROR:  invalid IP4R value: "64.0.0.0/1" at character 8
+2023-07-26 15:59:27.107 UTC [2119501] STATEMENT:  select '64.0.0.0/1'::iprange;
+2023-07-26 15:59:27.107 UTC [2119501] ERROR:  invalid IP4R value: "128.0.0.0/0" at character 8
+2023-07-26 15:59:27.107 UTC [2119501] STATEMENT:  select '128.0.0.0/0'::iprange;
+2023-07-26 15:59:27.107 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.0/33" at character 8
+2023-07-26 15:59:27.107 UTC [2119501] STATEMENT:  select '0.0.0.0/33'::iprange;
+2023-07-26 15:59:27.107 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.0/3.0" at character 8
+2023-07-26 15:59:27.107 UTC [2119501] STATEMENT:  select '0.0.0.0/3.0'::iprange;
+2023-07-26 15:59:27.107 UTC [2119501] ERROR:  invalid IP4R value: "0.0.0.0/+33" at character 8
+2023-07-26 15:59:27.107 UTC [2119501] STATEMENT:  select '0.0.0.0/+33'::iprange;
+2023-07-26 15:59:27.107 UTC [2119501] ERROR:  invalid IP6R value: "::-::-::" at character 8
+2023-07-26 15:59:27.107 UTC [2119501] STATEMENT:  select '::-::-::'::iprange;
+2023-07-26 15:59:27.107 UTC [2119501] ERROR:  invalid IP6R value: "ffff:ffff:ffff:ffff:ffff:ffff:ffff-ffff" at character 8
+2023-07-26 15:59:27.107 UTC [2119501] STATEMENT:  select 'ffff:ffff:ffff:ffff:ffff:ffff:ffff-ffff'::ip6r;
+2023-07-26 15:59:27.107 UTC [2119501] ERROR:  invalid IP6R value: "::-ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff" at character 8
+2023-07-26 15:59:27.107 UTC [2119501] STATEMENT:  select '::-ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff'::iprange;
+2023-07-26 15:59:27.107 UTC [2119501] ERROR:  invalid IP6R value: "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff-::" at character 8
+2023-07-26 15:59:27.107 UTC [2119501] STATEMENT:  select 'ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff-::'::iprange;
+2023-07-26 15:59:27.107 UTC [2119501] ERROR:  invalid IP6R value: "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff/128" at character 8
+2023-07-26 15:59:27.107 UTC [2119501] STATEMENT:  select 'ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff/128'::iprange;
+2023-07-26 15:59:27.107 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:0000:0000:0001/127" at character 8
+2023-07-26 15:59:27.107 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/127'::iprange;
+2023-07-26 15:59:27.107 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:0000:0000:0001/120" at character 8
+2023-07-26 15:59:27.107 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/120'::iprange;
+2023-07-26 15:59:27.107 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:0000:0000:0001/112" at character 8
+2023-07-26 15:59:27.107 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/112'::iprange;
+2023-07-26 15:59:27.107 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:0000:0000:0001/96" at character 8
+2023-07-26 15:59:27.107 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/96'::iprange;
+2023-07-26 15:59:27.107 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:0000:0000:0001/80" at character 8
+2023-07-26 15:59:27.107 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/80'::iprange;
+2023-07-26 15:59:27.107 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:0000:0000:0001/64" at character 8
+2023-07-26 15:59:27.107 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/64'::iprange;
+2023-07-26 15:59:27.107 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:0000:0000:0001/48" at character 8
+2023-07-26 15:59:27.107 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/48'::iprange;
+2023-07-26 15:59:27.108 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:0000:0000:0001/32" at character 8
+2023-07-26 15:59:27.108 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/32'::iprange;
+2023-07-26 15:59:27.108 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:0000:0000:0001/16" at character 8
+2023-07-26 15:59:27.108 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/16'::iprange;
+2023-07-26 15:59:27.108 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:0000:0000:0001/8" at character 8
+2023-07-26 15:59:27.108 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/8'::iprange;
+2023-07-26 15:59:27.108 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:0000:0000:0001/4" at character 8
+2023-07-26 15:59:27.108 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/4'::iprange;
+2023-07-26 15:59:27.108 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:0000:0000:0001/0" at character 8
+2023-07-26 15:59:27.108 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/0'::iprange;
+2023-07-26 15:59:27.108 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:0000:0000:0008/124" at character 8
+2023-07-26 15:59:27.108 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0008/124'::iprange;
+2023-07-26 15:59:27.108 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:0000:0000:0080/120" at character 8
+2023-07-26 15:59:27.108 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0080/120'::iprange;
+2023-07-26 15:59:27.108 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:0000:0000:8000/112" at character 8
+2023-07-26 15:59:27.108 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:8000/112'::iprange;
+2023-07-26 15:59:27.108 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:0000:8000:0000/96" at character 8
+2023-07-26 15:59:27.108 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:8000:0000/96'::iprange;
+2023-07-26 15:59:27.108 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:0000:8000:0000:0000/80" at character 8
+2023-07-26 15:59:27.108 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:8000:0000:0000/80'::iprange;
+2023-07-26 15:59:27.108 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:0000:8000:0000:0000:0000/64" at character 8
+2023-07-26 15:59:27.108 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:8000:0000:0000:0000/64'::iprange;
+2023-07-26 15:59:27.108 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:0000:8000:0000:0000:0000:0000/48" at character 8
+2023-07-26 15:59:27.108 UTC [2119501] STATEMENT:  select '0000:0000:0000:8000:0000:0000:0000:0000/48'::iprange;
+2023-07-26 15:59:27.108 UTC [2119501] ERROR:  invalid IP6R value: "0000:0000:8000:0000:0000:0000:0000:0000/32" at character 8
+2023-07-26 15:59:27.108 UTC [2119501] STATEMENT:  select '0000:0000:8000:0000:0000:0000:0000:0000/32'::iprange;
+2023-07-26 15:59:27.108 UTC [2119501] ERROR:  invalid IP6R value: "0000:8000:0000:0000:0000:0000:0000:0000/16" at character 8
+2023-07-26 15:59:27.108 UTC [2119501] STATEMENT:  select '0000:8000:0000:0000:0000:0000:0000:0000/16'::iprange;
+2023-07-26 15:59:27.108 UTC [2119501] ERROR:  invalid IP6R value: "0080:0000:0000:0000:0000:0000:0000:0000/8" at character 8
+2023-07-26 15:59:27.108 UTC [2119501] STATEMENT:  select '0080:0000:0000:0000:0000:0000:0000:0000/8'::iprange;
+2023-07-26 15:59:27.108 UTC [2119501] ERROR:  invalid IP6R value: "0800:0000:0000:0000:0000:0000:0000:0000/4" at character 8
+2023-07-26 15:59:27.108 UTC [2119501] STATEMENT:  select '0800:0000:0000:0000:0000:0000:0000:0000/4'::iprange;
+2023-07-26 15:59:27.108 UTC [2119501] ERROR:  invalid IP6R value: "8000:0000:0000:0000:0000:0000:0000:0000/0" at character 8
+2023-07-26 15:59:27.108 UTC [2119501] STATEMENT:  select '8000:0000:0000:0000:0000:0000:0000:0000/0'::iprange;
+2023-07-26 15:59:27.108 UTC [2119501] ERROR:  invalid IP6R value: "::/129" at character 8
+2023-07-26 15:59:27.108 UTC [2119501] STATEMENT:  select '::/129'::iprange;
+2023-07-26 15:59:27.108 UTC [2119501] ERROR:  invalid IP6R value: "::/255" at character 8
+2023-07-26 15:59:27.108 UTC [2119501] STATEMENT:  select '::/255'::iprange;
+2023-07-26 15:59:27.108 UTC [2119501] ERROR:  invalid IP6R value: "::/256" at character 8
+2023-07-26 15:59:27.108 UTC [2119501] STATEMENT:  select '::/256'::iprange;
+2023-07-26 15:59:27.108 UTC [2119501] ERROR:  invalid IP6R value: "::/+0" at character 8
+2023-07-26 15:59:27.108 UTC [2119501] STATEMENT:  select '::/+0'::iprange;
+2023-07-26 15:59:27.108 UTC [2119501] ERROR:  invalid IP6R value: "::/0-0" at character 8
+2023-07-26 15:59:27.108 UTC [2119501] STATEMENT:  select '::/0-0'::iprange;
+2023-07-26 15:59:27.108 UTC [2119501] ERROR:  invalid IP6R value: "::-::/0" at character 8
+2023-07-26 15:59:27.108 UTC [2119501] STATEMENT:  select '::-::/0'::iprange;
+2023-07-26 15:59:27.108 UTC [2119501] ERROR:  invalid IP6R value: "-::" at character 8
+2023-07-26 15:59:27.108 UTC [2119501] STATEMENT:  select '-::'::iprange;
+2023-07-26 15:59:27.108 UTC [2119501] ERROR:  invalid IP4R value: "-1.2.3.4" at character 8
+2023-07-26 15:59:27.108 UTC [2119501] STATEMENT:  select '-1.2.3.4'::iprange;
+2023-07-26 15:59:27.108 UTC [2119501] ERROR:  invalid IP4R value: "1.2.3.4-" at character 8
+2023-07-26 15:59:27.108 UTC [2119501] STATEMENT:  select '1.2.3.4-'::iprange;
+2023-07-26 15:59:27.124 UTC [2119501] ERROR:  invalid IP4 value in text
+2023-07-26 15:59:27.124 UTC [2119501] STATEMENT:  select '1.2.3'::text::ip4;
+2023-07-26 15:59:27.124 UTC [2119501] ERROR:  invalid IP4 value in text
+2023-07-26 15:59:27.124 UTC [2119501] STATEMENT:  select '0'::text::ip4;
+2023-07-26 15:59:27.124 UTC [2119501] ERROR:  invalid IP4 value in text
+2023-07-26 15:59:27.124 UTC [2119501] STATEMENT:  select ' 1.2.3.4'::text::ip4;
+2023-07-26 15:59:27.124 UTC [2119501] ERROR:  invalid IP4 value in text
+2023-07-26 15:59:27.124 UTC [2119501] STATEMENT:  select '1.2.3.4 '::text::ip4;
+2023-07-26 15:59:27.124 UTC [2119501] ERROR:  invalid IP4 value in text
+2023-07-26 15:59:27.124 UTC [2119501] STATEMENT:  select '0.0.0.256'::text::ip4;
+2023-07-26 15:59:27.125 UTC [2119501] ERROR:  invalid IP4 value in text
+2023-07-26 15:59:27.125 UTC [2119501] STATEMENT:  select '0.0.256'::text::ip4;
+2023-07-26 15:59:27.125 UTC [2119501] ERROR:  invalid IP4 value in text
+2023-07-26 15:59:27.125 UTC [2119501] STATEMENT:  select '0..255.0'::text::ip4;
+2023-07-26 15:59:27.125 UTC [2119501] ERROR:  invalid IP4 value in text
+2023-07-26 15:59:27.125 UTC [2119501] STATEMENT:  select '+0.255.0.0'::text::ip4;
+2023-07-26 15:59:27.125 UTC [2119501] ERROR:  invalid IP4 value in text
+2023-07-26 15:59:27.125 UTC [2119501] STATEMENT:  select '1.2.3.4-1.2.3.4'::text::ip4;
+2023-07-26 15:59:27.125 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.125 UTC [2119501] STATEMENT:  select '1.2.3'::text::ip4r;
+2023-07-26 15:59:27.125 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.125 UTC [2119501] STATEMENT:  select '255.255.255.255.255.255.255.255.255'::text::ip4r;
+2023-07-26 15:59:27.125 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.125 UTC [2119501] STATEMENT:  select '255.255.255.255.255-255.255.255.255.255'::text::ip4r;
+2023-07-26 15:59:27.125 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.125 UTC [2119501] STATEMENT:  select '255.255.255.255-1.2.3.4.5'::text::ip4r;
+2023-07-26 15:59:27.125 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.125 UTC [2119501] STATEMENT:  select '255.255.255.255-1.2.3'::text::ip4r;
+2023-07-26 15:59:27.125 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.125 UTC [2119501] STATEMENT:  select '0.0.0.1/31'::text::ip4r;
+2023-07-26 15:59:27.125 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.125 UTC [2119501] STATEMENT:  select '0.0.0.1/30'::text::ip4r;
+2023-07-26 15:59:27.125 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.125 UTC [2119501] STATEMENT:  select '0.0.0.1/29'::text::ip4r;
+2023-07-26 15:59:27.125 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.125 UTC [2119501] STATEMENT:  select '0.0.0.1/28'::text::ip4r;
+2023-07-26 15:59:27.125 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.125 UTC [2119501] STATEMENT:  select '0.0.0.1/27'::text::ip4r;
+2023-07-26 15:59:27.125 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.125 UTC [2119501] STATEMENT:  select '0.0.0.1/26'::text::ip4r;
+2023-07-26 15:59:27.125 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.125 UTC [2119501] STATEMENT:  select '0.0.0.1/25'::text::ip4r;
+2023-07-26 15:59:27.125 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.125 UTC [2119501] STATEMENT:  select '0.0.0.1/24'::text::ip4r;
+2023-07-26 15:59:27.125 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.125 UTC [2119501] STATEMENT:  select '0.0.0.1/23'::text::ip4r;
+2023-07-26 15:59:27.125 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.125 UTC [2119501] STATEMENT:  select '0.0.0.1/22'::text::ip4r;
+2023-07-26 15:59:27.125 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.125 UTC [2119501] STATEMENT:  select '0.0.0.1/21'::text::ip4r;
+2023-07-26 15:59:27.125 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.125 UTC [2119501] STATEMENT:  select '0.0.0.1/20'::text::ip4r;
+2023-07-26 15:59:27.125 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.125 UTC [2119501] STATEMENT:  select '0.0.0.1/19'::text::ip4r;
+2023-07-26 15:59:27.125 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.125 UTC [2119501] STATEMENT:  select '0.0.0.1/18'::text::ip4r;
+2023-07-26 15:59:27.125 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.125 UTC [2119501] STATEMENT:  select '0.0.0.1/17'::text::ip4r;
+2023-07-26 15:59:27.125 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.125 UTC [2119501] STATEMENT:  select '0.0.0.1/16'::text::ip4r;
+2023-07-26 15:59:27.125 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.125 UTC [2119501] STATEMENT:  select '0.0.0.1/15'::text::ip4r;
+2023-07-26 15:59:27.125 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.125 UTC [2119501] STATEMENT:  select '0.0.0.1/14'::text::ip4r;
+2023-07-26 15:59:27.126 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.126 UTC [2119501] STATEMENT:  select '0.0.0.1/13'::text::ip4r;
+2023-07-26 15:59:27.126 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.126 UTC [2119501] STATEMENT:  select '0.0.0.1/12'::text::ip4r;
+2023-07-26 15:59:27.126 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.126 UTC [2119501] STATEMENT:  select '0.0.0.1/11'::text::ip4r;
+2023-07-26 15:59:27.126 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.126 UTC [2119501] STATEMENT:  select '0.0.0.1/10'::text::ip4r;
+2023-07-26 15:59:27.126 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.126 UTC [2119501] STATEMENT:  select '0.0.0.1/9'::text::ip4r;
+2023-07-26 15:59:27.126 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.126 UTC [2119501] STATEMENT:  select '0.0.0.1/8'::text::ip4r;
+2023-07-26 15:59:27.126 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.126 UTC [2119501] STATEMENT:  select '0.0.0.1/7'::text::ip4r;
+2023-07-26 15:59:27.126 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.126 UTC [2119501] STATEMENT:  select '0.0.0.1/6'::text::ip4r;
+2023-07-26 15:59:27.126 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.126 UTC [2119501] STATEMENT:  select '0.0.0.1/5'::text::ip4r;
+2023-07-26 15:59:27.126 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.126 UTC [2119501] STATEMENT:  select '0.0.0.1/4'::text::ip4r;
+2023-07-26 15:59:27.126 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.126 UTC [2119501] STATEMENT:  select '0.0.0.1/3'::text::ip4r;
+2023-07-26 15:59:27.126 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.126 UTC [2119501] STATEMENT:  select '0.0.0.1/2'::text::ip4r;
+2023-07-26 15:59:27.126 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.126 UTC [2119501] STATEMENT:  select '0.0.0.1/1'::text::ip4r;
+2023-07-26 15:59:27.126 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.126 UTC [2119501] STATEMENT:  select '0.0.0.1/0'::text::ip4r;
+2023-07-26 15:59:27.126 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.126 UTC [2119501] STATEMENT:  select '0.0.0.2/30'::text::ip4r;
+2023-07-26 15:59:27.126 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.126 UTC [2119501] STATEMENT:  select '0.0.0.4/29'::text::ip4r;
+2023-07-26 15:59:27.126 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.126 UTC [2119501] STATEMENT:  select '0.0.0.8/28'::text::ip4r;
+2023-07-26 15:59:27.126 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.126 UTC [2119501] STATEMENT:  select '0.0.0.16/27'::text::ip4r;
+2023-07-26 15:59:27.126 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.126 UTC [2119501] STATEMENT:  select '0.0.0.32/26'::text::ip4r;
+2023-07-26 15:59:27.126 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.126 UTC [2119501] STATEMENT:  select '0.0.0.64/25'::text::ip4r;
+2023-07-26 15:59:27.126 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.126 UTC [2119501] STATEMENT:  select '0.0.0.128/24'::text::ip4r;
+2023-07-26 15:59:27.126 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.126 UTC [2119501] STATEMENT:  select '0.0.1.0/23'::text::ip4r;
+2023-07-26 15:59:27.126 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.126 UTC [2119501] STATEMENT:  select '0.0.2.0/22'::text::ip4r;
+2023-07-26 15:59:27.126 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.126 UTC [2119501] STATEMENT:  select '0.0.4.0/21'::text::ip4r;
+2023-07-26 15:59:27.126 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.126 UTC [2119501] STATEMENT:  select '0.0.8.0/20'::text::ip4r;
+2023-07-26 15:59:27.126 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.126 UTC [2119501] STATEMENT:  select '0.0.16.0/19'::text::ip4r;
+2023-07-26 15:59:27.126 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.126 UTC [2119501] STATEMENT:  select '0.0.32.0/18'::text::ip4r;
+2023-07-26 15:59:27.126 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.126 UTC [2119501] STATEMENT:  select '0.0.64.0/17'::text::ip4r;
+2023-07-26 15:59:27.127 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.127 UTC [2119501] STATEMENT:  select '0.0.128.0/16'::text::ip4r;
+2023-07-26 15:59:27.127 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.127 UTC [2119501] STATEMENT:  select '0.1.0.0/15'::text::ip4r;
+2023-07-26 15:59:27.127 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.127 UTC [2119501] STATEMENT:  select '0.2.0.0/14'::text::ip4r;
+2023-07-26 15:59:27.127 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.127 UTC [2119501] STATEMENT:  select '0.4.0.0/13'::text::ip4r;
+2023-07-26 15:59:27.127 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.127 UTC [2119501] STATEMENT:  select '0.8.0.0/12'::text::ip4r;
+2023-07-26 15:59:27.127 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.127 UTC [2119501] STATEMENT:  select '0.16.0.0/11'::text::ip4r;
+2023-07-26 15:59:27.127 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.127 UTC [2119501] STATEMENT:  select '0.32.0.0/10'::text::ip4r;
+2023-07-26 15:59:27.127 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.127 UTC [2119501] STATEMENT:  select '0.64.0.0/9'::text::ip4r;
+2023-07-26 15:59:27.127 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.127 UTC [2119501] STATEMENT:  select '0.128.0.0/8'::text::ip4r;
+2023-07-26 15:59:27.127 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.127 UTC [2119501] STATEMENT:  select '1.0.0.0/7'::text::ip4r;
+2023-07-26 15:59:27.127 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.127 UTC [2119501] STATEMENT:  select '2.0.0.0/6'::text::ip4r;
+2023-07-26 15:59:27.127 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.127 UTC [2119501] STATEMENT:  select '4.0.0.0/5'::text::ip4r;
+2023-07-26 15:59:27.127 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.127 UTC [2119501] STATEMENT:  select '8.0.0.0/4'::text::ip4r;
+2023-07-26 15:59:27.127 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.127 UTC [2119501] STATEMENT:  select '16.0.0.0/3'::text::ip4r;
+2023-07-26 15:59:27.127 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.127 UTC [2119501] STATEMENT:  select '32.0.0.0/2'::text::ip4r;
+2023-07-26 15:59:27.127 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.127 UTC [2119501] STATEMENT:  select '64.0.0.0/1'::text::ip4r;
+2023-07-26 15:59:27.127 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.127 UTC [2119501] STATEMENT:  select '128.0.0.0/0'::text::ip4r;
+2023-07-26 15:59:27.127 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.127 UTC [2119501] STATEMENT:  select '0.0.0.0/33'::text::ip4r;
+2023-07-26 15:59:27.127 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.127 UTC [2119501] STATEMENT:  select '0.0.0.0/3.0'::text::ip4r;
+2023-07-26 15:59:27.127 UTC [2119501] ERROR:  invalid IP4R value in text
+2023-07-26 15:59:27.127 UTC [2119501] STATEMENT:  select '0.0.0.0/+33'::text::ip4r;
+2023-07-26 15:59:27.127 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.127 UTC [2119501] STATEMENT:  select ''::text::ip6;
+2023-07-26 15:59:27.127 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.127 UTC [2119501] STATEMENT:  select '02001:0000:1234:0000:0000:C1C0:ABCD:0876'::text::ip6;
+2023-07-26 15:59:27.127 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.127 UTC [2119501] STATEMENT:  select '1.2.3.4:1111:2222:3333:4444::5555'::text::ip6;
+2023-07-26 15:59:27.127 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.127 UTC [2119501] STATEMENT:  select '1.2.3.4:1111:2222:3333::5555'::text::ip6;
+2023-07-26 15:59:27.127 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.127 UTC [2119501] STATEMENT:  select '1.2.3.4:1111:2222::5555'::text::ip6;
+2023-07-26 15:59:27.127 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.127 UTC [2119501] STATEMENT:  select '1.2.3.4:1111::5555'::text::ip6;
+2023-07-26 15:59:27.127 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.127 UTC [2119501] STATEMENT:  select '1.2.3.4::'::text::ip6;
+2023-07-26 15:59:27.127 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.127 UTC [2119501] STATEMENT:  select '1.2.3.4::5555'::text::ip6;
+2023-07-26 15:59:27.127 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.127 UTC [2119501] STATEMENT:  select '1111:'::text::ip6;
+2023-07-26 15:59:27.128 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.128 UTC [2119501] STATEMENT:  select '1111:2222:3333:4444::5555:'::text::ip6;
+2023-07-26 15:59:27.128 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.128 UTC [2119501] STATEMENT:  select '1111:2222:3333::5555:'::text::ip6;
+2023-07-26 15:59:27.128 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.128 UTC [2119501] STATEMENT:  select '1111:2222::5555:'::text::ip6;
+2023-07-26 15:59:27.128 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.128 UTC [2119501] STATEMENT:  select '1111::5555:'::text::ip6;
+2023-07-26 15:59:27.128 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.128 UTC [2119501] STATEMENT:  select '123'::text::ip6;
+2023-07-26 15:59:27.128 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.128 UTC [2119501] STATEMENT:  select '12345::6:7:8'::text::ip6;
+2023-07-26 15:59:27.128 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.128 UTC [2119501] STATEMENT:  select '127.0.0.1'::text::ip6;
+2023-07-26 15:59:27.128 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.128 UTC [2119501] STATEMENT:  select '1:2:3:4:5:6:7:8:9'::text::ip6;
+2023-07-26 15:59:27.128 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.128 UTC [2119501] STATEMENT:  select '1:2:3::4:5:6:7:8:9'::text::ip6;
+2023-07-26 15:59:27.128 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.128 UTC [2119501] STATEMENT:  select '1:2:3::4:5::7:8'::text::ip6;
+2023-07-26 15:59:27.128 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.128 UTC [2119501] STATEMENT:  select '1::1.2.256.4'::text::ip6;
+2023-07-26 15:59:27.128 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.128 UTC [2119501] STATEMENT:  select '1::1.2.3.256'::text::ip6;
+2023-07-26 15:59:27.128 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.128 UTC [2119501] STATEMENT:  select '1::1.2.3.300'::text::ip6;
+2023-07-26 15:59:27.128 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.128 UTC [2119501] STATEMENT:  select '1::1.2.3.900'::text::ip6;
+2023-07-26 15:59:27.128 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.128 UTC [2119501] STATEMENT:  select '1::1.2.300.4'::text::ip6;
+2023-07-26 15:59:27.128 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.128 UTC [2119501] STATEMENT:  select '1::1.2.900.4'::text::ip6;
+2023-07-26 15:59:27.128 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.128 UTC [2119501] STATEMENT:  select '1::1.256.3.4'::text::ip6;
+2023-07-26 15:59:27.128 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.128 UTC [2119501] STATEMENT:  select '1::1.300.3.4'::text::ip6;
+2023-07-26 15:59:27.128 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.128 UTC [2119501] STATEMENT:  select '1::1.900.3.4'::text::ip6;
+2023-07-26 15:59:27.128 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.128 UTC [2119501] STATEMENT:  select '1::256.2.3.4'::text::ip6;
+2023-07-26 15:59:27.128 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.128 UTC [2119501] STATEMENT:  select '1::260.2.3.4'::text::ip6;
+2023-07-26 15:59:27.128 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.128 UTC [2119501] STATEMENT:  select '1::2::3'::text::ip6;
+2023-07-26 15:59:27.128 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.128 UTC [2119501] STATEMENT:  select '1::300.2.3.4'::text::ip6;
+2023-07-26 15:59:27.128 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.128 UTC [2119501] STATEMENT:  select '1::300.300.300.300'::text::ip6;
+2023-07-26 15:59:27.128 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.128 UTC [2119501] STATEMENT:  select '1::3000.30.30.30'::text::ip6;
+2023-07-26 15:59:27.128 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.128 UTC [2119501] STATEMENT:  select '1::400.2.3.4'::text::ip6;
+2023-07-26 15:59:27.128 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.128 UTC [2119501] STATEMENT:  select '1::5:1.2.256.4'::text::ip6;
+2023-07-26 15:59:27.128 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.128 UTC [2119501] STATEMENT:  select '1::5:1.2.3.256'::text::ip6;
+2023-07-26 15:59:27.128 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.128 UTC [2119501] STATEMENT:  select '1::5:1.2.3.300'::text::ip6;
+2023-07-26 15:59:27.129 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.129 UTC [2119501] STATEMENT:  select '1::5:1.2.3.900'::text::ip6;
+2023-07-26 15:59:27.129 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.129 UTC [2119501] STATEMENT:  select '1::5:1.2.300.4'::text::ip6;
+2023-07-26 15:59:27.129 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.129 UTC [2119501] STATEMENT:  select '1::5:1.2.900.4'::text::ip6;
+2023-07-26 15:59:27.129 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.129 UTC [2119501] STATEMENT:  select '1::5:1.256.3.4'::text::ip6;
+2023-07-26 15:59:27.129 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.129 UTC [2119501] STATEMENT:  select '1::5:1.300.3.4'::text::ip6;
+2023-07-26 15:59:27.129 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.129 UTC [2119501] STATEMENT:  select '1::5:1.900.3.4'::text::ip6;
+2023-07-26 15:59:27.129 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.129 UTC [2119501] STATEMENT:  select '1::5:256.2.3.4'::text::ip6;
+2023-07-26 15:59:27.129 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.129 UTC [2119501] STATEMENT:  select '1::5:260.2.3.4'::text::ip6;
+2023-07-26 15:59:27.129 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.129 UTC [2119501] STATEMENT:  select '1::5:300.2.3.4'::text::ip6;
+2023-07-26 15:59:27.129 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.129 UTC [2119501] STATEMENT:  select '1::5:300.300.300.300'::text::ip6;
+2023-07-26 15:59:27.129 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.129 UTC [2119501] STATEMENT:  select '1::5:3000.30.30.30'::text::ip6;
+2023-07-26 15:59:27.129 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.129 UTC [2119501] STATEMENT:  select '1::5:400.2.3.4'::text::ip6;
+2023-07-26 15:59:27.129 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.129 UTC [2119501] STATEMENT:  select '1::5:900.2.3.4'::text::ip6;
+2023-07-26 15:59:27.129 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.129 UTC [2119501] STATEMENT:  select '1::900.2.3.4'::text::ip6;
+2023-07-26 15:59:27.129 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.129 UTC [2119501] STATEMENT:  select '1:::3:4:5'::text::ip6;
+2023-07-26 15:59:27.129 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.129 UTC [2119501] STATEMENT:  select '2001:0000:1234: 0000:0000:C1C0:ABCD:0876'::text::ip6;
+2023-07-26 15:59:27.129 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.129 UTC [2119501] STATEMENT:  select '2001:0000:1234:0000:00001:C1C0:ABCD:0876'::text::ip6;
+2023-07-26 15:59:27.129 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.129 UTC [2119501] STATEMENT:  select '2001:0000:1234:0000:0000:C1C0:ABCD:0876 0'::text::ip6;
+2023-07-26 15:59:27.129 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.129 UTC [2119501] STATEMENT:  select '2001::FFD3::57ab'::text::ip6;
+2023-07-26 15:59:27.129 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.129 UTC [2119501] STATEMENT:  select '2001:DB8:0:0:8:800:200C:417A:221'::text::ip6;
+2023-07-26 15:59:27.129 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.129 UTC [2119501] STATEMENT:  select '2001:db8:85a3::8a2e:37023:7334'::text::ip6;
+2023-07-26 15:59:27.129 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.129 UTC [2119501] STATEMENT:  select '2001:db8:85a3::8a2e:370k:7334'::text::ip6;
+2023-07-26 15:59:27.129 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.129 UTC [2119501] STATEMENT:  select '3ffe:0b00:0000:0001:0000:0000:000a'::text::ip6;
+2023-07-26 15:59:27.129 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.129 UTC [2119501] STATEMENT:  select '3ffe:b00::1::a'::text::ip6;
+2023-07-26 15:59:27.129 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.129 UTC [2119501] STATEMENT:  select ':'::text::ip6;
+2023-07-26 15:59:27.129 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.129 UTC [2119501] STATEMENT:  select ':1111:2222:3333:4444::5555'::text::ip6;
+2023-07-26 15:59:27.129 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.129 UTC [2119501] STATEMENT:  select ':1111:2222:3333::5555'::text::ip6;
+2023-07-26 15:59:27.129 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.129 UTC [2119501] STATEMENT:  select ':1111:2222::5555'::text::ip6;
+2023-07-26 15:59:27.129 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.129 UTC [2119501] STATEMENT:  select ':1111::5555'::text::ip6;
+2023-07-26 15:59:27.130 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.130 UTC [2119501] STATEMENT:  select '::1.2.256.4'::text::ip6;
+2023-07-26 15:59:27.130 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.130 UTC [2119501] STATEMENT:  select '::1.2.3.256'::text::ip6;
+2023-07-26 15:59:27.130 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.130 UTC [2119501] STATEMENT:  select '::1.2.3.300'::text::ip6;
+2023-07-26 15:59:27.130 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.130 UTC [2119501] STATEMENT:  select '::1.2.3.900'::text::ip6;
+2023-07-26 15:59:27.130 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.130 UTC [2119501] STATEMENT:  select '::1.2.300.4'::text::ip6;
+2023-07-26 15:59:27.130 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.130 UTC [2119501] STATEMENT:  select '::1.2.900.4'::text::ip6;
+2023-07-26 15:59:27.130 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.130 UTC [2119501] STATEMENT:  select '::1.256.3.4'::text::ip6;
+2023-07-26 15:59:27.130 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.130 UTC [2119501] STATEMENT:  select '::1.300.3.4'::text::ip6;
+2023-07-26 15:59:27.130 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.130 UTC [2119501] STATEMENT:  select '::1.900.3.4'::text::ip6;
+2023-07-26 15:59:27.130 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.130 UTC [2119501] STATEMENT:  select '::1111:2222:3333:4444:5555:6666::'::text::ip6;
+2023-07-26 15:59:27.130 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.130 UTC [2119501] STATEMENT:  select '::256.2.3.4'::text::ip6;
+2023-07-26 15:59:27.130 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.130 UTC [2119501] STATEMENT:  select '::260.2.3.4'::text::ip6;
+2023-07-26 15:59:27.130 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.130 UTC [2119501] STATEMENT:  select '::300.2.3.4'::text::ip6;
+2023-07-26 15:59:27.130 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.130 UTC [2119501] STATEMENT:  select '::300.300.300.300'::text::ip6;
+2023-07-26 15:59:27.130 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.130 UTC [2119501] STATEMENT:  select '::3000.30.30.30'::text::ip6;
+2023-07-26 15:59:27.130 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.130 UTC [2119501] STATEMENT:  select '::400.2.3.4'::text::ip6;
+2023-07-26 15:59:27.130 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.130 UTC [2119501] STATEMENT:  select '::5555:'::text::ip6;
+2023-07-26 15:59:27.130 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.130 UTC [2119501] STATEMENT:  select '::900.2.3.4'::text::ip6;
+2023-07-26 15:59:27.130 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.130 UTC [2119501] STATEMENT:  select ':::'::text::ip6;
+2023-07-26 15:59:27.130 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.130 UTC [2119501] STATEMENT:  select ':::5555'::text::ip6;
+2023-07-26 15:59:27.130 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.130 UTC [2119501] STATEMENT:  select '::ffff:2.3.4'::text::ip6;
+2023-07-26 15:59:27.130 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.130 UTC [2119501] STATEMENT:  select '::ffff:257.1.2.3'::text::ip6;
+2023-07-26 15:59:27.130 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.130 UTC [2119501] STATEMENT:  select 'FF01::101::2'::text::ip6;
+2023-07-26 15:59:27.130 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.130 UTC [2119501] STATEMENT:  select 'FF02:0000:0000:0000:0000:0000:0000:0000:0001'::text::ip6;
+2023-07-26 15:59:27.130 UTC [2119501] ERROR:  invalid IP6 value in text
+2023-07-26 15:59:27.130 UTC [2119501] STATEMENT:  select 'ldkfj'::text::ip6;
+2023-07-26 15:59:27.130 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.130 UTC [2119501] STATEMENT:  select '::-::-::'::text::ip6r;
+2023-07-26 15:59:27.130 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.130 UTC [2119501] STATEMENT:  select 'ffff:ffff:ffff:ffff:ffff:ffff:ffff-ffff'::text::ip6r;
+2023-07-26 15:59:27.130 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.130 UTC [2119501] STATEMENT:  select '::-ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff'::text::ip6r;
+2023-07-26 15:59:27.130 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.130 UTC [2119501] STATEMENT:  select 'ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff-::'::text::ip6r;
+2023-07-26 15:59:27.131 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.131 UTC [2119501] STATEMENT:  select 'ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff/128'::text::ip6r;
+2023-07-26 15:59:27.131 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.131 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/127'::text::ip6r;
+2023-07-26 15:59:27.131 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.131 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/120'::text::ip6r;
+2023-07-26 15:59:27.131 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.131 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/112'::text::ip6r;
+2023-07-26 15:59:27.131 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.131 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/96'::text::ip6r;
+2023-07-26 15:59:27.131 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.131 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/80'::text::ip6r;
+2023-07-26 15:59:27.131 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.131 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/64'::text::ip6r;
+2023-07-26 15:59:27.131 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.131 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/48'::text::ip6r;
+2023-07-26 15:59:27.131 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.131 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/32'::text::ip6r;
+2023-07-26 15:59:27.131 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.131 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/16'::text::ip6r;
+2023-07-26 15:59:27.131 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.131 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/8'::text::ip6r;
+2023-07-26 15:59:27.131 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.131 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/4'::text::ip6r;
+2023-07-26 15:59:27.131 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.131 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0001/0'::text::ip6r;
+2023-07-26 15:59:27.131 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.131 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0008/124'::text::ip6r;
+2023-07-26 15:59:27.131 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.131 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:0080/120'::text::ip6r;
+2023-07-26 15:59:27.131 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.131 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:0000:8000/112'::text::ip6r;
+2023-07-26 15:59:27.131 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.131 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:0000:8000:0000/96'::text::ip6r;
+2023-07-26 15:59:27.131 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.131 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:0000:8000:0000:0000/80'::text::ip6r;
+2023-07-26 15:59:27.131 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.131 UTC [2119501] STATEMENT:  select '0000:0000:0000:0000:8000:0000:0000:0000/64'::text::ip6r;
+2023-07-26 15:59:27.131 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.131 UTC [2119501] STATEMENT:  select '0000:0000:0000:8000:0000:0000:0000:0000/48'::text::ip6r;
+2023-07-26 15:59:27.131 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.131 UTC [2119501] STATEMENT:  select '0000:0000:8000:0000:0000:0000:0000:0000/32'::text::ip6r;
+2023-07-26 15:59:27.131 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.131 UTC [2119501] STATEMENT:  select '0000:8000:0000:0000:0000:0000:0000:0000/16'::text::ip6r;
+2023-07-26 15:59:27.131 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.131 UTC [2119501] STATEMENT:  select '0080:0000:0000:0000:0000:0000:0000:0000/8'::text::ip6r;
+2023-07-26 15:59:27.131 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.131 UTC [2119501] STATEMENT:  select '0800:0000:0000:0000:0000:0000:0000:0000/4'::text::ip6r;
+2023-07-26 15:59:27.131 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.131 UTC [2119501] STATEMENT:  select '8000:0000:0000:0000:0000:0000:0000:0000/0'::text::ip6r;
+2023-07-26 15:59:27.131 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.131 UTC [2119501] STATEMENT:  select '::/129'::text::ip6r;
+2023-07-26 15:59:27.131 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.131 UTC [2119501] STATEMENT:  select '::/255'::text::ip6r;
+2023-07-26 15:59:27.131 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.131 UTC [2119501] STATEMENT:  select '::/256'::text::ip6r;
+2023-07-26 15:59:27.131 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.131 UTC [2119501] STATEMENT:  select '::/+0'::text::ip6r;
+2023-07-26 15:59:27.132 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.132 UTC [2119501] STATEMENT:  select '::/0-0'::text::ip6r;
+2023-07-26 15:59:27.132 UTC [2119501] ERROR:  invalid IP6R value in text
+2023-07-26 15:59:27.132 UTC [2119501] STATEMENT:  select '::-::/0'::text::ip6r;
+2023-07-26 15:59:27.132 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.132 UTC [2119501] STATEMENT:  select '1.2.3'::text::ipaddress;
+2023-07-26 15:59:27.132 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.132 UTC [2119501] STATEMENT:  select '0'::text::ipaddress;
+2023-07-26 15:59:27.132 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.132 UTC [2119501] STATEMENT:  select ' 1.2.3.4'::text::ipaddress;
+2023-07-26 15:59:27.132 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.132 UTC [2119501] STATEMENT:  select '1.2.3.4 '::text::ipaddress;
+2023-07-26 15:59:27.132 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.132 UTC [2119501] STATEMENT:  select '0.0.0.256'::text::ipaddress;
+2023-07-26 15:59:27.132 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.132 UTC [2119501] STATEMENT:  select '0.0.256'::text::ipaddress;
+2023-07-26 15:59:27.132 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.132 UTC [2119501] STATEMENT:  select '0..255.0'::text::ipaddress;
+2023-07-26 15:59:27.132 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.132 UTC [2119501] STATEMENT:  select '+0.255.0.0'::text::ipaddress;
+2023-07-26 15:59:27.132 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.132 UTC [2119501] STATEMENT:  select '1.2.3.4-1.2.3.4'::text::ipaddress;
+2023-07-26 15:59:27.132 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.132 UTC [2119501] STATEMENT:  select ''::text::ipaddress;
+2023-07-26 15:59:27.132 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.132 UTC [2119501] STATEMENT:  select '02001:0000:1234:0000:0000:C1C0:ABCD:0876'::text::ipaddress;
+2023-07-26 15:59:27.132 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.132 UTC [2119501] STATEMENT:  select '1.2.3.4:1111:2222:3333:4444::5555'::text::ipaddress;
+2023-07-26 15:59:27.132 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.132 UTC [2119501] STATEMENT:  select '1.2.3.4:1111:2222:3333::5555'::text::ipaddress;
+2023-07-26 15:59:27.132 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.132 UTC [2119501] STATEMENT:  select '1.2.3.4:1111:2222::5555'::text::ipaddress;
+2023-07-26 15:59:27.132 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.132 UTC [2119501] STATEMENT:  select '1.2.3.4:1111::5555'::text::ipaddress;
+2023-07-26 15:59:27.132 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.132 UTC [2119501] STATEMENT:  select '1.2.3.4::'::text::ipaddress;
+2023-07-26 15:59:27.132 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.132 UTC [2119501] STATEMENT:  select '1.2.3.4::5555'::text::ipaddress;
+2023-07-26 15:59:27.132 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.132 UTC [2119501] STATEMENT:  select '1111:'::text::ipaddress;
+2023-07-26 15:59:27.132 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.132 UTC [2119501] STATEMENT:  select '1111:2222:3333:4444::5555:'::text::ipaddress;
+2023-07-26 15:59:27.132 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.132 UTC [2119501] STATEMENT:  select '1111:2222:3333::5555:'::text::ipaddress;
+2023-07-26 15:59:27.132 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.132 UTC [2119501] STATEMENT:  select '1111:2222::5555:'::text::ipaddress;
+2023-07-26 15:59:27.132 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.132 UTC [2119501] STATEMENT:  select '1111::5555:'::text::ipaddress;
+2023-07-26 15:59:27.132 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.132 UTC [2119501] STATEMENT:  select '123'::text::ipaddress;
+2023-07-26 15:59:27.132 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.132 UTC [2119501] STATEMENT:  select '12345::6:7:8'::text::ipaddress;
+2023-07-26 15:59:27.132 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.132 UTC [2119501] STATEMENT:  select '1:2:3:4:5:6:7:8:9'::text::ipaddress;
+2023-07-26 15:59:27.132 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.132 UTC [2119501] STATEMENT:  select '1:2:3::4:5:6:7:8:9'::text::ipaddress;
+2023-07-26 15:59:27.132 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.132 UTC [2119501] STATEMENT:  select '1:2:3::4:5::7:8'::text::ipaddress;
+2023-07-26 15:59:27.133 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.133 UTC [2119501] STATEMENT:  select '1::1.2.256.4'::text::ipaddress;
+2023-07-26 15:59:27.133 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.133 UTC [2119501] STATEMENT:  select '1::1.2.3.256'::text::ipaddress;
+2023-07-26 15:59:27.133 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.133 UTC [2119501] STATEMENT:  select '1::1.2.3.300'::text::ipaddress;
+2023-07-26 15:59:27.133 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.133 UTC [2119501] STATEMENT:  select '1::1.2.3.900'::text::ipaddress;
+2023-07-26 15:59:27.133 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.133 UTC [2119501] STATEMENT:  select '1::1.2.300.4'::text::ipaddress;
+2023-07-26 15:59:27.133 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.133 UTC [2119501] STATEMENT:  select '1::1.2.900.4'::text::ipaddress;
+2023-07-26 15:59:27.133 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.133 UTC [2119501] STATEMENT:  select '1::1.256.3.4'::text::ipaddress;
+2023-07-26 15:59:27.133 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.133 UTC [2119501] STATEMENT:  select '1::1.300.3.4'::text::ipaddress;
+2023-07-26 15:59:27.133 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.133 UTC [2119501] STATEMENT:  select '1::1.900.3.4'::text::ipaddress;
+2023-07-26 15:59:27.133 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.133 UTC [2119501] STATEMENT:  select '1::256.2.3.4'::text::ipaddress;
+2023-07-26 15:59:27.133 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.133 UTC [2119501] STATEMENT:  select '1::260.2.3.4'::text::ipaddress;
+2023-07-26 15:59:27.133 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.133 UTC [2119501] STATEMENT:  select '1::2::3'::text::ipaddress;
+2023-07-26 15:59:27.133 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.133 UTC [2119501] STATEMENT:  select '1::300.2.3.4'::text::ipaddress;
+2023-07-26 15:59:27.133 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.133 UTC [2119501] STATEMENT:  select '1::300.300.300.300'::text::ipaddress;
+2023-07-26 15:59:27.133 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.133 UTC [2119501] STATEMENT:  select '1::3000.30.30.30'::text::ipaddress;
+2023-07-26 15:59:27.133 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.133 UTC [2119501] STATEMENT:  select '1::400.2.3.4'::text::ipaddress;
+2023-07-26 15:59:27.133 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.133 UTC [2119501] STATEMENT:  select '1::5:1.2.256.4'::text::ipaddress;
+2023-07-26 15:59:27.133 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.133 UTC [2119501] STATEMENT:  select '1::5:1.2.3.256'::text::ipaddress;
+2023-07-26 15:59:27.133 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.133 UTC [2119501] STATEMENT:  select '1::5:1.2.3.300'::text::ipaddress;
+2023-07-26 15:59:27.133 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.133 UTC [2119501] STATEMENT:  select '1::5:1.2.3.900'::text::ipaddress;
+2023-07-26 15:59:27.133 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.133 UTC [2119501] STATEMENT:  select '1::5:1.2.300.4'::text::ipaddress;
+2023-07-26 15:59:27.133 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.133 UTC [2119501] STATEMENT:  select '1::5:1.2.900.4'::text::ipaddress;
+2023-07-26 15:59:27.133 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.133 UTC [2119501] STATEMENT:  select '1::5:1.256.3.4'::text::ipaddress;
+2023-07-26 15:59:27.133 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.133 UTC [2119501] STATEMENT:  select '1::5:1.300.3.4'::text::ipaddress;
+2023-07-26 15:59:27.133 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.133 UTC [2119501] STATEMENT:  select '1::5:1.900.3.4'::text::ipaddress;
+2023-07-26 15:59:27.133 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.133 UTC [2119501] STATEMENT:  select '1::5:256.2.3.4'::text::ipaddress;
+2023-07-26 15:59:27.133 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.133 UTC [2119501] STATEMENT:  select '1::5:260.2.3.4'::text::ipaddress;
+2023-07-26 15:59:27.133 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.133 UTC [2119501] STATEMENT:  select '1::5:300.2.3.4'::text::ipaddress;
+2023-07-26 15:59:27.133 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.133 UTC [2119501] STATEMENT:  select '1::5:300.300.300.300'::text::ipaddress;
+2023-07-26 15:59:27.134 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.134 UTC [2119501] STATEMENT:  select '1::5:3000.30.30.30'::text::ipaddress;
+2023-07-26 15:59:27.134 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.134 UTC [2119501] STATEMENT:  select '1::5:400.2.3.4'::text::ipaddress;
+2023-07-26 15:59:27.134 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.134 UTC [2119501] STATEMENT:  select '1::5:900.2.3.4'::text::ipaddress;
+2023-07-26 15:59:27.134 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.134 UTC [2119501] STATEMENT:  select '1::900.2.3.4'::text::ipaddress;
+2023-07-26 15:59:27.134 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.134 UTC [2119501] STATEMENT:  select '1:::3:4:5'::text::ipaddress;
+2023-07-26 15:59:27.134 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.134 UTC [2119501] STATEMENT:  select '2001:0000:1234: 0000:0000:C1C0:ABCD:0876'::text::ipaddress;
+2023-07-26 15:59:27.134 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.134 UTC [2119501] STATEMENT:  select '2001:0000:1234:0000:00001:C1C0:ABCD:0876'::text::ipaddress;
+2023-07-26 15:59:27.134 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.134 UTC [2119501] STATEMENT:  select '2001:0000:1234:0000:0000:C1C0:ABCD:0876 0'::text::ipaddress;
+2023-07-26 15:59:27.134 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.134 UTC [2119501] STATEMENT:  select '2001::FFD3::57ab'::text::ipaddress;
+2023-07-26 15:59:27.134 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.134 UTC [2119501] STATEMENT:  select '2001:DB8:0:0:8:800:200C:417A:221'::text::ipaddress;
+2023-07-26 15:59:27.134 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.134 UTC [2119501] STATEMENT:  select '2001:db8:85a3::8a2e:37023:7334'::text::ipaddress;
+2023-07-26 15:59:27.134 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.134 UTC [2119501] STATEMENT:  select '2001:db8:85a3::8a2e:370k:7334'::text::ipaddress;
+2023-07-26 15:59:27.134 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.134 UTC [2119501] STATEMENT:  select '3ffe:0b00:0000:0001:0000:0000:000a'::text::ipaddress;
+2023-07-26 15:59:27.134 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.134 UTC [2119501] STATEMENT:  select '3ffe:b00::1::a'::text::ipaddress;
+2023-07-26 15:59:27.134 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.134 UTC [2119501] STATEMENT:  select ':'::text::ipaddress;
+2023-07-26 15:59:27.134 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.134 UTC [2119501] STATEMENT:  select ':1111:2222:3333:4444::5555'::text::ipaddress;
+2023-07-26 15:59:27.134 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.134 UTC [2119501] STATEMENT:  select ':1111:2222:3333::5555'::text::ipaddress;
+2023-07-26 15:59:27.134 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.134 UTC [2119501] STATEMENT:  select ':1111:2222::5555'::text::ipaddress;
+2023-07-26 15:59:27.134 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.134 UTC [2119501] STATEMENT:  select ':1111::5555'::text::ipaddress;
+2023-07-26 15:59:27.134 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.134 UTC [2119501] STATEMENT:  select '::1.2.256.4'::text::ipaddress;
+2023-07-26 15:59:27.134 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.134 UTC [2119501] STATEMENT:  select '::1.2.3.256'::text::ipaddress;
+2023-07-26 15:59:27.134 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.134 UTC [2119501] STATEMENT:  select '::1.2.3.300'::text::ipaddress;
+2023-07-26 15:59:27.134 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.134 UTC [2119501] STATEMENT:  select '::1.2.3.900'::text::ipaddress;
+2023-07-26 15:59:27.134 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.134 UTC [2119501] STATEMENT:  select '::1.2.300.4'::text::ipaddress;
+2023-07-26 15:59:27.134 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.134 UTC [2119501] STATEMENT:  select '::1.2.900.4'::text::ipaddress;
+2023-07-26 15:59:27.134 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.134 UTC [2119501] STATEMENT:  select '::1.256.3.4'::text::ipaddress;
+2023-07-26 15:59:27.134 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.134 UTC [2119501] STATEMENT:  select '::1.300.3.4'::text::ipaddress;
+2023-07-26 15:59:27.134 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.134 UTC [2119501] STATEMENT:  select '::1.900.3.4'::text::ipaddress;
+2023-07-26 15:59:27.134 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.134 UTC [2119501] STATEMENT:  select '::1111:2222:3333:4444:5555:6666::'::text::ipaddress;
+2023-07-26 15:59:27.135 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.135 UTC [2119501] STATEMENT:  select '::256.2.3.4'::text::ipaddress;
+2023-07-26 15:59:27.135 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.135 UTC [2119501] STATEMENT:  select '::260.2.3.4'::text::ipaddress;
+2023-07-26 15:59:27.135 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.135 UTC [2119501] STATEMENT:  select '::300.2.3.4'::text::ipaddress;
+2023-07-26 15:59:27.135 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.135 UTC [2119501] STATEMENT:  select '::300.300.300.300'::text::ipaddress;
+2023-07-26 15:59:27.135 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.135 UTC [2119501] STATEMENT:  select '::3000.30.30.30'::text::ipaddress;
+2023-07-26 15:59:27.135 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.135 UTC [2119501] STATEMENT:  select '::400.2.3.4'::text::ipaddress;
+2023-07-26 15:59:27.135 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.135 UTC [2119501] STATEMENT:  select '::5555:'::text::ipaddress;
+2023-07-26 15:59:27.135 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.135 UTC [2119501] STATEMENT:  select '::900.2.3.4'::text::ipaddress;
+2023-07-26 15:59:27.135 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.135 UTC [2119501] STATEMENT:  select ':::'::text::ipaddress;
+2023-07-26 15:59:27.135 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.135 UTC [2119501] STATEMENT:  select ':::5555'::text::ipaddress;
+2023-07-26 15:59:27.135 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.135 UTC [2119501] STATEMENT:  select '::ffff:2.3.4'::text::ipaddress;
+2023-07-26 15:59:27.135 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.135 UTC [2119501] STATEMENT:  select '::ffff:257.1.2.3'::text::ipaddress;
+2023-07-26 15:59:27.135 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.135 UTC [2119501] STATEMENT:  select 'FF01::101::2'::text::ipaddress;
+2023-07-26 15:59:27.135 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.135 UTC [2119501] STATEMENT:  select 'FF02:0000:0000:0000:0000:0000:0000:0000:0001'::text::ipaddress;
+2023-07-26 15:59:27.135 UTC [2119501] ERROR:  invalid IP value in text
+2023-07-26 15:59:27.135 UTC [2119501] STATEMENT:  select 'ldkfj'::text::ipaddress;
+2023-07-26 15:59:27.138 UTC [2119501] ERROR:  ip address out of range
+2023-07-26 15:59:27.138 UTC [2119501] STATEMENT:  select (-4294967295::bigint)::ip4;
+2023-07-26 15:59:27.138 UTC [2119501] ERROR:  ip address out of range
+2023-07-26 15:59:27.138 UTC [2119501] STATEMENT:  select (4294967296::bigint)::ip4;
+2023-07-26 15:59:27.138 UTC [2119501] WARNING:  double converted to IP4 is not integral
+2023-07-26 15:59:27.138 UTC [2119501] WARNING:  double converted to IP4 is not integral
+2023-07-26 15:59:27.138 UTC [2119501] ERROR:  ip address out of range
+2023-07-26 15:59:27.138 UTC [2119501] STATEMENT:  select (-4294967295::float8)::ip4;
+2023-07-26 15:59:27.139 UTC [2119501] ERROR:  ip address out of range
+2023-07-26 15:59:27.139 UTC [2119501] STATEMENT:  select (4294967296::float8)::ip4;
+2023-07-26 15:59:27.139 UTC [2119501] ERROR:  ip address out of range
+2023-07-26 15:59:27.139 UTC [2119501] STATEMENT:  select (-3000000000::float8)::ip4;
+2023-07-26 15:59:27.139 UTC [2119501] ERROR:  ip address out of range
+2023-07-26 15:59:27.139 UTC [2119501] STATEMENT:  select 6000000000::float8::ip4;
+2023-07-26 15:59:27.139 UTC [2119501] ERROR:  ip address out of range
+2023-07-26 15:59:27.139 UTC [2119501] STATEMENT:  select 6e10::float8::ip4;
+2023-07-26 15:59:27.139 UTC [2119501] ERROR:  ip address out of range
+2023-07-26 15:59:27.139 UTC [2119501] STATEMENT:  select 6e30::float8::ip4;
+2023-07-26 15:59:27.139 UTC [2119501] ERROR:  invalid numeric value for conversion to IP6
+2023-07-26 15:59:27.139 UTC [2119501] STATEMENT:  select (-1::numeric)::ip6;
+2023-07-26 15:59:27.139 UTC [2119501] ERROR:  numeric value too large for conversion to IP6
+2023-07-26 15:59:27.139 UTC [2119501] STATEMENT:  select 340282366920938463463374607431768211456::numeric::ip6;
+2023-07-26 15:59:27.139 UTC [2119501] ERROR:  invalid numeric value for conversion to IP6
+2023-07-26 15:59:27.139 UTC [2119501] STATEMENT:  select 0.1::numeric::ip6;
+2023-07-26 15:59:27.139 UTC [2119501] ERROR:  invalid numeric value for conversion to IP6
+2023-07-26 15:59:27.139 UTC [2119501] STATEMENT:  select 0.00000000000000000001::numeric::ip6;
+2023-07-26 15:59:27.139 UTC [2119501] ERROR:  invalid numeric value for conversion to IP6
+2023-07-26 15:59:27.139 UTC [2119501] STATEMENT:  select (-0.00000000000000000001::numeric)::ip6;
+2023-07-26 15:59:27.141 UTC [2119501] ERROR:  invalid INET value for conversion to IP4
+2023-07-26 15:59:27.141 UTC [2119501] STATEMENT:  select '::'::inet::ip4;
+2023-07-26 15:59:27.141 UTC [2119501] ERROR:  invalid INET value for conversion to IP6
+2023-07-26 15:59:27.141 UTC [2119501] STATEMENT:  select '0.0.0.0'::inet::ip6;
+2023-07-26 15:59:27.141 UTC [2119501] ERROR:  invalid CIDR value for conversion to IP4R
+2023-07-26 15:59:27.141 UTC [2119501] STATEMENT:  select '::/128'::cidr::ip4r;
+2023-07-26 15:59:27.142 UTC [2119501] ERROR:  invalid CIDR value for conversion to IP6R
+2023-07-26 15:59:27.142 UTC [2119501] STATEMENT:  select '0.0.0.0/32'::cidr::ip6r;
+2023-07-26 15:59:27.142 UTC [2119501] ERROR:  invalid IPR value for conversion to IP4R
+2023-07-26 15:59:27.142 UTC [2119501] STATEMENT:  select '::/0'::iprange::ip4r;
+2023-07-26 15:59:27.142 UTC [2119501] ERROR:  invalid IPR value for conversion to IP6R
+2023-07-26 15:59:27.142 UTC [2119501] STATEMENT:  select '0.0.0.0/0'::iprange::ip6r;
+2023-07-26 15:59:27.142 UTC [2119501] ERROR:  invalid IP value in cast to IP4
+2023-07-26 15:59:27.142 UTC [2119501] STATEMENT:  select '::'::ipaddress::ip4;
+2023-07-26 15:59:27.142 UTC [2119501] ERROR:  invalid IP value in cast to IP4
+2023-07-26 15:59:27.142 UTC [2119501] STATEMENT:  select '0.0.0.0'::ipaddress::ip6;
+2023-07-26 15:59:27.143 UTC [2119501] ERROR:  invalid BIT value for conversion to IP4
+2023-07-26 15:59:27.143 UTC [2119501] STATEMENT:  select (x'0102030')::ip4;
+2023-07-26 15:59:27.143 UTC [2119501] ERROR:  invalid BIT value for conversion to IP4
+2023-07-26 15:59:27.143 UTC [2119501] STATEMENT:  select (x'0102030405')::ip4;
+2023-07-26 15:59:27.143 UTC [2119501] ERROR:  invalid BIT value for conversion to IP6
+2023-07-26 15:59:27.143 UTC [2119501] STATEMENT:  select (x'fff0fff1fff2fff3000000000000fff')::ip6;
+2023-07-26 15:59:27.143 UTC [2119501] ERROR:  invalid BIT value for conversion to IP6
+2023-07-26 15:59:27.143 UTC [2119501] STATEMENT:  select (x'fff0fff1fff2fff3000000000000fff4f')::ip6;
+2023-07-26 15:59:27.143 UTC [2119501] ERROR:  invalid BIT value for conversion to IPADDRESS
+2023-07-26 15:59:27.143 UTC [2119501] STATEMENT:  select (x'0102030')::ipaddress;
+2023-07-26 15:59:27.143 UTC [2119501] ERROR:  invalid BIT value for conversion to IPADDRESS
+2023-07-26 15:59:27.143 UTC [2119501] STATEMENT:  select (x'0102030405')::ipaddress;
+2023-07-26 15:59:27.143 UTC [2119501] ERROR:  invalid BIT value for conversion to IPADDRESS
+2023-07-26 15:59:27.143 UTC [2119501] STATEMENT:  select (x'fff0fff1fff2fff3000000000000fff')::ipaddress;
+2023-07-26 15:59:27.143 UTC [2119501] ERROR:  invalid BIT value for conversion to IPADDRESS
+2023-07-26 15:59:27.143 UTC [2119501] STATEMENT:  select (x'fff0fff1fff2fff3000000000000fff4f')::ipaddress;
+2023-07-26 15:59:27.144 UTC [2119501] ERROR:  invalid BYTEA value for conversion to IP4
+2023-07-26 15:59:27.144 UTC [2119501] STATEMENT:  select (decode('010203','hex'))::ip4;
+2023-07-26 15:59:27.144 UTC [2119501] ERROR:  invalid BYTEA value for conversion to IP4
+2023-07-26 15:59:27.144 UTC [2119501] STATEMENT:  select (decode('0102030405','hex'))::ip4;
+2023-07-26 15:59:27.144 UTC [2119501] ERROR:  invalid BYTEA value for conversion to IP4
+2023-07-26 15:59:27.144 UTC [2119501] STATEMENT:  select (decode('fff0fff1fff2fff3000000000000ff','hex'))::ip6;
+2023-07-26 15:59:27.144 UTC [2119501] ERROR:  invalid BYTEA value for conversion to IPADDRESS
+2023-07-26 15:59:27.144 UTC [2119501] STATEMENT:  select (decode('0102030405','hex'))::ipaddress;
+2023-07-26 15:59:27.144 UTC [2119501] ERROR:  invalid BYTEA value for conversion to IPADDRESS
+2023-07-26 15:59:27.144 UTC [2119501] STATEMENT:  select (decode('fff0fff1fff2fff3000000000000ff','hex'))::ipaddress;
+2023-07-26 15:59:27.144 UTC [2119501] ERROR:  invalid BYTEA value for conversion to IPADDRESS
+2023-07-26 15:59:27.144 UTC [2119501] STATEMENT:  select (decode('fff0fff1fff2fff3000000000000ffffff','hex'))::ipaddress;
+2023-07-26 15:59:27.145 UTC [2119501] ERROR:  prefix length out of range
+2023-07-26 15:59:27.145 UTC [2119501] STATEMENT:  select ip4_netmask(33);
+2023-07-26 15:59:27.145 UTC [2119501] ERROR:  prefix length out of range
+2023-07-26 15:59:27.145 UTC [2119501] STATEMENT:  select ip4_netmask(-1);
+2023-07-26 15:59:27.145 UTC [2119501] ERROR:  prefix length out of range
+2023-07-26 15:59:27.145 UTC [2119501] STATEMENT:  select ip6_netmask(129);
+2023-07-26 15:59:27.145 UTC [2119501] ERROR:  prefix length out of range
+2023-07-26 15:59:27.145 UTC [2119501] STATEMENT:  select ip6_netmask(-1);
+2023-07-26 15:59:27.147 UTC [2119501] ERROR:  prefix length out of range
+2023-07-26 15:59:27.147 UTC [2119501] STATEMENT:  select ip4_net_lower('255.255.255.255',33);
+2023-07-26 15:59:27.147 UTC [2119501] ERROR:  prefix length out of range
+2023-07-26 15:59:27.147 UTC [2119501] STATEMENT:  select ip4_net_lower('255.255.255.255',-1);
+2023-07-26 15:59:27.148 UTC [2119501] ERROR:  prefix length out of range
+2023-07-26 15:59:27.148 UTC [2119501] STATEMENT:  select ip4_net_upper('0.0.0.0',33);
+2023-07-26 15:59:27.148 UTC [2119501] ERROR:  prefix length out of range
+2023-07-26 15:59:27.148 UTC [2119501] STATEMENT:  select ip4_net_upper('0.0.0.0',-1);
+2023-07-26 15:59:27.148 UTC [2119501] ERROR:  prefix length out of range
+2023-07-26 15:59:27.148 UTC [2119501] STATEMENT:  select ip6_net_lower('ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff',129);
+2023-07-26 15:59:27.148 UTC [2119501] ERROR:  prefix length out of range
+2023-07-26 15:59:27.148 UTC [2119501] STATEMENT:  select ip6_net_lower('ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff',-1);
+2023-07-26 15:59:27.148 UTC [2119501] ERROR:  prefix length out of range
+2023-07-26 15:59:27.148 UTC [2119501] STATEMENT:  select ip6_net_upper('::',129);
+2023-07-26 15:59:27.148 UTC [2119501] ERROR:  prefix length out of range
+2023-07-26 15:59:27.148 UTC [2119501] STATEMENT:  select ip6_net_upper('::',-1);
+2023-07-26 15:59:27.149 UTC [2119501] ERROR:  prefix length out of range
+2023-07-26 15:59:27.149 UTC [2119501] STATEMENT:  select ipaddress_net_lower('255.255.255.255',33);
+2023-07-26 15:59:27.149 UTC [2119501] ERROR:  prefix length out of range
+2023-07-26 15:59:27.149 UTC [2119501] STATEMENT:  select ipaddress_net_lower('255.255.255.255',-1);
+2023-07-26 15:59:27.149 UTC [2119501] ERROR:  prefix length out of range
+2023-07-26 15:59:27.149 UTC [2119501] STATEMENT:  select ipaddress_net_upper('0.0.0.0',33);
+2023-07-26 15:59:27.149 UTC [2119501] ERROR:  prefix length out of range
+2023-07-26 15:59:27.149 UTC [2119501] STATEMENT:  select ipaddress_net_upper('0.0.0.0',-1);
+2023-07-26 15:59:27.149 UTC [2119501] ERROR:  prefix length out of range
+2023-07-26 15:59:27.149 UTC [2119501] STATEMENT:  select ipaddress_net_lower('ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff',129);
+2023-07-26 15:59:27.149 UTC [2119501] ERROR:  prefix length out of range
+2023-07-26 15:59:27.149 UTC [2119501] STATEMENT:  select ipaddress_net_lower('ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff',-1);
+2023-07-26 15:59:27.150 UTC [2119501] ERROR:  prefix length out of range
+2023-07-26 15:59:27.150 UTC [2119501] STATEMENT:  select ipaddress_net_upper('::',129);
+2023-07-26 15:59:27.150 UTC [2119501] ERROR:  prefix length out of range
+2023-07-26 15:59:27.150 UTC [2119501] STATEMENT:  select ipaddress_net_upper('::',-1);
+2023-07-26 15:59:27.153 UTC [2119501] ERROR:  prefix length out of range
+2023-07-26 15:59:27.153 UTC [2119501] STATEMENT:  select ip4 '255.255.255.255' / 33;
+2023-07-26 15:59:27.153 UTC [2119501] ERROR:  prefix length out of range
+2023-07-26 15:59:27.153 UTC [2119501] STATEMENT:  select ip4 '255.255.255.255' / -1;
+2023-07-26 15:59:27.153 UTC [2119501] ERROR:  invalid netmask
+2023-07-26 15:59:27.153 UTC [2119501] STATEMENT:  select ip4 '255.255.255.255' / ip4 '0.255.255.255';
+2023-07-26 15:59:27.153 UTC [2119501] ERROR:  invalid netmask
+2023-07-26 15:59:27.153 UTC [2119501] STATEMENT:  select ip4 '255.255.255.255' / ip4 '255.254.255.255';
+2023-07-26 15:59:27.153 UTC [2119501] ERROR:  prefix length out of range
+2023-07-26 15:59:27.153 UTC [2119501] STATEMENT:  select ip6 'ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff' / 129;
+2023-07-26 15:59:27.153 UTC [2119501] ERROR:  prefix length out of range
+2023-07-26 15:59:27.153 UTC [2119501] STATEMENT:  select ip6 'ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff' / -1;
+2023-07-26 15:59:27.154 UTC [2119501] ERROR:  invalid netmask
+2023-07-26 15:59:27.154 UTC [2119501] STATEMENT:  select ip6 'ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff' / ip6 'ffff:ffff:ffff:ffff:ffff::ffff';
+2023-07-26 15:59:27.154 UTC [2119501] ERROR:  invalid netmask
+2023-07-26 15:59:27.154 UTC [2119501] STATEMENT:  select ip6 'ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff' / ip6 'ffff:ffff:ffff::ffff';
+2023-07-26 15:59:27.154 UTC [2119501] ERROR:  prefix length out of range
+2023-07-26 15:59:27.154 UTC [2119501] STATEMENT:  select ipaddress '255.255.255.255' / 33;
+2023-07-26 15:59:27.154 UTC [2119501] ERROR:  prefix length out of range
+2023-07-26 15:59:27.154 UTC [2119501] STATEMENT:  select ipaddress '255.255.255.255' / -1;
+2023-07-26 15:59:27.154 UTC [2119501] ERROR:  prefix length out of range
+2023-07-26 15:59:27.154 UTC [2119501] STATEMENT:  select ipaddress 'ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff' / 129;
+2023-07-26 15:59:27.154 UTC [2119501] ERROR:  prefix length out of range
+2023-07-26 15:59:27.154 UTC [2119501] STATEMENT:  select ipaddress 'ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff' / -1;
+2023-07-26 15:59:27.154 UTC [2119501] ERROR:  invalid netmask
+2023-07-26 15:59:27.154 UTC [2119501] STATEMENT:  select ipaddress '255.255.255.255' / ipaddress '0.255.255.255';
+2023-07-26 15:59:27.154 UTC [2119501] ERROR:  invalid netmask
+2023-07-26 15:59:27.154 UTC [2119501] STATEMENT:  select ipaddress '255.255.255.255' / ipaddress '255.254.255.255';
+2023-07-26 15:59:27.155 UTC [2119501] ERROR:  invalid netmask
+2023-07-26 15:59:27.155 UTC [2119501] STATEMENT:  select ipaddress 'ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff' / ipaddress 'ffff:ffff:ffff:ffff:ffff::ffff';
+2023-07-26 15:59:27.155 UTC [2119501] ERROR:  invalid netmask
+2023-07-26 15:59:27.155 UTC [2119501] STATEMENT:  select ipaddress 'ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff' / ipaddress 'ffff:ffff:ffff::ffff';
+2023-07-26 15:59:27.155 UTC [2119501] ERROR:  invalid mixing of IP address families
+2023-07-26 15:59:27.155 UTC [2119501] STATEMENT:  select ipaddress 'ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff' / ipaddress '0.0.0.0';
+2023-07-26 15:59:27.155 UTC [2119501] ERROR:  invalid mixing of IP address families
+2023-07-26 15:59:27.155 UTC [2119501] STATEMENT:  select ipaddress '255.255.255.255' / ipaddress '::';
+2023-07-26 15:59:27.157 UTC [2119501] ERROR:  ip address out of range
+2023-07-26 15:59:27.157 UTC [2119501] STATEMENT:  select a + 1 from (select ip4 '255.255.255.255' as a) s;
+2023-07-26 15:59:27.157 UTC [2119501] ERROR:  ip address out of range
+2023-07-26 15:59:27.157 UTC [2119501] STATEMENT:  select a::ipaddress + 1 from (select ip4 '255.255.255.255' as a) s;
+2023-07-26 15:59:27.157 UTC [2119501] ERROR:  ip address out of range
+2023-07-26 15:59:27.157 UTC [2119501] STATEMENT:  select a - 1 from (select ip4 '0.0.0.0' as a) s;
+2023-07-26 15:59:27.157 UTC [2119501] ERROR:  ip address out of range
+2023-07-26 15:59:27.157 UTC [2119501] STATEMENT:  select a::ipaddress - 1 from (select ip4 '0.0.0.0' as a) s;
+2023-07-26 15:59:27.157 UTC [2119501] ERROR:  ip address out of range
+2023-07-26 15:59:27.157 UTC [2119501] STATEMENT:  select a + 1::bigint from (select ip4 '255.255.255.255' as a) s;
+2023-07-26 15:59:27.157 UTC [2119501] ERROR:  ip address out of range
+2023-07-26 15:59:27.157 UTC [2119501] STATEMENT:  select a::ipaddress + 1::bigint from (select ip4 '255.255.255.255' as a) s;
+2023-07-26 15:59:27.158 UTC [2119501] ERROR:  ip address out of range
+2023-07-26 15:59:27.158 UTC [2119501] STATEMENT:  select a + 4294967296::bigint from (select ip4 '0.0.0.0' as a) s;
+2023-07-26 15:59:27.158 UTC [2119501] ERROR:  ip address out of range
+2023-07-26 15:59:27.158 UTC [2119501] STATEMENT:  select a::ipaddress + 4294967296::bigint from (select ip4 '0.0.0.0' as a) s;
+2023-07-26 15:59:27.158 UTC [2119501] ERROR:  ip address out of range
+2023-07-26 15:59:27.158 UTC [2119501] STATEMENT:  select a - 1::bigint from (select ip4 '0.0.0.0' as a) s;
+2023-07-26 15:59:27.158 UTC [2119501] ERROR:  ip address out of range
+2023-07-26 15:59:27.158 UTC [2119501] STATEMENT:  select a::ipaddress - 1::bigint from (select ip4 '0.0.0.0' as a) s;
+2023-07-26 15:59:27.158 UTC [2119501] ERROR:  ip address out of range
+2023-07-26 15:59:27.158 UTC [2119501] STATEMENT:  select a - 4294967296::bigint from (select ip4 '255.255.255.255' as a) s;
+2023-07-26 15:59:27.158 UTC [2119501] ERROR:  ip address out of range
+2023-07-26 15:59:27.158 UTC [2119501] STATEMENT:  select a::ipaddress - 4294967296::bigint from (select ip4 '255.255.255.255' as a) s;
+2023-07-26 15:59:27.158 UTC [2119501] ERROR:  ip address out of range
+2023-07-26 15:59:27.158 UTC [2119501] STATEMENT:  select a + 1::numeric from (select ip4 '255.255.255.255' as a) s;
+2023-07-26 15:59:27.158 UTC [2119501] ERROR:  ip address out of range
+2023-07-26 15:59:27.158 UTC [2119501] STATEMENT:  select a::ipaddress + 1::numeric from (select ip4 '255.255.255.255' as a) s;
+2023-07-26 15:59:27.158 UTC [2119501] ERROR:  ip address out of range
+2023-07-26 15:59:27.158 UTC [2119501] STATEMENT:  select a + 4294967296::numeric from (select ip4 '0.0.0.0' as a) s;
+2023-07-26 15:59:27.158 UTC [2119501] ERROR:  ip address out of range
+2023-07-26 15:59:27.158 UTC [2119501] STATEMENT:  select a::ipaddress + 4294967296::numeric from (select ip4 '0.0.0.0' as a) s;
+2023-07-26 15:59:27.159 UTC [2119501] ERROR:  ip address out of range
+2023-07-26 15:59:27.159 UTC [2119501] STATEMENT:  select a - 1::numeric from (select ip4 '0.0.0.0' as a) s;
+2023-07-26 15:59:27.159 UTC [2119501] ERROR:  ip address out of range
+2023-07-26 15:59:27.159 UTC [2119501] STATEMENT:  select a::ipaddress - 1::numeric from (select ip4 '0.0.0.0' as a) s;
+2023-07-26 15:59:27.159 UTC [2119501] ERROR:  ip address out of range
+2023-07-26 15:59:27.159 UTC [2119501] STATEMENT:  select a - 4294967296::bigint from (select ip4 '255.255.255.255' as a) s;
+2023-07-26 15:59:27.159 UTC [2119501] ERROR:  ip address out of range
+2023-07-26 15:59:27.159 UTC [2119501] STATEMENT:  select a::ipaddress - 4294967296::bigint from (select ip4 '255.255.255.255' as a) s;
+2023-07-26 15:59:28.443 UTC [2119509] ERROR:  invalid preceding or following size in window function
+2023-07-26 15:59:28.443 UTC [2119509] DETAIL:  Offset value -33 is outside the range -32 to 4294967295
+2023-07-26 15:59:28.443 UTC [2119509] STATEMENT:  select a4,
+	       array_agg(a4) over (order by a4 range between -33 preceding and -33 following)
+	  from ipaddrs
+	 where a4 is not null;
+2023-07-26 15:59:28.444 UTC [2119509] ERROR:  invalid preceding or following size in window function
+2023-07-26 15:59:28.444 UTC [2119509] DETAIL:  Offset value -129 is outside the range -128 to 2^63-1
+2023-07-26 15:59:28.444 UTC [2119509] STATEMENT:  select a6,
+	       array_agg(a6) over (order by a6 range between -129 preceding and -129 following)
+	  from ipaddrs
+	 where a6 is not null;

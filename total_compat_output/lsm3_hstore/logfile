@@ -1,0 +1,75 @@
+2023-07-25 05:15:00.542 UTC [688567] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 05:15:00.542 UTC [688567] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 05:15:00.547 UTC [688567] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 05:15:00.554 UTC [688570] LOG:  database system was shut down at 2023-07-25 05:15:00 UTC
+2023-07-25 05:15:00.559 UTC [688567] LOG:  database system is ready to accept connections
+2023-07-25 05:15:00.732 UTC [688586] LOG:  lsm3_build lsm3_index
+2023-07-25 05:15:00.732 UTC [688586] STATEMENT:  create index lsm3_index on t using lsm3(k);
+2023-07-25 05:15:01.981 UTC [688587] LOG:  Lsm3: merge top index lsm3_index_top0 with size 2 blocks
+2023-07-25 05:15:01.982 UTC [688587] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:15:02.814 UTC [688587] LOG:  Lsm3: merge top index lsm3_index_top1 with size 2 blocks
+2023-07-25 05:15:02.814 UTC [688587] LOG:  Lsm3: truncate index lsm3_index_top1
+2023-07-25 05:15:03.824 UTC [688587] LOG:  Lsm3: merge top index lsm3_index_top0 with size 2 blocks
+2023-07-25 05:15:03.825 UTC [688587] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:15:04.835 UTC [688587] LOG:  Lsm3: merge top index lsm3_index_top1 with size 2 blocks
+2023-07-25 05:15:04.835 UTC [688587] LOG:  Lsm3: truncate index lsm3_index_top1
+2023-07-25 05:15:05.845 UTC [688587] LOG:  Lsm3: merge top index lsm3_index_top0 with size 2 blocks
+2023-07-25 05:15:05.846 UTC [688587] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:15:06.980 UTC [688587] LOG:  Lsm3: merge top index lsm3_index_top1 with size 181 blocks
+2023-07-25 05:15:07.106 UTC [688587] LOG:  Lsm3: truncate index lsm3_index_top1
+2023-07-25 05:15:07.193 UTC [688587] LOG:  Lsm3: merge top index lsm3_index_top0 with size 250 blocks
+2023-07-25 05:15:07.319 UTC [688587] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:15:07.386 UTC [688587] LOG:  Lsm3: merge top index lsm3_index_top1 with size 181 blocks
+2023-07-25 05:15:07.466 UTC [688586] LOG:  lsm3_build lsm3_index
+2023-07-25 05:15:07.466 UTC [688586] STATEMENT:  truncate table t;
+2023-07-25 05:15:08.467 UTC [688587] ERROR:  deadlock detected
+2023-07-25 05:15:08.467 UTC [688587] DETAIL:  Process 688587 waits for AccessShareLock on relation 17158 of database 16384; blocked by process 688586.
+	Process 688586 waits for AccessExclusiveLock on relation 17163 of database 16384; blocked by process 688587.
+	Process 688587: truncate
+	Process 688586: truncate table t;
+2023-07-25 05:15:08.467 UTC [688587] HINT:  See server log for query details.
+2023-07-25 05:15:08.471 UTC [688567] LOG:  background worker "lsm3-merger-17161" (PID 688587) exited with exit code 1
+2023-07-25 05:15:10.531 UTC [688586] LOG:  lsm3_build lsm3_index
+2023-07-25 05:15:10.531 UTC [688586] STATEMENT:  reindex table t;
+2023-07-25 05:15:11.743 UTC [688586] LOG:  lsm3_build lsm_k_idx
+2023-07-25 05:15:11.743 UTC [688586] STATEMENT:  create index concurrently on lsm using lsm3(k);
+2023-07-25 05:15:12.370 UTC [688605] ERROR:  array must have even number of elements
+2023-07-25 05:15:12.370 UTC [688605] STATEMENT:  select ARRAY['a','g','b','h','asd']::hstore;
+2023-07-25 05:15:12.370 UTC [688605] ERROR:  array must have two columns
+2023-07-25 05:15:12.370 UTC [688605] STATEMENT:  select ARRAY[['a','g','b'],['h','asd','i']]::hstore;
+2023-07-25 05:15:12.370 UTC [688605] ERROR:  wrong number of array subscripts
+2023-07-25 05:15:12.370 UTC [688605] STATEMENT:  select ARRAY[[['a','g'],['b','h'],['asd','i']]]::hstore;
+2023-07-25 05:15:12.370 UTC [688605] ERROR:  array must have even number of elements
+2023-07-25 05:15:12.370 UTC [688605] STATEMENT:  select hstore(ARRAY['a','g','b','h','asd']);
+2023-07-25 05:15:12.370 UTC [688605] ERROR:  array must have two columns
+2023-07-25 05:15:12.370 UTC [688605] STATEMENT:  select hstore(ARRAY[['a','g','b'],['h','asd','i']]);
+2023-07-25 05:15:12.370 UTC [688605] ERROR:  wrong number of array subscripts
+2023-07-25 05:15:12.370 UTC [688605] STATEMENT:  select hstore(ARRAY[[['a','g'],['b','h'],['asd','i']]]);
+2023-07-25 05:15:12.371 UTC [688605] ERROR:  arrays must have same bounds
+2023-07-25 05:15:12.371 UTC [688605] STATEMENT:  select hstore(ARRAY['a'], '{}'::text[]);
+2023-07-25 05:15:12.371 UTC [688605] ERROR:  arrays must have same bounds
+2023-07-25 05:15:12.371 UTC [688605] STATEMENT:  select hstore('{}'::text[], ARRAY['a']);
+2023-07-25 05:15:12.397 UTC [688605] ERROR:  domain hstestdom1 does not allow null values
+2023-07-25 05:15:12.397 UTC [688605] STATEMENT:  select populate_record(v, hstore('e', null)) from testhstore1 v;
+2023-07-25 05:15:12.399 UTC [688605] ERROR:  domain hstestdom1 does not allow null values
+2023-07-25 05:15:12.399 UTC [688605] STATEMENT:  select populate_record(v, hstore('b', 'foo') || hstore('e', null)) from testhstore1 v;
+2023-07-25 05:15:12.401 UTC [688605] ERROR:  domain hstestdom1 does not allow null values
+2023-07-25 05:15:12.401 UTC [688605] STATEMENT:  select populate_record(null::testhstore1, hstore('c', '3.45') || hstore('a', '123'));
+2023-07-25 05:15:12.402 UTC [688605] ERROR:  domain hstestdom1 does not allow null values
+2023-07-25 05:15:12.402 UTC [688605] STATEMENT:  select populate_record(null::testhstore1, '');
+2023-07-25 05:15:12.405 UTC [688605] ERROR:  domain hstestdom1 does not allow null values
+2023-07-25 05:15:12.405 UTC [688605] STATEMENT:  select v #= hstore('e', null) from testhstore1 v;
+2023-07-25 05:15:12.407 UTC [688605] ERROR:  domain hstestdom1 does not allow null values
+2023-07-25 05:15:12.407 UTC [688605] STATEMENT:  select null::testhstore1 #= (hstore('c', '3.45') || hstore('a', '123'));
+2023-07-25 05:15:12.408 UTC [688605] ERROR:  domain hstestdom1 does not allow null values
+2023-07-25 05:15:12.408 UTC [688605] STATEMENT:  select null::testhstore1 #= hstore '';
+2023-07-25 05:15:12.477 UTC [688605] ERROR:  value 0 out of bounds for option "siglen"
+2023-07-25 05:15:12.477 UTC [688605] DETAIL:  Valid values are between "1" and "2024".
+2023-07-25 05:15:12.477 UTC [688605] STATEMENT:  create index hidx on testhstore using gist(h gist_hstore_ops(siglen=0));
+2023-07-25 05:15:12.477 UTC [688605] ERROR:  value 2025 out of bounds for option "siglen"
+2023-07-25 05:15:12.477 UTC [688605] DETAIL:  Valid values are between "1" and "2024".
+2023-07-25 05:15:12.477 UTC [688605] STATEMENT:  create index hidx on testhstore using gist(h gist_hstore_ops(siglen=2025));
+2023-07-25 05:15:13.003 UTC [688605] ERROR:  hstore allows only one subscript
+2023-07-25 05:15:13.003 UTC [688605] STATEMENT:  select f2['d']['e'] from test_json_agg;
+2023-07-25 05:15:13.003 UTC [688605] ERROR:  hstore allows only one subscript
+2023-07-25 05:15:13.003 UTC [688605] STATEMENT:  select f2['d':'e'] from test_json_agg;

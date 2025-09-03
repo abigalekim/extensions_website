@@ -1,0 +1,745 @@
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/regress/expected/init-extension.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/results/init-extension.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/regress/expected/init-extension.out	2023-07-25 04:55:56.160786782 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/results/init-extension.out	2023-07-26 08:00:07.935013043 +0000
+@@ -1,3 +1,4 @@
+ SET client_min_messages = warning;
+ CREATE EXTENSION pg_repack;
++ERROR:  cache lookup failed for type 21
+ RESET client_min_messages;
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/regress/expected/repack-run.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/results/repack-run.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/regress/expected/repack-run.out	2023-07-25 04:55:56.160786782 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/results/repack-run.out	2023-07-26 08:00:08.507008096 +0000
+@@ -2,20 +2,8 @@
+ -- do repack
+ --
+ \! pg_repack --dbname=contrib_regression --table=tbl_cluster
+-INFO: repacking table "public.tbl_cluster"
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ \! pg_repack --dbname=contrib_regression --table=tbl_badindex
+-INFO: repacking table "public.tbl_badindex"
+-WARNING: skipping invalid index: CREATE UNIQUE INDEX idx_badindex_n ON tbl_badindex USING btree (n)
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ \! pg_repack --dbname=contrib_regression
+-INFO: repacking table "public.tbl_badindex"
+-WARNING: skipping invalid index: CREATE UNIQUE INDEX idx_badindex_n ON tbl_badindex USING btree (n)
+-INFO: repacking table "public.tbl_cluster"
+-INFO: repacking table "public.tbl_gistkey"
+-INFO: repacking table "public.tbl_idxopts"
+-INFO: repacking table "public.tbl_only_pkey"
+-INFO: repacking table "public.tbl_order"
+-INFO: repacking table "public.tbl_storage_plain"
+-INFO: repacking table "public.tbl_with_dropped_column"
+-INFO: repacking table "public.tbl_with_dropped_toast"
+-INFO: repacking table "public.tbl_with_mod_column_storage"
+-INFO: repacking table "public.tbl_with_toast"
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/regress/expected/error-on-invalid-idx_1.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/results/error-on-invalid-idx.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/regress/expected/error-on-invalid-idx_1.out	2023-07-25 04:55:56.160786782 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/results/error-on-invalid-idx.out	2023-07-26 08:00:08.551007716 +0000
+@@ -2,10 +2,8 @@
+ -- do repack
+ --
+ \! pg_repack --dbname=contrib_regression --table=tbl_cluster --error-on-invalid-index
+-INFO: repacking table "public.tbl_cluster"
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ \! pg_repack --dbname=contrib_regression --table=tbl_badindex --error-on-invalid-index
+-INFO: repacking table "public.tbl_badindex"
+-WARNING: Invalid index: CREATE UNIQUE INDEX idx_badindex_n ON public.tbl_badindex USING btree (n)
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ \! pg_repack --dbname=contrib_regression --error-on-invalid-index
+-INFO: repacking table "public.tbl_badindex"
+-WARNING: Invalid index: CREATE UNIQUE INDEX idx_badindex_n ON public.tbl_badindex USING btree (n)
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/regress/expected/after-schema.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/results/after-schema.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/regress/expected/after-schema.out	2023-07-25 04:55:56.160786782 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/results/after-schema.out	2023-07-26 08:00:08.599007300 +0000
+@@ -2,74 +2,16 @@
+ -- tables schema after running repack
+ --
+ \d tbl_cluster
+-            Table "public.tbl_cluster"
+- Column |            Type             | Modifiers 
+---------+-----------------------------+-----------
+- col1   | integer                     | not null
+- time   | timestamp without time zone | 
+- ,")    | text                        | not null
+-Indexes:
+-    "tbl_cluster_pkey" PRIMARY KEY, btree (","")", col1) WITH (fillfactor='75')
+-    ",") cluster" btree ("time", length(","")"), ","")" text_pattern_ops) WITH (fillfactor='75') CLUSTER
+-
++ERROR:  cache lookup failed for type 18
+ \d tbl_gistkey
+-  Table "public.tbl_gistkey"
+- Column |  Type   | Modifiers 
+---------+---------+-----------
+- id     | integer | not null
+- c      | circle  | 
+-Indexes:
+-    "tbl_gistkey_pkey" PRIMARY KEY, btree (id)
+-    "cidx_circle" gist (c) CLUSTER
+-
++ERROR:  cache lookup failed for type 18
+ \d tbl_only_ckey
+-           Table "public.tbl_only_ckey"
+- Column |            Type             | Modifiers 
+---------+-----------------------------+-----------
+- col1   | integer                     | 
+- col2   | timestamp without time zone | 
+- ,")    | text                        | 
+-Indexes:
+-    "cidx_only_ckey" btree (col2, ","")") CLUSTER
+-
++ERROR:  cache lookup failed for type 18
+ \d tbl_only_pkey
+- Table "public.tbl_only_pkey"
+- Column |  Type   | Modifiers 
+---------+---------+-----------
+- col1   | integer | not null
+- ,")    | text    | 
+-Indexes:
+-    "tbl_only_pkey_pkey" PRIMARY KEY, btree (col1)
+-
++ERROR:  cache lookup failed for type 18
+ \d tbl_with_dropped_column
+-Table "public.tbl_with_dropped_column"
+- Column |  Type   | Modifiers 
+---------+---------+-----------
+- c1     | text    | 
+- id     | integer | not null
+- c2     | text    | 
+- c3     | text    | 
+-Indexes:
+-    "tbl_with_dropped_column_pkey" PRIMARY KEY, btree (id) WITH (fillfactor='75') CLUSTER
+-    "idx_c1c2" btree (c1, c2) WITH (fillfactor='75')
+-    "idx_c2c1" btree (c2, c1)
+-
++ERROR:  cache lookup failed for type 18
+ \d tbl_with_dropped_toast
+-Table "public.tbl_with_dropped_toast"
+- Column |  Type   | Modifiers 
+---------+---------+-----------
+- i      | integer | not null
+- j      | integer | not null
+-Indexes:
+-    "tbl_with_dropped_toast_pkey" PRIMARY KEY, btree (i, j) CLUSTER
+-
++ERROR:  cache lookup failed for type 18
+ \d tbl_idxopts
+-  Table "public.tbl_idxopts"
+- Column |  Type   | Modifiers 
+---------+---------+-----------
+- i      | integer | not null
+- t      | text    | 
+-Indexes:
+-    "tbl_idxopts_pkey" PRIMARY KEY, btree (i)
+-    "idxopts_t" btree (t DESC NULLS LAST) WHERE t <> 'aaa'::text
+-
++ERROR:  cache lookup failed for type 18
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/regress/expected/repack-check.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/results/repack-check.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/regress/expected/repack-check.out	2023-07-25 04:55:56.160786782 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/results/repack-check.out	2023-07-26 08:00:09.439000042 +0000
+@@ -35,8 +35,8 @@
+ SELECT * FROM tbl_with_dropped_column ;
+  c1 | id | c2 | c3 
+ ----+----+----+----
+- c1 |  1 | c2 | 
+  c1 |  2 | c2 | 
++ c1 |  1 | c2 | 
+ (2 rows)
+ 
+ SELECT * FROM view_for_dropped_column ORDER BY 1, 2;
+@@ -65,8 +65,8 @@
+ SELECT * FROM view_for_dropped_column;
+  c1 | id | c2 | c3 
+ ----+----+----+----
+- c1 |  1 | c2 | 
+  c1 |  2 | c2 | 
++ c1 |  1 | c2 | 
+ (2 rows)
+ 
+ SELECT * FROM tbl_with_dropped_toast;
+@@ -87,12 +87,7 @@
+ FROM pg_class
+ WHERE relname = 'tbl_with_toast' OR relname = 'pg_toast_' || 'tbl_with_toast'::regclass::oid
+ ORDER BY 1;
+-     table      |                             reloptions                              
+-----------------+---------------------------------------------------------------------
+- tbl_with_toast | {autovacuum_vacuum_scale_factor=30,autovacuum_vacuum_threshold=300}
+- toast_table    | {autovacuum_vacuum_scale_factor=40,autovacuum_vacuum_threshold=400}
+-(2 rows)
+-
++ERROR:  cache lookup failed for type 18
+ SELECT pg_relation_size(reltoastrelid) = 0 as check_toast_rel_size FROM pg_class WHERE relname = 'tbl_with_mod_column_storage';
+  check_toast_rel_size 
+ ----------------------
+@@ -141,24 +136,22 @@
+ CREATE TABLE tbl_nn_puk (col1 int NOT NULL, col2 int NOT NULL);
+ CREATE UNIQUE INDEX tbl_nn_puk_pcol1_idx ON tbl_nn_puk(col1) WHERE col1 < 10;
+ \! pg_repack --dbname=contrib_regression --table=tbl_nn
+-WARNING: relation "public.tbl_nn" must have a primary key or not-null unique keys
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ -- => WARNING
+ \! pg_repack --dbname=contrib_regression --table=tbl_uk
+-WARNING: relation "public.tbl_uk" must have a primary key or not-null unique keys
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ -- => WARNING
+ \! pg_repack --dbname=contrib_regression --table=tbl_nn_uk
+-INFO: repacking table "public.tbl_nn_uk"
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ -- => OK
+ \! pg_repack --dbname=contrib_regression --table=tbl_pk_uk
+-INFO: repacking table "public.tbl_pk_uk"
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ -- => OK
+ \! pg_repack --dbname=contrib_regression --table=tbl_pk_uk --only-indexes
+-INFO: repacking indexes of "tbl_pk_uk"
+-INFO: repacking index "public.tbl_pk_uk_col2_col1_key"
+-INFO: repacking index "public.tbl_pk_uk_pkey"
++ERROR: pg_repack 1.4.8 is not installed in the database
+ -- => OK
+ \! pg_repack --dbname=contrib_regression --table=tbl_nn_puk
+-WARNING: relation "public.tbl_nn_puk" must have a primary key or not-null unique keys
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ -- => WARNING
+ --
+ -- Triggers handling
+@@ -169,54 +162,52 @@
+ CREATE TABLE trg1 (id integer PRIMARY KEY);
+ CREATE TRIGGER repack_trigger_1 AFTER UPDATE ON trg1 FOR EACH ROW EXECUTE PROCEDURE trgtest();
+ \! pg_repack --dbname=contrib_regression --table=trg1
+-INFO: repacking table "public.trg1"
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ CREATE TABLE trg2 (id integer PRIMARY KEY);
+ CREATE TRIGGER repack_trigger AFTER UPDATE ON trg2 FOR EACH ROW EXECUTE PROCEDURE trgtest();
+ \! pg_repack --dbname=contrib_regression --table=trg2
+-INFO: repacking table "public.trg2"
+-WARNING: the table "public.trg2" already has a trigger called "repack_trigger"
+-DETAIL: The trigger was probably installed during a previous attempt to run pg_repack on the table which was interrupted and for some reason failed to clean up the temporary objects.  Please drop the trigger or drop and recreate the pg_repack extension altogether to remove all the temporary objects left over.
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ CREATE TABLE trg3 (id integer PRIMARY KEY);
+ CREATE TRIGGER repack_trigger_1 BEFORE UPDATE ON trg3 FOR EACH ROW EXECUTE PROCEDURE trgtest();
+ \! pg_repack --dbname=contrib_regression --table=trg3
+-INFO: repacking table "public.trg3"
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ --
+ -- Table re-organization using specific column
+ --
+ -- reorganize table using cluster key. Sort in ascending order.
+ \! pg_repack --dbname=contrib_regression --table=tbl_order
+-INFO: repacking table "public.tbl_order"
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ SELECT ctid, c FROM tbl_order WHERE ctid <= '(0,10)';
+   ctid  | c  
+ --------+----
+- (0,1)  |  1
+- (0,2)  |  2
+- (0,3)  |  3
+- (0,4)  |  4
+- (0,5)  |  5
+- (0,6)  |  6
+- (0,7)  |  7
+- (0,8)  |  8
+- (0,9)  |  9
+- (0,10) | 10
++ (0,1)  | 51
++ (0,2)  | 52
++ (0,3)  | 53
++ (0,4)  | 54
++ (0,5)  | 55
++ (0,6)  | 56
++ (0,7)  | 57
++ (0,8)  | 58
++ (0,9)  | 59
++ (0,10) | 60
+ (10 rows)
+ 
+ -- reorganize table using specific column order. Sort in descending order.
+ \! pg_repack --dbname=contrib_regression --table=tbl_order -o "c DESC"
+-INFO: repacking table "public.tbl_order"
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ SELECT ctid, c FROM tbl_order WHERE ctid <= '(0,10)';
+-  ctid  |  c  
+---------+-----
+- (0,1)  | 100
+- (0,2)  |  99
+- (0,3)  |  98
+- (0,4)  |  97
+- (0,5)  |  96
+- (0,6)  |  95
+- (0,7)  |  94
+- (0,8)  |  93
+- (0,9)  |  92
+- (0,10) |  91
++  ctid  | c  
++--------+----
++ (0,1)  | 51
++ (0,2)  | 52
++ (0,3)  | 53
++ (0,4)  | 54
++ (0,5)  | 55
++ (0,6)  | 56
++ (0,7)  | 57
++ (0,8)  | 58
++ (0,9)  | 59
++ (0,10) | 60
+ (10 rows)
+ 
+ --
+@@ -224,7 +215,7 @@
+ --
+ \! pg_repack --dbname=contrib_regression --table=tbl_cluster --dry-run
+ INFO: Dry run enabled, not executing repack
+-INFO: repacking table "public.tbl_cluster"
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ -- Test --schema
+ --
+ CREATE SCHEMA test_schema1;
+@@ -235,14 +226,10 @@
+ CREATE TABLE test_schema2.tbl2 (id INTEGER PRIMARY KEY);
+ -- => OK
+ \! pg_repack --dbname=contrib_regression --schema=test_schema1
+-INFO: repacking table "test_schema1.tbl1"
+-INFO: repacking table "test_schema1.tbl2"
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ -- => OK
+ \! pg_repack --dbname=contrib_regression --schema=test_schema1 --schema=test_schema2
+-INFO: repacking table "test_schema1.tbl1"
+-INFO: repacking table "test_schema1.tbl2"
+-INFO: repacking table "test_schema2.tbl1"
+-INFO: repacking table "test_schema2.tbl2"
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ -- => ERROR
+ \! pg_repack --dbname=contrib_regression --schema=test_schema1 --table=tbl1
+ ERROR: cannot repack specific table(s) in schema, use schema.table notation instead
+@@ -253,7 +240,7 @@
+ -- don't kill backend
+ --
+ \! pg_repack --dbname=contrib_regression --table=tbl_cluster --no-kill-backend
+-INFO: repacking table "public.tbl_cluster"
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ --
+ -- exclude extension check
+ --
+@@ -270,10 +257,10 @@
+ ERROR: cannot specify --index (-i) and --exclude-extension (-C)
+ -- => OK
+ \! pg_repack --dbname=contrib_regression --schema=exclude_extension_schema --exclude-extension=dummy_extension
+-INFO: repacking table "exclude_extension_schema.tbl"
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ -- => OK
+ \! pg_repack --dbname=contrib_regression --schema=exclude_extension_schema --exclude-extension=dummy_extension --exclude-extension=dummy_extension
+-INFO: repacking table "exclude_extension_schema.tbl"
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ --
+ -- table inheritance check
+ --
+@@ -285,7 +272,7 @@
+ CREATE TABLE child_b_2(val integer primary key) INHERITS(parent_b);
+ -- => ERROR
+ \! pg_repack --dbname=contrib_regression --parent-table=dummy_table
+-ERROR: pg_repack failed with error: ERROR:  relation "dummy_table" does not exist
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ -- => ERROR
+ \! pg_repack --dbname=contrib_regression --parent-table=dummy_index --index=dummy_index
+ ERROR: cannot specify --index (-i) and --parent-table (-I)
+@@ -297,44 +284,18 @@
+ ERROR: cannot repack specific table(s) in all databases
+ -- => OK
+ \! pg_repack --dbname=contrib_regression --table=parent_a --parent-table=parent_b
+-INFO: repacking table "public.child_b_1"
+-INFO: repacking table "public.child_b_2"
+-INFO: repacking table "public.parent_a"
+-INFO: repacking table "public.parent_b"
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ -- => OK
+ \! pg_repack --dbname=contrib_regression --parent-table=parent_a --parent-table=parent_b
+-INFO: repacking table "public.child_a_1"
+-INFO: repacking table "public.child_a_2"
+-INFO: repacking table "public.child_b_1"
+-INFO: repacking table "public.child_b_2"
+-INFO: repacking table "public.parent_a"
+-INFO: repacking table "public.parent_b"
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ -- => OK
+ \! pg_repack --dbname=contrib_regression --table=parent_a --parent-table=parent_b --only-indexes
+-INFO: repacking indexes of "parent_a"
+-INFO: repacking index "public.parent_a_pkey"
+-INFO: repacking indexes of "public.child_b_1"
+-INFO: repacking index "public.child_b_1_pkey"
+-INFO: repacking indexes of "public.child_b_2"
+-INFO: repacking index "public.child_b_2_pkey"
+-INFO: repacking indexes of "public.parent_b"
+-INFO: repacking index "public.parent_b_pkey"
++ERROR: pg_repack 1.4.8 is not installed in the database
+ -- => OK
+ \! pg_repack --dbname=contrib_regression --parent-table=parent_a --parent-table=parent_b --only-indexes
+-INFO: repacking indexes of "public.child_a_1"
+-INFO: repacking index "public.child_a_1_pkey"
+-INFO: repacking indexes of "public.child_a_2"
+-INFO: repacking index "public.child_a_2_pkey"
+-INFO: repacking indexes of "public.parent_a"
+-INFO: repacking index "public.parent_a_pkey"
+-INFO: repacking indexes of "public.child_b_1"
+-INFO: repacking index "public.child_b_1_pkey"
+-INFO: repacking indexes of "public.child_b_2"
+-INFO: repacking index "public.child_b_2_pkey"
+-INFO: repacking indexes of "public.parent_b"
+-INFO: repacking index "public.parent_b_pkey"
++ERROR: pg_repack 1.4.8 is not installed in the database
+ --
+ -- Switch threshold
+ --
+ \! pg_repack --dbname=contrib_regression --table=tbl_cluster --switch-threshold 200
+-INFO: repacking table "public.tbl_cluster"
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/regress/expected/nosuper_1.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/results/nosuper.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/regress/expected/nosuper_1.out	2023-07-25 04:55:56.160786782 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/results/nosuper.out	2023-07-26 08:00:09.534999213 +0000
+@@ -7,11 +7,11 @@
+ CREATE ROLE nosuper WITH LOGIN;
+ -- => OK
+ \! pg_repack --dbname=contrib_regression --table=tbl_cluster --no-superuser-check
+-INFO: repacking table "public.tbl_cluster"
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ -- => ERROR
+ \! pg_repack --dbname=contrib_regression --table=tbl_cluster --username=nosuper
+ ERROR: pg_repack failed with error: You must be a superuser to use pg_repack
+ -- => ERROR
+ \! pg_repack --dbname=contrib_regression --table=tbl_cluster --username=nosuper --no-superuser-check
+-ERROR: pg_repack failed with error: ERROR:  permission denied for schema repack
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ DROP ROLE IF EXISTS nosuper;
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/regress/expected/tablespace.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/results/tablespace.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/regress/expected/tablespace.out	2023-07-25 04:55:56.160786782 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/results/tablespace.out	2023-07-26 08:00:10.098994344 +0000
+@@ -23,60 +23,43 @@
+     '_[0-9]+', '_OID', 'g')
+ FROM pg_index i join pg_class c ON c.oid = indexrelid
+ WHERE indrelid = 'testts1'::regclass ORDER BY relname;
+-                                              regexp_replace                                              
+-----------------------------------------------------------------------------------------------------------
+- CREATE INDEX index_OID ON repack.table_OID USING btree (id) TABLESPACE pg_default WHERE (id > 0)
+- CREATE UNIQUE INDEX index_OID ON repack.table_OID USING btree (id) TABLESPACE pg_default
+- CREATE INDEX index_OID ON repack.table_OID USING btree (id) WITH (fillfactor='80') TABLESPACE pg_default
+-(3 rows)
+-
++ERROR:  schema "repack" does not exist
++LINE 2:     repack.repack_indexdef(indexrelid, 'testts1'::regclass, ...
++            ^
+ SELECT regexp_replace(
+     repack.repack_indexdef(indexrelid, 'testts1'::regclass, 'foo', false),
+     '_[0-9]+', '_OID', 'g')
+ FROM pg_index i join pg_class c ON c.oid = indexrelid
+ WHERE indrelid = 'testts1'::regclass ORDER BY relname;
+-                                          regexp_replace                                           
+----------------------------------------------------------------------------------------------------
+- CREATE INDEX index_OID ON repack.table_OID USING btree (id) TABLESPACE foo WHERE (id > 0)
+- CREATE UNIQUE INDEX index_OID ON repack.table_OID USING btree (id) TABLESPACE foo
+- CREATE INDEX index_OID ON repack.table_OID USING btree (id) WITH (fillfactor='80') TABLESPACE foo
+-(3 rows)
+-
++ERROR:  schema "repack" does not exist
++LINE 2:     repack.repack_indexdef(indexrelid, 'testts1'::regclass, ...
++            ^
+ SELECT regexp_replace(
+     repack.repack_indexdef(indexrelid, 'testts1'::regclass, NULL, true),
+     '_[0-9]+', '_OID', 'g')
+ FROM pg_index i join pg_class c ON c.oid = indexrelid
+ WHERE indrelid = 'testts1'::regclass ORDER BY relname;
+-                                                regexp_replace                                                
+---------------------------------------------------------------------------------------------------------------
+- CREATE INDEX CONCURRENTLY index_OID ON testts1 USING btree (id) TABLESPACE pg_default WHERE (id > 0)
+- CREATE UNIQUE INDEX CONCURRENTLY index_OID ON testts1 USING btree (id) TABLESPACE pg_default
+- CREATE INDEX CONCURRENTLY index_OID ON testts1 USING btree (id) WITH (fillfactor='80') TABLESPACE pg_default
+-(3 rows)
+-
++ERROR:  schema "repack" does not exist
++LINE 2:     repack.repack_indexdef(indexrelid, 'testts1'::regclass, ...
++            ^
+ SELECT regexp_replace(
+     repack.repack_indexdef(indexrelid, 'testts1'::regclass, 'foo', true),
+     '_[0-9]+', '_OID', 'g')
+ FROM pg_index i join pg_class c ON c.oid = indexrelid
+ WHERE indrelid = 'testts1'::regclass ORDER BY relname;
+-                                            regexp_replace                                             
+--------------------------------------------------------------------------------------------------------
+- CREATE INDEX CONCURRENTLY index_OID ON testts1 USING btree (id) TABLESPACE foo WHERE (id > 0)
+- CREATE UNIQUE INDEX CONCURRENTLY index_OID ON testts1 USING btree (id) TABLESPACE foo
+- CREATE INDEX CONCURRENTLY index_OID ON testts1 USING btree (id) WITH (fillfactor='80') TABLESPACE foo
+-(3 rows)
+-
++ERROR:  schema "repack" does not exist
++LINE 2:     repack.repack_indexdef(indexrelid, 'testts1'::regclass, ...
++            ^
+ -- can move the tablespace from default
+ \! pg_repack --dbname=contrib_regression --no-order --table=testts1 --tablespace testts
+-INFO: repacking table "public.testts1"
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ SELECT relname, spcname
+ FROM pg_class JOIN pg_tablespace ts ON ts.oid = reltablespace
+ WHERE relname ~ '^testts1'
+ ORDER BY relname;
+  relname | spcname 
+ ---------+---------
+- testts1 | testts
+-(1 row)
++(0 rows)
+ 
+ SELECT * from testts1 order by id;
+  id | data 
+@@ -88,19 +71,18 @@
+ 
+ -- tablespace stays where it is
+ \! pg_repack --dbname=contrib_regression --no-order --table=testts1
+-INFO: repacking table "public.testts1"
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ SELECT relname, spcname
+ FROM pg_class JOIN pg_tablespace ts ON ts.oid = reltablespace
+ WHERE relname ~ '^testts1'
+ ORDER BY relname;
+  relname | spcname 
+ ---------+---------
+- testts1 | testts
+-(1 row)
++(0 rows)
+ 
+ -- can move the ts back to default
+ \! pg_repack --dbname=contrib_regression --no-order --table=testts1 -s pg_default
+-INFO: repacking table "public.testts1"
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ SELECT relname, spcname
+ FROM pg_class JOIN pg_tablespace ts ON ts.oid = reltablespace
+ WHERE relname ~ '^testts1'
+@@ -111,18 +93,14 @@
+ 
+ -- can move the table together with the indexes
+ \! pg_repack --dbname=contrib_regression --no-order --table=testts1 --tablespace testts --moveidx
+-INFO: repacking table "public.testts1"
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ SELECT relname, spcname
+ FROM pg_class JOIN pg_tablespace ts ON ts.oid = reltablespace
+ WHERE relname ~ '^testts1'
+ ORDER BY relname;
+-       relname       | spcname 
+----------------------+---------
+- testts1             | testts
+- testts1_partial_idx | testts
+- testts1_pkey        | testts
+- testts1_with_idx    | testts
+-(4 rows)
++ relname | spcname 
++---------+---------
++(0 rows)
+ 
+ -- can't specify --moveidx without --tablespace
+ \! pg_repack --dbname=contrib_regression --no-order --table=testts1 --moveidx
+@@ -131,47 +109,32 @@
+ ERROR: cannot specify --moveidx (-S) without --tablespace (-s)
+ -- not broken with order
+ \! pg_repack --dbname=contrib_regression -o id --table=testts1 --tablespace pg_default --moveidx
+-INFO: repacking table "public.testts1"
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ --move all indexes of the table to a tablespace
+ \! pg_repack --dbname=contrib_regression --table=testts1 --only-indexes --tablespace=testts
+-INFO: repacking indexes of "testts1"
+-INFO: repacking index "public.testts1_partial_idx"
+-INFO: repacking index "public.testts1_pkey"
+-INFO: repacking index "public.testts1_with_idx"
++ERROR: pg_repack 1.4.8 is not installed in the database
+ SELECT relname, spcname
+ FROM pg_class JOIN pg_tablespace ts ON ts.oid = reltablespace
+ WHERE relname ~ '^testts1'
+ ORDER BY relname;
+-       relname       | spcname 
+----------------------+---------
+- testts1_partial_idx | testts
+- testts1_pkey        | testts
+- testts1_with_idx    | testts
+-(3 rows)
++ relname | spcname 
++---------+---------
++(0 rows)
+ 
+ --all indexes of tablespace remain in same tablespace
+ \! pg_repack --dbname=contrib_regression --table=testts1 --only-indexes
+-INFO: repacking indexes of "testts1"
+-INFO: repacking index "public.testts1_partial_idx"
+-INFO: repacking index "public.testts1_pkey"
+-INFO: repacking index "public.testts1_with_idx"
++ERROR: pg_repack 1.4.8 is not installed in the database
+ SELECT relname, spcname
+ FROM pg_class JOIN pg_tablespace ts ON ts.oid = reltablespace
+ WHERE relname ~ '^testts1'
+ ORDER BY relname;
+-       relname       | spcname 
+----------------------+---------
+- testts1_partial_idx | testts
+- testts1_pkey        | testts
+- testts1_with_idx    | testts
+-(3 rows)
++ relname | spcname 
++---------+---------
++(0 rows)
+ 
+ --move all indexes of the table to pg_default
+ \! pg_repack --dbname=contrib_regression --table=testts1 --only-indexes --tablespace=pg_default
+-INFO: repacking indexes of "testts1"
+-INFO: repacking index "public.testts1_partial_idx"
+-INFO: repacking index "public.testts1_pkey"
+-INFO: repacking index "public.testts1_with_idx"
++ERROR: pg_repack 1.4.8 is not installed in the database
+ SELECT relname, spcname
+ FROM pg_class JOIN pg_tablespace ts ON ts.oid = reltablespace
+ WHERE relname ~ '^testts1'
+@@ -182,31 +145,29 @@
+ 
+ --move one index to a tablespace
+ \! pg_repack --dbname=contrib_regression --index=testts1_pkey --tablespace=testts
+-INFO: repacking index "public.testts1_pkey"
++ERROR: pg_repack 1.4.8 is not installed in the database
+ SELECT relname, spcname
+ FROM pg_class JOIN pg_tablespace ts ON ts.oid = reltablespace
+ WHERE relname ~ '^testts1'
+ ORDER BY relname;
+-   relname    | spcname 
+---------------+---------
+- testts1_pkey | testts
+-(1 row)
++ relname | spcname 
++---------+---------
++(0 rows)
+ 
+ --index tablespace stays as is
+ \! pg_repack --dbname=contrib_regression --index=testts1_pkey
+-INFO: repacking index "public.testts1_pkey"
++ERROR: pg_repack 1.4.8 is not installed in the database
+ SELECT relname, spcname
+ FROM pg_class JOIN pg_tablespace ts ON ts.oid = reltablespace
+ WHERE relname ~ '^testts1'
+ ORDER BY relname;
+-   relname    | spcname 
+---------------+---------
+- testts1_pkey | testts
+-(1 row)
++ relname | spcname 
++---------+---------
++(0 rows)
+ 
+ --move index to pg_default
+ \! pg_repack --dbname=contrib_regression --index=testts1_pkey --tablespace=pg_default
+-INFO: repacking index "public.testts1_pkey"
++ERROR: pg_repack 1.4.8 is not installed in the database
+ SELECT relname, spcname
+ FROM pg_class JOIN pg_tablespace ts ON ts.oid = reltablespace
+ WHERE relname ~ '^testts1'
+@@ -217,17 +178,14 @@
+ 
+ --using multiple --index option
+ \! pg_repack --dbname=contrib_regression --index=testts1_pkey --index=testts1_with_idx --tablespace=testts
+-INFO: repacking index "public.testts1_pkey"
+-INFO: repacking index "public.testts1_with_idx"
++ERROR: pg_repack 1.4.8 is not installed in the database
+ SELECT relname, spcname
+ FROM pg_class JOIN pg_tablespace ts ON ts.oid = reltablespace
+ WHERE relname ~ '^testts1'
+ ORDER BY relname;
+-     relname      | spcname 
+-------------------+---------
+- testts1_pkey     | testts
+- testts1_with_idx | testts
+-(2 rows)
++ relname | spcname 
++---------+---------
++(0 rows)
+ 
+ --using --indexes-only and --index option together
+ \! pg_repack --dbname=contrib_regression --table=testts1 --only-indexes --index=testts1_pkey
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/regress/expected/get_order_by.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/results/get_order_by.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/regress/expected/get_order_by.out	2023-07-25 04:55:56.160786782 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/results/get_order_by.out	2023-07-26 08:00:10.426991517 +0000
+@@ -4,59 +4,53 @@
+ CREATE TABLE issue3_1 (col1 int NOT NULL, col2 text NOT NULL);
+ CREATE UNIQUE INDEX issue3_1_idx ON issue3_1 (col1, col2 DESC);
+ SELECT repack.get_order_by('issue3_1_idx'::regclass::oid, 'issue3_1'::regclass::oid);
+-  get_order_by   
+------------------
+- col1, col2 DESC
+-(1 row)
+-
++ERROR:  schema "repack" does not exist
++LINE 1: SELECT repack.get_order_by('issue3_1_idx'::regclass::oid, 'i...
++               ^
+ \! pg_repack --dbname=contrib_regression --table=issue3_1
+-INFO: repacking table "public.issue3_1"
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ CREATE TABLE issue3_2 (col1 int NOT NULL, col2 text NOT NULL);
+ CREATE UNIQUE INDEX issue3_2_idx ON issue3_2 (col1 DESC, col2 text_pattern_ops);
+ SELECT repack.get_order_by('issue3_2_idx'::regclass::oid, 'issue3_2'::regclass::oid);
+-       get_order_by        
+----------------------------
+- col1 DESC, col2 USING ~<~
+-(1 row)
+-
++ERROR:  schema "repack" does not exist
++LINE 1: SELECT repack.get_order_by('issue3_2_idx'::regclass::oid, 'i...
++               ^
+ \! pg_repack --dbname=contrib_regression --table=issue3_2
+-INFO: repacking table "public.issue3_2"
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ CREATE TABLE issue3_3 (col1 int NOT NULL, col2 text NOT NULL);
+ CREATE UNIQUE INDEX issue3_3_idx ON issue3_3 (col1 DESC, col2 DESC);
+ SELECT repack.get_order_by('issue3_3_idx'::regclass::oid, 'issue3_3'::regclass::oid);
+-     get_order_by     
+-----------------------
+- col1 DESC, col2 DESC
+-(1 row)
+-
++ERROR:  schema "repack" does not exist
++LINE 1: SELECT repack.get_order_by('issue3_3_idx'::regclass::oid, 'i...
++               ^
+ \! pg_repack --dbname=contrib_regression --table=issue3_3
+-INFO: repacking table "public.issue3_3"
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ CREATE TABLE issue3_4 (col1 int NOT NULL, col2 text NOT NULL);
+ CREATE UNIQUE INDEX issue3_4_idx ON issue3_4 (col1 NULLS FIRST, col2 text_pattern_ops DESC NULLS LAST);
+ SELECT repack.get_order_by('issue3_4_idx'::regclass::oid, 'issue3_4'::regclass::oid);
+-                   get_order_by                   
+---------------------------------------------------
+- col1 NULLS FIRST, col2 DESC USING ~<~ NULLS LAST
+-(1 row)
+-
++ERROR:  schema "repack" does not exist
++LINE 1: SELECT repack.get_order_by('issue3_4_idx'::regclass::oid, 'i...
++               ^
+ \! pg_repack --dbname=contrib_regression --table=issue3_4
+-INFO: repacking table "public.issue3_4"
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ CREATE TABLE issue3_5 (col1 int NOT NULL, col2 text NOT NULL);
+ CREATE UNIQUE INDEX issue3_5_idx ON issue3_5 (col1 DESC NULLS FIRST, col2 COLLATE "POSIX" DESC);
+ SELECT repack.get_order_by('issue3_5_idx'::regclass::oid, 'issue3_5'::regclass::oid);
+-             get_order_by             
+---------------------------------------
+- col1 DESC, col2 COLLATE "POSIX" DESC
+-(1 row)
+-
++ERROR:  schema "repack" does not exist
++LINE 1: SELECT repack.get_order_by('issue3_5_idx'::regclass::oid, 'i...
++               ^
+ \! pg_repack --dbname=contrib_regression --table=issue3_5
+-INFO: repacking table "public.issue3_5"
++ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+ --
+ -- pg_repack issue #321
+ --
+ CREATE TABLE issue321 (col1 int NOT NULL, col2 text NOT NULL);
+ CREATE UNIQUE INDEX issue321_idx ON issue321 (col1);
+ SELECT repack.get_order_by('issue321_idx'::regclass::oid, 1);
+-ERROR:  table name not found for OID 1
++ERROR:  schema "repack" does not exist
++LINE 1: SELECT repack.get_order_by('issue321_idx'::regclass::oid, 1)...
++               ^
+ SELECT repack.get_order_by(1, 1);
+-ERROR:  cache lookup failed for index 1
++ERROR:  schema "repack" does not exist
++LINE 1: SELECT repack.get_order_by(1, 1);
++               ^

@@ -1,0 +1,15 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/amcheck/expected/check_btree.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/amcheck/results/check_btree.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/amcheck/expected/check_btree.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/amcheck/results/check_btree.out	2023-07-25 07:06:01.785878307 +0000
+@@ -97,10 +97,7 @@
+ SELECT * FROM pg_locks
+ WHERE relation = ANY(ARRAY['bttest_a', 'bttest_a_idx', 'bttest_b', 'bttest_b_idx']::regclass[])
+     AND pid = pg_backend_pid();
+- locktype | database | relation | page | tuple | virtualxid | transactionid | classid | objid | objsubid | virtualtransaction | pid | mode | granted | fastpath | waitstart 
+-----------+----------+----------+------+-------+------------+---------------+---------+-------+----------+--------------------+-----+------+---------+----------+-----------
+-(0 rows)
+-
++ERROR:  cache lookup failed for type 2205
+ COMMIT;
+ -- Deduplication
+ TRUNCATE bttest_a;

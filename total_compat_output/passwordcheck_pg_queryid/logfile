@@ -1,0 +1,15 @@
+2023-07-25 13:31:28.950 UTC [755105] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 13:31:28.951 UTC [755105] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 13:31:28.959 UTC [755105] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 13:31:28.968 UTC [755108] LOG:  database system was shut down at 2023-07-25 13:31:28 UTC
+2023-07-25 13:31:28.973 UTC [755105] LOG:  database system is ready to accept connections
+2023-07-25 13:31:29.199 UTC [755127] ERROR:  password is too short
+2023-07-25 13:31:29.199 UTC [755127] STATEMENT:  ALTER USER regress_user1 PASSWORD 'tooshrt';
+2023-07-25 13:31:29.200 UTC [755127] ERROR:  password must not contain user name
+2023-07-25 13:31:29.200 UTC [755127] STATEMENT:  ALTER USER regress_user1 PASSWORD 'xyzregress_user1';
+2023-07-25 13:31:29.200 UTC [755127] ERROR:  password must contain both letters and nonletters
+2023-07-25 13:31:29.200 UTC [755127] STATEMENT:  ALTER USER regress_user1 PASSWORD 'alessnicelongpassword';
+2023-07-25 13:31:29.203 UTC [755127] ERROR:  password must not equal user name
+2023-07-25 13:31:29.203 UTC [755127] STATEMENT:  ALTER USER regress_user1 PASSWORD 'md5e589150ae7d28f93333afae92b36ef48';
+2023-07-25 13:31:29.215 UTC [755106] LOG:  checkpoint starting: immediate force wait
+2023-07-25 13:31:29.261 UTC [755106] LOG:  checkpoint complete: wrote 13 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.009 s, sync=0.014 s, total=0.047 s; sync files=11, longest=0.005 s, average=0.002 s; distance=4099 kB, estimate=4099 kB

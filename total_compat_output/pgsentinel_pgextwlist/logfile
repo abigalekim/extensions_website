@@ -1,0 +1,39 @@
+2023-07-25 17:57:18.925 UTC [3271405] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 17:57:18.925 UTC [3271405] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 17:57:18.931 UTC [3271405] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 17:57:18.939 UTC [3271408] LOG:  database system was shut down at 2023-07-25 17:57:18 UTC
+2023-07-25 17:57:18.944 UTC [3271405] LOG:  database system is ready to accept connections
+2023-07-25 17:57:18.944 UTC [3271411] LOG:  starting bgworker pgsentinel
+2023-07-25 17:57:18.944 UTC [3271411] FATAL:  database "contrib_regression" does not exist
+2023-07-25 17:57:18.947 UTC [3271405] LOG:  background worker "pgsentinel" (PID 3271411) exited with exit code 1
+2023-07-25 17:57:20.949 UTC [3271423] LOG:  starting bgworker pgsentinel
+2023-07-25 17:57:25.091 UTC [3271405] LOG:  received SIGHUP, reloading configuration files
+2023-07-25 17:57:25.093 UTC [3271405] LOG:  parameter "pgsentinel_ash.track_idle_trans" changed to "true"
+2023-07-25 17:57:25.095 UTC [3271423] LOG:  bgworker pgsentinel signal: processed SIGHUP
+2023-07-25 17:57:28.227 UTC [3271405] LOG:  received SIGHUP, reloading configuration files
+2023-07-25 17:57:28.229 UTC [3271405] LOG:  parameter "session_preload_libraries" changed to "pgextwlist"
+2023-07-25 17:57:28.229 UTC [3271405] LOG:  parameter "extwlist.extensions" changed to "citext,earthdistance,pg_trgm,pg_stat_statements,refint"
+2023-07-25 17:57:28.229 UTC [3271405] LOG:  parameter "extwlist.custom_path" changed to "/home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/test-scripts"
+2023-07-25 17:57:28.231 UTC [3271423] LOG:  bgworker pgsentinel signal: processed SIGHUP
+2023-07-25 17:57:28.286 UTC [3271452] ERROR:  extension "pg_stat_statements" already exists
+2023-07-25 17:57:28.286 UTC [3271452] STATEMENT:  CREATE EXTENSION pg_stat_statements;
+2023-07-25 17:57:28.288 UTC [3271452] ERROR:  role "stat_resetters" does not exist
+2023-07-25 17:57:28.288 UTC [3271452] STATEMENT:  DROP EXTENSION pg_stat_statements;
+2023-07-25 17:57:28.298 UTC [3271458] ERROR:  extension "plpgsql" already exists
+2023-07-25 17:57:28.298 UTC [3271458] STATEMENT:  CREATE EXTENSION plpgsql;
+2023-07-25 17:57:28.298 UTC [3271458] ERROR:  extension "hstore" does not exist
+2023-07-25 17:57:28.298 UTC [3271458] STATEMENT:  COMMENT ON EXTENSION hstore IS 'plpgsql comment';
+2023-07-25 17:57:28.299 UTC [3271458] ERROR:  permission denied to create extension "hstore"
+2023-07-25 17:57:28.299 UTC [3271458] HINT:  Must have CREATE privilege on current database to create this extension.
+2023-07-25 17:57:28.299 UTC [3271458] STATEMENT:  CREATE EXTENSION hstore;
+2023-07-25 17:57:28.299 UTC [3271458] ERROR:  extension "hstore" does not exist
+2023-07-25 17:57:28.299 UTC [3271458] STATEMENT:  COMMENT ON EXTENSION hstore IS 'hstore comment';
+2023-07-25 17:57:28.299 UTC [3271458] ERROR:  required extension "cube" is not installed
+2023-07-25 17:57:28.299 UTC [3271458] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-25 17:57:28.299 UTC [3271458] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-25 17:57:28.299 UTC [3271458] ERROR:  must be owner of extension plpgsql
+2023-07-25 17:57:28.299 UTC [3271458] STATEMENT:  DROP EXTENSION plpgsql;
+2023-07-25 17:57:28.320 UTC [3271466] ERROR:  cannot drop extension citext because other objects depend on it
+2023-07-25 17:57:28.320 UTC [3271466] DETAIL:  column t of table mere_table depends on type citext
+2023-07-25 17:57:28.320 UTC [3271466] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 17:57:28.320 UTC [3271466] STATEMENT:  DROP EXTENSION citext;

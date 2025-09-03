@@ -1,0 +1,141 @@
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/postgresql-hll/expected/typmod.out /home/abigalek/pgext-cli-python/pgextworkdir/postgresql-hll/results/typmod.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/postgresql-hll/expected/typmod.out	2023-07-25 04:47:14.127687742 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/postgresql-hll/results/typmod.out	2023-07-26 07:11:34.377302856 +0000
+@@ -12,44 +12,24 @@
+ -- Using all defaults.
+ CREATE TABLE test_qiundgkm (v1 hll);
+ \d test_qiundgkm
+-          Table "public.test_qiundgkm"
+- Column | Type | Collation | Nullable | Default 
+---------+------+-----------+----------+---------
+- v1     | hll  |           |          | 
+-
++ERROR:  cache lookup failed for type 18
+ DROP TABLE test_qiundgkm;
+ -- Partial defaults.
+ CREATE TABLE test_qiundgkm (v1 hll(10));
+ \d test_qiundgkm
+-               Table "public.test_qiundgkm"
+- Column |      Type      | Collation | Nullable | Default 
+---------+----------------+-----------+----------+---------
+- v1     | hll(10,5,-1,1) |           |          | 
+-
++ERROR:  cache lookup failed for type 18
+ DROP TABLE test_qiundgkm;
+ CREATE TABLE test_qiundgkm (v1 hll(10, 4));
+ \d test_qiundgkm
+-               Table "public.test_qiundgkm"
+- Column |      Type      | Collation | Nullable | Default 
+---------+----------------+-----------+----------+---------
+- v1     | hll(10,4,-1,1) |           |          | 
+-
++ERROR:  cache lookup failed for type 18
+ DROP TABLE test_qiundgkm;
+ CREATE TABLE test_qiundgkm (v1 hll(10, 4, 64));
+ \d test_qiundgkm
+-               Table "public.test_qiundgkm"
+- Column |      Type      | Collation | Nullable | Default 
+---------+----------------+-----------+----------+---------
+- v1     | hll(10,4,64,1) |           |          | 
+-
++ERROR:  cache lookup failed for type 18
+ DROP TABLE test_qiundgkm;
+ CREATE TABLE test_qiundgkm (v1 hll(10, 4, 64, 0));
+ \d test_qiundgkm
+-               Table "public.test_qiundgkm"
+- Column |      Type      | Collation | Nullable | Default 
+---------+----------------+-----------+----------+---------
+- v1     | hll(10,4,64,0) |           |          | 
+-
++ERROR:  cache lookup failed for type 18
+ DROP TABLE test_qiundgkm;
+ -- ERROR:  invalid number of type modifiers
+ CREATE TABLE test_qiundgkm (v1 hll(10, 4, 64, 0, 42));
+@@ -66,11 +46,7 @@
+                                        ^
+ CREATE TABLE test_qiundgkm (v1 hll(0));
+ \d test_qiundgkm
+-              Table "public.test_qiundgkm"
+- Column |     Type      | Collation | Nullable | Default 
+---------+---------------+-----------+----------+---------
+- v1     | hll(0,5,-1,1) |           |          | 
+-
++ERROR:  cache lookup failed for type 18
+ DROP TABLE test_qiundgkm;
+ CREATE TABLE test_qiundgkm (v1 hll(31));
+ ERROR:  log2m modifier must be between 0 and 17
+@@ -94,19 +70,11 @@
+                                        ^
+ CREATE TABLE test_qiundgkm (v1 hll(11, 0));
+ \d test_qiundgkm
+-               Table "public.test_qiundgkm"
+- Column |      Type      | Collation | Nullable | Default 
+---------+----------------+-----------+----------+---------
+- v1     | hll(11,0,-1,1) |           |          | 
+-
++ERROR:  cache lookup failed for type 18
+ DROP TABLE test_qiundgkm;
+ CREATE TABLE test_qiundgkm (v1 hll(11, 7));
+ \d test_qiundgkm
+-               Table "public.test_qiundgkm"
+- Column |      Type      | Collation | Nullable | Default 
+---------+----------------+-----------+----------+---------
+- v1     | hll(11,7,-1,1) |           |          | 
+-
++ERROR:  cache lookup failed for type 18
+ DROP TABLE test_qiundgkm;
+ -- ERROR:  regwidth modifier must be between 0 and 7
+ CREATE TABLE test_qiundgkm (v1 hll(11, 8));
+@@ -123,27 +91,15 @@
+                                        ^
+ CREATE TABLE test_qiundgkm (v1 hll(11, 5, -1));
+ \d test_qiundgkm
+-               Table "public.test_qiundgkm"
+- Column |      Type      | Collation | Nullable | Default 
+---------+----------------+-----------+----------+---------
+- v1     | hll(11,5,-1,1) |           |          | 
+-
++ERROR:  cache lookup failed for type 18
+ DROP TABLE test_qiundgkm;
+ CREATE TABLE test_qiundgkm (v1 hll(11, 5, 0));
+ \d test_qiundgkm
+-              Table "public.test_qiundgkm"
+- Column |     Type      | Collation | Nullable | Default 
+---------+---------------+-----------+----------+---------
+- v1     | hll(11,5,0,1) |           |          | 
+-
++ERROR:  cache lookup failed for type 18
+ DROP TABLE test_qiundgkm;
+ CREATE TABLE test_qiundgkm (v1 hll(11, 5, 128));
+ \d test_qiundgkm
+-               Table "public.test_qiundgkm"
+- Column |      Type       | Collation | Nullable | Default 
+---------+-----------------+-----------+----------+---------
+- v1     | hll(11,5,128,1) |           |          | 
+-
++ERROR:  cache lookup failed for type 18
+ DROP TABLE test_qiundgkm;
+ CREATE TABLE test_qiundgkm (v1 hll(11, 5, 4294967296));
+ ERROR:  expthresh modifier must be between -1 and 16383
+@@ -167,19 +123,11 @@
+                                        ^
+ CREATE TABLE test_qiundgkm (v1 hll(11, 5, 128, 0));
+ \d test_qiundgkm
+-               Table "public.test_qiundgkm"
+- Column |      Type       | Collation | Nullable | Default 
+---------+-----------------+-----------+----------+---------
+- v1     | hll(11,5,128,0) |           |          | 
+-
++ERROR:  cache lookup failed for type 18
+ DROP TABLE test_qiundgkm;
+ CREATE TABLE test_qiundgkm (v1 hll(11, 5, 128, 1));
+ \d test_qiundgkm
+-               Table "public.test_qiundgkm"
+- Column |      Type       | Collation | Nullable | Default 
+---------+-----------------+-----------+----------+---------
+- v1     | hll(11,5,128,1) |           |          | 
+-
++ERROR:  cache lookup failed for type 18
+ DROP TABLE test_qiundgkm;
+ -- ERROR:  nosparse modifier must be 0 or 1
+ CREATE TABLE test_qiundgkm (v1 hll(11, 5, 128, 2));

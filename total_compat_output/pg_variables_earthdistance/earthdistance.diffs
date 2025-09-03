@@ -1,0 +1,141 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out	2023-07-26 16:09:30.789999487 +0000
+@@ -1001,10 +1001,41 @@
+ (0 rows)
+ 
+ \df
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                                                          List of functions
++ Schema |        Name         |                     Result data type                     |                                        Argument data types                                         | Type 
++--------+---------------------+----------------------------------------------------------+----------------------------------------------------------------------------------------------------+------
++ public | pgv_delete          | boolean                                                  | package text, name text, value anynonarray                                                         | func
++ public | pgv_exists          | boolean                                                  | package text                                                                                       | func
++ public | pgv_exists          | boolean                                                  | package text, name text                                                                            | func
++ public | pgv_free            | void                                                     |                                                                                                    | func
++ public | pgv_get             | anyarray                                                 | package text, name text, var_type anyarray, strict boolean DEFAULT true                            | func
++ public | pgv_get             | anynonarray                                              | package text, name text, var_type anynonarray, strict boolean DEFAULT true                         | func
++ public | pgv_get_date        | date                                                     | package text, name text, strict boolean DEFAULT true                                               | func
++ public | pgv_get_int         | integer                                                  | package text, name text, strict boolean DEFAULT true                                               | func
++ public | pgv_get_jsonb       | jsonb                                                    | package text, name text, strict boolean DEFAULT true                                               | func
++ public | pgv_get_numeric     | numeric                                                  | package text, name text, strict boolean DEFAULT true                                               | func
++ public | pgv_get_text        | text                                                     | package text, name text, strict boolean DEFAULT true                                               | func
++ public | pgv_get_timestamp   | timestamp without time zone                              | package text, name text, strict boolean DEFAULT true                                               | func
++ public | pgv_get_timestamptz | timestamp with time zone                                 | package text, name text, strict boolean DEFAULT true                                               | func
++ public | pgv_insert          | void                                                     | package text, name text, r record, is_transactional boolean DEFAULT false                          | func
++ public | pgv_list            | TABLE(package text, name text, is_transactional boolean) |                                                                                                    | func
++ public | pgv_remove          | void                                                     | package text                                                                                       | func
++ public | pgv_remove          | void                                                     | package text, name text                                                                            | func
++ public | pgv_select          | SETOF record                                             | package text, name text                                                                            | func
++ public | pgv_select          | SETOF record                                             | package text, name text, value anyarray                                                            | func
++ public | pgv_select          | record                                                   | package text, name text, value anynonarray                                                         | func
++ public | pgv_set             | void                                                     | package text, name text, value anyarray, is_transactional boolean DEFAULT false                    | func
++ public | pgv_set             | void                                                     | package text, name text, value anynonarray, is_transactional boolean DEFAULT false                 | func
++ public | pgv_set_date        | void                                                     | package text, name text, value date, is_transactional boolean DEFAULT false                        | func
++ public | pgv_set_int         | void                                                     | package text, name text, value integer, is_transactional boolean DEFAULT false                     | func
++ public | pgv_set_jsonb       | void                                                     | package text, name text, value jsonb, is_transactional boolean DEFAULT false                       | func
++ public | pgv_set_numeric     | void                                                     | package text, name text, value numeric, is_transactional boolean DEFAULT false                     | func
++ public | pgv_set_text        | void                                                     | package text, name text, value text, is_transactional boolean DEFAULT false                        | func
++ public | pgv_set_timestamp   | void                                                     | package text, name text, value timestamp without time zone, is_transactional boolean DEFAULT false | func
++ public | pgv_set_timestamptz | void                                                     | package text, name text, value timestamp with time zone, is_transactional boolean DEFAULT false    | func
++ public | pgv_stats           | TABLE(package text, allocated_memory bigint)             |                                                                                                    | func
++ public | pgv_update          | boolean                                                  | package text, name text, r record                                                                  | func
++(31 rows)
+ 
+ \do
+                              List of operators
+@@ -1022,10 +1053,41 @@
+ (0 rows)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                                                          List of functions
++ Schema |        Name         |                     Result data type                     |                                        Argument data types                                         | Type 
++--------+---------------------+----------------------------------------------------------+----------------------------------------------------------------------------------------------------+------
++ public | pgv_delete          | boolean                                                  | package text, name text, value anynonarray                                                         | func
++ public | pgv_exists          | boolean                                                  | package text                                                                                       | func
++ public | pgv_exists          | boolean                                                  | package text, name text                                                                            | func
++ public | pgv_free            | void                                                     |                                                                                                    | func
++ public | pgv_get             | anyarray                                                 | package text, name text, var_type anyarray, strict boolean DEFAULT true                            | func
++ public | pgv_get             | anynonarray                                              | package text, name text, var_type anynonarray, strict boolean DEFAULT true                         | func
++ public | pgv_get_date        | date                                                     | package text, name text, strict boolean DEFAULT true                                               | func
++ public | pgv_get_int         | integer                                                  | package text, name text, strict boolean DEFAULT true                                               | func
++ public | pgv_get_jsonb       | jsonb                                                    | package text, name text, strict boolean DEFAULT true                                               | func
++ public | pgv_get_numeric     | numeric                                                  | package text, name text, strict boolean DEFAULT true                                               | func
++ public | pgv_get_text        | text                                                     | package text, name text, strict boolean DEFAULT true                                               | func
++ public | pgv_get_timestamp   | timestamp without time zone                              | package text, name text, strict boolean DEFAULT true                                               | func
++ public | pgv_get_timestamptz | timestamp with time zone                                 | package text, name text, strict boolean DEFAULT true                                               | func
++ public | pgv_insert          | void                                                     | package text, name text, r record, is_transactional boolean DEFAULT false                          | func
++ public | pgv_list            | TABLE(package text, name text, is_transactional boolean) |                                                                                                    | func
++ public | pgv_remove          | void                                                     | package text                                                                                       | func
++ public | pgv_remove          | void                                                     | package text, name text                                                                            | func
++ public | pgv_select          | SETOF record                                             | package text, name text                                                                            | func
++ public | pgv_select          | SETOF record                                             | package text, name text, value anyarray                                                            | func
++ public | pgv_select          | record                                                   | package text, name text, value anynonarray                                                         | func
++ public | pgv_set             | void                                                     | package text, name text, value anyarray, is_transactional boolean DEFAULT false                    | func
++ public | pgv_set             | void                                                     | package text, name text, value anynonarray, is_transactional boolean DEFAULT false                 | func
++ public | pgv_set_date        | void                                                     | package text, name text, value date, is_transactional boolean DEFAULT false                        | func
++ public | pgv_set_int         | void                                                     | package text, name text, value integer, is_transactional boolean DEFAULT false                     | func
++ public | pgv_set_jsonb       | void                                                     | package text, name text, value jsonb, is_transactional boolean DEFAULT false                       | func
++ public | pgv_set_numeric     | void                                                     | package text, name text, value numeric, is_transactional boolean DEFAULT false                     | func
++ public | pgv_set_text        | void                                                     | package text, name text, value text, is_transactional boolean DEFAULT false                        | func
++ public | pgv_set_timestamp   | void                                                     | package text, name text, value timestamp without time zone, is_transactional boolean DEFAULT false | func
++ public | pgv_set_timestamptz | void                                                     | package text, name text, value timestamp with time zone, is_transactional boolean DEFAULT false    | func
++ public | pgv_stats           | TABLE(package text, allocated_memory bigint)             |                                                                                                    | func
++ public | pgv_update          | boolean                                                  | package text, name text, r record                                                                  | func
++(31 rows)
+ 
+ \do public.*
+                              List of operators
+@@ -1066,10 +1128,41 @@
+ (0 rows)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                                                          List of functions
++ Schema |        Name         |                     Result data type                     |                                        Argument data types                                         | Type 
++--------+---------------------+----------------------------------------------------------+----------------------------------------------------------------------------------------------------+------
++ public | pgv_delete          | boolean                                                  | package text, name text, value anynonarray                                                         | func
++ public | pgv_exists          | boolean                                                  | package text                                                                                       | func
++ public | pgv_exists          | boolean                                                  | package text, name text                                                                            | func
++ public | pgv_free            | void                                                     |                                                                                                    | func
++ public | pgv_get             | anyarray                                                 | package text, name text, var_type anyarray, strict boolean DEFAULT true                            | func
++ public | pgv_get             | anynonarray                                              | package text, name text, var_type anynonarray, strict boolean DEFAULT true                         | func
++ public | pgv_get_date        | date                                                     | package text, name text, strict boolean DEFAULT true                                               | func
++ public | pgv_get_int         | integer                                                  | package text, name text, strict boolean DEFAULT true                                               | func
++ public | pgv_get_jsonb       | jsonb                                                    | package text, name text, strict boolean DEFAULT true                                               | func
++ public | pgv_get_numeric     | numeric                                                  | package text, name text, strict boolean DEFAULT true                                               | func
++ public | pgv_get_text        | text                                                     | package text, name text, strict boolean DEFAULT true                                               | func
++ public | pgv_get_timestamp   | timestamp without time zone                              | package text, name text, strict boolean DEFAULT true                                               | func
++ public | pgv_get_timestamptz | timestamp with time zone                                 | package text, name text, strict boolean DEFAULT true                                               | func
++ public | pgv_insert          | void                                                     | package text, name text, r record, is_transactional boolean DEFAULT false                          | func
++ public | pgv_list            | TABLE(package text, name text, is_transactional boolean) |                                                                                                    | func
++ public | pgv_remove          | void                                                     | package text                                                                                       | func
++ public | pgv_remove          | void                                                     | package text, name text                                                                            | func
++ public | pgv_select          | SETOF record                                             | package text, name text                                                                            | func
++ public | pgv_select          | SETOF record                                             | package text, name text, value anyarray                                                            | func
++ public | pgv_select          | record                                                   | package text, name text, value anynonarray                                                         | func
++ public | pgv_set             | void                                                     | package text, name text, value anyarray, is_transactional boolean DEFAULT false                    | func
++ public | pgv_set             | void                                                     | package text, name text, value anynonarray, is_transactional boolean DEFAULT false                 | func
++ public | pgv_set_date        | void                                                     | package text, name text, value date, is_transactional boolean DEFAULT false                        | func
++ public | pgv_set_int         | void                                                     | package text, name text, value integer, is_transactional boolean DEFAULT false                     | func
++ public | pgv_set_jsonb       | void                                                     | package text, name text, value jsonb, is_transactional boolean DEFAULT false                       | func
++ public | pgv_set_numeric     | void                                                     | package text, name text, value numeric, is_transactional boolean DEFAULT false                     | func
++ public | pgv_set_text        | void                                                     | package text, name text, value text, is_transactional boolean DEFAULT false                        | func
++ public | pgv_set_timestamp   | void                                                     | package text, name text, value timestamp without time zone, is_transactional boolean DEFAULT false | func
++ public | pgv_set_timestamptz | void                                                     | package text, name text, value timestamp with time zone, is_transactional boolean DEFAULT false    | func
++ public | pgv_stats           | TABLE(package text, allocated_memory bigint)             |                                                                                                    | func
++ public | pgv_update          | boolean                                                  | package text, name text, r record                                                                  | func
++(31 rows)
+ 
+ \do public.*
+                              List of operators

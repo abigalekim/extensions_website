@@ -1,0 +1,137 @@
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/pgsm_query_id.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/pgsm_query_id.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/pgsm_query_id.out	2023-07-25 04:55:55.016790254 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/pgsm_query_id.out	2023-07-26 10:11:36.158201963 +0000
+@@ -89,13 +89,12 @@
+  db2                | 1988437669671417938 | SELECT * FROM t1                                    |     1
+  db1                | 2864453209316739369 | select $1 + $2                                      |     1
+  db2                | 2864453209316739369 | select $1 + $2                                      |     1
+- db2                | 6220142855706866455 | set pg_stat_monitor.pgsm_enable_pgsm_query_id = on  |     1
+  db2                | 6633979598391393345 | SELECT * FROM t3 where c = 20                       |     1
+  db1                | 8140395000078788481 | SELECT *, ADD(1, 2) FROM t1                         |     1
+  db2                | 8140395000078788481 | SELECT *, ADD(1, 2) FROM t1                         |     1
+  db2                |                     | SELECT * FROM t3                                    |     1
+- db2                |                     | set pg_stat_monitor.pgsm_enable_pgsm_query_id = off |     1
+-(12 rows)
++ db2                |                     | set pg_stat_monitor.pgsm_enable_pgsm_query_id = off |     2
++(11 rows)
+ 
+ SELECT pg_stat_monitor_reset();
+  pg_stat_monitor_reset 
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/functions.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/functions.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/functions.out	2023-07-25 04:55:55.016790254 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/functions.out	2023-07-26 10:11:36.258200401 +0000
+@@ -20,13 +20,16 @@
+  public         | pg_stat_monitor_internal | FUNCTION     | record
+  public         | pg_stat_monitor_reset    | FUNCTION     | void
+  public         | pg_stat_monitor_version  | FUNCTION     | text
++ public         | pg_stat_statements       | FUNCTION     | record
++ public         | pg_stat_statements_info  | FUNCTION     | record
++ public         | pg_stat_statements_reset | FUNCTION     | void
+  public         | pgsm_create_11_view      | FUNCTION     | integer
+  public         | pgsm_create_13_view      | FUNCTION     | integer
+  public         | pgsm_create_14_view      | FUNCTION     | integer
+  public         | pgsm_create_15_view      | FUNCTION     | integer
+  public         | pgsm_create_view         | FUNCTION     | integer
+  public         | range                    | FUNCTION     | ARRAY
+-(13 rows)
++(16 rows)
+ 
+ SET ROLE u1;
+ SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+@@ -38,8 +41,10 @@
+  public         | histogram                | FUNCTION     | record
+  public         | pg_stat_monitor_internal | FUNCTION     | record
+  public         | pg_stat_monitor_version  | FUNCTION     | text
++ public         | pg_stat_statements       | FUNCTION     | record
++ public         | pg_stat_statements_info  | FUNCTION     | record
+  public         | range                    | FUNCTION     | ARRAY
+-(7 rows)
++(9 rows)
+ 
+ SET ROLE su;
+ DROP USER u1;
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/top_query.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/top_query.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/top_query.out	2023-07-25 04:55:55.016790254 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/top_query.out	2023-07-26 10:11:37.198185713 +0000
+@@ -24,23 +24,17 @@
+ (1 row)
+ 
+ SELECT query, top_query FROM pg_stat_monitor ORDER BY query COLLATE "C";
+-                            query                             |     top_query     
+---------------------------------------------------------------+-------------------
+- (select $1 + $2)                                             | SELECT add2(1,2);
+- CREATE OR REPLACE FUNCTION add(int, int) RETURNS INTEGER AS +| 
+- $$                                                          +| 
+- BEGIN                                                       +| 
+-         return (select $1 + $2);                            +| 
+- END; $$ language plpgsql                                     | 
+- CREATE OR REPLACE FUNCTION add2(int, int) RETURNS INTEGER AS+| 
+- $$                                                          +| 
+- BEGIN                                                       +| 
+-         return add($1,$2);                                  +| 
+- END;                                                        +| 
+- $$ language plpgsql                                          | 
+- SELECT add2(1,2)                                             | 
+- SELECT pg_stat_monitor_reset()                               | 
+-(5 rows)
++                            query                            |     top_query     
++-------------------------------------------------------------+-------------------
++ (select $1 + $2)                                            | SELECT add2(1,2);
++ CREATE OR REPLACE FUNCTION add(int, int) RETURNS INTEGER AS+| 
++ $$                                                         +| 
++ BEGIN                                                      +| 
++         return (select $1 + $2);                           +| 
++ END; $$ language plpgsql                                    | 
++ SELECT add2(1,2)                                            | 
++ SELECT pg_stat_monitor_reset()                              | 
++(4 rows)
+ 
+ SELECT pg_stat_monitor_reset();
+  pg_stat_monitor_reset 
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/cmd_type_1.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/cmd_type.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/cmd_type_1.out	2023-07-25 04:55:55.016790254 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/cmd_type.out	2023-07-26 10:11:37.262184714 +0000
+@@ -23,16 +23,18 @@
+ 
+ TRUNCATE t1;
+ DROP TABLE t1;
++DROP TABLE t2;
+ SELECT query, cmd_type,  cmd_type_text FROM pg_stat_monitor ORDER BY query COLLATE "C";
+              query              | cmd_type | cmd_type_text 
+ --------------------------------+----------+---------------
++ CREATE TABLE t1 (a INTEGER)    |        0 | 
+  DELETE FROM t1                 |        4 | DELETE
+  INSERT INTO t1 VALUES(1)       |        3 | INSERT
+  SELECT a FROM t1               |        1 | SELECT
+  SELECT b FROM t2 FOR UPDATE    |        1 | SELECT
+  SELECT pg_stat_monitor_reset() |        1 | SELECT
+  UPDATE t1 SET a = 2            |        2 | UPDATE
+-(6 rows)
++(7 rows)
+ 
+ SELECT pg_stat_monitor_reset();
+  pg_stat_monitor_reset 
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/user.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/user.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/user.out	2023-07-25 04:55:55.016790254 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/user.out	2023-07-26 10:11:37.526180595 +0000
+@@ -36,19 +36,14 @@
+ SELECT username, query FROM pg_stat_monitor ORDER BY username, query COLLATE "C";
+  username |              query              
+ ----------+---------------------------------
+- su       | DROP OWNED BY u2
+- su       | DROP USER u2
+  su       | SELECT pg_stat_monitor_reset()
+  su       | SET ROLE su
+- u1       | CREATE TABLE t1 (a int)
+  u1       | SELECT * FROM t1
+  u1       | SELECT pg_stat_monitor_reset();
+  u1       | SET ROLE u1
+- u2       | CREATE TABLE t2 (a int)
+- u2       | DROP TABLE t2
+  u2       | SELECT * FROM t2
+  u2       | SET ROLE u2
+-(12 rows)
++(7 rows)
+ 
+ SELECT pg_stat_monitor_reset();
+  pg_stat_monitor_reset 

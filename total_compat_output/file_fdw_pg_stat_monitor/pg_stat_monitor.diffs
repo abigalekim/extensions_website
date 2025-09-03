@@ -1,0 +1,44 @@
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/functions.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/functions.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/functions.out	2023-07-25 04:12:42.052174645 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/functions.out	2023-07-26 04:09:08.249210962 +0000
+@@ -11,9 +11,11 @@
+ (1 row)
+ 
+ SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+- routine_schema |       routine_name       | routine_type | data_type 
+-----------------+--------------------------+--------------+-----------
++ routine_schema |       routine_name       | routine_type |  data_type  
++----------------+--------------------------+--------------+-------------
+  public         | decode_error_level       | FUNCTION     | text
++ public         | file_fdw_handler         | FUNCTION     | fdw_handler
++ public         | file_fdw_validator       | FUNCTION     | void
+  public         | get_cmd_type             | FUNCTION     | text
+  public         | get_histogram_timings    | FUNCTION     | text
+  public         | histogram                | FUNCTION     | record
+@@ -26,20 +28,22 @@
+  public         | pgsm_create_15_view      | FUNCTION     | integer
+  public         | pgsm_create_view         | FUNCTION     | integer
+  public         | range                    | FUNCTION     | ARRAY
+-(13 rows)
++(15 rows)
+ 
+ SET ROLE u1;
+ SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+- routine_schema |       routine_name       | routine_type | data_type 
+-----------------+--------------------------+--------------+-----------
++ routine_schema |       routine_name       | routine_type |  data_type  
++----------------+--------------------------+--------------+-------------
+  public         | decode_error_level       | FUNCTION     | text
++ public         | file_fdw_handler         | FUNCTION     | fdw_handler
++ public         | file_fdw_validator       | FUNCTION     | void
+  public         | get_cmd_type             | FUNCTION     | text
+  public         | get_histogram_timings    | FUNCTION     | text
+  public         | histogram                | FUNCTION     | record
+  public         | pg_stat_monitor_internal | FUNCTION     | record
+  public         | pg_stat_monitor_version  | FUNCTION     | text
+  public         | range                    | FUNCTION     | ARRAY
+-(7 rows)
++(9 rows)
+ 
+ SET ROLE su;
+ DROP USER u1;

@@ -1,0 +1,242 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out	2023-07-25 21:16:40.972442749 +0000
+@@ -963,12 +963,13 @@
+ --
+ -- list what's installed
+ \dT
+-                                              List of data types
+- Schema | Name  |                                         Description                                         
+---------+-------+---------------------------------------------------------------------------------------------
+- public | cube  | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
+- public | earth | 
+-(2 rows)
++                                                     List of data types
++ Schema |        Name         |                                         Description                                         
++--------+---------------------+---------------------------------------------------------------------------------------------
++ public | cube                | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
++ public | dblink_pkey_results | 
++ public | earth               | 
++(3 rows)
+ 
+ drop extension cube;  -- fail, earthdistance requires it
+ ERROR:  cannot drop extension cube because other objects depend on it
+@@ -980,11 +981,12 @@
+ HINT:  You can drop extension cube instead.
+ -- list what's installed
+ \dT
+-                                             List of data types
+- Schema | Name |                                         Description                                         
+---------+------+---------------------------------------------------------------------------------------------
+- public | cube | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
+-(1 row)
++                                                     List of data types
++ Schema |        Name         |                                         Description                                         
++--------+---------------------+---------------------------------------------------------------------------------------------
++ public | cube                | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
++ public | dblink_pkey_results | 
++(2 rows)
+ 
+ create table foo (f1 cube, f2 int);
+ drop extension cube;  -- fail, foo.f1 requires it
+@@ -995,16 +997,58 @@
+ drop extension cube;
+ -- list what's installed
+ \dT
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++             List of data types
++ Schema |        Name         | Description 
++--------+---------------------+-------------
++ public | dblink_pkey_results | 
++(1 row)
+ 
+ \df
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                              List of functions
++ Schema |          Name           |     Result data type      |                          Argument data types                           | Type 
++--------+-------------------------+---------------------------+------------------------------------------------------------------------+------
++ public | dblink                  | SETOF record              | text                                                                   | func
++ public | dblink                  | SETOF record              | text, boolean                                                          | func
++ public | dblink                  | SETOF record              | text, text                                                             | func
++ public | dblink                  | SETOF record              | text, text, boolean                                                    | func
++ public | dblink_build_sql_delete | text                      | text, int2vector, integer, text[]                                      | func
++ public | dblink_build_sql_insert | text                      | text, int2vector, integer, text[], text[]                              | func
++ public | dblink_build_sql_update | text                      | text, int2vector, integer, text[], text[]                              | func
++ public | dblink_cancel_query     | text                      | text                                                                   | func
++ public | dblink_close            | text                      | text                                                                   | func
++ public | dblink_close            | text                      | text, boolean                                                          | func
++ public | dblink_close            | text                      | text, text                                                             | func
++ public | dblink_close            | text                      | text, text, boolean                                                    | func
++ public | dblink_connect          | text                      | text                                                                   | func
++ public | dblink_connect          | text                      | text, text                                                             | func
++ public | dblink_connect_u        | text                      | text                                                                   | func
++ public | dblink_connect_u        | text                      | text, text                                                             | func
++ public | dblink_current_query    | text                      |                                                                        | func
++ public | dblink_disconnect       | text                      |                                                                        | func
++ public | dblink_disconnect       | text                      | text                                                                   | func
++ public | dblink_error_message    | text                      | text                                                                   | func
++ public | dblink_exec             | text                      | text                                                                   | func
++ public | dblink_exec             | text                      | text, boolean                                                          | func
++ public | dblink_exec             | text                      | text, text                                                             | func
++ public | dblink_exec             | text                      | text, text, boolean                                                    | func
++ public | dblink_fdw_validator    | void                      | options text[], catalog oid                                            | func
++ public | dblink_fetch            | SETOF record              | text, integer                                                          | func
++ public | dblink_fetch            | SETOF record              | text, integer, boolean                                                 | func
++ public | dblink_fetch            | SETOF record              | text, text, integer                                                    | func
++ public | dblink_fetch            | SETOF record              | text, text, integer, boolean                                           | func
++ public | dblink_get_connections  | text[]                    |                                                                        | func
++ public | dblink_get_notify       | SETOF record              | conname text, OUT notify_name text, OUT be_pid integer, OUT extra text | func
++ public | dblink_get_notify       | SETOF record              | OUT notify_name text, OUT be_pid integer, OUT extra text               | func
++ public | dblink_get_pkey         | SETOF dblink_pkey_results | text                                                                   | func
++ public | dblink_get_result       | SETOF record              | text                                                                   | func
++ public | dblink_get_result       | SETOF record              | text, boolean                                                          | func
++ public | dblink_is_busy          | integer                   | text                                                                   | func
++ public | dblink_open             | text                      | text, text                                                             | func
++ public | dblink_open             | text                      | text, text, boolean                                                    | func
++ public | dblink_open             | text                      | text, text, text                                                       | func
++ public | dblink_open             | text                      | text, text, text, boolean                                              | func
++ public | dblink_send_query       | integer                   | text, text                                                             | func
++(41 rows)
+ 
+ \do
+                              List of operators
+@@ -1016,16 +1060,58 @@
+ create extension cube with schema c;
+ -- list what's installed
+ \dT public.*
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++             List of data types
++ Schema |        Name         | Description 
++--------+---------------------+-------------
++ public | dblink_pkey_results | 
++(1 row)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                              List of functions
++ Schema |          Name           |     Result data type      |                          Argument data types                           | Type 
++--------+-------------------------+---------------------------+------------------------------------------------------------------------+------
++ public | dblink                  | SETOF record              | text                                                                   | func
++ public | dblink                  | SETOF record              | text, boolean                                                          | func
++ public | dblink                  | SETOF record              | text, text                                                             | func
++ public | dblink                  | SETOF record              | text, text, boolean                                                    | func
++ public | dblink_build_sql_delete | text                      | text, int2vector, integer, text[]                                      | func
++ public | dblink_build_sql_insert | text                      | text, int2vector, integer, text[], text[]                              | func
++ public | dblink_build_sql_update | text                      | text, int2vector, integer, text[], text[]                              | func
++ public | dblink_cancel_query     | text                      | text                                                                   | func
++ public | dblink_close            | text                      | text                                                                   | func
++ public | dblink_close            | text                      | text, boolean                                                          | func
++ public | dblink_close            | text                      | text, text                                                             | func
++ public | dblink_close            | text                      | text, text, boolean                                                    | func
++ public | dblink_connect          | text                      | text                                                                   | func
++ public | dblink_connect          | text                      | text, text                                                             | func
++ public | dblink_connect_u        | text                      | text                                                                   | func
++ public | dblink_connect_u        | text                      | text, text                                                             | func
++ public | dblink_current_query    | text                      |                                                                        | func
++ public | dblink_disconnect       | text                      |                                                                        | func
++ public | dblink_disconnect       | text                      | text                                                                   | func
++ public | dblink_error_message    | text                      | text                                                                   | func
++ public | dblink_exec             | text                      | text                                                                   | func
++ public | dblink_exec             | text                      | text, boolean                                                          | func
++ public | dblink_exec             | text                      | text, text                                                             | func
++ public | dblink_exec             | text                      | text, text, boolean                                                    | func
++ public | dblink_fdw_validator    | void                      | options text[], catalog oid                                            | func
++ public | dblink_fetch            | SETOF record              | text, integer                                                          | func
++ public | dblink_fetch            | SETOF record              | text, integer, boolean                                                 | func
++ public | dblink_fetch            | SETOF record              | text, text, integer                                                    | func
++ public | dblink_fetch            | SETOF record              | text, text, integer, boolean                                           | func
++ public | dblink_get_connections  | text[]                    |                                                                        | func
++ public | dblink_get_notify       | SETOF record              | conname text, OUT notify_name text, OUT be_pid integer, OUT extra text | func
++ public | dblink_get_notify       | SETOF record              | OUT notify_name text, OUT be_pid integer, OUT extra text               | func
++ public | dblink_get_pkey         | SETOF dblink_pkey_results | text                                                                   | func
++ public | dblink_get_result       | SETOF record              | text                                                                   | func
++ public | dblink_get_result       | SETOF record              | text, boolean                                                          | func
++ public | dblink_is_busy          | integer                   | text                                                                   | func
++ public | dblink_open             | text                      | text, text                                                             | func
++ public | dblink_open             | text                      | text, text, boolean                                                    | func
++ public | dblink_open             | text                      | text, text, text                                                       | func
++ public | dblink_open             | text                      | text, text, text, boolean                                              | func
++ public | dblink_send_query       | integer                   | text, text                                                             | func
++(41 rows)
+ 
+ \do public.*
+                              List of operators
+@@ -1060,16 +1146,58 @@
+ 
+ -- list what's installed
+ \dT public.*
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++             List of data types
++ Schema |        Name         | Description 
++--------+---------------------+-------------
++ public | dblink_pkey_results | 
++(1 row)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                              List of functions
++ Schema |          Name           |     Result data type      |                          Argument data types                           | Type 
++--------+-------------------------+---------------------------+------------------------------------------------------------------------+------
++ public | dblink                  | SETOF record              | text                                                                   | func
++ public | dblink                  | SETOF record              | text, boolean                                                          | func
++ public | dblink                  | SETOF record              | text, text                                                             | func
++ public | dblink                  | SETOF record              | text, text, boolean                                                    | func
++ public | dblink_build_sql_delete | text                      | text, int2vector, integer, text[]                                      | func
++ public | dblink_build_sql_insert | text                      | text, int2vector, integer, text[], text[]                              | func
++ public | dblink_build_sql_update | text                      | text, int2vector, integer, text[], text[]                              | func
++ public | dblink_cancel_query     | text                      | text                                                                   | func
++ public | dblink_close            | text                      | text                                                                   | func
++ public | dblink_close            | text                      | text, boolean                                                          | func
++ public | dblink_close            | text                      | text, text                                                             | func
++ public | dblink_close            | text                      | text, text, boolean                                                    | func
++ public | dblink_connect          | text                      | text                                                                   | func
++ public | dblink_connect          | text                      | text, text                                                             | func
++ public | dblink_connect_u        | text                      | text                                                                   | func
++ public | dblink_connect_u        | text                      | text, text                                                             | func
++ public | dblink_current_query    | text                      |                                                                        | func
++ public | dblink_disconnect       | text                      |                                                                        | func
++ public | dblink_disconnect       | text                      | text                                                                   | func
++ public | dblink_error_message    | text                      | text                                                                   | func
++ public | dblink_exec             | text                      | text                                                                   | func
++ public | dblink_exec             | text                      | text, boolean                                                          | func
++ public | dblink_exec             | text                      | text, text                                                             | func
++ public | dblink_exec             | text                      | text, text, boolean                                                    | func
++ public | dblink_fdw_validator    | void                      | options text[], catalog oid                                            | func
++ public | dblink_fetch            | SETOF record              | text, integer                                                          | func
++ public | dblink_fetch            | SETOF record              | text, integer, boolean                                                 | func
++ public | dblink_fetch            | SETOF record              | text, text, integer                                                    | func
++ public | dblink_fetch            | SETOF record              | text, text, integer, boolean                                           | func
++ public | dblink_get_connections  | text[]                    |                                                                        | func
++ public | dblink_get_notify       | SETOF record              | conname text, OUT notify_name text, OUT be_pid integer, OUT extra text | func
++ public | dblink_get_notify       | SETOF record              | OUT notify_name text, OUT be_pid integer, OUT extra text               | func
++ public | dblink_get_pkey         | SETOF dblink_pkey_results | text                                                                   | func
++ public | dblink_get_result       | SETOF record              | text                                                                   | func
++ public | dblink_get_result       | SETOF record              | text, boolean                                                          | func
++ public | dblink_is_busy          | integer                   | text                                                                   | func
++ public | dblink_open             | text                      | text, text                                                             | func
++ public | dblink_open             | text                      | text, text, boolean                                                    | func
++ public | dblink_open             | text                      | text, text, text                                                       | func
++ public | dblink_open             | text                      | text, text, text, boolean                                              | func
++ public | dblink_send_query       | integer                   | text, text                                                             | func
++(41 rows)
+ 
+ \do public.*
+                              List of operators

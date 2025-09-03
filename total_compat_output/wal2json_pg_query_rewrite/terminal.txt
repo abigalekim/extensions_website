@@ -1,0 +1,111 @@
+The files belonging to this database system will be owned by user "abigalek".
+This user must also own the server process.
+
+The database cluster will be initialized with locale "en_US.UTF-8".
+The default database encoding has accordingly been set to "UTF8".
+The default text search configuration will be set to "english".
+
+Data page checksums are disabled.
+
+creating directory pg-15-data ... ok
+creating subdirectories ... ok
+selecting dynamic shared memory implementation ... posix
+selecting default max_connections ... 100
+selecting default shared_buffers ... 128MB
+selecting default time zone ... Etc/UTC
+creating configuration files ... ok
+running bootstrap script ... ok
+performing post-bootstrap initialization ... ok
+syncing data to disk ... ok
+
+initdb: warning: enabling "trust" authentication for local connections
+initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+
+Success. You can now start the database server using:
+
+    pg-15-dist/bin/pg_ctl -D pg-15-data -l logfile start
+
+waiting for server to start.... done
+server started
+(using postmaster on Unix socket, default port)
+============== dropping database "regression"         ==============
+SET
+DROP DATABASE
+============== creating database "regression"         ==============
+CREATE DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+============== installing pg_query_rewrite            ==============
+CREATE EXTENSION
+============== running regression test queries        ==============
+test cmdline                      ... ok          153 ms
+test insert1                      ... ok          163 ms
+test update1                      ... ok          170 ms
+test update2                      ... ok          206 ms
+test update3                      ... ok          201 ms
+test update4                      ... ok          131 ms
+test delete1                      ... ok          180 ms
+test delete2                      ... ok          195 ms
+test delete3                      ... ok          216 ms
+test delete4                      ... ok          132 ms
+test savepoint                    ... ok          113 ms
+test specialvalue                 ... ok          113 ms
+test toast                        ... ok          208 ms
+test bytea                        ... ok          144 ms
+test message                      ... ok          103 ms
+test typmod                       ... ok          124 ms
+test filtertable                  ... ok          485 ms
+test selecttable                  ... ok          259 ms
+test include_timestamp            ... ok          106 ms
+test include_lsn                  ... ok          111 ms
+test include_xids                 ... ok          112 ms
+test include_domain_data_type     ... ok          208 ms
+test truncate                     ... ok          236 ms
+test type_oid                     ... ok          108 ms
+test actions                      ... ok          130 ms
+test position                     ... ok          127 ms
+test default                      ... ok          194 ms
+test pk                           ... ok          192 ms
+test rename_column                ... ok          189 ms
+
+======================
+ All 29 tests passed. 
+======================
+
+(using postmaster on Unix socket, default port)
+============== dropping database "contrib_regression" ==============
+SET
+DROP DATABASE
+============== creating database "contrib_regression" ==============
+CREATE DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+============== running regression test queries        ==============
+test test0                        ... ok           14 ms
+test test1                        ... ok           18 ms
+test test2                        ... ok           22 ms
+test test3                        ... ok           43 ms
+test test4                        ... ok          271 ms
+test test5                        ... ok           21 ms
+test test6                        ... ok           63 ms
+test test7                        ... FAILED       25 ms
+test test8                        ... ok           42 ms
+
+======================
+ 1 of 9 tests failed. 
+======================
+
+The differences that caused some tests to fail can be viewed in the
+file "/home/abigalek/pgext-cli-python/pgextworkdir/pg_query_rewrite/regression.diffs".  A copy of the test summary that you see
+above is saved in the file "/home/abigalek/pgext-cli-python/pgextworkdir/pg_query_rewrite/regression.out".
+
+waiting for server to shut down.... done
+server stopped

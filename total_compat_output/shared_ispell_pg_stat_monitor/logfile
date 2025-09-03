@@ -1,0 +1,34 @@
+2023-07-26 08:58:26.599 UTC [3449800] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 08:58:26.599 UTC [3449800] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 08:58:26.614 UTC [3449800] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 08:58:26.627 UTC [3449803] LOG:  database system was shut down at 2023-07-26 08:58:26 UTC
+2023-07-26 08:58:26.636 UTC [3449800] LOG:  database system is ready to accept connections
+2023-07-26 08:58:26.868 UTC [3449819] ERROR:  function "shared_ispell_dicts" already exists with same argument types
+2023-07-26 08:58:26.868 UTC [3449819] STATEMENT:  create extension shared_ispell;
+2023-07-26 08:58:26.887 UTC [3449819] ERROR:  function "shared_ispell_stoplists" already exists with same argument types
+2023-07-26 08:58:26.887 UTC [3449819] STATEMENT:  create extension shared_ispell;
+2023-07-26 08:58:27.450 UTC [3449801] LOG:  checkpoint starting: immediate force wait
+2023-07-26 08:58:27.642 UTC [3449801] LOG:  checkpoint complete: wrote 2737 buffers (16.7%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.080 s, sync=0.076 s, total=0.193 s; sync files=742, longest=0.026 s, average=0.001 s; distance=16934 kB, estimate=16934 kB
+2023-07-26 08:58:27.666 UTC [3449801] LOG:  checkpoint starting: immediate force wait
+2023-07-26 08:58:27.712 UTC [3449801] LOG:  checkpoint complete: wrote 2 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.010 s, sync=0.008 s, total=0.046 s; sync files=2, longest=0.005 s, average=0.004 s; distance=1 kB, estimate=15241 kB
+2023-07-26 08:58:27.839 UTC [3449865] ERROR:  current user cannot be dropped
+2023-07-26 08:58:27.839 UTC [3449865] STATEMENT:  DROP USER su;
+2023-07-26 08:58:28.280 UTC [3449801] LOG:  checkpoint starting: immediate force wait
+2023-07-26 08:58:28.396 UTC [3449801] LOG:  checkpoint complete: wrote 1035 buffers (6.3%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.050 s, sync=0.037 s, total=0.117 s; sync files=297, longest=0.008 s, average=0.001 s; distance=9062 kB, estimate=14623 kB
+2023-07-26 08:58:28.443 UTC [3449801] LOG:  checkpoint starting: immediate force wait
+2023-07-26 08:58:28.490 UTC [3449801] LOG:  checkpoint complete: wrote 10 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.010 s, sync=0.010 s, total=0.047 s; sync files=7, longest=0.006 s, average=0.002 s; distance=42 kB, estimate=13165 kB
+2023-07-26 08:58:28.588 UTC [3449893] ERROR:  duplicate key value violates unique constraint "company_pkey"
+2023-07-26 08:58:28.588 UTC [3449893] DETAIL:  Key (id)=(1) already exists.
+2023-07-26 08:58:28.588 UTC [3449893] STATEMENT:  INSERT  INTO Company(ID, Name) VALUES (1, 'Percona');
+2023-07-26 08:58:28.827 UTC [3449913] ERROR:  division by zero
+2023-07-26 08:58:28.827 UTC [3449913] STATEMENT:  SELECT 1/0;
+2023-07-26 08:58:28.827 UTC [3449913] ERROR:  relation "unknown" does not exist at character 15
+2023-07-26 08:58:28.827 UTC [3449913] STATEMENT:  SELECT * FROM unknown;
+2023-07-26 08:58:28.827 UTC [3449913] ERROR:  syntax error at or near "ELECET" at character 1
+2023-07-26 08:58:28.827 UTC [3449913] STATEMENT:  ELECET * FROM unknown;
+2023-07-26 08:58:28.828 UTC [3449913] WARNING:  warning message
+2023-07-26 08:58:28.828 UTC [3449913] CONTEXT:  PL/pgSQL function inline_code_block line 3 at RAISE
+2023-07-26 08:58:28.999 UTC [3449927] ERROR:  role "su" already exists
+2023-07-26 08:58:28.999 UTC [3449927] STATEMENT:  CREATE USER su WITH SUPERUSER;
+2023-07-26 08:58:29.034 UTC [3449927] ERROR:  permission denied for function pg_stat_monitor_reset
+2023-07-26 08:58:29.034 UTC [3449927] STATEMENT:  SELECT pg_stat_monitor_reset();

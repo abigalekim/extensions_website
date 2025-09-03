@@ -1,0 +1,1410 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out	2023-07-26 16:50:49.831386378 +0000
+@@ -964,11 +964,19 @@
+ -- list what's installed
+ \dT
+                                               List of data types
+- Schema | Name  |                                         Description                                         
+---------+-------+---------------------------------------------------------------------------------------------
+- public | cube  | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
+- public | earth | 
+-(2 rows)
++ Schema |  Name  |                                         Description                                         
++--------+--------+---------------------------------------------------------------------------------------------
++ public | cube   | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
++ public | ean13  | International European Article Number (EAN13)
++ public | earth  | 
++ public | isbn   | International Standard Book Number (ISBN)
++ public | isbn13 | International Standard Book Number 13 (ISBN13)
++ public | ismn   | International Standard Music Number (ISMN)
++ public | ismn13 | International Standard Music Number 13 (ISMN13)
++ public | issn   | International Standard Serial Number (ISSN)
++ public | issn13 | International Standard Serial Number 13 (ISSN13)
++ public | upc    | Universal Product Code (UPC)
++(10 rows)
+ 
+ drop extension cube;  -- fail, earthdistance requires it
+ ERROR:  cannot drop extension cube because other objects depend on it
+@@ -980,11 +988,19 @@
+ HINT:  You can drop extension cube instead.
+ -- list what's installed
+ \dT
+-                                             List of data types
+- Schema | Name |                                         Description                                         
+---------+------+---------------------------------------------------------------------------------------------
+- public | cube | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
+-(1 row)
++                                              List of data types
++ Schema |  Name  |                                         Description                                         
++--------+--------+---------------------------------------------------------------------------------------------
++ public | cube   | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
++ public | ean13  | International European Article Number (EAN13)
++ public | isbn   | International Standard Book Number (ISBN)
++ public | isbn13 | International Standard Book Number 13 (ISBN13)
++ public | ismn   | International Standard Music Number (ISMN)
++ public | ismn13 | International Standard Music Number 13 (ISMN13)
++ public | issn   | International Standard Serial Number (ISSN)
++ public | issn13 | International Standard Serial Number 13 (ISSN13)
++ public | upc    | Universal Product Code (UPC)
++(9 rows)
+ 
+ create table foo (f1 cube, f2 int);
+ drop extension cube;  -- fail, foo.f1 requires it
+@@ -995,43 +1011,885 @@
+ drop extension cube;
+ -- list what's installed
+ \dT
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++                         List of data types
++ Schema |  Name  |                   Description                    
++--------+--------+--------------------------------------------------
++ public | ean13  | International European Article Number (EAN13)
++ public | isbn   | International Standard Book Number (ISBN)
++ public | isbn13 | International Standard Book Number 13 (ISBN13)
++ public | ismn   | International Standard Music Number (ISMN)
++ public | ismn13 | International Standard Music Number 13 (ISMN13)
++ public | issn   | International Standard Serial Number (ISSN)
++ public | issn13 | International Standard Serial Number 13 (ISSN13)
++ public | upc    | Universal Product Code (UPC)
++(8 rows)
+ 
+ \df
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                          List of functions
++ Schema |    Name     | Result data type | Argument data types | Type 
++--------+-------------+------------------+---------------------+------
++ public | btean13cmp  | integer          | ean13, ean13        | func
++ public | btean13cmp  | integer          | ean13, isbn         | func
++ public | btean13cmp  | integer          | ean13, isbn13       | func
++ public | btean13cmp  | integer          | ean13, ismn         | func
++ public | btean13cmp  | integer          | ean13, ismn13       | func
++ public | btean13cmp  | integer          | ean13, issn         | func
++ public | btean13cmp  | integer          | ean13, issn13       | func
++ public | btean13cmp  | integer          | ean13, upc          | func
++ public | btisbn13cmp | integer          | isbn13, ean13       | func
++ public | btisbn13cmp | integer          | isbn13, isbn        | func
++ public | btisbn13cmp | integer          | isbn13, isbn13      | func
++ public | btisbncmp   | integer          | isbn, ean13         | func
++ public | btisbncmp   | integer          | isbn, isbn          | func
++ public | btisbncmp   | integer          | isbn, isbn13        | func
++ public | btismn13cmp | integer          | ismn13, ean13       | func
++ public | btismn13cmp | integer          | ismn13, ismn        | func
++ public | btismn13cmp | integer          | ismn13, ismn13      | func
++ public | btismncmp   | integer          | ismn, ean13         | func
++ public | btismncmp   | integer          | ismn, ismn          | func
++ public | btismncmp   | integer          | ismn, ismn13        | func
++ public | btissn13cmp | integer          | issn13, ean13       | func
++ public | btissn13cmp | integer          | issn13, issn        | func
++ public | btissn13cmp | integer          | issn13, issn13      | func
++ public | btissncmp   | integer          | issn, ean13         | func
++ public | btissncmp   | integer          | issn, issn          | func
++ public | btissncmp   | integer          | issn, issn13        | func
++ public | btupccmp    | integer          | upc, ean13          | func
++ public | btupccmp    | integer          | upc, upc            | func
++ public | ean13_in    | ean13            | cstring             | func
++ public | ean13_out   | cstring          | ean13               | func
++ public | ean13_out   | cstring          | isbn13              | func
++ public | ean13_out   | cstring          | ismn13              | func
++ public | ean13_out   | cstring          | issn13              | func
++ public | hashean13   | integer          | ean13               | func
++ public | hashisbn    | integer          | isbn                | func
++ public | hashisbn13  | integer          | isbn13              | func
++ public | hashismn    | integer          | ismn                | func
++ public | hashismn13  | integer          | ismn13              | func
++ public | hashissn    | integer          | issn                | func
++ public | hashissn13  | integer          | issn13              | func
++ public | hashupc     | integer          | upc                 | func
++ public | is_valid    | boolean          | ean13               | func
++ public | is_valid    | boolean          | isbn                | func
++ public | is_valid    | boolean          | isbn13              | func
++ public | is_valid    | boolean          | ismn                | func
++ public | is_valid    | boolean          | ismn13              | func
++ public | is_valid    | boolean          | issn                | func
++ public | is_valid    | boolean          | issn13              | func
++ public | is_valid    | boolean          | upc                 | func
++ public | isbn        | isbn             | ean13               | func
++ public | isbn13      | isbn13           | ean13               | func
++ public | isbn13_in   | isbn13           | cstring             | func
++ public | isbn_in     | isbn             | cstring             | func
++ public | ismn        | ismn             | ean13               | func
++ public | ismn13      | ismn13           | ean13               | func
++ public | ismn13_in   | ismn13           | cstring             | func
++ public | ismn_in     | ismn             | cstring             | func
++ public | isn_out     | cstring          | isbn                | func
++ public | isn_out     | cstring          | ismn                | func
++ public | isn_out     | cstring          | issn                | func
++ public | isn_out     | cstring          | upc                 | func
++ public | isn_weak    | boolean          |                     | func
++ public | isn_weak    | boolean          | boolean             | func
++ public | isneq       | boolean          | ean13, ean13        | func
++ public | isneq       | boolean          | ean13, isbn         | func
++ public | isneq       | boolean          | ean13, isbn13       | func
++ public | isneq       | boolean          | ean13, ismn         | func
++ public | isneq       | boolean          | ean13, ismn13       | func
++ public | isneq       | boolean          | ean13, issn         | func
++ public | isneq       | boolean          | ean13, issn13       | func
++ public | isneq       | boolean          | ean13, upc          | func
++ public | isneq       | boolean          | isbn13, ean13       | func
++ public | isneq       | boolean          | isbn13, isbn        | func
++ public | isneq       | boolean          | isbn13, isbn13      | func
++ public | isneq       | boolean          | isbn, ean13         | func
++ public | isneq       | boolean          | isbn, isbn          | func
++ public | isneq       | boolean          | isbn, isbn13        | func
++ public | isneq       | boolean          | ismn13, ean13       | func
++ public | isneq       | boolean          | ismn13, ismn        | func
++ public | isneq       | boolean          | ismn13, ismn13      | func
++ public | isneq       | boolean          | ismn, ean13         | func
++ public | isneq       | boolean          | ismn, ismn          | func
++ public | isneq       | boolean          | ismn, ismn13        | func
++ public | isneq       | boolean          | issn13, ean13       | func
++ public | isneq       | boolean          | issn13, issn        | func
++ public | isneq       | boolean          | issn13, issn13      | func
++ public | isneq       | boolean          | issn, ean13         | func
++ public | isneq       | boolean          | issn, issn          | func
++ public | isneq       | boolean          | issn, issn13        | func
++ public | isneq       | boolean          | upc, ean13          | func
++ public | isneq       | boolean          | upc, upc            | func
++ public | isnge       | boolean          | ean13, ean13        | func
++ public | isnge       | boolean          | ean13, isbn         | func
++ public | isnge       | boolean          | ean13, isbn13       | func
++ public | isnge       | boolean          | ean13, ismn         | func
++ public | isnge       | boolean          | ean13, ismn13       | func
++ public | isnge       | boolean          | ean13, issn         | func
++ public | isnge       | boolean          | ean13, issn13       | func
++ public | isnge       | boolean          | ean13, upc          | func
++ public | isnge       | boolean          | isbn13, ean13       | func
++ public | isnge       | boolean          | isbn13, isbn        | func
++ public | isnge       | boolean          | isbn13, isbn13      | func
++ public | isnge       | boolean          | isbn, ean13         | func
++ public | isnge       | boolean          | isbn, isbn          | func
++ public | isnge       | boolean          | isbn, isbn13        | func
++ public | isnge       | boolean          | ismn13, ean13       | func
++ public | isnge       | boolean          | ismn13, ismn        | func
++ public | isnge       | boolean          | ismn13, ismn13      | func
++ public | isnge       | boolean          | ismn, ean13         | func
++ public | isnge       | boolean          | ismn, ismn          | func
++ public | isnge       | boolean          | ismn, ismn13        | func
++ public | isnge       | boolean          | issn13, ean13       | func
++ public | isnge       | boolean          | issn13, issn        | func
++ public | isnge       | boolean          | issn13, issn13      | func
++ public | isnge       | boolean          | issn, ean13         | func
++ public | isnge       | boolean          | issn, issn          | func
++ public | isnge       | boolean          | issn, issn13        | func
++ public | isnge       | boolean          | upc, ean13          | func
++ public | isnge       | boolean          | upc, upc            | func
++ public | isngt       | boolean          | ean13, ean13        | func
++ public | isngt       | boolean          | ean13, isbn         | func
++ public | isngt       | boolean          | ean13, isbn13       | func
++ public | isngt       | boolean          | ean13, ismn         | func
++ public | isngt       | boolean          | ean13, ismn13       | func
++ public | isngt       | boolean          | ean13, issn         | func
++ public | isngt       | boolean          | ean13, issn13       | func
++ public | isngt       | boolean          | ean13, upc          | func
++ public | isngt       | boolean          | isbn13, ean13       | func
++ public | isngt       | boolean          | isbn13, isbn        | func
++ public | isngt       | boolean          | isbn13, isbn13      | func
++ public | isngt       | boolean          | isbn, ean13         | func
++ public | isngt       | boolean          | isbn, isbn          | func
++ public | isngt       | boolean          | isbn, isbn13        | func
++ public | isngt       | boolean          | ismn13, ean13       | func
++ public | isngt       | boolean          | ismn13, ismn        | func
++ public | isngt       | boolean          | ismn13, ismn13      | func
++ public | isngt       | boolean          | ismn, ean13         | func
++ public | isngt       | boolean          | ismn, ismn          | func
++ public | isngt       | boolean          | ismn, ismn13        | func
++ public | isngt       | boolean          | issn13, ean13       | func
++ public | isngt       | boolean          | issn13, issn        | func
++ public | isngt       | boolean          | issn13, issn13      | func
++ public | isngt       | boolean          | issn, ean13         | func
++ public | isngt       | boolean          | issn, issn          | func
++ public | isngt       | boolean          | issn, issn13        | func
++ public | isngt       | boolean          | upc, ean13          | func
++ public | isngt       | boolean          | upc, upc            | func
++ public | isnle       | boolean          | ean13, ean13        | func
++ public | isnle       | boolean          | ean13, isbn         | func
++ public | isnle       | boolean          | ean13, isbn13       | func
++ public | isnle       | boolean          | ean13, ismn         | func
++ public | isnle       | boolean          | ean13, ismn13       | func
++ public | isnle       | boolean          | ean13, issn         | func
++ public | isnle       | boolean          | ean13, issn13       | func
++ public | isnle       | boolean          | ean13, upc          | func
++ public | isnle       | boolean          | isbn13, ean13       | func
++ public | isnle       | boolean          | isbn13, isbn        | func
++ public | isnle       | boolean          | isbn13, isbn13      | func
++ public | isnle       | boolean          | isbn, ean13         | func
++ public | isnle       | boolean          | isbn, isbn          | func
++ public | isnle       | boolean          | isbn, isbn13        | func
++ public | isnle       | boolean          | ismn13, ean13       | func
++ public | isnle       | boolean          | ismn13, ismn        | func
++ public | isnle       | boolean          | ismn13, ismn13      | func
++ public | isnle       | boolean          | ismn, ean13         | func
++ public | isnle       | boolean          | ismn, ismn          | func
++ public | isnle       | boolean          | ismn, ismn13        | func
++ public | isnle       | boolean          | issn13, ean13       | func
++ public | isnle       | boolean          | issn13, issn        | func
++ public | isnle       | boolean          | issn13, issn13      | func
++ public | isnle       | boolean          | issn, ean13         | func
++ public | isnle       | boolean          | issn, issn          | func
++ public | isnle       | boolean          | issn, issn13        | func
++ public | isnle       | boolean          | upc, ean13          | func
++ public | isnle       | boolean          | upc, upc            | func
++ public | isnlt       | boolean          | ean13, ean13        | func
++ public | isnlt       | boolean          | ean13, isbn         | func
++ public | isnlt       | boolean          | ean13, isbn13       | func
++ public | isnlt       | boolean          | ean13, ismn         | func
++ public | isnlt       | boolean          | ean13, ismn13       | func
++ public | isnlt       | boolean          | ean13, issn         | func
++ public | isnlt       | boolean          | ean13, issn13       | func
++ public | isnlt       | boolean          | ean13, upc          | func
++ public | isnlt       | boolean          | isbn13, ean13       | func
++ public | isnlt       | boolean          | isbn13, isbn        | func
++ public | isnlt       | boolean          | isbn13, isbn13      | func
++ public | isnlt       | boolean          | isbn, ean13         | func
++ public | isnlt       | boolean          | isbn, isbn          | func
++ public | isnlt       | boolean          | isbn, isbn13        | func
++ public | isnlt       | boolean          | ismn13, ean13       | func
++ public | isnlt       | boolean          | ismn13, ismn        | func
++ public | isnlt       | boolean          | ismn13, ismn13      | func
++ public | isnlt       | boolean          | ismn, ean13         | func
++ public | isnlt       | boolean          | ismn, ismn          | func
++ public | isnlt       | boolean          | ismn, ismn13        | func
++ public | isnlt       | boolean          | issn13, ean13       | func
++ public | isnlt       | boolean          | issn13, issn        | func
++ public | isnlt       | boolean          | issn13, issn13      | func
++ public | isnlt       | boolean          | issn, ean13         | func
++ public | isnlt       | boolean          | issn, issn          | func
++ public | isnlt       | boolean          | issn, issn13        | func
++ public | isnlt       | boolean          | upc, ean13          | func
++ public | isnlt       | boolean          | upc, upc            | func
++ public | isnne       | boolean          | ean13, ean13        | func
++ public | isnne       | boolean          | ean13, isbn         | func
++ public | isnne       | boolean          | ean13, isbn13       | func
++ public | isnne       | boolean          | ean13, ismn         | func
++ public | isnne       | boolean          | ean13, ismn13       | func
++ public | isnne       | boolean          | ean13, issn         | func
++ public | isnne       | boolean          | ean13, issn13       | func
++ public | isnne       | boolean          | ean13, upc          | func
++ public | isnne       | boolean          | isbn13, ean13       | func
++ public | isnne       | boolean          | isbn13, isbn        | func
++ public | isnne       | boolean          | isbn13, isbn13      | func
++ public | isnne       | boolean          | isbn, ean13         | func
++ public | isnne       | boolean          | isbn, isbn          | func
++ public | isnne       | boolean          | isbn, isbn13        | func
++ public | isnne       | boolean          | ismn13, ean13       | func
++ public | isnne       | boolean          | ismn13, ismn        | func
++ public | isnne       | boolean          | ismn13, ismn13      | func
++ public | isnne       | boolean          | ismn, ean13         | func
++ public | isnne       | boolean          | ismn, ismn          | func
++ public | isnne       | boolean          | ismn, ismn13        | func
++ public | isnne       | boolean          | issn13, ean13       | func
++ public | isnne       | boolean          | issn13, issn        | func
++ public | isnne       | boolean          | issn13, issn13      | func
++ public | isnne       | boolean          | issn, ean13         | func
++ public | isnne       | boolean          | issn, issn          | func
++ public | isnne       | boolean          | issn, issn13        | func
++ public | isnne       | boolean          | upc, ean13          | func
++ public | isnne       | boolean          | upc, upc            | func
++ public | issn        | issn             | ean13               | func
++ public | issn13      | issn13           | ean13               | func
++ public | issn13_in   | issn13           | cstring             | func
++ public | issn_in     | issn             | cstring             | func
++ public | make_valid  | ean13            | ean13               | func
++ public | make_valid  | isbn             | isbn                | func
++ public | make_valid  | isbn13           | isbn13              | func
++ public | make_valid  | ismn             | ismn                | func
++ public | make_valid  | ismn13           | ismn13              | func
++ public | make_valid  | issn             | issn                | func
++ public | make_valid  | issn13           | issn13              | func
++ public | make_valid  | upc              | upc                 | func
++ public | upc         | upc              | ean13               | func
++ public | upc_in      | upc              | cstring             | func
++(245 rows)
+ 
+ \do
+                              List of operators
+  Schema | Name | Left arg type | Right arg type | Result type | Description 
+ --------+------+---------------+----------------+-------------+-------------
+-(0 rows)
++ public | <    | ean13         | ean13          | boolean     | 
++ public | <    | ean13         | isbn           | boolean     | 
++ public | <    | ean13         | isbn13         | boolean     | 
++ public | <    | ean13         | ismn           | boolean     | 
++ public | <    | ean13         | ismn13         | boolean     | 
++ public | <    | ean13         | issn           | boolean     | 
++ public | <    | ean13         | issn13         | boolean     | 
++ public | <    | ean13         | upc            | boolean     | 
++ public | <    | isbn          | ean13          | boolean     | 
++ public | <    | isbn          | isbn           | boolean     | 
++ public | <    | isbn          | isbn13         | boolean     | 
++ public | <    | isbn13        | ean13          | boolean     | 
++ public | <    | isbn13        | isbn           | boolean     | 
++ public | <    | isbn13        | isbn13         | boolean     | 
++ public | <    | ismn          | ean13          | boolean     | 
++ public | <    | ismn          | ismn           | boolean     | 
++ public | <    | ismn          | ismn13         | boolean     | 
++ public | <    | ismn13        | ean13          | boolean     | 
++ public | <    | ismn13        | ismn           | boolean     | 
++ public | <    | ismn13        | ismn13         | boolean     | 
++ public | <    | issn          | ean13          | boolean     | 
++ public | <    | issn          | issn           | boolean     | 
++ public | <    | issn          | issn13         | boolean     | 
++ public | <    | issn13        | ean13          | boolean     | 
++ public | <    | issn13        | issn           | boolean     | 
++ public | <    | issn13        | issn13         | boolean     | 
++ public | <    | upc           | ean13          | boolean     | 
++ public | <    | upc           | upc            | boolean     | 
++ public | <=   | ean13         | ean13          | boolean     | 
++ public | <=   | ean13         | isbn           | boolean     | 
++ public | <=   | ean13         | isbn13         | boolean     | 
++ public | <=   | ean13         | ismn           | boolean     | 
++ public | <=   | ean13         | ismn13         | boolean     | 
++ public | <=   | ean13         | issn           | boolean     | 
++ public | <=   | ean13         | issn13         | boolean     | 
++ public | <=   | ean13         | upc            | boolean     | 
++ public | <=   | isbn          | ean13          | boolean     | 
++ public | <=   | isbn          | isbn           | boolean     | 
++ public | <=   | isbn          | isbn13         | boolean     | 
++ public | <=   | isbn13        | ean13          | boolean     | 
++ public | <=   | isbn13        | isbn           | boolean     | 
++ public | <=   | isbn13        | isbn13         | boolean     | 
++ public | <=   | ismn          | ean13          | boolean     | 
++ public | <=   | ismn          | ismn           | boolean     | 
++ public | <=   | ismn          | ismn13         | boolean     | 
++ public | <=   | ismn13        | ean13          | boolean     | 
++ public | <=   | ismn13        | ismn           | boolean     | 
++ public | <=   | ismn13        | ismn13         | boolean     | 
++ public | <=   | issn          | ean13          | boolean     | 
++ public | <=   | issn          | issn           | boolean     | 
++ public | <=   | issn          | issn13         | boolean     | 
++ public | <=   | issn13        | ean13          | boolean     | 
++ public | <=   | issn13        | issn           | boolean     | 
++ public | <=   | issn13        | issn13         | boolean     | 
++ public | <=   | upc           | ean13          | boolean     | 
++ public | <=   | upc           | upc            | boolean     | 
++ public | <>   | ean13         | ean13          | boolean     | 
++ public | <>   | ean13         | isbn           | boolean     | 
++ public | <>   | ean13         | isbn13         | boolean     | 
++ public | <>   | ean13         | ismn           | boolean     | 
++ public | <>   | ean13         | ismn13         | boolean     | 
++ public | <>   | ean13         | issn           | boolean     | 
++ public | <>   | ean13         | issn13         | boolean     | 
++ public | <>   | ean13         | upc            | boolean     | 
++ public | <>   | isbn          | ean13          | boolean     | 
++ public | <>   | isbn          | isbn           | boolean     | 
++ public | <>   | isbn          | isbn13         | boolean     | 
++ public | <>   | isbn13        | ean13          | boolean     | 
++ public | <>   | isbn13        | isbn           | boolean     | 
++ public | <>   | isbn13        | isbn13         | boolean     | 
++ public | <>   | ismn          | ean13          | boolean     | 
++ public | <>   | ismn          | ismn           | boolean     | 
++ public | <>   | ismn          | ismn13         | boolean     | 
++ public | <>   | ismn13        | ean13          | boolean     | 
++ public | <>   | ismn13        | ismn           | boolean     | 
++ public | <>   | ismn13        | ismn13         | boolean     | 
++ public | <>   | issn          | ean13          | boolean     | 
++ public | <>   | issn          | issn           | boolean     | 
++ public | <>   | issn          | issn13         | boolean     | 
++ public | <>   | issn13        | ean13          | boolean     | 
++ public | <>   | issn13        | issn           | boolean     | 
++ public | <>   | issn13        | issn13         | boolean     | 
++ public | <>   | upc           | ean13          | boolean     | 
++ public | <>   | upc           | upc            | boolean     | 
++ public | =    | ean13         | ean13          | boolean     | 
++ public | =    | ean13         | isbn           | boolean     | 
++ public | =    | ean13         | isbn13         | boolean     | 
++ public | =    | ean13         | ismn           | boolean     | 
++ public | =    | ean13         | ismn13         | boolean     | 
++ public | =    | ean13         | issn           | boolean     | 
++ public | =    | ean13         | issn13         | boolean     | 
++ public | =    | ean13         | upc            | boolean     | 
++ public | =    | isbn          | ean13          | boolean     | 
++ public | =    | isbn          | isbn           | boolean     | 
++ public | =    | isbn          | isbn13         | boolean     | 
++ public | =    | isbn13        | ean13          | boolean     | 
++ public | =    | isbn13        | isbn           | boolean     | 
++ public | =    | isbn13        | isbn13         | boolean     | 
++ public | =    | ismn          | ean13          | boolean     | 
++ public | =    | ismn          | ismn           | boolean     | 
++ public | =    | ismn          | ismn13         | boolean     | 
++ public | =    | ismn13        | ean13          | boolean     | 
++ public | =    | ismn13        | ismn           | boolean     | 
++ public | =    | ismn13        | ismn13         | boolean     | 
++ public | =    | issn          | ean13          | boolean     | 
++ public | =    | issn          | issn           | boolean     | 
++ public | =    | issn          | issn13         | boolean     | 
++ public | =    | issn13        | ean13          | boolean     | 
++ public | =    | issn13        | issn           | boolean     | 
++ public | =    | issn13        | issn13         | boolean     | 
++ public | =    | upc           | ean13          | boolean     | 
++ public | =    | upc           | upc            | boolean     | 
++ public | >    | ean13         | ean13          | boolean     | 
++ public | >    | ean13         | isbn           | boolean     | 
++ public | >    | ean13         | isbn13         | boolean     | 
++ public | >    | ean13         | ismn           | boolean     | 
++ public | >    | ean13         | ismn13         | boolean     | 
++ public | >    | ean13         | issn           | boolean     | 
++ public | >    | ean13         | issn13         | boolean     | 
++ public | >    | ean13         | upc            | boolean     | 
++ public | >    | isbn          | ean13          | boolean     | 
++ public | >    | isbn          | isbn           | boolean     | 
++ public | >    | isbn          | isbn13         | boolean     | 
++ public | >    | isbn13        | ean13          | boolean     | 
++ public | >    | isbn13        | isbn           | boolean     | 
++ public | >    | isbn13        | isbn13         | boolean     | 
++ public | >    | ismn          | ean13          | boolean     | 
++ public | >    | ismn          | ismn           | boolean     | 
++ public | >    | ismn          | ismn13         | boolean     | 
++ public | >    | ismn13        | ean13          | boolean     | 
++ public | >    | ismn13        | ismn           | boolean     | 
++ public | >    | ismn13        | ismn13         | boolean     | 
++ public | >    | issn          | ean13          | boolean     | 
++ public | >    | issn          | issn           | boolean     | 
++ public | >    | issn          | issn13         | boolean     | 
++ public | >    | issn13        | ean13          | boolean     | 
++ public | >    | issn13        | issn           | boolean     | 
++ public | >    | issn13        | issn13         | boolean     | 
++ public | >    | upc           | ean13          | boolean     | 
++ public | >    | upc           | upc            | boolean     | 
++ public | >=   | ean13         | ean13          | boolean     | 
++ public | >=   | ean13         | isbn           | boolean     | 
++ public | >=   | ean13         | isbn13         | boolean     | 
++ public | >=   | ean13         | ismn           | boolean     | 
++ public | >=   | ean13         | ismn13         | boolean     | 
++ public | >=   | ean13         | issn           | boolean     | 
++ public | >=   | ean13         | issn13         | boolean     | 
++ public | >=   | ean13         | upc            | boolean     | 
++ public | >=   | isbn          | ean13          | boolean     | 
++ public | >=   | isbn          | isbn           | boolean     | 
++ public | >=   | isbn          | isbn13         | boolean     | 
++ public | >=   | isbn13        | ean13          | boolean     | 
++ public | >=   | isbn13        | isbn           | boolean     | 
++ public | >=   | isbn13        | isbn13         | boolean     | 
++ public | >=   | ismn          | ean13          | boolean     | 
++ public | >=   | ismn          | ismn           | boolean     | 
++ public | >=   | ismn          | ismn13         | boolean     | 
++ public | >=   | ismn13        | ean13          | boolean     | 
++ public | >=   | ismn13        | ismn           | boolean     | 
++ public | >=   | ismn13        | ismn13         | boolean     | 
++ public | >=   | issn          | ean13          | boolean     | 
++ public | >=   | issn          | issn           | boolean     | 
++ public | >=   | issn          | issn13         | boolean     | 
++ public | >=   | issn13        | ean13          | boolean     | 
++ public | >=   | issn13        | issn           | boolean     | 
++ public | >=   | issn13        | issn13         | boolean     | 
++ public | >=   | upc           | ean13          | boolean     | 
++ public | >=   | upc           | upc            | boolean     | 
++(168 rows)
+ 
+ create schema c;
+ create extension cube with schema c;
+ -- list what's installed
+ \dT public.*
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++                         List of data types
++ Schema |  Name  |                   Description                    
++--------+--------+--------------------------------------------------
++ public | ean13  | International European Article Number (EAN13)
++ public | isbn   | International Standard Book Number (ISBN)
++ public | isbn13 | International Standard Book Number 13 (ISBN13)
++ public | ismn   | International Standard Music Number (ISMN)
++ public | ismn13 | International Standard Music Number 13 (ISMN13)
++ public | issn   | International Standard Serial Number (ISSN)
++ public | issn13 | International Standard Serial Number 13 (ISSN13)
++ public | upc    | Universal Product Code (UPC)
++(8 rows)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                          List of functions
++ Schema |    Name     | Result data type | Argument data types | Type 
++--------+-------------+------------------+---------------------+------
++ public | btean13cmp  | integer          | ean13, ean13        | func
++ public | btean13cmp  | integer          | ean13, isbn         | func
++ public | btean13cmp  | integer          | ean13, isbn13       | func
++ public | btean13cmp  | integer          | ean13, ismn         | func
++ public | btean13cmp  | integer          | ean13, ismn13       | func
++ public | btean13cmp  | integer          | ean13, issn         | func
++ public | btean13cmp  | integer          | ean13, issn13       | func
++ public | btean13cmp  | integer          | ean13, upc          | func
++ public | btisbn13cmp | integer          | isbn13, ean13       | func
++ public | btisbn13cmp | integer          | isbn13, isbn        | func
++ public | btisbn13cmp | integer          | isbn13, isbn13      | func
++ public | btisbncmp   | integer          | isbn, ean13         | func
++ public | btisbncmp   | integer          | isbn, isbn          | func
++ public | btisbncmp   | integer          | isbn, isbn13        | func
++ public | btismn13cmp | integer          | ismn13, ean13       | func
++ public | btismn13cmp | integer          | ismn13, ismn        | func
++ public | btismn13cmp | integer          | ismn13, ismn13      | func
++ public | btismncmp   | integer          | ismn, ean13         | func
++ public | btismncmp   | integer          | ismn, ismn          | func
++ public | btismncmp   | integer          | ismn, ismn13        | func
++ public | btissn13cmp | integer          | issn13, ean13       | func
++ public | btissn13cmp | integer          | issn13, issn        | func
++ public | btissn13cmp | integer          | issn13, issn13      | func
++ public | btissncmp   | integer          | issn, ean13         | func
++ public | btissncmp   | integer          | issn, issn          | func
++ public | btissncmp   | integer          | issn, issn13        | func
++ public | btupccmp    | integer          | upc, ean13          | func
++ public | btupccmp    | integer          | upc, upc            | func
++ public | ean13_in    | ean13            | cstring             | func
++ public | ean13_out   | cstring          | ean13               | func
++ public | ean13_out   | cstring          | isbn13              | func
++ public | ean13_out   | cstring          | ismn13              | func
++ public | ean13_out   | cstring          | issn13              | func
++ public | hashean13   | integer          | ean13               | func
++ public | hashisbn    | integer          | isbn                | func
++ public | hashisbn13  | integer          | isbn13              | func
++ public | hashismn    | integer          | ismn                | func
++ public | hashismn13  | integer          | ismn13              | func
++ public | hashissn    | integer          | issn                | func
++ public | hashissn13  | integer          | issn13              | func
++ public | hashupc     | integer          | upc                 | func
++ public | is_valid    | boolean          | ean13               | func
++ public | is_valid    | boolean          | isbn                | func
++ public | is_valid    | boolean          | isbn13              | func
++ public | is_valid    | boolean          | ismn                | func
++ public | is_valid    | boolean          | ismn13              | func
++ public | is_valid    | boolean          | issn                | func
++ public | is_valid    | boolean          | issn13              | func
++ public | is_valid    | boolean          | upc                 | func
++ public | isbn        | isbn             | ean13               | func
++ public | isbn13      | isbn13           | ean13               | func
++ public | isbn13_in   | isbn13           | cstring             | func
++ public | isbn_in     | isbn             | cstring             | func
++ public | ismn        | ismn             | ean13               | func
++ public | ismn13      | ismn13           | ean13               | func
++ public | ismn13_in   | ismn13           | cstring             | func
++ public | ismn_in     | ismn             | cstring             | func
++ public | isn_out     | cstring          | isbn                | func
++ public | isn_out     | cstring          | ismn                | func
++ public | isn_out     | cstring          | issn                | func
++ public | isn_out     | cstring          | upc                 | func
++ public | isn_weak    | boolean          |                     | func
++ public | isn_weak    | boolean          | boolean             | func
++ public | isneq       | boolean          | ean13, ean13        | func
++ public | isneq       | boolean          | ean13, isbn         | func
++ public | isneq       | boolean          | ean13, isbn13       | func
++ public | isneq       | boolean          | ean13, ismn         | func
++ public | isneq       | boolean          | ean13, ismn13       | func
++ public | isneq       | boolean          | ean13, issn         | func
++ public | isneq       | boolean          | ean13, issn13       | func
++ public | isneq       | boolean          | ean13, upc          | func
++ public | isneq       | boolean          | isbn13, ean13       | func
++ public | isneq       | boolean          | isbn13, isbn        | func
++ public | isneq       | boolean          | isbn13, isbn13      | func
++ public | isneq       | boolean          | isbn, ean13         | func
++ public | isneq       | boolean          | isbn, isbn          | func
++ public | isneq       | boolean          | isbn, isbn13        | func
++ public | isneq       | boolean          | ismn13, ean13       | func
++ public | isneq       | boolean          | ismn13, ismn        | func
++ public | isneq       | boolean          | ismn13, ismn13      | func
++ public | isneq       | boolean          | ismn, ean13         | func
++ public | isneq       | boolean          | ismn, ismn          | func
++ public | isneq       | boolean          | ismn, ismn13        | func
++ public | isneq       | boolean          | issn13, ean13       | func
++ public | isneq       | boolean          | issn13, issn        | func
++ public | isneq       | boolean          | issn13, issn13      | func
++ public | isneq       | boolean          | issn, ean13         | func
++ public | isneq       | boolean          | issn, issn          | func
++ public | isneq       | boolean          | issn, issn13        | func
++ public | isneq       | boolean          | upc, ean13          | func
++ public | isneq       | boolean          | upc, upc            | func
++ public | isnge       | boolean          | ean13, ean13        | func
++ public | isnge       | boolean          | ean13, isbn         | func
++ public | isnge       | boolean          | ean13, isbn13       | func
++ public | isnge       | boolean          | ean13, ismn         | func
++ public | isnge       | boolean          | ean13, ismn13       | func
++ public | isnge       | boolean          | ean13, issn         | func
++ public | isnge       | boolean          | ean13, issn13       | func
++ public | isnge       | boolean          | ean13, upc          | func
++ public | isnge       | boolean          | isbn13, ean13       | func
++ public | isnge       | boolean          | isbn13, isbn        | func
++ public | isnge       | boolean          | isbn13, isbn13      | func
++ public | isnge       | boolean          | isbn, ean13         | func
++ public | isnge       | boolean          | isbn, isbn          | func
++ public | isnge       | boolean          | isbn, isbn13        | func
++ public | isnge       | boolean          | ismn13, ean13       | func
++ public | isnge       | boolean          | ismn13, ismn        | func
++ public | isnge       | boolean          | ismn13, ismn13      | func
++ public | isnge       | boolean          | ismn, ean13         | func
++ public | isnge       | boolean          | ismn, ismn          | func
++ public | isnge       | boolean          | ismn, ismn13        | func
++ public | isnge       | boolean          | issn13, ean13       | func
++ public | isnge       | boolean          | issn13, issn        | func
++ public | isnge       | boolean          | issn13, issn13      | func
++ public | isnge       | boolean          | issn, ean13         | func
++ public | isnge       | boolean          | issn, issn          | func
++ public | isnge       | boolean          | issn, issn13        | func
++ public | isnge       | boolean          | upc, ean13          | func
++ public | isnge       | boolean          | upc, upc            | func
++ public | isngt       | boolean          | ean13, ean13        | func
++ public | isngt       | boolean          | ean13, isbn         | func
++ public | isngt       | boolean          | ean13, isbn13       | func
++ public | isngt       | boolean          | ean13, ismn         | func
++ public | isngt       | boolean          | ean13, ismn13       | func
++ public | isngt       | boolean          | ean13, issn         | func
++ public | isngt       | boolean          | ean13, issn13       | func
++ public | isngt       | boolean          | ean13, upc          | func
++ public | isngt       | boolean          | isbn13, ean13       | func
++ public | isngt       | boolean          | isbn13, isbn        | func
++ public | isngt       | boolean          | isbn13, isbn13      | func
++ public | isngt       | boolean          | isbn, ean13         | func
++ public | isngt       | boolean          | isbn, isbn          | func
++ public | isngt       | boolean          | isbn, isbn13        | func
++ public | isngt       | boolean          | ismn13, ean13       | func
++ public | isngt       | boolean          | ismn13, ismn        | func
++ public | isngt       | boolean          | ismn13, ismn13      | func
++ public | isngt       | boolean          | ismn, ean13         | func
++ public | isngt       | boolean          | ismn, ismn          | func
++ public | isngt       | boolean          | ismn, ismn13        | func
++ public | isngt       | boolean          | issn13, ean13       | func
++ public | isngt       | boolean          | issn13, issn        | func
++ public | isngt       | boolean          | issn13, issn13      | func
++ public | isngt       | boolean          | issn, ean13         | func
++ public | isngt       | boolean          | issn, issn          | func
++ public | isngt       | boolean          | issn, issn13        | func
++ public | isngt       | boolean          | upc, ean13          | func
++ public | isngt       | boolean          | upc, upc            | func
++ public | isnle       | boolean          | ean13, ean13        | func
++ public | isnle       | boolean          | ean13, isbn         | func
++ public | isnle       | boolean          | ean13, isbn13       | func
++ public | isnle       | boolean          | ean13, ismn         | func
++ public | isnle       | boolean          | ean13, ismn13       | func
++ public | isnle       | boolean          | ean13, issn         | func
++ public | isnle       | boolean          | ean13, issn13       | func
++ public | isnle       | boolean          | ean13, upc          | func
++ public | isnle       | boolean          | isbn13, ean13       | func
++ public | isnle       | boolean          | isbn13, isbn        | func
++ public | isnle       | boolean          | isbn13, isbn13      | func
++ public | isnle       | boolean          | isbn, ean13         | func
++ public | isnle       | boolean          | isbn, isbn          | func
++ public | isnle       | boolean          | isbn, isbn13        | func
++ public | isnle       | boolean          | ismn13, ean13       | func
++ public | isnle       | boolean          | ismn13, ismn        | func
++ public | isnle       | boolean          | ismn13, ismn13      | func
++ public | isnle       | boolean          | ismn, ean13         | func
++ public | isnle       | boolean          | ismn, ismn          | func
++ public | isnle       | boolean          | ismn, ismn13        | func
++ public | isnle       | boolean          | issn13, ean13       | func
++ public | isnle       | boolean          | issn13, issn        | func
++ public | isnle       | boolean          | issn13, issn13      | func
++ public | isnle       | boolean          | issn, ean13         | func
++ public | isnle       | boolean          | issn, issn          | func
++ public | isnle       | boolean          | issn, issn13        | func
++ public | isnle       | boolean          | upc, ean13          | func
++ public | isnle       | boolean          | upc, upc            | func
++ public | isnlt       | boolean          | ean13, ean13        | func
++ public | isnlt       | boolean          | ean13, isbn         | func
++ public | isnlt       | boolean          | ean13, isbn13       | func
++ public | isnlt       | boolean          | ean13, ismn         | func
++ public | isnlt       | boolean          | ean13, ismn13       | func
++ public | isnlt       | boolean          | ean13, issn         | func
++ public | isnlt       | boolean          | ean13, issn13       | func
++ public | isnlt       | boolean          | ean13, upc          | func
++ public | isnlt       | boolean          | isbn13, ean13       | func
++ public | isnlt       | boolean          | isbn13, isbn        | func
++ public | isnlt       | boolean          | isbn13, isbn13      | func
++ public | isnlt       | boolean          | isbn, ean13         | func
++ public | isnlt       | boolean          | isbn, isbn          | func
++ public | isnlt       | boolean          | isbn, isbn13        | func
++ public | isnlt       | boolean          | ismn13, ean13       | func
++ public | isnlt       | boolean          | ismn13, ismn        | func
++ public | isnlt       | boolean          | ismn13, ismn13      | func
++ public | isnlt       | boolean          | ismn, ean13         | func
++ public | isnlt       | boolean          | ismn, ismn          | func
++ public | isnlt       | boolean          | ismn, ismn13        | func
++ public | isnlt       | boolean          | issn13, ean13       | func
++ public | isnlt       | boolean          | issn13, issn        | func
++ public | isnlt       | boolean          | issn13, issn13      | func
++ public | isnlt       | boolean          | issn, ean13         | func
++ public | isnlt       | boolean          | issn, issn          | func
++ public | isnlt       | boolean          | issn, issn13        | func
++ public | isnlt       | boolean          | upc, ean13          | func
++ public | isnlt       | boolean          | upc, upc            | func
++ public | isnne       | boolean          | ean13, ean13        | func
++ public | isnne       | boolean          | ean13, isbn         | func
++ public | isnne       | boolean          | ean13, isbn13       | func
++ public | isnne       | boolean          | ean13, ismn         | func
++ public | isnne       | boolean          | ean13, ismn13       | func
++ public | isnne       | boolean          | ean13, issn         | func
++ public | isnne       | boolean          | ean13, issn13       | func
++ public | isnne       | boolean          | ean13, upc          | func
++ public | isnne       | boolean          | isbn13, ean13       | func
++ public | isnne       | boolean          | isbn13, isbn        | func
++ public | isnne       | boolean          | isbn13, isbn13      | func
++ public | isnne       | boolean          | isbn, ean13         | func
++ public | isnne       | boolean          | isbn, isbn          | func
++ public | isnne       | boolean          | isbn, isbn13        | func
++ public | isnne       | boolean          | ismn13, ean13       | func
++ public | isnne       | boolean          | ismn13, ismn        | func
++ public | isnne       | boolean          | ismn13, ismn13      | func
++ public | isnne       | boolean          | ismn, ean13         | func
++ public | isnne       | boolean          | ismn, ismn          | func
++ public | isnne       | boolean          | ismn, ismn13        | func
++ public | isnne       | boolean          | issn13, ean13       | func
++ public | isnne       | boolean          | issn13, issn        | func
++ public | isnne       | boolean          | issn13, issn13      | func
++ public | isnne       | boolean          | issn, ean13         | func
++ public | isnne       | boolean          | issn, issn          | func
++ public | isnne       | boolean          | issn, issn13        | func
++ public | isnne       | boolean          | upc, ean13          | func
++ public | isnne       | boolean          | upc, upc            | func
++ public | issn        | issn             | ean13               | func
++ public | issn13      | issn13           | ean13               | func
++ public | issn13_in   | issn13           | cstring             | func
++ public | issn_in     | issn             | cstring             | func
++ public | make_valid  | ean13            | ean13               | func
++ public | make_valid  | isbn             | isbn                | func
++ public | make_valid  | isbn13           | isbn13              | func
++ public | make_valid  | ismn             | ismn                | func
++ public | make_valid  | ismn13           | ismn13              | func
++ public | make_valid  | issn             | issn                | func
++ public | make_valid  | issn13           | issn13              | func
++ public | make_valid  | upc              | upc                 | func
++ public | upc         | upc              | ean13               | func
++ public | upc_in      | upc              | cstring             | func
++(245 rows)
+ 
+ \do public.*
+                              List of operators
+  Schema | Name | Left arg type | Right arg type | Result type | Description 
+ --------+------+---------------+----------------+-------------+-------------
+-(0 rows)
++ public | <    | ean13         | ean13          | boolean     | 
++ public | <    | ean13         | isbn           | boolean     | 
++ public | <    | ean13         | isbn13         | boolean     | 
++ public | <    | ean13         | ismn           | boolean     | 
++ public | <    | ean13         | ismn13         | boolean     | 
++ public | <    | ean13         | issn           | boolean     | 
++ public | <    | ean13         | issn13         | boolean     | 
++ public | <    | ean13         | upc            | boolean     | 
++ public | <    | isbn          | ean13          | boolean     | 
++ public | <    | isbn          | isbn           | boolean     | 
++ public | <    | isbn          | isbn13         | boolean     | 
++ public | <    | isbn13        | ean13          | boolean     | 
++ public | <    | isbn13        | isbn           | boolean     | 
++ public | <    | isbn13        | isbn13         | boolean     | 
++ public | <    | ismn          | ean13          | boolean     | 
++ public | <    | ismn          | ismn           | boolean     | 
++ public | <    | ismn          | ismn13         | boolean     | 
++ public | <    | ismn13        | ean13          | boolean     | 
++ public | <    | ismn13        | ismn           | boolean     | 
++ public | <    | ismn13        | ismn13         | boolean     | 
++ public | <    | issn          | ean13          | boolean     | 
++ public | <    | issn          | issn           | boolean     | 
++ public | <    | issn          | issn13         | boolean     | 
++ public | <    | issn13        | ean13          | boolean     | 
++ public | <    | issn13        | issn           | boolean     | 
++ public | <    | issn13        | issn13         | boolean     | 
++ public | <    | upc           | ean13          | boolean     | 
++ public | <    | upc           | upc            | boolean     | 
++ public | <=   | ean13         | ean13          | boolean     | 
++ public | <=   | ean13         | isbn           | boolean     | 
++ public | <=   | ean13         | isbn13         | boolean     | 
++ public | <=   | ean13         | ismn           | boolean     | 
++ public | <=   | ean13         | ismn13         | boolean     | 
++ public | <=   | ean13         | issn           | boolean     | 
++ public | <=   | ean13         | issn13         | boolean     | 
++ public | <=   | ean13         | upc            | boolean     | 
++ public | <=   | isbn          | ean13          | boolean     | 
++ public | <=   | isbn          | isbn           | boolean     | 
++ public | <=   | isbn          | isbn13         | boolean     | 
++ public | <=   | isbn13        | ean13          | boolean     | 
++ public | <=   | isbn13        | isbn           | boolean     | 
++ public | <=   | isbn13        | isbn13         | boolean     | 
++ public | <=   | ismn          | ean13          | boolean     | 
++ public | <=   | ismn          | ismn           | boolean     | 
++ public | <=   | ismn          | ismn13         | boolean     | 
++ public | <=   | ismn13        | ean13          | boolean     | 
++ public | <=   | ismn13        | ismn           | boolean     | 
++ public | <=   | ismn13        | ismn13         | boolean     | 
++ public | <=   | issn          | ean13          | boolean     | 
++ public | <=   | issn          | issn           | boolean     | 
++ public | <=   | issn          | issn13         | boolean     | 
++ public | <=   | issn13        | ean13          | boolean     | 
++ public | <=   | issn13        | issn           | boolean     | 
++ public | <=   | issn13        | issn13         | boolean     | 
++ public | <=   | upc           | ean13          | boolean     | 
++ public | <=   | upc           | upc            | boolean     | 
++ public | <>   | ean13         | ean13          | boolean     | 
++ public | <>   | ean13         | isbn           | boolean     | 
++ public | <>   | ean13         | isbn13         | boolean     | 
++ public | <>   | ean13         | ismn           | boolean     | 
++ public | <>   | ean13         | ismn13         | boolean     | 
++ public | <>   | ean13         | issn           | boolean     | 
++ public | <>   | ean13         | issn13         | boolean     | 
++ public | <>   | ean13         | upc            | boolean     | 
++ public | <>   | isbn          | ean13          | boolean     | 
++ public | <>   | isbn          | isbn           | boolean     | 
++ public | <>   | isbn          | isbn13         | boolean     | 
++ public | <>   | isbn13        | ean13          | boolean     | 
++ public | <>   | isbn13        | isbn           | boolean     | 
++ public | <>   | isbn13        | isbn13         | boolean     | 
++ public | <>   | ismn          | ean13          | boolean     | 
++ public | <>   | ismn          | ismn           | boolean     | 
++ public | <>   | ismn          | ismn13         | boolean     | 
++ public | <>   | ismn13        | ean13          | boolean     | 
++ public | <>   | ismn13        | ismn           | boolean     | 
++ public | <>   | ismn13        | ismn13         | boolean     | 
++ public | <>   | issn          | ean13          | boolean     | 
++ public | <>   | issn          | issn           | boolean     | 
++ public | <>   | issn          | issn13         | boolean     | 
++ public | <>   | issn13        | ean13          | boolean     | 
++ public | <>   | issn13        | issn           | boolean     | 
++ public | <>   | issn13        | issn13         | boolean     | 
++ public | <>   | upc           | ean13          | boolean     | 
++ public | <>   | upc           | upc            | boolean     | 
++ public | =    | ean13         | ean13          | boolean     | 
++ public | =    | ean13         | isbn           | boolean     | 
++ public | =    | ean13         | isbn13         | boolean     | 
++ public | =    | ean13         | ismn           | boolean     | 
++ public | =    | ean13         | ismn13         | boolean     | 
++ public | =    | ean13         | issn           | boolean     | 
++ public | =    | ean13         | issn13         | boolean     | 
++ public | =    | ean13         | upc            | boolean     | 
++ public | =    | isbn          | ean13          | boolean     | 
++ public | =    | isbn          | isbn           | boolean     | 
++ public | =    | isbn          | isbn13         | boolean     | 
++ public | =    | isbn13        | ean13          | boolean     | 
++ public | =    | isbn13        | isbn           | boolean     | 
++ public | =    | isbn13        | isbn13         | boolean     | 
++ public | =    | ismn          | ean13          | boolean     | 
++ public | =    | ismn          | ismn           | boolean     | 
++ public | =    | ismn          | ismn13         | boolean     | 
++ public | =    | ismn13        | ean13          | boolean     | 
++ public | =    | ismn13        | ismn           | boolean     | 
++ public | =    | ismn13        | ismn13         | boolean     | 
++ public | =    | issn          | ean13          | boolean     | 
++ public | =    | issn          | issn           | boolean     | 
++ public | =    | issn          | issn13         | boolean     | 
++ public | =    | issn13        | ean13          | boolean     | 
++ public | =    | issn13        | issn           | boolean     | 
++ public | =    | issn13        | issn13         | boolean     | 
++ public | =    | upc           | ean13          | boolean     | 
++ public | =    | upc           | upc            | boolean     | 
++ public | >    | ean13         | ean13          | boolean     | 
++ public | >    | ean13         | isbn           | boolean     | 
++ public | >    | ean13         | isbn13         | boolean     | 
++ public | >    | ean13         | ismn           | boolean     | 
++ public | >    | ean13         | ismn13         | boolean     | 
++ public | >    | ean13         | issn           | boolean     | 
++ public | >    | ean13         | issn13         | boolean     | 
++ public | >    | ean13         | upc            | boolean     | 
++ public | >    | isbn          | ean13          | boolean     | 
++ public | >    | isbn          | isbn           | boolean     | 
++ public | >    | isbn          | isbn13         | boolean     | 
++ public | >    | isbn13        | ean13          | boolean     | 
++ public | >    | isbn13        | isbn           | boolean     | 
++ public | >    | isbn13        | isbn13         | boolean     | 
++ public | >    | ismn          | ean13          | boolean     | 
++ public | >    | ismn          | ismn           | boolean     | 
++ public | >    | ismn          | ismn13         | boolean     | 
++ public | >    | ismn13        | ean13          | boolean     | 
++ public | >    | ismn13        | ismn           | boolean     | 
++ public | >    | ismn13        | ismn13         | boolean     | 
++ public | >    | issn          | ean13          | boolean     | 
++ public | >    | issn          | issn           | boolean     | 
++ public | >    | issn          | issn13         | boolean     | 
++ public | >    | issn13        | ean13          | boolean     | 
++ public | >    | issn13        | issn           | boolean     | 
++ public | >    | issn13        | issn13         | boolean     | 
++ public | >    | upc           | ean13          | boolean     | 
++ public | >    | upc           | upc            | boolean     | 
++ public | >=   | ean13         | ean13          | boolean     | 
++ public | >=   | ean13         | isbn           | boolean     | 
++ public | >=   | ean13         | isbn13         | boolean     | 
++ public | >=   | ean13         | ismn           | boolean     | 
++ public | >=   | ean13         | ismn13         | boolean     | 
++ public | >=   | ean13         | issn           | boolean     | 
++ public | >=   | ean13         | issn13         | boolean     | 
++ public | >=   | ean13         | upc            | boolean     | 
++ public | >=   | isbn          | ean13          | boolean     | 
++ public | >=   | isbn          | isbn           | boolean     | 
++ public | >=   | isbn          | isbn13         | boolean     | 
++ public | >=   | isbn13        | ean13          | boolean     | 
++ public | >=   | isbn13        | isbn           | boolean     | 
++ public | >=   | isbn13        | isbn13         | boolean     | 
++ public | >=   | ismn          | ean13          | boolean     | 
++ public | >=   | ismn          | ismn           | boolean     | 
++ public | >=   | ismn          | ismn13         | boolean     | 
++ public | >=   | ismn13        | ean13          | boolean     | 
++ public | >=   | ismn13        | ismn           | boolean     | 
++ public | >=   | ismn13        | ismn13         | boolean     | 
++ public | >=   | issn          | ean13          | boolean     | 
++ public | >=   | issn          | issn           | boolean     | 
++ public | >=   | issn          | issn13         | boolean     | 
++ public | >=   | issn13        | ean13          | boolean     | 
++ public | >=   | issn13        | issn           | boolean     | 
++ public | >=   | issn13        | issn13         | boolean     | 
++ public | >=   | upc           | ean13          | boolean     | 
++ public | >=   | upc           | upc            | boolean     | 
++(168 rows)
+ 
+ \dT c.*
+                                               List of data types
+@@ -1060,22 +1918,443 @@
+ 
+ -- list what's installed
+ \dT public.*
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++                         List of data types
++ Schema |  Name  |                   Description                    
++--------+--------+--------------------------------------------------
++ public | ean13  | International European Article Number (EAN13)
++ public | isbn   | International Standard Book Number (ISBN)
++ public | isbn13 | International Standard Book Number 13 (ISBN13)
++ public | ismn   | International Standard Music Number (ISMN)
++ public | ismn13 | International Standard Music Number 13 (ISMN13)
++ public | issn   | International Standard Serial Number (ISSN)
++ public | issn13 | International Standard Serial Number 13 (ISSN13)
++ public | upc    | Universal Product Code (UPC)
++(8 rows)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                          List of functions
++ Schema |    Name     | Result data type | Argument data types | Type 
++--------+-------------+------------------+---------------------+------
++ public | btean13cmp  | integer          | ean13, ean13        | func
++ public | btean13cmp  | integer          | ean13, isbn         | func
++ public | btean13cmp  | integer          | ean13, isbn13       | func
++ public | btean13cmp  | integer          | ean13, ismn         | func
++ public | btean13cmp  | integer          | ean13, ismn13       | func
++ public | btean13cmp  | integer          | ean13, issn         | func
++ public | btean13cmp  | integer          | ean13, issn13       | func
++ public | btean13cmp  | integer          | ean13, upc          | func
++ public | btisbn13cmp | integer          | isbn13, ean13       | func
++ public | btisbn13cmp | integer          | isbn13, isbn        | func
++ public | btisbn13cmp | integer          | isbn13, isbn13      | func
++ public | btisbncmp   | integer          | isbn, ean13         | func
++ public | btisbncmp   | integer          | isbn, isbn          | func
++ public | btisbncmp   | integer          | isbn, isbn13        | func
++ public | btismn13cmp | integer          | ismn13, ean13       | func
++ public | btismn13cmp | integer          | ismn13, ismn        | func
++ public | btismn13cmp | integer          | ismn13, ismn13      | func
++ public | btismncmp   | integer          | ismn, ean13         | func
++ public | btismncmp   | integer          | ismn, ismn          | func
++ public | btismncmp   | integer          | ismn, ismn13        | func
++ public | btissn13cmp | integer          | issn13, ean13       | func
++ public | btissn13cmp | integer          | issn13, issn        | func
++ public | btissn13cmp | integer          | issn13, issn13      | func
++ public | btissncmp   | integer          | issn, ean13         | func
++ public | btissncmp   | integer          | issn, issn          | func
++ public | btissncmp   | integer          | issn, issn13        | func
++ public | btupccmp    | integer          | upc, ean13          | func
++ public | btupccmp    | integer          | upc, upc            | func
++ public | ean13_in    | ean13            | cstring             | func
++ public | ean13_out   | cstring          | ean13               | func
++ public | ean13_out   | cstring          | isbn13              | func
++ public | ean13_out   | cstring          | ismn13              | func
++ public | ean13_out   | cstring          | issn13              | func
++ public | hashean13   | integer          | ean13               | func
++ public | hashisbn    | integer          | isbn                | func
++ public | hashisbn13  | integer          | isbn13              | func
++ public | hashismn    | integer          | ismn                | func
++ public | hashismn13  | integer          | ismn13              | func
++ public | hashissn    | integer          | issn                | func
++ public | hashissn13  | integer          | issn13              | func
++ public | hashupc     | integer          | upc                 | func
++ public | is_valid    | boolean          | ean13               | func
++ public | is_valid    | boolean          | isbn                | func
++ public | is_valid    | boolean          | isbn13              | func
++ public | is_valid    | boolean          | ismn                | func
++ public | is_valid    | boolean          | ismn13              | func
++ public | is_valid    | boolean          | issn                | func
++ public | is_valid    | boolean          | issn13              | func
++ public | is_valid    | boolean          | upc                 | func
++ public | isbn        | isbn             | ean13               | func
++ public | isbn13      | isbn13           | ean13               | func
++ public | isbn13_in   | isbn13           | cstring             | func
++ public | isbn_in     | isbn             | cstring             | func
++ public | ismn        | ismn             | ean13               | func
++ public | ismn13      | ismn13           | ean13               | func
++ public | ismn13_in   | ismn13           | cstring             | func
++ public | ismn_in     | ismn             | cstring             | func
++ public | isn_out     | cstring          | isbn                | func
++ public | isn_out     | cstring          | ismn                | func
++ public | isn_out     | cstring          | issn                | func
++ public | isn_out     | cstring          | upc                 | func
++ public | isn_weak    | boolean          |                     | func
++ public | isn_weak    | boolean          | boolean             | func
++ public | isneq       | boolean          | ean13, ean13        | func
++ public | isneq       | boolean          | ean13, isbn         | func
++ public | isneq       | boolean          | ean13, isbn13       | func
++ public | isneq       | boolean          | ean13, ismn         | func
++ public | isneq       | boolean          | ean13, ismn13       | func
++ public | isneq       | boolean          | ean13, issn         | func
++ public | isneq       | boolean          | ean13, issn13       | func
++ public | isneq       | boolean          | ean13, upc          | func
++ public | isneq       | boolean          | isbn13, ean13       | func
++ public | isneq       | boolean          | isbn13, isbn        | func
++ public | isneq       | boolean          | isbn13, isbn13      | func
++ public | isneq       | boolean          | isbn, ean13         | func
++ public | isneq       | boolean          | isbn, isbn          | func
++ public | isneq       | boolean          | isbn, isbn13        | func
++ public | isneq       | boolean          | ismn13, ean13       | func
++ public | isneq       | boolean          | ismn13, ismn        | func
++ public | isneq       | boolean          | ismn13, ismn13      | func
++ public | isneq       | boolean          | ismn, ean13         | func
++ public | isneq       | boolean          | ismn, ismn          | func
++ public | isneq       | boolean          | ismn, ismn13        | func
++ public | isneq       | boolean          | issn13, ean13       | func
++ public | isneq       | boolean          | issn13, issn        | func
++ public | isneq       | boolean          | issn13, issn13      | func
++ public | isneq       | boolean          | issn, ean13         | func
++ public | isneq       | boolean          | issn, issn          | func
++ public | isneq       | boolean          | issn, issn13        | func
++ public | isneq       | boolean          | upc, ean13          | func
++ public | isneq       | boolean          | upc, upc            | func
++ public | isnge       | boolean          | ean13, ean13        | func
++ public | isnge       | boolean          | ean13, isbn         | func
++ public | isnge       | boolean          | ean13, isbn13       | func
++ public | isnge       | boolean          | ean13, ismn         | func
++ public | isnge       | boolean          | ean13, ismn13       | func
++ public | isnge       | boolean          | ean13, issn         | func
++ public | isnge       | boolean          | ean13, issn13       | func
++ public | isnge       | boolean          | ean13, upc          | func
++ public | isnge       | boolean          | isbn13, ean13       | func
++ public | isnge       | boolean          | isbn13, isbn        | func
++ public | isnge       | boolean          | isbn13, isbn13      | func
++ public | isnge       | boolean          | isbn, ean13         | func
++ public | isnge       | boolean          | isbn, isbn          | func
++ public | isnge       | boolean          | isbn, isbn13        | func
++ public | isnge       | boolean          | ismn13, ean13       | func
++ public | isnge       | boolean          | ismn13, ismn        | func
++ public | isnge       | boolean          | ismn13, ismn13      | func
++ public | isnge       | boolean          | ismn, ean13         | func
++ public | isnge       | boolean          | ismn, ismn          | func
++ public | isnge       | boolean          | ismn, ismn13        | func
++ public | isnge       | boolean          | issn13, ean13       | func
++ public | isnge       | boolean          | issn13, issn        | func
++ public | isnge       | boolean          | issn13, issn13      | func
++ public | isnge       | boolean          | issn, ean13         | func
++ public | isnge       | boolean          | issn, issn          | func
++ public | isnge       | boolean          | issn, issn13        | func
++ public | isnge       | boolean          | upc, ean13          | func
++ public | isnge       | boolean          | upc, upc            | func
++ public | isngt       | boolean          | ean13, ean13        | func
++ public | isngt       | boolean          | ean13, isbn         | func
++ public | isngt       | boolean          | ean13, isbn13       | func
++ public | isngt       | boolean          | ean13, ismn         | func
++ public | isngt       | boolean          | ean13, ismn13       | func
++ public | isngt       | boolean          | ean13, issn         | func
++ public | isngt       | boolean          | ean13, issn13       | func
++ public | isngt       | boolean          | ean13, upc          | func
++ public | isngt       | boolean          | isbn13, ean13       | func
++ public | isngt       | boolean          | isbn13, isbn        | func
++ public | isngt       | boolean          | isbn13, isbn13      | func
++ public | isngt       | boolean          | isbn, ean13         | func
++ public | isngt       | boolean          | isbn, isbn          | func
++ public | isngt       | boolean          | isbn, isbn13        | func
++ public | isngt       | boolean          | ismn13, ean13       | func
++ public | isngt       | boolean          | ismn13, ismn        | func
++ public | isngt       | boolean          | ismn13, ismn13      | func
++ public | isngt       | boolean          | ismn, ean13         | func
++ public | isngt       | boolean          | ismn, ismn          | func
++ public | isngt       | boolean          | ismn, ismn13        | func
++ public | isngt       | boolean          | issn13, ean13       | func
++ public | isngt       | boolean          | issn13, issn        | func
++ public | isngt       | boolean          | issn13, issn13      | func
++ public | isngt       | boolean          | issn, ean13         | func
++ public | isngt       | boolean          | issn, issn          | func
++ public | isngt       | boolean          | issn, issn13        | func
++ public | isngt       | boolean          | upc, ean13          | func
++ public | isngt       | boolean          | upc, upc            | func
++ public | isnle       | boolean          | ean13, ean13        | func
++ public | isnle       | boolean          | ean13, isbn         | func
++ public | isnle       | boolean          | ean13, isbn13       | func
++ public | isnle       | boolean          | ean13, ismn         | func
++ public | isnle       | boolean          | ean13, ismn13       | func
++ public | isnle       | boolean          | ean13, issn         | func
++ public | isnle       | boolean          | ean13, issn13       | func
++ public | isnle       | boolean          | ean13, upc          | func
++ public | isnle       | boolean          | isbn13, ean13       | func
++ public | isnle       | boolean          | isbn13, isbn        | func
++ public | isnle       | boolean          | isbn13, isbn13      | func
++ public | isnle       | boolean          | isbn, ean13         | func
++ public | isnle       | boolean          | isbn, isbn          | func
++ public | isnle       | boolean          | isbn, isbn13        | func
++ public | isnle       | boolean          | ismn13, ean13       | func
++ public | isnle       | boolean          | ismn13, ismn        | func
++ public | isnle       | boolean          | ismn13, ismn13      | func
++ public | isnle       | boolean          | ismn, ean13         | func
++ public | isnle       | boolean          | ismn, ismn          | func
++ public | isnle       | boolean          | ismn, ismn13        | func
++ public | isnle       | boolean          | issn13, ean13       | func
++ public | isnle       | boolean          | issn13, issn        | func
++ public | isnle       | boolean          | issn13, issn13      | func
++ public | isnle       | boolean          | issn, ean13         | func
++ public | isnle       | boolean          | issn, issn          | func
++ public | isnle       | boolean          | issn, issn13        | func
++ public | isnle       | boolean          | upc, ean13          | func
++ public | isnle       | boolean          | upc, upc            | func
++ public | isnlt       | boolean          | ean13, ean13        | func
++ public | isnlt       | boolean          | ean13, isbn         | func
++ public | isnlt       | boolean          | ean13, isbn13       | func
++ public | isnlt       | boolean          | ean13, ismn         | func
++ public | isnlt       | boolean          | ean13, ismn13       | func
++ public | isnlt       | boolean          | ean13, issn         | func
++ public | isnlt       | boolean          | ean13, issn13       | func
++ public | isnlt       | boolean          | ean13, upc          | func
++ public | isnlt       | boolean          | isbn13, ean13       | func
++ public | isnlt       | boolean          | isbn13, isbn        | func
++ public | isnlt       | boolean          | isbn13, isbn13      | func
++ public | isnlt       | boolean          | isbn, ean13         | func
++ public | isnlt       | boolean          | isbn, isbn          | func
++ public | isnlt       | boolean          | isbn, isbn13        | func
++ public | isnlt       | boolean          | ismn13, ean13       | func
++ public | isnlt       | boolean          | ismn13, ismn        | func
++ public | isnlt       | boolean          | ismn13, ismn13      | func
++ public | isnlt       | boolean          | ismn, ean13         | func
++ public | isnlt       | boolean          | ismn, ismn          | func
++ public | isnlt       | boolean          | ismn, ismn13        | func
++ public | isnlt       | boolean          | issn13, ean13       | func
++ public | isnlt       | boolean          | issn13, issn        | func
++ public | isnlt       | boolean          | issn13, issn13      | func
++ public | isnlt       | boolean          | issn, ean13         | func
++ public | isnlt       | boolean          | issn, issn          | func
++ public | isnlt       | boolean          | issn, issn13        | func
++ public | isnlt       | boolean          | upc, ean13          | func
++ public | isnlt       | boolean          | upc, upc            | func
++ public | isnne       | boolean          | ean13, ean13        | func
++ public | isnne       | boolean          | ean13, isbn         | func
++ public | isnne       | boolean          | ean13, isbn13       | func
++ public | isnne       | boolean          | ean13, ismn         | func
++ public | isnne       | boolean          | ean13, ismn13       | func
++ public | isnne       | boolean          | ean13, issn         | func
++ public | isnne       | boolean          | ean13, issn13       | func
++ public | isnne       | boolean          | ean13, upc          | func
++ public | isnne       | boolean          | isbn13, ean13       | func
++ public | isnne       | boolean          | isbn13, isbn        | func
++ public | isnne       | boolean          | isbn13, isbn13      | func
++ public | isnne       | boolean          | isbn, ean13         | func
++ public | isnne       | boolean          | isbn, isbn          | func
++ public | isnne       | boolean          | isbn, isbn13        | func
++ public | isnne       | boolean          | ismn13, ean13       | func
++ public | isnne       | boolean          | ismn13, ismn        | func
++ public | isnne       | boolean          | ismn13, ismn13      | func
++ public | isnne       | boolean          | ismn, ean13         | func
++ public | isnne       | boolean          | ismn, ismn          | func
++ public | isnne       | boolean          | ismn, ismn13        | func
++ public | isnne       | boolean          | issn13, ean13       | func
++ public | isnne       | boolean          | issn13, issn        | func
++ public | isnne       | boolean          | issn13, issn13      | func
++ public | isnne       | boolean          | issn, ean13         | func
++ public | isnne       | boolean          | issn, issn          | func
++ public | isnne       | boolean          | issn, issn13        | func
++ public | isnne       | boolean          | upc, ean13          | func
++ public | isnne       | boolean          | upc, upc            | func
++ public | issn        | issn             | ean13               | func
++ public | issn13      | issn13           | ean13               | func
++ public | issn13_in   | issn13           | cstring             | func
++ public | issn_in     | issn             | cstring             | func
++ public | make_valid  | ean13            | ean13               | func
++ public | make_valid  | isbn             | isbn                | func
++ public | make_valid  | isbn13           | isbn13              | func
++ public | make_valid  | ismn             | ismn                | func
++ public | make_valid  | ismn13           | ismn13              | func
++ public | make_valid  | issn             | issn                | func
++ public | make_valid  | issn13           | issn13              | func
++ public | make_valid  | upc              | upc                 | func
++ public | upc         | upc              | ean13               | func
++ public | upc_in      | upc              | cstring             | func
++(245 rows)
+ 
+ \do public.*
+                              List of operators
+  Schema | Name | Left arg type | Right arg type | Result type | Description 
+ --------+------+---------------+----------------+-------------+-------------
+-(0 rows)
++ public | <    | ean13         | ean13          | boolean     | 
++ public | <    | ean13         | isbn           | boolean     | 
++ public | <    | ean13         | isbn13         | boolean     | 
++ public | <    | ean13         | ismn           | boolean     | 
++ public | <    | ean13         | ismn13         | boolean     | 
++ public | <    | ean13         | issn           | boolean     | 
++ public | <    | ean13         | issn13         | boolean     | 
++ public | <    | ean13         | upc            | boolean     | 
++ public | <    | isbn          | ean13          | boolean     | 
++ public | <    | isbn          | isbn           | boolean     | 
++ public | <    | isbn          | isbn13         | boolean     | 
++ public | <    | isbn13        | ean13          | boolean     | 
++ public | <    | isbn13        | isbn           | boolean     | 
++ public | <    | isbn13        | isbn13         | boolean     | 
++ public | <    | ismn          | ean13          | boolean     | 
++ public | <    | ismn          | ismn           | boolean     | 
++ public | <    | ismn          | ismn13         | boolean     | 
++ public | <    | ismn13        | ean13          | boolean     | 
++ public | <    | ismn13        | ismn           | boolean     | 
++ public | <    | ismn13        | ismn13         | boolean     | 
++ public | <    | issn          | ean13          | boolean     | 
++ public | <    | issn          | issn           | boolean     | 
++ public | <    | issn          | issn13         | boolean     | 
++ public | <    | issn13        | ean13          | boolean     | 
++ public | <    | issn13        | issn           | boolean     | 
++ public | <    | issn13        | issn13         | boolean     | 
++ public | <    | upc           | ean13          | boolean     | 
++ public | <    | upc           | upc            | boolean     | 
++ public | <=   | ean13         | ean13          | boolean     | 
++ public | <=   | ean13         | isbn           | boolean     | 
++ public | <=   | ean13         | isbn13         | boolean     | 
++ public | <=   | ean13         | ismn           | boolean     | 
++ public | <=   | ean13         | ismn13         | boolean     | 
++ public | <=   | ean13         | issn           | boolean     | 
++ public | <=   | ean13         | issn13         | boolean     | 
++ public | <=   | ean13         | upc            | boolean     | 
++ public | <=   | isbn          | ean13          | boolean     | 
++ public | <=   | isbn          | isbn           | boolean     | 
++ public | <=   | isbn          | isbn13         | boolean     | 
++ public | <=   | isbn13        | ean13          | boolean     | 
++ public | <=   | isbn13        | isbn           | boolean     | 
++ public | <=   | isbn13        | isbn13         | boolean     | 
++ public | <=   | ismn          | ean13          | boolean     | 
++ public | <=   | ismn          | ismn           | boolean     | 
++ public | <=   | ismn          | ismn13         | boolean     | 
++ public | <=   | ismn13        | ean13          | boolean     | 
++ public | <=   | ismn13        | ismn           | boolean     | 
++ public | <=   | ismn13        | ismn13         | boolean     | 
++ public | <=   | issn          | ean13          | boolean     | 
++ public | <=   | issn          | issn           | boolean     | 
++ public | <=   | issn          | issn13         | boolean     | 
++ public | <=   | issn13        | ean13          | boolean     | 
++ public | <=   | issn13        | issn           | boolean     | 
++ public | <=   | issn13        | issn13         | boolean     | 
++ public | <=   | upc           | ean13          | boolean     | 
++ public | <=   | upc           | upc            | boolean     | 
++ public | <>   | ean13         | ean13          | boolean     | 
++ public | <>   | ean13         | isbn           | boolean     | 
++ public | <>   | ean13         | isbn13         | boolean     | 
++ public | <>   | ean13         | ismn           | boolean     | 
++ public | <>   | ean13         | ismn13         | boolean     | 
++ public | <>   | ean13         | issn           | boolean     | 
++ public | <>   | ean13         | issn13         | boolean     | 
++ public | <>   | ean13         | upc            | boolean     | 
++ public | <>   | isbn          | ean13          | boolean     | 
++ public | <>   | isbn          | isbn           | boolean     | 
++ public | <>   | isbn          | isbn13         | boolean     | 
++ public | <>   | isbn13        | ean13          | boolean     | 
++ public | <>   | isbn13        | isbn           | boolean     | 
++ public | <>   | isbn13        | isbn13         | boolean     | 
++ public | <>   | ismn          | ean13          | boolean     | 
++ public | <>   | ismn          | ismn           | boolean     | 
++ public | <>   | ismn          | ismn13         | boolean     | 
++ public | <>   | ismn13        | ean13          | boolean     | 
++ public | <>   | ismn13        | ismn           | boolean     | 
++ public | <>   | ismn13        | ismn13         | boolean     | 
++ public | <>   | issn          | ean13          | boolean     | 
++ public | <>   | issn          | issn           | boolean     | 
++ public | <>   | issn          | issn13         | boolean     | 
++ public | <>   | issn13        | ean13          | boolean     | 
++ public | <>   | issn13        | issn           | boolean     | 
++ public | <>   | issn13        | issn13         | boolean     | 
++ public | <>   | upc           | ean13          | boolean     | 
++ public | <>   | upc           | upc            | boolean     | 
++ public | =    | ean13         | ean13          | boolean     | 
++ public | =    | ean13         | isbn           | boolean     | 
++ public | =    | ean13         | isbn13         | boolean     | 
++ public | =    | ean13         | ismn           | boolean     | 
++ public | =    | ean13         | ismn13         | boolean     | 
++ public | =    | ean13         | issn           | boolean     | 
++ public | =    | ean13         | issn13         | boolean     | 
++ public | =    | ean13         | upc            | boolean     | 
++ public | =    | isbn          | ean13          | boolean     | 
++ public | =    | isbn          | isbn           | boolean     | 
++ public | =    | isbn          | isbn13         | boolean     | 
++ public | =    | isbn13        | ean13          | boolean     | 
++ public | =    | isbn13        | isbn           | boolean     | 
++ public | =    | isbn13        | isbn13         | boolean     | 
++ public | =    | ismn          | ean13          | boolean     | 
++ public | =    | ismn          | ismn           | boolean     | 
++ public | =    | ismn          | ismn13         | boolean     | 
++ public | =    | ismn13        | ean13          | boolean     | 
++ public | =    | ismn13        | ismn           | boolean     | 
++ public | =    | ismn13        | ismn13         | boolean     | 
++ public | =    | issn          | ean13          | boolean     | 
++ public | =    | issn          | issn           | boolean     | 
++ public | =    | issn          | issn13         | boolean     | 
++ public | =    | issn13        | ean13          | boolean     | 
++ public | =    | issn13        | issn           | boolean     | 
++ public | =    | issn13        | issn13         | boolean     | 
++ public | =    | upc           | ean13          | boolean     | 
++ public | =    | upc           | upc            | boolean     | 
++ public | >    | ean13         | ean13          | boolean     | 
++ public | >    | ean13         | isbn           | boolean     | 
++ public | >    | ean13         | isbn13         | boolean     | 
++ public | >    | ean13         | ismn           | boolean     | 
++ public | >    | ean13         | ismn13         | boolean     | 
++ public | >    | ean13         | issn           | boolean     | 
++ public | >    | ean13         | issn13         | boolean     | 
++ public | >    | ean13         | upc            | boolean     | 
++ public | >    | isbn          | ean13          | boolean     | 
++ public | >    | isbn          | isbn           | boolean     | 
++ public | >    | isbn          | isbn13         | boolean     | 
++ public | >    | isbn13        | ean13          | boolean     | 
++ public | >    | isbn13        | isbn           | boolean     | 
++ public | >    | isbn13        | isbn13         | boolean     | 
++ public | >    | ismn          | ean13          | boolean     | 
++ public | >    | ismn          | ismn           | boolean     | 
++ public | >    | ismn          | ismn13         | boolean     | 
++ public | >    | ismn13        | ean13          | boolean     | 
++ public | >    | ismn13        | ismn           | boolean     | 
++ public | >    | ismn13        | ismn13         | boolean     | 
++ public | >    | issn          | ean13          | boolean     | 
++ public | >    | issn          | issn           | boolean     | 
++ public | >    | issn          | issn13         | boolean     | 
++ public | >    | issn13        | ean13          | boolean     | 
++ public | >    | issn13        | issn           | boolean     | 
++ public | >    | issn13        | issn13         | boolean     | 
++ public | >    | upc           | ean13          | boolean     | 
++ public | >    | upc           | upc            | boolean     | 
++ public | >=   | ean13         | ean13          | boolean     | 
++ public | >=   | ean13         | isbn           | boolean     | 
++ public | >=   | ean13         | isbn13         | boolean     | 
++ public | >=   | ean13         | ismn           | boolean     | 
++ public | >=   | ean13         | ismn13         | boolean     | 
++ public | >=   | ean13         | issn           | boolean     | 
++ public | >=   | ean13         | issn13         | boolean     | 
++ public | >=   | ean13         | upc            | boolean     | 
++ public | >=   | isbn          | ean13          | boolean     | 
++ public | >=   | isbn          | isbn           | boolean     | 
++ public | >=   | isbn          | isbn13         | boolean     | 
++ public | >=   | isbn13        | ean13          | boolean     | 
++ public | >=   | isbn13        | isbn           | boolean     | 
++ public | >=   | isbn13        | isbn13         | boolean     | 
++ public | >=   | ismn          | ean13          | boolean     | 
++ public | >=   | ismn          | ismn           | boolean     | 
++ public | >=   | ismn          | ismn13         | boolean     | 
++ public | >=   | ismn13        | ean13          | boolean     | 
++ public | >=   | ismn13        | ismn           | boolean     | 
++ public | >=   | ismn13        | ismn13         | boolean     | 
++ public | >=   | issn          | ean13          | boolean     | 
++ public | >=   | issn          | issn           | boolean     | 
++ public | >=   | issn          | issn13         | boolean     | 
++ public | >=   | issn13        | ean13          | boolean     | 
++ public | >=   | issn13        | issn           | boolean     | 
++ public | >=   | issn13        | issn13         | boolean     | 
++ public | >=   | upc           | ean13          | boolean     | 
++ public | >=   | upc           | upc            | boolean     | 
++(168 rows)
+ 
+ \dT c.*
+      List of data types

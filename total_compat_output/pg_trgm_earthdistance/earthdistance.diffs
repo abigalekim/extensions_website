@@ -1,0 +1,260 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out	2023-07-26 14:47:38.929498058 +0000
+@@ -968,7 +968,8 @@
+ --------+-------+---------------------------------------------------------------------------------------------
+  public | cube  | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
+  public | earth | 
+-(2 rows)
++ public | gtrgm | 
++(3 rows)
+ 
+ drop extension cube;  -- fail, earthdistance requires it
+ ERROR:  cannot drop extension cube because other objects depend on it
+@@ -980,11 +981,12 @@
+ HINT:  You can drop extension cube instead.
+ -- list what's installed
+ \dT
+-                                             List of data types
+- Schema | Name |                                         Description                                         
+---------+------+---------------------------------------------------------------------------------------------
+- public | cube | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
+-(1 row)
++                                              List of data types
++ Schema | Name  |                                         Description                                         
++--------+-------+---------------------------------------------------------------------------------------------
++ public | cube  | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
++ public | gtrgm | 
++(2 rows)
+ 
+ create table foo (f1 cube, f2 int);
+ drop extension cube;  -- fail, foo.f1 requires it
+@@ -995,43 +997,127 @@
+ drop extension cube;
+ -- list what's installed
+ \dT
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++      List of data types
++ Schema | Name  | Description 
++--------+-------+-------------
++ public | gtrgm | 
++(1 row)
+ 
+ \df
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                                    List of functions
++ Schema |                   Name                    | Result data type |                            Argument data types                            | Type 
++--------+-------------------------------------------+------------------+---------------------------------------------------------------------------+------
++ public | gin_extract_query_trgm                    | internal         | text, internal, smallint, internal, internal, internal, internal          | func
++ public | gin_extract_value_trgm                    | internal         | text, internal                                                            | func
++ public | gin_trgm_consistent                       | boolean          | internal, smallint, text, integer, internal, internal, internal, internal | func
++ public | gin_trgm_triconsistent                    | "char"           | internal, smallint, text, integer, internal, internal, internal           | func
++ public | gtrgm_compress                            | internal         | internal                                                                  | func
++ public | gtrgm_consistent                          | boolean          | internal, text, smallint, oid, internal                                   | func
++ public | gtrgm_decompress                          | internal         | internal                                                                  | func
++ public | gtrgm_distance                            | double precision | internal, text, smallint, oid, internal                                   | func
++ public | gtrgm_in                                  | gtrgm            | cstring                                                                   | func
++ public | gtrgm_options                             | void             | internal                                                                  | func
++ public | gtrgm_out                                 | cstring          | gtrgm                                                                     | func
++ public | gtrgm_penalty                             | internal         | internal, internal, internal                                              | func
++ public | gtrgm_picksplit                           | internal         | internal, internal                                                        | func
++ public | gtrgm_same                                | internal         | gtrgm, gtrgm, internal                                                    | func
++ public | gtrgm_union                               | gtrgm            | internal, internal                                                        | func
++ public | set_limit                                 | real             | real                                                                      | func
++ public | show_limit                                | real             |                                                                           | func
++ public | show_trgm                                 | text[]           | text                                                                      | func
++ public | similarity                                | real             | text, text                                                                | func
++ public | similarity_dist                           | real             | text, text                                                                | func
++ public | similarity_op                             | boolean          | text, text                                                                | func
++ public | strict_word_similarity                    | real             | text, text                                                                | func
++ public | strict_word_similarity_commutator_op      | boolean          | text, text                                                                | func
++ public | strict_word_similarity_dist_commutator_op | real             | text, text                                                                | func
++ public | strict_word_similarity_dist_op            | real             | text, text                                                                | func
++ public | strict_word_similarity_op                 | boolean          | text, text                                                                | func
++ public | word_similarity                           | real             | text, text                                                                | func
++ public | word_similarity_commutator_op             | boolean          | text, text                                                                | func
++ public | word_similarity_dist_commutator_op        | real             | text, text                                                                | func
++ public | word_similarity_dist_op                   | real             | text, text                                                                | func
++ public | word_similarity_op                        | boolean          | text, text                                                                | func
++(31 rows)
+ 
+ \do
+-                             List of operators
+- Schema | Name | Left arg type | Right arg type | Result type | Description 
+---------+------+---------------+----------------+-------------+-------------
+-(0 rows)
++                              List of operators
++ Schema | Name  | Left arg type | Right arg type | Result type | Description 
++--------+-------+---------------+----------------+-------------+-------------
++ public | %     | text          | text           | boolean     | 
++ public | %>    | text          | text           | boolean     | 
++ public | %>>   | text          | text           | boolean     | 
++ public | <%    | text          | text           | boolean     | 
++ public | <->   | text          | text           | real        | 
++ public | <->>  | text          | text           | real        | 
++ public | <->>> | text          | text           | real        | 
++ public | <<%   | text          | text           | boolean     | 
++ public | <<->  | text          | text           | real        | 
++ public | <<<-> | text          | text           | real        | 
++(10 rows)
+ 
+ create schema c;
+ create extension cube with schema c;
+ -- list what's installed
+ \dT public.*
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++      List of data types
++ Schema | Name  | Description 
++--------+-------+-------------
++ public | gtrgm | 
++(1 row)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                                    List of functions
++ Schema |                   Name                    | Result data type |                            Argument data types                            | Type 
++--------+-------------------------------------------+------------------+---------------------------------------------------------------------------+------
++ public | gin_extract_query_trgm                    | internal         | text, internal, smallint, internal, internal, internal, internal          | func
++ public | gin_extract_value_trgm                    | internal         | text, internal                                                            | func
++ public | gin_trgm_consistent                       | boolean          | internal, smallint, text, integer, internal, internal, internal, internal | func
++ public | gin_trgm_triconsistent                    | "char"           | internal, smallint, text, integer, internal, internal, internal           | func
++ public | gtrgm_compress                            | internal         | internal                                                                  | func
++ public | gtrgm_consistent                          | boolean          | internal, text, smallint, oid, internal                                   | func
++ public | gtrgm_decompress                          | internal         | internal                                                                  | func
++ public | gtrgm_distance                            | double precision | internal, text, smallint, oid, internal                                   | func
++ public | gtrgm_in                                  | gtrgm            | cstring                                                                   | func
++ public | gtrgm_options                             | void             | internal                                                                  | func
++ public | gtrgm_out                                 | cstring          | gtrgm                                                                     | func
++ public | gtrgm_penalty                             | internal         | internal, internal, internal                                              | func
++ public | gtrgm_picksplit                           | internal         | internal, internal                                                        | func
++ public | gtrgm_same                                | internal         | gtrgm, gtrgm, internal                                                    | func
++ public | gtrgm_union                               | gtrgm            | internal, internal                                                        | func
++ public | set_limit                                 | real             | real                                                                      | func
++ public | show_limit                                | real             |                                                                           | func
++ public | show_trgm                                 | text[]           | text                                                                      | func
++ public | similarity                                | real             | text, text                                                                | func
++ public | similarity_dist                           | real             | text, text                                                                | func
++ public | similarity_op                             | boolean          | text, text                                                                | func
++ public | strict_word_similarity                    | real             | text, text                                                                | func
++ public | strict_word_similarity_commutator_op      | boolean          | text, text                                                                | func
++ public | strict_word_similarity_dist_commutator_op | real             | text, text                                                                | func
++ public | strict_word_similarity_dist_op            | real             | text, text                                                                | func
++ public | strict_word_similarity_op                 | boolean          | text, text                                                                | func
++ public | word_similarity                           | real             | text, text                                                                | func
++ public | word_similarity_commutator_op             | boolean          | text, text                                                                | func
++ public | word_similarity_dist_commutator_op        | real             | text, text                                                                | func
++ public | word_similarity_dist_op                   | real             | text, text                                                                | func
++ public | word_similarity_op                        | boolean          | text, text                                                                | func
++(31 rows)
+ 
+ \do public.*
+-                             List of operators
+- Schema | Name | Left arg type | Right arg type | Result type | Description 
+---------+------+---------------+----------------+-------------+-------------
+-(0 rows)
++                              List of operators
++ Schema | Name  | Left arg type | Right arg type | Result type | Description 
++--------+-------+---------------+----------------+-------------+-------------
++ public | %     | text          | text           | boolean     | 
++ public | %>    | text          | text           | boolean     | 
++ public | %>>   | text          | text           | boolean     | 
++ public | <%    | text          | text           | boolean     | 
++ public | <->   | text          | text           | real        | 
++ public | <->>  | text          | text           | real        | 
++ public | <->>> | text          | text           | real        | 
++ public | <<%   | text          | text           | boolean     | 
++ public | <<->  | text          | text           | real        | 
++ public | <<<-> | text          | text           | real        | 
++(10 rows)
+ 
+ \dT c.*
+                                               List of data types
+@@ -1060,22 +1146,64 @@
+ 
+ -- list what's installed
+ \dT public.*
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++      List of data types
++ Schema | Name  | Description 
++--------+-------+-------------
++ public | gtrgm | 
++(1 row)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                                    List of functions
++ Schema |                   Name                    | Result data type |                            Argument data types                            | Type 
++--------+-------------------------------------------+------------------+---------------------------------------------------------------------------+------
++ public | gin_extract_query_trgm                    | internal         | text, internal, smallint, internal, internal, internal, internal          | func
++ public | gin_extract_value_trgm                    | internal         | text, internal                                                            | func
++ public | gin_trgm_consistent                       | boolean          | internal, smallint, text, integer, internal, internal, internal, internal | func
++ public | gin_trgm_triconsistent                    | "char"           | internal, smallint, text, integer, internal, internal, internal           | func
++ public | gtrgm_compress                            | internal         | internal                                                                  | func
++ public | gtrgm_consistent                          | boolean          | internal, text, smallint, oid, internal                                   | func
++ public | gtrgm_decompress                          | internal         | internal                                                                  | func
++ public | gtrgm_distance                            | double precision | internal, text, smallint, oid, internal                                   | func
++ public | gtrgm_in                                  | gtrgm            | cstring                                                                   | func
++ public | gtrgm_options                             | void             | internal                                                                  | func
++ public | gtrgm_out                                 | cstring          | gtrgm                                                                     | func
++ public | gtrgm_penalty                             | internal         | internal, internal, internal                                              | func
++ public | gtrgm_picksplit                           | internal         | internal, internal                                                        | func
++ public | gtrgm_same                                | internal         | gtrgm, gtrgm, internal                                                    | func
++ public | gtrgm_union                               | gtrgm            | internal, internal                                                        | func
++ public | set_limit                                 | real             | real                                                                      | func
++ public | show_limit                                | real             |                                                                           | func
++ public | show_trgm                                 | text[]           | text                                                                      | func
++ public | similarity                                | real             | text, text                                                                | func
++ public | similarity_dist                           | real             | text, text                                                                | func
++ public | similarity_op                             | boolean          | text, text                                                                | func
++ public | strict_word_similarity                    | real             | text, text                                                                | func
++ public | strict_word_similarity_commutator_op      | boolean          | text, text                                                                | func
++ public | strict_word_similarity_dist_commutator_op | real             | text, text                                                                | func
++ public | strict_word_similarity_dist_op            | real             | text, text                                                                | func
++ public | strict_word_similarity_op                 | boolean          | text, text                                                                | func
++ public | word_similarity                           | real             | text, text                                                                | func
++ public | word_similarity_commutator_op             | boolean          | text, text                                                                | func
++ public | word_similarity_dist_commutator_op        | real             | text, text                                                                | func
++ public | word_similarity_dist_op                   | real             | text, text                                                                | func
++ public | word_similarity_op                        | boolean          | text, text                                                                | func
++(31 rows)
+ 
+ \do public.*
+-                             List of operators
+- Schema | Name | Left arg type | Right arg type | Result type | Description 
+---------+------+---------------+----------------+-------------+-------------
+-(0 rows)
++                              List of operators
++ Schema | Name  | Left arg type | Right arg type | Result type | Description 
++--------+-------+---------------+----------------+-------------+-------------
++ public | %     | text          | text           | boolean     | 
++ public | %>    | text          | text           | boolean     | 
++ public | %>>   | text          | text           | boolean     | 
++ public | <%    | text          | text           | boolean     | 
++ public | <->   | text          | text           | real        | 
++ public | <->>  | text          | text           | real        | 
++ public | <->>> | text          | text           | real        | 
++ public | <<%   | text          | text           | boolean     | 
++ public | <<->  | text          | text           | real        | 
++ public | <<<-> | text          | text           | real        | 
++(10 rows)
+ 
+ \dT c.*
+      List of data types

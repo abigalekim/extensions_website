@@ -1,0 +1,56 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/isn/expected/isn.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/isn/results/isn.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/isn/expected/isn.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/isn/results/isn.out	2023-07-26 17:01:19.537756253 +0000
+@@ -26,25 +26,33 @@
+ INFO:  operator family "isn_ops" of access method hash is missing cross-type operator(s)
+ INFO:  operator family "isn_ops" of access method hash is missing cross-type operator(s)
+ INFO:  operator family "isn_ops" of access method hash is missing cross-type operator(s)
+- amname |  opcname   
+---------+------------
+- btree  | ean13_ops
+- btree  | isbn13_ops
+- btree  | isbn_ops
+- btree  | ismn13_ops
+- btree  | ismn_ops
+- btree  | issn13_ops
+- btree  | issn_ops
+- btree  | upc_ops
+- hash   | ean13_ops
+- hash   | isbn13_ops
+- hash   | isbn_ops
+- hash   | ismn13_ops
+- hash   | ismn_ops
+- hash   | issn13_ops
+- hash   | issn_ops
+- hash   | upc_ops
+-(16 rows)
++INFO:  operator family "time_ops" of access method btree contains function in_range(time without time zone,time without time zone,interval,boolean,boolean) with wrong signature for support number 3
++INFO:  operator family "timetz_ops" of access method btree contains function in_range(time with time zone,time with time zone,interval,boolean,boolean) with wrong signature for support number 3
++INFO:  operator family "time_ops" of access method btree contains function in_range(time without time zone,time without time zone,interval,boolean,boolean) with wrong signature for support number 3
++INFO:  operator family "timetz_ops" of access method btree contains function in_range(time with time zone,time with time zone,interval,boolean,boolean) with wrong signature for support number 3
++       amname       |  opcname   
++--------------------+------------
++ btree              | ean13_ops
++ btree              | isbn13_ops
++ btree              | isbn_ops
++ btree              | ismn13_ops
++ btree              | ismn_ops
++ btree              | issn13_ops
++ btree              | issn_ops
++ btree              | upc_ops
++ hash               | ean13_ops
++ hash               | isbn13_ops
++ hash               | isbn_ops
++ hash               | ismn13_ops
++ hash               | ismn_ops
++ hash               | issn13_ops
++ hash               | issn_ops
++ hash               | upc_ops
++ lsm3               | time_ops
++ lsm3               | timetz_ops
++ lsm3_btree_wrapper | time_ops
++ lsm3_btree_wrapper | timetz_ops
++(20 rows)
+ 
+ --
+ -- test valid conversions

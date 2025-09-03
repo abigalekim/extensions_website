@@ -1,0 +1,15 @@
+-- enable strict mode with GUC, which allows usage of ES6 let and const keywords
+SET plv8.v8_flags = '--use_strict';
+CREATE OR REPLACE FUNCTION let_test()
+   RETURNS json AS $$
+      let result = ['Hello, World!'];
+      return result;
+   $$ LANGUAGE plv8 STABLE STRICT;
+ERROR:  language "plv8" does not exist
+SELECT let_test();
+ERROR:  function let_test() does not exist
+LINE 1: SELECT let_test();
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+DROP FUNCTION let_test();
+ERROR:  function let_test() does not exist

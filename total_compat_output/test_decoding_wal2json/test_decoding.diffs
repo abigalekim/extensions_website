@@ -1,0 +1,99 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/test_decoding/expected/slot.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/test_decoding/results/slot.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/test_decoding/expected/slot.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/test_decoding/results/slot.out	2023-07-26 14:25:03.797847892 +0000
+@@ -219,8 +219,11 @@
+ -- Now we have maximum 4 replication slots. Check slots are properly
+ -- released even when raise error during creating the target slot.
+ SELECT 'copy' FROM pg_copy_logical_replication_slot('orig_slot1', 'failed'); -- error
+-ERROR:  all replication slots are in use
+-HINT:  Free one or increase max_replication_slots.
++ ?column? 
++----------
++ copy
++(1 row)
++
+ -- temporary slots were dropped automatically
+ SELECT pg_drop_replication_slot('orig_slot1');
+  pg_drop_replication_slot 
+@@ -327,7 +330,8 @@
+  orig_slot2             | physical  | f
+  copied_slot1_no_change | physical  | f
+  copied_slot1_temp      | physical  | t
+-(4 rows)
++ failed                 | logical   | f
++(5 rows)
+ 
+ -- Cannot copy a physical slot to a logical slot
+ SELECT 'copy' FROM pg_copy_logical_replication_slot('orig_slot1', 'failed'); -- error
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/test_decoding/expected/stats.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/test_decoding/results/stats.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/test_decoding/expected/stats.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/test_decoding/results/stats.out	2023-07-26 14:25:04.485849796 +0000
+@@ -40,10 +40,11 @@
+ SELECT slot_name, spill_txns = 0 AS spill_txns, spill_count = 0 AS spill_count, total_txns > 0 AS total_txns, total_bytes > 0 AS total_bytes FROM pg_stat_replication_slots ORDER BY slot_name;
+        slot_name        | spill_txns | spill_count | total_txns | total_bytes 
+ ------------------------+------------+-------------+------------+-------------
++ failed                 | t          | t           | f          | f
+  regression_slot_stats1 | t          | t           | t          | t
+  regression_slot_stats2 | t          | t           | t          | t
+  regression_slot_stats3 | t          | t           | t          | t
+-(3 rows)
++(4 rows)
+ 
+ RESET logical_decoding_work_mem;
+ -- reset stats for one slot, others should be unaffected
+@@ -56,10 +57,11 @@
+ SELECT slot_name, spill_txns = 0 AS spill_txns, spill_count = 0 AS spill_count, total_txns > 0 AS total_txns, total_bytes > 0 AS total_bytes FROM pg_stat_replication_slots ORDER BY slot_name;
+        slot_name        | spill_txns | spill_count | total_txns | total_bytes 
+ ------------------------+------------+-------------+------------+-------------
++ failed                 | t          | t           | f          | f
+  regression_slot_stats1 | t          | t           | f          | f
+  regression_slot_stats2 | t          | t           | t          | t
+  regression_slot_stats3 | t          | t           | t          | t
+-(3 rows)
++(4 rows)
+ 
+ -- reset stats for all slots
+ SELECT pg_stat_reset_replication_slot(NULL);
+@@ -71,10 +73,11 @@
+ SELECT slot_name, spill_txns = 0 AS spill_txns, spill_count = 0 AS spill_count, total_txns > 0 AS total_txns, total_bytes > 0 AS total_bytes FROM pg_stat_replication_slots ORDER BY slot_name;
+        slot_name        | spill_txns | spill_count | total_txns | total_bytes 
+ ------------------------+------------+-------------+------------+-------------
++ failed                 | t          | t           | f          | f
+  regression_slot_stats1 | t          | t           | f          | f
+  regression_slot_stats2 | t          | t           | f          | f
+  regression_slot_stats3 | t          | t           | f          | f
+-(3 rows)
++(4 rows)
+ 
+ -- verify accessing/resetting stats for non-existent slot does something reasonable
+ SELECT * FROM pg_stat_get_replication_slot('do-not-exist');
+@@ -116,7 +119,8 @@
+  regression_slot_stats1 | t          | t
+  regression_slot_stats2 | f          | f
+  regression_slot_stats3 | f          | f
+-(3 rows)
++ failed                 | f          | f
++(4 rows)
+ 
+ -- Ensure stats can be repeatedly accessed using the same stats snapshot. See
+ -- https://postgr.es/m/20210317230447.c7uc4g3vbs4wi32i%40alap3.anarazel.de
+@@ -127,7 +131,8 @@
+  regression_slot_stats1
+  regression_slot_stats2
+  regression_slot_stats3
+-(3 rows)
++ failed
++(4 rows)
+ 
+ SELECT slot_name FROM pg_stat_replication_slots;
+        slot_name        
+@@ -135,7 +140,8 @@
+  regression_slot_stats1
+  regression_slot_stats2
+  regression_slot_stats3
+-(3 rows)
++ failed
++(4 rows)
+ 
+ COMMIT;
+ DROP TABLE stats_test;

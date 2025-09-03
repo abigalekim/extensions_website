@@ -1,0 +1,170 @@
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/expected/pgextwlist.out /home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/results/pgextwlist.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/expected/pgextwlist.out	2022-09-28 10:59:06.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/results/pgextwlist.out	2023-07-25 14:12:16.109002005 +0000
+@@ -6,22 +6,26 @@
+ (1 row)
+ 
+ SELECT extname FROM pg_extension ORDER BY 1;
+- extname 
+----------
++      extname       
++--------------------
++ pg_queryid
++ pg_stat_statements
+  plpgsql
+-(1 row)
++(3 rows)
+ 
+ -- whitelisted extensions
+ CREATE EXTENSION citext;
+ CREATE EXTENSION pg_trgm;
+ COMMENT ON EXTENSION pg_trgm IS 'pg_trgm comment';
+ SELECT extname FROM pg_extension ORDER BY 1;
+- extname 
+----------
++      extname       
++--------------------
+  citext
++ pg_queryid
++ pg_stat_statements
+  pg_trgm
+  plpgsql
+-(3 rows)
++(5 rows)
+ 
+ SELECT d.description FROM pg_extension e JOIN pg_description d ON d.objoid = e.oid WHERE e.extname = 'pg_trgm';
+    description   
+@@ -32,35 +36,39 @@
+ -- drop whitelisted extension
+ DROP EXTENSION pg_trgm;
+ SELECT extname FROM pg_extension ORDER BY 1;
+- extname 
+----------
++      extname       
++--------------------
+  citext
++ pg_queryid
++ pg_stat_statements
+  plpgsql
+-(2 rows)
++(4 rows)
+ 
+ -- whitelisted extension with custom scripts
+ CREATE EXTENSION pg_stat_statements;
++ERROR:  extension "pg_stat_statements" already exists
+ SELECT extname FROM pg_extension ORDER BY 1;
+       extname       
+ --------------------
+  citext
++ pg_queryid
+  pg_stat_statements
+  plpgsql
+-(3 rows)
++(4 rows)
+ 
+ SELECT proacl FROM pg_proc WHERE proname = 'pg_stat_statements_reset';
+-                          proacl                          
+-----------------------------------------------------------
+- {mere_mortal=X/mere_mortal,stat_resetters=X/mere_mortal}
++        proacl         
++-----------------------
++ {abigalek=X/abigalek}
+ (1 row)
+ 
+ \du stat_resetters
+-               List of roles
+-   Role name    |  Attributes  | Member of 
+-----------------+--------------+-----------
+- stat_resetters | Cannot login | {}
++           List of roles
++ Role name | Attributes | Member of 
++-----------+------------+-----------
+ 
+ DROP EXTENSION pg_stat_statements;
++ERROR:  role "stat_resetters" does not exist
+ \du stat_resetters
+            List of roles
+  Role name | Attributes | Member of 
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/expected/errors_1.out /home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/results/errors.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/expected/errors_1.out	2022-09-28 10:59:06.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/results/errors.out	2023-07-25 14:12:16.125001983 +0000
+@@ -10,11 +10,13 @@
+ 
+ SET ROLE mere_mortal;
+ SELECT extname FROM pg_extension ORDER BY 1;
+- extname 
+----------
++      extname       
++--------------------
+  citext
++ pg_queryid
++ pg_stat_statements
+  plpgsql
+-(2 rows)
++(4 rows)
+ 
+ -- pre-existing extension
+ CREATE EXTENSION plpgsql;
+@@ -22,11 +24,13 @@
+ COMMENT ON EXTENSION hstore IS 'plpgsql comment';
+ ERROR:  extension "hstore" does not exist
+ SELECT extname FROM pg_extension ORDER BY 1;
+- extname 
+----------
++      extname       
++--------------------
+  citext
++ pg_queryid
++ pg_stat_statements
+  plpgsql
+-(2 rows)
++(4 rows)
+ 
+ -- non-whitelisted extension
+ CREATE EXTENSION hstore;
+@@ -35,30 +39,36 @@
+ COMMENT ON EXTENSION hstore IS 'hstore comment';
+ ERROR:  extension "hstore" does not exist
+ SELECT extname FROM pg_extension ORDER BY 1;
+- extname 
+----------
++      extname       
++--------------------
+  citext
++ pg_queryid
++ pg_stat_statements
+  plpgsql
+-(2 rows)
++(4 rows)
+ 
+ -- whitelisted extension, but dependency is missing
+ CREATE EXTENSION earthdistance;
+ ERROR:  required extension "cube" is not installed
+ HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+ SELECT extname FROM pg_extension ORDER BY 1;
+- extname 
+----------
++      extname       
++--------------------
+  citext
++ pg_queryid
++ pg_stat_statements
+  plpgsql
+-(2 rows)
++(4 rows)
+ 
+ -- drop non-whitelisted extension
+ DROP EXTENSION plpgsql;
+ ERROR:  must be owner of extension plpgsql
+ SELECT extname FROM pg_extension ORDER BY 1;
+- extname 
+----------
++      extname       
++--------------------
+  citext
++ pg_queryid
++ pg_stat_statements
+  plpgsql
+-(2 rows)
++(4 rows)
+ 

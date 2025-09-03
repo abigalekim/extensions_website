@@ -1,0 +1,100 @@
+2023-07-25 06:40:08.067 UTC [699146] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 06:40:08.067 UTC [699146] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 06:40:08.081 UTC [699146] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 06:40:08.098 UTC [699149] LOG:  database system was shut down at 2023-07-25 06:40:07 UTC
+2023-07-25 06:40:08.107 UTC [699146] LOG:  database system is ready to accept connections
+2023-07-25 06:40:08.263 UTC [699168] ERROR:  ltree syntax error at character 1 at character 8
+2023-07-25 06:40:08.263 UTC [699168] STATEMENT:  SELECT '.2.3'::ltree;
+2023-07-25 06:40:08.263 UTC [699168] ERROR:  ltree syntax error at character 3 at character 8
+2023-07-25 06:40:08.263 UTC [699168] STATEMENT:  SELECT '1..3'::ltree;
+2023-07-25 06:40:08.263 UTC [699168] ERROR:  ltree syntax error at character 8
+2023-07-25 06:40:08.263 UTC [699168] DETAIL:  Unexpected end of input.
+2023-07-25 06:40:08.263 UTC [699168] STATEMENT:  SELECT '1.2.'::ltree;
+2023-07-25 06:40:08.264 UTC [699168] ERROR:  label string is too long
+2023-07-25 06:40:08.264 UTC [699168] DETAIL:  Label length is 256, must be at most 255, at character 257.
+2023-07-25 06:40:08.264 UTC [699168] STATEMENT:  SELECT repeat('x', 256)::ltree;
+2023-07-25 06:40:08.267 UTC [699168] ERROR:  lquery syntax error at character 1 at character 8
+2023-07-25 06:40:08.267 UTC [699168] STATEMENT:  SELECT '.2.3'::lquery;
+2023-07-25 06:40:08.267 UTC [699168] ERROR:  lquery syntax error at character 3 at character 8
+2023-07-25 06:40:08.267 UTC [699168] STATEMENT:  SELECT '1..3'::lquery;
+2023-07-25 06:40:08.267 UTC [699168] ERROR:  lquery syntax error at character 8
+2023-07-25 06:40:08.267 UTC [699168] DETAIL:  Unexpected end of input.
+2023-07-25 06:40:08.267 UTC [699168] STATEMENT:  SELECT '1.2.'::lquery;
+2023-07-25 06:40:08.267 UTC [699168] ERROR:  lquery syntax error at character 1 at character 8
+2023-07-25 06:40:08.267 UTC [699168] STATEMENT:  SELECT '@.2.3'::lquery;
+2023-07-25 06:40:08.267 UTC [699168] ERROR:  lquery syntax error at character 3 at character 8
+2023-07-25 06:40:08.267 UTC [699168] STATEMENT:  SELECT '1.@.3'::lquery;
+2023-07-25 06:40:08.268 UTC [699168] ERROR:  lquery syntax error at character 5 at character 8
+2023-07-25 06:40:08.268 UTC [699168] STATEMENT:  SELECT '1.2.@'::lquery;
+2023-07-25 06:40:08.268 UTC [699168] ERROR:  lquery syntax error at character 2 at character 8
+2023-07-25 06:40:08.268 UTC [699168] DETAIL:  Empty labels are not allowed.
+2023-07-25 06:40:08.268 UTC [699168] STATEMENT:  SELECT '!.2.3'::lquery;
+2023-07-25 06:40:08.268 UTC [699168] ERROR:  lquery syntax error at character 4 at character 8
+2023-07-25 06:40:08.268 UTC [699168] DETAIL:  Empty labels are not allowed.
+2023-07-25 06:40:08.268 UTC [699168] STATEMENT:  SELECT '1.!.3'::lquery;
+2023-07-25 06:40:08.268 UTC [699168] ERROR:  lquery syntax error at character 6 at character 8
+2023-07-25 06:40:08.268 UTC [699168] DETAIL:  Empty labels are not allowed.
+2023-07-25 06:40:08.268 UTC [699168] STATEMENT:  SELECT '1.2.!'::lquery;
+2023-07-25 06:40:08.268 UTC [699168] ERROR:  lquery syntax error at character 7 at character 8
+2023-07-25 06:40:08.268 UTC [699168] STATEMENT:  SELECT '1.2.3|@.4'::lquery;
+2023-07-25 06:40:08.268 UTC [699168] ERROR:  label string is too long
+2023-07-25 06:40:08.268 UTC [699168] DETAIL:  Label length is 256, must be at most 255, at character 257.
+2023-07-25 06:40:08.268 UTC [699168] STATEMENT:  SELECT (repeat('x', 256) || '*@@*')::lquery;
+2023-07-25 06:40:08.268 UTC [699168] ERROR:  label string is too long
+2023-07-25 06:40:08.268 UTC [699168] DETAIL:  Label length is 256, must be at most 255, at character 258.
+2023-07-25 06:40:08.268 UTC [699168] STATEMENT:  SELECT ('!' || repeat('x', 256))::lquery;
+2023-07-25 06:40:08.273 UTC [699168] ERROR:  number of ltree labels (65536) exceeds the maximum allowed (65535)
+2023-07-25 06:40:08.273 UTC [699168] STATEMENT:  SELECT nlevel(('1' || repeat('.1', 65535))::ltree);
+2023-07-25 06:40:08.277 UTC [699168] ERROR:  number of ltree levels (65536) exceeds the maximum allowed (65535)
+2023-07-25 06:40:08.277 UTC [699168] STATEMENT:  SELECT nlevel(('1' || repeat('.1', 65534))::ltree || '1');
+2023-07-25 06:40:08.286 UTC [699168] ERROR:  number of lquery items (65536) exceeds the maximum allowed (65535)
+2023-07-25 06:40:08.286 UTC [699168] STATEMENT:  SELECT ('1' || repeat('.1', 65535))::lquery IS NULL;
+2023-07-25 06:40:08.286 UTC [699168] ERROR:  lquery syntax error at character 8
+2023-07-25 06:40:08.286 UTC [699168] DETAIL:  Low limit (65536) exceeds the maximum allowed (65535), at character 3.
+2023-07-25 06:40:08.286 UTC [699168] STATEMENT:  SELECT '*{65536}'::lquery;
+2023-07-25 06:40:08.286 UTC [699168] ERROR:  lquery syntax error at character 8
+2023-07-25 06:40:08.286 UTC [699168] DETAIL:  High limit (65536) exceeds the maximum allowed (65535), at character 4.
+2023-07-25 06:40:08.286 UTC [699168] STATEMENT:  SELECT '*{,65536}'::lquery;
+2023-07-25 06:40:08.286 UTC [699168] ERROR:  lquery syntax error at character 8
+2023-07-25 06:40:08.286 UTC [699168] DETAIL:  Low limit (4) is greater than high limit (3), at character 5.
+2023-07-25 06:40:08.286 UTC [699168] STATEMENT:  SELECT '*{4,3}'::lquery;
+2023-07-25 06:40:08.387 UTC [699168] ERROR:  value 0 out of bounds for option "siglen"
+2023-07-25 06:40:08.387 UTC [699168] DETAIL:  Valid values are between "4" and "2024".
+2023-07-25 06:40:08.387 UTC [699168] STATEMENT:  create index tstidx on ltreetest using gist (t gist_ltree_ops(siglen=0));
+2023-07-25 06:40:08.389 UTC [699168] ERROR:  value 2025 out of bounds for option "siglen"
+2023-07-25 06:40:08.389 UTC [699168] DETAIL:  Valid values are between "4" and "2024".
+2023-07-25 06:40:08.389 UTC [699168] STATEMENT:  create index tstidx on ltreetest using gist (t gist_ltree_ops(siglen=2025));
+2023-07-25 06:40:08.390 UTC [699168] ERROR:  value 2028 out of bounds for option "siglen"
+2023-07-25 06:40:08.390 UTC [699168] DETAIL:  Valid values are between "4" and "2024".
+2023-07-25 06:40:08.390 UTC [699168] STATEMENT:  create index tstidx on ltreetest using gist (t gist_ltree_ops(siglen=2028));
+2023-07-25 06:40:08.392 UTC [699168] ERROR:  siglen value must be a multiple of 4
+2023-07-25 06:40:08.392 UTC [699168] STATEMENT:  create index tstidx on ltreetest using gist (t gist_ltree_ops(siglen=2019));
+2023-07-25 06:40:08.477 UTC [699168] ERROR:  value 0 out of bounds for option "siglen"
+2023-07-25 06:40:08.477 UTC [699168] DETAIL:  Valid values are between "1" and "2024".
+2023-07-25 06:40:08.477 UTC [699168] STATEMENT:  create index _tstidx on _ltreetest using gist (t gist__ltree_ops(siglen=0));
+2023-07-25 06:40:08.477 UTC [699168] ERROR:  value 2025 out of bounds for option "siglen"
+2023-07-25 06:40:08.477 UTC [699168] DETAIL:  Valid values are between "1" and "2024".
+2023-07-25 06:40:08.477 UTC [699168] STATEMENT:  create index _tstidx on _ltreetest using gist (t gist__ltree_ops(siglen=2025));
+2023-07-25 06:40:08.781 UTC [699183] ERROR:  required extension "cube" is not installed
+2023-07-25 06:40:08.781 UTC [699183] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-25 06:40:08.781 UTC [699183] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-25 06:40:08.835 UTC [699183] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-25 06:40:08.835 UTC [699183] DETAIL:  extension earthdistance depends on extension cube
+2023-07-25 06:40:08.835 UTC [699183] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 06:40:08.835 UTC [699183] STATEMENT:  drop extension cube;
+2023-07-25 06:40:08.838 UTC [699183] ERROR:  cannot drop type cube because extension cube requires it
+2023-07-25 06:40:08.838 UTC [699183] HINT:  You can drop extension cube instead.
+2023-07-25 06:40:08.838 UTC [699183] STATEMENT:  drop type cube;
+2023-07-25 06:40:08.844 UTC [699183] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-25 06:40:08.844 UTC [699183] DETAIL:  column f1 of table foo depends on type cube
+2023-07-25 06:40:08.844 UTC [699183] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 06:40:08.844 UTC [699183] STATEMENT:  drop extension cube;
+2023-07-25 06:40:08.944 UTC [699183] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-25 06:40:08.944 UTC [699183] DETAIL:  column f1 of table foo depends on type c.cube
+2023-07-25 06:40:08.944 UTC [699183] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 06:40:08.944 UTC [699183] STATEMENT:  drop extension cube;
+2023-07-25 06:40:08.945 UTC [699183] ERROR:  cannot drop schema c because other objects depend on it
+2023-07-25 06:40:08.945 UTC [699183] DETAIL:  extension cube depends on schema c
+	column f1 of table foo depends on type c.cube
+2023-07-25 06:40:08.945 UTC [699183] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 06:40:08.945 UTC [699183] STATEMENT:  drop schema c;

@@ -1,0 +1,40 @@
+2023-07-26 08:14:28.216 UTC [1026680] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 08:14:28.216 UTC [1026680] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 08:14:28.231 UTC [1026680] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 08:14:28.247 UTC [1026683] LOG:  database system was shut down at 2023-07-26 08:14:27 UTC
+2023-07-26 08:14:28.258 UTC [1026680] LOG:  database system is ready to accept connections
+2023-07-26 08:14:28.914 UTC [1026704] ERROR:  could not create unique index "idx_badindex_n"
+2023-07-26 08:14:28.914 UTC [1026704] DETAIL:  Key (n)=(10) is duplicated.
+2023-07-26 08:14:28.914 UTC [1026704] STATEMENT:  CREATE UNIQUE INDEX CONCURRENTLY idx_badindex_n ON tbl_badindex (n);
+2023-07-26 08:14:35.933 UTC [1026871] ERROR:  permission denied for schema repack at character 8
+2023-07-26 08:14:35.933 UTC [1026871] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 08:14:38.774 UTC [1026961] ERROR:  table name not found for OID 1
+2023-07-26 08:14:38.774 UTC [1026961] STATEMENT:  SELECT repack.get_order_by('issue321_idx'::regclass::oid, 1);
+2023-07-26 08:14:38.775 UTC [1026961] ERROR:  cache lookup failed for index 1
+2023-07-26 08:14:38.775 UTC [1026961] STATEMENT:  SELECT repack.get_order_by(1, 1);
+2023-07-26 08:14:38.798 UTC [1026681] LOG:  checkpoint starting: immediate force wait
+2023-07-26 08:14:39.040 UTC [1026681] LOG:  checkpoint complete: wrote 1040 buffers (6.3%); 1 WAL file(s) added, 0 removed, 0 recycled; write=0.051 s, sync=0.049 s, total=0.242 s; sync files=405, longest=0.010 s, average=0.001 s; distance=7734 kB, estimate=7734 kB
+2023-07-26 08:14:39.042 UTC [1026987] ERROR:  tablespace "testts" is not empty
+2023-07-26 08:14:39.042 UTC [1026987] STATEMENT:  DROP TABLESPACE testts
+2023-07-26 08:14:39.273 UTC [1026680] LOG:  received SIGHUP, reloading configuration files
+2023-07-26 08:14:39.275 UTC [1026680] LOG:  parameter "session_preload_libraries" changed to "pgextwlist"
+2023-07-26 08:14:39.275 UTC [1026680] LOG:  parameter "extwlist.extensions" changed to "citext,earthdistance,pg_trgm,pg_stat_statements,refint"
+2023-07-26 08:14:39.275 UTC [1026680] LOG:  parameter "extwlist.custom_path" changed to "/home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/test-scripts"
+2023-07-26 08:14:39.375 UTC [1027012] ERROR:  extension "plpgsql" already exists
+2023-07-26 08:14:39.375 UTC [1027012] STATEMENT:  CREATE EXTENSION plpgsql;
+2023-07-26 08:14:39.375 UTC [1027012] ERROR:  extension "hstore" does not exist
+2023-07-26 08:14:39.375 UTC [1027012] STATEMENT:  COMMENT ON EXTENSION hstore IS 'plpgsql comment';
+2023-07-26 08:14:39.376 UTC [1027012] ERROR:  permission denied to create extension "hstore"
+2023-07-26 08:14:39.376 UTC [1027012] HINT:  Must have CREATE privilege on current database to create this extension.
+2023-07-26 08:14:39.376 UTC [1027012] STATEMENT:  CREATE EXTENSION hstore;
+2023-07-26 08:14:39.376 UTC [1027012] ERROR:  extension "hstore" does not exist
+2023-07-26 08:14:39.376 UTC [1027012] STATEMENT:  COMMENT ON EXTENSION hstore IS 'hstore comment';
+2023-07-26 08:14:39.376 UTC [1027012] ERROR:  required extension "cube" is not installed
+2023-07-26 08:14:39.376 UTC [1027012] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-26 08:14:39.376 UTC [1027012] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-26 08:14:39.377 UTC [1027012] ERROR:  must be owner of extension plpgsql
+2023-07-26 08:14:39.377 UTC [1027012] STATEMENT:  DROP EXTENSION plpgsql;
+2023-07-26 08:14:39.407 UTC [1027020] ERROR:  cannot drop extension citext because other objects depend on it
+2023-07-26 08:14:39.407 UTC [1027020] DETAIL:  column t of table mere_table depends on type citext
+2023-07-26 08:14:39.407 UTC [1027020] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 08:14:39.407 UTC [1027020] STATEMENT:  DROP EXTENSION citext;

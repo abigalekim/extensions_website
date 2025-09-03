@@ -1,0 +1,56 @@
+2023-07-25 05:49:48.037 UTC [1792729] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 05:49:48.037 UTC [1792729] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 05:49:48.048 UTC [1792729] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 05:49:48.063 UTC [1792732] LOG:  database system was shut down at 2023-07-25 05:49:47 UTC
+2023-07-25 05:49:48.074 UTC [1792729] LOG:  database system is ready to accept connections
+2023-07-25 05:49:48.236 UTC [1792745] ERROR:  file "test_file1" exists
+2023-07-25 05:49:48.236 UTC [1792745] STATEMENT:  SELECT pg_file_write('test_file1', 'test1', false);
+2023-07-25 05:49:48.246 UTC [1792745] ERROR:  path must be in or below the current directory
+2023-07-25 05:49:48.246 UTC [1792745] STATEMENT:  SELECT pg_file_write('../test_file0', 'test0', false);
+2023-07-25 05:49:48.247 UTC [1792745] ERROR:  absolute path not allowed
+2023-07-25 05:49:48.247 UTC [1792745] STATEMENT:  SELECT pg_file_write('/tmp/test_file0', 'test0', false);
+2023-07-25 05:49:48.248 UTC [1792745] ERROR:  absolute path not allowed
+2023-07-25 05:49:48.248 UTC [1792745] STATEMENT:  SELECT pg_file_write(current_setting('data_directory') || '/../test_file4', 'test4', false);
+2023-07-25 05:49:48.268 UTC [1792745] ERROR:  could not stat file "test_file2": No such file or directory
+2023-07-25 05:49:48.268 UTC [1792745] STATEMENT:  SELECT pg_file_sync('test_file2');
+2023-07-25 05:49:48.269 UTC [1792745] ERROR:  could not open file "test_file1" for reading: No such file or directory
+2023-07-25 05:49:48.269 UTC [1792745] STATEMENT:  SELECT pg_read_file('test_file1');
+2023-07-25 05:49:48.270 UTC [1792745] WARNING:  file "test_file1" is not accessible: No such file or directory
+2023-07-25 05:49:48.270 UTC [1792745] CONTEXT:  SQL function "pg_file_rename" statement 1
+2023-07-25 05:49:48.272 UTC [1792745] ERROR:  could not open file "test_file2" for reading: No such file or directory
+2023-07-25 05:49:48.272 UTC [1792745] STATEMENT:  SELECT pg_read_file('test_file2');
+2023-07-25 05:49:48.281 UTC [1792745] ERROR:  permission denied for function pg_file_write
+2023-07-25 05:49:48.281 UTC [1792745] STATEMENT:  SELECT pg_file_write('test_file0', 'test0', false);
+2023-07-25 05:49:48.281 UTC [1792745] ERROR:  permission denied for function pg_file_sync
+2023-07-25 05:49:48.281 UTC [1792745] STATEMENT:  SELECT pg_file_sync('test_file0');
+2023-07-25 05:49:48.282 UTC [1792745] ERROR:  permission denied for function pg_file_rename
+2023-07-25 05:49:48.282 UTC [1792745] CONTEXT:  SQL function "pg_file_rename" statement 1
+2023-07-25 05:49:48.282 UTC [1792745] STATEMENT:  SELECT pg_file_rename('test_file0', 'test_file0');
+2023-07-25 05:49:48.282 UTC [1792745] ERROR:  permission denied for function pg_file_unlink
+2023-07-25 05:49:48.282 UTC [1792745] STATEMENT:  SELECT pg_file_unlink('test_file0');
+2023-07-25 05:49:48.283 UTC [1792745] ERROR:  permission denied for function pg_logdir_ls
+2023-07-25 05:49:48.283 UTC [1792745] STATEMENT:  SELECT pg_logdir_ls();
+2023-07-25 05:49:48.292 UTC [1792730] LOG:  checkpoint starting: immediate force wait
+2023-07-25 05:49:48.344 UTC [1792730] LOG:  checkpoint complete: wrote 22 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.012 s, sync=0.017 s, total=0.053 s; sync files=18, longest=0.007 s, average=0.001 s; distance=4015 kB, estimate=4015 kB
+2023-07-25 05:49:48.506 UTC [1792729] LOG:  received SIGHUP, reloading configuration files
+2023-07-25 05:49:48.508 UTC [1792729] LOG:  parameter "session_preload_libraries" changed to "pgextwlist"
+2023-07-25 05:49:48.508 UTC [1792729] LOG:  parameter "extwlist.extensions" changed to "citext,earthdistance,pg_trgm,pg_stat_statements,refint"
+2023-07-25 05:49:48.508 UTC [1792729] LOG:  parameter "extwlist.custom_path" changed to "/home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/test-scripts"
+2023-07-25 05:49:48.604 UTC [1792771] ERROR:  extension "plpgsql" already exists
+2023-07-25 05:49:48.604 UTC [1792771] STATEMENT:  CREATE EXTENSION plpgsql;
+2023-07-25 05:49:48.604 UTC [1792771] ERROR:  extension "hstore" does not exist
+2023-07-25 05:49:48.604 UTC [1792771] STATEMENT:  COMMENT ON EXTENSION hstore IS 'plpgsql comment';
+2023-07-25 05:49:48.605 UTC [1792771] ERROR:  permission denied to create extension "hstore"
+2023-07-25 05:49:48.605 UTC [1792771] HINT:  Must have CREATE privilege on current database to create this extension.
+2023-07-25 05:49:48.605 UTC [1792771] STATEMENT:  CREATE EXTENSION hstore;
+2023-07-25 05:49:48.605 UTC [1792771] ERROR:  extension "hstore" does not exist
+2023-07-25 05:49:48.605 UTC [1792771] STATEMENT:  COMMENT ON EXTENSION hstore IS 'hstore comment';
+2023-07-25 05:49:48.605 UTC [1792771] ERROR:  required extension "cube" is not installed
+2023-07-25 05:49:48.605 UTC [1792771] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-25 05:49:48.605 UTC [1792771] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-25 05:49:48.605 UTC [1792771] ERROR:  must be owner of extension plpgsql
+2023-07-25 05:49:48.605 UTC [1792771] STATEMENT:  DROP EXTENSION plpgsql;
+2023-07-25 05:49:48.629 UTC [1792779] ERROR:  cannot drop extension citext because other objects depend on it
+2023-07-25 05:49:48.629 UTC [1792779] DETAIL:  column t of table mere_table depends on type citext
+2023-07-25 05:49:48.629 UTC [1792779] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 05:49:48.629 UTC [1792779] STATEMENT:  DROP EXTENSION citext;

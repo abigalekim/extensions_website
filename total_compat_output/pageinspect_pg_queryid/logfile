@@ -1,0 +1,237 @@
+2023-07-25 12:04:53.808 UTC [743213] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 12:04:53.809 UTC [743213] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 12:04:53.823 UTC [743213] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 12:04:53.839 UTC [743216] LOG:  database system was shut down at 2023-07-25 12:04:53 UTC
+2023-07-25 12:04:53.846 UTC [743213] LOG:  database system is ready to accept connections
+2023-07-25 12:04:53.992 UTC [743235] ERROR:  block number 1 is out of range for relation "test1"
+2023-07-25 12:04:53.992 UTC [743235] STATEMENT:  SELECT octet_length(get_raw_page('test1', 'main', 1)) AS main_1;
+2023-07-25 12:04:53.993 UTC [743235] ERROR:  block number 1 is out of range for relation "test1"
+2023-07-25 12:04:53.993 UTC [743235] STATEMENT:  SELECT octet_length(get_raw_page('test1', 'vm', 1)) AS vm_1;
+2023-07-25 12:04:53.993 UTC [743235] ERROR:  invalid block number
+2023-07-25 12:04:53.993 UTC [743235] STATEMENT:  SELECT octet_length(get_raw_page('test1', 'main', -1));
+2023-07-25 12:04:53.993 UTC [743235] ERROR:  relation "xxx" does not exist
+2023-07-25 12:04:53.993 UTC [743235] STATEMENT:  SELECT octet_length(get_raw_page('xxx', 'main', 0));
+2023-07-25 12:04:53.993 UTC [743235] ERROR:  invalid fork name
+2023-07-25 12:04:53.993 UTC [743235] HINT:  Valid fork names are "main", "fsm", "vm", and "init".
+2023-07-25 12:04:53.993 UTC [743235] STATEMENT:  SELECT octet_length(get_raw_page('test1', 'xxx', 0));
+2023-07-25 12:04:53.994 UTC [743235] ERROR:  invalid block number
+2023-07-25 12:04:53.994 UTC [743235] STATEMENT:  SELECT page_checksum(get_raw_page('test1', 0), -1);
+2023-07-25 12:04:54.011 UTC [743235] ERROR:  cannot get raw page from relation "test_partitioned"
+2023-07-25 12:04:54.011 UTC [743235] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-25 12:04:54.011 UTC [743235] STATEMENT:  select get_raw_page('test_partitioned', 0);
+2023-07-25 12:04:54.012 UTC [743235] ERROR:  cannot get raw page from relation "test_partitioned_index"
+2023-07-25 12:04:54.012 UTC [743235] DETAIL:  This operation is not supported for partitioned indexes.
+2023-07-25 12:04:54.012 UTC [743235] STATEMENT:  select get_raw_page('test_partitioned_index', 0);
+2023-07-25 12:04:54.028 UTC [743235] ERROR:  block number 0 is out of range for relation "test_part1"
+2023-07-25 12:04:54.028 UTC [743235] STATEMENT:  select get_raw_page('test_part1', 0);
+2023-07-25 12:04:54.049 UTC [743235] ERROR:  invalid page size
+2023-07-25 12:04:54.049 UTC [743235] DETAIL:  Expected 8192 bytes, got 3.
+2023-07-25 12:04:54.049 UTC [743235] STATEMENT:  SELECT fsm_page_contents('aaa'::bytea);
+2023-07-25 12:04:54.050 UTC [743235] ERROR:  invalid page size
+2023-07-25 12:04:54.050 UTC [743235] DETAIL:  Expected 8192 bytes, got 3.
+2023-07-25 12:04:54.050 UTC [743235] STATEMENT:  SELECT page_checksum('bbb'::bytea, 0);
+2023-07-25 12:04:54.050 UTC [743235] ERROR:  invalid page size
+2023-07-25 12:04:54.050 UTC [743235] DETAIL:  Expected 8192 bytes, got 3.
+2023-07-25 12:04:54.050 UTC [743235] STATEMENT:  SELECT page_header('ccc'::bytea);
+2023-07-25 12:04:54.110 UTC [743239] ERROR:  invalid block number
+2023-07-25 12:04:54.110 UTC [743239] STATEMENT:  SELECT * FROM bt_page_stats('test1_a_idx', -1);
+2023-07-25 12:04:54.111 UTC [743239] ERROR:  block 0 is a meta page
+2023-07-25 12:04:54.111 UTC [743239] STATEMENT:  SELECT * FROM bt_page_stats('test1_a_idx', 0);
+2023-07-25 12:04:54.112 UTC [743239] ERROR:  block number out of range
+2023-07-25 12:04:54.112 UTC [743239] STATEMENT:  SELECT * FROM bt_page_stats('test1_a_idx', 2);
+2023-07-25 12:04:54.113 UTC [743239] ERROR:  invalid block number
+2023-07-25 12:04:54.113 UTC [743239] STATEMENT:  SELECT * FROM bt_page_items('test1_a_idx', -1);
+2023-07-25 12:04:54.114 UTC [743239] ERROR:  block 0 is a meta page
+2023-07-25 12:04:54.114 UTC [743239] STATEMENT:  SELECT * FROM bt_page_items('test1_a_idx', 0);
+2023-07-25 12:04:54.115 UTC [743239] ERROR:  block number out of range
+2023-07-25 12:04:54.115 UTC [743239] STATEMENT:  SELECT * FROM bt_page_items('test1_a_idx', 2);
+2023-07-25 12:04:54.116 UTC [743239] ERROR:  invalid block number
+2023-07-25 12:04:54.116 UTC [743239] STATEMENT:  SELECT * FROM bt_page_items(get_raw_page('test1_a_idx', -1));
+2023-07-25 12:04:54.116 UTC [743239] ERROR:  block is a meta page
+2023-07-25 12:04:54.116 UTC [743239] STATEMENT:  SELECT * FROM bt_page_items(get_raw_page('test1_a_idx', 0));
+2023-07-25 12:04:54.117 UTC [743239] ERROR:  block number 2 is out of range for relation "test1_a_idx"
+2023-07-25 12:04:54.117 UTC [743239] STATEMENT:  SELECT * FROM bt_page_items(get_raw_page('test1_a_idx', 2));
+2023-07-25 12:04:54.123 UTC [743239] ERROR:  "test1_a_hash" is not a btree index
+2023-07-25 12:04:54.123 UTC [743239] STATEMENT:  SELECT bt_metap('test1_a_hash');
+2023-07-25 12:04:54.123 UTC [743239] ERROR:  "test1_a_hash" is not a btree index
+2023-07-25 12:04:54.123 UTC [743239] STATEMENT:  SELECT bt_page_stats('test1_a_hash', 0);
+2023-07-25 12:04:54.124 UTC [743239] ERROR:  "test1_a_hash" is not a btree index
+2023-07-25 12:04:54.124 UTC [743239] STATEMENT:  SELECT bt_page_items('test1_a_hash', 0);
+2023-07-25 12:04:54.125 UTC [743239] ERROR:  block is a meta page
+2023-07-25 12:04:54.125 UTC [743239] STATEMENT:  SELECT bt_page_items(get_raw_page('test1_a_hash', 0));
+2023-07-25 12:04:54.131 UTC [743239] ERROR:  block is not a valid btree leaf page
+2023-07-25 12:04:54.131 UTC [743239] STATEMENT:  SELECT bt_page_items(get_raw_page('test1_b_gist', 0));
+2023-07-25 12:04:54.131 UTC [743239] ERROR:  invalid page size
+2023-07-25 12:04:54.131 UTC [743239] DETAIL:  Expected 8192 bytes, got 3.
+2023-07-25 12:04:54.131 UTC [743239] STATEMENT:  SELECT bt_page_items('aaa'::bytea);
+2023-07-25 12:04:54.137 UTC [743239] ERROR:  input page is not a valid btree page
+2023-07-25 12:04:54.137 UTC [743239] DETAIL:  Expected special size 16, got 0.
+2023-07-25 12:04:54.137 UTC [743239] STATEMENT:  SELECT bt_page_items(get_raw_page('test1', 0));
+2023-07-25 12:04:54.137 UTC [743239] ERROR:  input page is not a valid btree page
+2023-07-25 12:04:54.137 UTC [743239] DETAIL:  Expected special size 16, got 8.
+2023-07-25 12:04:54.137 UTC [743239] STATEMENT:  SELECT bt_page_items(get_raw_page('test1_a_brin', 0));
+2023-07-25 12:04:54.196 UTC [743243] ERROR:  page is not a BRIN page of type "metapage"
+2023-07-25 12:04:54.196 UTC [743243] DETAIL:  Expected special type 0000f091, got 0000f092.
+2023-07-25 12:04:54.196 UTC [743243] STATEMENT:  SELECT * FROM brin_metapage_info(get_raw_page('test1_a_idx', 1));
+2023-07-25 12:04:54.197 UTC [743243] ERROR:  page is not a BRIN page of type "revmap"
+2023-07-25 12:04:54.197 UTC [743243] DETAIL:  Expected special type 0000f092, got 0000f091.
+2023-07-25 12:04:54.197 UTC [743243] STATEMENT:  SELECT * FROM brin_revmap_data(get_raw_page('test1_a_idx', 0)) LIMIT 5;
+2023-07-25 12:04:54.214 UTC [743243] ERROR:  "test1_a_btree" is not a BRIN index
+2023-07-25 12:04:54.214 UTC [743243] STATEMENT:  SELECT brin_page_items(get_raw_page('test1_a_btree', 0), 'test1_a_btree');
+2023-07-25 12:04:54.214 UTC [743243] ERROR:  input page is not a valid BRIN page
+2023-07-25 12:04:54.214 UTC [743243] DETAIL:  Expected special size 8, got 16.
+2023-07-25 12:04:54.214 UTC [743243] STATEMENT:  SELECT brin_page_items(get_raw_page('test1_a_btree', 0), 'test1_a_idx');
+2023-07-25 12:04:54.215 UTC [743243] ERROR:  input page is not a valid BRIN page
+2023-07-25 12:04:54.215 UTC [743243] DETAIL:  Expected special size 8, got 0.
+2023-07-25 12:04:54.215 UTC [743243] STATEMENT:  SELECT brin_page_type(get_raw_page('test1', 0));
+2023-07-25 12:04:54.216 UTC [743243] ERROR:  input page is not a valid BRIN page
+2023-07-25 12:04:54.216 UTC [743243] DETAIL:  Expected special size 8, got 0.
+2023-07-25 12:04:54.216 UTC [743243] STATEMENT:  SELECT * FROM brin_metapage_info(get_raw_page('test1', 0));
+2023-07-25 12:04:54.216 UTC [743243] ERROR:  input page is not a valid BRIN page
+2023-07-25 12:04:54.216 UTC [743243] DETAIL:  Expected special size 8, got 0.
+2023-07-25 12:04:54.216 UTC [743243] STATEMENT:  SELECT * FROM brin_revmap_data(get_raw_page('test1', 0));
+2023-07-25 12:04:54.272 UTC [743247] ERROR:  input page is not a GIN metapage
+2023-07-25 12:04:54.272 UTC [743247] DETAIL:  Flags 0002, expected 0008
+2023-07-25 12:04:54.272 UTC [743247] STATEMENT:  SELECT * FROM gin_metapage_info(get_raw_page('test1_y_idx', 1));
+2023-07-25 12:04:54.274 UTC [743247] ERROR:  input page is not a compressed GIN data leaf page
+2023-07-25 12:04:54.274 UTC [743247] DETAIL:  Flags 0002, expected 0083
+2023-07-25 12:04:54.274 UTC [743247] STATEMENT:  SELECT * FROM gin_leafpage_items(get_raw_page('test1_y_idx', 1));
+2023-07-25 12:04:54.499 UTC [743247] ERROR:  invalid page size
+2023-07-25 12:04:54.499 UTC [743247] DETAIL:  Expected 8192 bytes, got 3.
+2023-07-25 12:04:54.499 UTC [743247] STATEMENT:  SELECT gin_leafpage_items('aaa'::bytea);
+2023-07-25 12:04:54.500 UTC [743247] ERROR:  invalid page size
+2023-07-25 12:04:54.500 UTC [743247] DETAIL:  Expected 8192 bytes, got 3.
+2023-07-25 12:04:54.500 UTC [743247] STATEMENT:  SELECT gin_metapage_info('bbb'::bytea);
+2023-07-25 12:04:54.501 UTC [743247] ERROR:  invalid page size
+2023-07-25 12:04:54.501 UTC [743247] DETAIL:  Expected 8192 bytes, got 3.
+2023-07-25 12:04:54.501 UTC [743247] STATEMENT:  SELECT gin_page_opaque_info('ccc'::bytea);
+2023-07-25 12:04:54.501 UTC [743247] ERROR:  input page is not a valid GIN metapage
+2023-07-25 12:04:54.501 UTC [743247] DETAIL:  Expected special size 8, got 0.
+2023-07-25 12:04:54.501 UTC [743247] STATEMENT:  SELECT * FROM gin_metapage_info(get_raw_page('test1', 0));
+2023-07-25 12:04:54.502 UTC [743247] ERROR:  input page is not a valid GIN data leaf page
+2023-07-25 12:04:54.502 UTC [743247] DETAIL:  Expected special size 8, got 0.
+2023-07-25 12:04:54.502 UTC [743247] STATEMENT:  SELECT * FROM gin_page_opaque_info(get_raw_page('test1', 0));
+2023-07-25 12:04:54.502 UTC [743247] ERROR:  input page is not a valid GIN data leaf page
+2023-07-25 12:04:54.502 UTC [743247] DETAIL:  Expected special size 8, got 0.
+2023-07-25 12:04:54.502 UTC [743247] STATEMENT:  SELECT * FROM gin_leafpage_items(get_raw_page('test1', 0));
+2023-07-25 12:04:54.592 UTC [743251] ERROR:  "test_gist_btree" is not a GiST index
+2023-07-25 12:04:54.592 UTC [743251] STATEMENT:  SELECT gist_page_items(get_raw_page('test_gist_btree', 0), 'test_gist_btree');
+2023-07-25 12:04:54.593 UTC [743251] ERROR:  input page is not a valid GiST page
+2023-07-25 12:04:54.593 UTC [743251] DETAIL:  Expected 0000ff81, got 00000000.
+2023-07-25 12:04:54.593 UTC [743251] STATEMENT:  SELECT gist_page_items(get_raw_page('test_gist_btree', 0), 'test_gist_idx');
+2023-07-25 12:04:54.593 UTC [743251] ERROR:  invalid page size
+2023-07-25 12:04:54.593 UTC [743251] DETAIL:  Expected 8192 bytes, got 3.
+2023-07-25 12:04:54.593 UTC [743251] STATEMENT:  SELECT gist_page_items_bytea('aaa'::bytea);
+2023-07-25 12:04:54.594 UTC [743251] ERROR:  invalid page size
+2023-07-25 12:04:54.594 UTC [743251] DETAIL:  Expected 8192 bytes, got 3.
+2023-07-25 12:04:54.594 UTC [743251] STATEMENT:  SELECT gist_page_items('aaa'::bytea, 'test_gist_idx'::regclass);
+2023-07-25 12:04:54.594 UTC [743251] ERROR:  invalid page size
+2023-07-25 12:04:54.594 UTC [743251] DETAIL:  Expected 8192 bytes, got 3.
+2023-07-25 12:04:54.594 UTC [743251] STATEMENT:  SELECT gist_page_opaque_info('aaa'::bytea);
+2023-07-25 12:04:54.595 UTC [743251] ERROR:  input page is not a valid GiST page
+2023-07-25 12:04:54.595 UTC [743251] DETAIL:  Expected special size 16, got 0.
+2023-07-25 12:04:54.595 UTC [743251] STATEMENT:  SELECT * FROM gist_page_opaque_info(get_raw_page('test_gist', 0));
+2023-07-25 12:04:54.596 UTC [743251] ERROR:  input page is not a valid GiST page
+2023-07-25 12:04:54.596 UTC [743251] DETAIL:  Expected special size 16, got 0.
+2023-07-25 12:04:54.596 UTC [743251] STATEMENT:  SELECT gist_page_items_bytea(get_raw_page('test_gist', 0));
+2023-07-25 12:04:54.596 UTC [743251] ERROR:  input page is not a valid GiST page
+2023-07-25 12:04:54.596 UTC [743251] DETAIL:  Expected 0000ff81, got 00000000.
+2023-07-25 12:04:54.596 UTC [743251] STATEMENT:  SELECT gist_page_items_bytea(get_raw_page('test_gist_btree', 0));
+2023-07-25 12:04:54.649 UTC [743255] ERROR:  block number 6 is out of range for relation "test_hash_a_idx"
+2023-07-25 12:04:54.649 UTC [743255] STATEMENT:  SELECT hash_page_type(get_raw_page('test_hash_a_idx', 6));
+2023-07-25 12:04:54.650 UTC [743255] ERROR:  invalid block number
+2023-07-25 12:04:54.650 UTC [743255] STATEMENT:  SELECT * FROM hash_bitmap_info('test_hash_a_idx', -1);
+2023-07-25 12:04:54.651 UTC [743255] ERROR:  invalid overflow block number 0
+2023-07-25 12:04:54.651 UTC [743255] STATEMENT:  SELECT * FROM hash_bitmap_info('test_hash_a_idx', 0);
+2023-07-25 12:04:54.651 UTC [743255] ERROR:  invalid overflow block number 1
+2023-07-25 12:04:54.651 UTC [743255] STATEMENT:  SELECT * FROM hash_bitmap_info('test_hash_a_idx', 1);
+2023-07-25 12:04:54.652 UTC [743255] ERROR:  invalid overflow block number 2
+2023-07-25 12:04:54.652 UTC [743255] STATEMENT:  SELECT * FROM hash_bitmap_info('test_hash_a_idx', 2);
+2023-07-25 12:04:54.652 UTC [743255] ERROR:  invalid overflow block number 3
+2023-07-25 12:04:54.652 UTC [743255] STATEMENT:  SELECT * FROM hash_bitmap_info('test_hash_a_idx', 3);
+2023-07-25 12:04:54.653 UTC [743255] ERROR:  invalid overflow block number 4
+2023-07-25 12:04:54.653 UTC [743255] STATEMENT:  SELECT * FROM hash_bitmap_info('test_hash_a_idx', 4);
+2023-07-25 12:04:54.653 UTC [743255] ERROR:  invalid overflow block number 5
+2023-07-25 12:04:54.653 UTC [743255] STATEMENT:  SELECT * FROM hash_bitmap_info('test_hash_a_idx', 5);
+2023-07-25 12:04:54.654 UTC [743255] ERROR:  block number 6 is out of range for relation "test_hash_a_idx"
+2023-07-25 12:04:54.654 UTC [743255] STATEMENT:  SELECT * FROM hash_bitmap_info('test_hash_a_idx', 6);
+2023-07-25 12:04:54.656 UTC [743255] ERROR:  page is not a hash meta page
+2023-07-25 12:04:54.656 UTC [743255] STATEMENT:  SELECT magic, version, ntuples, bsize, bmsize, bmshift, maxbucket, highmask,
+	lowmask, ovflpoint, firstfree, nmaps, procid, spares, mapp FROM
+	hash_metapage_info(get_raw_page('test_hash_a_idx', 1));
+2023-07-25 12:04:54.657 UTC [743255] ERROR:  page is not a hash meta page
+2023-07-25 12:04:54.657 UTC [743255] STATEMENT:  SELECT magic, version, ntuples, bsize, bmsize, bmshift, maxbucket, highmask,
+	lowmask, ovflpoint, firstfree, nmaps, procid, spares, mapp FROM
+	hash_metapage_info(get_raw_page('test_hash_a_idx', 2));
+2023-07-25 12:04:54.658 UTC [743255] ERROR:  page is not a hash meta page
+2023-07-25 12:04:54.658 UTC [743255] STATEMENT:  SELECT magic, version, ntuples, bsize, bmsize, bmshift, maxbucket, highmask,
+	lowmask, ovflpoint, firstfree, nmaps, procid, spares, mapp FROM
+	hash_metapage_info(get_raw_page('test_hash_a_idx', 3));
+2023-07-25 12:04:54.658 UTC [743255] ERROR:  page is not a hash meta page
+2023-07-25 12:04:54.658 UTC [743255] STATEMENT:  SELECT magic, version, ntuples, bsize, bmsize, bmshift, maxbucket, highmask,
+	lowmask, ovflpoint, firstfree, nmaps, procid, spares, mapp FROM
+	hash_metapage_info(get_raw_page('test_hash_a_idx', 4));
+2023-07-25 12:04:54.659 UTC [743255] ERROR:  page is not a hash meta page
+2023-07-25 12:04:54.659 UTC [743255] STATEMENT:  SELECT magic, version, ntuples, bsize, bmsize, bmshift, maxbucket, highmask,
+	lowmask, ovflpoint, firstfree, nmaps, procid, spares, mapp FROM
+	hash_metapage_info(get_raw_page('test_hash_a_idx', 5));
+2023-07-25 12:04:54.660 UTC [743255] ERROR:  page is not a hash bucket or overflow page
+2023-07-25 12:04:54.660 UTC [743255] STATEMENT:  SELECT live_items, dead_items, page_size, hasho_prevblkno, hasho_nextblkno,
+	hasho_bucket, hasho_flag, hasho_page_id FROM
+	hash_page_stats(get_raw_page('test_hash_a_idx', 0));
+2023-07-25 12:04:54.663 UTC [743255] ERROR:  page is not a hash bucket or overflow page
+2023-07-25 12:04:54.663 UTC [743255] STATEMENT:  SELECT live_items, dead_items, page_size, hasho_prevblkno, hasho_nextblkno,
+	hasho_bucket, hasho_flag, hasho_page_id FROM
+	hash_page_stats(get_raw_page('test_hash_a_idx', 5));
+2023-07-25 12:04:54.664 UTC [743255] ERROR:  page is not a hash bucket or overflow page
+2023-07-25 12:04:54.664 UTC [743255] STATEMENT:  SELECT * FROM hash_page_items(get_raw_page('test_hash_a_idx', 0));
+2023-07-25 12:04:54.667 UTC [743255] ERROR:  page is not a hash bucket or overflow page
+2023-07-25 12:04:54.667 UTC [743255] STATEMENT:  SELECT * FROM hash_page_items(get_raw_page('test_hash_a_idx', 5));
+2023-07-25 12:04:54.679 UTC [743255] ERROR:  "test_hash_a_btree" is not a hash index
+2023-07-25 12:04:54.679 UTC [743255] STATEMENT:  SELECT hash_bitmap_info('test_hash_a_btree', 0);
+2023-07-25 12:04:54.680 UTC [743255] ERROR:  invalid page size
+2023-07-25 12:04:54.680 UTC [743255] DETAIL:  Expected 8192 bytes, got 3.
+2023-07-25 12:04:54.680 UTC [743255] STATEMENT:  SELECT hash_metapage_info('aaa'::bytea);
+2023-07-25 12:04:54.681 UTC [743255] ERROR:  invalid page size
+2023-07-25 12:04:54.681 UTC [743255] DETAIL:  Expected 8192 bytes, got 3.
+2023-07-25 12:04:54.681 UTC [743255] STATEMENT:  SELECT hash_page_items('bbb'::bytea);
+2023-07-25 12:04:54.681 UTC [743255] ERROR:  invalid page size
+2023-07-25 12:04:54.681 UTC [743255] DETAIL:  Expected 8192 bytes, got 3.
+2023-07-25 12:04:54.681 UTC [743255] STATEMENT:  SELECT hash_page_stats('ccc'::bytea);
+2023-07-25 12:04:54.682 UTC [743255] ERROR:  invalid page size
+2023-07-25 12:04:54.682 UTC [743255] DETAIL:  Expected 8192 bytes, got 3.
+2023-07-25 12:04:54.682 UTC [743255] STATEMENT:  SELECT hash_page_type('ddd'::bytea);
+2023-07-25 12:04:54.683 UTC [743255] ERROR:  input page is not a valid hash page
+2023-07-25 12:04:54.683 UTC [743255] DETAIL:  Expected special size 16, got 0.
+2023-07-25 12:04:54.683 UTC [743255] STATEMENT:  SELECT hash_metapage_info(get_raw_page('test_hash', 0));
+2023-07-25 12:04:54.683 UTC [743255] ERROR:  input page is not a valid hash page
+2023-07-25 12:04:54.683 UTC [743255] DETAIL:  Expected special size 16, got 0.
+2023-07-25 12:04:54.683 UTC [743255] STATEMENT:  SELECT hash_page_items(get_raw_page('test_hash', 0));
+2023-07-25 12:04:54.684 UTC [743255] ERROR:  input page is not a valid hash page
+2023-07-25 12:04:54.684 UTC [743255] DETAIL:  Expected special size 16, got 0.
+2023-07-25 12:04:54.684 UTC [743255] STATEMENT:  SELECT hash_page_stats(get_raw_page('test_hash', 0));
+2023-07-25 12:04:54.684 UTC [743255] ERROR:  input page is not a valid hash page
+2023-07-25 12:04:54.684 UTC [743255] DETAIL:  Expected special size 16, got 0.
+2023-07-25 12:04:54.684 UTC [743255] STATEMENT:  SELECT hash_page_type(get_raw_page('test_hash', 0));
+2023-07-25 12:04:54.685 UTC [743255] ERROR:  page is not a hash meta page
+2023-07-25 12:04:54.685 UTC [743255] STATEMENT:  SELECT hash_metapage_info(decode(repeat('00', 8192), 'hex'));
+2023-07-25 12:04:54.686 UTC [743255] ERROR:  page is not a hash bucket or overflow page
+2023-07-25 12:04:54.686 UTC [743255] STATEMENT:  SELECT hash_page_items(decode(repeat('00', 8192), 'hex'));
+2023-07-25 12:04:54.687 UTC [743255] ERROR:  page is not a hash bucket or overflow page
+2023-07-25 12:04:54.687 UTC [743255] STATEMENT:  SELECT hash_page_stats(decode(repeat('00', 8192), 'hex'));
+2023-07-25 12:04:54.760 UTC [743263] ERROR:  cache lookup failed for type 18
+2023-07-25 12:04:54.760 UTC [743263] STATEMENT:  SELECT n.nspname as "Schema",
+	  p.proname as "Name",
+	  pg_catalog.pg_get_function_result(p.oid) as "Result data type",
+	  pg_catalog.pg_get_function_arguments(p.oid) as "Argument data types",
+	 CASE p.prokind
+	  WHEN 'a' THEN 'agg'
+	  WHEN 'w' THEN 'window'
+	  WHEN 'p' THEN 'proc'
+	  ELSE 'func'
+	 END as "Type"
+	FROM pg_catalog.pg_proc p
+	     LEFT JOIN pg_catalog.pg_namespace n ON n.oid = p.pronamespace
+	WHERE p.proname OPERATOR(pg_catalog.~) '^(page_header)$' COLLATE pg_catalog.default
+	  AND pg_catalog.pg_function_is_visible(p.oid)
+	ORDER BY 1, 2, 4;

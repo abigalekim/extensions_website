@@ -1,0 +1,124 @@
+2023-07-25 21:16:39.813 UTC [1937065] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 21:16:39.813 UTC [1937065] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 21:16:39.827 UTC [1937065] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 21:16:39.844 UTC [1937068] LOG:  database system was shut down at 2023-07-25 21:16:39 UTC
+2023-07-25 21:16:39.855 UTC [1937065] LOG:  database system is ready to accept connections
+2023-07-25 21:16:40.145 UTC [1937087] ERROR:  invalid attribute number 4
+2023-07-25 21:16:40.145 UTC [1937087] STATEMENT:  SELECT dblink_build_sql_insert('foo','1 2 3 4',4,'{"0", "a", "{a0,b0,c0}"}','{"99", "xyz", "{za0,zb0,zc0}"}');
+2023-07-25 21:16:40.147 UTC [1937087] ERROR:  invalid attribute number 4
+2023-07-25 21:16:40.147 UTC [1937087] STATEMENT:  SELECT dblink_build_sql_update('foo','1 2 3 4',4,'{"0", "a", "{a0,b0,c0}"}','{"99", "xyz", "{za0,zb0,zc0}"}');
+2023-07-25 21:16:40.148 UTC [1937087] ERROR:  invalid attribute number 4
+2023-07-25 21:16:40.148 UTC [1937087] STATEMENT:  SELECT dblink_build_sql_delete('foo','1 2 3 4',4,'{"0", "a", "{a0,b0,c0}"}');
+2023-07-25 21:16:40.213 UTC [1937087] ERROR:  invalid attribute number 4
+2023-07-25 21:16:40.213 UTC [1937087] STATEMENT:  SELECT dblink_build_sql_insert('foo_1','1 2 3 4',4,'{"0", "a", "{a0,b0,c0}"}','{"99", "xyz", "{za0,zb0,zc0}"}');
+2023-07-25 21:16:40.214 UTC [1937087] ERROR:  invalid attribute number 4
+2023-07-25 21:16:40.214 UTC [1937087] STATEMENT:  SELECT dblink_build_sql_update('foo_1','1 2 3 4',4,'{"0", "a", "{a0,b0,c0}"}','{"99", "xyz", "{za0,zb0,zc0}"}');
+2023-07-25 21:16:40.215 UTC [1937087] ERROR:  invalid attribute number 4
+2023-07-25 21:16:40.215 UTC [1937087] STATEMENT:  SELECT dblink_build_sql_delete('foo_1','1 2 3 4',4,'{"0", "a", "{a0,b0,c0}"}');
+2023-07-25 21:16:40.269 UTC [1937087] ERROR:  connection not available
+2023-07-25 21:16:40.269 UTC [1937087] STATEMENT:  SELECT *
+	FROM dblink('SELECT * FROM foo') AS t(a int, b text, c text[])
+	WHERE t.a > 7;
+2023-07-25 21:16:40.274 UTC [1937089] ERROR:  could not establish connection
+2023-07-25 21:16:40.274 UTC [1937089] DETAIL:  syntax error in service file "/home/abigalek/pgext-cli-python/postgresql-15.3/contrib/dblink/pg_service.conf", line 7
+2023-07-25 21:16:40.274 UTC [1937089] STATEMENT:  
+			SELECT pg_backend_pid() FROM dblink(
+				'service=test_ldap '||connection_parameters(),
+				-- This string concatenation is a hack to shoehorn a
+				-- set_pgservicefile call into the SQL statement.
+				'SELECT 1' || set_pgservicefile('pg_service.conf')
+			) t(c int)
+		
+2023-07-25 21:16:40.279 UTC [1937090] ERROR:  relation "foobar" does not exist at character 49
+2023-07-25 21:16:40.279 UTC [1937090] STATEMENT:  DECLARE rmt_foo_cursor CURSOR FOR SELECT * FROM foobar
+2023-07-25 21:16:40.283 UTC [1937090] ERROR:  cursor "rmt_foobar_cursor" does not exist
+2023-07-25 21:16:40.283 UTC [1937090] STATEMENT:  FETCH 4 FROM rmt_foobar_cursor
+2023-07-25 21:16:40.284 UTC [1937090] ERROR:  cursor "rmt_foobar_cursor" does not exist
+2023-07-25 21:16:40.284 UTC [1937090] STATEMENT:  CLOSE rmt_foobar_cursor
+2023-07-25 21:16:40.284 UTC [1937090] ERROR:  cursor "rmt_foo_cursor" does not exist
+2023-07-25 21:16:40.284 UTC [1937090] STATEMENT:  FETCH 4 FROM rmt_foo_cursor
+2023-07-25 21:16:40.284 UTC [1937087] ERROR:  cursor "rmt_foo_cursor" does not exist
+2023-07-25 21:16:40.284 UTC [1937087] CONTEXT:  while fetching from cursor "rmt_foo_cursor" on unnamed dblink connection
+2023-07-25 21:16:40.284 UTC [1937087] STATEMENT:  SELECT *
+	FROM dblink_fetch('rmt_foo_cursor',4) AS t(a int, b text, c text[]);
+2023-07-25 21:16:40.285 UTC [1937090] ERROR:  cursor "rmt_foo_cursor" does not exist
+2023-07-25 21:16:40.285 UTC [1937090] STATEMENT:  FETCH 4 FROM rmt_foo_cursor
+2023-07-25 21:16:40.285 UTC [1937087] ERROR:  connection not available
+2023-07-25 21:16:40.285 UTC [1937087] STATEMENT:  SELECT *
+	FROM dblink('SELECT * FROM foo') AS t(a int, b text, c text[])
+	WHERE t.a > 7;
+2023-07-25 21:16:40.310 UTC [1937092] ERROR:  relation "foobar" does not exist at character 15
+2023-07-25 21:16:40.310 UTC [1937092] STATEMENT:  SELECT * FROM foobar
+2023-07-25 21:16:40.318 UTC [1937092] ERROR:  relation "foobar" does not exist at character 8
+2023-07-25 21:16:40.318 UTC [1937092] STATEMENT:  UPDATE foobar SET f3[2] = 'b99' WHERE f1 = 11
+2023-07-25 21:16:40.325 UTC [1937087] ERROR:  could not establish connection
+2023-07-25 21:16:40.325 UTC [1937087] DETAIL:  missing "=" after "myconn" in connection info string
+2023-07-25 21:16:40.325 UTC [1937087] STATEMENT:  SELECT *
+	FROM dblink('myconn','SELECT * FROM foo') AS t(a int, b text, c text[])
+	WHERE t.a > 7;
+2023-07-25 21:16:40.336 UTC [1937093] ERROR:  relation "foobar" does not exist at character 15
+2023-07-25 21:16:40.336 UTC [1937093] STATEMENT:  SELECT * FROM foobar
+2023-07-25 21:16:40.343 UTC [1937087] ERROR:  duplicate connection name
+2023-07-25 21:16:40.343 UTC [1937087] STATEMENT:  SELECT dblink_connect('myconn',connection_parameters());
+2023-07-25 21:16:40.355 UTC [1937093] ERROR:  relation "foobar" does not exist at character 49
+2023-07-25 21:16:40.355 UTC [1937093] STATEMENT:  DECLARE rmt_foo_cursor CURSOR FOR SELECT * FROM foobar
+2023-07-25 21:16:40.365 UTC [1937093] ERROR:  DECLARE CURSOR can only be used in transaction blocks
+2023-07-25 21:16:40.365 UTC [1937093] STATEMENT:  DECLARE xact_test CURSOR FOR SELECT * FROM foo
+2023-07-25 21:16:40.366 UTC [1937087] ERROR:  DECLARE CURSOR can only be used in transaction blocks
+2023-07-25 21:16:40.366 UTC [1937087] CONTEXT:  while executing command on dblink connection named "myconn"
+2023-07-25 21:16:40.366 UTC [1937087] STATEMENT:  SELECT dblink_exec('myconn','DECLARE xact_test CURSOR FOR SELECT * FROM foo');
+2023-07-25 21:16:40.366 UTC [1937093] WARNING:  there is no transaction in progress
+WARNING:  there is no transaction in progress
+2023-07-25 21:16:40.371 UTC [1937093] ERROR:  cursor "rmt_foobar_cursor" does not exist
+2023-07-25 21:16:40.371 UTC [1937093] STATEMENT:  FETCH 4 FROM rmt_foobar_cursor
+2023-07-25 21:16:40.372 UTC [1937093] ERROR:  cursor "rmt_foo_cursor" does not exist
+2023-07-25 21:16:40.372 UTC [1937093] STATEMENT:  FETCH 4 FROM rmt_foo_cursor
+2023-07-25 21:16:40.373 UTC [1937087] ERROR:  cursor "rmt_foo_cursor" does not exist
+2023-07-25 21:16:40.373 UTC [1937087] CONTEXT:  while fetching from cursor "rmt_foo_cursor" on dblink connection named "myconn"
+2023-07-25 21:16:40.373 UTC [1937087] STATEMENT:  SELECT *
+	FROM dblink_fetch('myconn','rmt_foo_cursor',4) AS t(a int, b text, c text[]);
+2023-07-25 21:16:40.374 UTC [1937087] ERROR:  could not establish connection
+2023-07-25 21:16:40.374 UTC [1937087] DETAIL:  missing "=" after "myconn" in connection info string
+2023-07-25 21:16:40.374 UTC [1937087] STATEMENT:  SELECT *
+	FROM dblink('myconn','SELECT * FROM foo') AS t(a int, b text, c text[])
+	WHERE t.a > 7;
+2023-07-25 21:16:40.401 UTC [1937087] ERROR:  connection "myconn" not available
+2023-07-25 21:16:40.401 UTC [1937087] STATEMENT:  SELECT dblink_disconnect('myconn');
+2023-07-25 21:16:40.454 UTC [1937100] ERROR:  canceling statement due to user request
+2023-07-25 21:16:40.454 UTC [1937100] STATEMENT:  select * from foo where f1 < 3
+2023-07-25 21:16:40.468 UTC [1937087] ERROR:  invalid option "server"
+2023-07-25 21:16:40.468 UTC [1937087] HINT:  Valid options in this context are: user, password, sslpassword
+2023-07-25 21:16:40.468 UTC [1937087] STATEMENT:  CREATE USER MAPPING FOR public SERVER fdtest
+	  OPTIONS (server 'localhost');
+2023-07-25 21:16:40.481 UTC [1937087] ERROR:  password is required
+2023-07-25 21:16:40.481 UTC [1937087] DETAIL:  Non-superusers must provide a password in the connection string.
+2023-07-25 21:16:40.481 UTC [1937087] STATEMENT:  SELECT dblink_connect('myconn', 'fdtest');
+2023-07-25 21:16:40.525 UTC [1937103] ERROR:  invalid option "nonexistent"
+2023-07-25 21:16:40.525 UTC [1937103] HINT:  There are no valid options in this context.
+2023-07-25 21:16:40.525 UTC [1937103] STATEMENT:  ALTER FOREIGN DATA WRAPPER dblink_fdw OPTIONS (nonexistent 'fdw');
+2023-07-25 21:16:40.618 UTC [1937103] ERROR:  invalid input syntax for type integer: "not an int"
+2023-07-25 21:16:40.618 UTC [1937103] STATEMENT:  SELECT *
+	FROM dblink_fetch('myconn','error_cursor', 1) AS t(i int);
+2023-07-25 21:16:40.799 UTC [1937120] ERROR:  required extension "cube" is not installed
+2023-07-25 21:16:40.799 UTC [1937120] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-25 21:16:40.799 UTC [1937120] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-25 21:16:40.864 UTC [1937120] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-25 21:16:40.864 UTC [1937120] DETAIL:  extension earthdistance depends on extension cube
+2023-07-25 21:16:40.864 UTC [1937120] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 21:16:40.864 UTC [1937120] STATEMENT:  drop extension cube;
+2023-07-25 21:16:40.867 UTC [1937120] ERROR:  cannot drop type cube because extension cube requires it
+2023-07-25 21:16:40.867 UTC [1937120] HINT:  You can drop extension cube instead.
+2023-07-25 21:16:40.867 UTC [1937120] STATEMENT:  drop type cube;
+2023-07-25 21:16:40.872 UTC [1937120] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-25 21:16:40.872 UTC [1937120] DETAIL:  column f1 of table foo depends on type cube
+2023-07-25 21:16:40.872 UTC [1937120] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 21:16:40.872 UTC [1937120] STATEMENT:  drop extension cube;
+2023-07-25 21:16:40.963 UTC [1937120] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-25 21:16:40.963 UTC [1937120] DETAIL:  column f1 of table foo depends on type c.cube
+2023-07-25 21:16:40.963 UTC [1937120] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 21:16:40.963 UTC [1937120] STATEMENT:  drop extension cube;
+2023-07-25 21:16:40.963 UTC [1937120] ERROR:  cannot drop schema c because other objects depend on it
+2023-07-25 21:16:40.963 UTC [1937120] DETAIL:  extension cube depends on schema c
+	column f1 of table foo depends on type c.cube
+2023-07-25 21:16:40.963 UTC [1937120] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 21:16:40.963 UTC [1937120] STATEMENT:  drop schema c;

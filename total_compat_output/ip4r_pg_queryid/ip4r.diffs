@@ -1,0 +1,28 @@
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/ip4r-2.4/expected/ip4r.out /home/abigalek/pgext-cli-python/pgextworkdir/ip4r-2.4/results/ip4r.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/ip4r-2.4/expected/ip4r.out	2018-11-21 06:35:30.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/ip4r-2.4/results/ip4r.out	2023-07-26 15:59:28.428050938 +0000
+@@ -31,6 +31,24 @@
+     END IF;
+   END;
+ $d$;
++ERROR:  cache lookup failed for type 19
++CONTEXT:  SQL statement "SELECT amname,
++                      CASE amname WHEN 'btree' THEN 6
++		                  WHEN 'hash' THEN 6
++				  WHEN 'gist' THEN 3
++				  ELSE 0 END as expected,
++		      count(nullif(amvalidate(opc.oid),false)) as actual
++                 FROM pg_opclass opc
++                      LEFT JOIN pg_am am ON am.oid = opcmethod
++                WHERE opcintype IN ('ip4'::regtype,
++                                    'ip4r'::regtype,
++                                    'ip6'::regtype,
++                                    'ip6r'::regtype,
++                                    'ipaddress'::regtype,
++                                    'iprange'::regtype)
++                GROUP BY amname
++                ORDER BY amname"
++PL/pgSQL function inline_code_block line 6 at FOR over SELECT rows
+ /*CUT-END*/
+ \set VERBOSITY terse
+ --

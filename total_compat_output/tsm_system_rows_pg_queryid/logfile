@@ -1,0 +1,15 @@
+2023-07-26 15:13:46.654 UTC [3522640] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 15:13:46.654 UTC [3522640] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 15:13:46.660 UTC [3522640] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 15:13:46.672 UTC [3522643] LOG:  database system was shut down at 2023-07-26 15:13:46 UTC
+2023-07-26 15:13:46.677 UTC [3522640] LOG:  database system is ready to accept connections
+2023-07-26 15:13:46.895 UTC [3522662] ERROR:  sample size must not be negative
+2023-07-26 15:13:46.895 UTC [3522662] STATEMENT:  SELECT id FROM test_tablesample TABLESAMPLE system_rows (-1);
+2023-07-26 15:13:46.895 UTC [3522662] ERROR:  tablesample method system_rows does not support REPEATABLE at character 44
+2023-07-26 15:13:46.895 UTC [3522662] STATEMENT:  SELECT * FROM test_tablesample TABLESAMPLE system_rows (10) REPEATABLE (0);
+2023-07-26 15:13:46.897 UTC [3522662] ERROR:  cannot drop extension tsm_system_rows because other objects depend on it
+2023-07-26 15:13:46.897 UTC [3522662] DETAIL:  view vv depends on function system_rows(internal)
+2023-07-26 15:13:46.897 UTC [3522662] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 15:13:46.897 UTC [3522662] STATEMENT:  DROP EXTENSION tsm_system_rows;
+2023-07-26 15:13:46.909 UTC [3522641] LOG:  checkpoint starting: immediate force wait
+2023-07-26 15:13:46.947 UTC [3522641] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.009 s, sync=0.010 s, total=0.039 s; sync files=7, longest=0.006 s, average=0.002 s; distance=4298 kB, estimate=4298 kB

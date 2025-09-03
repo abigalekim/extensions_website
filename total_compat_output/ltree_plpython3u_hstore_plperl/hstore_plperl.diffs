@@ -1,0 +1,42 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/hstore_plperl/expected/hstore_plperl.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/hstore_plperl/results/hstore_plperl.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/hstore_plperl/expected/hstore_plperl.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/hstore_plperl/results/hstore_plperl.out	2023-07-21 22:11:56.835114881 +0000
+@@ -7,11 +7,12 @@
+ FROM information_schema.transforms JOIN information_schema.routines
+      USING (specific_catalog, specific_schema, specific_name)
+ ORDER BY 1, 2, 5, 6;
+- udt_schema | udt_name | routine_schema |   routine_name   | group_name | transform_type 
+-------------+----------+----------------+------------------+------------+----------------
+- public     | hstore   | public         | hstore_to_plperl | plperl     | FROM SQL
+- public     | hstore   | public         | plperl_to_hstore | plperl     | TO SQL
+-(2 rows)
++ udt_schema | udt_name | routine_schema |    routine_name    | group_name | transform_type 
++------------+----------+----------------+--------------------+------------+----------------
++ public     | hstore   | public         | hstore_to_plperl   | plperl     | FROM SQL
++ public     | hstore   | public         | plperl_to_hstore   | plperl     | TO SQL
++ public     | ltree    | public         | ltree_to_plpython3 | plpython3u | FROM SQL
++(3 rows)
+ 
+ -- test perl -> hstore
+ CREATE FUNCTION test2() RETURNS hstore
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/hstore_plperl/expected/hstore_plperlu.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/hstore_plperl/results/hstore_plperlu.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/hstore_plperl/expected/hstore_plperlu.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/hstore_plperl/results/hstore_plperlu.out	2023-07-21 22:11:56.899114702 +0000
+@@ -7,11 +7,12 @@
+ FROM information_schema.transforms JOIN information_schema.routines
+      USING (specific_catalog, specific_schema, specific_name)
+ ORDER BY 1, 2, 5, 6;
+- udt_schema | udt_name | routine_schema |   routine_name    | group_name | transform_type 
+-------------+----------+----------------+-------------------+------------+----------------
+- public     | hstore   | public         | hstore_to_plperlu | plperlu    | FROM SQL
+- public     | hstore   | public         | plperlu_to_hstore | plperlu    | TO SQL
+-(2 rows)
++ udt_schema | udt_name | routine_schema |    routine_name    | group_name | transform_type 
++------------+----------+----------------+--------------------+------------+----------------
++ public     | hstore   | public         | hstore_to_plperlu  | plperlu    | FROM SQL
++ public     | hstore   | public         | plperlu_to_hstore  | plperlu    | TO SQL
++ public     | ltree    | public         | ltree_to_plpython3 | plpython3u | FROM SQL
++(3 rows)
+ 
+ -- test hstore -> perl
+ CREATE FUNCTION test1(val hstore) RETURNS int

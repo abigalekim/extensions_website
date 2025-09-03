@@ -1,0 +1,35 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/pg_stat_statements/expected/pg_stat_statements.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/pg_stat_statements/results/pg_stat_statements.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/pg_stat_statements/expected/pg_stat_statements.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/pg_stat_statements/results/pg_stat_statements.out	2023-07-26 11:11:23.582986933 +0000
+@@ -456,11 +456,16 @@
+ ------------------------------------------------------------------------------+-------+------
+  SELECT (i + $2 + $3)::INTEGER                                                |     2 |    2
+  SELECT (i + $2)::INTEGER LIMIT $3                                            |     2 |    2
++ SELECT * FROM pg_catalog.pg_event_trigger_dropped_objects()                  |     2 |    0
+  SELECT PLUS_ONE($1)                                                          |     2 |    2
+  SELECT PLUS_TWO($1)                                                          |     2 |    2
++ SELECT count(*)                   FROM pgtle.feature_info                   +|     2 |    2
++                                 WHERE obj_identity = obj.object_identity     |       | 
+  SELECT pg_stat_statements_reset()                                            |     1 |    1
+  SELECT query, calls, rows FROM pg_stat_statements ORDER BY query COLLATE "C" |     0 |    0
+-(6 rows)
++ TG_TAG = $3                                                                  |     0 |    0
++ num_rows > $6                                                                |     0 |    0
++(10 rows)
+ 
+ --
+ -- queries with locking clauses
+@@ -588,9 +593,12 @@
+  DROP TABLE IF EXISTS test                                                    |     3 |    0
+  DROP TABLE test                                                              |     1 |    0
+  SELECT $1                                                                    |     1 |    1
++ SELECT * FROM pg_catalog.pg_event_trigger_dropped_objects()                  |     3 |    0
++ SELECT count(*)                   FROM pgtle.feature_info                   +|     2 |    2
++                                 WHERE obj_identity = obj.object_identity     |       | 
+  SELECT pg_stat_statements_reset()                                            |     1 |    1
+  SELECT query, calls, rows FROM pg_stat_statements ORDER BY query COLLATE "C" |     0 |    0
+-(9 rows)
++(11 rows)
+ 
+ --
+ -- Track the total number of rows retrieved or affected by the utility

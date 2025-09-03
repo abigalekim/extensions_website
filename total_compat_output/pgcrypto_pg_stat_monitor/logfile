@@ -1,0 +1,269 @@
+2023-07-25 02:13:46.318 UTC [3064132] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 02:13:46.318 UTC [3064132] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 02:13:46.327 UTC [3064132] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 02:13:46.334 UTC [3064135] LOG:  database system was shut down at 2023-07-25 02:13:45 UTC
+2023-07-25 02:13:46.341 UTC [3064132] LOG:  database system is ready to accept connections
+2023-07-25 02:13:46.491 UTC [3064151] ERROR:  gen_salt: Unknown salt algorithm
+2023-07-25 02:13:46.491 UTC [3064151] STATEMENT:  select gen_salt('foo');
+2023-07-25 02:13:46.492 UTC [3064151] ERROR:  Cannot use "foo": No such hash algorithm
+2023-07-25 02:13:46.492 UTC [3064151] STATEMENT:  select digest('foo', 'foo');
+2023-07-25 02:13:46.492 UTC [3064151] ERROR:  Cannot use "foo": No such hash algorithm
+2023-07-25 02:13:46.492 UTC [3064151] STATEMENT:  select hmac('foo', 'foo', 'foo');
+2023-07-25 02:13:46.492 UTC [3064151] ERROR:  Cannot use "foo": No such cipher algorithm
+2023-07-25 02:13:46.492 UTC [3064151] STATEMENT:  select encrypt('foo', 'foo', 'foo');
+2023-07-25 02:13:46.549 UTC [3064171] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-25 02:13:46.549 UTC [3064171] STATEMENT:  SELECT encrypt('\x0000000000000000', '\x0000000000000000', 'bf-ecb/pad:none');
+2023-07-25 02:13:46.550 UTC [3064171] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-25 02:13:46.550 UTC [3064171] STATEMENT:  SELECT encrypt('\xffffffffffffffff', '\xffffffffffffffff', 'bf-ecb/pad:none');
+2023-07-25 02:13:46.550 UTC [3064171] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-25 02:13:46.550 UTC [3064171] STATEMENT:  SELECT encrypt('\x1000000000000001', '\x3000000000000000', 'bf-ecb/pad:none');
+2023-07-25 02:13:46.550 UTC [3064171] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-25 02:13:46.550 UTC [3064171] STATEMENT:  SELECT encrypt('\x1111111111111111', '\x1111111111111111', 'bf-ecb/pad:none');
+2023-07-25 02:13:46.550 UTC [3064171] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-25 02:13:46.550 UTC [3064171] STATEMENT:  SELECT encrypt('\x0123456789abcdef', '\xfedcba9876543210', 'bf-ecb/pad:none');
+2023-07-25 02:13:46.551 UTC [3064171] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-25 02:13:46.551 UTC [3064171] STATEMENT:  SELECT encrypt('\x01a1d6d039776742', '\xfedcba9876543210', 'bf-ecb/pad:none');
+2023-07-25 02:13:46.551 UTC [3064171] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-25 02:13:46.551 UTC [3064171] STATEMENT:  SELECT encrypt('\xffffffffffffffff', '\x0000000000000000', 'bf-ecb/pad:none');
+2023-07-25 02:13:46.551 UTC [3064171] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-25 02:13:46.551 UTC [3064171] STATEMENT:  SELECT encrypt('\xfedcba9876543210', '\xf0e1d2c3b4a5968778695a4b3c2d1e0f', 'bf-ecb/pad:none');
+2023-07-25 02:13:46.551 UTC [3064171] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-25 02:13:46.551 UTC [3064171] STATEMENT:  SELECT encrypt('\x01234567890123456789', '\x33443344334433443344334433443344', 'bf-ecb');
+2023-07-25 02:13:46.552 UTC [3064171] ERROR:  encrypt error: Key was too big
+2023-07-25 02:13:46.552 UTC [3064171] STATEMENT:  SELECT encrypt('\x6b77b4d63006dee605b156e27403979358deb9e7154616d959f1652bd5',
+	               '\x37363534333231204e6f77206973207468652074696d6520666f7220',
+	               'bf-cbc');
+2023-07-25 02:13:46.552 UTC [3064171] ERROR:  encrypt error: Key was too big
+2023-07-25 02:13:46.552 UTC [3064171] STATEMENT:  SELECT encrypt('\x6b77b4d63006dee605b156e27403979358deb9e7154616d959f1652bd5ff92cc',
+	               '\x37363534333231204e6f77206973207468652074696d6520666f722000',
+	               'bf-cbc');
+2023-07-25 02:13:46.552 UTC [3064171] ERROR:  encrypt error: Key was too big
+2023-07-25 02:13:46.552 UTC [3064171] STATEMENT:  SELECT encrypt('\xfedcba9876543210',
+	               '\xf0e1d2c3b4a5968778695a4b3c2d1e0f001122334455667704689104c2fd3b2f584023641aba61761f1f1f1f0e0e0e0effffffffffffffff',
+	               'bf-ecb/pad:none');
+2023-07-25 02:13:46.552 UTC [3064171] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-25 02:13:46.552 UTC [3064171] STATEMENT:  select encrypt('', 'foo', 'bf');
+2023-07-25 02:13:46.552 UTC [3064171] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-25 02:13:46.552 UTC [3064171] STATEMENT:  select encrypt('foo', '0123456789', 'bf');
+2023-07-25 02:13:46.552 UTC [3064171] ERROR:  encrypt error: Key was too big
+2023-07-25 02:13:46.552 UTC [3064171] STATEMENT:  select encrypt('foo', '0123456789012345678901', 'bf');
+2023-07-25 02:13:46.553 UTC [3064171] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-25 02:13:46.553 UTC [3064171] STATEMENT:  select encode(decrypt(encrypt('foo', '0123456', 'bf'), '0123456', 'bf'), 'escape');
+2023-07-25 02:13:46.553 UTC [3064171] ERROR:  encrypt_iv error: Cipher cannot be initialized
+2023-07-25 02:13:46.553 UTC [3064171] STATEMENT:  select encrypt_iv('foo', '0123456', 'abcd', 'bf');
+2023-07-25 02:13:46.553 UTC [3064171] ERROR:  decrypt_iv error: Cipher cannot be initialized
+2023-07-25 02:13:46.553 UTC [3064171] STATEMENT:  select encode(decrypt_iv('\x95c7e89322525d59', '0123456', 'abcd', 'bf'), 'escape');
+2023-07-25 02:13:46.553 UTC [3064171] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-25 02:13:46.553 UTC [3064171] STATEMENT:  select encrypt('Lets try a longer message.', '0123456789', 'bf');
+2023-07-25 02:13:46.553 UTC [3064171] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-25 02:13:46.553 UTC [3064171] STATEMENT:  select encode(decrypt(encrypt('Lets try a longer message.', '0123456789', 'bf'), '0123456789', 'bf'), 'escape');
+2023-07-25 02:13:46.571 UTC [3064177] ERROR:  encrypt error: Encryption failed
+2023-07-25 02:13:46.571 UTC [3064177] STATEMENT:  SELECT encrypt(
+	'\x00112233445566778899aabbccddeeff00',
+	'\x000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f',
+	'aes-cbc/pad:none');
+2023-07-25 02:13:46.573 UTC [3064177] ERROR:  decrypt error: Decryption failed
+2023-07-25 02:13:46.573 UTC [3064177] STATEMENT:  select encode(decrypt(encrypt('foo', '0123456', 'aes') || '\x00'::bytea, '0123456', 'aes'), 'escape');
+2023-07-25 02:13:46.574 UTC [3064177] ERROR:  decrypt_iv error: Decryption failed
+2023-07-25 02:13:46.574 UTC [3064177] STATEMENT:  select encode(decrypt_iv('\xa21a9c15231465964e3396d32095e67eb52bab05f556a581621dee1b85385789', '0123456', 'abcd', 'aes'), 'escape');
+2023-07-25 02:13:46.606 UTC [3064185] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-25 02:13:46.606 UTC [3064185] STATEMENT:  SELECT encrypt('\x0123456789abcdef', '\xfedcba9876543210', 'des-ecb/pad:none');
+2023-07-25 02:13:46.607 UTC [3064185] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-25 02:13:46.607 UTC [3064185] STATEMENT:  select encrypt('', 'foo', 'des');
+2023-07-25 02:13:46.607 UTC [3064185] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-25 02:13:46.607 UTC [3064185] STATEMENT:  select encrypt('foo', '01234589', 'des');
+2023-07-25 02:13:46.607 UTC [3064185] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-25 02:13:46.607 UTC [3064185] STATEMENT:  select encode(decrypt(encrypt('foo', '0123456', 'des'), '0123456', 'des'), 'escape');
+2023-07-25 02:13:46.608 UTC [3064185] ERROR:  encrypt_iv error: Cipher cannot be initialized
+2023-07-25 02:13:46.608 UTC [3064185] STATEMENT:  select encrypt_iv('foo', '0123456', 'abcd', 'des');
+2023-07-25 02:13:46.608 UTC [3064185] ERROR:  decrypt_iv error: Cipher cannot be initialized
+2023-07-25 02:13:46.608 UTC [3064185] STATEMENT:  select encode(decrypt_iv('\x50735067b073bb93', '0123456', 'abcd', 'des'), 'escape');
+2023-07-25 02:13:46.608 UTC [3064185] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-25 02:13:46.608 UTC [3064185] STATEMENT:  select encrypt('Lets try a longer message.', '01234567', 'des');
+2023-07-25 02:13:46.608 UTC [3064185] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-25 02:13:46.608 UTC [3064185] STATEMENT:  select encode(decrypt(encrypt('Lets try a longer message.', '01234567', 'des'), '01234567', 'des'), 'escape');
+2023-07-25 02:13:46.640 UTC [3064195] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-25 02:13:46.640 UTC [3064195] STATEMENT:  SELECT encrypt('\x0123456789ABCDEF', '\x0123456712345678234567893456789A', 'cast5-ecb/pad:none');
+2023-07-25 02:13:46.640 UTC [3064195] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-25 02:13:46.640 UTC [3064195] STATEMENT:  SELECT encrypt('\x0123456789ABCDEF', '\x01234567123456782345', 'cast5-ecb/pad:none');
+2023-07-25 02:13:46.641 UTC [3064195] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-25 02:13:46.641 UTC [3064195] STATEMENT:  SELECT encrypt('\x0123456789ABCDEF', '\x0123456712', 'cast5-ecb/pad:none');
+2023-07-25 02:13:46.641 UTC [3064195] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-25 02:13:46.641 UTC [3064195] STATEMENT:  select encrypt('', 'foo', 'cast5');
+2023-07-25 02:13:46.641 UTC [3064195] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-25 02:13:46.641 UTC [3064195] STATEMENT:  select encrypt('foo', '0123456789', 'cast5');
+2023-07-25 02:13:46.641 UTC [3064195] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-25 02:13:46.641 UTC [3064195] STATEMENT:  select encode(decrypt(encrypt('foo', '0123456', 'cast5'), '0123456', 'cast5'), 'escape');
+2023-07-25 02:13:46.642 UTC [3064195] ERROR:  encrypt_iv error: Cipher cannot be initialized
+2023-07-25 02:13:46.642 UTC [3064195] STATEMENT:  select encrypt_iv('foo', '0123456', 'abcd', 'cast5');
+2023-07-25 02:13:46.642 UTC [3064195] ERROR:  decrypt_iv error: Cipher cannot be initialized
+2023-07-25 02:13:46.642 UTC [3064195] STATEMENT:  select encode(decrypt_iv('\x384a970695ce016a', '0123456', 'abcd', 'cast5'), 'escape');
+2023-07-25 02:13:46.642 UTC [3064195] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-25 02:13:46.642 UTC [3064195] STATEMENT:  select encrypt('Lets try a longer message.', '0123456789', 'cast5');
+2023-07-25 02:13:46.642 UTC [3064195] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-25 02:13:46.642 UTC [3064195] STATEMENT:  select encode(decrypt(encrypt('Lets try a longer message.', '0123456789', 'cast5'), '0123456789', 'cast5'), 'escape');
+2023-07-25 02:13:46.659 UTC [3064201] ERROR:  invalid salt
+2023-07-25 02:13:46.659 UTC [3064201] STATEMENT:  SELECT crypt('password', 'a');
+2023-07-25 02:13:46.787 UTC [3064209] ERROR:  invalid salt
+2023-07-25 02:13:46.787 UTC [3064209] STATEMENT:  SELECT crypt('foox', '$2a$');
+2023-07-25 02:13:46.787 UTC [3064209] ERROR:  invalid salt
+2023-07-25 02:13:46.787 UTC [3064209] STATEMENT:  SELECT crypt('foox', '$2a$40$RQiOJ.3ELirrXwxIZY8q0O');
+2023-07-25 02:13:46.787 UTC [3064209] ERROR:  invalid salt
+2023-07-25 02:13:46.787 UTC [3064209] STATEMENT:  SELECT crypt('foox', '$2a$00$RQiOJ.3ELirrXwxIZY8q0O');
+2023-07-25 02:13:46.835 UTC [3064213] ERROR:  invalid salt
+2023-07-25 02:13:46.835 UTC [3064213] STATEMENT:  SELECT crypt('foox', '_J9..BWH');
+2023-07-25 02:13:46.835 UTC [3064213] ERROR:  crypt(3) returned NULL
+2023-07-25 02:13:46.835 UTC [3064213] STATEMENT:  SELECT crypt('password', '_........');
+2023-07-25 02:13:46.835 UTC [3064213] ERROR:  crypt(3) returned NULL
+2023-07-25 02:13:46.835 UTC [3064213] STATEMENT:  SELECT crypt('password', '_..!!!!!!');
+2023-07-25 02:13:46.857 UTC [3064217] ERROR:  Corrupt ascii-armor
+2023-07-25 02:13:46.857 UTC [3064217] STATEMENT:  select dearmor('
+	-----BEGIN PGP MESSAGE-----
+	
+	em9va2E=
+	=ZZZZ
+	-----END PGP MESSAGE-----
+	');
+2023-07-25 02:13:46.857 UTC [3064217] ERROR:  Corrupt ascii-armor
+2023-07-25 02:13:46.857 UTC [3064217] STATEMENT:  select * from pgp_armor_headers('
+	-----BEGIN PGP MESSAGE-----
+	foo:
+	
+	em9va2E=
+	=ZZZZ
+	-----END PGP MESSAGE-----
+	');
+2023-07-25 02:13:46.857 UTC [3064217] ERROR:  Corrupt ascii-armor
+2023-07-25 02:13:46.857 UTC [3064217] STATEMENT:  select * from pgp_armor_headers('
+	-----BEGIN PGP MESSAGE-----
+	em9va2E=
+	=ZZZZ
+	-----END PGP MESSAGE-----
+	');
+2023-07-25 02:13:46.859 UTC [3064217] ERROR:  mismatched array dimensions
+2023-07-25 02:13:46.859 UTC [3064217] STATEMENT:  select armor('', array['foo'], array['too', 'many']);
+2023-07-25 02:13:46.859 UTC [3064217] ERROR:  mismatched array dimensions
+2023-07-25 02:13:46.859 UTC [3064217] STATEMENT:  select armor('', array['too', 'many'], array['foo']);
+2023-07-25 02:13:46.859 UTC [3064217] ERROR:  wrong number of array subscripts
+2023-07-25 02:13:46.859 UTC [3064217] STATEMENT:  select armor('', array[['']], array['foo']);
+2023-07-25 02:13:46.859 UTC [3064217] ERROR:  wrong number of array subscripts
+2023-07-25 02:13:46.859 UTC [3064217] STATEMENT:  select armor('', array['foo'], array[['']]);
+2023-07-25 02:13:46.859 UTC [3064217] ERROR:  null value not allowed for header key
+2023-07-25 02:13:46.859 UTC [3064217] STATEMENT:  select armor('', array[null], array['foo']);
+2023-07-25 02:13:46.859 UTC [3064217] ERROR:  null value not allowed for header value
+2023-07-25 02:13:46.859 UTC [3064217] STATEMENT:  select armor('', array['foo'], array[null]);
+2023-07-25 02:13:46.859 UTC [3064217] ERROR:  header key must not contain newlines
+2023-07-25 02:13:46.859 UTC [3064217] STATEMENT:  select armor('', array[E'embedded\nnewline'], array['foo']);
+2023-07-25 02:13:46.859 UTC [3064217] ERROR:  header value must not contain newlines
+2023-07-25 02:13:46.859 UTC [3064217] STATEMENT:  select armor('', array['foo'], array[E'embedded\nnewline']);
+2023-07-25 02:13:46.859 UTC [3064217] ERROR:  header key must not contain ": "
+2023-07-25 02:13:46.859 UTC [3064217] STATEMENT:  select armor('', array['embedded: colon+space'], array['foo']);
+2023-07-25 02:13:46.867 UTC [3064221] ERROR:  Wrong key or corrupt data
+2023-07-25 02:13:46.867 UTC [3064221] STATEMENT:  select pgp_sym_decrypt(dearmor('
+	-----BEGIN PGP MESSAGE-----
+	Comment: dat1.blowfish.sha1.mdc.s2k3.z0
+	
+	jA0EBAMCfFNwxnvodX9g0jwB4n4s26/g5VmKzVab1bX1SmwY7gvgvlWdF3jKisvS
+	yA6Ce1QTMK3KdL2MPfamsTUSAML8huCJMwYQFfE=
+	=JcP+
+	-----END PGP MESSAGE-----
+	'), 'foobar');
+2023-07-25 02:13:46.881 UTC [3064221] ERROR:  Wrong key or corrupt data
+2023-07-25 02:13:46.881 UTC [3064221] STATEMENT:  select pgp_sym_decrypt(dearmor('
+	-----BEGIN PGP MESSAGE-----
+	
+	ww0EBwMCxf8PTrQBmJdl0jcB6y2joE7GSLKRv7trbNsF5Z8ou5NISLUg31llVH/S0B2wl4bvzZjV
+	VsxxqLSPzNLAeIspJk5G
+	=mSd/
+	-----END PGP MESSAGE-----
+	'), 'wrong-key', 'debug=1');
+2023-07-25 02:13:46.882 UTC [3064221] ERROR:  Not text data
+2023-07-25 02:13:46.882 UTC [3064221] STATEMENT:  select pgp_sym_decrypt(pgp_sym_encrypt_bytea('P', 'key'), 'key', 'debug=1');
+2023-07-25 02:13:46.883 UTC [3064221] ERROR:  Wrong key or corrupt data
+2023-07-25 02:13:46.883 UTC [3064221] STATEMENT:  select pgp_sym_decrypt(dearmor('
+	-----BEGIN PGP MESSAGE-----
+	
+	ww0EBwMC9rK/dMkF5Zlt0jcBlzAQ1mQY2qYbKYbw8h3EZ5Jk0K2IiY92R82TRhWzBIF/8cmXDPtP
+	GXsd65oYJZp3Khz0qfyn
+	=Nmpq
+	-----END PGP MESSAGE-----
+	'), 'wrong-key', 'debug=1');
+2023-07-25 02:13:46.883 UTC [3064221] ERROR:  Unsupported compression algorithm
+2023-07-25 02:13:46.883 UTC [3064221] STATEMENT:  select pgp_sym_decrypt(dearmor('
+	-----BEGIN PGP MESSAGE-----
+	
+	jA0EBwMCRhFrAKNcLVJg0mMBLJG1cCASNk/x/3dt1zJ+2eo7jHfjgg3N6wpB3XIe
+	QCwkWJwlBG5pzbO5gu7xuPQN+TbPJ7aQ2sLx3bAHhtYb0i3vV9RO10Gw++yUyd4R
+	UCAAw2JRIISttRHMfDpDuZJpvYo=
+	=AZ9M
+	-----END PGP MESSAGE-----
+	'), 'key', 'debug=1');
+2023-07-25 02:13:46.898 UTC [3064227] ERROR:  Not text data
+2023-07-25 02:13:46.898 UTC [3064227] STATEMENT:  select pgp_sym_decrypt(pgp_sym_encrypt_bytea('Binary', 'baz'), 'baz');
+2023-07-25 02:13:47.353 UTC [3064235] ERROR:  Wrong key or corrupt data
+2023-07-25 02:13:47.353 UTC [3064235] STATEMENT:  select pgp_pub_decrypt(dearmor(data), dearmor(seckey))
+	from keytbl, encdata where keytbl.id=2 and encdata.id=2;
+2023-07-25 02:13:47.371 UTC [3064235] ERROR:  Wrong key
+2023-07-25 02:13:47.371 UTC [3064235] STATEMENT:  select pgp_pub_decrypt(dearmor(data), dearmor(seckey))
+	from keytbl, encdata where keytbl.id=2 and encdata.id=1;
+2023-07-25 02:13:47.372 UTC [3064235] ERROR:  No encryption key found
+2023-07-25 02:13:47.372 UTC [3064235] STATEMENT:  select pgp_pub_decrypt(dearmor(data), dearmor(seckey))
+	from keytbl, encdata where keytbl.id=4 and encdata.id=1;
+2023-07-25 02:13:47.373 UTC [3064235] ERROR:  Wrong key or corrupt data
+2023-07-25 02:13:47.373 UTC [3064235] STATEMENT:  select pgp_pub_decrypt(dearmor(data), dearmor(seckey), '123')
+	from keytbl, encdata where keytbl.id=7 and encdata.id=4;
+2023-07-25 02:13:47.378 UTC [3064235] ERROR:  Need password for secret key
+2023-07-25 02:13:47.378 UTC [3064235] STATEMENT:  select pgp_pub_decrypt(dearmor(data), dearmor(seckey))
+	from keytbl, encdata where keytbl.id=5 and encdata.id=1;
+2023-07-25 02:13:47.379 UTC [3064235] ERROR:  Wrong key or corrupt data
+2023-07-25 02:13:47.379 UTC [3064235] STATEMENT:  select pgp_pub_decrypt(dearmor(data), dearmor(seckey), 'foo')
+	from keytbl, encdata where keytbl.id=5 and encdata.id=1;
+2023-07-25 02:13:47.383 UTC [3064235] ERROR:  Wrong key or corrupt data
+2023-07-25 02:13:47.383 UTC [3064235] STATEMENT:  select pgp_pub_decrypt(dearmor(data), dearmor(seckey))
+	from keytbl, encdata where keytbl.id=6 and encdata.id=5;
+2023-07-25 02:13:47.404 UTC [3064241] ERROR:  No encryption key found
+2023-07-25 02:13:47.404 UTC [3064241] STATEMENT:  select pgp_pub_decrypt(
+			pgp_pub_encrypt('Secret msg', dearmor(pubkey)),
+			dearmor(seckey))
+	from keytbl where keytbl.id=4;
+2023-07-25 02:13:47.405 UTC [3064241] ERROR:  Refusing to encrypt with secret key
+2023-07-25 02:13:47.405 UTC [3064241] STATEMENT:  select pgp_pub_decrypt(
+			pgp_pub_encrypt('Secret msg', dearmor(seckey)),
+			dearmor(seckey))
+	from keytbl where keytbl.id=1;
+2023-07-25 02:13:47.406 UTC [3064241] ERROR:  Not text data
+2023-07-25 02:13:47.406 UTC [3064241] STATEMENT:  select pgp_pub_decrypt(
+			pgp_pub_encrypt_bytea('Secret msg', dearmor(pubkey)),
+			dearmor(seckey))
+	from keytbl where keytbl.id=1;
+2023-07-25 02:13:47.414 UTC [3064245] ERROR:  No encryption key found
+2023-07-25 02:13:47.414 UTC [3064245] STATEMENT:  select pgp_key_id(dearmor(pubkey)) from keytbl where id=4;
+2023-07-25 02:13:47.415 UTC [3064245] ERROR:  No encryption key found
+2023-07-25 02:13:47.415 UTC [3064245] STATEMENT:  select pgp_key_id(dearmor(seckey)) from keytbl where id=4;
+2023-07-25 02:13:47.425 UTC [3064133] LOG:  checkpoint starting: immediate force wait
+2023-07-25 02:13:47.453 UTC [3064133] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.009 s, sync=0.006 s, total=0.029 s; sync files=7, longest=0.003 s, average=0.001 s; distance=4350 kB, estimate=4350 kB
+2023-07-25 02:13:47.794 UTC [3064133] LOG:  checkpoint starting: immediate force wait
+2023-07-25 02:13:47.896 UTC [3064133] LOG:  checkpoint complete: wrote 1829 buffers (11.2%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.051 s, sync=0.034 s, total=0.103 s; sync files=496, longest=0.006 s, average=0.001 s; distance=12738 kB, estimate=12738 kB
+2023-07-25 02:13:47.902 UTC [3064133] LOG:  checkpoint starting: immediate force wait
+2023-07-25 02:13:47.926 UTC [3064133] LOG:  checkpoint complete: wrote 2 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.004 s, sync=0.007 s, total=0.024 s; sync files=2, longest=0.006 s, average=0.004 s; distance=1 kB, estimate=11464 kB
+2023-07-25 02:13:48.000 UTC [3064285] ERROR:  current user cannot be dropped
+2023-07-25 02:13:48.000 UTC [3064285] STATEMENT:  DROP USER su;
+2023-07-25 02:13:48.337 UTC [3064133] LOG:  checkpoint starting: immediate force wait
+2023-07-25 02:13:48.398 UTC [3064133] LOG:  checkpoint complete: wrote 1050 buffers (6.4%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.017 s, sync=0.031 s, total=0.061 s; sync files=297, longest=0.005 s, average=0.001 s; distance=9059 kB, estimate=11224 kB
+2023-07-25 02:13:48.451 UTC [3064133] LOG:  checkpoint starting: immediate force wait
+2023-07-25 02:13:48.476 UTC [3064133] LOG:  checkpoint complete: wrote 8 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.006 s, sync=0.005 s, total=0.025 s; sync files=7, longest=0.004 s, average=0.001 s; distance=34 kB, estimate=10105 kB
+2023-07-25 02:13:48.546 UTC [3064313] ERROR:  duplicate key value violates unique constraint "company_pkey"
+2023-07-25 02:13:48.546 UTC [3064313] DETAIL:  Key (id)=(1) already exists.
+2023-07-25 02:13:48.546 UTC [3064313] STATEMENT:  INSERT  INTO Company(ID, Name) VALUES (1, 'Percona');
+2023-07-25 02:13:48.651 UTC [3064333] ERROR:  division by zero
+2023-07-25 02:13:48.651 UTC [3064333] STATEMENT:  SELECT 1/0;
+2023-07-25 02:13:48.651 UTC [3064333] ERROR:  relation "unknown" does not exist at character 15
+2023-07-25 02:13:48.651 UTC [3064333] STATEMENT:  SELECT * FROM unknown;
+2023-07-25 02:13:48.651 UTC [3064333] ERROR:  syntax error at or near "ELECET" at character 1
+2023-07-25 02:13:48.651 UTC [3064333] STATEMENT:  ELECET * FROM unknown;
+2023-07-25 02:13:48.651 UTC [3064333] WARNING:  warning message
+2023-07-25 02:13:48.651 UTC [3064333] CONTEXT:  PL/pgSQL function inline_code_block line 3 at RAISE
+2023-07-25 02:13:48.712 UTC [3064347] ERROR:  role "su" already exists
+2023-07-25 02:13:48.712 UTC [3064347] STATEMENT:  CREATE USER su WITH SUPERUSER;
+2023-07-25 02:13:48.724 UTC [3064347] ERROR:  permission denied for function pg_stat_monitor_reset
+2023-07-25 02:13:48.724 UTC [3064347] STATEMENT:  SELECT pg_stat_monitor_reset();

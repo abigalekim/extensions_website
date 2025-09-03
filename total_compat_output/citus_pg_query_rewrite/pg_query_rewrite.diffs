@@ -1,0 +1,19 @@
+diff -U3 /home/abigalek/pgext-cli/pgextworkdir/pg_query_rewrite/expected/test4.out /home/abigalek/pgext-cli/pgextworkdir/pg_query_rewrite/results/test4.out
+--- /home/abigalek/pgext-cli/pgextworkdir/pg_query_rewrite/expected/test4.out	2023-11-25 02:28:47.705635360 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/pg_query_rewrite/results/test4.out	2023-11-25 02:30:42.557155673 +0000
+@@ -16,6 +16,7 @@
+ --
+ \c db1
+ create extension pg_query_rewrite;
++ERROR:  extension "pg_query_rewrite" already exists
+ select pgqr_add_rule('select 1;','select 11;');
+  pgqr_add_rule 
+ ---------------
+@@ -46,6 +47,7 @@
+ --
+ \c db2
+ create extension pg_query_rewrite;
++ERROR:  extension "pg_query_rewrite" already exists
+ select pgqr_add_rule('select 2;','select 22;');
+  pgqr_add_rule 
+ ---------------

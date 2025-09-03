@@ -1,0 +1,317 @@
+diff -U3 /home/abigalek/pgext-cli/pgextworkdir/pg_hint_plan-REL15_1_5_0/expected/pg_hint_plan.out /home/abigalek/pgext-cli/pgextworkdir/pg_hint_plan-REL15_1_5_0/results/pg_hint_plan.out
+--- /home/abigalek/pgext-cli/pgextworkdir/pg_hint_plan-REL15_1_5_0/expected/pg_hint_plan.out	2023-01-25 03:40:47.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/pg_hint_plan-REL15_1_5_0/results/pg_hint_plan.out	2023-11-25 02:00:20.759702623 +0000
+@@ -8135,6 +8135,15 @@
+ 
+ -- Perform
+ DROP FUNCTION testfunc();
++LOG:  pg_hint_plan:
++used hint:
++not used hint:
++IndexScan(t1)
++duplication hint:
++error hint:
++
++CONTEXT:  SQL statement "SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)"
++PL/pgSQL function citus_drop_trigger() line 32 at PERFORM
+ CREATE FUNCTION testfunc() RETURNS void AS $$
+ BEGIN
+   PERFORM  1, /*+ SeqScan(t1) */ * from t1;
+@@ -8157,6 +8166,15 @@
+ 
+ -- FOR loop
+ DROP FUNCTION testfunc();
++LOG:  pg_hint_plan:
++used hint:
++not used hint:
++SeqScan(t1)
++duplication hint:
++error hint:
++
++CONTEXT:  SQL statement "SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)"
++PL/pgSQL function citus_drop_trigger() line 32 at PERFORM
+ CREATE FUNCTION testfunc() RETURNS int AS $$
+ DECLARE
+   sum int;
+diff -U3 /home/abigalek/pgext-cli/pgextworkdir/pg_hint_plan-REL15_1_5_0/expected/ut-A.out /home/abigalek/pgext-cli/pgextworkdir/pg_hint_plan-REL15_1_5_0/results/ut-A.out
+--- /home/abigalek/pgext-cli/pgextworkdir/pg_hint_plan-REL15_1_5_0/expected/ut-A.out	2023-01-25 03:40:47.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/pg_hint_plan-REL15_1_5_0/results/ut-A.out	2023-11-25 02:00:21.511700190 +0000
+@@ -4850,6 +4850,41 @@
+ DEALLOCATE p2;
+ DEALLOCATE p3;
+ DROP TABLE s1.tpc;
++LOG:  pg_hint_plan:
++used hint:
++not used hint:
++SeqScan(tpc)
++duplication hint:
++error hint:
++
++LOG:  pg_hint_plan:
++used hint:
++not used hint:
++SeqScan(tpc)
++duplication hint:
++error hint:
++
++LOG:  pg_hint_plan:
++used hint:
++not used hint:
++SeqScan(tpc)
++duplication hint:
++error hint:
++
++LOG:  pg_hint_plan:
++used hint:
++not used hint:
++SeqScan(tpc)
++duplication hint:
++error hint:
++
++LOG:  pg_hint_plan:
++used hint:
++not used hint:
++SeqScan(tpc)
++duplication hint:
++error hint:
++
+ --No.14-1-2 PREPARE query with array parameters
+ PREPARE test_query(numeric[]) AS
+   /*+ MergeJoin(t1 t2) */ WITH test AS
+diff -U3 /home/abigalek/pgext-cli/pgextworkdir/pg_hint_plan-REL15_1_5_0/expected/ut-S.out /home/abigalek/pgext-cli/pgextworkdir/pg_hint_plan-REL15_1_5_0/results/ut-S.out
+--- /home/abigalek/pgext-cli/pgextworkdir/pg_hint_plan-REL15_1_5_0/expected/ut-S.out	2023-01-25 03:40:47.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/pg_hint_plan-REL15_1_5_0/results/ut-S.out	2023-11-25 02:00:21.655699725 +0000
+@@ -457,7 +457,8 @@
+ -------------------------------------------------
+  Index Scan using pg_class_oid_index on pg_class
+    Index Cond: (oid = '1'::oid)
+-(2 rows)
++   Filter: (NOT relation_is_a_known_shard(oid))
++(3 rows)
+ 
+ /*+SeqScan(pg_class)*/
+ EXPLAIN (COSTS false) SELECT * FROM pg_catalog.pg_class WHERE oid = 1;
+@@ -468,10 +469,10 @@
+ duplication hint:
+ error hint:
+ 
+-         QUERY PLAN         
+-----------------------------
++                              QUERY PLAN                               
++-----------------------------------------------------------------------
+  Seq Scan on pg_class
+-   Filter: (oid = '1'::oid)
++   Filter: ((NOT relation_is_a_known_shard(oid)) AND (oid = '1'::oid))
+ (2 rows)
+ 
+ -- No. S-1-5-6
+diff -U3 /home/abigalek/pgext-cli/pgextworkdir/pg_hint_plan-REL15_1_5_0/expected/ut-J.out /home/abigalek/pgext-cli/pgextworkdir/pg_hint_plan-REL15_1_5_0/results/ut-J.out
+--- /home/abigalek/pgext-cli/pgextworkdir/pg_hint_plan-REL15_1_5_0/expected/ut-J.out	2023-01-25 03:40:47.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/pg_hint_plan-REL15_1_5_0/results/ut-J.out	2023-11-25 02:00:21.751699414 +0000
+@@ -571,14 +571,16 @@
+ 
+ -- No. J-1-6-5
+ EXPLAIN (COSTS false) SELECT * FROM pg_catalog.pg_class t1, pg_catalog.pg_class t2 WHERE t1.oid = t2.oid;
+-             QUERY PLAN              
+--------------------------------------
++                         QUERY PLAN                         
++------------------------------------------------------------
+  Hash Join
+    Hash Cond: (t1.oid = t2.oid)
+    ->  Seq Scan on pg_class t1
++         Filter: (NOT relation_is_a_known_shard(oid))
+    ->  Hash
+          ->  Seq Scan on pg_class t2
+-(5 rows)
++               Filter: (NOT relation_is_a_known_shard(oid))
++(7 rows)
+ 
+ /*+NestLoop(t1 t2)*/
+ EXPLAIN (COSTS false) SELECT * FROM pg_catalog.pg_class t1, pg_catalog.pg_class t2 WHERE t1.oid = t2.oid;
+@@ -593,9 +595,11 @@
+ ----------------------------------------------------------
+  Nested Loop
+    ->  Seq Scan on pg_class t1
++         Filter: (NOT relation_is_a_known_shard(oid))
+    ->  Index Scan using pg_class_oid_index on pg_class t2
+          Index Cond: (oid = t1.oid)
+-(4 rows)
++         Filter: (NOT relation_is_a_known_shard(oid))
++(6 rows)
+ 
+ -- No. J-1-6-6
+ -- refer ut-fdw.sql
+diff -U3 /home/abigalek/pgext-cli/pgextworkdir/pg_hint_plan-REL15_1_5_0/expected/ut-L.out /home/abigalek/pgext-cli/pgextworkdir/pg_hint_plan-REL15_1_5_0/results/ut-L.out
+--- /home/abigalek/pgext-cli/pgextworkdir/pg_hint_plan-REL15_1_5_0/expected/ut-L.out	2023-01-25 03:40:47.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/pg_hint_plan-REL15_1_5_0/results/ut-L.out	2023-11-25 02:00:21.851699090 +0000
+@@ -832,22 +832,26 @@
+ 
+ -- No. L-1-6-5
+ EXPLAIN (COSTS false) SELECT * FROM pg_catalog.pg_class t1, pg_catalog.pg_class t2, pg_catalog.pg_class t3, pg_catalog.pg_class t4 WHERE t1.oid = t2.oid AND t1.oid = t3.oid AND t1.oid = t4.oid;
+-                   QUERY PLAN                    
+--------------------------------------------------
++                                  QUERY PLAN                                  
++------------------------------------------------------------------------------
+  Hash Join
+-   Hash Cond: (t1.oid = t4.oid)
+-   ->  Hash Join
+-         Hash Cond: (t1.oid = t3.oid)
++   Hash Cond: (t4.oid = t1.oid)
++   ->  Seq Scan on pg_class t4
++         Filter: (NOT relation_is_a_known_shard(oid))
++   ->  Hash
+          ->  Hash Join
+-               Hash Cond: (t1.oid = t2.oid)
+-               ->  Seq Scan on pg_class t1
++               Hash Cond: (t1.oid = t3.oid)
++               ->  Hash Join
++                     Hash Cond: (t1.oid = t2.oid)
++                     ->  Seq Scan on pg_class t1
++                           Filter: (NOT relation_is_a_known_shard(oid))
++                     ->  Hash
++                           ->  Seq Scan on pg_class t2
++                                 Filter: (NOT relation_is_a_known_shard(oid))
+                ->  Hash
+-                     ->  Seq Scan on pg_class t2
+-         ->  Hash
+-               ->  Seq Scan on pg_class t3
+-   ->  Hash
+-         ->  Seq Scan on pg_class t4
+-(13 rows)
++                     ->  Seq Scan on pg_class t3
++                           Filter: (NOT relation_is_a_known_shard(oid))
++(17 rows)
+ 
+ /*+Leading(t4 t3 t2 t1)*/
+ EXPLAIN (COSTS false) SELECT * FROM pg_catalog.pg_class t1, pg_catalog.pg_class t2, pg_catalog.pg_class t3, pg_catalog.pg_class t4 WHERE t1.oid = t2.oid AND t1.oid = t3.oid AND t1.oid = t4.oid;
+@@ -858,22 +862,26 @@
+ duplication hint:
+ error hint:
+ 
+-                   QUERY PLAN                    
+--------------------------------------------------
++                                  QUERY PLAN                                  
++------------------------------------------------------------------------------
+  Hash Join
+-   Hash Cond: (t2.oid = t1.oid)
+-   ->  Hash Join
+-         Hash Cond: (t3.oid = t2.oid)
++   Hash Cond: (t1.oid = t2.oid)
++   ->  Seq Scan on pg_class t1
++         Filter: (NOT relation_is_a_known_shard(oid))
++   ->  Hash
+          ->  Hash Join
+-               Hash Cond: (t3.oid = t4.oid)
+-               ->  Seq Scan on pg_class t3
++               Hash Cond: (t3.oid = t2.oid)
++               ->  Hash Join
++                     Hash Cond: (t3.oid = t4.oid)
++                     ->  Seq Scan on pg_class t3
++                           Filter: (NOT relation_is_a_known_shard(oid))
++                     ->  Hash
++                           ->  Seq Scan on pg_class t4
++                                 Filter: (NOT relation_is_a_known_shard(oid))
+                ->  Hash
+-                     ->  Seq Scan on pg_class t4
+-         ->  Hash
+-               ->  Seq Scan on pg_class t2
+-   ->  Hash
+-         ->  Seq Scan on pg_class t1
+-(13 rows)
++                     ->  Seq Scan on pg_class t2
++                           Filter: (NOT relation_is_a_known_shard(oid))
++(17 rows)
+ 
+ -- No. L-1-6-6
+ -- refer ut-fdw.sql
+diff -U3 /home/abigalek/pgext-cli/pgextworkdir/pg_hint_plan-REL15_1_5_0/expected/plpgsql.out /home/abigalek/pgext-cli/pgextworkdir/pg_hint_plan-REL15_1_5_0/results/plpgsql.out
+--- /home/abigalek/pgext-cli/pgextworkdir/pg_hint_plan-REL15_1_5_0/expected/plpgsql.out	2023-01-25 03:40:47.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/pg_hint_plan-REL15_1_5_0/results/plpgsql.out	2023-11-25 02:00:22.511696954 +0000
+@@ -76,26 +76,15 @@
+ -- Show plan with hint, stored as an internal state of plpgsql_recurse_level.
+ explain (costs false) with test /*+ MergeJoin(t1 t2) */
+   as (select 'x' val) select t1.val from test t1, test t2 where t1.val = t2.val;
+-LOG:  pg_hint_plan:
+-used hint:
+-MergeJoin(t1 t2)
+-not used hint:
+-duplication hint:
+-error hint:
+-
+-           QUERY PLAN            
+----------------------------------
+- Merge Join
+-   Merge Cond: (t1.val = t2.val)
++            QUERY PLAN            
++----------------------------------
++ Nested Loop
++   Join Filter: (t1.val = t2.val)
+    CTE test
+      ->  Result
+-   ->  Sort
+-         Sort Key: t1.val
+-         ->  CTE Scan on test t1
+-   ->  Sort
+-         Sort Key: t2.val
+-         ->  CTE Scan on test t2
+-(10 rows)
++   ->  CTE Scan on test t1
++   ->  CTE Scan on test t2
++(6 rows)
+ 
+ -- This query should have the same plan as the first one, without hints.
+ explain (costs false) with test as (select 'y' val)
+@@ -122,26 +111,15 @@
+ -- Show plan with hint.
+ explain (costs false) with test /*+ MergeJoin(t1 t2) */
+   as (select 'x' val) select t1.val from test t1, test t2 where t1.val = t2.val;
+-LOG:  pg_hint_plan:
+-used hint:
+-MergeJoin(t1 t2)
+-not used hint:
+-duplication hint:
+-error hint:
+-
+-           QUERY PLAN            
+----------------------------------
+- Merge Join
+-   Merge Cond: (t1.val = t2.val)
++            QUERY PLAN            
++----------------------------------
++ Nested Loop
++   Join Filter: (t1.val = t2.val)
+    CTE test
+      ->  Result
+-   ->  Sort
+-         Sort Key: t1.val
+-         ->  CTE Scan on test t1
+-   ->  Sort
+-         Sort Key: t2.val
+-         ->  CTE Scan on test t2
+-(10 rows)
++   ->  CTE Scan on test t1
++   ->  CTE Scan on test t2
++(6 rows)
+ 
+ -- This query should have no hints.
+ explain (costs false) with test as (select 'y' val)
+@@ -222,19 +200,6 @@
+ CONTEXT:  PL/pgSQL function test_hint_queries(integer,integer) line 16 at RAISE
+ SQL statement "select test_hint_queries(0, 0)"
+ PL/pgSQL function test_hint_transaction() line 5 at EXECUTE
+-LOG:  pg_hint_plan:
+-used hint:
+-MergeJoin(t1 t2)
+-not used hint:
+-duplication hint:
+-error hint:
+-
+-CONTEXT:  SQL statement "explain (costs false) with test /*+ MergeJoin(t1 t2) */
+-    as (select 1 val)
+-    select t1.val from test t1, test t2 where t1.val = t2.val;"
+-PL/pgSQL function test_hint_queries(integer,integer) line 17 at EXECUTE
+-SQL statement "select test_hint_queries(0, 0)"
+-PL/pgSQL function test_hint_transaction() line 5 at EXECUTE
+ NOTICE:  Execution 0 at level 2, no hints
+ CONTEXT:  PL/pgSQL function test_hint_queries(integer,integer) line 11 at RAISE
+ SQL statement "select test_hint_queries(0,1)"

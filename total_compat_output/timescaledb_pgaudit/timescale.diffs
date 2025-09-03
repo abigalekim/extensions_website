@@ -1,0 +1,23 @@
+diff -u /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/copy-15.out /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/copy-15.out
+--- /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/copy-15.out	2023-06-28 16:40:59.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/copy-15.out	2023-10-28 03:46:26.390243837 +0000
+@@ -214,6 +214,7 @@
+     RETURN NEW;
+ END
+ $BODY$;
++DEBUG:  EventTriggerInvoke 16385
+ -- Before trigger (CIM_SINGLE should be used)
+ CREATE TRIGGER hyper_copy_trigger_insert_before
+     BEFORE INSERT ON hyper_copy
+diff -u /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/drop_extension.out /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/drop_extension.out
+--- /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/drop_extension.out	2023-06-28 16:40:59.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/drop_extension.out	2023-10-28 03:46:22.738262521 +0000
+@@ -72,7 +72,7 @@
+ --test drops thru cascades of other objects
+ \c :TEST_DBNAME :ROLE_SUPERUSER
+ drop schema public cascade;
+-NOTICE:  drop cascades to 3 other objects
++NOTICE:  drop cascades to 4 other objects
+ \dn
+   List of schemas
+  Name |   Owner    

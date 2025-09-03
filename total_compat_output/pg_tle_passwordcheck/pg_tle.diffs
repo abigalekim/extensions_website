@@ -1,0 +1,83 @@
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_tle-1.0.4/test/expected/pg_tle_api.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_tle-1.0.4/results/pg_tle_api.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_tle-1.0.4/test/expected/pg_tle_api.out	2023-04-22 00:38:38.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_tle-1.0.4/results/pg_tle_api.out	2023-07-26 13:44:01.341514645 +0000
+@@ -13,6 +13,7 @@
+ --  limitations under the License.
+ -- Expect password to go through since we haven't enabled the feature
+ CREATE ROLE testuser with password 'pass';
++ERROR:  password is too short
+ -- Test 'on' / 'off' / 'require'
+ ALTER SYSTEM SET pgtle.enable_password_check = 'off';
+ SELECT pg_reload_conf();
+@@ -24,6 +25,7 @@
+ -- reconnect to ensure reload settings are propagated immediately
+ \c -
+ ALTER ROLE testuser with password 'pass';
++ERROR:  role "testuser" does not exist
+ ALTER SYSTEM SET pgtle.enable_password_check = 'on';
+ SELECT pg_reload_conf();
+  pg_reload_conf 
+@@ -35,9 +37,11 @@
+ \c -
+ -- Do not expect an error
+ ALTER ROLE testuser with password 'pass';
++ERROR:  role "testuser" does not exist
+ CREATE EXTENSION pg_tle;
+ -- Do not expect an error
+ ALTER ROLE testuser with password 'pass';
++ERROR:  role "testuser" does not exist
+ ALTER SYSTEM SET pgtle.enable_password_check = 'require';
+ SELECT pg_reload_conf();
+  pg_reload_conf 
+@@ -49,7 +53,7 @@
+ \c -
+ -- Expect an error for require if no entries are present
+ ALTER ROLE testuser with password 'pass';
+-ERROR:  "pgtle.enable_password_check" feature is set to require, however no entries exist in "pgtle.feature_info" with the feature "passcheck"
++ERROR:  role "testuser" does not exist
+ -- Insert a value into the feature table
+ CREATE OR REPLACE FUNCTION password_check_length_greater_than_8(username text, shadow_pass text, password_types pgtle.password_types, validuntil_time TimestampTz,validuntil_null boolean) RETURNS void AS
+ $$
+@@ -68,10 +72,9 @@
+ 
+ -- Expect failure since pass is shorter than 8
+ ALTER ROLE testuser with password 'pass';
+-ERROR:  Passwords needs to be longer than 8
+-CONTEXT:  PL/pgSQL function password_check_length_greater_than_8(text,text,pgtle.password_types,timestamp with time zone,boolean) line 4 at RAISE
+-SQL statement "SELECT public.password_check_length_greater_than_8($1::pg_catalog.text, $2::pg_catalog.text, $3::pgtle.password_types, $4::pg_catalog.timestamptz, $5::pg_catalog.bool)"
++ERROR:  role "testuser" does not exist
+ ALTER ROLE testuser with password 'passwords';
++ERROR:  role "testuser" does not exist
+ -- Test that by default a role has access to the feature_info table
+ CREATE ROLE testuser_2 with LOGIN;
+ CREATE SCHEMA testuser_2 AUTHORIZATION testuser_2;
+@@ -119,14 +122,13 @@
+ 
+ -- Test both functions are called
+ ALTER ROLE testuser with password 'passwords';
+-ERROR:  Passwords can only have numbers
+-CONTEXT:  PL/pgSQL function password_check_only_nums(text,text,pgtle.password_types,timestamp with time zone,boolean) line 7 at RAISE
+-SQL statement "SELECT public.password_check_only_nums($1::pg_catalog.text, $2::pg_catalog.text, $3::pgtle.password_types, $4::pg_catalog.timestamptz, $5::pg_catalog.bool)"
++ERROR:  role "testuser" does not exist
+ ALTER ROLE testuser with password '123456789';
++ERROR:  role "testuser" does not exist
+ INSERT INTO pgtle.feature_info VALUES ('passcheck', '', 'password_check_only_nums', '');
+ -- Expect to fail cause no schema qualified function found
+ ALTER ROLE testuser with password '123456789';
+-ERROR:  table, schema, and proname must be present in "pgtle.feature_info"
++ERROR:  role "testuser" does not exist
+ -- test insert of duplicate hook and fail
+ SELECT pgtle.register_feature('password_check_length_greater_than_8', 'passcheck');
+ ERROR:  duplicate key value violates unique constraint "feature_info_pkey"
+@@ -179,9 +181,9 @@
+ TRUNCATE TABLE pgtle.feature_info;
+ INSERT INTO pgtle.feature_info VALUES ('passcheck', 'public', 'test_foo;select foo()', '');
+ ALTER ROLE testuser with password '123456789';
+-ERROR:  "passcheck" feature does not support calling out to functions/schemas that contain ";"
+-HINT:  Check the "pgtle.feature_info" table does not contain ';'.
++ERROR:  role "testuser" does not exist
+ DROP ROLE testuser;
++ERROR:  role "testuser" does not exist
+ DROP FUNCTION testuser_2.unpriv_function_passcheck;
+ DROP SCHEMA testuser_2;
+ DROP ROLE testuser_2;

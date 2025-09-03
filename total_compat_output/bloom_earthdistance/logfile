@@ -1,0 +1,34 @@
+2023-07-25 14:15:04.941 UTC [1861968] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 14:15:04.941 UTC [1861968] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 14:15:04.959 UTC [1861968] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 14:15:04.974 UTC [1861971] LOG:  database system was shut down at 2023-07-25 14:15:04 UTC
+2023-07-25 14:15:04.984 UTC [1861968] LOG:  database system is ready to accept connections
+2023-07-25 14:15:05.338 UTC [1861990] ERROR:  value 0 out of bounds for option "length"
+2023-07-25 14:15:05.338 UTC [1861990] DETAIL:  Valid values are between "1" and "4096".
+2023-07-25 14:15:05.338 UTC [1861990] STATEMENT:  CREATE INDEX bloomidx2 ON tst USING bloom (i, t) WITH (length=0);
+2023-07-25 14:15:05.339 UTC [1861990] ERROR:  value 0 out of bounds for option "col1"
+2023-07-25 14:15:05.339 UTC [1861990] DETAIL:  Valid values are between "1" and "4095".
+2023-07-25 14:15:05.339 UTC [1861990] STATEMENT:  CREATE INDEX bloomidx2 ON tst USING bloom (i, t) WITH (col1=0);
+2023-07-25 14:15:05.470 UTC [1862005] ERROR:  required extension "cube" is not installed
+2023-07-25 14:15:05.470 UTC [1862005] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-25 14:15:05.470 UTC [1862005] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-25 14:15:05.531 UTC [1862005] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-25 14:15:05.531 UTC [1862005] DETAIL:  extension earthdistance depends on extension cube
+2023-07-25 14:15:05.531 UTC [1862005] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 14:15:05.531 UTC [1862005] STATEMENT:  drop extension cube;
+2023-07-25 14:15:05.535 UTC [1862005] ERROR:  cannot drop type cube because extension cube requires it
+2023-07-25 14:15:05.535 UTC [1862005] HINT:  You can drop extension cube instead.
+2023-07-25 14:15:05.535 UTC [1862005] STATEMENT:  drop type cube;
+2023-07-25 14:15:05.540 UTC [1862005] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-25 14:15:05.540 UTC [1862005] DETAIL:  column f1 of table foo depends on type cube
+2023-07-25 14:15:05.540 UTC [1862005] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 14:15:05.540 UTC [1862005] STATEMENT:  drop extension cube;
+2023-07-25 14:15:05.633 UTC [1862005] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-25 14:15:05.633 UTC [1862005] DETAIL:  column f1 of table foo depends on type c.cube
+2023-07-25 14:15:05.633 UTC [1862005] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 14:15:05.633 UTC [1862005] STATEMENT:  drop extension cube;
+2023-07-25 14:15:05.634 UTC [1862005] ERROR:  cannot drop schema c because other objects depend on it
+2023-07-25 14:15:05.634 UTC [1862005] DETAIL:  extension cube depends on schema c
+	column f1 of table foo depends on type c.cube
+2023-07-25 14:15:05.634 UTC [1862005] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 14:15:05.634 UTC [1862005] STATEMENT:  drop schema c;

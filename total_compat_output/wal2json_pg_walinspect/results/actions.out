@@ -1,0 +1,29 @@
+\set VERBOSITY terse
+-- predictability
+SET synchronous_commit = on;
+SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'wal2json');
+ERROR:  logical decoding requires wal_level >= logical
+-- actions
+CREATE TABLE actions (a integer primary key);
+INSERT INTO actions (a) VALUES(1);
+UPDATE actions SET a = 2 WHERE a = 1;
+DELETE FROM actions WHERE a = 2;
+TRUNCATE TABLE actions;
+SELECT data FROM pg_logical_slot_peek_changes('regression_slot', NULL, NULL, 'format-version', '2', 'actions', 'insert, foo, delete');
+ERROR:  logical decoding requires wal_level >= logical
+SELECT data FROM pg_logical_slot_peek_changes('regression_slot', NULL, NULL, 'format-version', '1');
+ERROR:  logical decoding requires wal_level >= logical
+SELECT data FROM pg_logical_slot_peek_changes('regression_slot', NULL, NULL, 'format-version', '2');
+ERROR:  logical decoding requires wal_level >= logical
+SELECT data FROM pg_logical_slot_peek_changes('regression_slot', NULL, NULL, 'format-version', '2', 'actions', 'insert');
+ERROR:  logical decoding requires wal_level >= logical
+SELECT data FROM pg_logical_slot_peek_changes('regression_slot', NULL, NULL, 'format-version', '2', 'actions', 'update');
+ERROR:  logical decoding requires wal_level >= logical
+SELECT data FROM pg_logical_slot_peek_changes('regression_slot', NULL, NULL, 'format-version', '2', 'actions', 'delete');
+ERROR:  logical decoding requires wal_level >= logical
+SELECT data FROM pg_logical_slot_peek_changes('regression_slot', NULL, NULL, 'format-version', '2', 'actions', 'truncate');
+ERROR:  logical decoding requires wal_level >= logical
+SELECT data FROM pg_logical_slot_peek_changes('regression_slot', NULL, NULL, 'format-version', '2', 'actions', 'update, truncate');
+ERROR:  logical decoding requires wal_level >= logical
+SELECT 'stop' FROM pg_drop_replication_slot('regression_slot');
+ERROR:  replication slot "regression_slot" does not exist

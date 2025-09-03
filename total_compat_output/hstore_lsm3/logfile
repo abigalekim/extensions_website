@@ -1,0 +1,45 @@
+2023-07-26 08:26:37.877 UTC [2050891] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 08:26:37.877 UTC [2050891] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 08:26:37.883 UTC [2050891] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 08:26:37.890 UTC [2050894] LOG:  database system was shut down at 2023-07-26 08:26:37 UTC
+2023-07-26 08:26:37.894 UTC [2050891] LOG:  database system is ready to accept connections
+2023-07-26 08:26:38.126 UTC [2050910] ERROR:  array must have even number of elements
+2023-07-26 08:26:38.126 UTC [2050910] STATEMENT:  select ARRAY['a','g','b','h','asd']::hstore;
+2023-07-26 08:26:38.126 UTC [2050910] ERROR:  array must have two columns
+2023-07-26 08:26:38.126 UTC [2050910] STATEMENT:  select ARRAY[['a','g','b'],['h','asd','i']]::hstore;
+2023-07-26 08:26:38.126 UTC [2050910] ERROR:  wrong number of array subscripts
+2023-07-26 08:26:38.126 UTC [2050910] STATEMENT:  select ARRAY[[['a','g'],['b','h'],['asd','i']]]::hstore;
+2023-07-26 08:26:38.126 UTC [2050910] ERROR:  array must have even number of elements
+2023-07-26 08:26:38.126 UTC [2050910] STATEMENT:  select hstore(ARRAY['a','g','b','h','asd']);
+2023-07-26 08:26:38.126 UTC [2050910] ERROR:  array must have two columns
+2023-07-26 08:26:38.126 UTC [2050910] STATEMENT:  select hstore(ARRAY[['a','g','b'],['h','asd','i']]);
+2023-07-26 08:26:38.126 UTC [2050910] ERROR:  wrong number of array subscripts
+2023-07-26 08:26:38.126 UTC [2050910] STATEMENT:  select hstore(ARRAY[[['a','g'],['b','h'],['asd','i']]]);
+2023-07-26 08:26:38.127 UTC [2050910] ERROR:  arrays must have same bounds
+2023-07-26 08:26:38.127 UTC [2050910] STATEMENT:  select hstore(ARRAY['a'], '{}'::text[]);
+2023-07-26 08:26:38.127 UTC [2050910] ERROR:  arrays must have same bounds
+2023-07-26 08:26:38.127 UTC [2050910] STATEMENT:  select hstore('{}'::text[], ARRAY['a']);
+2023-07-26 08:26:38.140 UTC [2050910] ERROR:  domain hstestdom1 does not allow null values
+2023-07-26 08:26:38.140 UTC [2050910] STATEMENT:  select populate_record(v, hstore('e', null)) from testhstore1 v;
+2023-07-26 08:26:38.140 UTC [2050910] ERROR:  domain hstestdom1 does not allow null values
+2023-07-26 08:26:38.140 UTC [2050910] STATEMENT:  select populate_record(v, hstore('b', 'foo') || hstore('e', null)) from testhstore1 v;
+2023-07-26 08:26:38.141 UTC [2050910] ERROR:  domain hstestdom1 does not allow null values
+2023-07-26 08:26:38.141 UTC [2050910] STATEMENT:  select populate_record(null::testhstore1, hstore('c', '3.45') || hstore('a', '123'));
+2023-07-26 08:26:38.141 UTC [2050910] ERROR:  domain hstestdom1 does not allow null values
+2023-07-26 08:26:38.141 UTC [2050910] STATEMENT:  select populate_record(null::testhstore1, '');
+2023-07-26 08:26:38.141 UTC [2050910] ERROR:  domain hstestdom1 does not allow null values
+2023-07-26 08:26:38.141 UTC [2050910] STATEMENT:  select v #= hstore('e', null) from testhstore1 v;
+2023-07-26 08:26:38.141 UTC [2050910] ERROR:  domain hstestdom1 does not allow null values
+2023-07-26 08:26:38.141 UTC [2050910] STATEMENT:  select null::testhstore1 #= (hstore('c', '3.45') || hstore('a', '123'));
+2023-07-26 08:26:38.142 UTC [2050910] ERROR:  domain hstestdom1 does not allow null values
+2023-07-26 08:26:38.142 UTC [2050910] STATEMENT:  select null::testhstore1 #= hstore '';
+2023-07-26 08:26:38.178 UTC [2050910] ERROR:  value 0 out of bounds for option "siglen"
+2023-07-26 08:26:38.178 UTC [2050910] DETAIL:  Valid values are between "1" and "2024".
+2023-07-26 08:26:38.178 UTC [2050910] STATEMENT:  create index hidx on testhstore using gist(h gist_hstore_ops(siglen=0));
+2023-07-26 08:26:38.178 UTC [2050910] ERROR:  value 2025 out of bounds for option "siglen"
+2023-07-26 08:26:38.178 UTC [2050910] DETAIL:  Valid values are between "1" and "2024".
+2023-07-26 08:26:38.178 UTC [2050910] STATEMENT:  create index hidx on testhstore using gist(h gist_hstore_ops(siglen=2025));
+2023-07-26 08:26:38.681 UTC [2050910] ERROR:  hstore allows only one subscript
+2023-07-26 08:26:38.681 UTC [2050910] STATEMENT:  select f2['d']['e'] from test_json_agg;
+2023-07-26 08:26:38.682 UTC [2050910] ERROR:  hstore allows only one subscript
+2023-07-26 08:26:38.682 UTC [2050910] STATEMENT:  select f2['d':'e'] from test_json_agg;

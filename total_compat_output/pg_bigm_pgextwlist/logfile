@@ -1,0 +1,38 @@
+2023-07-25 15:00:49.117 UTC [767772] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 15:00:49.117 UTC [767772] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 15:00:49.132 UTC [767772] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 15:00:49.148 UTC [767775] LOG:  database system was shut down at 2023-07-25 15:00:48 UTC
+2023-07-25 15:00:49.157 UTC [767772] LOG:  database system is ready to accept connections
+2023-07-25 15:00:49.316 UTC [767788] ERROR:  parameter "pg_bigm.last_update" cannot be changed
+2023-07-25 15:00:49.316 UTC [767788] STATEMENT:  SET pg_bigm.last_update = '2013.09.18';
+2023-07-25 15:00:49.370 UTC [767788] ERROR:  relation "test_bigm" is not a GIN index
+2023-07-25 15:00:49.370 UTC [767788] STATEMENT:  SELECT * FROM pg_gin_pending_stats('test_bigm');
+2023-07-25 15:00:49.383 UTC [767788] ERROR:  relation "test_bigm_btree" is not a GIN index
+2023-07-25 15:00:49.383 UTC [767788] STATEMENT:  SELECT * FROM pg_gin_pending_stats('test_bigm_btree');
+2023-07-25 15:00:49.471 UTC [767788] ERROR:  function likequery(unknown) does not exist at character 8
+2023-07-25 15:00:49.471 UTC [767788] HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+2023-07-25 15:00:49.471 UTC [767788] STATEMENT:  SELECT likequery('test');
+2023-07-25 15:00:49.522 UTC [767773] LOG:  checkpoint starting: immediate force wait
+2023-07-25 15:00:49.593 UTC [767773] LOG:  checkpoint complete: wrote 22 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.018 s, sync=0.021 s, total=0.072 s; sync files=14, longest=0.008 s, average=0.002 s; distance=4688 kB, estimate=4688 kB
+2023-07-25 15:00:49.787 UTC [767772] LOG:  received SIGHUP, reloading configuration files
+2023-07-25 15:00:49.789 UTC [767772] LOG:  parameter "session_preload_libraries" changed to "pgextwlist"
+2023-07-25 15:00:49.789 UTC [767772] LOG:  parameter "extwlist.extensions" changed to "citext,earthdistance,pg_trgm,pg_stat_statements,refint"
+2023-07-25 15:00:49.789 UTC [767772] LOG:  parameter "extwlist.custom_path" changed to "/home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/test-scripts"
+2023-07-25 15:00:49.869 UTC [767818] ERROR:  extension "plpgsql" already exists
+2023-07-25 15:00:49.869 UTC [767818] STATEMENT:  CREATE EXTENSION plpgsql;
+2023-07-25 15:00:49.869 UTC [767818] ERROR:  extension "hstore" does not exist
+2023-07-25 15:00:49.869 UTC [767818] STATEMENT:  COMMENT ON EXTENSION hstore IS 'plpgsql comment';
+2023-07-25 15:00:49.870 UTC [767818] ERROR:  permission denied to create extension "hstore"
+2023-07-25 15:00:49.870 UTC [767818] HINT:  Must have CREATE privilege on current database to create this extension.
+2023-07-25 15:00:49.870 UTC [767818] STATEMENT:  CREATE EXTENSION hstore;
+2023-07-25 15:00:49.870 UTC [767818] ERROR:  extension "hstore" does not exist
+2023-07-25 15:00:49.870 UTC [767818] STATEMENT:  COMMENT ON EXTENSION hstore IS 'hstore comment';
+2023-07-25 15:00:49.871 UTC [767818] ERROR:  required extension "cube" is not installed
+2023-07-25 15:00:49.871 UTC [767818] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-25 15:00:49.871 UTC [767818] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-25 15:00:49.871 UTC [767818] ERROR:  must be owner of extension plpgsql
+2023-07-25 15:00:49.871 UTC [767818] STATEMENT:  DROP EXTENSION plpgsql;
+2023-07-25 15:00:49.909 UTC [767826] ERROR:  cannot drop extension citext because other objects depend on it
+2023-07-25 15:00:49.909 UTC [767826] DETAIL:  column t of table mere_table depends on type citext
+2023-07-25 15:00:49.909 UTC [767826] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 15:00:49.909 UTC [767826] STATEMENT:  DROP EXTENSION citext;

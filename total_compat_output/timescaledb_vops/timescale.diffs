@@ -1,0 +1,141 @@
+diff -u /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/alternate_users.out /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/alternate_users.out
+--- /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/alternate_users.out	2023-06-28 16:40:59.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/alternate_users.out	2023-10-28 04:14:43.759889471 +0000
+@@ -60,11 +60,12 @@
+ --test creating and using schema as non-superuser
+ \c :TEST_DBNAME :ROLE_DEFAULT_PERM_USER_2
+ \dt
+-                 List of relations
+- Schema |     Name      | Type  |       Owner       
+---------+---------------+-------+-------------------
+- public | one_Partition | table | default_perm_user
+-(1 row)
++                   List of relations
++ Schema |       Name       | Type  |       Owner       
++--------+------------------+-------+-------------------
++ public | one_Partition    | table | default_perm_user
++ public | vops_projections | table | abigalek
++(2 rows)
+ 
+ \set ON_ERROR_STOP 0
+ SELECT * FROM "one_Partition";
+diff -u /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/drop_extension.out /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/drop_extension.out
+--- /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/drop_extension.out	2023-06-28 16:40:59.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/drop_extension.out	2023-10-28 04:14:56.155850189 +0000
+@@ -72,7 +72,7 @@
+ --test drops thru cascades of other objects
+ \c :TEST_DBNAME :ROLE_SUPERUSER
+ drop schema public cascade;
+-NOTICE:  drop cascades to 3 other objects
++NOTICE:  drop cascades to 4 other objects
+ \dn
+   List of schemas
+  Name |   Owner    
+diff -u /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/drop_rename_hypertable.out /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/drop_rename_hypertable.out
+--- /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/drop_rename_hypertable.out	2023-06-28 16:40:59.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/drop_rename_hypertable.out	2023-10-28 04:15:06.727816659 +0000
+@@ -185,10 +185,11 @@
+ (0 rows)
+ 
+ \dt  "public".*
+-      List of relations
+- Schema | Name | Type | Owner 
+---------+------+------+-------
+-(0 rows)
++              List of relations
++ Schema |       Name       | Type  |  Owner   
++--------+------------------+-------+----------
++ public | vops_projections | table | abigalek
++(1 row)
+ 
+ \dt  "_timescaledb_catalog".*
+                                       List of relations
+diff -u /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/dump_meta.out /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/dump_meta.out
+--- /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/dump_meta.out	2023-06-28 16:40:59.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/dump_meta.out	2023-10-28 04:15:06.699816747 +0000
+@@ -57,11 +57,12 @@
+ \echo 'List of tables'
+ List of tables
+ \dt
+-                  List of relations
+- Schema |      Name      | Type  |       Owner       
+---------+----------------+-------+-------------------
+- public | two_Partitions | table | default_perm_user
+-(1 row)
++                   List of relations
++ Schema |       Name       | Type  |       Owner       
++--------+------------------+-------+-------------------
++ public | two_Partitions   | table | default_perm_user
++ public | vops_projections | table | abigalek
++(2 rows)
+ 
+ \echo 'List of hypertables'
+ List of hypertables
+diff -u /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/extension_scripts.out /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/extension_scripts.out
+--- /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/extension_scripts.out	2023-06-28 16:40:59.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/extension_scripts.out	2023-10-28 04:15:09.819806847 +0000
+@@ -41,6 +41,7 @@
+ CREATE EXTENSION timescaledb;
+ ERROR:  function "time_bucket" already exists with same argument types
+ DROP FUNCTION time_bucket;
++ERROR:  function name "time_bucket" is not unique
+ \c :TEST_DBNAME :ROLE_SUPERUSER
+ CREATE OR REPLACE FUNCTION show_chunks(relation regclass, older_than "any" DEFAULT NULL, newer_than "any" DEFAULT NULL) RETURNS SETOF regclass language internal as 'pg_partition_ancestors';
+ CREATE EXTENSION timescaledb;
+@@ -51,8 +52,11 @@
+ \c :TEST_DBNAME "FooBar"
+ SET client_min_messages TO error;
+ CREATE EXTENSION timescaledb;
++ERROR:  function "time_bucket" already exists with same argument types
+ DROP EXTENSION timescaledb;
++ERROR:  extension "timescaledb" does not exist
+ RESET client_min_messages;
+ \c :TEST_DBNAME :ROLE_SUPERUSER
+ SET client_min_messages TO ERROR;
+ CREATE EXTENSION timescaledb;
++ERROR:  function "time_bucket" already exists with same argument types
+diff -u /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/plain.out /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/plain.out
+--- /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/plain.out	2023-06-28 16:40:59.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/plain.out	2023-10-28 04:15:24.503760224 +0000
+@@ -29,17 +29,30 @@
+ CREATE TYPE rainbow AS ENUM ('red', 'orange', 'yellow', 'green', 'blue', 'purple');
+ ALTER TYPE rainbow RENAME TO colors;
+ \dT+
+-                                           List of data types
+- Schema |  Name  | Internal name | Size | Elements |       Owner       | Access privileges | Description 
+---------+--------+---------------+------+----------+-------------------+-------------------+-------------
+- public | colors | colors        | 4    | red     +| default_perm_user |                   | 
+-        |        |               |      | orange  +|                   |                   | 
+-        |        |               |      | yellow  +|                   |                   | 
+-        |        |               |      | green   +|                   |                   | 
+-        |        |               |      | blue    +|                   |                   | 
+-        |        |               |      | purple   |                   |                   | 
+- public | rxid   | rxid          | 16   |          | super_user        |                   | 
+-(2 rows)
++                                                 List of data types
++ Schema |      Name       |  Internal name  | Size  | Elements |       Owner       | Access privileges | Description 
++--------+-----------------+-----------------+-------+----------+-------------------+-------------------+-------------
++ public | colors          | colors          | 4     | red     +| default_perm_user |                   | 
++        |                 |                 |       | orange  +|                   |                   | 
++        |                 |                 |       | yellow  +|                   |                   | 
++        |                 |                 |       | green   +|                   |                   | 
++        |                 |                 |       | blue    +|                   |                   | 
++        |                 |                 |       | purple   |                   |                   | 
++ public | deltatime       | deltatime       | 8     |          | abigalek          |                   | 
++ public | rxid            | rxid            | 16    |          | super_user        |                   | 
++ public | vops_aggregates | vops_aggregates | tuple |          | abigalek          |                   | 
++ public | vops_bool       | vops_bool       | 24    |          | abigalek          |                   | 
++ public | vops_char       | vops_char       | 80    |          | abigalek          |                   | 
++ public | vops_date       | vops_date       | 272   |          | abigalek          |                   | 
++ public | vops_float4     | vops_float4     | 272   |          | abigalek          |                   | 
++ public | vops_float8     | vops_float8     | 528   |          | abigalek          |                   | 
++ public | vops_int2       | vops_int2       | 144   |          | abigalek          |                   | 
++ public | vops_int4       | vops_int4       | 272   |          | abigalek          |                   | 
++ public | vops_int8       | vops_int8       | 528   |          | abigalek          |                   | 
++ public | vops_interval   | vops_interval   | 528   |          | abigalek          |                   | 
++ public | vops_text       | vops_text       | var   |          | abigalek          |                   | 
++ public | vops_timestamp  | vops_timestamp  | 528   |          | abigalek          |                   | 
++(15 rows)
+ 
+ REINDEX TABLE regular_table;
+ \c :TEST_DBNAME :ROLE_SUPERUSER

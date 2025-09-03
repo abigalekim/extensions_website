@@ -1,0 +1,114 @@
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/expected/pgextwlist.out /home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/results/pgextwlist.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/expected/pgextwlist.out	2022-09-28 10:59:06.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/results/pgextwlist.out	2023-07-25 20:35:20.300731982 +0000
+@@ -8,8 +8,9 @@
+ SELECT extname FROM pg_extension ORDER BY 1;
+  extname 
+ ---------
++ cube
+  plpgsql
+-(1 row)
++(2 rows)
+ 
+ -- whitelisted extensions
+ CREATE EXTENSION citext;
+@@ -19,9 +20,10 @@
+  extname 
+ ---------
+  citext
++ cube
+  pg_trgm
+  plpgsql
+-(3 rows)
++(4 rows)
+ 
+ SELECT d.description FROM pg_extension e JOIN pg_description d ON d.objoid = e.oid WHERE e.extname = 'pg_trgm';
+    description   
+@@ -35,8 +37,9 @@
+  extname 
+ ---------
+  citext
++ cube
+  plpgsql
+-(2 rows)
++(3 rows)
+ 
+ -- whitelisted extension with custom scripts
+ CREATE EXTENSION pg_stat_statements;
+@@ -44,9 +47,10 @@
+       extname       
+ --------------------
+  citext
++ cube
+  pg_stat_statements
+  plpgsql
+-(3 rows)
++(4 rows)
+ 
+ SELECT proacl FROM pg_proc WHERE proname = 'pg_stat_statements_reset';
+                           proacl                          
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/expected/errors_1.out /home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/results/errors.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/expected/errors_1.out	2022-09-28 10:59:06.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/results/errors.out	2023-07-25 20:35:20.316731941 +0000
+@@ -13,8 +13,9 @@
+  extname 
+ ---------
+  citext
++ cube
+  plpgsql
+-(2 rows)
++(3 rows)
+ 
+ -- pre-existing extension
+ CREATE EXTENSION plpgsql;
+@@ -25,8 +26,9 @@
+  extname 
+ ---------
+  citext
++ cube
+  plpgsql
+-(2 rows)
++(3 rows)
+ 
+ -- non-whitelisted extension
+ CREATE EXTENSION hstore;
+@@ -38,27 +40,30 @@
+  extname 
+ ---------
+  citext
++ cube
+  plpgsql
+-(2 rows)
++(3 rows)
+ 
+ -- whitelisted extension, but dependency is missing
+ CREATE EXTENSION earthdistance;
+-ERROR:  required extension "cube" is not installed
+-HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+ SELECT extname FROM pg_extension ORDER BY 1;
+- extname 
+----------
++    extname    
++---------------
+  citext
++ cube
++ earthdistance
+  plpgsql
+-(2 rows)
++(4 rows)
+ 
+ -- drop non-whitelisted extension
+ DROP EXTENSION plpgsql;
+ ERROR:  must be owner of extension plpgsql
+ SELECT extname FROM pg_extension ORDER BY 1;
+- extname 
+----------
++    extname    
++---------------
+  citext
++ cube
++ earthdistance
+  plpgsql
+-(2 rows)
++(4 rows)
+ 

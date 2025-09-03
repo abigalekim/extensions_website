@@ -1,0 +1,162 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out	2023-07-26 03:17:30.056459034 +0000
+@@ -963,12 +963,15 @@
+ --
+ -- list what's installed
+ \dT
+-                                              List of data types
+- Schema | Name  |                                         Description                                         
+---------+-------+---------------------------------------------------------------------------------------------
+- public | cube  | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
+- public | earth | 
+-(2 rows)
++                                                     List of data types
++ Schema |         Name         |                                         Description                                         
++--------+----------------------+---------------------------------------------------------------------------------------------
++ public | cube                 | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
++ public | earth                | 
++ public | tablefunc_crosstab_2 | 
++ public | tablefunc_crosstab_3 | 
++ public | tablefunc_crosstab_4 | 
++(5 rows)
+ 
+ drop extension cube;  -- fail, earthdistance requires it
+ ERROR:  cannot drop extension cube because other objects depend on it
+@@ -980,11 +983,14 @@
+ HINT:  You can drop extension cube instead.
+ -- list what's installed
+ \dT
+-                                             List of data types
+- Schema | Name |                                         Description                                         
+---------+------+---------------------------------------------------------------------------------------------
+- public | cube | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
+-(1 row)
++                                                     List of data types
++ Schema |         Name         |                                         Description                                         
++--------+----------------------+---------------------------------------------------------------------------------------------
++ public | cube                 | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
++ public | tablefunc_crosstab_2 | 
++ public | tablefunc_crosstab_3 | 
++ public | tablefunc_crosstab_4 | 
++(4 rows)
+ 
+ create table foo (f1 cube, f2 int);
+ drop extension cube;  -- fail, foo.f1 requires it
+@@ -995,16 +1001,30 @@
+ drop extension cube;
+ -- list what's installed
+ \dT
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++             List of data types
++ Schema |         Name         | Description 
++--------+----------------------+-------------
++ public | tablefunc_crosstab_2 | 
++ public | tablefunc_crosstab_3 | 
++ public | tablefunc_crosstab_4 | 
++(3 rows)
+ 
+ \df
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                           List of functions
++ Schema |    Name     |      Result data type      |             Argument data types             | Type 
++--------+-------------+----------------------------+---------------------------------------------+------
++ public | connectby   | SETOF record               | text, text, text, text, integer             | func
++ public | connectby   | SETOF record               | text, text, text, text, integer, text       | func
++ public | connectby   | SETOF record               | text, text, text, text, text, integer       | func
++ public | connectby   | SETOF record               | text, text, text, text, text, integer, text | func
++ public | crosstab    | SETOF record               | text                                        | func
++ public | crosstab    | SETOF record               | text, integer                               | func
++ public | crosstab    | SETOF record               | text, text                                  | func
++ public | crosstab2   | SETOF tablefunc_crosstab_2 | text                                        | func
++ public | crosstab3   | SETOF tablefunc_crosstab_3 | text                                        | func
++ public | crosstab4   | SETOF tablefunc_crosstab_4 | text                                        | func
++ public | normal_rand | SETOF double precision     | integer, double precision, double precision | func
++(11 rows)
+ 
+ \do
+                              List of operators
+@@ -1016,16 +1036,30 @@
+ create extension cube with schema c;
+ -- list what's installed
+ \dT public.*
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++             List of data types
++ Schema |         Name         | Description 
++--------+----------------------+-------------
++ public | tablefunc_crosstab_2 | 
++ public | tablefunc_crosstab_3 | 
++ public | tablefunc_crosstab_4 | 
++(3 rows)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                           List of functions
++ Schema |    Name     |      Result data type      |             Argument data types             | Type 
++--------+-------------+----------------------------+---------------------------------------------+------
++ public | connectby   | SETOF record               | text, text, text, text, integer             | func
++ public | connectby   | SETOF record               | text, text, text, text, integer, text       | func
++ public | connectby   | SETOF record               | text, text, text, text, text, integer       | func
++ public | connectby   | SETOF record               | text, text, text, text, text, integer, text | func
++ public | crosstab    | SETOF record               | text                                        | func
++ public | crosstab    | SETOF record               | text, integer                               | func
++ public | crosstab    | SETOF record               | text, text                                  | func
++ public | crosstab2   | SETOF tablefunc_crosstab_2 | text                                        | func
++ public | crosstab3   | SETOF tablefunc_crosstab_3 | text                                        | func
++ public | crosstab4   | SETOF tablefunc_crosstab_4 | text                                        | func
++ public | normal_rand | SETOF double precision     | integer, double precision, double precision | func
++(11 rows)
+ 
+ \do public.*
+                              List of operators
+@@ -1060,16 +1094,30 @@
+ 
+ -- list what's installed
+ \dT public.*
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++             List of data types
++ Schema |         Name         | Description 
++--------+----------------------+-------------
++ public | tablefunc_crosstab_2 | 
++ public | tablefunc_crosstab_3 | 
++ public | tablefunc_crosstab_4 | 
++(3 rows)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                           List of functions
++ Schema |    Name     |      Result data type      |             Argument data types             | Type 
++--------+-------------+----------------------------+---------------------------------------------+------
++ public | connectby   | SETOF record               | text, text, text, text, integer             | func
++ public | connectby   | SETOF record               | text, text, text, text, integer, text       | func
++ public | connectby   | SETOF record               | text, text, text, text, text, integer       | func
++ public | connectby   | SETOF record               | text, text, text, text, text, integer, text | func
++ public | crosstab    | SETOF record               | text                                        | func
++ public | crosstab    | SETOF record               | text, integer                               | func
++ public | crosstab    | SETOF record               | text, text                                  | func
++ public | crosstab2   | SETOF tablefunc_crosstab_2 | text                                        | func
++ public | crosstab3   | SETOF tablefunc_crosstab_3 | text                                        | func
++ public | crosstab4   | SETOF tablefunc_crosstab_4 | text                                        | func
++ public | normal_rand | SETOF double precision     | integer, double precision, double precision | func
++(11 rows)
+ 
+ \do public.*
+                              List of operators

@@ -1,0 +1,168 @@
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/functions.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/functions.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/functions.out	2023-07-26 18:23:18.888661850 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/functions.out	2023-07-27 01:29:08.029201655 +0000
+@@ -11,12 +11,67 @@
+ (1 row)
+ 
+ SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+- routine_schema |       routine_name       | routine_type | data_type 
+-----------------+--------------------------+--------------+-----------
++ routine_schema |       routine_name       | routine_type |  data_type   
++----------------+--------------------------+--------------+--------------
++ public         | akeys                    | FUNCTION     | ARRAY
++ public         | avals                    | FUNCTION     | ARRAY
+  public         | decode_error_level       | FUNCTION     | text
++ public         | defined                  | FUNCTION     | boolean
++ public         | delete                   | FUNCTION     | USER-DEFINED
++ public         | delete                   | FUNCTION     | USER-DEFINED
++ public         | delete                   | FUNCTION     | USER-DEFINED
++ public         | each                     | FUNCTION     | record
++ public         | exist                    | FUNCTION     | boolean
++ public         | exists_all               | FUNCTION     | boolean
++ public         | exists_any               | FUNCTION     | boolean
++ public         | fetchval                 | FUNCTION     | text
+  public         | get_cmd_type             | FUNCTION     | text
+  public         | get_histogram_timings    | FUNCTION     | text
++ public         | ghstore_compress         | FUNCTION     | internal
++ public         | ghstore_consistent       | FUNCTION     | boolean
++ public         | ghstore_decompress       | FUNCTION     | internal
++ public         | ghstore_in               | FUNCTION     | USER-DEFINED
++ public         | ghstore_options          | FUNCTION     | void
++ public         | ghstore_out              | FUNCTION     | cstring
++ public         | ghstore_penalty          | FUNCTION     | internal
++ public         | ghstore_picksplit        | FUNCTION     | internal
++ public         | ghstore_same             | FUNCTION     | internal
++ public         | ghstore_union            | FUNCTION     | USER-DEFINED
++ public         | gin_consistent_hstore    | FUNCTION     | boolean
++ public         | gin_extract_hstore       | FUNCTION     | internal
++ public         | gin_extract_hstore_query | FUNCTION     | internal
+  public         | histogram                | FUNCTION     | record
++ public         | hs_concat                | FUNCTION     | USER-DEFINED
++ public         | hs_contained             | FUNCTION     | boolean
++ public         | hs_contains              | FUNCTION     | boolean
++ public         | hstore                   | FUNCTION     | USER-DEFINED
++ public         | hstore                   | FUNCTION     | USER-DEFINED
++ public         | hstore                   | FUNCTION     | USER-DEFINED
++ public         | hstore                   | FUNCTION     | USER-DEFINED
++ public         | hstore_cmp               | FUNCTION     | integer
++ public         | hstore_eq                | FUNCTION     | boolean
++ public         | hstore_ge                | FUNCTION     | boolean
++ public         | hstore_gt                | FUNCTION     | boolean
++ public         | hstore_hash              | FUNCTION     | integer
++ public         | hstore_hash_extended     | FUNCTION     | bigint
++ public         | hstore_in                | FUNCTION     | USER-DEFINED
++ public         | hstore_le                | FUNCTION     | boolean
++ public         | hstore_lt                | FUNCTION     | boolean
++ public         | hstore_ne                | FUNCTION     | boolean
++ public         | hstore_out               | FUNCTION     | cstring
++ public         | hstore_recv              | FUNCTION     | USER-DEFINED
++ public         | hstore_send              | FUNCTION     | bytea
++ public         | hstore_subscript_handler | FUNCTION     | internal
++ public         | hstore_to_array          | FUNCTION     | ARRAY
++ public         | hstore_to_json           | FUNCTION     | json
++ public         | hstore_to_json_loose     | FUNCTION     | json
++ public         | hstore_to_jsonb          | FUNCTION     | jsonb
++ public         | hstore_to_jsonb_loose    | FUNCTION     | jsonb
++ public         | hstore_to_matrix         | FUNCTION     | ARRAY
++ public         | hstore_to_plperl         | FUNCTION     | internal
++ public         | hstore_version_diag      | FUNCTION     | integer
++ public         | isdefined                | FUNCTION     | boolean
++ public         | isexists                 | FUNCTION     | boolean
+  public         | pg_stat_monitor_internal | FUNCTION     | record
+  public         | pg_stat_monitor_reset    | FUNCTION     | void
+  public         | pg_stat_monitor_version  | FUNCTION     | text
+@@ -25,21 +80,90 @@
+  public         | pgsm_create_14_view      | FUNCTION     | integer
+  public         | pgsm_create_15_view      | FUNCTION     | integer
+  public         | pgsm_create_view         | FUNCTION     | integer
++ public         | plperl_to_hstore         | FUNCTION     | USER-DEFINED
++ public         | populate_record          | FUNCTION     | anyelement
+  public         | range                    | FUNCTION     | ARRAY
+-(13 rows)
++ public         | skeys                    | FUNCTION     | text
++ public         | slice                    | FUNCTION     | USER-DEFINED
++ public         | slice_array              | FUNCTION     | ARRAY
++ public         | svals                    | FUNCTION     | text
++ public         | tconvert                 | FUNCTION     | USER-DEFINED
++(75 rows)
+ 
+ SET ROLE u1;
+ SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+- routine_schema |       routine_name       | routine_type | data_type 
+-----------------+--------------------------+--------------+-----------
++ routine_schema |       routine_name       | routine_type |  data_type   
++----------------+--------------------------+--------------+--------------
++ public         | akeys                    | FUNCTION     | ARRAY
++ public         | avals                    | FUNCTION     | ARRAY
+  public         | decode_error_level       | FUNCTION     | text
++ public         | defined                  | FUNCTION     | boolean
++ public         | delete                   | FUNCTION     | USER-DEFINED
++ public         | delete                   | FUNCTION     | USER-DEFINED
++ public         | delete                   | FUNCTION     | USER-DEFINED
++ public         | each                     | FUNCTION     | record
++ public         | exist                    | FUNCTION     | boolean
++ public         | exists_all               | FUNCTION     | boolean
++ public         | exists_any               | FUNCTION     | boolean
++ public         | fetchval                 | FUNCTION     | text
+  public         | get_cmd_type             | FUNCTION     | text
+  public         | get_histogram_timings    | FUNCTION     | text
++ public         | ghstore_compress         | FUNCTION     | internal
++ public         | ghstore_consistent       | FUNCTION     | boolean
++ public         | ghstore_decompress       | FUNCTION     | internal
++ public         | ghstore_in               | FUNCTION     | USER-DEFINED
++ public         | ghstore_options          | FUNCTION     | void
++ public         | ghstore_out              | FUNCTION     | cstring
++ public         | ghstore_penalty          | FUNCTION     | internal
++ public         | ghstore_picksplit        | FUNCTION     | internal
++ public         | ghstore_same             | FUNCTION     | internal
++ public         | ghstore_union            | FUNCTION     | USER-DEFINED
++ public         | gin_consistent_hstore    | FUNCTION     | boolean
++ public         | gin_extract_hstore       | FUNCTION     | internal
++ public         | gin_extract_hstore_query | FUNCTION     | internal
+  public         | histogram                | FUNCTION     | record
++ public         | hs_concat                | FUNCTION     | USER-DEFINED
++ public         | hs_contained             | FUNCTION     | boolean
++ public         | hs_contains              | FUNCTION     | boolean
++ public         | hstore                   | FUNCTION     | USER-DEFINED
++ public         | hstore                   | FUNCTION     | USER-DEFINED
++ public         | hstore                   | FUNCTION     | USER-DEFINED
++ public         | hstore                   | FUNCTION     | USER-DEFINED
++ public         | hstore_cmp               | FUNCTION     | integer
++ public         | hstore_eq                | FUNCTION     | boolean
++ public         | hstore_ge                | FUNCTION     | boolean
++ public         | hstore_gt                | FUNCTION     | boolean
++ public         | hstore_hash              | FUNCTION     | integer
++ public         | hstore_hash_extended     | FUNCTION     | bigint
++ public         | hstore_in                | FUNCTION     | USER-DEFINED
++ public         | hstore_le                | FUNCTION     | boolean
++ public         | hstore_lt                | FUNCTION     | boolean
++ public         | hstore_ne                | FUNCTION     | boolean
++ public         | hstore_out               | FUNCTION     | cstring
++ public         | hstore_recv              | FUNCTION     | USER-DEFINED
++ public         | hstore_send              | FUNCTION     | bytea
++ public         | hstore_subscript_handler | FUNCTION     | internal
++ public         | hstore_to_array          | FUNCTION     | ARRAY
++ public         | hstore_to_json           | FUNCTION     | json
++ public         | hstore_to_json_loose     | FUNCTION     | json
++ public         | hstore_to_jsonb          | FUNCTION     | jsonb
++ public         | hstore_to_jsonb_loose    | FUNCTION     | jsonb
++ public         | hstore_to_matrix         | FUNCTION     | ARRAY
++ public         | hstore_to_plperl         | FUNCTION     | internal
++ public         | hstore_version_diag      | FUNCTION     | integer
++ public         | isdefined                | FUNCTION     | boolean
++ public         | isexists                 | FUNCTION     | boolean
+  public         | pg_stat_monitor_internal | FUNCTION     | record
+  public         | pg_stat_monitor_version  | FUNCTION     | text
++ public         | plperl_to_hstore         | FUNCTION     | USER-DEFINED
++ public         | populate_record          | FUNCTION     | anyelement
+  public         | range                    | FUNCTION     | ARRAY
+-(7 rows)
++ public         | skeys                    | FUNCTION     | text
++ public         | slice                    | FUNCTION     | USER-DEFINED
++ public         | slice_array              | FUNCTION     | ARRAY
++ public         | svals                    | FUNCTION     | text
++ public         | tconvert                 | FUNCTION     | USER-DEFINED
++(69 rows)
+ 
+ SET ROLE su;
+ DROP USER u1;

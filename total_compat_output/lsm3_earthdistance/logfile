@@ -1,0 +1,60 @@
+2023-07-25 05:10:44.229 UTC [688026] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 05:10:44.230 UTC [688026] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 05:10:44.236 UTC [688026] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 05:10:44.243 UTC [688029] LOG:  database system was shut down at 2023-07-25 05:10:44 UTC
+2023-07-25 05:10:44.248 UTC [688026] LOG:  database system is ready to accept connections
+2023-07-25 05:10:44.471 UTC [688048] LOG:  lsm3_build lsm3_index
+2023-07-25 05:10:44.471 UTC [688048] STATEMENT:  create index lsm3_index on t using lsm3(k);
+2023-07-25 05:10:45.693 UTC [688049] LOG:  Lsm3: merge top index lsm3_index_top0 with size 2 blocks
+2023-07-25 05:10:45.694 UTC [688049] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:10:46.543 UTC [688049] LOG:  Lsm3: merge top index lsm3_index_top1 with size 2 blocks
+2023-07-25 05:10:46.543 UTC [688049] LOG:  Lsm3: truncate index lsm3_index_top1
+2023-07-25 05:10:47.553 UTC [688049] LOG:  Lsm3: merge top index lsm3_index_top0 with size 2 blocks
+2023-07-25 05:10:47.553 UTC [688049] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:10:48.563 UTC [688049] LOG:  Lsm3: merge top index lsm3_index_top1 with size 2 blocks
+2023-07-25 05:10:48.564 UTC [688049] LOG:  Lsm3: truncate index lsm3_index_top1
+2023-07-25 05:10:49.573 UTC [688049] LOG:  Lsm3: merge top index lsm3_index_top0 with size 2 blocks
+2023-07-25 05:10:49.574 UTC [688049] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:10:50.705 UTC [688049] LOG:  Lsm3: merge top index lsm3_index_top1 with size 181 blocks
+2023-07-25 05:10:50.860 UTC [688049] LOG:  Lsm3: truncate index lsm3_index_top1
+2023-07-25 05:10:50.942 UTC [688049] LOG:  Lsm3: merge top index lsm3_index_top0 with size 250 blocks
+2023-07-25 05:10:51.133 UTC [688049] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:10:51.189 UTC [688049] LOG:  Lsm3: merge top index lsm3_index_top1 with size 181 blocks
+2023-07-25 05:10:51.265 UTC [688048] LOG:  lsm3_build lsm3_index
+2023-07-25 05:10:51.265 UTC [688048] STATEMENT:  truncate table t;
+2023-07-25 05:10:52.265 UTC [688049] ERROR:  deadlock detected
+2023-07-25 05:10:52.265 UTC [688049] DETAIL:  Process 688049 waits for AccessShareLock on relation 17135 of database 16384; blocked by process 688048.
+	Process 688048 waits for AccessExclusiveLock on relation 17140 of database 16384; blocked by process 688049.
+	Process 688049: truncate
+	Process 688048: truncate table t;
+2023-07-25 05:10:52.265 UTC [688049] HINT:  See server log for query details.
+2023-07-25 05:10:52.270 UTC [688026] LOG:  background worker "lsm3-merger-17138" (PID 688049) exited with exit code 1
+2023-07-25 05:10:54.272 UTC [688048] LOG:  lsm3_build lsm3_index
+2023-07-25 05:10:54.272 UTC [688048] STATEMENT:  reindex table t;
+2023-07-25 05:10:55.415 UTC [688048] LOG:  lsm3_build lsm_k_idx
+2023-07-25 05:10:55.415 UTC [688048] STATEMENT:  create index concurrently on lsm using lsm3(k);
+2023-07-25 05:10:55.962 UTC [688027] LOG:  checkpoint starting: immediate force wait
+2023-07-25 05:10:56.040 UTC [688027] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 17 recycled; write=0.008 s, sync=0.005 s, total=0.078 s; sync files=7, longest=0.003 s, average=0.001 s; distance=283613 kB, estimate=283613 kB
+2023-07-25 05:10:56.115 UTC [688064] ERROR:  required extension "cube" is not installed
+2023-07-25 05:10:56.115 UTC [688064] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-25 05:10:56.115 UTC [688064] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-25 05:10:56.158 UTC [688064] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-25 05:10:56.158 UTC [688064] DETAIL:  extension earthdistance depends on extension cube
+2023-07-25 05:10:56.158 UTC [688064] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 05:10:56.158 UTC [688064] STATEMENT:  drop extension cube;
+2023-07-25 05:10:56.159 UTC [688064] ERROR:  cannot drop type cube because extension cube requires it
+2023-07-25 05:10:56.159 UTC [688064] HINT:  You can drop extension cube instead.
+2023-07-25 05:10:56.159 UTC [688064] STATEMENT:  drop type cube;
+2023-07-25 05:10:56.162 UTC [688064] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-25 05:10:56.162 UTC [688064] DETAIL:  column f1 of table foo depends on type cube
+2023-07-25 05:10:56.162 UTC [688064] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 05:10:56.162 UTC [688064] STATEMENT:  drop extension cube;
+2023-07-25 05:10:56.235 UTC [688064] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-25 05:10:56.235 UTC [688064] DETAIL:  column f1 of table foo depends on type c.cube
+2023-07-25 05:10:56.235 UTC [688064] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 05:10:56.235 UTC [688064] STATEMENT:  drop extension cube;
+2023-07-25 05:10:56.236 UTC [688064] ERROR:  cannot drop schema c because other objects depend on it
+2023-07-25 05:10:56.236 UTC [688064] DETAIL:  extension cube depends on schema c
+	column f1 of table foo depends on type c.cube
+2023-07-25 05:10:56.236 UTC [688064] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 05:10:56.236 UTC [688064] STATEMENT:  drop schema c;

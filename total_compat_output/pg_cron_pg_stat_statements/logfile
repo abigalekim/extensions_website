@@ -1,0 +1,79 @@
+2023-07-25 17:29:16.536 UTC [787781] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 17:29:16.536 UTC [787781] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 17:29:16.547 UTC [787781] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 17:29:16.563 UTC [787784] LOG:  database system was shut down at 2023-07-25 17:29:16 UTC
+2023-07-25 17:29:16.572 UTC [787781] LOG:  database system is ready to accept connections
+2023-07-25 17:29:16.578 UTC [787787] LOG:  pg_cron scheduler started
+2023-07-25 17:29:16.736 UTC [787801] LOG:  failed to parse schedule: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+2023-07-25 17:29:16.736 UTC [787801] STATEMENT:  SELECT cron.schedule(repeat('a', 1000), '');
+2023-07-25 17:29:16.736 UTC [787801] ERROR:  invalid schedule: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+2023-07-25 17:29:16.736 UTC [787801] HINT:  Use cron format (e.g. 5 4 * * *), or interval format '[1-59] seconds'
+2023-07-25 17:29:16.736 UTC [787801] STATEMENT:  SELECT cron.schedule(repeat('a', 1000), '');
+2023-07-25 17:29:16.736 UTC [787801] LOG:  failed to parse schedule: * * * *
+2023-07-25 17:29:16.736 UTC [787801] STATEMENT:  SELECT cron.schedule('* * * *', 'SELECT 1');
+2023-07-25 17:29:16.736 UTC [787801] ERROR:  invalid schedule: * * * *
+2023-07-25 17:29:16.736 UTC [787801] HINT:  Use cron format (e.g. 5 4 * * *), or interval format '[1-59] seconds'
+2023-07-25 17:29:16.736 UTC [787801] STATEMENT:  SELECT cron.schedule('* * * *', 'SELECT 1');
+2023-07-25 17:29:16.737 UTC [787801] LOG:  failed to parse schedule: 5 secondc
+2023-07-25 17:29:16.737 UTC [787801] STATEMENT:  SELECT cron.schedule('5 secondc', 'SELECT 1');
+2023-07-25 17:29:16.737 UTC [787801] ERROR:  invalid schedule: 5 secondc
+2023-07-25 17:29:16.737 UTC [787801] HINT:  Use cron format (e.g. 5 4 * * *), or interval format '[1-59] seconds'
+2023-07-25 17:29:16.737 UTC [787801] STATEMENT:  SELECT cron.schedule('5 secondc', 'SELECT 1');
+2023-07-25 17:29:16.737 UTC [787801] LOG:  failed to parse schedule: 50 seconds c
+2023-07-25 17:29:16.737 UTC [787801] STATEMENT:  SELECT cron.schedule('50 seconds c', 'SELECT 1');
+2023-07-25 17:29:16.737 UTC [787801] ERROR:  invalid schedule: 50 seconds c
+2023-07-25 17:29:16.737 UTC [787801] HINT:  Use cron format (e.g. 5 4 * * *), or interval format '[1-59] seconds'
+2023-07-25 17:29:16.737 UTC [787801] STATEMENT:  SELECT cron.schedule('50 seconds c', 'SELECT 1');
+2023-07-25 17:29:16.738 UTC [787801] LOG:  failed to parse schedule: -1 seconds
+2023-07-25 17:29:16.738 UTC [787801] STATEMENT:  SELECT cron.schedule('-1 seconds', 'SELECT 1');
+2023-07-25 17:29:16.738 UTC [787801] ERROR:  invalid schedule: -1 seconds
+2023-07-25 17:29:16.738 UTC [787801] HINT:  Use cron format (e.g. 5 4 * * *), or interval format '[1-59] seconds'
+2023-07-25 17:29:16.738 UTC [787801] STATEMENT:  SELECT cron.schedule('-1 seconds', 'SELECT 1');
+2023-07-25 17:29:16.738 UTC [787801] LOG:  failed to parse schedule: 0 seconds
+2023-07-25 17:29:16.738 UTC [787801] STATEMENT:  SELECT cron.schedule('0 seconds', 'SELECT 1');
+2023-07-25 17:29:16.738 UTC [787801] ERROR:  invalid schedule: 0 seconds
+2023-07-25 17:29:16.738 UTC [787801] HINT:  Use cron format (e.g. 5 4 * * *), or interval format '[1-59] seconds'
+2023-07-25 17:29:16.738 UTC [787801] STATEMENT:  SELECT cron.schedule('0 seconds', 'SELECT 1');
+2023-07-25 17:29:16.739 UTC [787801] LOG:  failed to parse schedule: 60 seconds
+2023-07-25 17:29:16.739 UTC [787801] STATEMENT:  SELECT cron.schedule('60 seconds', 'SELECT 1');
+2023-07-25 17:29:16.739 UTC [787801] ERROR:  invalid schedule: 60 seconds
+2023-07-25 17:29:16.739 UTC [787801] HINT:  Use cron format (e.g. 5 4 * * *), or interval format '[1-59] seconds'
+2023-07-25 17:29:16.739 UTC [787801] STATEMENT:  SELECT cron.schedule('60 seconds', 'SELECT 1');
+2023-07-25 17:29:16.739 UTC [787801] LOG:  failed to parse schedule: 10000000000 seconds
+2023-07-25 17:29:16.739 UTC [787801] STATEMENT:  SELECT cron.schedule('10000000000 seconds', 'SELECT 1');
+2023-07-25 17:29:16.739 UTC [787801] ERROR:  invalid schedule: 10000000000 seconds
+2023-07-25 17:29:16.739 UTC [787801] HINT:  Use cron format (e.g. 5 4 * * *), or interval format '[1-59] seconds'
+2023-07-25 17:29:16.739 UTC [787801] STATEMENT:  SELECT cron.schedule('10000000000 seconds', 'SELECT 1');
+2023-07-25 17:29:16.740 UTC [787801] LOG:  failed to parse schedule: @restar
+2023-07-25 17:29:16.740 UTC [787801] STATEMENT:  SELECT cron.schedule('@restar', 'ALTER EXTENSION pg_cron UPDATE');
+2023-07-25 17:29:16.740 UTC [787801] ERROR:  invalid schedule: @restar
+2023-07-25 17:29:16.740 UTC [787801] HINT:  Use cron format (e.g. 5 4 * * *), or interval format '[1-59] seconds'
+2023-07-25 17:29:16.740 UTC [787801] STATEMENT:  SELECT cron.schedule('@restar', 'ALTER EXTENSION pg_cron UPDATE');
+2023-07-25 17:29:16.769 UTC [787801] ERROR:  no updates specified
+2023-07-25 17:29:16.769 UTC [787801] HINT:  You must specify at least one job attribute to change when calling alter_job
+2023-07-25 17:29:16.769 UTC [787801] STATEMENT:  SELECT cron.alter_job(2);
+2023-07-25 17:29:16.770 UTC [787801] ERROR:  database "hopedoesnotexist" does not exist
+2023-07-25 17:29:16.770 UTC [787801] STATEMENT:  select cron.alter_job(job_id:=2,database:='hopedoesnotexist');
+2023-07-25 17:29:16.873 UTC [787801] ERROR:  User pgcron_cront does not have CONNECT privilege on pgcron_dbno
+2023-07-25 17:29:16.873 UTC [787801] STATEMENT:  SELECT cron.schedule_in_database(job_name:='can not connect', schedule:='0 11 * * *', command:='VACUUM',database:='pgcron_dbno',username:='pgcron_cront');
+2023-07-25 17:29:16.996 UTC [787801] ERROR:  role "pgcron_useraqwxszedc" does not exist
+2023-07-25 17:29:16.996 UTC [787801] STATEMENT:  SELECT cron.schedule_in_database(job_name:='user does not exist', schedule:='0 11 * * *', command:='VACUUM',database:='pgcron_dbyes',username:='pgcron_useraqwxszedc');
+2023-07-25 17:29:16.997 UTC [787801] ERROR:  User pgcron_cront does not have CONNECT privilege on pgcron_dbno
+2023-07-25 17:29:16.997 UTC [787801] STATEMENT:  SELECT cron.alter_job(job_id:=2,database:='pgcron_dbno',username:='pgcron_cront');
+2023-07-25 17:29:17.003 UTC [787801] ERROR:  permission denied for function schedule_in_database
+2023-07-25 17:29:17.003 UTC [787801] STATEMENT:  SELECT cron.schedule_in_database(job_name:='his vacuum', schedule:='0 11 * * *', command:='VACUUM',database:=current_database(),username:='anotheruser');
+2023-07-25 17:29:17.003 UTC [787801] ERROR:  must be superuser to alter username
+2023-07-25 17:29:17.003 UTC [787801] STATEMENT:  select cron.alter_job(job_id:=6,username:='anotheruser');
+2023-07-25 17:29:17.004 UTC [787801] ERROR:  Job 2 does not exist or you don't own it
+2023-07-25 17:29:17.004 UTC [787801] STATEMENT:  select cron.alter_job(job_id:=2,database:='pgcron_dbyes');
+2023-07-25 17:29:17.008 UTC [787801] ERROR:  User pgcron_cront does not have CONNECT privilege on pgcron_dbno
+2023-07-25 17:29:17.008 UTC [787801] STATEMENT:  select cron.alter_job(job_id:=6,database:='pgcron_dbno');
+2023-07-25 17:29:17.184 UTC [787782] LOG:  checkpoint starting: immediate force wait
+2023-07-25 17:29:17.333 UTC [787782] LOG:  checkpoint complete: wrote 1815 buffers (11.1%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.055 s, sync=0.054 s, total=0.149 s; sync files=519, longest=0.015 s, average=0.001 s; distance=12321 kB, estimate=12321 kB
+2023-07-25 17:29:17.357 UTC [787782] LOG:  checkpoint starting: immediate force wait
+2023-07-25 17:29:17.412 UTC [787782] LOG:  checkpoint complete: wrote 2 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.012 s, sync=0.011 s, total=0.056 s; sync files=2, longest=0.008 s, average=0.006 s; distance=1 kB, estimate=11089 kB
+2023-07-25 17:29:17.595 UTC [787814] ERROR:  can only create extension in database postgres
+2023-07-25 17:29:17.595 UTC [787814] DETAIL:  Jobs must be scheduled from the database configured in cron.database_name, since the pg_cron background worker reads job descriptions from this database.
+2023-07-25 17:29:17.595 UTC [787814] HINT:  Add cron.database_name = 'regression' in postgresql.conf to use the current database.
+2023-07-25 17:29:17.595 UTC [787814] CONTEXT:  PL/pgSQL function inline_code_block line 4 at RAISE
+2023-07-25 17:29:17.595 UTC [787814] STATEMENT:  CREATE EXTENSION IF NOT EXISTS "pg_cron"

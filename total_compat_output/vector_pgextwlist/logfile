@@ -1,0 +1,117 @@
+2023-07-26 19:47:45.914 UTC [3578167] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 19:47:45.914 UTC [3578167] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 19:47:45.928 UTC [3578167] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 19:47:45.942 UTC [3578170] LOG:  database system was shut down at 2023-07-26 19:47:45 UTC
+2023-07-26 19:47:45.953 UTC [3578167] LOG:  database system is ready to accept connections
+2023-07-26 19:47:46.196 UTC [3578190] ERROR:  array must not contain nulls
+2023-07-26 19:47:46.196 UTC [3578190] STATEMENT:  SELECT '{NULL}'::real[]::vector;
+2023-07-26 19:47:46.197 UTC [3578190] ERROR:  NaN not allowed in vector
+2023-07-26 19:47:46.197 UTC [3578190] STATEMENT:  SELECT '{NaN}'::real[]::vector;
+2023-07-26 19:47:46.197 UTC [3578190] ERROR:  infinite value not allowed in vector
+2023-07-26 19:47:46.197 UTC [3578190] STATEMENT:  SELECT '{Infinity}'::real[]::vector;
+2023-07-26 19:47:46.197 UTC [3578190] ERROR:  infinite value not allowed in vector
+2023-07-26 19:47:46.197 UTC [3578190] STATEMENT:  SELECT '{-Infinity}'::real[]::vector;
+2023-07-26 19:47:46.198 UTC [3578190] ERROR:  vector must have at least 1 dimension
+2023-07-26 19:47:46.198 UTC [3578190] STATEMENT:  SELECT '{}'::real[]::vector;
+2023-07-26 19:47:46.198 UTC [3578190] ERROR:  array must be 1-D
+2023-07-26 19:47:46.198 UTC [3578190] STATEMENT:  SELECT '{{1}}'::real[]::vector;
+2023-07-26 19:47:46.209 UTC [3578190] ERROR:  vector cannot have more than 16000 dimensions
+2023-07-26 19:47:46.209 UTC [3578190] STATEMENT:  SELECT array_agg(n)::vector FROM generate_series(1, 16001) n;
+2023-07-26 19:47:46.215 UTC [3578190] ERROR:  vector cannot have more than 16000 dimensions
+2023-07-26 19:47:46.215 UTC [3578190] STATEMENT:  SELECT array_to_vector(array_agg(n), 16001, false) FROM generate_series(1, 16001) n;
+2023-07-26 19:47:46.277 UTC [3578198] ERROR:  value out of range: overflow
+2023-07-26 19:47:46.277 UTC [3578198] STATEMENT:  SELECT '[3e38]'::vector + '[3e38]';
+2023-07-26 19:47:46.278 UTC [3578198] ERROR:  value out of range: overflow
+2023-07-26 19:47:46.278 UTC [3578198] STATEMENT:  SELECT '[-3e38]'::vector - '[3e38]';
+2023-07-26 19:47:46.279 UTC [3578198] ERROR:  value out of range: overflow
+2023-07-26 19:47:46.279 UTC [3578198] STATEMENT:  SELECT '[1e37]'::vector * '[1e37]';
+2023-07-26 19:47:46.279 UTC [3578198] ERROR:  value out of range: underflow
+2023-07-26 19:47:46.279 UTC [3578198] STATEMENT:  SELECT '[1e-37]'::vector * '[1e-37]';
+2023-07-26 19:47:46.282 UTC [3578198] ERROR:  different vector dimensions 2 and 1
+2023-07-26 19:47:46.282 UTC [3578198] STATEMENT:  SELECT l2_distance('[1,2]', '[3]');
+2023-07-26 19:47:46.283 UTC [3578198] ERROR:  different vector dimensions 2 and 1
+2023-07-26 19:47:46.283 UTC [3578198] STATEMENT:  SELECT inner_product('[1,2]', '[3]');
+2023-07-26 19:47:46.285 UTC [3578198] ERROR:  different vector dimensions 2 and 1
+2023-07-26 19:47:46.285 UTC [3578198] STATEMENT:  SELECT cosine_distance('[1,2]', '[3]');
+2023-07-26 19:47:46.286 UTC [3578198] ERROR:  different vector dimensions 2 and 1
+2023-07-26 19:47:46.286 UTC [3578198] STATEMENT:  SELECT l1_distance('[1,2]', '[3]');
+2023-07-26 19:47:46.289 UTC [3578198] ERROR:  expected 2 dimensions, not 1
+2023-07-26 19:47:46.289 UTC [3578198] STATEMENT:  SELECT avg(v) FROM unnest(ARRAY['[1,2]'::vector, '[3]']) v;
+2023-07-26 19:47:46.300 UTC [3578198] ERROR:  vector cannot have more than 16000 dimensions
+2023-07-26 19:47:46.300 UTC [3578198] STATEMENT:  SELECT vector_avg(array_agg(n)) FROM generate_series(1, 16002) n;
+2023-07-26 19:47:46.302 UTC [3578198] ERROR:  different vector dimensions 2 and 1
+2023-07-26 19:47:46.302 UTC [3578198] STATEMENT:  SELECT sum(v) FROM unnest(ARRAY['[1,2]'::vector, '[3]']) v;
+2023-07-26 19:47:46.302 UTC [3578198] ERROR:  value out of range: overflow
+2023-07-26 19:47:46.302 UTC [3578198] STATEMENT:  SELECT sum(v) FROM unnest(ARRAY['[3e38]'::vector, '[3e38]']) v;
+2023-07-26 19:47:46.324 UTC [3578202] ERROR:  invalid input syntax for type vector: "[hello,1]" at character 8
+2023-07-26 19:47:46.324 UTC [3578202] STATEMENT:  SELECT '[hello,1]'::vector;
+2023-07-26 19:47:46.324 UTC [3578202] ERROR:  NaN not allowed in vector at character 8
+2023-07-26 19:47:46.324 UTC [3578202] STATEMENT:  SELECT '[NaN,1]'::vector;
+2023-07-26 19:47:46.324 UTC [3578202] ERROR:  infinite value not allowed in vector at character 8
+2023-07-26 19:47:46.324 UTC [3578202] STATEMENT:  SELECT '[Infinity,1]'::vector;
+2023-07-26 19:47:46.325 UTC [3578202] ERROR:  infinite value not allowed in vector at character 8
+2023-07-26 19:47:46.325 UTC [3578202] STATEMENT:  SELECT '[-Infinity,1]'::vector;
+2023-07-26 19:47:46.326 UTC [3578202] ERROR:  infinite value not allowed in vector at character 8
+2023-07-26 19:47:46.326 UTC [3578202] STATEMENT:  SELECT '[4e38,1]'::vector;
+2023-07-26 19:47:46.326 UTC [3578202] ERROR:  malformed vector literal: "[1,2,3" at character 8
+2023-07-26 19:47:46.326 UTC [3578202] DETAIL:  Unexpected end of input.
+2023-07-26 19:47:46.326 UTC [3578202] STATEMENT:  SELECT '[1,2,3'::vector;
+2023-07-26 19:47:46.327 UTC [3578202] ERROR:  malformed vector literal: "[1,2,3]9" at character 8
+2023-07-26 19:47:46.327 UTC [3578202] DETAIL:  Junk after closing right brace.
+2023-07-26 19:47:46.327 UTC [3578202] STATEMENT:  SELECT '[1,2,3]9'::vector;
+2023-07-26 19:47:46.327 UTC [3578202] ERROR:  malformed vector literal: "1,2,3" at character 8
+2023-07-26 19:47:46.327 UTC [3578202] DETAIL:  Vector contents must start with "[".
+2023-07-26 19:47:46.327 UTC [3578202] STATEMENT:  SELECT '1,2,3'::vector;
+2023-07-26 19:47:46.327 UTC [3578202] ERROR:  malformed vector literal: "" at character 8
+2023-07-26 19:47:46.327 UTC [3578202] DETAIL:  Vector contents must start with "[".
+2023-07-26 19:47:46.327 UTC [3578202] STATEMENT:  SELECT ''::vector;
+2023-07-26 19:47:46.328 UTC [3578202] ERROR:  malformed vector literal: "[" at character 8
+2023-07-26 19:47:46.328 UTC [3578202] DETAIL:  Unexpected end of input.
+2023-07-26 19:47:46.328 UTC [3578202] STATEMENT:  SELECT '['::vector;
+2023-07-26 19:47:46.328 UTC [3578202] ERROR:  malformed vector literal: "[," at character 8
+2023-07-26 19:47:46.328 UTC [3578202] DETAIL:  Unexpected end of input.
+2023-07-26 19:47:46.328 UTC [3578202] STATEMENT:  SELECT '[,'::vector;
+2023-07-26 19:47:46.328 UTC [3578202] ERROR:  vector must have at least 1 dimension at character 8
+2023-07-26 19:47:46.328 UTC [3578202] STATEMENT:  SELECT '[]'::vector;
+2023-07-26 19:47:46.328 UTC [3578202] ERROR:  invalid input syntax for type vector: "[1,]" at character 8
+2023-07-26 19:47:46.328 UTC [3578202] STATEMENT:  SELECT '[1,]'::vector;
+2023-07-26 19:47:46.328 UTC [3578202] ERROR:  invalid input syntax for type vector: "[1a]" at character 8
+2023-07-26 19:47:46.328 UTC [3578202] STATEMENT:  SELECT '[1a]'::vector;
+2023-07-26 19:47:46.329 UTC [3578202] ERROR:  malformed vector literal: "[1,,3]" at character 8
+2023-07-26 19:47:46.329 UTC [3578202] STATEMENT:  SELECT '[1,,3]'::vector;
+2023-07-26 19:47:46.329 UTC [3578202] ERROR:  invalid input syntax for type vector: "[1, ,3]" at character 8
+2023-07-26 19:47:46.329 UTC [3578202] STATEMENT:  SELECT '[1, ,3]'::vector;
+2023-07-26 19:47:46.329 UTC [3578202] ERROR:  expected 2 dimensions, not 3
+2023-07-26 19:47:46.329 UTC [3578202] STATEMENT:  SELECT '[1,2,3]'::vector(2);
+2023-07-26 19:47:46.330 UTC [3578202] ERROR:  expected 2 dimensions, not 3
+2023-07-26 19:47:46.330 UTC [3578202] STATEMENT:  SELECT '{"[1,2,3]"}'::vector(2)[];
+2023-07-26 19:47:46.542 UTC [3578218] ERROR:  value 0 out of bounds for option "lists"
+2023-07-26 19:47:46.542 UTC [3578218] DETAIL:  Valid values are between "1" and "32768".
+2023-07-26 19:47:46.542 UTC [3578218] STATEMENT:  CREATE INDEX ON t USING ivfflat (val) WITH (lists = 0);
+2023-07-26 19:47:46.542 UTC [3578218] ERROR:  value 32769 out of bounds for option "lists"
+2023-07-26 19:47:46.542 UTC [3578218] DETAIL:  Valid values are between "1" and "32768".
+2023-07-26 19:47:46.542 UTC [3578218] STATEMENT:  CREATE INDEX ON t USING ivfflat (val) WITH (lists = 32769);
+2023-07-26 19:47:46.644 UTC [3578168] LOG:  checkpoint starting: immediate force wait
+2023-07-26 19:47:46.710 UTC [3578168] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.018 s, sync=0.015 s, total=0.067 s; sync files=7, longest=0.008 s, average=0.003 s; distance=4356 kB, estimate=4356 kB
+2023-07-26 19:47:46.893 UTC [3578167] LOG:  received SIGHUP, reloading configuration files
+2023-07-26 19:47:46.895 UTC [3578167] LOG:  parameter "session_preload_libraries" changed to "pgextwlist"
+2023-07-26 19:47:46.895 UTC [3578167] LOG:  parameter "extwlist.extensions" changed to "citext,earthdistance,pg_trgm,pg_stat_statements,refint"
+2023-07-26 19:47:46.895 UTC [3578167] LOG:  parameter "extwlist.custom_path" changed to "/home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/test-scripts"
+2023-07-26 19:47:46.977 UTC [3578248] ERROR:  extension "plpgsql" already exists
+2023-07-26 19:47:46.977 UTC [3578248] STATEMENT:  CREATE EXTENSION plpgsql;
+2023-07-26 19:47:46.977 UTC [3578248] ERROR:  extension "hstore" does not exist
+2023-07-26 19:47:46.977 UTC [3578248] STATEMENT:  COMMENT ON EXTENSION hstore IS 'plpgsql comment';
+2023-07-26 19:47:46.978 UTC [3578248] ERROR:  permission denied to create extension "hstore"
+2023-07-26 19:47:46.978 UTC [3578248] HINT:  Must have CREATE privilege on current database to create this extension.
+2023-07-26 19:47:46.978 UTC [3578248] STATEMENT:  CREATE EXTENSION hstore;
+2023-07-26 19:47:46.978 UTC [3578248] ERROR:  extension "hstore" does not exist
+2023-07-26 19:47:46.978 UTC [3578248] STATEMENT:  COMMENT ON EXTENSION hstore IS 'hstore comment';
+2023-07-26 19:47:46.979 UTC [3578248] ERROR:  required extension "cube" is not installed
+2023-07-26 19:47:46.979 UTC [3578248] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-26 19:47:46.979 UTC [3578248] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-26 19:47:46.979 UTC [3578248] ERROR:  must be owner of extension plpgsql
+2023-07-26 19:47:46.979 UTC [3578248] STATEMENT:  DROP EXTENSION plpgsql;
+2023-07-26 19:47:47.026 UTC [3578256] ERROR:  cannot drop extension citext because other objects depend on it
+2023-07-26 19:47:47.026 UTC [3578256] DETAIL:  column t of table mere_table depends on type citext
+2023-07-26 19:47:47.026 UTC [3578256] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 19:47:47.026 UTC [3578256] STATEMENT:  DROP EXTENSION citext;

@@ -1,0 +1,17 @@
+2023-07-26 14:20:30.940 UTC [2105843] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 14:20:30.940 UTC [2105843] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 14:20:30.951 UTC [2105843] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 14:20:30.965 UTC [2105846] LOG:  database system was shut down at 2023-07-26 14:20:30 UTC
+2023-07-26 14:20:30.976 UTC [2105843] LOG:  database system is ready to accept connections
+2023-07-26 14:20:31.445 UTC [2105862] ERROR:  value 0 out of bounds for option "numranges"
+2023-07-26 14:20:31.445 UTC [2105862] DETAIL:  Valid values are between "1" and "252".
+2023-07-26 14:20:31.445 UTC [2105862] STATEMENT:  CREATE INDEX text_idx on test__int using gist (a gist__int_ops(numranges = 0));
+2023-07-26 14:20:31.445 UTC [2105862] ERROR:  value 253 out of bounds for option "numranges"
+2023-07-26 14:20:31.445 UTC [2105862] DETAIL:  Valid values are between "1" and "252".
+2023-07-26 14:20:31.445 UTC [2105862] STATEMENT:  CREATE INDEX text_idx on test__int using gist (a gist__int_ops(numranges = 253));
+2023-07-26 14:20:31.692 UTC [2105862] ERROR:  value 0 out of bounds for option "siglen"
+2023-07-26 14:20:31.692 UTC [2105862] DETAIL:  Valid values are between "1" and "2024".
+2023-07-26 14:20:31.692 UTC [2105862] STATEMENT:  CREATE INDEX text_idx on test__int using gist (a gist__intbig_ops(siglen = 0));
+2023-07-26 14:20:31.692 UTC [2105862] ERROR:  value 2025 out of bounds for option "siglen"
+2023-07-26 14:20:31.692 UTC [2105862] DETAIL:  Valid values are between "1" and "2024".
+2023-07-26 14:20:31.692 UTC [2105862] STATEMENT:  CREATE INDEX text_idx on test__int using gist (a gist__intbig_ops(siglen = 2025));

@@ -1,0 +1,499 @@
+2023-07-25 19:06:44.460 UTC [1919787] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 19:06:44.461 UTC [1919787] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 19:06:44.475 UTC [1919787] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 19:06:44.492 UTC [1919790] LOG:  database system was shut down at 2023-07-25 19:06:44 UTC
+2023-07-25 19:06:44.502 UTC [1919787] LOG:  database system is ready to accept connections
+2023-07-25 19:06:44.710 UTC [1919806] ERROR:  collation "coll" for encoding "UTF8" does not exist
+2023-07-25 19:06:44.710 UTC [1919806] STATEMENT:  ALTER TABLE s.x ADD CONSTRAINT underqualified EXCLUDE USING btree
+	  ((s.index_this_expr(y, s.const())) COLLATE coll WITH s.=)
+	  USING INDEX TABLESPACE regress_create_idx_tblspace
+	  WHERE (s.index_row_if(y));
+2023-07-25 19:06:44.713 UTC [1919788] LOG:  checkpoint starting: immediate force wait
+2023-07-25 19:06:44.856 UTC [1919788] LOG:  checkpoint complete: wrote 927 buffers (5.7%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.057 s, sync=0.054 s, total=0.144 s; sync files=268, longest=0.016 s, average=0.001 s; distance=4253 kB, estimate=4253 kB
+2023-07-25 19:06:44.906 UTC [1919810] ERROR:  duplicate key value violates unique constraint "try_pkey"
+2023-07-25 19:06:44.906 UTC [1919810] DETAIL:  Key (name)=(a) already exists.
+2023-07-25 19:06:44.906 UTC [1919810] STATEMENT:  INSERT INTO try (name) VALUES ('a');
+2023-07-25 19:06:44.906 UTC [1919810] ERROR:  duplicate key value violates unique constraint "try_pkey"
+2023-07-25 19:06:44.906 UTC [1919810] DETAIL:  Key (name)=(A) already exists.
+2023-07-25 19:06:44.906 UTC [1919810] STATEMENT:  INSERT INTO try (name) VALUES ('A');
+2023-07-25 19:06:44.906 UTC [1919810] ERROR:  duplicate key value violates unique constraint "try_pkey"
+2023-07-25 19:06:44.906 UTC [1919810] DETAIL:  Key (name)=(aB) already exists.
+2023-07-25 19:06:44.906 UTC [1919810] STATEMENT:  INSERT INTO try (name) VALUES ('aB');
+2023-07-25 19:06:45.065 UTC [1919810] ERROR:  column "chr" is of type "char" but expression is of type citext at character 44
+2023-07-25 19:06:45.065 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.065 UTC [1919810] STATEMENT:  INSERT INTO caster (chr)           VALUES ('f'::citext);
+2023-07-25 19:06:45.090 UTC [1919810] ERROR:  column "bytea" is of type bytea but expression is of type text at character 44
+2023-07-25 19:06:45.090 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.090 UTC [1919810] STATEMENT:  INSERT INTO caster (bytea)         VALUES ('foo'::text);
+2023-07-25 19:06:45.094 UTC [1919810] ERROR:  column "bytea" is of type bytea but expression is of type citext at character 44
+2023-07-25 19:06:45.094 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.094 UTC [1919810] STATEMENT:  INSERT INTO caster (bytea)         VALUES ('foo'::citext);
+2023-07-25 19:06:45.099 UTC [1919810] ERROR:  column "boolean" is of type boolean but expression is of type text at character 44
+2023-07-25 19:06:45.099 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.099 UTC [1919810] STATEMENT:  INSERT INTO caster (boolean)       VALUES ('t'::text);
+2023-07-25 19:06:45.104 UTC [1919810] ERROR:  column "boolean" is of type boolean but expression is of type citext at character 44
+2023-07-25 19:06:45.104 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.104 UTC [1919810] STATEMENT:  INSERT INTO caster (boolean)       VALUES ('t'::citext);
+2023-07-25 19:06:45.108 UTC [1919810] ERROR:  column "float8" is of type double precision but expression is of type text at character 44
+2023-07-25 19:06:45.108 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.108 UTC [1919810] STATEMENT:  INSERT INTO caster (float8)        VALUES ('12.42'::text);
+2023-07-25 19:06:45.113 UTC [1919810] ERROR:  column "float8" is of type double precision but expression is of type citext at character 44
+2023-07-25 19:06:45.113 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.113 UTC [1919810] STATEMENT:  INSERT INTO caster (float8)        VALUES ('12.42'::citext);
+2023-07-25 19:06:45.118 UTC [1919810] ERROR:  column "float4" is of type real but expression is of type text at character 44
+2023-07-25 19:06:45.118 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.118 UTC [1919810] STATEMENT:  INSERT INTO caster (float4)        VALUES ('12.42'::text);
+2023-07-25 19:06:45.123 UTC [1919810] ERROR:  column "float4" is of type real but expression is of type citext at character 44
+2023-07-25 19:06:45.123 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.123 UTC [1919810] STATEMENT:  INSERT INTO caster (float4)        VALUES ('12.42'::citext);
+2023-07-25 19:06:45.127 UTC [1919810] ERROR:  column "numeric" is of type numeric but expression is of type text at character 44
+2023-07-25 19:06:45.127 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.127 UTC [1919810] STATEMENT:  INSERT INTO caster (numeric)       VALUES ('12.42'::text);
+2023-07-25 19:06:45.132 UTC [1919810] ERROR:  column "numeric" is of type numeric but expression is of type citext at character 44
+2023-07-25 19:06:45.132 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.132 UTC [1919810] STATEMENT:  INSERT INTO caster (numeric)       VALUES ('12.42'::citext);
+2023-07-25 19:06:45.136 UTC [1919810] ERROR:  column "int8" is of type bigint but expression is of type text at character 44
+2023-07-25 19:06:45.136 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.136 UTC [1919810] STATEMENT:  INSERT INTO caster (int8)          VALUES ('12'::text);
+2023-07-25 19:06:45.140 UTC [1919810] ERROR:  column "int8" is of type bigint but expression is of type citext at character 44
+2023-07-25 19:06:45.140 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.140 UTC [1919810] STATEMENT:  INSERT INTO caster (int8)          VALUES ('12'::citext);
+2023-07-25 19:06:45.144 UTC [1919810] ERROR:  column "int4" is of type integer but expression is of type text at character 44
+2023-07-25 19:06:45.144 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.144 UTC [1919810] STATEMENT:  INSERT INTO caster (int4)          VALUES ('12'::text);
+2023-07-25 19:06:45.149 UTC [1919810] ERROR:  column "int4" is of type integer but expression is of type citext at character 44
+2023-07-25 19:06:45.149 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.149 UTC [1919810] STATEMENT:  INSERT INTO caster (int4)          VALUES ('12'::citext);
+2023-07-25 19:06:45.153 UTC [1919810] ERROR:  column "int2" is of type smallint but expression is of type text at character 44
+2023-07-25 19:06:45.153 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.153 UTC [1919810] STATEMENT:  INSERT INTO caster (int2)          VALUES ('12'::text);
+2023-07-25 19:06:45.158 UTC [1919810] ERROR:  column "int2" is of type smallint but expression is of type citext at character 44
+2023-07-25 19:06:45.158 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.158 UTC [1919810] STATEMENT:  INSERT INTO caster (int2)          VALUES ('12'::citext);
+2023-07-25 19:06:45.162 UTC [1919810] ERROR:  column "cidr" is of type cidr but expression is of type text at character 44
+2023-07-25 19:06:45.162 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.162 UTC [1919810] STATEMENT:  INSERT INTO caster (cidr)          VALUES ('192.168.100.128/25'::text);
+2023-07-25 19:06:45.167 UTC [1919810] ERROR:  column "cidr" is of type cidr but expression is of type citext at character 44
+2023-07-25 19:06:45.167 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.167 UTC [1919810] STATEMENT:  INSERT INTO caster (cidr)          VALUES ('192.168.100.128/25'::citext);
+2023-07-25 19:06:45.172 UTC [1919810] ERROR:  column "inet" is of type inet but expression is of type text at character 44
+2023-07-25 19:06:45.172 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.172 UTC [1919810] STATEMENT:  INSERT INTO caster (inet)          VALUES ('192.168.100.128'::text);
+2023-07-25 19:06:45.176 UTC [1919810] ERROR:  column "inet" is of type inet but expression is of type citext at character 44
+2023-07-25 19:06:45.176 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.176 UTC [1919810] STATEMENT:  INSERT INTO caster (inet)          VALUES ('192.168.100.128'::citext);
+2023-07-25 19:06:45.181 UTC [1919810] ERROR:  column "macaddr" is of type macaddr but expression is of type text at character 44
+2023-07-25 19:06:45.181 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.181 UTC [1919810] STATEMENT:  INSERT INTO caster (macaddr)       VALUES ('08:00:2b:01:02:03'::text);
+2023-07-25 19:06:45.186 UTC [1919810] ERROR:  column "macaddr" is of type macaddr but expression is of type citext at character 44
+2023-07-25 19:06:45.186 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.186 UTC [1919810] STATEMENT:  INSERT INTO caster (macaddr)       VALUES ('08:00:2b:01:02:03'::citext);
+2023-07-25 19:06:45.190 UTC [1919810] ERROR:  column "money" is of type money but expression is of type text at character 44
+2023-07-25 19:06:45.190 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.190 UTC [1919810] STATEMENT:  INSERT INTO caster (money)         VALUES ('12'::text);
+2023-07-25 19:06:45.195 UTC [1919810] ERROR:  column "money" is of type money but expression is of type citext at character 44
+2023-07-25 19:06:45.195 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.195 UTC [1919810] STATEMENT:  INSERT INTO caster (money)         VALUES ('12'::citext);
+2023-07-25 19:06:45.200 UTC [1919810] ERROR:  column "timestamp" is of type timestamp without time zone but expression is of type text at character 44
+2023-07-25 19:06:45.200 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.200 UTC [1919810] STATEMENT:  INSERT INTO caster (timestamp)     VALUES ('1999-01-08 04:05:06'::text);
+2023-07-25 19:06:45.204 UTC [1919810] ERROR:  column "timestamp" is of type timestamp without time zone but expression is of type citext at character 44
+2023-07-25 19:06:45.204 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.204 UTC [1919810] STATEMENT:  INSERT INTO caster (timestamp)     VALUES ('1999-01-08 04:05:06'::citext);
+2023-07-25 19:06:45.209 UTC [1919810] ERROR:  column "timestamptz" is of type timestamp with time zone but expression is of type text at character 44
+2023-07-25 19:06:45.209 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.209 UTC [1919810] STATEMENT:  INSERT INTO caster (timestamptz)   VALUES ('1999-01-08 04:05:06'::text);
+2023-07-25 19:06:45.214 UTC [1919810] ERROR:  column "timestamptz" is of type timestamp with time zone but expression is of type citext at character 44
+2023-07-25 19:06:45.214 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.214 UTC [1919810] STATEMENT:  INSERT INTO caster (timestamptz)   VALUES ('1999-01-08 04:05:06'::citext);
+2023-07-25 19:06:45.219 UTC [1919810] ERROR:  column "interval" is of type interval but expression is of type text at character 44
+2023-07-25 19:06:45.219 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.219 UTC [1919810] STATEMENT:  INSERT INTO caster (interval)      VALUES ('1 hour'::text);
+2023-07-25 19:06:45.223 UTC [1919810] ERROR:  column "interval" is of type interval but expression is of type citext at character 44
+2023-07-25 19:06:45.223 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.223 UTC [1919810] STATEMENT:  INSERT INTO caster (interval)      VALUES ('1 hour'::citext);
+2023-07-25 19:06:45.228 UTC [1919810] ERROR:  column "date" is of type date but expression is of type text at character 44
+2023-07-25 19:06:45.228 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.228 UTC [1919810] STATEMENT:  INSERT INTO caster (date)          VALUES ('1999-01-08'::text);
+2023-07-25 19:06:45.233 UTC [1919810] ERROR:  column "date" is of type date but expression is of type citext at character 44
+2023-07-25 19:06:45.233 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.233 UTC [1919810] STATEMENT:  INSERT INTO caster (date)          VALUES ('1999-01-08'::citext);
+2023-07-25 19:06:45.237 UTC [1919810] ERROR:  column "time" is of type time without time zone but expression is of type text at character 44
+2023-07-25 19:06:45.237 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.237 UTC [1919810] STATEMENT:  INSERT INTO caster (time)          VALUES ('04:05:06'::text);
+2023-07-25 19:06:45.242 UTC [1919810] ERROR:  column "time" is of type time without time zone but expression is of type citext at character 44
+2023-07-25 19:06:45.242 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.242 UTC [1919810] STATEMENT:  INSERT INTO caster (time)          VALUES ('04:05:06'::citext);
+2023-07-25 19:06:45.247 UTC [1919810] ERROR:  column "timetz" is of type time with time zone but expression is of type text at character 44
+2023-07-25 19:06:45.247 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.247 UTC [1919810] STATEMENT:  INSERT INTO caster (timetz)        VALUES ('04:05:06'::text);
+2023-07-25 19:06:45.252 UTC [1919810] ERROR:  column "timetz" is of type time with time zone but expression is of type citext at character 44
+2023-07-25 19:06:45.252 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.252 UTC [1919810] STATEMENT:  INSERT INTO caster (timetz)        VALUES ('04:05:06'::citext);
+2023-07-25 19:06:45.256 UTC [1919810] ERROR:  column "point" is of type point but expression is of type text at character 44
+2023-07-25 19:06:45.256 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.256 UTC [1919810] STATEMENT:  INSERT INTO caster (point)         VALUES ('( 1 , 1)'::text);
+2023-07-25 19:06:45.261 UTC [1919810] ERROR:  column "point" is of type point but expression is of type citext at character 44
+2023-07-25 19:06:45.261 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.261 UTC [1919810] STATEMENT:  INSERT INTO caster (point)         VALUES ('( 1 , 1)'::citext);
+2023-07-25 19:06:45.266 UTC [1919810] ERROR:  column "lseg" is of type lseg but expression is of type text at character 44
+2023-07-25 19:06:45.266 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.266 UTC [1919810] STATEMENT:  INSERT INTO caster (lseg)          VALUES ('( 1 , 1 ) , ( 2 , 2 )'::text);
+2023-07-25 19:06:45.270 UTC [1919810] ERROR:  column "lseg" is of type lseg but expression is of type citext at character 44
+2023-07-25 19:06:45.270 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.270 UTC [1919810] STATEMENT:  INSERT INTO caster (lseg)          VALUES ('( 1 , 1 ) , ( 2 , 2 )'::citext);
+2023-07-25 19:06:45.275 UTC [1919810] ERROR:  column "box" is of type box but expression is of type text at character 44
+2023-07-25 19:06:45.275 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.275 UTC [1919810] STATEMENT:  INSERT INTO caster (box)           VALUES ('(0,0),(1,1)'::text);
+2023-07-25 19:06:45.280 UTC [1919810] ERROR:  column "box" is of type box but expression is of type citext at character 44
+2023-07-25 19:06:45.280 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.280 UTC [1919810] STATEMENT:  INSERT INTO caster (box)           VALUES ('(0,0),(1,1)'::citext);
+2023-07-25 19:06:45.285 UTC [1919810] ERROR:  column "path" is of type path but expression is of type text at character 44
+2023-07-25 19:06:45.285 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.285 UTC [1919810] STATEMENT:  INSERT INTO caster (path)          VALUES ('((0,0),(1,1),(2,0))'::text);
+2023-07-25 19:06:45.290 UTC [1919810] ERROR:  column "path" is of type path but expression is of type citext at character 44
+2023-07-25 19:06:45.290 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.290 UTC [1919810] STATEMENT:  INSERT INTO caster (path)          VALUES ('((0,0),(1,1),(2,0))'::citext);
+2023-07-25 19:06:45.294 UTC [1919810] ERROR:  column "polygon" is of type polygon but expression is of type text at character 44
+2023-07-25 19:06:45.294 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.294 UTC [1919810] STATEMENT:  INSERT INTO caster (polygon)       VALUES ('((0,0),(1,1))'::text);
+2023-07-25 19:06:45.299 UTC [1919810] ERROR:  column "polygon" is of type polygon but expression is of type citext at character 44
+2023-07-25 19:06:45.299 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.299 UTC [1919810] STATEMENT:  INSERT INTO caster (polygon)       VALUES ('((0,0),(1,1))'::citext);
+2023-07-25 19:06:45.304 UTC [1919810] ERROR:  column "circle" is of type circle but expression is of type text at character 44
+2023-07-25 19:06:45.304 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.304 UTC [1919810] STATEMENT:  INSERT INTO caster (circle)        VALUES ('((0,0),2)'::text);
+2023-07-25 19:06:45.308 UTC [1919810] ERROR:  column "circle" is of type circle but expression is of type citext at character 44
+2023-07-25 19:06:45.308 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.308 UTC [1919810] STATEMENT:  INSERT INTO caster (circle)        VALUES ('((0,0),2)'::citext);
+2023-07-25 19:06:45.313 UTC [1919810] ERROR:  column "bit" is of type bit but expression is of type text at character 44
+2023-07-25 19:06:45.313 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.313 UTC [1919810] STATEMENT:  INSERT INTO caster (bit)           VALUES ('101'::text);
+2023-07-25 19:06:45.318 UTC [1919810] ERROR:  column "bit" is of type bit but expression is of type citext at character 44
+2023-07-25 19:06:45.318 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.318 UTC [1919810] STATEMENT:  INSERT INTO caster (bit)           VALUES ('101'::citext);
+2023-07-25 19:06:45.322 UTC [1919810] ERROR:  column "bitv" is of type bit varying but expression is of type text at character 44
+2023-07-25 19:06:45.322 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.322 UTC [1919810] STATEMENT:  INSERT INTO caster (bitv)          VALUES ('101'::text);
+2023-07-25 19:06:45.327 UTC [1919810] ERROR:  column "bitv" is of type bit varying but expression is of type citext at character 44
+2023-07-25 19:06:45.327 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.327 UTC [1919810] STATEMENT:  INSERT INTO caster (bitv)          VALUES ('101'::citext);
+2023-07-25 19:06:45.332 UTC [1919810] ERROR:  column "tsvector" is of type tsvector but expression is of type text at character 44
+2023-07-25 19:06:45.332 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.332 UTC [1919810] STATEMENT:  INSERT INTO caster (tsvector)      VALUES ('the fat cat'::text);
+2023-07-25 19:06:45.336 UTC [1919810] ERROR:  column "tsvector" is of type tsvector but expression is of type citext at character 44
+2023-07-25 19:06:45.336 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.336 UTC [1919810] STATEMENT:  INSERT INTO caster (tsvector)      VALUES ('the fat cat'::citext);
+2023-07-25 19:06:45.341 UTC [1919810] ERROR:  column "tsquery" is of type tsquery but expression is of type text at character 44
+2023-07-25 19:06:45.341 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.341 UTC [1919810] STATEMENT:  INSERT INTO caster (tsquery)       VALUES ('fat & rat'::text);
+2023-07-25 19:06:45.345 UTC [1919810] ERROR:  column "tsquery" is of type tsquery but expression is of type citext at character 44
+2023-07-25 19:06:45.345 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.345 UTC [1919810] STATEMENT:  INSERT INTO caster (tsquery)       VALUES ('fat & rat'::citext);
+2023-07-25 19:06:45.350 UTC [1919810] ERROR:  column "uuid" is of type uuid but expression is of type text at character 44
+2023-07-25 19:06:45.350 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.350 UTC [1919810] STATEMENT:  INSERT INTO caster (uuid)          VALUES ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'::text);
+2023-07-25 19:06:45.355 UTC [1919810] ERROR:  column "uuid" is of type uuid but expression is of type citext at character 44
+2023-07-25 19:06:45.355 UTC [1919810] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:06:45.355 UTC [1919810] STATEMENT:  INSERT INTO caster (uuid)          VALUES ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'::citext);
+2023-07-25 19:06:45.391 UTC [1919810] ERROR:  regexp_match() does not support the "global" option
+2023-07-25 19:06:45.391 UTC [1919810] HINT:  Use the regexp_matches function instead.
+2023-07-25 19:06:45.391 UTC [1919810] CONTEXT:  SQL function "regexp_match" statement 1
+2023-07-25 19:06:45.391 UTC [1919810] STATEMENT:  SELECT regexp_match('foobarbequebazmorebarbequetoo'::citext, '(BAR)(BEQUE)'::citext, 'g') AS "error";
+2023-07-25 19:06:45.756 UTC [1919787] LOG:  received SIGHUP, reloading configuration files
+2023-07-25 19:06:45.787 UTC [1919787] LOG:  received SIGHUP, reloading configuration files
+2023-07-25 19:06:45.789 UTC [1919787] LOG:  parameter "pgtle.enable_password_check" changed to "on"
+2023-07-25 19:06:45.885 UTC [1919787] LOG:  received SIGHUP, reloading configuration files
+2023-07-25 19:06:45.886 UTC [1919787] LOG:  parameter "pgtle.enable_password_check" changed to "require"
+2023-07-25 19:06:45.891 UTC [1919834] ERROR:  "pgtle.enable_password_check" feature is set to require, however no entries exist in "pgtle.feature_info" with the feature "passcheck"
+2023-07-25 19:06:45.901 UTC [1919834] ERROR:  Passwords needs to be longer than 8
+2023-07-25 19:06:45.928 UTC [1919834] ERROR:  Passwords needs to be longer than 8
+2023-07-25 19:06:45.933 UTC [1919834] ERROR:  permission denied for table feature_info
+2023-07-25 19:06:45.933 UTC [1919834] STATEMENT:  INSERT INTO pgtle.feature_info VALUES ('passcheck', 'testuser_2', 'unpriv_function_passcheck', 'public.unpriv_function_passcheck(pg_catalog.text,pg_catalog.text,pgtle.password_types,timestamp with time zone,boolean)');
+2023-07-25 19:06:45.934 UTC [1919834] ERROR:  permission denied for function register_feature
+2023-07-25 19:06:45.934 UTC [1919834] STATEMENT:  SELECT pgtle.register_feature('testuser_2.unpriv_function_passcheck', 'passcheck');
+2023-07-25 19:06:45.934 UTC [1919834] ERROR:  permission denied for function unregister_feature
+2023-07-25 19:06:45.934 UTC [1919834] STATEMENT:  SELECT pgtle.unregister_feature('password_check_length_greater_than_8', 'passcheck');
+2023-07-25 19:06:45.935 UTC [1919834] ERROR:  permission denied for table feature_info
+2023-07-25 19:06:45.935 UTC [1919834] STATEMENT:  DELETE FROM pgtle.feature_info where feature = 'passcheck';
+2023-07-25 19:06:45.947 UTC [1919834] ERROR:  Passwords can only have numbers
+2023-07-25 19:06:45.976 UTC [1919834] ERROR:  table, schema, and proname must be present in "pgtle.feature_info"
+2023-07-25 19:06:45.978 UTC [1919834] ERROR:  duplicate key value violates unique constraint "feature_info_pkey"
+2023-07-25 19:06:45.978 UTC [1919834] DETAIL:  Key (feature, schema_name, proname)=(passcheck, public, password_check_length_greater_than_8) already exists.
+2023-07-25 19:06:45.978 UTC [1919834] CONTEXT:  SQL statement "INSERT INTO pgtle.feature_info VALUES (feature, proc_schema_name, proname, ident)"
+	PL/pgSQL function pgtle.register_feature(regproc,pgtle.pg_tle_features) line 24 at SQL statement
+2023-07-25 19:06:45.978 UTC [1919834] STATEMENT:  SELECT pgtle.register_feature('password_check_length_greater_than_8', 'passcheck');
+2023-07-25 19:06:45.990 UTC [1919834] ERROR:  Could not unregister "password_check_length_greater_than_8": does not exist.
+2023-07-25 19:06:45.990 UTC [1919834] CONTEXT:  PL/pgSQL function pgtle.unregister_feature(regproc,pgtle.pg_tle_features) line 44 at RAISE
+2023-07-25 19:06:45.990 UTC [1919834] STATEMENT:  SELECT pgtle.unregister_feature('password_check_length_greater_than_8', 'passcheck');
+2023-07-25 19:06:46.040 UTC [1919834] ERROR:  "passcheck" feature does not support calling out to functions/schemas that contain ";"
+2023-07-25 19:06:46.040 UTC [1919834] HINT:  Check the "pgtle.feature_info" table does not contain ';'.
+2023-07-25 19:06:46.074 UTC [1919787] LOG:  received SIGHUP, reloading configuration files
+2023-07-25 19:06:46.075 UTC [1919787] LOG:  parameter "pgtle.enable_password_check" removed from configuration file, reset to default
+2023-07-25 19:06:46.099 UTC [1919834] ERROR:  Function is referenced in pgtle.feature_info
+2023-07-25 19:06:46.099 UTC [1919834] CONTEXT:  PL/pgSQL function pgtle.pg_tle_feature_info_sql_drop() line 27 at RAISE
+2023-07-25 19:06:46.099 UTC [1919834] STATEMENT:  DROP SCHEMA pass CASCADE;
+2023-07-25 19:06:46.288 UTC [1919838] ERROR:  permission denied for function superuser_only
+2023-07-25 19:06:46.288 UTC [1919838] STATEMENT:  CREATE EXTENSION test_no_switch_to_superuser_when_trusted;
+2023-07-25 19:06:46.289 UTC [1919838] ERROR:  must be owner of extension test123
+2023-07-25 19:06:46.289 UTC [1919838] STATEMENT:  DROP EXTENSION test123;
+2023-07-25 19:06:46.290 UTC [1919838] ERROR:  must be owner of function test123_func
+2023-07-25 19:06:46.290 UTC [1919838] STATEMENT:  DROP FUNCTION test123_func();
+2023-07-25 19:06:46.291 UTC [1919838] ERROR:  must be owner of extension test123
+2023-07-25 19:06:46.291 UTC [1919838] STATEMENT:  DROP EXTENSION test123;
+2023-07-25 19:06:46.292 UTC [1919838] ERROR:  must be owner of function test123_func
+2023-07-25 19:06:46.292 UTC [1919838] STATEMENT:  DROP FUNCTION test123_func();
+2023-07-25 19:06:46.294 UTC [1919838] ERROR:  extension "test123" already installed
+2023-07-25 19:06:46.294 UTC [1919838] STATEMENT:  SELECT pgtle.install_extension
+	(
+	 'test123',
+	 '1.1',
+	 'Test TLE Functions',
+	$_pgtle_$
+	  CREATE OR REPLACE FUNCTION test123_func()
+	  RETURNS INT AS $$
+	  (
+	    SELECT 42
+	  )$$ LANGUAGE sql;
+	  CREATE OR REPLACE FUNCTION test123_func_2()
+	  RETURNS INT AS $$
+	  (
+	    SELECT 424242
+	  )$$ LANGUAGE sql;
+	$_pgtle_$
+	);
+2023-07-25 19:06:46.321 UTC [1919838] ERROR:  permission denied for schema pgtle
+2023-07-25 19:06:46.321 UTC [1919838] STATEMENT:  CREATE OR REPLACE FUNCTION pgtle.foo()
+	RETURNS TEXT AS $$
+	SELECT 'ok'
+	$$ LANGUAGE sql;
+2023-07-25 19:06:46.325 UTC [1919838] ERROR:  pgtle schema reserved for pg_tle functions
+2023-07-25 19:06:46.325 UTC [1919838] STATEMENT:  ALTER FUNCTION public.pg_tlefoo() SET SCHEMA pgtle;
+2023-07-25 19:06:46.331 UTC [1919838] ERROR:  control file already exists for the plpgsql extension
+2023-07-25 19:06:46.331 UTC [1919838] STATEMENT:  SELECT pgtle.install_extension
+	(
+	 'plpgsql',
+	 '1.0',
+	 'Test TLE Functions',
+	$_pgtle_$
+	  CREATE OR REPLACE FUNCTION test123_func()
+	  RETURNS INT AS $$
+	  (
+	    SELECT 42
+	  )$$ LANGUAGE sql;
+	$_pgtle_$
+	);
+2023-07-25 19:06:46.332 UTC [1919838] ERROR:  altering pg_tle functions in pgtle schema not allowed
+2023-07-25 19:06:46.332 UTC [1919838] STATEMENT:  ALTER FUNCTION pgtle.install_extension
+	(
+	  name text,
+	  version text,
+	  description text,
+	  ext text,
+	  requires text[]
+	)
+	SET search_path TO 'public';
+2023-07-25 19:06:46.379 UTC [1919838] ERROR:  extension "new_ext" update path "1.0-1.1" already installed
+2023-07-25 19:06:46.379 UTC [1919838] HINT:  To update this specific install path, first use "pgtle.uninstall_update_path".
+2023-07-25 19:06:46.379 UTC [1919838] STATEMENT:  SELECT pgtle.install_update_path
+	(
+	 'new_ext',
+	 '1.0',
+	 '1.1',
+	$_pgtle_$
+	  CREATE OR REPLACE FUNCTION fun()
+	  RETURNS INT AS $$ SELECT 2; $$ LANGUAGE SQL;
+	$_pgtle_$
+	);
+2023-07-25 19:06:46.391 UTC [1919838] ERROR:  Extension new_ext does not exist
+2023-07-25 19:06:46.391 UTC [1919838] CONTEXT:  PL/pgSQL function uninstall_update_path(text,text,text) line 16 at RAISE
+2023-07-25 19:06:46.391 UTC [1919838] STATEMENT:  SELECT pgtle.uninstall_update_path('new_ext', '1.1', '1.0');
+2023-07-25 19:06:46.422 UTC [1919838] ERROR:  extension and version do not exist
+2023-07-25 19:06:46.422 UTC [1919838] HINT:  Try installing the extension with "pgtle.install_extension".
+2023-07-25 19:06:46.422 UTC [1919838] STATEMENT:  SELECT pgtle.set_default_version('new_ext', '1.2');
+2023-07-25 19:06:46.425 UTC [1919838] ERROR:  extension and version do not exist
+2023-07-25 19:06:46.425 UTC [1919838] HINT:  Try installing the extension with "pgtle.install_extension".
+2023-07-25 19:06:46.425 UTC [1919838] STATEMENT:  SELECT pgtle.set_default_version('bogus', '1.2');
+2023-07-25 19:06:46.438 UTC [1919838] ERROR:  syntax error in extension control function for "broken_ext"
+2023-07-25 19:06:46.438 UTC [1919838] DETAIL:  Could not parse extension control function "pgtle"."broken_ext.control".
+2023-07-25 19:06:46.438 UTC [1919838] HINT:  You may need to reinstall the extension to correct this error.
+2023-07-25 19:06:46.438 UTC [1919838] STATEMENT:  SELECT * FROM pgtle.available_extensions();
+2023-07-25 19:06:46.445 UTC [1919838] ERROR:  Extension bogus does not exist
+2023-07-25 19:06:46.445 UTC [1919838] CONTEXT:  PL/pgSQL function uninstall_extension(text) line 18 at RAISE
+2023-07-25 19:06:46.445 UTC [1919838] STATEMENT:  SELECT pgtle.uninstall_extension('bogus');
+2023-07-25 19:06:46.479 UTC [1919838] ERROR:  version "2.0" of extension "test42" already installed
+2023-07-25 19:06:46.479 UTC [1919838] STATEMENT:  SELECT pgtle.install_extension_version_sql
+	(
+	 'test42',
+	 '2.0',
+	$_pgtle_$
+	  CREATE OR REPLACE FUNCTION test42_func()
+	  RETURNS INT AS $$
+	  (
+	    SELECT 4242
+	  )$$ LANGUAGE sql;
+	$_pgtle_$
+	);
+2023-07-25 19:06:46.483 UTC [1919838] ERROR:  Can not uninstall default version of extension test42, use set_default_version to update the default to another available version and retry
+2023-07-25 19:06:46.483 UTC [1919838] CONTEXT:  PL/pgSQL function uninstall_extension(text,text) line 28 at RAISE
+2023-07-25 19:06:46.483 UTC [1919838] STATEMENT:  SELECT pgtle.uninstall_extension('test42', '1.0');
+2023-07-25 19:06:46.495 UTC [1919838] ERROR:  Version test42 of extension 3.0 is not installed and therefore can not be uninstalled
+2023-07-25 19:06:46.495 UTC [1919838] CONTEXT:  PL/pgSQL function uninstall_extension(text,text) line 50 at RAISE
+2023-07-25 19:06:46.495 UTC [1919838] STATEMENT:  SELECT pgtle.uninstall_extension('test42', '3.0');
+2023-07-25 19:06:46.559 UTC [1919838] ERROR:  role "pgtle_admin" cannot be dropped because some objects depend on it
+2023-07-25 19:06:46.559 UTC [1919838] DETAIL:  15 objects in database contrib_regression
+2023-07-25 19:06:46.559 UTC [1919838] STATEMENT:  DROP ROLE pgtle_admin;
+2023-07-25 19:06:46.609 UTC [1919844] ERROR:  invalid character in extension definition
+2023-07-25 19:06:46.609 UTC [1919844] DETAIL:  Use of string delimiters "$_pgtle_o_$" and "$_pgtle_i_$" are forbidden in extension definitions.
+2023-07-25 19:06:46.609 UTC [1919844] HINT:  This may be an attempt at a SQL injection attack. Please verify your installation file.
+2023-07-25 19:06:46.609 UTC [1919844] STATEMENT:  SELECT pgtle.install_extension
+	(
+	 'test_hax',
+	 '1.0',
+	 $$hax$_pgtle_i_$ $_pgtle_o_$ LANGUAGE SQL; ALTER ROLE bad_actor SUPERUSER; CREATE OR REPLACE FUNCTION haha() RETURNS TEXT AS $_pgtle_o_$ SELECT $_pgtle_i_$ $$,
+	$_pgtle_$
+	  CREATE OR REPLACE FUNCTION basic_func()
+	  RETURNS INT AS $$
+	    SELECT 1;
+	  $$ LANGUAGE SQL;
+	$_pgtle_$
+	);
+2023-07-25 19:06:46.610 UTC [1919844] ERROR:  invalid character in extension definition
+2023-07-25 19:06:46.610 UTC [1919844] DETAIL:  Use of string delimiters "$_pgtle_o_$" and "$_pgtle_i_$" are forbidden in extension definitions.
+2023-07-25 19:06:46.610 UTC [1919844] HINT:  This may be an attempt at a SQL injection attack. Please verify your installation file.
+2023-07-25 19:06:46.610 UTC [1919844] STATEMENT:  SELECT pgtle.install_extension
+	(
+	 'test_hax',
+	 '1.0',
+	 'hax',
+	$_pgtle_$ $_pgtle_i_$ $_pgtle_o_$ ALTER ROLE bad_actor SUPERUSER; $_pgtle_o_$ $_pgtle_i_$
+	  CREATE OR REPLACE FUNCTION basic_func()
+	  RETURNS INT AS $$
+	    SELECT 1;
+	  $$ LANGUAGE SQL;
+	$_pgtle_$
+	);
+2023-07-25 19:06:46.614 UTC [1919844] ERROR:  invalid character in extension update definition
+2023-07-25 19:06:46.614 UTC [1919844] DETAIL:  Use of string delimiters "$_pgtle_o_$" and "$_pgtle_i_$" are forbidden in extension definitions.
+2023-07-25 19:06:46.614 UTC [1919844] HINT:  This may be an attempt at a SQL injection attack. Please verify your installation file.
+2023-07-25 19:06:46.614 UTC [1919844] STATEMENT:  SELECT pgtle.install_update_path
+	(
+	 'legit_100',
+	 '1.0',
+	 '1.1',
+	$_pgtle_$ $_pgtle_i_$ ; $_pgtle_o_$ LANGUAGE SQL; ALTER ROLE bad_actor SUPERUSER; CREATE FUNCTiON hax() RETURNS text AS $_pgtle_o_$ SELECT $_pgtle_i_$
+	 CREATE OR REPLACE FUNCTION basic_func()
+	 RETURNS INT AS $$
+	   SELECT 2;
+	 $$ LANGUAGE SQL;
+	$_pgtle_$
+	);
+2023-07-25 19:06:46.624 UTC [1919844] ERROR:  invalid character in extension definition
+2023-07-25 19:06:46.624 UTC [1919844] DETAIL:  Use of string delimiters "$_pgtle_o_$" and "$_pgtle_i_$" are forbidden in extension definitions.
+2023-07-25 19:06:46.624 UTC [1919844] HINT:  This may be an attempt at a SQL injection attack. Please verify your installation file.
+2023-07-25 19:06:46.624 UTC [1919844] STATEMENT:  SELECT pgtle.install_extension
+	(
+	 'test_hax',
+	 '1.0',
+	 $$hax$_pgtle_i_$ $_pgtle_o_$ LANGUAGE SQL; ALTER ROLE bad_actor SUPERUSER; CREATE OR REPLACE FUNCTION haha() RETURNS TEXT AS $_pgtle_o_$ SELECT $_pgtle_i_$ $$,
+	$_pgtle_$
+	  CREATE OR REPLACE FUNCTION basic_func()
+	  RETURNS INT AS $$
+	    SELECT 1;
+	  $$ LANGUAGE SQL;
+	$_pgtle_$
+	);
+2023-07-25 19:06:46.625 UTC [1919844] ERROR:  invalid character in extension definition
+2023-07-25 19:06:46.625 UTC [1919844] DETAIL:  Use of string delimiters "$_pgtle_o_$" and "$_pgtle_i_$" are forbidden in extension definitions.
+2023-07-25 19:06:46.625 UTC [1919844] HINT:  This may be an attempt at a SQL injection attack. Please verify your installation file.
+2023-07-25 19:06:46.625 UTC [1919844] STATEMENT:  SELECT pgtle.install_extension
+	(
+	 'test_hax',
+	 '1.0',
+	 'hax',
+	$_pgtle_$ $_pgtle_i_$ $_pgtle_o_$ ALTER ROLE bad_actor SUPERUSER; $_pgtle_o_$ $_pgtle_i_$
+	  CREATE OR REPLACE FUNCTION basic_func()
+	  RETURNS INT AS $$
+	    SELECT 1;
+	  $$ LANGUAGE SQL;
+	$_pgtle_$
+	);
+2023-07-25 19:06:46.629 UTC [1919844] ERROR:  invalid character in extension update definition
+2023-07-25 19:06:46.629 UTC [1919844] DETAIL:  Use of string delimiters "$_pgtle_o_$" and "$_pgtle_i_$" are forbidden in extension definitions.
+2023-07-25 19:06:46.629 UTC [1919844] HINT:  This may be an attempt at a SQL injection attack. Please verify your installation file.
+2023-07-25 19:06:46.629 UTC [1919844] STATEMENT:  SELECT pgtle.install_update_path
+	(
+	 'legit_100',
+	 '1.0',
+	 '1.1',
+	$_pgtle_$ $_pgtle_i_$ ; $_pgtle_o_$ LANGUAGE SQL; ALTER ROLE bad_actor SUPERUSER; CREATE FUNCTiON hax() RETURNS text AS $_pgtle_o_$ SELECT $_pgtle_i_$
+	 CREATE OR REPLACE FUNCTION basic_func()
+	 RETURNS INT AS $$
+	   SELECT 2;
+	 $$ LANGUAGE SQL;
+	$_pgtle_$
+	);
+2023-07-25 19:06:46.635 UTC [1919844] ERROR:  invalid extension name: "test9.control"(),pg_sleep(10),pgtle."test9"
+2023-07-25 19:06:46.635 UTC [1919844] DETAIL:  Extension names must only contain alphanumeric characters or valid separators.
+2023-07-25 19:06:46.635 UTC [1919844] STATEMENT:  SELECT pgtle.install_extension
+	(
+	 'test9.control"(),pg_sleep(10),pgtle."test9',
+	 '0.1',
+	 'comment',
+	$_pg_tle_$
+	    CREATE FUNCTION dist(x1 numeric, y1 numeric, x2 numeric, y2 numeric, l numeric)
+	    RETURNS numeric
+	    AS $$
+	      SELECT ((x2 ^ l - x1 ^ l) ^ (1 / l)) + ((y2 ^ l - y1 ^ l) ^ (1 / l));
+	    $$ LANGUAGE SQL;
+	$_pg_tle_$
+	);
+2023-07-25 19:06:46.648 UTC [1919844] ERROR:  role "pgtle_admin" cannot be dropped because some objects depend on it
+2023-07-25 19:06:46.648 UTC [1919844] DETAIL:  15 objects in database contrib_regression
+2023-07-25 19:06:46.648 UTC [1919844] STATEMENT:  DROP ROLE pgtle_admin;
+2023-07-25 19:06:46.709 UTC [1919850] ERROR:  permission denied for schema public
+2023-07-25 19:06:46.709 UTC [1919850] STATEMENT:  CREATE EXTENSION no_features;
+2023-07-25 19:06:46.745 UTC [1919850] ERROR:  must be owner of extension no_features
+2023-07-25 19:06:46.745 UTC [1919850] STATEMENT:  DROP EXTENSION no_features;
+2023-07-25 19:06:46.757 UTC [1919850] ERROR:  permission denied for function register_feature
+2023-07-25 19:06:46.757 UTC [1919850] STATEMENT:  CREATE EXTENSION yes_features;
+2023-07-25 19:06:46.762 UTC [1919850] ERROR:  permission denied for table feature_info
+2023-07-25 19:06:46.762 UTC [1919850] STATEMENT:  INSERT INTO pgtle.feature_info VALUES ('passcheck', 'public', 'other_passcheck_hook', '');
+2023-07-25 19:06:46.762 UTC [1919850] ERROR:  must have admin option on role "pgtle_admin"
+2023-07-25 19:06:46.762 UTC [1919850] STATEMENT:  GRANT pgtle_admin to tle_person;
+2023-07-25 19:06:46.787 UTC [1919850] ERROR:  permission denied for function unregister_feature
+2023-07-25 19:06:46.787 UTC [1919850] STATEMENT:  SELECT pgtle.unregister_feature('passcheck_hook', 'passcheck');
+2023-07-25 19:06:46.787 UTC [1919850] ERROR:  permission denied for function unregister_feature
+2023-07-25 19:06:46.787 UTC [1919850] STATEMENT:  SELECT pgtle.unregister_feature('other_passcheck_hook', 'passcheck');
+2023-07-25 19:06:46.788 UTC [1919850] ERROR:  permission denied for table feature_info
+2023-07-25 19:06:46.788 UTC [1919850] STATEMENT:  DELETE FROM pgtle.feature_info WHERE proname = 'passcheck_hook';
+2023-07-25 19:06:46.788 UTC [1919850] ERROR:  permission denied for table feature_info
+2023-07-25 19:06:46.788 UTC [1919850] STATEMENT:  DELETE FROM pgtle.feature_info WHERE proname = 'other_passcheck_hook';
+2023-07-25 19:06:46.825 UTC [1919850] ERROR:  permission denied for schema public
+2023-07-25 19:06:46.825 UTC [1919850] STATEMENT:  CREATE EXTENSION no_features;
+2023-07-25 19:06:46.832 UTC [1919850] ERROR:  permission denied for schema public
+2023-07-25 19:06:46.832 UTC [1919850] STATEMENT:  CREATE EXTENSION no_features;
+2023-07-25 19:06:46.839 UTC [1919850] ERROR:  permission denied for schema public
+2023-07-25 19:06:46.839 UTC [1919850] STATEMENT:  CREATE EXTENSION yes_features;
+2023-07-25 19:06:46.840 UTC [1919850] ERROR:  permission denied for schema public
+2023-07-25 19:06:46.840 UTC [1919850] STATEMENT:  CREATE EXTENSION no_features;
+2023-07-25 19:06:46.877 UTC [1919850] ERROR:  role "pgtle_admin" cannot be dropped because some objects depend on it
+2023-07-25 19:06:46.877 UTC [1919850] DETAIL:  15 objects in database contrib_regression
+2023-07-25 19:06:46.877 UTC [1919850] STATEMENT:  DROP ROLE pgtle_admin;
+2023-07-25 19:06:46.953 UTC [1919858] ERROR:  "requires" limited to 1024 entries for "pg_tle" extensions
+2023-07-25 19:06:46.953 UTC [1919858] STATEMENT:  SELECT pgtle.install_extension
+	(
+	 't',
+	 '1',
+	 '1',
+	$_pg_tle_$
+	CREATE FUNCTION pgtle."test12--0.1FOOBAR.control"()
+	RETURNS void
+	AS $$
+	    BEGIN
+	    RAISE NOTICE 'called';
+	    END
+	$$ LANGUAGE SQL;
+	$_pg_tle_$,
+	'{a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a}'
+	);

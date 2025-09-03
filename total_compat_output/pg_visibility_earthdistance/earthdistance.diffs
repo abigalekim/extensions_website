@@ -1,0 +1,72 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out	2023-07-25 08:40:04.734473786 +0000
+@@ -1001,10 +1001,18 @@
+ (0 rows)
+ 
+ \df
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                                            List of functions
++ Schema |            Name            | Result data type |                                           Argument data types                                           | Type 
++--------+----------------------------+------------------+---------------------------------------------------------------------------------------------------------+------
++ public | pg_check_frozen            | SETOF tid        | regclass, OUT t_ctid tid                                                                                | func
++ public | pg_check_visible           | SETOF tid        | regclass, OUT t_ctid tid                                                                                | func
++ public | pg_truncate_visibility_map | void             | regclass                                                                                                | func
++ public | pg_visibility              | record           | regclass, blkno bigint, OUT all_visible boolean, OUT all_frozen boolean, OUT pd_all_visible boolean     | func
++ public | pg_visibility              | SETOF record     | regclass, OUT blkno bigint, OUT all_visible boolean, OUT all_frozen boolean, OUT pd_all_visible boolean | func
++ public | pg_visibility_map          | record           | regclass, blkno bigint, OUT all_visible boolean, OUT all_frozen boolean                                 | func
++ public | pg_visibility_map          | SETOF record     | regclass, OUT blkno bigint, OUT all_visible boolean, OUT all_frozen boolean                             | func
++ public | pg_visibility_map_summary  | record           | regclass, OUT all_visible bigint, OUT all_frozen bigint                                                 | func
++(8 rows)
+ 
+ \do
+                              List of operators
+@@ -1022,10 +1030,18 @@
+ (0 rows)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                                            List of functions
++ Schema |            Name            | Result data type |                                           Argument data types                                           | Type 
++--------+----------------------------+------------------+---------------------------------------------------------------------------------------------------------+------
++ public | pg_check_frozen            | SETOF tid        | regclass, OUT t_ctid tid                                                                                | func
++ public | pg_check_visible           | SETOF tid        | regclass, OUT t_ctid tid                                                                                | func
++ public | pg_truncate_visibility_map | void             | regclass                                                                                                | func
++ public | pg_visibility              | record           | regclass, blkno bigint, OUT all_visible boolean, OUT all_frozen boolean, OUT pd_all_visible boolean     | func
++ public | pg_visibility              | SETOF record     | regclass, OUT blkno bigint, OUT all_visible boolean, OUT all_frozen boolean, OUT pd_all_visible boolean | func
++ public | pg_visibility_map          | record           | regclass, blkno bigint, OUT all_visible boolean, OUT all_frozen boolean                                 | func
++ public | pg_visibility_map          | SETOF record     | regclass, OUT blkno bigint, OUT all_visible boolean, OUT all_frozen boolean                             | func
++ public | pg_visibility_map_summary  | record           | regclass, OUT all_visible bigint, OUT all_frozen bigint                                                 | func
++(8 rows)
+ 
+ \do public.*
+                              List of operators
+@@ -1066,10 +1082,18 @@
+ (0 rows)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                                            List of functions
++ Schema |            Name            | Result data type |                                           Argument data types                                           | Type 
++--------+----------------------------+------------------+---------------------------------------------------------------------------------------------------------+------
++ public | pg_check_frozen            | SETOF tid        | regclass, OUT t_ctid tid                                                                                | func
++ public | pg_check_visible           | SETOF tid        | regclass, OUT t_ctid tid                                                                                | func
++ public | pg_truncate_visibility_map | void             | regclass                                                                                                | func
++ public | pg_visibility              | record           | regclass, blkno bigint, OUT all_visible boolean, OUT all_frozen boolean, OUT pd_all_visible boolean     | func
++ public | pg_visibility              | SETOF record     | regclass, OUT blkno bigint, OUT all_visible boolean, OUT all_frozen boolean, OUT pd_all_visible boolean | func
++ public | pg_visibility_map          | record           | regclass, blkno bigint, OUT all_visible boolean, OUT all_frozen boolean                                 | func
++ public | pg_visibility_map          | SETOF record     | regclass, OUT blkno bigint, OUT all_visible boolean, OUT all_frozen boolean                             | func
++ public | pg_visibility_map_summary  | record           | regclass, OUT all_visible bigint, OUT all_frozen bigint                                                 | func
++(8 rows)
+ 
+ \do public.*
+                              List of operators

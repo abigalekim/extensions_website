@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}{{ extension_name }} - PostgreSQL Extension Analysis{% endblock %}
+
+{% block content %}
+<div class="extension-header">
+    <h1>
+        {{ extension_name }}
+        {% if source_code %}
+        <a href="{{ source_code }}" target="_blank" class="code-icon" title="View Source Code">
+            <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0L19.2 12l-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+            </svg>
+        </a>
+        {% endif %}
+    </h1>
+</div>
+
+<div class="extension-details">
+    {% if include_descriptions and description %}
+    <p class="description">{{ description }}</p>
+    {% endif %}
+    
+    <div class="analysis-section">
+        <h3>Information Analysis</h3>
+        <div class="analysis-box">
+            <p><strong>Extensibility Types:</strong> {{ extensibility_types|join(', ') }}</p>
+            <p><strong>System Components:</strong> {{ system_components|join(', ') }}</p>
+        </div>
+    </div>
+    
+    {% if has_compatibility_data %}
+    <div class="analysis-section">
+        <h3>Compatibility Analysis</h3>
+        <div class="analysis-box">
+            <p><strong>Failed Extensions:</strong> {{ failed_extensions|length }}</p>
+            <p><strong>Failure Rate:</strong> {{ "%.1f"|format(failure_rate) }}%</p>
+        </div>
+    </div>
+    
+    {% if failed_extensions %}
+    <div class="analysis-section">
+        <h3>Failed Extensions</h3>
+        <div class="analysis-box">
+            {% for failed_ext, outputs in terminal_outputs %}
+            <div class="failed-extension-section">
+                <h4 class="failed-extension-title">{{ failed_ext }}</h4>
+                {% for output in outputs %}
+                <div class="terminal-dropdown">
+                    <button class="dropdown-btn" onclick="toggleTerminal('terminal-{{ failed_ext|replace('_', '-') }}-{{ loop.index }}')">
+                        Terminal output ({{ output.first_ext }}, {{ output.second_ext }}) ▼
+                    </button>
+                    <div id="terminal-{{ failed_ext|replace('_', '-') }}-{{ loop.index }}" class="terminal-output hidden">
+                        <pre><code>{{ output.content }}</code></pre>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    {% endif %}
+</div>
+
+<script>
+function toggleTerminal(terminalId) {
+    const terminal = document.getElementById(terminalId);
+    const btn = terminal.previousElementSibling;
+    
+    if (terminal.classList.contains('hidden')) {
+        terminal.classList.remove('hidden');
+        btn.innerHTML = btn.innerHTML.replace('▼', '▲');
+    } else {
+        terminal.classList.add('hidden');
+        btn.innerHTML = btn.innerHTML.replace('▲', '▼');
+    }
+}
+</script>
+{% endblock %}

@@ -1,0 +1,35 @@
+2023-11-25 08:46:40.037 UTC [2337637] LOG:  00000: number of prepared transactions has not been configured, overriding
+2023-11-25 08:46:40.037 UTC [2337637] DETAIL:  max_prepared_transactions is now set to 200
+2023-11-25 08:46:40.037 UTC [2337637] LOCATION:  AdjustMaxPreparedTransactions, transaction_management.c:761
+2023-11-25 08:46:40.054 UTC [2337637] LOG:  00000: starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-11-25 08:46:40.054 UTC [2337637] LOCATION:  PostmasterMain, postmaster.c:1189
+2023-11-25 08:46:40.054 UTC [2337637] LOG:  00000: listening on IPv4 address "127.0.0.1", port 57636
+2023-11-25 08:46:40.054 UTC [2337637] LOCATION:  StreamServerPort, pqcomm.c:582
+2023-11-25 08:46:40.055 UTC [2337637] LOG:  00000: listening on Unix socket "/tmp/.s.PGSQL.57636"
+2023-11-25 08:46:40.055 UTC [2337637] LOCATION:  StreamServerPort, pqcomm.c:577
+2023-11-25 08:46:40.056 UTC [2337640] LOG:  00000: database system was shut down at 2023-11-25 08:46:39 UTC
+2023-11-25 08:46:40.056 UTC [2337640] LOCATION:  StartupXLOG, xlog.c:4928
+2023-11-25 08:46:40.058 UTC [2337637] LOG:  00000: database system is ready to accept connections
+2023-11-25 08:46:40.058 UTC [2337637] LOCATION:  reaper, postmaster.c:3117
+2023-11-25 08:46:40.812 UTC [2337707] LOG:  00000: starting maintenance daemon on database 16384 user 10
+2023-11-25 08:46:40.812 UTC [2337707] CONTEXT:  Citus maintenance daemon for database 16384 user 10
+2023-11-25 08:46:40.812 UTC [2337707] LOCATION:  CitusMaintenanceDaemonMain, maintenanced.c:373
+2023-11-25 08:46:40.828 UTC [2337711] ERROR:  0A000: extension "plpython3u,hstore_plpython3u" is not available
+2023-11-25 08:46:40.828 UTC [2337711] DETAIL:  Could not open extension control file "/home/abigalek/pgext-cli/pg-15-dist/share/postgresql/extension/plpython3u,hstore_plpython3u.control": No such file or directory.
+2023-11-25 08:46:40.828 UTC [2337711] HINT:  The extension must first be installed on the system where PostgreSQL is running.
+2023-11-25 08:46:40.828 UTC [2337711] LOCATION:  parse_extension_control_file, extension.c:500
+2023-11-25 08:46:40.828 UTC [2337711] STATEMENT:  CREATE EXTENSION IF NOT EXISTS "plpython3u,hstore_plpython3u"
+2023-11-25 08:46:40.832 UTC [2337637] LOG:  00000: received fast shutdown request
+2023-11-25 08:46:40.832 UTC [2337637] LOCATION:  pmdie, postmaster.c:2904
+2023-11-25 08:46:40.832 UTC [2337637] LOG:  00000: aborting any active transactions
+2023-11-25 08:46:40.832 UTC [2337637] LOCATION:  pmdie, postmaster.c:2922
+2023-11-25 08:46:40.834 UTC [2337637] LOG:  00000: background worker "logical replication launcher" (PID 2337643) exited with exit code 1
+2023-11-25 08:46:40.834 UTC [2337637] LOCATION:  LogChildExit, postmaster.c:3737
+2023-11-25 08:46:40.834 UTC [2337638] LOG:  00000: shutting down
+2023-11-25 08:46:40.834 UTC [2337638] LOCATION:  ShutdownXLOG, xlog.c:6039
+2023-11-25 08:46:40.834 UTC [2337638] LOG:  00000: checkpoint starting: shutdown immediate
+2023-11-25 08:46:40.834 UTC [2337638] LOCATION:  LogCheckpointStart, xlog.c:6089
+2023-11-25 08:46:40.840 UTC [2337638] LOG:  00000: checkpoint complete: wrote 1102 buffers (6.7%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.006 s, sync=0.001 s, total=0.007 s; sync files=0, longest=0.000 s, average=0.000 s; distance=6652 kB, estimate=6652 kB
+2023-11-25 08:46:40.840 UTC [2337638] LOCATION:  LogCheckpointEnd, xlog.c:6170
+2023-11-25 08:46:40.848 UTC [2337637] LOG:  00000: database system is shut down
+2023-11-25 08:46:40.848 UTC [2337637] LOCATION:  UnlinkLockFiles, miscinit.c:977

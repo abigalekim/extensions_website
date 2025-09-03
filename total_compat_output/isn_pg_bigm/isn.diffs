@@ -1,0 +1,39 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/isn/expected/isn.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/isn/results/isn.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/isn/expected/isn.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/isn/results/isn.out	2023-07-26 17:06:17.568821278 +0000
+@@ -18,6 +18,7 @@
+ INFO:  operator family "isn_ops" of access method btree is missing cross-type operator(s)
+ INFO:  operator family "isn_ops" of access method btree is missing cross-type operator(s)
+ INFO:  operator family "isn_ops" of access method btree is missing cross-type operator(s)
++INFO:  operator family "gin_bigm_ops" of access method gin contains function gin_bigm_compare_partial(text,text,smallint,internal) with wrong signature for support number 5
+ INFO:  operator family "isn_ops" of access method hash is missing cross-type operator(s)
+ INFO:  operator family "isn_ops" of access method hash is missing cross-type operator(s)
+ INFO:  operator family "isn_ops" of access method hash is missing cross-type operator(s)
+@@ -26,8 +27,8 @@
+ INFO:  operator family "isn_ops" of access method hash is missing cross-type operator(s)
+ INFO:  operator family "isn_ops" of access method hash is missing cross-type operator(s)
+ INFO:  operator family "isn_ops" of access method hash is missing cross-type operator(s)
+- amname |  opcname   
+---------+------------
++ amname |   opcname    
++--------+--------------
+  btree  | ean13_ops
+  btree  | isbn13_ops
+  btree  | isbn_ops
+@@ -36,6 +37,7 @@
+  btree  | issn13_ops
+  btree  | issn_ops
+  btree  | upc_ops
++ gin    | gin_bigm_ops
+  hash   | ean13_ops
+  hash   | isbn13_ops
+  hash   | isbn_ops
+@@ -44,7 +46,7 @@
+  hash   | issn13_ops
+  hash   | issn_ops
+  hash   | upc_ops
+-(16 rows)
++(17 rows)
+ 
+ --
+ -- test valid conversions

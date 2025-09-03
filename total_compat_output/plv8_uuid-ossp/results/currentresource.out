@@ -1,0 +1,17 @@
+CREATE OR REPLACE FUNCTION test_resource_owner()
+RETURNS INT
+AS $$
+  return plv8.execute("SELECT 1")[0]['?column?']
+$$ LANGUAGE plv8;
+ERROR:  language "plv8" does not exist
+CREATE TABLE resource_table (col TEXT);
+SELECT test_resource_owner();
+ERROR:  function test_resource_owner() does not exist
+LINE 1: SELECT test_resource_owner();
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+SELECT test_resource_owner() FROM resource_table;
+ERROR:  function test_resource_owner() does not exist
+LINE 1: SELECT test_resource_owner() FROM resource_table;
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.

@@ -1,0 +1,69 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/test_decoding/expected/ddl.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/test_decoding/results/ddl.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/test_decoding/expected/ddl.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/test_decoding/results/ddl.out	2023-07-26 13:43:36.574880352 +0000
+@@ -484,43 +484,17 @@
+ WITH (user_catalog_table = true)
+ ;
+ \d+ replication_metadata
+-                                                 Table "public.replication_metadata"
+-  Column  |  Type   | Collation | Nullable |                     Default                      | Storage  | Stats target | Description 
+-----------+---------+-----------+----------+--------------------------------------------------+----------+--------------+-------------
+- id       | integer |           | not null | nextval('replication_metadata_id_seq'::regclass) | plain    |              | 
+- relation | name    |           | not null |                                                  | plain    |              | 
+- options  | text[]  |           |          |                                                  | extended |              | 
+-Indexes:
+-    "replication_metadata_pkey" PRIMARY KEY, btree (id)
+-Options: user_catalog_table=true
+-
++ERROR:  cache lookup failed for type 18
+ INSERT INTO replication_metadata(relation, options)
+ VALUES ('foo', ARRAY['a', 'b']);
+ ALTER TABLE replication_metadata RESET (user_catalog_table);
+ \d+ replication_metadata
+-                                                 Table "public.replication_metadata"
+-  Column  |  Type   | Collation | Nullable |                     Default                      | Storage  | Stats target | Description 
+-----------+---------+-----------+----------+--------------------------------------------------+----------+--------------+-------------
+- id       | integer |           | not null | nextval('replication_metadata_id_seq'::regclass) | plain    |              | 
+- relation | name    |           | not null |                                                  | plain    |              | 
+- options  | text[]  |           |          |                                                  | extended |              | 
+-Indexes:
+-    "replication_metadata_pkey" PRIMARY KEY, btree (id)
+-
++ERROR:  cache lookup failed for type 18
+ INSERT INTO replication_metadata(relation, options)
+ VALUES ('bar', ARRAY['a', 'b']);
+ ALTER TABLE replication_metadata SET (user_catalog_table = true);
+ \d+ replication_metadata
+-                                                 Table "public.replication_metadata"
+-  Column  |  Type   | Collation | Nullable |                     Default                      | Storage  | Stats target | Description 
+-----------+---------+-----------+----------+--------------------------------------------------+----------+--------------+-------------
+- id       | integer |           | not null | nextval('replication_metadata_id_seq'::regclass) | plain    |              | 
+- relation | name    |           | not null |                                                  | plain    |              | 
+- options  | text[]  |           |          |                                                  | extended |              | 
+-Indexes:
+-    "replication_metadata_pkey" PRIMARY KEY, btree (id)
+-Options: user_catalog_table=true
+-
++ERROR:  cache lookup failed for type 18
+ INSERT INTO replication_metadata(relation, options)
+ VALUES ('blub', NULL);
+ -- make sure rewrites don't work
+@@ -529,17 +503,7 @@
+ ERROR:  cannot rewrite table "replication_metadata" used as a catalog table
+ ALTER TABLE replication_metadata SET (user_catalog_table = false);
+ \d+ replication_metadata
+-                                                    Table "public.replication_metadata"
+-     Column     |  Type   | Collation | Nullable |                     Default                      | Storage  | Stats target | Description 
+-----------------+---------+-----------+----------+--------------------------------------------------+----------+--------------+-------------
+- id             | integer |           | not null | nextval('replication_metadata_id_seq'::regclass) | plain    |              | 
+- relation       | name    |           | not null |                                                  | plain    |              | 
+- options        | text[]  |           |          |                                                  | extended |              | 
+- rewritemeornot | integer |           |          |                                                  | plain    |              | 
+-Indexes:
+-    "replication_metadata_pkey" PRIMARY KEY, btree (id)
+-Options: user_catalog_table=false
+-
++ERROR:  cache lookup failed for type 18
+ INSERT INTO replication_metadata(relation, options)
+ VALUES ('zaphod', NULL);
+ SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');

@@ -1,0 +1,47 @@
+2023-07-25 05:19:00.892 UTC [689096] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 05:19:00.892 UTC [689096] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 05:19:00.898 UTC [689096] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 05:19:00.907 UTC [689099] LOG:  database system was shut down at 2023-07-25 05:19:00 UTC
+2023-07-25 05:19:00.914 UTC [689096] LOG:  database system is ready to accept connections
+2023-07-25 05:19:01.086 UTC [689115] LOG:  lsm3_build lsm3_index
+2023-07-25 05:19:01.086 UTC [689115] STATEMENT:  create index lsm3_index on t using lsm3(k);
+2023-07-25 05:19:02.675 UTC [689116] LOG:  Lsm3: merge top index lsm3_index_top0 with size 2 blocks
+2023-07-25 05:19:02.676 UTC [689116] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:19:03.162 UTC [689116] LOG:  Lsm3: merge top index lsm3_index_top1 with size 2 blocks
+2023-07-25 05:19:03.162 UTC [689116] LOG:  Lsm3: truncate index lsm3_index_top1
+2023-07-25 05:19:04.172 UTC [689116] LOG:  Lsm3: merge top index lsm3_index_top0 with size 2 blocks
+2023-07-25 05:19:04.172 UTC [689116] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:19:05.182 UTC [689116] LOG:  Lsm3: merge top index lsm3_index_top1 with size 2 blocks
+2023-07-25 05:19:05.183 UTC [689116] LOG:  Lsm3: truncate index lsm3_index_top1
+2023-07-25 05:19:06.193 UTC [689116] LOG:  Lsm3: merge top index lsm3_index_top0 with size 2 blocks
+2023-07-25 05:19:06.193 UTC [689116] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:19:07.325 UTC [689116] LOG:  Lsm3: merge top index lsm3_index_top1 with size 181 blocks
+2023-07-25 05:19:07.464 UTC [689116] LOG:  Lsm3: truncate index lsm3_index_top1
+2023-07-25 05:19:07.550 UTC [689116] LOG:  Lsm3: merge top index lsm3_index_top0 with size 250 blocks
+2023-07-25 05:19:07.670 UTC [689116] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:19:07.736 UTC [689116] LOG:  Lsm3: merge top index lsm3_index_top1 with size 181 blocks
+2023-07-25 05:19:07.814 UTC [689115] LOG:  lsm3_build lsm3_index
+2023-07-25 05:19:07.814 UTC [689115] STATEMENT:  truncate table t;
+2023-07-25 05:19:08.815 UTC [689116] ERROR:  deadlock detected
+2023-07-25 05:19:08.815 UTC [689116] DETAIL:  Process 689116 waits for AccessShareLock on relation 17152 of database 16384; blocked by process 689115.
+	Process 689115 waits for AccessExclusiveLock on relation 17157 of database 16384; blocked by process 689116.
+	Process 689116: truncate
+	Process 689115: truncate table t;
+2023-07-25 05:19:08.815 UTC [689116] HINT:  See server log for query details.
+2023-07-25 05:19:08.819 UTC [689096] LOG:  background worker "lsm3-merger-17155" (PID 689116) exited with exit code 1
+2023-07-25 05:19:10.857 UTC [689115] LOG:  lsm3_build lsm3_index
+2023-07-25 05:19:10.857 UTC [689115] STATEMENT:  reindex table t;
+2023-07-25 05:19:11.990 UTC [689115] LOG:  lsm3_build lsm_k_idx
+2023-07-25 05:19:11.990 UTC [689115] STATEMENT:  create index concurrently on lsm using lsm3(k);
+2023-07-25 05:19:12.957 UTC [689131] ERROR:  value 0 out of bounds for option "numranges"
+2023-07-25 05:19:12.957 UTC [689131] DETAIL:  Valid values are between "1" and "252".
+2023-07-25 05:19:12.957 UTC [689131] STATEMENT:  CREATE INDEX text_idx on test__int using gist (a gist__int_ops(numranges = 0));
+2023-07-25 05:19:12.957 UTC [689131] ERROR:  value 253 out of bounds for option "numranges"
+2023-07-25 05:19:12.957 UTC [689131] DETAIL:  Valid values are between "1" and "252".
+2023-07-25 05:19:12.957 UTC [689131] STATEMENT:  CREATE INDEX text_idx on test__int using gist (a gist__int_ops(numranges = 253));
+2023-07-25 05:19:13.180 UTC [689131] ERROR:  value 0 out of bounds for option "siglen"
+2023-07-25 05:19:13.180 UTC [689131] DETAIL:  Valid values are between "1" and "2024".
+2023-07-25 05:19:13.180 UTC [689131] STATEMENT:  CREATE INDEX text_idx on test__int using gist (a gist__intbig_ops(siglen = 0));
+2023-07-25 05:19:13.180 UTC [689131] ERROR:  value 2025 out of bounds for option "siglen"
+2023-07-25 05:19:13.180 UTC [689131] DETAIL:  Valid values are between "1" and "2024".
+2023-07-25 05:19:13.180 UTC [689131] STATEMENT:  CREATE INDEX text_idx on test__int using gist (a gist__intbig_ops(siglen = 2025));

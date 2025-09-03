@@ -1,0 +1,33 @@
+2023-07-25 22:14:27.032 UTC [3321517] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 22:14:27.032 UTC [3321517] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 22:14:27.042 UTC [3321517] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 22:14:27.055 UTC [3321520] LOG:  database system was shut down at 2023-07-25 22:14:26 UTC
+2023-07-25 22:14:27.066 UTC [3321517] LOG:  database system is ready to accept connections
+2023-07-25 22:14:27.066 UTC [3321523] LOG:  starting bgworker pgsentinel
+2023-07-25 22:14:27.067 UTC [3321523] FATAL:  database "contrib_regression" does not exist
+2023-07-25 22:14:27.075 UTC [3321517] LOG:  background worker "pgsentinel" (PID 3321523) exited with exit code 1
+2023-07-25 22:14:27.365 UTC [3321544] WARNING:  GLOBAL is deprecated in temporary table creation at character 8
+2023-07-25 22:14:27.426 UTC [3321544] ERROR:  can not drop a GTT that is in use.
+2023-07-25 22:14:27.426 UTC [3321544] STATEMENT:  DROP TABLE t_glob_temptable1;
+2023-07-25 22:14:27.472 UTC [3321549] WARNING:  GLOBAL is deprecated in temporary table creation at character 8
+2023-07-25 22:14:27.568 UTC [3321554] WARNING:  GLOBAL is deprecated in temporary table creation at character 8
+2023-07-25 22:14:27.762 UTC [3321559] ERROR:  a temporary table has been created and is active, can not rename the GTT table in this session.
+2023-07-25 22:14:27.762 UTC [3321559] STATEMENT:  ALTER TABLE t_glob_temptable2 RENAME TO t_glob_temptable1;
+2023-07-25 22:14:27.979 UTC [3321566] ERROR:  a temporary table has been created and is active, can not add an index on the GTT table in this session.
+2023-07-25 22:14:27.979 UTC [3321566] STATEMENT:  CREATE INDEX ON t_glob_temptable2 (lbl);
+2023-07-25 22:14:28.026 UTC [3321571] WARNING:  GLOBAL is deprecated in temporary table creation at character 8
+2023-07-25 22:14:28.107 UTC [3321576] WARNING:  GLOBAL is deprecated in temporary table creation at character 8
+2023-07-25 22:14:28.295 UTC [3321582] ERROR:  relation "t_glob_temptable1" already exists
+2023-07-25 22:14:28.295 UTC [3321582] CONTEXT:  SQL statement "CREATE UNLOGGED TABLE pgtt_schema.t_glob_temptable1 (id int, lbl text)"
+	SQL statement "CREATE /*GLOBAL*/ TEMPORARY TABLE t_glob_temptable1(id int, lbl text) ON COMMIT PRESERVE ROWS"
+	PL/pgSQL function test_temp_table() line 6 at SQL statement
+2023-07-25 22:14:28.295 UTC [3321582] STATEMENT:  SELECT test_temp_table();
+2023-07-25 22:14:28.353 UTC [3321589] ERROR:  relation "t_glob_temptable1" does not exist at character 15
+2023-07-25 22:14:28.353 UTC [3321589] STATEMENT:  SELECT * FROM t_glob_temptable1;
+2023-07-25 22:14:28.429 UTC [3321594] ERROR:  attempt to create referential integrity constraint on global temporary table
+2023-07-25 22:14:28.429 UTC [3321594] STATEMENT:  CREATE /*GLOBAL*/ TEMPORARY TABLE t2 (c1 integer, FOREIGN KEY (c1) REFERENCES source (id));
+2023-07-25 22:14:28.446 UTC [3321594] ERROR:  attempt to create referential integrity constraint on global temporary table
+2023-07-25 22:14:28.446 UTC [3321594] STATEMENT:  ALTER TABLE t2 ADD FOREIGN KEY (c1) REFERENCES source (id);
+2023-07-25 22:14:28.476 UTC [3321598] WARNING:  GLOBAL is deprecated in temporary table creation at character 8
+2023-07-25 22:14:28.516 UTC [3321598] ERROR:  column "two" does not exist at character 42
+2023-07-25 22:14:28.516 UTC [3321598] STATEMENT:  INSERT INTO t_glob_temptable1 VALUES (2, two);

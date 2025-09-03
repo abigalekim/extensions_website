@@ -1,0 +1,780 @@
+diff -U3 /home/abigalek/pgext-cli/pgextworkdir/pgaudit-1.7.0/expected/pgaudit.out /home/abigalek/pgext-cli/pgextworkdir/pgaudit-1.7.0/results/pgaudit.out
+--- /home/abigalek/pgext-cli/pgextworkdir/pgaudit-1.7.0/expected/pgaudit.out	2022-06-14 17:32:06.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/pgaudit-1.7.0/results/pgaudit.out	2023-11-25 03:23:03.126186917 +0000
+@@ -905,7 +905,19 @@
+ 	EXECUTE 'DROP table ' || table_name;
+ END $$;",<none>
+ NOTICE:  AUDIT: SESSION,35,2,DDL,CREATE TABLE,TABLE,public.do_table,"CREATE TABLE do_table (""weird name"" INT)",<none>
+-NOTICE:  AUDIT: SESSION,35,3,DDL,DROP TABLE,TABLE,public.do_table,DROP table do_table,<none>
++NOTICE:  AUDIT: SESSION,35,3,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
++                 WHERE object_type IN ('table', 'foreign table')",<none>
++NOTICE:  AUDIT: SESSION,35,4,READ,SELECT,,,"SELECT master_remove_distributed_table_metadata_from_workers(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17253,public,do_table,,,,,,"
++NOTICE:  AUDIT: SESSION,35,5,READ,SELECT,,,SELECT (v_obj.original = false AND v_obj.normal = false),",,,,,,,,,t,f,,,,"
++NOTICE:  AUDIT: SESSION,35,6,READ,SELECT,,,"SELECT citus_drop_all_shards(v_obj.objid, v_obj.schema_name, v_obj.object_name, drop_shards_metadata_only := false)",",,,,,,17253,public,do_table,,,,,,"
++NOTICE:  AUDIT: SESSION,35,7,READ,SELECT,,,"SELECT master_remove_partition_metadata(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17253,public,do_table,,,,,,"
++NOTICE:  AUDIT: SESSION,35,8,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<none>
++NOTICE:  AUDIT: SESSION,35,9,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17253,,,,,,1259,0,"
++NOTICE:  AUDIT: SESSION,35,10,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17255,,,,,,1247,0,"
++NOTICE:  AUDIT: SESSION,35,11,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17254,,,,,,1247,0,"
++NOTICE:  AUDIT: SESSION,35,12,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
++    WHERE object_type IN ('table constraint')",<none>
++NOTICE:  AUDIT: SESSION,35,13,DDL,DROP TABLE,TABLE,public.do_table,DROP table do_table,<none>
+ --
+ -- Generate an error and make sure the stack gets cleared
+ DO $$
+@@ -927,9 +939,15 @@
+ -- Test alter table statements
+ ALTER TABLE public.test
+ 	DROP COLUMN description ;
+-NOTICE:  AUDIT: SESSION,37,1,DDL,ALTER TABLE,TABLE COLUMN,public.test.description,"ALTER TABLE public.test
++NOTICE:  AUDIT: SESSION,37,1,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
++                 WHERE object_type IN ('table', 'foreign table')",<none>
++NOTICE:  AUDIT: SESSION,37,2,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<none>
++NOTICE:  AUDIT: SESSION,37,3,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17246,,,,,,1259,3,"
++NOTICE:  AUDIT: SESSION,37,4,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
++    WHERE object_type IN ('table constraint')",<none>
++NOTICE:  AUDIT: SESSION,37,5,DDL,ALTER TABLE,TABLE COLUMN,public.test.description,"ALTER TABLE public.test
+ 	DROP COLUMN description ;",<none>
+-NOTICE:  AUDIT: SESSION,37,1,DDL,ALTER TABLE,TABLE,public.test,"ALTER TABLE public.test
++NOTICE:  AUDIT: SESSION,37,5,DDL,ALTER TABLE,TABLE,public.test,"ALTER TABLE public.test
+ 	DROP COLUMN description ;",<none>
+ ALTER TABLE public.test
+ 	RENAME TO test2;
+@@ -945,14 +963,37 @@
+ 	ADD COLUMN description TEXT;",<none>
+ ALTER TABLE test.test2
+ 	DROP COLUMN description;
+-NOTICE:  AUDIT: SESSION,41,1,DDL,ALTER TABLE,TABLE COLUMN,test.test2.description,"ALTER TABLE test.test2
++NOTICE:  AUDIT: SESSION,41,1,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
++                 WHERE object_type IN ('table', 'foreign table')",<none>
++NOTICE:  AUDIT: SESSION,41,2,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<none>
++NOTICE:  AUDIT: SESSION,41,3,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17246,,,,,,1259,4,"
++NOTICE:  AUDIT: SESSION,41,4,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
++    WHERE object_type IN ('table constraint')",<none>
++NOTICE:  AUDIT: SESSION,41,5,DDL,ALTER TABLE,TABLE COLUMN,test.test2.description,"ALTER TABLE test.test2
+ 	DROP COLUMN description;",<none>
+-NOTICE:  AUDIT: SESSION,41,1,DDL,ALTER TABLE,TABLE,test.test2,"ALTER TABLE test.test2
++NOTICE:  AUDIT: SESSION,41,5,DDL,ALTER TABLE,TABLE,test.test2,"ALTER TABLE test.test2
+ 	DROP COLUMN description;",<none>
+ DROP TABLE test.test2;
+-NOTICE:  AUDIT: SESSION,42,1,DDL,DROP TABLE,TABLE,test.test2,DROP TABLE test.test2;,<none>
+-NOTICE:  AUDIT: SESSION,42,1,DDL,DROP TABLE,TABLE CONSTRAINT,test_pkey on test.test2,DROP TABLE test.test2;,<none>
+-NOTICE:  AUDIT: SESSION,42,1,DDL,DROP TABLE,INDEX,test.test_pkey,DROP TABLE test.test2;,<none>
++NOTICE:  AUDIT: SESSION,42,1,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
++                 WHERE object_type IN ('table', 'foreign table')",<none>
++NOTICE:  AUDIT: SESSION,42,2,READ,SELECT,,,"SELECT master_remove_distributed_table_metadata_from_workers(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17246,test,test2,,,,,,"
++NOTICE:  AUDIT: SESSION,42,3,READ,SELECT,,,SELECT (v_obj.original = false AND v_obj.normal = false),",,,,,,,,,t,f,,,,"
++NOTICE:  AUDIT: SESSION,42,4,READ,SELECT,,,"SELECT citus_drop_all_shards(v_obj.objid, v_obj.schema_name, v_obj.object_name, drop_shards_metadata_only := false)",",,,,,,17246,test,test2,,,,,,"
++NOTICE:  AUDIT: SESSION,42,5,READ,SELECT,,,"SELECT master_remove_partition_metadata(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17246,test,test2,,,,,,"
++NOTICE:  AUDIT: SESSION,42,6,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<none>
++NOTICE:  AUDIT: SESSION,42,7,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17246,,,,,,1259,0,"
++NOTICE:  AUDIT: SESSION,42,8,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17248,,,,,,1247,0,"
++NOTICE:  AUDIT: SESSION,42,9,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17247,,,,,,1247,0,"
++NOTICE:  AUDIT: SESSION,42,10,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17249,,,,,,1259,0,"
++NOTICE:  AUDIT: SESSION,42,11,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17250,,,,,,1259,0,"
++NOTICE:  AUDIT: SESSION,42,12,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17252,,,,,,2606,0,"
++NOTICE:  AUDIT: SESSION,42,13,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17251,,,,,,1259,0,"
++NOTICE:  AUDIT: SESSION,42,14,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
++    WHERE object_type IN ('table constraint')",<none>
++NOTICE:  AUDIT: SESSION,42,15,READ,SELECT,,,SELECT notify_constraint_dropped(),<none>
++NOTICE:  AUDIT: SESSION,42,16,DDL,DROP TABLE,TABLE,test.test2,DROP TABLE test.test2;,<none>
++NOTICE:  AUDIT: SESSION,42,16,DDL,DROP TABLE,TABLE CONSTRAINT,test_pkey on test.test2,DROP TABLE test.test2;,<none>
++NOTICE:  AUDIT: SESSION,42,16,DDL,DROP TABLE,INDEX,test.test_pkey,DROP TABLE test.test2;,<none>
+ --
+ -- Test multiple statements with one semi-colon
+ CREATE SCHEMA foo
+@@ -1185,94 +1226,212 @@
+ NOTICE:  AUDIT: SESSION,67,4,READ,SELECT,TABLE,public.aaa,"SELECT 1 FROM ONLY ""public"".""aaa"" x WHERE ""id"" OPERATOR(pg_catalog.=) $1 FOR KEY SHARE OF x",<not logged>
+ SET pgaudit.log_parameter TO ON;
+ DROP TABLE bbb;
++NOTICE:  AUDIT: SESSION,68,1,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
++                 WHERE object_type IN ('table', 'foreign table')",<none>
++NOTICE:  AUDIT: SESSION,68,2,READ,SELECT,,,"SELECT master_remove_distributed_table_metadata_from_workers(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17285,public,bbb,,,,,,"
++NOTICE:  AUDIT: SESSION,68,3,READ,SELECT,,,SELECT (v_obj.original = false AND v_obj.normal = false),",,,,,,,,,t,f,,,,"
++NOTICE:  AUDIT: SESSION,68,4,READ,SELECT,,,"SELECT citus_drop_all_shards(v_obj.objid, v_obj.schema_name, v_obj.object_name, drop_shards_metadata_only := false)",",,,,,,17285,public,bbb,,,,,,"
++NOTICE:  AUDIT: SESSION,68,5,READ,SELECT,,,"SELECT master_remove_partition_metadata(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17285,public,bbb,,,,,,"
++NOTICE:  AUDIT: SESSION,68,6,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<none>
++NOTICE:  AUDIT: SESSION,68,7,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17285,,,,,,1259,0,"
++NOTICE:  AUDIT: SESSION,68,8,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17287,,,,,,1247,0,"
++NOTICE:  AUDIT: SESSION,68,9,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17286,,,,,,1247,0,"
++NOTICE:  AUDIT: SESSION,68,10,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17288,,,,,,2606,0,"
++NOTICE:  AUDIT: SESSION,68,11,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17289,,,,,,2620,0,"
++NOTICE:  AUDIT: SESSION,68,12,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17290,,,,,,2620,0,"
++NOTICE:  AUDIT: SESSION,68,13,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17291,,,,,,2620,0,"
++NOTICE:  AUDIT: SESSION,68,14,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17292,,,,,,2620,0,"
++NOTICE:  AUDIT: SESSION,68,15,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17294,,,,,,2620,0,"
++NOTICE:  AUDIT: SESSION,68,16,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
++    WHERE object_type IN ('table constraint')",<none>
++NOTICE:  AUDIT: SESSION,68,17,READ,SELECT,,,SELECT notify_constraint_dropped(),<none>
+ DROP TABLE aaa;
++NOTICE:  AUDIT: SESSION,69,1,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
++                 WHERE object_type IN ('table', 'foreign table')",<none>
++NOTICE:  AUDIT: SESSION,69,2,READ,SELECT,,,"SELECT master_remove_distributed_table_metadata_from_workers(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17280,public,aaa,,,,,,"
++NOTICE:  AUDIT: SESSION,69,3,READ,SELECT,,,SELECT (v_obj.original = false AND v_obj.normal = false),",,,,,,,,,t,f,,,,"
++NOTICE:  AUDIT: SESSION,69,4,READ,SELECT,,,"SELECT citus_drop_all_shards(v_obj.objid, v_obj.schema_name, v_obj.object_name, drop_shards_metadata_only := false)",",,,,,,17280,public,aaa,,,,,,"
++NOTICE:  AUDIT: SESSION,69,5,READ,SELECT,,,"SELECT master_remove_partition_metadata(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17280,public,aaa,,,,,,"
++NOTICE:  AUDIT: SESSION,69,6,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<none>
++NOTICE:  AUDIT: SESSION,69,7,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17280,,,,,,1259,0,"
++NOTICE:  AUDIT: SESSION,69,8,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17282,,,,,,1247,0,"
++NOTICE:  AUDIT: SESSION,69,9,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17281,,,,,,1247,0,"
++NOTICE:  AUDIT: SESSION,69,10,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17284,,,,,,2606,0,"
++NOTICE:  AUDIT: SESSION,69,11,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17283,,,,,,1259,0,"
++NOTICE:  AUDIT: SESSION,69,12,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
++    WHERE object_type IN ('table constraint')",<none>
++NOTICE:  AUDIT: SESSION,69,13,READ,SELECT,,,SELECT notify_constraint_dropped(),<none>
+ -- Test create table as after extension as been dropped
+ DROP EXTENSION pgaudit;
++NOTICE:  AUDIT: SESSION,70,1,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
++                 WHERE object_type IN ('table', 'foreign table')",<none>
++NOTICE:  AUDIT: SESSION,70,2,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<none>
++NOTICE:  AUDIT: SESSION,70,3,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17190,,,,,,3079,0,"
++NOTICE:  AUDIT: SESSION,70,4,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17191,,,,,,1255,0,"
++NOTICE:  AUDIT: SESSION,70,5,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17193,,,,,,1255,0,"
++NOTICE:  AUDIT: SESSION,70,6,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
++    WHERE object_type IN ('table constraint')",<none>
+ CREATE TABLE tmp (id int, data text);
+ CREATE TABLE tmp2 AS (SELECT * FROM tmp);
+-NOTICE:  AUDIT: SESSION,68,1,READ,SELECT,TABLE,public.tmp,CREATE TABLE tmp2 AS (SELECT * FROM tmp);,<none>
++NOTICE:  AUDIT: SESSION,71,1,READ,SELECT,TABLE,public.tmp,CREATE TABLE tmp2 AS (SELECT * FROM tmp);,<none>
+ DROP TABLE tmp;
++NOTICE:  AUDIT: SESSION,72,1,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
++                 WHERE object_type IN ('table', 'foreign table')",<none>
++NOTICE:  AUDIT: SESSION,72,2,READ,SELECT,,,"SELECT master_remove_distributed_table_metadata_from_workers(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17295,public,tmp,,,,,,"
++NOTICE:  AUDIT: SESSION,72,3,READ,SELECT,,,SELECT (v_obj.original = false AND v_obj.normal = false),",,,,,,,,,t,f,,,,"
++NOTICE:  AUDIT: SESSION,72,4,READ,SELECT,,,"SELECT citus_drop_all_shards(v_obj.objid, v_obj.schema_name, v_obj.object_name, drop_shards_metadata_only := false)",",,,,,,17295,public,tmp,,,,,,"
++NOTICE:  AUDIT: SESSION,72,5,READ,SELECT,,,"SELECT master_remove_partition_metadata(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17295,public,tmp,,,,,,"
++NOTICE:  AUDIT: SESSION,72,6,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<none>
++NOTICE:  AUDIT: SESSION,72,7,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17295,,,,,,1259,0,"
++NOTICE:  AUDIT: SESSION,72,8,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17297,,,,,,1247,0,"
++NOTICE:  AUDIT: SESSION,72,9,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17296,,,,,,1247,0,"
++NOTICE:  AUDIT: SESSION,72,10,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17298,,,,,,1259,0,"
++NOTICE:  AUDIT: SESSION,72,11,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17299,,,,,,1259,0,"
++NOTICE:  AUDIT: SESSION,72,12,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
++    WHERE object_type IN ('table constraint')",<none>
+ DROP TABLE tmp2;
++NOTICE:  AUDIT: SESSION,73,1,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
++                 WHERE object_type IN ('table', 'foreign table')",<none>
++NOTICE:  AUDIT: SESSION,73,2,READ,SELECT,,,"SELECT master_remove_distributed_table_metadata_from_workers(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17300,public,tmp2,,,,,,"
++NOTICE:  AUDIT: SESSION,73,3,READ,SELECT,,,SELECT (v_obj.original = false AND v_obj.normal = false),",,,,,,,,,t,f,,,,"
++NOTICE:  AUDIT: SESSION,73,4,READ,SELECT,,,"SELECT citus_drop_all_shards(v_obj.objid, v_obj.schema_name, v_obj.object_name, drop_shards_metadata_only := false)",",,,,,,17300,public,tmp2,,,,,,"
++NOTICE:  AUDIT: SESSION,73,5,READ,SELECT,,,"SELECT master_remove_partition_metadata(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17300,public,tmp2,,,,,,"
++NOTICE:  AUDIT: SESSION,73,6,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<none>
++NOTICE:  AUDIT: SESSION,73,7,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17300,,,,,,1259,0,"
++NOTICE:  AUDIT: SESSION,73,8,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17302,,,,,,1247,0,"
++NOTICE:  AUDIT: SESSION,73,9,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17301,,,,,,1247,0,"
++NOTICE:  AUDIT: SESSION,73,10,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17303,,,,,,1259,0,"
++NOTICE:  AUDIT: SESSION,73,11,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17304,,,,,,1259,0,"
++NOTICE:  AUDIT: SESSION,73,12,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
++    WHERE object_type IN ('table constraint')",<none>
+ --
+ -- Test MISC
+ SET pgaudit.log = 'MISC';
+-NOTICE:  AUDIT: SESSION,69,1,MISC,SET,,,SET pgaudit.log = 'MISC';,<none>
++NOTICE:  AUDIT: SESSION,74,1,MISC,SET,,,SET pgaudit.log = 'MISC';,<none>
+ SET pgaudit.log_level = 'notice';
+-NOTICE:  AUDIT: SESSION,70,1,MISC,SET,,,SET pgaudit.log_level = 'notice';,<none>
++NOTICE:  AUDIT: SESSION,75,1,MISC,SET,,,SET pgaudit.log_level = 'notice';,<none>
+ SET pgaudit.log_client = ON;
+-NOTICE:  AUDIT: SESSION,71,1,MISC,SET,,,SET pgaudit.log_client = ON;,<none>
++NOTICE:  AUDIT: SESSION,76,1,MISC,SET,,,SET pgaudit.log_client = ON;,<none>
+ SET pgaudit.log_relation = ON;
+-NOTICE:  AUDIT: SESSION,72,1,MISC,SET,,,SET pgaudit.log_relation = ON;,<none>
++NOTICE:  AUDIT: SESSION,77,1,MISC,SET,,,SET pgaudit.log_relation = ON;,<none>
+ SET pgaudit.log_parameter = ON;
+-NOTICE:  AUDIT: SESSION,73,1,MISC,SET,,,SET pgaudit.log_parameter = ON;,<none>
++NOTICE:  AUDIT: SESSION,78,1,MISC,SET,,,SET pgaudit.log_parameter = ON;,<none>
+ CREATE ROLE alice;
+ SET ROLE alice;
+-NOTICE:  AUDIT: SESSION,74,1,MISC,SET,,,SET ROLE alice;,<none>
++NOTICE:  AUDIT: SESSION,79,1,MISC,SET,,,SET ROLE alice;,<none>
+ CREATE TABLE t (a int, b text);
+ SET search_path TO test, public;
+-NOTICE:  AUDIT: SESSION,75,1,MISC,SET,,,"SET search_path TO test, public;",<none>
++NOTICE:  AUDIT: SESSION,80,1,MISC,SET,,,"SET search_path TO test, public;",<none>
+ INSERT INTO t VALUES (1, 'misc');
+ VACUUM t;
+-NOTICE:  AUDIT: SESSION,76,1,MISC,VACUUM,,,VACUUM t;,<none>
++NOTICE:  AUDIT: SESSION,81,1,MISC,VACUUM,,,VACUUM t;,<none>
+ RESET ROLE;
+-NOTICE:  AUDIT: SESSION,77,1,MISC,RESET,,,RESET ROLE;,<none>
++NOTICE:  AUDIT: SESSION,82,1,MISC,RESET,,,RESET ROLE;,<none>
+ --
+ -- Test MISC_SET
+ SET pgaudit.log = 'MISC_SET';
+-NOTICE:  AUDIT: SESSION,78,1,MISC,SET,,,SET pgaudit.log = 'MISC_SET';,<none>
++NOTICE:  AUDIT: SESSION,83,1,MISC,SET,,,SET pgaudit.log = 'MISC_SET';,<none>
+ SET ROLE alice;
+-NOTICE:  AUDIT: SESSION,79,1,MISC,SET,,,SET ROLE alice;,<none>
++NOTICE:  AUDIT: SESSION,84,1,MISC,SET,,,SET ROLE alice;,<none>
+ SET search_path TO public;
+-NOTICE:  AUDIT: SESSION,80,1,MISC,SET,,,SET search_path TO public;,<none>
++NOTICE:  AUDIT: SESSION,85,1,MISC,SET,,,SET search_path TO public;,<none>
+ INSERT INTO t VALUES (2, 'misc_set');
+ VACUUM t;
+ RESET ROLE;
+-NOTICE:  AUDIT: SESSION,81,1,MISC,RESET,,,RESET ROLE;,<none>
++NOTICE:  AUDIT: SESSION,86,1,MISC,RESET,,,RESET ROLE;,<none>
+ --
+ -- Test ALL, -MISC, MISC_SET
+ SET pgaudit.log = 'ALL, -MISC, MISC_SET';
+-NOTICE:  AUDIT: SESSION,82,1,MISC,SET,,,"SET pgaudit.log = 'ALL, -MISC, MISC_SET';",<none>
++NOTICE:  AUDIT: SESSION,87,1,MISC,SET,,,"SET pgaudit.log = 'ALL, -MISC, MISC_SET';",<none>
+ SET search_path TO public;
+-NOTICE:  AUDIT: SESSION,83,1,MISC,SET,,,SET search_path TO public;,<none>
++NOTICE:  AUDIT: SESSION,88,1,MISC,SET,,,SET search_path TO public;,<none>
+ INSERT INTO t VALUES (3, 'all, -misc, misc_set');
+-NOTICE:  AUDIT: SESSION,84,1,WRITE,INSERT,TABLE,public.t,"INSERT INTO t VALUES (3, 'all, -misc, misc_set');",<none>
++NOTICE:  AUDIT: SESSION,89,1,WRITE,INSERT,TABLE,public.t,"INSERT INTO t VALUES (3, 'all, -misc, misc_set');",<none>
+ VACUUM t;
+ RESET ROLE;
+-NOTICE:  AUDIT: SESSION,85,1,MISC,RESET,,,RESET ROLE;,<none>
++NOTICE:  AUDIT: SESSION,90,1,MISC,RESET,,,RESET ROLE;,<none>
+ DROP TABLE public.t;
+-NOTICE:  AUDIT: SESSION,86,1,DDL,DROP TABLE,,,DROP TABLE public.t;,<none>
++NOTICE:  AUDIT: SESSION,91,1,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
++                 WHERE object_type IN ('table', 'foreign table')",<none>
++NOTICE:  AUDIT: SESSION,91,2,READ,SELECT,,,"SELECT master_remove_distributed_table_metadata_from_workers(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17306,public,t,,,,,,"
++NOTICE:  AUDIT: SESSION,91,3,READ,SELECT,,,SELECT (v_obj.original = false AND v_obj.normal = false),",,,,,,,,,t,f,,,,"
++NOTICE:  AUDIT: SESSION,91,4,READ,SELECT,,,"SELECT citus_drop_all_shards(v_obj.objid, v_obj.schema_name, v_obj.object_name, drop_shards_metadata_only := false)",",,,,,,17306,public,t,,,,,,"
++NOTICE:  AUDIT: SESSION,91,5,READ,SELECT,,,"SELECT master_remove_partition_metadata(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17306,public,t,,,,,,"
++NOTICE:  AUDIT: SESSION,91,6,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<none>
++NOTICE:  AUDIT: SESSION,91,7,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17306,,,,,,1259,0,"
++NOTICE:  AUDIT: SESSION,91,8,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17308,,,,,,1247,0,"
++NOTICE:  AUDIT: SESSION,91,9,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17307,,,,,,1247,0,"
++NOTICE:  AUDIT: SESSION,91,10,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17309,,,,,,1259,0,"
++NOTICE:  AUDIT: SESSION,91,11,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17310,,,,,,1259,0,"
++NOTICE:  AUDIT: SESSION,91,12,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
++    WHERE object_type IN ('table constraint')",<none>
++NOTICE:  AUDIT: SESSION,91,13,DDL,DROP TABLE,,,DROP TABLE public.t;,<none>
+ DROP ROLE alice;
+-NOTICE:  AUDIT: SESSION,87,1,ROLE,DROP ROLE,,,DROP ROLE alice;,<none>
++NOTICE:  AUDIT: SESSION,92,1,ROLE,DROP ROLE,,,DROP ROLE alice;,<none>
+ --
+ -- Test PARTITIONED table
+ CREATE TABLE h(x int ,y int) PARTITION BY HASH(x);
+-NOTICE:  AUDIT: SESSION,88,1,DDL,CREATE TABLE,,,"CREATE TABLE h(x int ,y int) PARTITION BY HASH(x);",<none>
++NOTICE:  AUDIT: SESSION,93,1,DDL,CREATE TABLE,,,"CREATE TABLE h(x int ,y int) PARTITION BY HASH(x);",<none>
+ CREATE TABLE h_0 partition OF h FOR VALUES WITH ( MODULUS 2, REMAINDER 0);
+-NOTICE:  AUDIT: SESSION,89,1,DDL,CREATE TABLE,,,"CREATE TABLE h_0 partition OF h FOR VALUES WITH ( MODULUS 2, REMAINDER 0);",<none>
++NOTICE:  AUDIT: SESSION,94,1,DDL,CREATE TABLE,,,"CREATE TABLE h_0 partition OF h FOR VALUES WITH ( MODULUS 2, REMAINDER 0);",<none>
+ CREATE TABLE h_1 partition OF h FOR VALUES WITH ( MODULUS 2, REMAINDER 1);
+-NOTICE:  AUDIT: SESSION,90,1,DDL,CREATE TABLE,,,"CREATE TABLE h_1 partition OF h FOR VALUES WITH ( MODULUS 2, REMAINDER 1);",<none>
++NOTICE:  AUDIT: SESSION,95,1,DDL,CREATE TABLE,,,"CREATE TABLE h_1 partition OF h FOR VALUES WITH ( MODULUS 2, REMAINDER 1);",<none>
+ INSERT INTO h VALUES(1,1);
+-NOTICE:  AUDIT: SESSION,91,1,WRITE,INSERT,TABLE,public.h,"INSERT INTO h VALUES(1,1);",<none>
++NOTICE:  AUDIT: SESSION,96,1,WRITE,INSERT,TABLE,public.h,"INSERT INTO h VALUES(1,1);",<none>
+ SELECT * FROM h;
+-NOTICE:  AUDIT: SESSION,92,1,READ,SELECT,TABLE,public.h,SELECT * FROM h;,<none>
++NOTICE:  AUDIT: SESSION,97,1,READ,SELECT,TABLE,public.h,SELECT * FROM h;,<none>
+  x | y 
+ ---+---
+  1 | 1
+ (1 row)
+ 
+ SELECT * FROM h_0;
+-NOTICE:  AUDIT: SESSION,93,1,READ,SELECT,TABLE,public.h_0,SELECT * FROM h_0;,<none>
++NOTICE:  AUDIT: SESSION,98,1,READ,SELECT,TABLE,public.h_0,SELECT * FROM h_0;,<none>
+  x | y 
+ ---+---
+  1 | 1
+ (1 row)
+ 
+ CREATE INDEX h_idx ON h (x);
+-NOTICE:  AUDIT: SESSION,94,1,DDL,CREATE INDEX,,,CREATE INDEX h_idx ON h (x);,<none>
++NOTICE:  AUDIT: SESSION,99,1,DDL,CREATE INDEX,,,CREATE INDEX h_idx ON h (x);,<none>
+ DROP INDEX h_idx;
+-NOTICE:  AUDIT: SESSION,95,1,DDL,DROP INDEX,,,DROP INDEX h_idx;,<none>
++NOTICE:  AUDIT: SESSION,100,1,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
++                 WHERE object_type IN ('table', 'foreign table')",<none>
++NOTICE:  AUDIT: SESSION,100,2,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<none>
++NOTICE:  AUDIT: SESSION,100,3,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17320,,,,,,1259,0,"
++NOTICE:  AUDIT: SESSION,100,4,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17321,,,,,,1259,0,"
++NOTICE:  AUDIT: SESSION,100,5,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17322,,,,,,1259,0,"
++NOTICE:  AUDIT: SESSION,100,6,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
++    WHERE object_type IN ('table constraint')",<none>
++NOTICE:  AUDIT: SESSION,100,7,DDL,DROP INDEX,,,DROP INDEX h_idx;,<none>
+ DROP TABLE h;
+-NOTICE:  AUDIT: SESSION,96,1,DDL,DROP TABLE,,,DROP TABLE h;,<none>
++NOTICE:  AUDIT: SESSION,101,1,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
++                 WHERE object_type IN ('table', 'foreign table')",<none>
++NOTICE:  AUDIT: SESSION,101,2,READ,SELECT,,,"SELECT master_remove_distributed_table_metadata_from_workers(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17311,public,h,,,,,,"
++NOTICE:  AUDIT: SESSION,101,3,READ,SELECT,,,SELECT (v_obj.original = false AND v_obj.normal = false),",,,,,,,,,t,f,,,,"
++NOTICE:  AUDIT: SESSION,101,4,READ,SELECT,,,"SELECT citus_drop_all_shards(v_obj.objid, v_obj.schema_name, v_obj.object_name, drop_shards_metadata_only := false)",",,,,,,17311,public,h,,,,,,"
++NOTICE:  AUDIT: SESSION,101,5,READ,SELECT,,,"SELECT master_remove_partition_metadata(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17311,public,h,,,,,,"
++NOTICE:  AUDIT: SESSION,101,6,READ,SELECT,,,"SELECT master_remove_distributed_table_metadata_from_workers(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17314,public,h_0,,,,,,"
++NOTICE:  AUDIT: SESSION,101,7,READ,SELECT,,,SELECT (v_obj.original = false AND v_obj.normal = false),",,,,,,,,,f,f,,,,"
++NOTICE:  AUDIT: SESSION,101,8,READ,SELECT,,,"SELECT citus_drop_all_shards(v_obj.objid, v_obj.schema_name, v_obj.object_name, drop_shards_metadata_only := true)",",,,,,,17314,public,h_0,,,,,,"
++NOTICE:  AUDIT: SESSION,101,9,READ,SELECT,,,"SELECT master_remove_partition_metadata(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17314,public,h_0,,,,,,"
++NOTICE:  AUDIT: SESSION,101,10,READ,SELECT,,,"SELECT master_remove_distributed_table_metadata_from_workers(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17317,public,h_1,,,,,,"
++NOTICE:  AUDIT: SESSION,101,11,READ,SELECT,,,SELECT (v_obj.original = false AND v_obj.normal = false),",,,,,,,,,f,f,,,,"
++NOTICE:  AUDIT: SESSION,101,12,READ,SELECT,,,"SELECT citus_drop_all_shards(v_obj.objid, v_obj.schema_name, v_obj.object_name, drop_shards_metadata_only := true)",",,,,,,17317,public,h_1,,,,,,"
++NOTICE:  AUDIT: SESSION,101,13,READ,SELECT,,,"SELECT master_remove_partition_metadata(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17317,public,h_1,,,,,,"
++NOTICE:  AUDIT: SESSION,101,14,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<none>
++NOTICE:  AUDIT: SESSION,101,15,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17311,,,,,,1259,0,"
++NOTICE:  AUDIT: SESSION,101,16,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17313,,,,,,1247,0,"
++NOTICE:  AUDIT: SESSION,101,17,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17312,,,,,,1247,0,"
++NOTICE:  AUDIT: SESSION,101,18,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17314,,,,,,1259,0,"
++NOTICE:  AUDIT: SESSION,101,19,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17316,,,,,,1247,0,"
++NOTICE:  AUDIT: SESSION,101,20,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17315,,,,,,1247,0,"
++NOTICE:  AUDIT: SESSION,101,21,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17317,,,,,,1259,0,"
++NOTICE:  AUDIT: SESSION,101,22,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17319,,,,,,1247,0,"
++NOTICE:  AUDIT: SESSION,101,23,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17318,,,,,,1247,0,"
++NOTICE:  AUDIT: SESSION,101,24,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
++    WHERE object_type IN ('table constraint')",<none>
++NOTICE:  AUDIT: SESSION,101,25,DDL,DROP TABLE,,,DROP TABLE h;,<none>
+ --
+ -- Test rows retrived or affected by statements
+ \connect - :current_user
+@@ -1602,15 +1761,65 @@
+ --
+ -- Drop test tables
+ DROP TABLE test2;
+-NOTICE:  AUDIT: SESSION,32,1,DDL,DROP TABLE,,,DROP TABLE test2;,<none>,0
++NOTICE:  AUDIT: SESSION,32,1,READ,SELECT,,,"SELECT master_remove_distributed_table_metadata_from_workers(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17323,public,test2,,,,,,",1
++NOTICE:  AUDIT: SESSION,32,2,READ,SELECT,,,SELECT (v_obj.original = false AND v_obj.normal = false),",,,,,,,,,t,f,,,,",1
++NOTICE:  AUDIT: SESSION,32,3,READ,SELECT,,,"SELECT citus_drop_all_shards(v_obj.objid, v_obj.schema_name, v_obj.object_name, drop_shards_metadata_only := false)",",,,,,,17323,public,test2,,,,,,",1
++NOTICE:  AUDIT: SESSION,32,4,READ,SELECT,,,"SELECT master_remove_partition_metadata(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17323,public,test2,,,,,,",1
++NOTICE:  AUDIT: SESSION,32,5,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
++                 WHERE object_type IN ('table', 'foreign table')",<none>,1
++NOTICE:  AUDIT: SESSION,32,6,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17323,,,,,,1259,0,",1
++NOTICE:  AUDIT: SESSION,32,7,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17325,,,,,,1247,0,",1
++NOTICE:  AUDIT: SESSION,32,8,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17324,,,,,,1247,0,",1
++NOTICE:  AUDIT: SESSION,32,9,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17326,,,,,,1259,0,",1
++NOTICE:  AUDIT: SESSION,32,10,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17327,,,,,,1259,0,",1
++NOTICE:  AUDIT: SESSION,32,11,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17334,,,,,,2620,0,",1
++NOTICE:  AUDIT: SESSION,32,12,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<none>,6
++NOTICE:  AUDIT: SESSION,32,13,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
++    WHERE object_type IN ('table constraint')",<none>,1
++NOTICE:  AUDIT: SESSION,32,14,DDL,DROP TABLE,,,DROP TABLE test2;,<none>,0
+ DROP VIEW vw_test3;
+-NOTICE:  AUDIT: SESSION,33,1,DDL,DROP VIEW,,,DROP VIEW vw_test3;,<none>,0
++NOTICE:  AUDIT: SESSION,33,1,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
++                 WHERE object_type IN ('table', 'foreign table')",<none>,0
++NOTICE:  AUDIT: SESSION,33,2,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17336,,,,,,1259,0,",1
++NOTICE:  AUDIT: SESSION,33,3,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17338,,,,,,1247,0,",1
++NOTICE:  AUDIT: SESSION,33,4,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17337,,,,,,1247,0,",1
++NOTICE:  AUDIT: SESSION,33,5,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17339,,,,,,2618,0,",1
++NOTICE:  AUDIT: SESSION,33,6,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<none>,4
++NOTICE:  AUDIT: SESSION,33,7,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
++    WHERE object_type IN ('table constraint')",<none>,1
++NOTICE:  AUDIT: SESSION,33,8,DDL,DROP VIEW,,,DROP VIEW vw_test3;,<none>,0
+ DROP TABLE test3;
+-NOTICE:  AUDIT: SESSION,34,1,DDL,DROP TABLE,,,DROP TABLE test3;,<none>,0
++NOTICE:  AUDIT: SESSION,34,1,READ,SELECT,,,"SELECT master_remove_distributed_table_metadata_from_workers(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17328,public,test3,,,,,,",1
++NOTICE:  AUDIT: SESSION,34,2,READ,SELECT,,,SELECT (v_obj.original = false AND v_obj.normal = false),",,,,,,,,,t,f,,,,",1
++NOTICE:  AUDIT: SESSION,34,3,READ,SELECT,,,"SELECT citus_drop_all_shards(v_obj.objid, v_obj.schema_name, v_obj.object_name, drop_shards_metadata_only := false)",",,,,,,17328,public,test3,,,,,,",1
++NOTICE:  AUDIT: SESSION,34,4,READ,SELECT,,,"SELECT master_remove_partition_metadata(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17328,public,test3,,,,,,",1
++NOTICE:  AUDIT: SESSION,34,5,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
++                 WHERE object_type IN ('table', 'foreign table')",<none>,1
++NOTICE:  AUDIT: SESSION,34,6,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17328,,,,,,1259,0,",1
++NOTICE:  AUDIT: SESSION,34,7,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17330,,,,,,1247,0,",1
++NOTICE:  AUDIT: SESSION,34,8,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17329,,,,,,1247,0,",1
++NOTICE:  AUDIT: SESSION,34,9,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17331,,,,,,1259,0,",1
++NOTICE:  AUDIT: SESSION,34,10,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17332,,,,,,1259,0,",1
++NOTICE:  AUDIT: SESSION,34,11,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<none>,5
++NOTICE:  AUDIT: SESSION,34,12,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
++    WHERE object_type IN ('table constraint')",<none>,1
++NOTICE:  AUDIT: SESSION,34,13,DDL,DROP TABLE,,,DROP TABLE test3;,<none>,0
+ DROP FUNCTION test2_insert();
+-NOTICE:  AUDIT: SESSION,35,1,DDL,DROP FUNCTION,,,DROP FUNCTION test2_insert();,<none>,0
++NOTICE:  AUDIT: SESSION,35,1,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
++                 WHERE object_type IN ('table', 'foreign table')",<none>,0
++NOTICE:  AUDIT: SESSION,35,2,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17333,,,,,,1255,0,",1
++NOTICE:  AUDIT: SESSION,35,3,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<none>,1
++NOTICE:  AUDIT: SESSION,35,4,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
++    WHERE object_type IN ('table constraint')",<none>,1
++NOTICE:  AUDIT: SESSION,35,5,DDL,DROP FUNCTION,,,DROP FUNCTION test2_insert();,<none>,0
+ DROP FUNCTION test2_change(int);
+-NOTICE:  AUDIT: SESSION,36,1,DDL,DROP FUNCTION,,,DROP FUNCTION test2_change(int);,<none>,0
++NOTICE:  AUDIT: SESSION,36,1,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
++                 WHERE object_type IN ('table', 'foreign table')",<none>,0
++NOTICE:  AUDIT: SESSION,36,2,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17335,,,,,,1255,0,",1
++NOTICE:  AUDIT: SESSION,36,3,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<none>,1
++NOTICE:  AUDIT: SESSION,36,4,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
++    WHERE object_type IN ('table constraint')",<none>,1
++NOTICE:  AUDIT: SESSION,36,5,DDL,DROP FUNCTION,,,DROP FUNCTION test2_change(int);,<none>,0
+ --
+ -- Only object logging will be done
+ SET pgaudit.log = 'none';
+@@ -1787,7 +1996,21 @@
+ --
+ -- Drop a table from a query
+ DROP TABLE test.account_copy;
+-NOTICE:  AUDIT: SESSION,52,1,DDL,DROP TABLE,,,DROP TABLE test.account_copy;,<none>,0
++NOTICE:  AUDIT: SESSION,52,1,READ,SELECT,,,"SELECT master_remove_distributed_table_metadata_from_workers(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17238,test,account_copy,,,,,,",1
++NOTICE:  AUDIT: SESSION,52,2,READ,SELECT,,,SELECT (v_obj.original = false AND v_obj.normal = false),",,,,,,,,,t,f,,,,",1
++NOTICE:  AUDIT: SESSION,52,3,READ,SELECT,,,"SELECT citus_drop_all_shards(v_obj.objid, v_obj.schema_name, v_obj.object_name, drop_shards_metadata_only := false)",",,,,,,17238,test,account_copy,,,,,,",1
++NOTICE:  AUDIT: SESSION,52,4,READ,SELECT,,,"SELECT master_remove_partition_metadata(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17238,test,account_copy,,,,,,",1
++NOTICE:  AUDIT: SESSION,52,5,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
++                 WHERE object_type IN ('table', 'foreign table')",<none>,1
++NOTICE:  AUDIT: SESSION,52,6,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17238,,,,,,1259,0,",1
++NOTICE:  AUDIT: SESSION,52,7,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17240,,,,,,1247,0,",1
++NOTICE:  AUDIT: SESSION,52,8,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17239,,,,,,1247,0,",1
++NOTICE:  AUDIT: SESSION,52,9,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17241,,,,,,1259,0,",1
++NOTICE:  AUDIT: SESSION,52,10,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17242,,,,,,1259,0,",1
++NOTICE:  AUDIT: SESSION,52,11,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<none>,5
++NOTICE:  AUDIT: SESSION,52,12,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
++    WHERE object_type IN ('table constraint')",<none>,1
++NOTICE:  AUDIT: SESSION,52,13,DDL,DROP TABLE,,,DROP TABLE test.account_copy;,<none>,0
+ --
+ -- Create a table from a query
+ CREATE TABLE test.account_copy AS
+@@ -1957,7 +2180,19 @@
+ --
+ -- Test prepared insert
+ DROP TABLE test.test_insert;
+-NOTICE:  AUDIT: SESSION,74,1,DDL,DROP TABLE,,,DROP TABLE test.test_insert;,<none>,0
++NOTICE:  AUDIT: SESSION,74,1,READ,SELECT,,,"SELECT master_remove_distributed_table_metadata_from_workers(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17243,test,test_insert,,,,,,",1
++NOTICE:  AUDIT: SESSION,74,2,READ,SELECT,,,SELECT (v_obj.original = false AND v_obj.normal = false),",,,,,,,,,t,f,,,,",1
++NOTICE:  AUDIT: SESSION,74,3,READ,SELECT,,,"SELECT citus_drop_all_shards(v_obj.objid, v_obj.schema_name, v_obj.object_name, drop_shards_metadata_only := false)",",,,,,,17243,test,test_insert,,,,,,",1
++NOTICE:  AUDIT: SESSION,74,4,READ,SELECT,,,"SELECT master_remove_partition_metadata(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17243,test,test_insert,,,,,,",1
++NOTICE:  AUDIT: SESSION,74,5,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
++                 WHERE object_type IN ('table', 'foreign table')",<none>,1
++NOTICE:  AUDIT: SESSION,74,6,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17243,,,,,,1259,0,",1
++NOTICE:  AUDIT: SESSION,74,7,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17245,,,,,,1247,0,",1
++NOTICE:  AUDIT: SESSION,74,8,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17244,,,,,,1247,0,",1
++NOTICE:  AUDIT: SESSION,74,9,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<none>,3
++NOTICE:  AUDIT: SESSION,74,10,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
++    WHERE object_type IN ('table constraint')",<none>,1
++NOTICE:  AUDIT: SESSION,74,11,DDL,DROP TABLE,,,DROP TABLE test.test_insert;,<none>,0
+ --
+ -- Test prepared insert
+ CREATE TABLE test.test_insert
+@@ -2119,7 +2354,19 @@
+ 	EXECUTE 'DROP table ' || table_name;
+ END $$;",<none>,0
+ NOTICE:  AUDIT: SESSION,90,2,DDL,CREATE TABLE,,,"CREATE TABLE do_table (""weird name"" INT)",<none>,0
+-NOTICE:  AUDIT: SESSION,90,3,DDL,DROP TABLE,,,DROP table do_table,<none>,0
++NOTICE:  AUDIT: SESSION,90,3,READ,SELECT,,,"SELECT master_remove_distributed_table_metadata_from_workers(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17355,public,do_table,,,,,,",1
++NOTICE:  AUDIT: SESSION,90,4,READ,SELECT,,,SELECT (v_obj.original = false AND v_obj.normal = false),",,,,,,,,,t,f,,,,",1
++NOTICE:  AUDIT: SESSION,90,5,READ,SELECT,,,"SELECT citus_drop_all_shards(v_obj.objid, v_obj.schema_name, v_obj.object_name, drop_shards_metadata_only := false)",",,,,,,17355,public,do_table,,,,,,",1
++NOTICE:  AUDIT: SESSION,90,6,READ,SELECT,,,"SELECT master_remove_partition_metadata(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17355,public,do_table,,,,,,",1
++NOTICE:  AUDIT: SESSION,90,7,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
++                 WHERE object_type IN ('table', 'foreign table')",<none>,1
++NOTICE:  AUDIT: SESSION,90,8,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17355,,,,,,1259,0,",1
++NOTICE:  AUDIT: SESSION,90,9,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17357,,,,,,1247,0,",1
++NOTICE:  AUDIT: SESSION,90,10,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17356,,,,,,1247,0,",1
++NOTICE:  AUDIT: SESSION,90,11,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<none>,3
++NOTICE:  AUDIT: SESSION,90,12,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
++    WHERE object_type IN ('table constraint')",<none>,1
++NOTICE:  AUDIT: SESSION,90,13,DDL,DROP TABLE,,,DROP table do_table,<none>,0
+ --
+ -- Generate an error and make sure the stack gets cleared
+ DO $$
+@@ -2141,7 +2388,13 @@
+ -- Test alter table statements
+ ALTER TABLE public.test
+ 	DROP COLUMN description ;
+-NOTICE:  AUDIT: SESSION,92,1,DDL,ALTER TABLE,,,"ALTER TABLE public.test
++NOTICE:  AUDIT: SESSION,92,1,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
++                 WHERE object_type IN ('table', 'foreign table')",<none>,0
++NOTICE:  AUDIT: SESSION,92,2,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17348,,,,,,1259,3,",1
++NOTICE:  AUDIT: SESSION,92,3,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<none>,1
++NOTICE:  AUDIT: SESSION,92,4,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
++    WHERE object_type IN ('table constraint')",<none>,1
++NOTICE:  AUDIT: SESSION,92,5,DDL,ALTER TABLE,,,"ALTER TABLE public.test
+ 	DROP COLUMN description ;",<none>,0
+ ALTER TABLE public.test
+ 	RENAME TO test2;
+@@ -2157,10 +2410,33 @@
+ 	ADD COLUMN description TEXT;",<none>,0
+ ALTER TABLE test.test2
+ 	DROP COLUMN description;
+-NOTICE:  AUDIT: SESSION,96,1,DDL,ALTER TABLE,,,"ALTER TABLE test.test2
++NOTICE:  AUDIT: SESSION,96,1,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
++                 WHERE object_type IN ('table', 'foreign table')",<none>,0
++NOTICE:  AUDIT: SESSION,96,2,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17348,,,,,,1259,4,",1
++NOTICE:  AUDIT: SESSION,96,3,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<none>,1
++NOTICE:  AUDIT: SESSION,96,4,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
++    WHERE object_type IN ('table constraint')",<none>,1
++NOTICE:  AUDIT: SESSION,96,5,DDL,ALTER TABLE,,,"ALTER TABLE test.test2
+ 	DROP COLUMN description;",<none>,0
+ DROP TABLE test.test2;
+-NOTICE:  AUDIT: SESSION,97,1,DDL,DROP TABLE,,,DROP TABLE test.test2;,<none>,0
++NOTICE:  AUDIT: SESSION,97,1,READ,SELECT,,,"SELECT master_remove_distributed_table_metadata_from_workers(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17348,test,test2,,,,,,",1
++NOTICE:  AUDIT: SESSION,97,2,READ,SELECT,,,SELECT (v_obj.original = false AND v_obj.normal = false),",,,,,,,,,t,f,,,,",1
++NOTICE:  AUDIT: SESSION,97,3,READ,SELECT,,,"SELECT citus_drop_all_shards(v_obj.objid, v_obj.schema_name, v_obj.object_name, drop_shards_metadata_only := false)",",,,,,,17348,test,test2,,,,,,",1
++NOTICE:  AUDIT: SESSION,97,4,READ,SELECT,,,"SELECT master_remove_partition_metadata(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17348,test,test2,,,,,,",1
++NOTICE:  AUDIT: SESSION,97,5,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
++                 WHERE object_type IN ('table', 'foreign table')",<none>,1
++NOTICE:  AUDIT: SESSION,97,6,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17348,,,,,,1259,0,",1
++NOTICE:  AUDIT: SESSION,97,7,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17350,,,,,,1247,0,",1
++NOTICE:  AUDIT: SESSION,97,8,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17349,,,,,,1247,0,",1
++NOTICE:  AUDIT: SESSION,97,9,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17351,,,,,,1259,0,",1
++NOTICE:  AUDIT: SESSION,97,10,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17352,,,,,,1259,0,",1
++NOTICE:  AUDIT: SESSION,97,11,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17354,,,,,,2606,0,",1
++NOTICE:  AUDIT: SESSION,97,12,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17353,,,,,,1259,0,",1
++NOTICE:  AUDIT: SESSION,97,13,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<none>,7
++NOTICE:  AUDIT: SESSION,97,14,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
++    WHERE object_type IN ('table constraint')",<none>,1
++NOTICE:  AUDIT: SESSION,97,15,READ,SELECT,,,SELECT notify_constraint_dropped(),<none>,1
++NOTICE:  AUDIT: SESSION,97,16,DDL,DROP TABLE,,,DROP TABLE test.test2;,<none>,0
+ --
+ -- Test multiple statements with one semi-colon
+ CREATE SCHEMA foo1
+@@ -2170,11 +2446,41 @@
+ 	CREATE TABLE foo1.bar1 (id int)
+ 	CREATE TABLE foo1.baz1 (id int);",<none>,0
+ DROP TABLE foo1.bar1;
+-NOTICE:  AUDIT: SESSION,99,1,DDL,DROP TABLE,,,DROP TABLE foo1.bar1;,<none>,0
++NOTICE:  AUDIT: SESSION,99,1,READ,SELECT,,,"SELECT master_remove_distributed_table_metadata_from_workers(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17359,foo1,bar1,,,,,,",1
++NOTICE:  AUDIT: SESSION,99,2,READ,SELECT,,,SELECT (v_obj.original = false AND v_obj.normal = false),",,,,,,,,,t,f,,,,",1
++NOTICE:  AUDIT: SESSION,99,3,READ,SELECT,,,"SELECT citus_drop_all_shards(v_obj.objid, v_obj.schema_name, v_obj.object_name, drop_shards_metadata_only := false)",",,,,,,17359,foo1,bar1,,,,,,",1
++NOTICE:  AUDIT: SESSION,99,4,READ,SELECT,,,"SELECT master_remove_partition_metadata(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17359,foo1,bar1,,,,,,",1
++NOTICE:  AUDIT: SESSION,99,5,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
++                 WHERE object_type IN ('table', 'foreign table')",<none>,1
++NOTICE:  AUDIT: SESSION,99,6,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17359,,,,,,1259,0,",1
++NOTICE:  AUDIT: SESSION,99,7,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17361,,,,,,1247,0,",1
++NOTICE:  AUDIT: SESSION,99,8,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17360,,,,,,1247,0,",1
++NOTICE:  AUDIT: SESSION,99,9,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<none>,3
++NOTICE:  AUDIT: SESSION,99,10,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
++    WHERE object_type IN ('table constraint')",<none>,1
++NOTICE:  AUDIT: SESSION,99,11,DDL,DROP TABLE,,,DROP TABLE foo1.bar1;,<none>,0
+ DROP TABLE foo1.baz1;
+-NOTICE:  AUDIT: SESSION,100,1,DDL,DROP TABLE,,,DROP TABLE foo1.baz1;,<none>,0
++NOTICE:  AUDIT: SESSION,100,1,READ,SELECT,,,"SELECT master_remove_distributed_table_metadata_from_workers(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17362,foo1,baz1,,,,,,",1
++NOTICE:  AUDIT: SESSION,100,2,READ,SELECT,,,SELECT (v_obj.original = false AND v_obj.normal = false),",,,,,,,,,t,f,,,,",1
++NOTICE:  AUDIT: SESSION,100,3,READ,SELECT,,,"SELECT citus_drop_all_shards(v_obj.objid, v_obj.schema_name, v_obj.object_name, drop_shards_metadata_only := false)",",,,,,,17362,foo1,baz1,,,,,,",1
++NOTICE:  AUDIT: SESSION,100,4,READ,SELECT,,,"SELECT master_remove_partition_metadata(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17362,foo1,baz1,,,,,,",1
++NOTICE:  AUDIT: SESSION,100,5,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
++                 WHERE object_type IN ('table', 'foreign table')",<none>,1
++NOTICE:  AUDIT: SESSION,100,6,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17362,,,,,,1259,0,",1
++NOTICE:  AUDIT: SESSION,100,7,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17364,,,,,,1247,0,",1
++NOTICE:  AUDIT: SESSION,100,8,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17363,,,,,,1247,0,",1
++NOTICE:  AUDIT: SESSION,100,9,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<none>,3
++NOTICE:  AUDIT: SESSION,100,10,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
++    WHERE object_type IN ('table constraint')",<none>,1
++NOTICE:  AUDIT: SESSION,100,11,DDL,DROP TABLE,,,DROP TABLE foo1.baz1;,<none>,0
+ DROP SCHEMA foo1;
+-NOTICE:  AUDIT: SESSION,101,1,DDL,DROP SCHEMA,,,DROP SCHEMA foo1;,<none>,0
++NOTICE:  AUDIT: SESSION,101,1,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
++                 WHERE object_type IN ('table', 'foreign table')",<none>,0
++NOTICE:  AUDIT: SESSION,101,2,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17358,,,,,,2615,0,",1
++NOTICE:  AUDIT: SESSION,101,3,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<none>,1
++NOTICE:  AUDIT: SESSION,101,4,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
++    WHERE object_type IN ('table constraint')",<none>,1
++NOTICE:  AUDIT: SESSION,101,5,DDL,DROP SCHEMA,,,DROP SCHEMA foo1;,<none>,0
+ --
+ -- Test aggregate
+ CREATE FUNCTION public.int_add1
+@@ -2373,85 +2679,167 @@
+ NOTICE:  AUDIT: SESSION,121,4,WRITE,INSERT,TABLE,public.bbb,INSERT INTO bbb VALUES (1);,<not logged>,1
+ SET pgaudit.log_parameter TO ON;
+ DROP TABLE bbb;
++NOTICE:  AUDIT: SESSION,122,1,READ,SELECT,,,"SELECT master_remove_distributed_table_metadata_from_workers(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17383,public,bbb,,,,,,",1
++NOTICE:  AUDIT: SESSION,122,2,READ,SELECT,,,SELECT (v_obj.original = false AND v_obj.normal = false),",,,,,,,,,t,f,,,,",1
++NOTICE:  AUDIT: SESSION,122,3,READ,SELECT,,,"SELECT citus_drop_all_shards(v_obj.objid, v_obj.schema_name, v_obj.object_name, drop_shards_metadata_only := false)",",,,,,,17383,public,bbb,,,,,,",1
++NOTICE:  AUDIT: SESSION,122,4,READ,SELECT,,,"SELECT master_remove_partition_metadata(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17383,public,bbb,,,,,,",1
++NOTICE:  AUDIT: SESSION,122,5,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
++                 WHERE object_type IN ('table', 'foreign table')",<none>,1
++NOTICE:  AUDIT: SESSION,122,6,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17383,,,,,,1259,0,",1
++NOTICE:  AUDIT: SESSION,122,7,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17385,,,,,,1247,0,",1
++NOTICE:  AUDIT: SESSION,122,8,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17384,,,,,,1247,0,",1
++NOTICE:  AUDIT: SESSION,122,9,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17386,,,,,,2606,0,",1
++NOTICE:  AUDIT: SESSION,122,10,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17387,,,,,,2620,0,",1
++NOTICE:  AUDIT: SESSION,122,11,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17388,,,,,,2620,0,",1
++NOTICE:  AUDIT: SESSION,122,12,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17389,,,,,,2620,0,",1
++NOTICE:  AUDIT: SESSION,122,13,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17390,,,,,,2620,0,",1
++NOTICE:  AUDIT: SESSION,122,14,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17392,,,,,,2620,0,",1
++NOTICE:  AUDIT: SESSION,122,15,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<none>,9
++NOTICE:  AUDIT: SESSION,122,16,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
++    WHERE object_type IN ('table constraint')",<none>,1
++NOTICE:  AUDIT: SESSION,122,17,READ,SELECT,,,SELECT notify_constraint_dropped(),<none>,1
+ DROP TABLE aaa;
++NOTICE:  AUDIT: SESSION,123,1,READ,SELECT,,,"SELECT master_remove_distributed_table_metadata_from_workers(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17378,public,aaa,,,,,,",1
++NOTICE:  AUDIT: SESSION,123,2,READ,SELECT,,,SELECT (v_obj.original = false AND v_obj.normal = false),",,,,,,,,,t,f,,,,",1
++NOTICE:  AUDIT: SESSION,123,3,READ,SELECT,,,"SELECT citus_drop_all_shards(v_obj.objid, v_obj.schema_name, v_obj.object_name, drop_shards_metadata_only := false)",",,,,,,17378,public,aaa,,,,,,",1
++NOTICE:  AUDIT: SESSION,123,4,READ,SELECT,,,"SELECT master_remove_partition_metadata(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17378,public,aaa,,,,,,",1
++NOTICE:  AUDIT: SESSION,123,5,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
++                 WHERE object_type IN ('table', 'foreign table')",<none>,1
++NOTICE:  AUDIT: SESSION,123,6,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17378,,,,,,1259,0,",1
++NOTICE:  AUDIT: SESSION,123,7,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17380,,,,,,1247,0,",1
++NOTICE:  AUDIT: SESSION,123,8,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17379,,,,,,1247,0,",1
++NOTICE:  AUDIT: SESSION,123,9,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17382,,,,,,2606,0,",1
++NOTICE:  AUDIT: SESSION,123,10,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17381,,,,,,1259,0,",1
++NOTICE:  AUDIT: SESSION,123,11,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<none>,5
++NOTICE:  AUDIT: SESSION,123,12,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
++    WHERE object_type IN ('table constraint')",<none>,1
++NOTICE:  AUDIT: SESSION,123,13,READ,SELECT,,,SELECT notify_constraint_dropped(),<none>,1
+ --
+ -- Test MISC
+ SET pgaudit.log = 'misc';
+-NOTICE:  AUDIT: SESSION,122,1,MISC,SET,,,SET pgaudit.log = 'misc';,<none>,0
++NOTICE:  AUDIT: SESSION,124,1,MISC,SET,,,SET pgaudit.log = 'misc';,<none>,0
+ SET pgaudit.log_client = on;
+-NOTICE:  AUDIT: SESSION,123,1,MISC,SET,,,SET pgaudit.log_client = on;,<none>,0
++NOTICE:  AUDIT: SESSION,125,1,MISC,SET,,,SET pgaudit.log_client = on;,<none>,0
+ SET pgaudit.log_relation = on;
+-NOTICE:  AUDIT: SESSION,124,1,MISC,SET,,,SET pgaudit.log_relation = on;,<none>,0
++NOTICE:  AUDIT: SESSION,126,1,MISC,SET,,,SET pgaudit.log_relation = on;,<none>,0
+ SET pgaudit.log_parameter = on;
+-NOTICE:  AUDIT: SESSION,125,1,MISC,SET,,,SET pgaudit.log_parameter = on;,<none>,0
++NOTICE:  AUDIT: SESSION,127,1,MISC,SET,,,SET pgaudit.log_parameter = on;,<none>,0
+ CREATE ROLE alice;
+ SET ROLE alice;
+-NOTICE:  AUDIT: SESSION,126,1,MISC,SET,,,SET ROLE alice;,<none>,0
++NOTICE:  AUDIT: SESSION,128,1,MISC,SET,,,SET ROLE alice;,<none>,0
+ CREATE TABLE t (a int, b text);
+ SET search_path TO test, public;
+-NOTICE:  AUDIT: SESSION,127,1,MISC,SET,,,"SET search_path TO test, public;",<none>,0
++NOTICE:  AUDIT: SESSION,129,1,MISC,SET,,,"SET search_path TO test, public;",<none>,0
+ INSERT INTO t VALUES (1, 'misc');
+ VACUUM t;
+-NOTICE:  AUDIT: SESSION,128,1,MISC,VACUUM,,,VACUUM t;,<none>,0
++NOTICE:  AUDIT: SESSION,130,1,MISC,VACUUM,,,VACUUM t;,<none>,0
+ RESET ROLE;
+-NOTICE:  AUDIT: SESSION,129,1,MISC,RESET,,,RESET ROLE;,<none>,0
++NOTICE:  AUDIT: SESSION,131,1,MISC,RESET,,,RESET ROLE;,<none>,0
+ --
+ -- Test MISC_SET
+ SET pgaudit.log = 'MISC_SET';
+-NOTICE:  AUDIT: SESSION,130,1,MISC,SET,,,SET pgaudit.log = 'MISC_SET';,<none>,0
++NOTICE:  AUDIT: SESSION,132,1,MISC,SET,,,SET pgaudit.log = 'MISC_SET';,<none>,0
+ SET ROLE alice;
+-NOTICE:  AUDIT: SESSION,131,1,MISC,SET,,,SET ROLE alice;,<none>,0
++NOTICE:  AUDIT: SESSION,133,1,MISC,SET,,,SET ROLE alice;,<none>,0
+ SET search_path TO public;
+-NOTICE:  AUDIT: SESSION,132,1,MISC,SET,,,SET search_path TO public;,<none>,0
++NOTICE:  AUDIT: SESSION,134,1,MISC,SET,,,SET search_path TO public;,<none>,0
+ INSERT INTO t VALUES (2, 'misc_set');
+ VACUUM t;
+ RESET ROLE;
+-NOTICE:  AUDIT: SESSION,133,1,MISC,RESET,,,RESET ROLE;,<none>,0
++NOTICE:  AUDIT: SESSION,135,1,MISC,RESET,,,RESET ROLE;,<none>,0
+ --
+ -- Test ALL, -MISC, MISC_SET
+ SET pgaudit.log = 'ALL, -MISC, MISC_SET';
+-NOTICE:  AUDIT: SESSION,134,1,MISC,SET,,,"SET pgaudit.log = 'ALL, -MISC, MISC_SET';",<none>,0
++NOTICE:  AUDIT: SESSION,136,1,MISC,SET,,,"SET pgaudit.log = 'ALL, -MISC, MISC_SET';",<none>,0
+ SET search_path TO public;
+-NOTICE:  AUDIT: SESSION,135,1,MISC,SET,,,SET search_path TO public;,<none>,0
++NOTICE:  AUDIT: SESSION,137,1,MISC,SET,,,SET search_path TO public;,<none>,0
+ INSERT INTO t VALUES (3, 'all, -misc, misc_set');
+-NOTICE:  AUDIT: SESSION,136,1,WRITE,INSERT,TABLE,public.t,"INSERT INTO t VALUES (3, 'all, -misc, misc_set');",<none>,1
++NOTICE:  AUDIT: SESSION,138,1,WRITE,INSERT,TABLE,public.t,"INSERT INTO t VALUES (3, 'all, -misc, misc_set');",<none>,1
+ VACUUM t;
+ RESET ROLE;
+-NOTICE:  AUDIT: SESSION,137,1,MISC,RESET,,,RESET ROLE;,<none>,0
++NOTICE:  AUDIT: SESSION,139,1,MISC,RESET,,,RESET ROLE;,<none>,0
+ DROP TABLE public.t;
+-NOTICE:  AUDIT: SESSION,138,1,DDL,DROP TABLE,,,DROP TABLE public.t;,<none>,0
++NOTICE:  AUDIT: SESSION,140,1,READ,SELECT,,,"SELECT master_remove_distributed_table_metadata_from_workers(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17394,public,t,,,,,,",1
++NOTICE:  AUDIT: SESSION,140,2,READ,SELECT,,,SELECT (v_obj.original = false AND v_obj.normal = false),",,,,,,,,,t,f,,,,",1
++NOTICE:  AUDIT: SESSION,140,3,READ,SELECT,,,"SELECT citus_drop_all_shards(v_obj.objid, v_obj.schema_name, v_obj.object_name, drop_shards_metadata_only := false)",",,,,,,17394,public,t,,,,,,",1
++NOTICE:  AUDIT: SESSION,140,4,READ,SELECT,,,"SELECT master_remove_partition_metadata(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17394,public,t,,,,,,",1
++NOTICE:  AUDIT: SESSION,140,5,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
++                 WHERE object_type IN ('table', 'foreign table')",<none>,1
++NOTICE:  AUDIT: SESSION,140,6,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17394,,,,,,1259,0,",1
++NOTICE:  AUDIT: SESSION,140,7,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17396,,,,,,1247,0,",1
++NOTICE:  AUDIT: SESSION,140,8,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17395,,,,,,1247,0,",1
++NOTICE:  AUDIT: SESSION,140,9,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17397,,,,,,1259,0,",1
++NOTICE:  AUDIT: SESSION,140,10,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17398,,,,,,1259,0,",1
++NOTICE:  AUDIT: SESSION,140,11,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<none>,5
++NOTICE:  AUDIT: SESSION,140,12,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
++    WHERE object_type IN ('table constraint')",<none>,1
++NOTICE:  AUDIT: SESSION,140,13,DDL,DROP TABLE,,,DROP TABLE public.t;,<none>,0
+ DROP ROLE alice;
+-NOTICE:  AUDIT: SESSION,139,1,ROLE,DROP ROLE,,,DROP ROLE alice;,<none>,0
++NOTICE:  AUDIT: SESSION,141,1,ROLE,DROP ROLE,,,DROP ROLE alice;,<none>,0
+ --
+ -- Test PARTITIONED table
+ CREATE TABLE h(x int ,y int) PARTITION BY HASH(x);
+-NOTICE:  AUDIT: SESSION,140,1,DDL,CREATE TABLE,,,"CREATE TABLE h(x int ,y int) PARTITION BY HASH(x);",<none>,0
++NOTICE:  AUDIT: SESSION,142,1,DDL,CREATE TABLE,,,"CREATE TABLE h(x int ,y int) PARTITION BY HASH(x);",<none>,0
+ CREATE TABLE h_0 partition OF h FOR VALUES WITH ( MODULUS 2, REMAINDER 0);
+-NOTICE:  AUDIT: SESSION,141,1,DDL,CREATE TABLE,,,"CREATE TABLE h_0 partition OF h FOR VALUES WITH ( MODULUS 2, REMAINDER 0);",<none>,0
++NOTICE:  AUDIT: SESSION,143,1,DDL,CREATE TABLE,,,"CREATE TABLE h_0 partition OF h FOR VALUES WITH ( MODULUS 2, REMAINDER 0);",<none>,0
+ CREATE TABLE h_1 partition OF h FOR VALUES WITH ( MODULUS 2, REMAINDER 1);
+-NOTICE:  AUDIT: SESSION,142,1,DDL,CREATE TABLE,,,"CREATE TABLE h_1 partition OF h FOR VALUES WITH ( MODULUS 2, REMAINDER 1);",<none>,0
++NOTICE:  AUDIT: SESSION,144,1,DDL,CREATE TABLE,,,"CREATE TABLE h_1 partition OF h FOR VALUES WITH ( MODULUS 2, REMAINDER 1);",<none>,0
+ INSERT INTO h VALUES(1,1);
+-NOTICE:  AUDIT: SESSION,143,1,WRITE,INSERT,TABLE,public.h,"INSERT INTO h VALUES(1,1);",<none>,1
++NOTICE:  AUDIT: SESSION,145,1,WRITE,INSERT,TABLE,public.h,"INSERT INTO h VALUES(1,1);",<none>,1
+ SELECT * FROM h;
+-NOTICE:  AUDIT: SESSION,144,1,READ,SELECT,TABLE,public.h,SELECT * FROM h;,<none>,1
++NOTICE:  AUDIT: SESSION,146,1,READ,SELECT,TABLE,public.h,SELECT * FROM h;,<none>,1
+  x | y 
+ ---+---
+  1 | 1
+ (1 row)
+ 
+ SELECT * FROM h_0;
+-NOTICE:  AUDIT: SESSION,145,1,READ,SELECT,TABLE,public.h_0,SELECT * FROM h_0;,<none>,1
++NOTICE:  AUDIT: SESSION,147,1,READ,SELECT,TABLE,public.h_0,SELECT * FROM h_0;,<none>,1
+  x | y 
+ ---+---
+  1 | 1
+ (1 row)
+ 
+ CREATE INDEX h_idx ON h (x);
+-NOTICE:  AUDIT: SESSION,146,1,DDL,CREATE INDEX,,,CREATE INDEX h_idx ON h (x);,<none>,0
++NOTICE:  AUDIT: SESSION,148,1,DDL,CREATE INDEX,,,CREATE INDEX h_idx ON h (x);,<none>,0
+ DROP INDEX h_idx;
+-NOTICE:  AUDIT: SESSION,147,1,DDL,DROP INDEX,,,DROP INDEX h_idx;,<none>,0
++NOTICE:  AUDIT: SESSION,149,1,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
++                 WHERE object_type IN ('table', 'foreign table')",<none>,0
++NOTICE:  AUDIT: SESSION,149,2,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17408,,,,,,1259,0,",1
++NOTICE:  AUDIT: SESSION,149,3,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17409,,,,,,1259,0,",1
++NOTICE:  AUDIT: SESSION,149,4,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17410,,,,,,1259,0,",1
++NOTICE:  AUDIT: SESSION,149,5,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<none>,3
++NOTICE:  AUDIT: SESSION,149,6,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
++    WHERE object_type IN ('table constraint')",<none>,1
++NOTICE:  AUDIT: SESSION,149,7,DDL,DROP INDEX,,,DROP INDEX h_idx;,<none>,0
+ DROP TABLE h;
+-NOTICE:  AUDIT: SESSION,148,1,DDL,DROP TABLE,,,DROP TABLE h;,<none>,0
++NOTICE:  AUDIT: SESSION,150,1,READ,SELECT,,,"SELECT master_remove_distributed_table_metadata_from_workers(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17399,public,h,,,,,,",1
++NOTICE:  AUDIT: SESSION,150,2,READ,SELECT,,,SELECT (v_obj.original = false AND v_obj.normal = false),",,,,,,,,,t,f,,,,",1
++NOTICE:  AUDIT: SESSION,150,3,READ,SELECT,,,"SELECT citus_drop_all_shards(v_obj.objid, v_obj.schema_name, v_obj.object_name, drop_shards_metadata_only := false)",",,,,,,17399,public,h,,,,,,",1
++NOTICE:  AUDIT: SESSION,150,4,READ,SELECT,,,"SELECT master_remove_partition_metadata(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17399,public,h,,,,,,",1
++NOTICE:  AUDIT: SESSION,150,5,READ,SELECT,,,"SELECT master_remove_distributed_table_metadata_from_workers(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17402,public,h_0,,,,,,",1
++NOTICE:  AUDIT: SESSION,150,6,READ,SELECT,,,SELECT (v_obj.original = false AND v_obj.normal = false),",,,,,,,,,f,f,,,,",1
++NOTICE:  AUDIT: SESSION,150,7,READ,SELECT,,,"SELECT citus_drop_all_shards(v_obj.objid, v_obj.schema_name, v_obj.object_name, drop_shards_metadata_only := true)",",,,,,,17402,public,h_0,,,,,,",1
++NOTICE:  AUDIT: SESSION,150,8,READ,SELECT,,,"SELECT master_remove_partition_metadata(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17402,public,h_0,,,,,,",1
++NOTICE:  AUDIT: SESSION,150,9,READ,SELECT,,,"SELECT master_remove_distributed_table_metadata_from_workers(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17405,public,h_1,,,,,,",1
++NOTICE:  AUDIT: SESSION,150,10,READ,SELECT,,,SELECT (v_obj.original = false AND v_obj.normal = false),",,,,,,,,,f,f,,,,",1
++NOTICE:  AUDIT: SESSION,150,11,READ,SELECT,,,"SELECT citus_drop_all_shards(v_obj.objid, v_obj.schema_name, v_obj.object_name, drop_shards_metadata_only := true)",",,,,,,17405,public,h_1,,,,,,",1
++NOTICE:  AUDIT: SESSION,150,12,READ,SELECT,,,"SELECT master_remove_partition_metadata(v_obj.objid, v_obj.schema_name, v_obj.object_name)",",,,,,,17405,public,h_1,,,,,,",1
++NOTICE:  AUDIT: SESSION,150,13,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
++                 WHERE object_type IN ('table', 'foreign table')",<none>,3
++NOTICE:  AUDIT: SESSION,150,14,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17399,,,,,,1259,0,",1
++NOTICE:  AUDIT: SESSION,150,15,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17401,,,,,,1247,0,",1
++NOTICE:  AUDIT: SESSION,150,16,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17400,,,,,,1247,0,",1
++NOTICE:  AUDIT: SESSION,150,17,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17402,,,,,,1259,0,",1
++NOTICE:  AUDIT: SESSION,150,18,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17404,,,,,,1247,0,",1
++NOTICE:  AUDIT: SESSION,150,19,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17403,,,,,,1247,0,",1
++NOTICE:  AUDIT: SESSION,150,20,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17405,,,,,,1259,0,",1
++NOTICE:  AUDIT: SESSION,150,21,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17407,,,,,,1247,0,",1
++NOTICE:  AUDIT: SESSION,150,22,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",",,,,,,17406,,,,,,1247,0,",1
++NOTICE:  AUDIT: SESSION,150,23,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<none>,9
++NOTICE:  AUDIT: SESSION,150,24,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
++    WHERE object_type IN ('table constraint')",<none>,1
++NOTICE:  AUDIT: SESSION,150,25,DDL,DROP TABLE,,,DROP TABLE h;,<none>,0
+ --
+ -- Change configuration of user 1 so that full statements are not logged
+ \connect - :current_user
+@@ -2513,7 +2901,24 @@
+ WARNING:  AUDIT: SESSION,4,1,DDL,ALTER EXTENSION,,,ALTER EXTENSION pg_stat_statements UPDATE TO '1.10';,<not logged>
+ NOTICE:  version "1.10" of extension "pg_stat_statements" is already installed
+ DROP EXTENSION pg_stat_statements;
+-WARNING:  AUDIT: SESSION,5,1,DDL,DROP EXTENSION,,,DROP EXTENSION pg_stat_statements;,<not logged>
++WARNING:  AUDIT: SESSION,5,1,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
++                 WHERE object_type IN ('table', 'foreign table')",<not logged>
++WARNING:  AUDIT: SESSION,5,2,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<not logged>
++WARNING:  AUDIT: SESSION,5,3,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
++WARNING:  AUDIT: SESSION,5,4,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
++WARNING:  AUDIT: SESSION,5,5,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
++WARNING:  AUDIT: SESSION,5,6,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
++WARNING:  AUDIT: SESSION,5,7,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
++WARNING:  AUDIT: SESSION,5,8,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
++WARNING:  AUDIT: SESSION,5,9,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
++WARNING:  AUDIT: SESSION,5,10,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
++WARNING:  AUDIT: SESSION,5,11,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
++WARNING:  AUDIT: SESSION,5,12,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
++WARNING:  AUDIT: SESSION,5,13,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
++WARNING:  AUDIT: SESSION,5,14,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
++WARNING:  AUDIT: SESSION,5,15,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
++    WHERE object_type IN ('table constraint')",<not logged>
++WARNING:  AUDIT: SESSION,5,16,DDL,DROP EXTENSION,,,DROP EXTENSION pg_stat_statements;,<not logged>
+ SET pgaudit.log_level = 'notice';
+ -- Cleanup
+ -- Set client_min_messages up to warning to avoid noise

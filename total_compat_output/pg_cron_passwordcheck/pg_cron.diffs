@@ -1,0 +1,121 @@
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_cron-1.5.1/expected/pg_cron-test.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_cron-1.5.1/results/pg_cron-test.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_cron-1.5.1/expected/pg_cron-test.out	2023-02-09 14:27:18.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_cron-1.5.1/results/pg_cron-test.out	2023-07-25 17:19:48.971400048 +0000
+@@ -133,10 +133,12 @@
+ revoke connect on database pgcron_dbno from public;
+ -- create a test user
+ create user pgcron_cront with password 'pwd';
++ERROR:  password is too short
+ GRANT USAGE ON SCHEMA cron TO pgcron_cront;
++ERROR:  role "pgcron_cront" does not exist
+ -- Schedule a job for this user on the database that does not accept connections
+ SELECT cron.schedule_in_database(job_name:='can not connect', schedule:='0 11 * * *', command:='VACUUM',database:='pgcron_dbno',username:='pgcron_cront');
+-ERROR:  User pgcron_cront does not have CONNECT privilege on pgcron_dbno
++ERROR:  role "pgcron_cront" does not exist
+ -- Create a database that does allow connections
+ create database pgcron_dbyes;
+ -- Schedule a job on the database that does accept connections for a non existing user
+@@ -144,11 +146,12 @@
+ ERROR:  role "pgcron_useraqwxszedc" does not exist
+ -- Alter an existing job on a database that does not accept connections
+ SELECT cron.alter_job(job_id:=2,database:='pgcron_dbno',username:='pgcron_cront');
+-ERROR:  User pgcron_cront does not have CONNECT privilege on pgcron_dbno
++ERROR:  role "pgcron_cront" does not exist
+ -- Make sure pgcron_cront can execute alter_job
+ GRANT EXECUTE ON FUNCTION cron.alter_job(bigint,text,text,text,text,boolean) TO public;
+ -- Second as non superuser
+ SET SESSION AUTHORIZATION pgcron_cront;
++ERROR:  role "pgcron_cront" does not exist
+ -- Create a job
+ SELECT cron.schedule('My vacuum', '0 11 * * *', 'VACUUM');
+  schedule 
+@@ -158,13 +161,17 @@
+ 
+ -- Create a job for another user
+ SELECT cron.schedule_in_database(job_name:='his vacuum', schedule:='0 11 * * *', command:='VACUUM',database:=current_database(),username:='anotheruser');
+-ERROR:  permission denied for function schedule_in_database
++ERROR:  role "anotheruser" does not exist
+ -- Change the username of an existing job that the user own
+ select cron.alter_job(job_id:=6,username:='anotheruser');
+-ERROR:  must be superuser to alter username
++ERROR:  role "anotheruser" does not exist
+ -- Update a job that the user does not own
+ select cron.alter_job(job_id:=2,database:='pgcron_dbyes');
+-ERROR:  Job 2 does not exist or you don't own it
++ alter_job 
++-----------
++ 
++(1 row)
++
+ -- change the database for a job that the user own and can connect to
+ select cron.alter_job(job_id:=6,database:='pgcron_dbyes');
+  alter_job 
+@@ -176,44 +183,41 @@
+    database   
+ --------------
+  pgcron_dbyes
+-(1 row)
++ pgcron_dbyes
++(2 rows)
+ 
+ -- change the database for a job that the user own but can not connect to
+ select cron.alter_job(job_id:=6,database:='pgcron_dbno');
+-ERROR:  User pgcron_cront does not have CONNECT privilege on pgcron_dbno
++ alter_job 
++-----------
++ 
++(1 row)
++
+ SELECT database FROM cron.job;
+    database   
+ --------------
+  pgcron_dbyes
+-(1 row)
++ pgcron_dbno
++(2 rows)
+ 
+ -- back to superuser
+ RESET SESSION AUTHORIZATION;
+ -- Change the username of an existing job
+ select cron.alter_job(job_id:=2,username:='pgcron_cront');
+- alter_job 
+------------
+- 
+-(1 row)
+-
++ERROR:  role "pgcron_cront" does not exist
+ SELECT username FROM cron.job where jobid=2;
+-   username   
+---------------
+- pgcron_cront
++ username 
++----------
++ abigalek
+ (1 row)
+ 
+ -- Create a job for another user
+ SELECT cron.schedule_in_database(job_name:='his vacuum', schedule:='0 11 * * *', command:='VACUUM',database:=current_database(), username:='pgcron_cront');
+- schedule_in_database 
+-----------------------
+-                    7
+-(1 row)
+-
++ERROR:  role "pgcron_cront" does not exist
+ SELECT username FROM cron.job where jobid=7;
+-   username   
+---------------
+- pgcron_cront
+-(1 row)
++ username 
++----------
++(0 rows)
+ 
+ -- Override function
+ DROP EXTENSION IF EXISTS pg_cron cascade;
+@@ -269,5 +273,6 @@
+ -- cleaning
+ DROP EXTENSION pg_cron;
+ drop user pgcron_cront;
++ERROR:  role "pgcron_cront" does not exist
+ drop database pgcron_dbno;
+ drop database pgcron_dbyes;

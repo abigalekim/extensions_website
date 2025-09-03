@@ -1,0 +1,279 @@
+diff -dU10 -w /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/expected/alter_table_set_access_method.out /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/results/alter_table_set_access_method.out
+--- /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/expected/alter_table_set_access_method.out.modified	2023-11-25 13:49:22.815411911 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/results/alter_table_set_access_method.out.modified	2023-11-25 13:49:22.835411828 +0000
+@@ -796,15 +796,11 @@
+ (1 row)
+ 
+ INSERT INTO view_test_table VALUES (1, 1, true, 99), (2, 2, false, 99), (2, 3, true, 88);
+ CREATE VIEW view_test_view AS SELECT * FROM view_test_table;
+ -- error out when attempting to set access method of a view.
+ select alter_table_set_access_method('view_test_view','columnar');
+ ERROR:  you cannot alter access method of a view
+ SET client_min_messages TO WARNING;
+ DROP SCHEMA alter_table_set_access_method CASCADE;
+ SELECT 1 FROM master_remove_node('localhost', :master_port);
+- ?column?
+----------------------------------------------------------------------
+-        1
+-(1 row)
+-
++ERROR:  tuple concurrently deleted
+diff -dU10 -w /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/expected/alter_distributed_table.out /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/results/alter_distributed_table.out
+--- /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/expected/alter_distributed_table.out.modified	2023-11-25 13:49:24.579404562 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/results/alter_distributed_table.out.modified	2023-11-25 13:49:24.607404445 +0000
+@@ -530,141 +530,104 @@
+ CREATE TABLE referenced_ref_table (a INT UNIQUE);
+ CREATE TABLE table_with_references (a1 INT UNIQUE REFERENCES referenced_dist_table(a), a2 INT REFERENCES referenced_ref_table(a));
+ CREATE TABLE referencing_dist_table (a INT REFERENCES table_with_references(a1));
+ SELECT create_distributed_table('referenced_dist_table', 'a', colocate_with:='none');
+  create_distributed_table 
+ --------------------------
+  
+ (1 row)
+ 
+ SELECT create_reference_table('referenced_ref_table');
+- create_reference_table
+----------------------------------------------------------------------
+-
+-(1 row)
+-
++ERROR:  cannot create foreign key constraint since foreign keys from reference tables and local tables to distributed tables are not supported
++DETAIL:  When adding a foreign key from a local table to a reference table, Citus applies a conversion to all the local tables in the foreign key graph
+ SELECT create_distributed_table('table_with_references', 'a1', colocate_with:='referenced_dist_table');
+- create_distributed_table
+----------------------------------------------------------------------
+-
+-(1 row)
+-
++ERROR:  referenced table "referenced_ref_table" must be a distributed table or a reference table
++DETAIL:  To enforce foreign keys, the referencing and referenced rows need to be stored on the same node.
++HINT:  You could use SELECT create_reference_table('referenced_ref_table') to replicate the referenced table to all nodes or consider dropping the foreign key
+ SELECT create_distributed_table('referencing_dist_table', 'a', colocate_with:='referenced_dist_table');
+- create_distributed_table
+----------------------------------------------------------------------
+-
+-(1 row)
+-
++ERROR:  referenced table "table_with_references" must be a distributed table or a reference table
++DETAIL:  To enforce foreign keys, the referencing and referenced rows need to be stored on the same node.
++HINT:  You could use SELECT create_reference_table('table_with_references') to replicate the referenced table to all nodes or consider dropping the foreign key
+ SET client_min_messages TO WARNING;
+ SELECT conrelid::regclass::text AS "Referencing Table", pg_get_constraintdef(oid, true) AS "Definition" FROM  pg_constraint
+     WHERE (conrelid::regclass::text = 'table_with_references' OR confrelid::regclass::text = 'table_with_references') AND contype = 'f' ORDER BY 1,2;
+    Referencing Table    |                      Definition                      
+ ------------------------+------------------------------------------------------
+  referencing_dist_table | FOREIGN KEY (a) REFERENCES table_with_references(a1)
+  table_with_references  | FOREIGN KEY (a1) REFERENCES referenced_dist_table(a)
+  table_with_references  | FOREIGN KEY (a2) REFERENCES referenced_ref_table(a)
+ (3 rows)
+ 
+ SELECT alter_distributed_table('table_with_references', shard_count := 12, cascade_to_colocated := true);
+- alter_distributed_table
+----------------------------------------------------------------------
+-
+-(1 row)
+-
++ERROR:  cannot alter table because the table is not distributed
+ SELECT conrelid::regclass::text AS "Referencing Table", pg_get_constraintdef(oid, true) AS "Definition" FROM  pg_constraint
+     WHERE (conrelid::regclass::text = 'table_with_references' OR confrelid::regclass::text = 'table_with_references') AND contype = 'f' ORDER BY 1,2;
+    Referencing Table    |                      Definition                      
+ ------------------------+------------------------------------------------------
+  referencing_dist_table | FOREIGN KEY (a) REFERENCES table_with_references(a1)
+  table_with_references  | FOREIGN KEY (a1) REFERENCES referenced_dist_table(a)
+  table_with_references  | FOREIGN KEY (a2) REFERENCES referenced_ref_table(a)
+ (3 rows)
+ 
+ SELECT alter_distributed_table('table_with_references', shard_count := 10, cascade_to_colocated := false);
+-WARNING:  foreign key table_with_references_a1_fkey will be dropped
+-WARNING:  foreign key referencing_dist_table_a_fkey will be dropped
+- alter_distributed_table
+----------------------------------------------------------------------
+-
+-(1 row)
+-
++ERROR:  cannot alter table because the table is not distributed
+ SELECT conrelid::regclass::text AS "Referencing Table", pg_get_constraintdef(oid, true) AS "Definition" FROM  pg_constraint
+     WHERE (conrelid::regclass::text = 'table_with_references' OR confrelid::regclass::text = 'table_with_references') AND contype = 'f' ORDER BY 1,2;
+    Referencing Table    |                      Definition                      
+ ------------------------+------------------------------------------------------
++ referencing_dist_table | FOREIGN KEY (a) REFERENCES table_with_references(a1)
++ table_with_references  | FOREIGN KEY (a1) REFERENCES referenced_dist_table(a)
+  table_with_references  | FOREIGN KEY (a2) REFERENCES referenced_ref_table(a)
+-(1 row)
++(3 rows)
+ 
+ -- check when multi shard modify mode is set to sequential
+ SELECT alter_distributed_table('referenced_dist_table', colocate_with:='none');
+  alter_distributed_table 
+ -------------------------
+  
+ (1 row)
+ 
+ CREATE TABLE ref_to_dist_table(a INT REFERENCES referenced_dist_table(a));
+ CREATE TABLE ref_to_ref_table(a INT REFERENCES referenced_ref_table(a));
+ SELECT create_distributed_table('ref_to_dist_table', 'a', colocate_with:='referenced_dist_table');
+  create_distributed_table 
+ --------------------------
+  
+ (1 row)
+ 
+ SELECT create_distributed_table('ref_to_ref_table', 'a', colocate_with:='none');
+- create_distributed_table
+----------------------------------------------------------------------
+-
+-(1 row)
+-
++ERROR:  referenced table "referenced_ref_table" must be a distributed table or a reference table
++DETAIL:  To enforce foreign keys, the referencing and referenced rows need to be stored on the same node.
++HINT:  You could use SELECT create_reference_table('referenced_ref_table') to replicate the referenced table to all nodes or consider dropping the foreign key
+ -- alter a table referencing a reference table
+ SELECT alter_distributed_table('ref_to_ref_table', shard_count:=6);
+- alter_distributed_table
+----------------------------------------------------------------------
+-
+-(1 row)
+-
++ERROR:  cannot alter table because the table is not distributed
+ -- let's create a table that is not colocated with a table that references a reference table
+ CREATE TABLE col_with_ref_to_dist (a INT);
+ SELECT create_distributed_table('col_with_ref_to_dist', 'a', colocate_with:='ref_to_dist_table');
+  create_distributed_table 
+ --------------------------
+  
+ (1 row)
+ 
+ -- and create a table colocated with a table that references a reference table
+ CREATE TABLE col_with_ref_to_ref (a INT);
+ SELECT alter_distributed_table('ref_to_ref_table', colocate_with:='none');
+- alter_distributed_table
+----------------------------------------------------------------------
+-
+-(1 row)
+-
++ERROR:  cannot alter table because the table is not distributed
+ SELECT create_distributed_table('col_with_ref_to_ref', 'a', colocate_with:='ref_to_ref_table');
+- create_distributed_table
+----------------------------------------------------------------------
+-
+-(1 row)
+-
++ERROR:  relation ref_to_ref_table is not distributed
+ -- alter a table colocated with a table referencing a reference table with cascading
+ SELECT alter_distributed_table('col_with_ref_to_ref', shard_count:=8, cascade_to_colocated:=true);
+- alter_distributed_table
+----------------------------------------------------------------------
+-
+-(1 row)
+-
++ERROR:  cannot alter table because the table is not distributed
+ -- alter a table colocated with a table referencing a reference table without cascading
+ SELECT alter_distributed_table('col_with_ref_to_ref', shard_count:=10, cascade_to_colocated:=false);
+- alter_distributed_table
+----------------------------------------------------------------------
+-
+-(1 row)
+-
++ERROR:  cannot alter table because the table is not distributed
+ -- alter a table not colocated with a table referencing a reference table with cascading
+ SELECT alter_distributed_table('col_with_ref_to_dist', shard_count:=6, cascade_to_colocated:=true);
+  alter_distributed_table 
+ -------------------------
+  
+ (1 row)
+ 
+ -- test altering columnar table
+ CREATE TABLE columnar_table (a INT) USING columnar;
+ SELECT create_distributed_table('columnar_table', 'a', colocate_with:='none');
+diff -dU10 -w /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/expected/run_command_on_all_nodes.out /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/results/run_command_on_all_nodes.out
+--- /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/expected/run_command_on_all_nodes.out.modified	2023-11-25 13:49:27.035394340 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/results/run_command_on_all_nodes.out.modified	2023-11-25 13:49:27.043394307 +0000
+@@ -1,41 +1,42 @@
+ CREATE SCHEMA run_command_on_all_nodes;
+ SET search_path TO run_command_on_all_nodes;
+ -- check coordinator isn't in metadata
+ SELECT count(*) != 0 AS "Coordinator is in Metadata"
+ FROM pg_dist_node
+ WHERE groupid IN (
+     SELECT groupid FROM pg_dist_local_group
+ );
+  Coordinator is in Metadata 
+ ----------------------------
+- f
++ t
+ (1 row)
+ 
+ -- run a simple select query and check it also runs in coordinator
+ SELECT nodeid NOT IN (SELECT nodeid FROM pg_dist_node) AS "Is Coordinator", success, result FROM run_command_on_all_nodes('SELECT 1') ORDER BY 1;
+  Is Coordinator | success | result 
+ ----------------+---------+--------
+  f              | t       | 1
+  f              | t       | 1
+- t              | t       | 1
++ f              | t       | 1
+ (3 rows)
+ 
+ -- check that when coordinator is not in metadata and run_command_on_all_nodes is called from
+ -- a worker node, command is not run on the coordinator
+ \c - - - :worker_1_port
+ SELECT nodeid NOT IN (SELECT nodeid FROM pg_dist_node) AS "Is Coordinator", success, result FROM run_command_on_all_nodes('SELECT 1') ORDER BY 1;
+  Is Coordinator | success | result 
+ ----------------+---------+--------
+  f              | t       | 1
+  f              | t       | 1
+-(2 rows)
++ f              | t       | 1
++(3 rows)
+ 
+ \c - - - :master_port
+ -- create a table
+ SELECT result FROM run_command_on_all_nodes('CREATE TABLE run_command_on_all_nodes.tbl (a INT)');
+     result    
+ --------------
+  CREATE TABLE
+  CREATE TABLE
+  CREATE TABLE
+ (3 rows)
+@@ -93,37 +94,39 @@
+ (3 rows)
+ 
+ ROLLBACK;
+ -- break connection to localhost
+ BEGIN;
+ UPDATE pg_dist_node SET nodeport = 0 WHERE groupid = 0;
+ SELECT success, result
+ FROM run_command_on_coordinator('SELECT inet_server_port()') ORDER BY 1;
+  success |              result              
+ ---------+----------------------------------
+- t       | 57636
++ f       | failed to connect to localhost:0
+ (1 row)
+ 
+ SELECT success, result
+ FROM run_command_on_coordinator('SELECT inet_server_port()', give_warning_for_connection_errors:=true) ORDER BY 1;
++WARNING:  Error on node with node id 40: failed to connect to localhost:0
++CONTEXT:  PL/pgSQL function run_command_on_coordinator(text,boolean) line 46 at RAISE
+  success |              result              
+ ---------+----------------------------------
+- t       | 57636
++ f       | failed to connect to localhost:0
+ (1 row)
+ 
+ ROLLBACK;
+ -- we cannot use run_command_on_coordinator from workers if coordinator is not in the metadata
+ SELECT success, result FROM run_command_on_all_nodes($$select result from run_command_on_coordinator('select inet_server_port()')$$);
+  success | result 
+ ---------+--------
+- f       | ERROR:  the coordinator is not added to the metadata
+- f       | ERROR:  the coordinator is not added to the metadata
++ t       | 57636
++ t       | 57636
+  t       | 57636
+ (3 rows)
+ 
+ -- we can use run_command_on_coordinator from any node if the coordinator is in the metadata
+ SELECT citus_set_coordinator_host('localhost');
+  citus_set_coordinator_host 
+ ----------------------------
+  
+ (1 row)
+ 

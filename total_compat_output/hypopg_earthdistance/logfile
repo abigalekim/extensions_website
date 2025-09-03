@@ -1,0 +1,38 @@
+2023-07-26 09:39:03.640 UTC [2060765] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 09:39:03.640 UTC [2060765] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 09:39:03.655 UTC [2060765] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 09:39:03.671 UTC [2060768] LOG:  database system was shut down at 2023-07-26 09:39:03 UTC
+2023-07-26 09:39:03.681 UTC [2060765] LOG:  database system is ready to accept connections
+2023-07-26 09:39:04.091 UTC [2060789] WARNING:  hypopg: SQL order #1 is not a CREATE INDEX statement
+2023-07-26 09:39:04.092 UTC [2060789] WARNING:  hypopg: SQL order #3 is not a CREATE INDEX statement
+2023-07-26 09:39:04.095 UTC [2060789] ERROR:  value 1 out of bounds for option "fillfactor"
+2023-07-26 09:39:04.095 UTC [2060789] DETAIL:  Valid values are between "10" and "100".
+2023-07-26 09:39:04.095 UTC [2060789] STATEMENT:  SELECT COUNT(*) AS NB
+	FROM public.hypopg_create_index('CREATE INDEX ON hypo(id) WITH (fillfactor = 1)');
+2023-07-26 09:39:04.095 UTC [2060789] ERROR:  oid 1 is not a hypothetical index
+2023-07-26 09:39:04.095 UTC [2060789] STATEMENT:  SELECT hypopg_relation_size(1);
+2023-07-26 09:39:04.634 UTC [2060766] LOG:  checkpoint starting: immediate force wait
+2023-07-26 09:39:04.707 UTC [2060766] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.019 s, sync=0.015 s, total=0.073 s; sync files=7, longest=0.008 s, average=0.003 s; distance=17440 kB, estimate=17440 kB
+2023-07-26 09:39:04.813 UTC [2060824] ERROR:  required extension "cube" is not installed
+2023-07-26 09:39:04.813 UTC [2060824] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-26 09:39:04.813 UTC [2060824] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-26 09:39:04.876 UTC [2060824] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-26 09:39:04.876 UTC [2060824] DETAIL:  extension earthdistance depends on extension cube
+2023-07-26 09:39:04.876 UTC [2060824] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 09:39:04.876 UTC [2060824] STATEMENT:  drop extension cube;
+2023-07-26 09:39:04.880 UTC [2060824] ERROR:  cannot drop type cube because extension cube requires it
+2023-07-26 09:39:04.880 UTC [2060824] HINT:  You can drop extension cube instead.
+2023-07-26 09:39:04.880 UTC [2060824] STATEMENT:  drop type cube;
+2023-07-26 09:39:04.885 UTC [2060824] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-26 09:39:04.885 UTC [2060824] DETAIL:  column f1 of table foo depends on type cube
+2023-07-26 09:39:04.885 UTC [2060824] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 09:39:04.885 UTC [2060824] STATEMENT:  drop extension cube;
+2023-07-26 09:39:04.972 UTC [2060824] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-26 09:39:04.972 UTC [2060824] DETAIL:  column f1 of table foo depends on type c.cube
+2023-07-26 09:39:04.972 UTC [2060824] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 09:39:04.972 UTC [2060824] STATEMENT:  drop extension cube;
+2023-07-26 09:39:04.973 UTC [2060824] ERROR:  cannot drop schema c because other objects depend on it
+2023-07-26 09:39:04.973 UTC [2060824] DETAIL:  extension cube depends on schema c
+	column f1 of table foo depends on type c.cube
+2023-07-26 09:39:04.973 UTC [2060824] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 09:39:04.973 UTC [2060824] STATEMENT:  drop schema c;

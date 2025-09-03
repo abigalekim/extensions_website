@@ -1,0 +1,227 @@
+The files belonging to this database system will be owned by user "abigalek".
+This user must also own the server process.
+
+The database cluster will be initialized with locale "en_US.UTF-8".
+The default database encoding has accordingly been set to "UTF8".
+The default text search configuration will be set to "english".
+
+Data page checksums are disabled.
+
+creating directory pg-15-data ... ok
+creating subdirectories ... ok
+selecting dynamic shared memory implementation ... posix
+selecting default max_connections ... 100
+selecting default shared_buffers ... 128MB
+selecting default time zone ... Etc/UTC
+creating configuration files ... ok
+running bootstrap script ... ok
+performing post-bootstrap initialization ... ok
+syncing data to disk ... ok
+
+initdb: warning: enabling "trust" authentication for local connections
+initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+
+Success. You can now start the database server using:
+
+    pg-15-dist/bin/pg_ctl -D pg-15-data -l logfile start
+
+waiting for server to start.... done
+server started
+(using postmaster on Unix socket, default port)
+============== dropping database "contrib_regression" ==============
+SET
+DROP DATABASE
+============== creating database "contrib_regression" ==============
+CREATE DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+============== installing timescaledb                 ==============
+WARNING:  
+WELCOME TO
+ _____ _                               _     ____________  
+|_   _(_)                             | |    |  _  \ ___ \ 
+  | |  _ _ __ ___   ___  ___  ___ __ _| | ___| | | | |_/ / 
+  | | | |  _ ` _ \ / _ \/ __|/ __/ _` | |/ _ \ | | | ___ \ 
+  | | | | | | | | |  __/\__ \ (_| (_| | |  __/ |/ /| |_/ /
+  |_| |_|_| |_| |_|\___||___/\___\__,_|_|\___|___/ \____/
+               Running version 2.11.1
+For more information on TimescaleDB, please visit the following links:
+
+ 1. Getting started: https://docs.timescale.com/timescaledb/latest/getting-started
+ 2. API reference documentation: https://docs.timescale.com/api/latest
+ 3. How TimescaleDB is designed: https://docs.timescale.com/timescaledb/latest/overview/core-concepts
+
+Note: Please enable telemetry to help us improve our product by running: ALTER DATABASE "contrib_regression" SET timescaledb.telemetry_level = 'basic';
+
+CREATE EXTENSION
+============== running regression test queries        ==============
+test pgsentinel-test              ... ok         9048 ms
+
+=====================
+ All 1 tests passed. 
+=====================
+
+CREATE EXTENSION
+CREATE EXTENSION
+waiting for server to shut down.... done
+server stopped
+TESTS 
+IGNORES 
+SKIPS 
+(using postmaster on localhost, port 5432)
+============== dropping database "single"             ==============
+SET
+DROP DATABASE
+============== dropping role "super_user"             ==============
+SET
+DROP ROLE
+============== dropping role "default_perm_user"      ==============
+SET
+DROP ROLE
+============== dropping role "default_perm_user_2"    ==============
+SET
+DROP ROLE
+============== dropping role "cluster_super_user"     ==============
+SET
+DROP ROLE
+============== dropping role "test_role_1"            ==============
+SET
+DROP ROLE
+============== dropping role "test_role_2"            ==============
+SET
+DROP ROLE
+============== dropping role "test_role_3"            ==============
+SET
+DROP ROLE
+============== dropping role "test_role_4"            ==============
+SET
+DROP ROLE
+============== dropping role "test_role_read_only"    ==============
+SET
+DROP ROLE
+============== creating database "single"             ==============
+CREATE DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+============== creating role "super_user"             ==============
+CREATE ROLE
+GRANT
+============== creating role "default_perm_user"      ==============
+CREATE ROLE
+GRANT
+============== creating role "default_perm_user_2"    ==============
+CREATE ROLE
+GRANT
+============== creating role "cluster_super_user"     ==============
+CREATE ROLE
+GRANT
+============== creating role "test_role_1"            ==============
+CREATE ROLE
+GRANT
+============== creating role "test_role_2"            ==============
+CREATE ROLE
+GRANT
+============== creating role "test_role_3"            ==============
+CREATE ROLE
+GRANT
+============== creating role "test_role_4"            ==============
+CREATE ROLE
+GRANT
+============== creating role "test_role_read_only"    ==============
+CREATE ROLE
+GRANT
+============== running regression test queries        ==============
+test alter                        ... ok         1176 ms
+test alternate_users              ... ok          790 ms
+test chunk_utils                  ... ok          922 ms
+test index                        ... FAILED     1042 ms
+test pg_dump_unprivileged         ... ok          769 ms
+test tablespace                   ... ok          768 ms
+parallel group (21 tests):  create_hypertable ddl_extra create_chunks cursor-15 drop_hypertable ddl_errors chunk_adaptive create_table custom_type baserel_cache chunks delete-15 ddl-15 copy-15 drop_extension broken_tables cluster-15 agg_bookends-15 constraint-15 drop_owned append-15
+     agg_bookends-15              ... ok         5182 ms
+     append-15                    ... ok         6743 ms
+     baserel_cache                ... ok         5160 ms
+     broken_tables                ... ok         5174 ms
+     chunk_adaptive               ... ok         5159 ms
+     chunks                       ... ok         5170 ms
+     cluster-15                   ... ok         5178 ms
+     constraint-15                ... ok         5245 ms
+     copy-15                      ... ok         5172 ms
+     create_chunks                ... ok         5156 ms
+     create_hypertable            ... ok         5147 ms
+     create_table                 ... ok         5159 ms
+     cursor-15                    ... ok         5157 ms
+     custom_type                  ... ok         5159 ms
+     ddl-15                       ... ok         5171 ms
+     ddl_errors                   ... ok         5157 ms
+     ddl_extra                    ... ok         5147 ms
+     delete-15                    ... ok         5170 ms
+     drop_extension               ... FAILED     5171 ms
+     drop_hypertable              ... FAILED     5156 ms
+     drop_owned                   ... ok         5295 ms
+parallel group (21 tests):  null_exclusion hash drop_schema merge partition drop_rename_hypertable extension_scripts generated_as_identity grant_hypertable parallel-15 insert_returning information_views partitioning misc insert_single histogram_test dump_meta license lateral insert-15 insert_many
+     drop_rename_hypertable       ... ok         6264 ms
+     drop_schema                  ... ok         6257 ms
+     dump_meta                    ... ok         6272 ms
+     extension_scripts            ... ok         6263 ms
+     generated_as_identity        ... ok         6263 ms
+     grant_hypertable             ... ok         6263 ms
+     hash                         ... ok         6241 ms
+     histogram_test               ... ok         6271 ms
+     information_views            ... ok         6263 ms
+     insert-15                    ... ok         6469 ms
+     insert_many                  ... FAILED     7546 ms
+     insert_returning             ... ok         6263 ms
+     insert_single                ... ok         6266 ms
+     lateral                      ... ok         6290 ms
+     license                      ... ok         6274 ms
+     merge                        ... ok         6255 ms
+     misc                         ... ok         6263 ms
+     null_exclusion               ... ok         5010 ms
+     parallel-15                  ... ok         6262 ms
+     partition                    ... FAILED     6256 ms
+     partitioning                 ... ok         6263 ms
+parallel group (21 tests):  plan_hypertable_inline-15 partitionwise-15 size_utils plain sort_optimization triggers plan_ordered_append tableam timestamp upsert reloptions plan_expand_hypertable-15 query-15 update-15 sql_query rowsecurity-15 relocate_extension trusted_extension truncate plan_hashagg-15 pg_join
+     partitionwise-15             ... FAILED     7679 ms
+     pg_join                      ... ok         9840 ms
+     plain                        ... ok         7688 ms
+     plan_expand_hypertable-15    ... ok         7716 ms
+     plan_hashagg-15              ... ok         9130 ms
+     plan_hypertable_inline-15    ... ok         7678 ms
+     plan_ordered_append          ... ok         7692 ms
+     query-15                     ... ok         7716 ms
+     relocate_extension           ... ok         7801 ms
+     reloptions                   ... ok         7710 ms
+     rowsecurity-15               ... ok         7718 ms
+     size_utils                   ... ok         7678 ms
+     sort_optimization            ... ok         7689 ms
+     sql_query                    ... FAILED     7716 ms
+     tableam                      ... ok         7691 ms
+     timestamp                    ... ok         7691 ms
+     triggers                     ... ok         7689 ms
+     truncate                     ... ok         7835 ms
+     trusted_extension            ... ok         7834 ms
+     update-15                    ... ok         7715 ms
+     upsert                       ... ok         7690 ms
+parallel group (4 tests):  version util vacuum vacuum_parallel
+     util                         ... ok          672 ms
+     vacuum                       ... ok          675 ms
+     vacuum_parallel              ... ok          675 ms
+     version                      ... ok          665 ms
+
+=======================
+ 7 of 73 tests failed. 
+=======================
+
+The differences that caused some tests to fail can be viewed in the
+file "/home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/regression.diffs".  A copy of the test summary that you see
+above is saved in the file "/home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/regression.out".
+

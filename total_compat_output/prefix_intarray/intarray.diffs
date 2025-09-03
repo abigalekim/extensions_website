@@ -1,0 +1,18 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/intarray/expected/_int.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/intarray/results/_int.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/intarray/expected/_int.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/intarray/results/_int.out	2023-07-26 05:46:17.637539683 +0000
+@@ -3,9 +3,11 @@
+ SELECT amname, opcname
+ FROM pg_opclass opc LEFT JOIN pg_am am ON am.oid = opcmethod
+ WHERE opc.oid >= 16384 AND NOT amvalidate(opc.oid);
+- amname | opcname 
+---------+---------
+-(0 rows)
++INFO:  operator family "gist_prefix_range_ops" of access method gist contains function gpr_union(internal,internal) with wrong signature for support number 2
++ amname |        opcname        
++--------+-----------------------
++ gist   | gist_prefix_range_ops
++(1 row)
+ 
+ SELECT intset(1234);
+  intset 

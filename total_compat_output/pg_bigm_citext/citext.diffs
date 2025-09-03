@@ -1,0 +1,18 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/citext/expected/citext_1.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/citext/results/citext.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/citext/expected/citext_1.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/citext/results/citext.out	2023-07-25 14:18:16.141516213 +0000
+@@ -6,9 +6,11 @@
+ SELECT amname, opcname
+ FROM pg_opclass opc LEFT JOIN pg_am am ON am.oid = opcmethod
+ WHERE opc.oid >= 16384 AND NOT amvalidate(opc.oid);
+- amname | opcname 
+---------+---------
+-(0 rows)
++INFO:  operator family "gin_bigm_ops" of access method gin contains function gin_bigm_compare_partial(text,text,smallint,internal) with wrong signature for support number 5
++ amname |   opcname    
++--------+--------------
++ gin    | gin_bigm_ops
++(1 row)
+ 
+ -- Test the operators and indexing functions
+ -- Test = and <>.

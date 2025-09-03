@@ -1,0 +1,192 @@
+SET client_min_messages = warning;
+--
+-- Tablespace features tests
+--
+-- Note: in order to pass this test you must create a tablespace called 'testts'
+--
+SELECT spcname FROM pg_tablespace WHERE spcname = 'testts';
+ spcname 
+---------
+ testts
+(1 row)
+
+-- If the query above failed you must create the 'testts' tablespace;
+CREATE TABLE testts1 (id serial primary key, data text);
+CREATE INDEX testts1_partial_idx on testts1 (id) where (id > 0);
+CREATE INDEX testts1_with_idx on testts1 (id) with (fillfactor=80);
+INSERT INTO testts1 (data) values ('a');
+INSERT INTO testts1 (data) values ('b');
+INSERT INTO testts1 (data) values ('c');
+-- check the indexes definitions
+SELECT regexp_replace(
+    repack.repack_indexdef(indexrelid, 'testts1'::regclass, NULL, false),
+    '_[0-9]+', '_OID', 'g')
+FROM pg_index i join pg_class c ON c.oid = indexrelid
+WHERE indrelid = 'testts1'::regclass ORDER BY relname;
+ERROR:  schema "repack" does not exist
+LINE 2:     repack.repack_indexdef(indexrelid, 'testts1'::regclass, ...
+            ^
+SELECT regexp_replace(
+    repack.repack_indexdef(indexrelid, 'testts1'::regclass, 'foo', false),
+    '_[0-9]+', '_OID', 'g')
+FROM pg_index i join pg_class c ON c.oid = indexrelid
+WHERE indrelid = 'testts1'::regclass ORDER BY relname;
+ERROR:  schema "repack" does not exist
+LINE 2:     repack.repack_indexdef(indexrelid, 'testts1'::regclass, ...
+            ^
+SELECT regexp_replace(
+    repack.repack_indexdef(indexrelid, 'testts1'::regclass, NULL, true),
+    '_[0-9]+', '_OID', 'g')
+FROM pg_index i join pg_class c ON c.oid = indexrelid
+WHERE indrelid = 'testts1'::regclass ORDER BY relname;
+ERROR:  schema "repack" does not exist
+LINE 2:     repack.repack_indexdef(indexrelid, 'testts1'::regclass, ...
+            ^
+SELECT regexp_replace(
+    repack.repack_indexdef(indexrelid, 'testts1'::regclass, 'foo', true),
+    '_[0-9]+', '_OID', 'g')
+FROM pg_index i join pg_class c ON c.oid = indexrelid
+WHERE indrelid = 'testts1'::regclass ORDER BY relname;
+ERROR:  schema "repack" does not exist
+LINE 2:     repack.repack_indexdef(indexrelid, 'testts1'::regclass, ...
+            ^
+-- can move the tablespace from default
+\! pg_repack --dbname=contrib_regression --no-order --table=testts1 --tablespace testts
+ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+SELECT relname, spcname
+FROM pg_class JOIN pg_tablespace ts ON ts.oid = reltablespace
+WHERE relname ~ '^testts1'
+ORDER BY relname;
+ relname | spcname 
+---------+---------
+(0 rows)
+
+SELECT * from testts1 order by id;
+ id | data 
+----+------
+  1 | a
+  2 | b
+  3 | c
+(3 rows)
+
+-- tablespace stays where it is
+\! pg_repack --dbname=contrib_regression --no-order --table=testts1
+ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+SELECT relname, spcname
+FROM pg_class JOIN pg_tablespace ts ON ts.oid = reltablespace
+WHERE relname ~ '^testts1'
+ORDER BY relname;
+ relname | spcname 
+---------+---------
+(0 rows)
+
+-- can move the ts back to default
+\! pg_repack --dbname=contrib_regression --no-order --table=testts1 -s pg_default
+ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+SELECT relname, spcname
+FROM pg_class JOIN pg_tablespace ts ON ts.oid = reltablespace
+WHERE relname ~ '^testts1'
+ORDER BY relname;
+ relname | spcname 
+---------+---------
+(0 rows)
+
+-- can move the table together with the indexes
+\! pg_repack --dbname=contrib_regression --no-order --table=testts1 --tablespace testts --moveidx
+ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+SELECT relname, spcname
+FROM pg_class JOIN pg_tablespace ts ON ts.oid = reltablespace
+WHERE relname ~ '^testts1'
+ORDER BY relname;
+ relname | spcname 
+---------+---------
+(0 rows)
+
+-- can't specify --moveidx without --tablespace
+\! pg_repack --dbname=contrib_regression --no-order --table=testts1 --moveidx
+ERROR: cannot specify --moveidx (-S) without --tablespace (-s)
+\! pg_repack --dbname=contrib_regression --no-order --table=testts1 -S
+ERROR: cannot specify --moveidx (-S) without --tablespace (-s)
+-- not broken with order
+\! pg_repack --dbname=contrib_regression -o id --table=testts1 --tablespace pg_default --moveidx
+ERROR: pg_repack failed with error: pg_repack 1.4.8 is not installed in the database
+--move all indexes of the table to a tablespace
+\! pg_repack --dbname=contrib_regression --table=testts1 --only-indexes --tablespace=testts
+ERROR: pg_repack 1.4.8 is not installed in the database
+SELECT relname, spcname
+FROM pg_class JOIN pg_tablespace ts ON ts.oid = reltablespace
+WHERE relname ~ '^testts1'
+ORDER BY relname;
+ relname | spcname 
+---------+---------
+(0 rows)
+
+--all indexes of tablespace remain in same tablespace
+\! pg_repack --dbname=contrib_regression --table=testts1 --only-indexes
+ERROR: pg_repack 1.4.8 is not installed in the database
+SELECT relname, spcname
+FROM pg_class JOIN pg_tablespace ts ON ts.oid = reltablespace
+WHERE relname ~ '^testts1'
+ORDER BY relname;
+ relname | spcname 
+---------+---------
+(0 rows)
+
+--move all indexes of the table to pg_default
+\! pg_repack --dbname=contrib_regression --table=testts1 --only-indexes --tablespace=pg_default
+ERROR: pg_repack 1.4.8 is not installed in the database
+SELECT relname, spcname
+FROM pg_class JOIN pg_tablespace ts ON ts.oid = reltablespace
+WHERE relname ~ '^testts1'
+ORDER BY relname;
+ relname | spcname 
+---------+---------
+(0 rows)
+
+--move one index to a tablespace
+\! pg_repack --dbname=contrib_regression --index=testts1_pkey --tablespace=testts
+ERROR: pg_repack 1.4.8 is not installed in the database
+SELECT relname, spcname
+FROM pg_class JOIN pg_tablespace ts ON ts.oid = reltablespace
+WHERE relname ~ '^testts1'
+ORDER BY relname;
+ relname | spcname 
+---------+---------
+(0 rows)
+
+--index tablespace stays as is
+\! pg_repack --dbname=contrib_regression --index=testts1_pkey
+ERROR: pg_repack 1.4.8 is not installed in the database
+SELECT relname, spcname
+FROM pg_class JOIN pg_tablespace ts ON ts.oid = reltablespace
+WHERE relname ~ '^testts1'
+ORDER BY relname;
+ relname | spcname 
+---------+---------
+(0 rows)
+
+--move index to pg_default
+\! pg_repack --dbname=contrib_regression --index=testts1_pkey --tablespace=pg_default
+ERROR: pg_repack 1.4.8 is not installed in the database
+SELECT relname, spcname
+FROM pg_class JOIN pg_tablespace ts ON ts.oid = reltablespace
+WHERE relname ~ '^testts1'
+ORDER BY relname;
+ relname | spcname 
+---------+---------
+(0 rows)
+
+--using multiple --index option
+\! pg_repack --dbname=contrib_regression --index=testts1_pkey --index=testts1_with_idx --tablespace=testts
+ERROR: pg_repack 1.4.8 is not installed in the database
+SELECT relname, spcname
+FROM pg_class JOIN pg_tablespace ts ON ts.oid = reltablespace
+WHERE relname ~ '^testts1'
+ORDER BY relname;
+ relname | spcname 
+---------+---------
+(0 rows)
+
+--using --indexes-only and --index option together
+\! pg_repack --dbname=contrib_regression --table=testts1 --only-indexes --index=testts1_pkey
+ERROR: cannot specify --index (-i) and --table (-t)

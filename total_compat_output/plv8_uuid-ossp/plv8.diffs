@@ -1,0 +1,2064 @@
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/init-extension.out /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/init-extension.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/init-extension.out	2023-04-09 01:43:50.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/init-extension.out	2023-07-22 04:27:20.716873471 +0000
+@@ -1 +1,4 @@
+ CREATE EXTENSION plv8;
++ERROR:  extension "plv8" is not available
++DETAIL:  Could not open extension control file "/home/abigalek/pgext-cli-python/pg-15-dist/share/postgresql/extension/plv8.control": No such file or directory.
++HINT:  The extension must first be installed on the system where PostgreSQL is running.
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/plv8.out /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/plv8.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/plv8.out	2023-04-09 01:43:50.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/plv8.out	2023-07-22 04:27:20.800872777 +0000
+@@ -7,12 +7,12 @@
+ 	return JSON.stringify(o);
+ $$
+ LANGUAGE plv8 IMMUTABLE STRICT;
++ERROR:  language "plv8" does not exist
+ SELECT plv8_test(ARRAY['name', 'age'], ARRAY['Tom', '29']);
+-         plv8_test         
+----------------------------
+- {"name":"Tom","age":"29"}
+-(1 row)
+-
++ERROR:  function plv8_test(text[], text[]) does not exist
++LINE 1: SELECT plv8_test(ARRAY['name', 'age'], ARRAY['Tom', '29']);
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION unnamed_args(text[], text[]) RETURNS text[] AS
+ $$
+ 	var array1 = arguments[0];
+@@ -20,12 +20,12 @@
+ 	return array1.concat(array2);
+ $$
+ LANGUAGE plv8 IMMUTABLE STRICT;
++ERROR:  language "plv8" does not exist
+ SELECT unnamed_args(ARRAY['A', 'B'], ARRAY['C', 'D']);
+- unnamed_args 
+---------------
+- {A,B,C,D}
+-(1 row)
+-
++ERROR:  function unnamed_args(text[], text[]) does not exist
++LINE 1: SELECT unnamed_args(ARRAY['A', 'B'], ARRAY['C', 'D']);
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION concat_strings(VARIADIC args text[]) RETURNS text AS
+ $$
+ 	var result = "";
+@@ -35,134 +35,137 @@
+ 	return result;
+ $$
+ LANGUAGE plv8 IMMUTABLE STRICT;
++ERROR:  language "plv8" does not exist
+ SELECT concat_strings('A', 'B', NULL, 'C');
+- concat_strings 
+-----------------
+- ABC
+-(1 row)
+-
++ERROR:  function concat_strings(unknown, unknown, unknown, unknown) does not exist
++LINE 1: SELECT concat_strings('A', 'B', NULL, 'C');
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION return_void() RETURNS void AS $$ $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT return_void();
+- return_void 
+--------------
+- 
+-(1 row)
+-
++ERROR:  function return_void() does not exist
++LINE 1: SELECT return_void();
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION return_null() RETURNS text AS $$ return null; $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT r, r IS NULL AS isnull FROM return_null() AS r;
+- r | isnull 
+----+--------
+-   | t
+-(1 row)
+-
++ERROR:  function return_null() does not exist
++LINE 1: SELECT r, r IS NULL AS isnull FROM return_null() AS r;
++                                           ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ -- TYPE CONVERTIONS
+ CREATE FUNCTION int2_to_int4(x int2) RETURNS int4 AS $$ return x; $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT int2_to_int4(24::int2);
+- int2_to_int4 
+---------------
+-           24
+-(1 row)
+-
++ERROR:  function int2_to_int4(smallint) does not exist
++LINE 1: SELECT int2_to_int4(24::int2);
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION int4_to_int2(x int4) RETURNS int2 AS $$ return x; $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT int4_to_int2(42);
+- int4_to_int2 
+---------------
+-           42
+-(1 row)
+-
++ERROR:  function int4_to_int2(integer) does not exist
++LINE 1: SELECT int4_to_int2(42);
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION int4_to_int8(x int4) RETURNS int8 AS $$ return x; $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT int4_to_int8(48);
+- int4_to_int8 
+---------------
+-           48
+-(1 row)
+-
++ERROR:  function int4_to_int8(integer) does not exist
++LINE 1: SELECT int4_to_int8(48);
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION int8_to_int4(x int8) RETURNS int4 AS $$ return x; $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT int8_to_int4(84);
+- int8_to_int4 
+---------------
+-           84
+-(1 row)
+-
++ERROR:  function int8_to_int4(integer) does not exist
++LINE 1: SELECT int8_to_int4(84);
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION float8_to_numeric(x float8) RETURNS numeric AS $$ return x; $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT float8_to_numeric(1.5);
+- float8_to_numeric 
+--------------------
+-               1.5
+-(1 row)
+-
++ERROR:  function float8_to_numeric(numeric) does not exist
++LINE 1: SELECT float8_to_numeric(1.5);
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION numeric_to_int8(x numeric) RETURNS int8 AS $$ return x; $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT numeric_to_int8(1234.56);
+- numeric_to_int8 
+------------------
+-            1234
+-(1 row)
+-
++ERROR:  function numeric_to_int8(numeric) does not exist
++LINE 1: SELECT numeric_to_int8(1234.56);
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION int4_to_text(x int4) RETURNS text AS $$ return x; $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT int4_to_text(123);
+- int4_to_text 
+---------------
+- 123
+-(1 row)
+-
++ERROR:  function int4_to_text(integer) does not exist
++LINE 1: SELECT int4_to_text(123);
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION text_to_int4(x text) RETURNS int4 AS $$ return x; $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT text_to_int4('123');
+- text_to_int4 
+---------------
+-          123
+-(1 row)
+-
++ERROR:  function text_to_int4(unknown) does not exist
++LINE 1: SELECT text_to_int4('123');
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT text_to_int4('abc'); -- error
+-ERROR:  invalid input syntax for integer: "abc"
++ERROR:  function text_to_int4(unknown) does not exist
++LINE 1: SELECT text_to_int4('abc');
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION int4array_to_textarray(x int4[]) RETURNS text[] AS $$ return x; $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT int4array_to_textarray(ARRAY[123, 456]::int4[]);
+- int4array_to_textarray 
+-------------------------
+- {123,456}
+-(1 row)
+-
++ERROR:  function int4array_to_textarray(integer[]) does not exist
++LINE 1: SELECT int4array_to_textarray(ARRAY[123, 456]::int4[]);
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION textarray_to_int4array(x text[]) RETURNS int4[] AS $$ return x; $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT textarray_to_int4array(ARRAY['123', '456']::text[]);
+- textarray_to_int4array 
+-------------------------
+- {123,456}
+-(1 row)
+-
++ERROR:  function textarray_to_int4array(text[]) does not exist
++LINE 1: SELECT textarray_to_int4array(ARRAY['123', '456']::text[]);
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION timestamptz_to_text(t timestamptz) RETURNS text AS $$ return t.toUTCString() $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT timestamptz_to_text('23 Dec 2010 12:34:56 GMT');
+-      timestamptz_to_text      
+--------------------------------
+- Thu, 23 Dec 2010 12:34:56 GMT
+-(1 row)
+-
++ERROR:  function timestamptz_to_text(unknown) does not exist
++LINE 1: SELECT timestamptz_to_text('23 Dec 2010 12:34:56 GMT');
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION text_to_timestamptz(t text) RETURNS timestamptz AS $$ return new Date(t) $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT text_to_timestamptz('23 Dec 2010 12:34:56 GMT') AT TIME ZONE 'GMT';
+-         timezone         
+---------------------------
+- Thu Dec 23 12:34:56 2010
+-(1 row)
+-
++ERROR:  function text_to_timestamptz(unknown) does not exist
++LINE 1: SELECT text_to_timestamptz('23 Dec 2010 12:34:56 GMT') AT TI...
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION date_to_text(t date) RETURNS text AS $$ return t.toUTCString() $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT date_to_text('23 Dec 2010');
+-         date_to_text          
+--------------------------------
+- Thu, 23 Dec 2010 00:00:00 GMT
+-(1 row)
+-
++ERROR:  function date_to_text(unknown) does not exist
++LINE 1: SELECT date_to_text('23 Dec 2010');
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION text_to_date(t text) RETURNS date AS $$ return new Date(t) $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT text_to_date('23 Dec 2010 GMT');
+- text_to_date 
+---------------
+- 12-23-2010
+-(1 row)
+-
++ERROR:  function text_to_date(unknown) does not exist
++LINE 1: SELECT text_to_date('23 Dec 2010 GMT');
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION oidfn(id oid) RETURNS oid AS $$ return id $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT oidfn('pg_catalog.pg_class'::regclass);
+- oidfn 
+--------
+-  1259
+-(1 row)
+-
++ERROR:  function oidfn(regclass) does not exist
++LINE 1: SELECT oidfn('pg_catalog.pg_class'::regclass);
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ -- RECORD TYPES
+ CREATE TYPE rec AS (i integer, t text);
+ CREATE FUNCTION scalar_to_record(i integer, t text) RETURNS rec AS
+@@ -170,36 +173,44 @@
+ 	return { "i": i, "t": t };
+ $$
+ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT scalar_to_record(1, 'a');
+- scalar_to_record 
+-------------------
+- (1,a)
+-(1 row)
+-
++ERROR:  function scalar_to_record(integer, unknown) does not exist
++LINE 1: SELECT scalar_to_record(1, 'a');
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION record_to_text(x rec) RETURNS text AS
+ $$
+ 	return JSON.stringify(x);
+ $$
+ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT record_to_text('(1,a)'::rec);
+- record_to_text  
+------------------
+- {"i":1,"t":"a"}
+-(1 row)
+-
++ERROR:  function record_to_text(rec) does not exist
++LINE 1: SELECT record_to_text('(1,a)'::rec);
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION return_record(i integer, t text) RETURNS record AS
+ $$
+ 	return { "i": i, "t": t };
+ $$
+ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT * FROM return_record(1, 'a');
+-ERROR:  a column definition list is required for functions returning "record"
++ERROR:  function return_record(integer, unknown) does not exist
+ LINE 1: SELECT * FROM return_record(1, 'a');
+                       ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT * FROM return_record(1, 'a') AS t(j integer, s text);
+-ERROR:  input of anonymous composite types is not implemented
++ERROR:  function return_record(integer, unknown) does not exist
++LINE 1: SELECT * FROM return_record(1, 'a') AS t(j integer, s text);
++                      ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT * FROM return_record(1, 'a') AS t(x text, y text);
+-ERROR:  input of anonymous composite types is not implemented
++ERROR:  function return_record(integer, unknown) does not exist
++LINE 1: SELECT * FROM return_record(1, 'a') AS t(x text, y text);
++                      ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION set_of_records() RETURNS SETOF rec AS
+ $$
+ 	plv8.return_next( { "i": 1, "t": "a" } );
+@@ -207,22 +218,23 @@
+ 	plv8.return_next( { "i": 3, "t": "c" } );
+ $$
+ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT * FROM set_of_records();
+- i | t 
+----+---
+- 1 | a
+- 2 | b
+- 3 | c
+-(3 rows)
+-
++ERROR:  function set_of_records() does not exist
++LINE 1: SELECT * FROM set_of_records();
++                      ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION set_of_record_but_non_obj() RETURNS SETOF rec AS
+ $$
+ 	plv8.return_next( "abc" );
+ $$
+ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT * FROM set_of_record_but_non_obj();
+-ERROR:  argument must be an object
+-CONTEXT:  set_of_record_but_non_obj() LINE 2: 	plv8.return_next( "abc" );
++ERROR:  function set_of_record_but_non_obj() does not exist
++LINE 1: SELECT * FROM set_of_record_but_non_obj();
++                      ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION set_of_integers() RETURNS SETOF integer AS
+ $$
+ 	plv8.return_next( 1 );
+@@ -230,14 +242,12 @@
+ 	plv8.return_next( 3 );
+ $$
+ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT * FROM set_of_integers();
+- set_of_integers 
+------------------
+-               1
+-               2
+-               3
+-(3 rows)
+-
++ERROR:  function set_of_integers() does not exist
++LINE 1: SELECT * FROM set_of_integers();
++                      ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION set_of_nest() RETURNS SETOF float AS
+ $$
+ 	plv8.return_next( -0.2 );
+@@ -246,92 +256,98 @@
+ 	return 0.2;
+ $$
+ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT * FROM set_of_nest();
+- set_of_nest 
+--------------
+-        -0.2
+-           1
+-         0.2
+-(3 rows)
+-
++ERROR:  function set_of_nest() does not exist
++LINE 1: SELECT * FROM set_of_nest();
++                      ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION set_of_unnamed_records() RETURNS SETOF record AS
+ $$
+ 	return [ { i: true } ];
+ $$
+ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT set_of_unnamed_records();
+-ERROR:  function returning record called in context that cannot accept type record
++ERROR:  function set_of_unnamed_records() does not exist
++LINE 1: SELECT set_of_unnamed_records();
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT * FROM set_of_unnamed_records() t (i bool);
+- i 
+----
+- t
+-(1 row)
+-
++ERROR:  function set_of_unnamed_records() does not exist
++LINE 1: SELECT * FROM set_of_unnamed_records() t (i bool);
++                      ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE OR REPLACE FUNCTION set_of_unnamed_records() RETURNS SETOF record AS
+ $$
+     plv8.return_next({"a": 1, "b": 2}); 
+     return; 
+ $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ -- not enough fields specified
+ SELECT * FROM set_of_unnamed_records() AS x(a int);
+- a 
+----
+- 1
+-(1 row)
+-
++ERROR:  function set_of_unnamed_records() does not exist
++LINE 1: SELECT * FROM set_of_unnamed_records() AS x(a int);
++                      ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ -- field names mismatch
+ SELECT * FROM set_of_unnamed_records() AS x(a int, c int);
+-ERROR:  field name / property name mismatch
+-CONTEXT:  set_of_unnamed_records() LINE 2:     plv8.return_next({"a": 1, "b": 2}); 
++ERROR:  function set_of_unnamed_records() does not exist
++LINE 1: SELECT * FROM set_of_unnamed_records() AS x(a int, c int);
++                      ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ -- name counts and values match
+ SELECT * FROM set_of_unnamed_records() AS x(a int, b int);
+- a | b 
+----+---
+- 1 | 2
+-(1 row)
+-
++ERROR:  function set_of_unnamed_records() does not exist
++LINE 1: SELECT * FROM set_of_unnamed_records() AS x(a int, b int);
++                      ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ -- return type check
+ CREATE OR REPLACE FUNCTION bogus_return_type() RETURNS int[] AS
+ $$
+     return 1;
+ $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT bogus_return_type();
+-ERROR:  value is not an Array
++ERROR:  function bogus_return_type() does not exist
++LINE 1: SELECT bogus_return_type();
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ -- INOUT and OUT parameters
+ CREATE FUNCTION one_inout(a integer, INOUT b text) AS
+ $$
+ return a + b;
+ $$
+ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT one_inout(5, 'ABC');
+- one_inout 
+------------
+- 5ABC
+-(1 row)
+-
++ERROR:  function one_inout(integer, unknown) does not exist
++LINE 1: SELECT one_inout(5, 'ABC');
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION one_out(OUT o text, i integer) AS
+ $$
+ return 'ABC' + i;
+ $$
+ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT one_out(123);
+- one_out 
+----------
+- ABC123
+-(1 row)
+-
++ERROR:  function one_out(integer) does not exist
++LINE 1: SELECT one_out(123);
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ -- polymorphic types
+ CREATE FUNCTION polymorphic(poly anyarray) returns anyelement AS
+ $$
+     return poly[0];
+ $$
+ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT polymorphic(ARRAY[10, 11]), polymorphic(ARRAY['foo', 'bar']);
+- polymorphic | polymorphic 
+--------------+-------------
+-          10 | foo
+-(1 row)
+-
++ERROR:  function polymorphic(integer[]) does not exist
++LINE 1: SELECT polymorphic(ARRAY[10, 11]), polymorphic(ARRAY['foo', ...
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ -- typed array
+ CREATE FUNCTION fastsum(ary plv8_int4array) RETURNS int8 AS
+ $$
+@@ -342,14 +358,17 @@
+     return sum;
+ $$
+ LANGUAGE plv8 IMMUTABLE STRICT;
++ERROR:  language "plv8" does not exist
+ SELECT fastsum(ARRAY[1, 2, 3, 4, 5]);
+- fastsum 
+----------
+-      15
+-(1 row)
+-
++ERROR:  function fastsum(integer[]) does not exist
++LINE 1: SELECT fastsum(ARRAY[1, 2, 3, 4, 5]);
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT fastsum(ARRAY[NULL, 2]);
+-ERROR:  NULL element, or multi-dimension array not allowed in external array type
++ERROR:  function fastsum(integer[]) does not exist
++LINE 1: SELECT fastsum(ARRAY[NULL, 2]);
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ -- elog()
+ CREATE FUNCTION test_elog(arg text) RETURNS void AS
+ $$
+@@ -363,12 +382,12 @@
+ 	plv8.elog(21, 'FATAL is not allowed');
+ $$
+ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT test_elog('ABC');
+-NOTICE:  args = ABC
+-WARNING:  warning
+-INFO:  Error: ERROR
+-ERROR:  invalid error level
+-CONTEXT:  test_elog() LINE 9: 	plv8.elog(21, 'FATAL is not allowed');
++ERROR:  function test_elog(unknown) does not exist
++LINE 1: SELECT test_elog('ABC');
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ -- execute()
+ CREATE TABLE test_tbl (i integer, s text);
+ CREATE FUNCTION test_sql() RETURNS integer AS
+@@ -383,24 +402,16 @@
+ 	return rows.length;
+ $$
+ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT test_sql();
+-NOTICE:  {"i":1,"s":"s1","c":["pg_catalog","public"]} 1
+-NOTICE:  {"i":2,"s":"s2","c":["pg_catalog","public"]} 1
+-NOTICE:  {"i":3,"s":"s3","c":["pg_catalog","public"]} 1
+-NOTICE:  {"i":4,"s":"s4","c":["pg_catalog","public"]} 1
+- test_sql 
+-----------
+-        4
+-(1 row)
+-
++ERROR:  function test_sql() does not exist
++LINE 1: SELECT test_sql();
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT * FROM test_tbl;
+- i | s  
+----+----
+- 1 | s1
+- 2 | s2
+- 3 | s3
+- 4 | s4
+-(4 rows)
++ i | s 
++---+---
++(0 rows)
+ 
+ CREATE FUNCTION return_sql() RETURNS SETOF test_tbl AS
+ $$
+@@ -410,30 +421,27 @@
+ 	);
+ $$
+ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT * FROM return_sql();
+- i | s  
+----+----
+- 1 | s1
+- 2 | s2
+- 3 | s3
+- 4 | s4
+-(4 rows)
+-
++ERROR:  function return_sql() does not exist
++LINE 1: SELECT * FROM return_sql();
++                      ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ -- REPLACE FUNCTION
+ CREATE FUNCTION replace_test() RETURNS integer AS $$ return 1; $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT replace_test();
+- replace_test 
+---------------
+-            1
+-(1 row)
+-
++ERROR:  function replace_test() does not exist
++LINE 1: SELECT replace_test();
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE OR REPLACE FUNCTION replace_test() RETURNS integer AS $$ return 2; $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT replace_test();
+- replace_test 
+---------------
+-            2
+-(1 row)
+-
++ERROR:  function replace_test() does not exist
++LINE 1: SELECT replace_test();
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ -- TRIGGER
+ CREATE FUNCTION test_trigger() RETURNS trigger AS
+ $$
+@@ -447,36 +455,19 @@
+ 	}
+ $$
+ LANGUAGE "plv8";
++ERROR:  language "plv8" does not exist
+ CREATE TRIGGER test_trigger
+   BEFORE INSERT OR UPDATE OR DELETE
+   ON test_tbl FOR EACH ROW
+   EXECUTE PROCEDURE test_trigger('foo', 'bar');
++ERROR:  function test_trigger() does not exist
+ INSERT INTO test_tbl VALUES(100, 'ABC');
+-NOTICE:  NEW =  {"i":100,"s":"ABC"}
+-NOTICE:  OLD =  undefined
+-NOTICE:  TG_OP =  INSERT
+-NOTICE:  TG_ARGV =  foo,bar
+ UPDATE test_tbl SET i = 101, s = 'DEF' WHERE i = 1;
+-NOTICE:  NEW =  {"i":101,"s":"DEF"}
+-NOTICE:  OLD =  {"i":1,"s":"s1"}
+-NOTICE:  TG_OP =  UPDATE
+-NOTICE:  TG_ARGV =  foo,bar
+ DELETE FROM test_tbl WHERE i >= 100;
+-NOTICE:  NEW =  undefined
+-NOTICE:  OLD =  {"i":100,"s":"ABC"}
+-NOTICE:  TG_OP =  DELETE
+-NOTICE:  TG_ARGV =  foo,bar
+-NOTICE:  NEW =  undefined
+-NOTICE:  OLD =  {"i":102,"s":"DEF"}
+-NOTICE:  TG_OP =  DELETE
+-NOTICE:  TG_ARGV =  foo,bar
+ SELECT * FROM test_tbl;
+- i | s  
+----+----
+- 2 | s2
+- 3 | s3
+- 4 | s4
+-(3 rows)
++ i | s 
++---+---
++(0 rows)
+ 
+ -- One more trigger
+ CREATE FUNCTION test_trigger2() RETURNS trigger AS
+@@ -504,50 +495,58 @@
+ 	}
+ $$
+ LANGUAGE "plv8";
++ERROR:  language "plv8" does not exist
+ CREATE TABLE trig_table (subject text, val int);
+ INSERT INTO trig_table VALUES('skip', 1);
+ CREATE TRIGGER test_trigger2
+   BEFORE INSERT OR UPDATE OR DELETE
+   ON trig_table FOR EACH ROW
+   EXECUTE PROCEDURE test_trigger2();
++ERROR:  function test_trigger2() does not exist
+ INSERT INTO trig_table VALUES
+   ('skip', 1), ('modify', 2), ('noop', 3);
+ SELECT * FROM trig_table;
+  subject | val 
+ ---------+-----
+  skip    |   1
+- modify  |   4
++ skip    |   1
++ modify  |   2
+  noop    |   3
+-(3 rows)
++(4 rows)
+ 
+ UPDATE trig_table SET val = 10;
+ SELECT * FROM trig_table;
+  subject | val 
+ ---------+-----
+- skip    |   1
+- modify  |   8
++ skip    |  10
++ skip    |  10
++ modify  |  10
+  noop    |  10
+-(3 rows)
++(4 rows)
+ 
+ DELETE FROM trig_table;
+ SELECT * FROM trig_table;
+  subject | val 
+ ---------+-----
+- skip    |   1
+-(1 row)
++(0 rows)
+ 
+ -- ERRORS
+ CREATE FUNCTION syntax_error() RETURNS text AS '@' LANGUAGE plv8;
+-ERROR:  SyntaxError: Invalid or unexpected token
+-CONTEXT:  syntax_error() LINE 1: @
++ERROR:  language "plv8" does not exist
+ CREATE FUNCTION reference_error() RETURNS text AS 'not_defined' LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT reference_error();
+-ERROR:  ReferenceError: not_defined is not defined
+-CONTEXT:  reference_error() LINE 1: not_defined
++ERROR:  function reference_error() does not exist
++LINE 1: SELECT reference_error();
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION throw() RETURNS void AS $$throw new Error("an error");$$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT throw();
+-ERROR:  an error
+-CONTEXT:  throw() LINE 1: throw new Error("an error");
++ERROR:  function throw() does not exist
++LINE 1: SELECT throw();
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ -- SPI operations
+ CREATE FUNCTION prep1() RETURNS void AS $$
+ var plan = plv8.prepare("SELECT * FROM test_tbl");
+@@ -604,30 +603,15 @@
+   plv8.elog(WARNING, e);
+ }
+ $$ LANGUAGE plv8 STRICT;
++ERROR:  language "plv8" does not exist
+ SELECT prep1();
+-INFO:  [object PreparedPlan]
+-INFO:  {"i":2,"s":"s2"}
+-INFO:  {"i":3,"s":"s3"}
+-INFO:  {"i":4,"s":"s4"}
+-INFO:  [object Cursor]
+-INFO:  {"i":2,"s":"s2"}
+-INFO:  {"i":3,"s":"s3"}
+-INFO:  {"i":4,"s":"s4"}
+-INFO:  [{"i":2,"s":"s2"},{"i":3,"s":"s3"}]
+-INFO:  [{"i":2,"s":"s2"}]
+-INFO:  [{"i":3,"s":"s3"},{"i":4,"s":"s4"}]
+-INFO:  [{"i":4,"s":"s4"}]
+-INFO:  rows.length =  1
+-INFO:  {"i":2,"s":"s2"}
+-WARNING:  Error: plan expected -1 argument(s), given is 0
+-WARNING:  Error: cannot find cursor
+- prep1 
+--------
+- 
+-(1 row)
+-
++ERROR:  function prep1() does not exist
++LINE 1: SELECT prep1();
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ -- find_function
+ CREATE FUNCTION callee(a int) RETURNS int AS $$ return a * a $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ CREATE FUNCTION sqlf(int) RETURNS int AS $$ SELECT $1 * $1 $$ LANGUAGE sql;
+ CREATE FUNCTION caller(a int, t int) RETURNS int AS $$
+   var func;
+@@ -648,72 +632,73 @@
+   }
+   return func(a);
+ $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT caller(10, 1);
+- caller 
+---------
+-    100
+-(1 row)
+-
++ERROR:  function caller(integer, integer) does not exist
++LINE 1: SELECT caller(10, 1);
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT caller(10, 2);
+- caller 
+---------
+-    100
+-(1 row)
+-
++ERROR:  function caller(integer, integer) does not exist
++LINE 1: SELECT caller(10, 2);
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT caller(10, 3);
+-ERROR:  javascript function is not found for "sqlf"
+-CONTEXT:  caller() LINE 8:     func = plv8.find_function("sqlf");
++ERROR:  function caller(integer, integer) does not exist
++LINE 1: SELECT caller(10, 3);
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT caller(10, 4);
+-ERROR:  function "callee(int, int)" does not exist
+-CONTEXT:  caller() LINE 10:     func = plv8.find_function("callee(int, int)");
++ERROR:  function caller(integer, integer) does not exist
++LINE 1: SELECT caller(10, 4);
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT caller(10, 5);
+- caller 
+---------
+-     10
+-(1 row)
+-
++ERROR:  function caller(integer, integer) does not exist
++LINE 1: SELECT caller(10, 5);
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ -- quote_*
+ CREATE FUNCTION plv8_quotes(s text) RETURNS text AS $$
+   return [plv8.quote_literal(s), plv8.quote_nullable(s), plv8.quote_ident(s)].join(":");
+ $$ LANGUAGE plv8 IMMUTABLE;
++ERROR:  language "plv8" does not exist
+ SELECT plv8_quotes('select');
+-        plv8_quotes         
+-----------------------------
+- 'select':'select':"select"
+-(1 row)
+-
++ERROR:  function plv8_quotes(unknown) does not exist
++LINE 1: SELECT plv8_quotes('select');
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT plv8_quotes('kevin''s name');
+-                  plv8_quotes                   
+-------------------------------------------------
+- 'kevin''s name':'kevin''s name':"kevin's name"
+-(1 row)
+-
++ERROR:  function plv8_quotes(unknown) does not exist
++LINE 1: SELECT plv8_quotes('kevin''s name');
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT plv8_quotes(NULL);
+-    plv8_quotes     
+---------------------
+- 'null':NULL:"null"
+-(1 row)
+-
++ERROR:  function plv8_quotes(unknown) does not exist
++LINE 1: SELECT plv8_quotes(NULL);
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ DROP TABLE IF EXISTS t_attdrop CASCADE;
+ NOTICE:  table "t_attdrop" does not exist, skipping
+ CREATE TABLE t_attdrop AS SELECT i a, i b, i c FROM generate_series(1, 10)i;
+ CREATE OR REPLACE FUNCTION f_attdrop(tbl t_attdrop) RETURNS int AS $$
+   return tbl.a;
+ $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ CREATE OR REPLACE FUNCTION f_attdrop(a int) RETURNS t_attdrop AS $$
+   return {a: a, b: 0, c: 10};
+ $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ ALTER TABLE t_attdrop DROP COLUMN b;
+ SELECT f_attdrop(t.*) FROM t;
+ ERROR:  relation "t" does not exist
+ LINE 1: SELECT f_attdrop(t.*) FROM t;
+                                    ^
+ SELECT f_attdrop(2);
+- f_attdrop 
+------------
+- (2,10)
+-(1 row)
+-
++ERROR:  function f_attdrop(integer) does not exist
++LINE 1: SELECT f_attdrop(2);
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ create table plv8test ( id numeric, data json, sum integer, num integer);
+ insert into plv8test (data, sum, num) values ('{"a": 1, "b": 2}', 0, 0);
+ insert into plv8test (data, sum, num) values ('{"a": 3, "b": 4}', 0, 0);
+@@ -726,10 +711,12 @@
+     return NEW;
+ $$ 
+ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ CREATE TRIGGER plv8test_trigger
+ BEFORE INSERT OR UPDATE
+ ON plv8test FOR EACH ROW
+ EXECUTE PROCEDURE plv8_trigger_handler();
++ERROR:  function plv8_trigger_handler() does not exist
+ -- test OK
+ update plv8test set num = 2 where id =2;
+ -- then add two fields and drop one of them
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/plv8-errors.out /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/plv8-errors.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/plv8-errors.out	2023-04-09 01:43:50.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/plv8-errors.out	2023-07-22 04:27:20.888872051 +0000
+@@ -1,7 +1,10 @@
+ CREATE FUNCTION test_sql_error() RETURNS void AS $$ plv8.execute("ERROR") $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT test_sql_error();
+-ERROR:  syntax error at or near "ERROR"
+-CONTEXT:  test_sql_error() LINE 1:  plv8.execute("ERROR") 
++ERROR:  function test_sql_error() does not exist
++LINE 1: SELECT test_sql_error();
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION catch_sql_error() RETURNS void AS $$
+ try {
+ 	plv8.execute("throw SQL error");
+@@ -10,13 +13,12 @@
+ 	plv8.elog(NOTICE, e);
+ }
+ $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT catch_sql_error();
+-NOTICE:  Error: syntax error at or near "throw"
+- catch_sql_error 
+------------------
+- 
+-(1 row)
+-
++ERROR:  function catch_sql_error() does not exist
++LINE 1: SELECT catch_sql_error();
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION catch_sql_error_2() RETURNS text AS $$
+ try {
+ 	plv8.execute("throw SQL error");
+@@ -26,13 +28,12 @@
+ 	return plv8.execute("select 'and can execute queries again' t").shift().t;
+ }
+ $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT catch_sql_error_2();
+-NOTICE:  Error: syntax error at or near "throw"
+-       catch_sql_error_2       
+--------------------------------
+- and can execute queries again
+-(1 row)
+-
++ERROR:  function catch_sql_error_2() does not exist
++LINE 1: SELECT catch_sql_error_2();
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION catch_sql_error_3() RETURNS text AS $$
+ try {
+ 	plv8.execute("throw SQL error");
+@@ -42,13 +43,12 @@
+ 	return e.sqlerrcode;
+ }
+ $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT catch_sql_error_3();
+-NOTICE:  42601
+- catch_sql_error_3 
+--------------------
+- 42601
+-(1 row)
+-
++ERROR:  function catch_sql_error_3() does not exist
++LINE 1: SELECT catch_sql_error_3();
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ -- subtransaction()
+ CREATE TABLE subtrant(a int);
+ CREATE FUNCTION test_subtransaction_catch() RETURNS void AS $$
+@@ -62,18 +62,16 @@
+ 	plv8.execute("INSERT INTO subtrant VALUES(2)");
+ }
+ $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT test_subtransaction_catch();
+-NOTICE:  Error: division by zero
+- test_subtransaction_catch 
+----------------------------
+- 
+-(1 row)
+-
++ERROR:  function test_subtransaction_catch() does not exist
++LINE 1: SELECT test_subtransaction_catch();
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT * FROM subtrant;
+  a 
+ ---
+- 2
+-(1 row)
++(0 rows)
+ 
+ TRUNCATE subtrant;
+ CREATE FUNCTION test_subtransaction_throw() RETURNS void AS $$
+@@ -82,9 +80,12 @@
+ 	plv8.execute("INSERT INTO subtrant VALUES(1/0)");
+ });
+ $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT test_subtransaction_throw();
+-ERROR:  division by zero
+-CONTEXT:  test_subtransaction_throw() LINE 2: plv8.subtransaction(function(){
++ERROR:  function test_subtransaction_throw() does not exist
++LINE 1: SELECT test_subtransaction_throw();
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT * FROM subtrant;
+  a 
+ ---
+@@ -96,6 +97,7 @@
+ throw new Error('Error');
+ $$
+ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ CREATE OR REPLACE FUNCTION v8_test_catch_throw() RETURNS text AS
+ $$
+  try{
+@@ -105,12 +107,12 @@
+  }
+ $$
+ language plv8;
++ERROR:  language "plv8" does not exist
+ SELECT v8_test_catch_throw();
+- v8_test_catch_throw 
+----------------------
+- {"result":"error"}
+-(1 row)
+-
++ERROR:  function v8_test_catch_throw() does not exist
++LINE 1: SELECT v8_test_catch_throw();
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION catch_elog_error() RETURNS void AS $$
+ function f (){
+ }
+@@ -124,13 +126,12 @@
+ 	plv8.elog(NOTICE, 'catch result:'+ e);
+ }
+ $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT catch_elog_error();
+-NOTICE:  catch result:custom exception
+- catch_elog_error 
+-------------------
+- 
+-(1 row)
+-
++ERROR:  function catch_elog_error() does not exist
++LINE 1: SELECT catch_elog_error();
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION catch_elog_error2() RETURNS void AS $$
+ function f (){
+ }
+@@ -142,6 +143,9 @@
+ plv8.elog(NOTICE, "should not come here");
+ 
+ $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT catch_elog_error2();
+-ERROR:  custom exception
+-CONTEXT:  catch_elog_error2() LINE 5:         throw 'custom exception';
++ERROR:  function catch_elog_error2() does not exist
++LINE 1: SELECT catch_elog_error2();
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/inline.out /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/inline.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/inline.out	2023-04-09 01:43:50.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/inline.out	2023-07-22 04:27:20.916871819 +0000
+@@ -1,5 +1,4 @@
+ DO $$ plv8.elog(NOTICE, 'this', 'is', 'inline', 'code') $$ LANGUAGE plv8;
+-NOTICE:  this is inline code
++ERROR:  language "plv8" does not exist
+ DO $$ plv8.return_next(new Object());$$ LANGUAGE plv8;
+-ERROR:  return_next called in context that cannot accept a set
+-CONTEXT:  undefined() LINE 1:  plv8.return_next(new Object());
++ERROR:  language "plv8" does not exist
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/json.out /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/json.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/json.out	2023-04-09 01:43:50.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/json.out	2023-07-22 04:27:20.952871523 +0000
+@@ -9,8 +9,11 @@
+     return false;
+   }
+ $$;
++ERROR:  language "plv8" does not exist
+ CREATE DOMAIN plv8.json AS text
+         CONSTRAINT json_check CHECK (valid_json(VALUE));
++ERROR:  function valid_json(text) does not exist
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION get_key(key text, json_raw text) RETURNS plv8.json
+ LANGUAGE plv8 IMMUTABLE STRICT
+ AS $$
+@@ -19,20 +22,24 @@
+   ret[key] = val;
+   return JSON.stringify(ret);
+ $$;
++ERROR:  language "plv8" does not exist
+ CREATE TABLE jsononly (
+     data plv8.json
+ );
++ERROR:  type "plv8.json" does not exist
++LINE 2:     data plv8.json
++                 ^
+ COPY jsononly (data) FROM stdin;
++ERROR:  relation "jsononly" does not exist
++{"ok": true}
++\.
++invalid command \.
+ -- Call twice to test the function cache.
+ SELECT get_key('ok', data) FROM jsononly;
+-   get_key   
+--------------
+- {"ok":true}
+-(1 row)
+-
++ERROR:  syntax error at or near "{"
++LINE 1: {"ok": true}
++        ^
+ SELECT get_key('ok', data) FROM jsononly;
+-   get_key   
+--------------
+- {"ok":true}
+-(1 row)
+-
++ERROR:  relation "jsononly" does not exist
++LINE 1: SELECT get_key('ok', data) FROM jsononly;
++                                        ^
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/startup_pre.out /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/startup_pre.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/startup_pre.out	2023-04-09 01:43:50.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/startup_pre.out	2023-07-22 04:27:20.996871159 +0000
+@@ -23,3 +23,4 @@
+ };
+ 
+ $$;
++ERROR:  language "plv8" does not exist
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/startup.out /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/startup.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/startup.out	2023-04-09 01:43:50.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/startup.out	2023-07-22 04:27:21.044870763 +0000
+@@ -1,26 +1,22 @@
+ -- test startup failure
+ set plv8.start_proc = foo;
+ do $$ plv8.elog(NOTICE, 'foo = ' + foo) $$ language plv8;
+-WARNING:  failed to find js function function "foo" does not exist
+-ERROR:  ReferenceError: foo is not defined
+-CONTEXT:  undefined() LINE 1:  plv8.elog(NOTICE, 'foo = ' + foo) 
++ERROR:  language "plv8" does not exist
+ \c
+ set plv8.start_proc = startup;
+ do $$ plv8.elog(NOTICE, 'foo = ' + foo) $$ language plv8;
+-NOTICE:  foo = 14378
++ERROR:  language "plv8" does not exist
+ update    plv8_modules set code = 'foo=98765;' where modname = 'startup';
+ -- startup code should not be reloaded
+ do $$ plv8.elog(NOTICE, 'foo = ' + foo) $$ language plv8;
+-NOTICE:  foo = 14378
++ERROR:  language "plv8" does not exist
+ do $$ load_module('testme'); plv8.elog (NOTICE,'bar = ' + bar);$$ language plv8;
+-NOTICE:  loaded module: testme
+-NOTICE:  bar = 98765
++ERROR:  language "plv8" does not exist
+ CREATE ROLE someone_else;
+ SET ROLE to someone_else;
+ reset plv8.start_proc;
+ -- should fail because of a reference error
+ do $$ plv8.elog(NOTICE, 'foo = ' + foo) $$ language plv8;
+-ERROR:  ReferenceError: foo is not defined
+-CONTEXT:  undefined() LINE 1:  plv8.elog(NOTICE, 'foo = ' + foo) 
++ERROR:  language "plv8" does not exist
+ RESET ROLE;
+ DROP ROLE someone_else;
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/varparam.out /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/varparam.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/varparam.out	2023-04-09 01:43:50.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/varparam.out	2023-07-22 04:27:21.072870532 +0000
+@@ -10,14 +10,11 @@
+   cur.close();
+   plan.free();
+ $$;
+-INFO:  pg_class
+-INFO:  pg_index
++ERROR:  language "plv8" does not exist
+ -- Show variadic argument handling
+ do language plv8 $$
+    plv8.elog(INFO, JSON.stringify(plv8.execute("SELECT $1", 1)));
+    plv8.elog(INFO, JSON.stringify(plv8.execute("SELECT $1", [1])));
+    plv8.elog(INFO, JSON.stringify(plv8.execute("SELECT $1 a, $2 b", 1, 2)));
+ $$;
+-INFO:  [{"?column?":"1"}]
+-INFO:  [{"?column?":"1"}]
+-INFO:  [{"a":"1","b":"2"}]
++ERROR:  language "plv8" does not exist
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/json_conv.out /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/json_conv.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/json_conv.out	2023-04-09 01:43:50.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/json_conv.out	2023-07-22 04:27:21.100870301 +0000
+@@ -6,15 +6,14 @@
+ }
+ return o;
+ $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT conv('{"i": 3, "b": 20}');
+-      conv       
+------------------
+- {"i":10,"b":20}
+-(1 row)
+-
++ERROR:  function conv(unknown) does not exist
++LINE 1: SELECT conv('{"i": 3, "b": 20}');
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT conv('[1, 2, 3]');
+-   conv   
+-----------
+- [1,10,3]
+-(1 row)
+-
++ERROR:  function conv(unknown) does not exist
++LINE 1: SELECT conv('[1, 2, 3]');
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/jsonb_conv.out /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/jsonb_conv.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/jsonb_conv.out	2023-04-09 01:43:50.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/jsonb_conv.out	2023-07-22 04:27:21.152869872 +0000
+@@ -6,18 +6,17 @@
+ }
+ return o;
+ $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT convb('{"i": 3, "b": 20}');
+-       convb        
+---------------------
+- {"b": 20, "i": 10}
+-(1 row)
+-
++ERROR:  function convb(unknown) does not exist
++LINE 1: SELECT convb('{"i": 3, "b": 20}');
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT convb('[1, 2, 3]');
+-   convb    
+-------------
+- [1, 10, 3]
+-(1 row)
+-
++ERROR:  function convb(unknown) does not exist
++LINE 1: SELECT convb('[1, 2, 3]');
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION get_keyb(key text, json_raw jsonb) RETURNS jsonb
+ LANGUAGE plv8 IMMUTABLE STRICT
+ AS $$
+@@ -26,33 +25,32 @@
+   ret[key] = val;
+   return ret;
+ $$;
++ERROR:  language "plv8" does not exist
+ CREATE TABLE jsonbonly (
+     data jsonb
+ );
+ COPY jsonbonly (data) FROM stdin;
+ -- Call twice to test the function cache.
+ SELECT get_keyb('ok', data) FROM jsonbonly;
+-   get_keyb   
+---------------
+- {"ok": true}
+-(1 row)
+-
++ERROR:  function get_keyb(unknown, jsonb) does not exist
++LINE 1: SELECT get_keyb('ok', data) FROM jsonbonly;
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT get_keyb('ok', data) FROM jsonbonly;
+-   get_keyb   
+---------------
+- {"ok": true}
+-(1 row)
+-
++ERROR:  function get_keyb(unknown, jsonb) does not exist
++LINE 1: SELECT get_keyb('ok', data) FROM jsonbonly;
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION jsonb_cat(data jsonb) RETURNS jsonb LANGUAGE plv8
+ AS $$
+   return data;
+ $$;
++ERROR:  language "plv8" does not exist
+ SELECT jsonb_cat('[{"a": 1},{"b": 2},{"c": 3}]'::jsonb);
+-           jsonb_cat            
+---------------------------------
+- [{"a": 1}, {"b": 2}, {"c": 3}]
+-(1 row)
+-
++ERROR:  function jsonb_cat(jsonb) does not exist
++LINE 1: SELECT jsonb_cat('[{"a": 1},{"b": 2},{"c": 3}]'::jsonb);
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE TABLE test_infinity_tbl (
+   id INT,
+   version_actual_period_start timestamp,
+@@ -66,20 +64,20 @@
+   return data[0];
+ $$
+ LANGUAGE plv8 STABLE;
++ERROR:  language "plv8" does not exist
+ SELECT test_plv8_with_infinite_date();
+-                                      test_plv8_with_infinite_date                                       
+----------------------------------------------------------------------------------------------------------
+- {"id": 1, "version_actual_period_end": null, "version_actual_period_start": "2019-03-01T00:00:00.000Z"}
+-(1 row)
+-
++ERROR:  function test_plv8_with_infinite_date() does not exist
++LINE 1: SELECT test_plv8_with_infinite_date();
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION jsonb_undefined(data jsonb) RETURNS jsonb AS
+ $$
+   return Object.assign({}, data, { key: undefined });
+ $$
+ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT jsonb_undefined('{"foo": "bar"}'::jsonb);
+- jsonb_undefined 
+------------------
+- {"foo": "bar"}
+-(1 row)
+-
++ERROR:  function jsonb_undefined(jsonb) does not exist
++LINE 1: SELECT jsonb_undefined('{"foo": "bar"}'::jsonb);
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/window.out /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/window.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/window.out	2023-04-09 01:43:50.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/window.out	2023-07-22 04:27:21.216869344 +0000
+@@ -3,6 +3,7 @@
+   var winobj = plv8.get_window_object();
+   return winobj.get_current_position() + 1;
+ $$ LANGUAGE plv8 WINDOW;
++ERROR:  language "plv8" does not exist
+ CREATE FUNCTION __js_rank_up(winobj internal, up_callback internal) RETURNS void AS $$
+   var context = winobj.get_partition_local() || {};
+   var pos = winobj.get_current_position();
+@@ -21,6 +22,7 @@
+   winobj.set_partition_local(context);
+   return context;
+ $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ CREATE FUNCTION js_rank() RETURNS numeric AS $$
+   var winobj = plv8.get_window_object();
+   var context = plv8.find_function("__js_rank_up")(winobj, function(context){
+@@ -28,6 +30,7 @@
+   });
+   return context.rank;
+ $$ LANGUAGE plv8 WINDOW;
++ERROR:  language "plv8" does not exist
+ CREATE FUNCTION js_dense_rank() RETURNS numeric AS $$
+   var winobj = plv8.get_window_object();
+   var context = plv8.find_function("__js_rank_up")(winobj, function(context){
+@@ -35,6 +38,7 @@
+   });
+   return context.rank;
+ $$ LANGUAGE plv8 WINDOW;
++ERROR:  language "plv8" does not exist
+ CREATE FUNCTION js_percent_rank() RETURNS float AS $$
+   var winobj = plv8.get_window_object();
+   var totalrows = winobj.get_partition_row_count();
+@@ -45,6 +49,7 @@
+   });
+   return (context.rank - 1) / (totalrows - 1);
+ $$ LANGUAGE plv8 WINDOW;
++ERROR:  language "plv8" does not exist
+ CREATE FUNCTION js_cume_dist() RETURNS float AS $$
+   var winobj = plv8.get_window_object();
+   var totalrows = winobj.get_partition_row_count();
+@@ -61,6 +66,7 @@
+   winobj.set_partition_local(context);
+   return context.rank / totalrows;
+ $$ LANGUAGE plv8 WINDOW;
++ERROR:  language "plv8" does not exist
+ CREATE FUNCTION js_ntile(nbuckets numeric) RETURNS int AS $$
+   var winobj = plv8.get_window_object();
+   var context = winobj.get_partition_local() || {};
+@@ -99,6 +105,7 @@
+   winobj.set_partition_local(context);
+   return context.ntile;
+ $$ LANGUAGE plv8 WINDOW;
++ERROR:  language "plv8" does not exist
+ CREATE FUNCTION __js_lead_lag_common(forward internal, withoffset internal, withdefault internal) RETURNS void AS $$
+   var winobj = plv8.get_window_object();
+   var offset;
+@@ -124,32 +131,41 @@
+   }
+   return result;
+ $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ CREATE FUNCTION js_lag(arg anyelement) RETURNS anyelement AS $$
+   return plv8.find_function("__js_lead_lag_common")(false, false, false);
+ $$ LANGUAGE plv8 WINDOW;
++ERROR:  language "plv8" does not exist
+ CREATE FUNCTION js_lag(arg anyelement, ofs int) RETURNS anyelement AS $$
+   return plv8.find_function("__js_lead_lag_common")(false, true, false);
+ $$ LANGUAGE plv8 WINDOW;
++ERROR:  language "plv8" does not exist
+ CREATE FUNCTION js_lag(arg anyelement, ofs int, deflt anyelement) RETURNS anyelement AS $$
+   return plv8.find_function("__js_lead_lag_common")(false, true, true);
+ $$ LANGUAGE plv8 WINDOW;
++ERROR:  language "plv8" does not exist
+ CREATE FUNCTION js_lead(arg anyelement) RETURNS anyelement AS $$
+   return plv8.find_function("__js_lead_lag_common")(true, false, false);
+ $$ LANGUAGE plv8 WINDOW;
++ERROR:  language "plv8" does not exist
+ CREATE FUNCTION js_lead(arg anyelement, ofs int) RETURNS anyelement AS $$
+   return plv8.find_function("__js_lead_lag_common")(true, true, false);
+ $$ LANGUAGE plv8 WINDOW;
++ERROR:  language "plv8" does not exist
+ CREATE FUNCTION js_lead(arg anyelement, ofs int, deflt anyelement) RETURNS anyelement AS $$
+   return plv8.find_function("__js_lead_lag_common")(true, true, true);
+ $$ LANGUAGE plv8 WINDOW;
++ERROR:  language "plv8" does not exist
+ CREATE FUNCTION js_first_value(arg anyelement) RETURNS anyelement AS $$
+   var winobj = plv8.get_window_object();
+   return winobj.get_func_arg_in_frame(0, 0, winobj.SEEK_HEAD, true);
+ $$ LANGUAGE plv8 WINDOW;
++ERROR:  language "plv8" does not exist
+ CREATE FUNCTION js_last_value(arg anyelement) RETURNS anyelement AS $$
+   var winobj = plv8.get_window_object();
+   return winobj.get_func_arg_in_frame(0, 0, winobj.SEEK_TAIL, true);
+ $$ LANGUAGE plv8 WINDOW;
++ERROR:  language "plv8" does not exist
+ CREATE FUNCTION js_nth_value(arg anyelement, nth int) RETURNS anyelement AS $$
+   var winobj = plv8.get_window_object();
+   nth = winobj.get_func_arg_current(1);
+@@ -157,6 +173,7 @@
+     plv8.elog(ERROR, "argument of nth_value must be greater than zero");
+   return winobj.get_func_arg_in_frame(0, nth - 1, winobj.SEEK_HEAD, false);
+ $$ LANGUAGE plv8 WINDOW;
++ERROR:  language "plv8" does not exist
+ CREATE TABLE empsalary (
+     depname varchar,
+     empno bigint,
+@@ -175,199 +192,96 @@
+ ('develop', 8, 6000, '2006-10-01'),
+ ('develop', 11, 5200, '2007-08-15');
+ SELECT row_number() OVER (w), js_row_number() OVER (w) FROM empsalary WINDOW w AS (ORDER BY salary);
+- row_number | js_row_number 
+-------------+---------------
+-          1 |             1
+-          2 |             2
+-          3 |             3
+-          4 |             4
+-          5 |             5
+-          6 |             6
+-          7 |             7
+-          8 |             8
+-          9 |             9
+-         10 |            10
+-(10 rows)
+-
++ERROR:  function js_row_number() does not exist
++LINE 1: SELECT row_number() OVER (w), js_row_number() OVER (w) FROM ...
++                                      ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT rank() OVER (w), js_rank() OVER (w) FROM empsalary WINDOW w AS (PARTITION BY depname ORDER BY salary);
+- rank | js_rank 
+-------+---------
+-    1 |       1
+-    2 |       2
+-    3 |       3
+-    3 |       3
+-    5 |       5
+-    1 |       1
+-    2 |       2
+-    1 |       1
+-    1 |       1
+-    3 |       3
+-(10 rows)
+-
++ERROR:  function js_rank() does not exist
++LINE 1: SELECT rank() OVER (w), js_rank() OVER (w) FROM empsalary WI...
++                                ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT dense_rank() OVER (w), js_dense_rank() OVER (w) FROM empsalary WINDOW w AS (ORDER BY salary);
+- dense_rank | js_dense_rank 
+-------------+---------------
+-          1 |             1
+-          2 |             2
+-          3 |             3
+-          4 |             4
+-          5 |             5
+-          5 |             5
+-          6 |             6
+-          7 |             7
+-          7 |             7
+-          8 |             8
+-(10 rows)
+-
++ERROR:  function js_dense_rank() does not exist
++LINE 1: SELECT dense_rank() OVER (w), js_dense_rank() OVER (w) FROM ...
++                                      ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SET extra_float_digits = 0;
+ SELECT percent_rank() OVER (w), js_percent_rank() OVER (w) FROM empsalary WINDOW w AS (ORDER BY salary);
+-   percent_rank    |  js_percent_rank  
+--------------------+-------------------
+-                 0 |                 0
+- 0.111111111111111 | 0.111111111111111
+- 0.222222222222222 | 0.222222222222222
+- 0.333333333333333 | 0.333333333333333
+- 0.444444444444444 | 0.444444444444444
+- 0.444444444444444 | 0.444444444444444
+- 0.666666666666667 | 0.666666666666667
+- 0.777777777777778 | 0.777777777777778
+- 0.777777777777778 | 0.777777777777778
+-                 1 |                 1
+-(10 rows)
+-
++ERROR:  function js_percent_rank() does not exist
++LINE 1: SELECT percent_rank() OVER (w), js_percent_rank() OVER (w) F...
++                                        ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ RESET extra_float_digits;
+ SELECT cume_dist() OVER (w), js_cume_dist() OVER (w) FROM empsalary WINDOW w AS (ORDER BY salary);
+- cume_dist | js_cume_dist 
+------------+--------------
+-       0.1 |          0.1
+-       0.2 |          0.2
+-       0.3 |          0.3
+-       0.4 |          0.4
+-       0.6 |          0.6
+-       0.6 |          0.6
+-       0.7 |          0.7
+-       0.9 |          0.9
+-       0.9 |          0.9
+-         1 |            1
+-(10 rows)
+-
++ERROR:  function js_cume_dist() does not exist
++LINE 1: SELECT cume_dist() OVER (w), js_cume_dist() OVER (w) FROM em...
++                                     ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT ntile(3) OVER (w), js_ntile(3) OVER (w) FROM empsalary WINDOW w AS (ORDER BY salary);
+- ntile | js_ntile 
+--------+----------
+-     1 |        1
+-     1 |        1
+-     1 |        1
+-     1 |        1
+-     2 |        2
+-     2 |        2
+-     2 |        2
+-     3 |        3
+-     3 |        3
+-     3 |        3
+-(10 rows)
+-
++ERROR:  function js_ntile(integer) does not exist
++LINE 1: SELECT ntile(3) OVER (w), js_ntile(3) OVER (w) FROM empsalar...
++                                  ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT lag(enroll_date) OVER (w), js_lag(enroll_date) OVER (w) FROM empsalary WINDOW w AS (ORDER BY salary);
+-    lag     |   js_lag   
+-------------+------------
+-            | 
+- 12-10-2007 | 12-10-2007
+- 12-23-2006 | 12-23-2006
+- 01-01-2008 | 01-01-2008
+- 01-01-2008 | 01-01-2008
+- 08-08-2007 | 08-08-2007
+- 08-01-2007 | 08-01-2007
+- 10-01-2006 | 10-01-2006
+- 08-15-2007 | 08-15-2007
+- 08-01-2007 | 08-01-2007
+-(10 rows)
+-
++ERROR:  function js_lag(date) does not exist
++LINE 1: SELECT lag(enroll_date) OVER (w), js_lag(enroll_date) OVER (...
++                                          ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT lead(enroll_date) OVER (w), js_lead(enroll_date) OVER (w) FROM empsalary WINDOW w AS (ORDER BY salary);
+-    lead    |  js_lead   
+-------------+------------
+- 12-23-2006 | 12-23-2006
+- 01-01-2008 | 01-01-2008
+- 01-01-2008 | 01-01-2008
+- 08-08-2007 | 08-08-2007
+- 08-01-2007 | 08-01-2007
+- 10-01-2006 | 10-01-2006
+- 08-15-2007 | 08-15-2007
+- 08-01-2007 | 08-01-2007
+- 10-01-2006 | 10-01-2006
+-            | 
+-(10 rows)
+-
++ERROR:  function js_lead(date) does not exist
++LINE 1: SELECT lead(enroll_date) OVER (w), js_lead(enroll_date) OVER...
++                                           ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT first_value(empno) OVER (w ROWS BETWEEN 2 PRECEDING AND 2 FOLLOWING),
+     js_first_value(empno) OVER (w ROWS BETWEEN 2 PRECEDING AND 2 FOLLOWING)
+     FROM empsalary WINDOW w AS (ORDER BY salary);
+- first_value | js_first_value 
+--------------+----------------
+-           5 |              5
+-           5 |              5
+-           5 |              5
+-           2 |              2
+-           7 |              7
+-           9 |              9
+-           4 |              4
+-           3 |              3
+-           1 |              1
+-          11 |             11
+-(10 rows)
+-
++ERROR:  function js_first_value(bigint) does not exist
++LINE 2:     js_first_value(empno) OVER (w ROWS BETWEEN 2 PRECEDING A...
++            ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT last_value(empno) OVER (w ROWS BETWEEN 3 PRECEDING AND 1 PRECEDING),
+     js_last_value(empno) OVER (w ROWS BETWEEN 3 PRECEDING AND 1 PRECEDING)
+     FROM empsalary WINDOW w AS (ORDER BY salary);
+- last_value | js_last_value 
+-------------+---------------
+-            |              
+-          5 |             5
+-          2 |             2
+-          7 |             7
+-          9 |             9
+-          4 |             4
+-          3 |             3
+-          1 |             1
+-         11 |            11
+-         10 |            10
+-(10 rows)
+-
++ERROR:  function js_last_value(bigint) does not exist
++LINE 2:     js_last_value(empno) OVER (w ROWS BETWEEN 3 PRECEDING AN...
++            ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT nth_value(empno, 2) OVER (w ROWS BETWEEN 1 FOLLOWING AND 3 FOLLOWING),
+     js_nth_value(empno, 2) OVER (w ROWS BETWEEN 1 FOLLOWING AND 3 FOLLOWING)
+     FROM empsalary WINDOW w AS (ORDER BY salary);
+- nth_value | js_nth_value 
+------------+--------------
+-         7 |            7
+-         9 |            9
+-         4 |            4
+-         3 |            3
+-         1 |            1
+-        11 |           11
+-        10 |           10
+-         8 |            8
+-           |             
+-           |             
+-(10 rows)
+-
++ERROR:  function js_nth_value(bigint, integer) does not exist
++LINE 2:     js_nth_value(empno, 2) OVER (w ROWS BETWEEN 1 FOLLOWING ...
++            ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION bad_alloc(sz text) RETURNS void AS $$
+   var winobj = plv8.get_window_object();
+   var context = winobj.get_partition_local(sz - 0) || {};
+   context.long_text_key_and_value = "blablablablablablablablablablablablablablablabla";
+   winobj.set_partition_local(context);
+ $$ LANGUAGE plv8 WINDOW;
++ERROR:  language "plv8" does not exist
+ SELECT bad_alloc('5') OVER ();
+-ERROR:  window local memory overflow
+-CONTEXT:  bad_alloc() LINE 5:   winobj.set_partition_local(context);
++ERROR:  function bad_alloc(unknown) does not exist
++LINE 1: SELECT bad_alloc('5') OVER ();
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT bad_alloc('not a number') OVER ();
+-ERROR:  window local memory overflow
+-CONTEXT:  bad_alloc() LINE 5:   winobj.set_partition_local(context);
++ERROR:  function bad_alloc(unknown) does not exist
++LINE 1: SELECT bad_alloc('not a number') OVER ();
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT bad_alloc('1000') OVER (); -- not so bad
+- bad_alloc 
+------------
+- 
+-(1 row)
+-
++ERROR:  function bad_alloc(unknown) does not exist
++LINE 1: SELECT bad_alloc('1000') OVER ();
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION non_window() RETURNS void AS $$
+   var winobj = plv8.get_window_object();
+ $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT non_window();
+-ERROR:  get_window_object called in wrong context
+-CONTEXT:  non_window() LINE 2:   var winobj = plv8.get_window_object();
++ERROR:  function non_window() does not exist
++LINE 1: SELECT non_window();
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/guc.out /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/guc.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/guc.out	2023-04-09 01:43:50.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/guc.out	2023-07-22 04:27:21.236869179 +0000
+@@ -5,10 +5,11 @@
+       let result = ['Hello, World!'];
+       return result;
+    $$ LANGUAGE plv8 STABLE STRICT;
++ERROR:  language "plv8" does not exist
+ SELECT let_test();
+-     let_test      
+--------------------
+- ["Hello, World!"]
+-(1 row)
+-
++ERROR:  function let_test() does not exist
++LINE 1: SELECT let_test();
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ DROP FUNCTION let_test();
++ERROR:  function let_test() does not exist
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/es6.out /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/es6.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/es6.out	2023-04-09 01:43:50.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/es6.out	2023-07-22 04:27:21.264868948 +0000
+@@ -25,12 +25,12 @@
+       }
+       return result;
+    $$ LANGUAGE plv8 STABLE STRICT;
++ERROR:  language "plv8" does not exist
+ SELECT get_rectangles_area(130.0);
+-                                                         get_rectangles_area                                                          
+---------------------------------------------------------------------------------------------------------------------------------------
+- [{"id":1,"data":{"width":20.3,"height":1.5}},{"id":2,"data":{"width":10.2,"height":9.5}},{"id":3,"data":{"width":3.5,"height":5.2}}]
+-(1 row)
+-
++ERROR:  function get_rectangles_area(numeric) does not exist
++LINE 1: SELECT get_rectangles_area(130.0);
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ -- same for..of loop, this time using a cursor within a generator
+ CREATE OR REPLACE FUNCTION get_rectangles_area(min_area NUMERIC)
+    RETURNS json AS $$
+@@ -56,9 +56,9 @@
+       plan.free();
+       return result;
+    $$ LANGUAGE plv8 STABLE STRICT;
++ERROR:  language "plv8" does not exist
+ SELECT get_rectangles_area(130.0);
+-                                                         get_rectangles_area                                                          
+---------------------------------------------------------------------------------------------------------------------------------------
+- [{"id":1,"data":{"width":20.3,"height":1.5}},{"id":2,"data":{"width":10.2,"height":9.5}},{"id":3,"data":{"width":3.5,"height":5.2}}]
+-(1 row)
+-
++ERROR:  function get_rectangles_area(numeric) does not exist
++LINE 1: SELECT get_rectangles_area(130.0);
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/arraybuffer.out /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/arraybuffer.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/arraybuffer.out	2023-04-09 01:43:50.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/arraybuffer.out	2023-07-22 04:27:21.280868816 +0000
+@@ -4,9 +4,9 @@
+   var a = new ArrayBuffer(8);
+   return true;
+ $$;
++ERROR:  language "plv8" does not exist
+ SELECT crash_test();
+- crash_test 
+-------------
+- t
+-(1 row)
+-
++ERROR:  function crash_test() does not exist
++LINE 1: SELECT crash_test();
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/composites.out /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/composites.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/composites.out	2023-04-09 01:43:50.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/composites.out	2023-07-22 04:27:21.300868651 +0000
+@@ -3,4 +3,4 @@
+   var jres = plv8.execute("select $1::acomp[]", [ [ { "x": 2, "z": null, "y": null } ] ]);
+   plv8.elog(NOTICE,JSON.stringify(jres));
+ $$;
+-NOTICE:  [{"acomp":[{"x":2,"y":null,"z":null}]}]
++ERROR:  language "plv8" does not exist
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/currentresource.out /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/currentresource.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/currentresource.out	2023-04-09 01:43:50.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/currentresource.out	2023-07-22 04:27:21.328868420 +0000
+@@ -3,15 +3,15 @@
+ AS $$
+   return plv8.execute("SELECT 1")[0]['?column?']
+ $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ CREATE TABLE resource_table (col TEXT);
+ SELECT test_resource_owner();
+- test_resource_owner 
+----------------------
+-                   1
+-(1 row)
+-
++ERROR:  function test_resource_owner() does not exist
++LINE 1: SELECT test_resource_owner();
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT test_resource_owner() FROM resource_table;
+- test_resource_owner 
+----------------------
+-(0 rows)
+-
++ERROR:  function test_resource_owner() does not exist
++LINE 1: SELECT test_resource_owner() FROM resource_table;
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/startup_perms.out /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/startup_perms.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/startup_perms.out	2023-04-09 01:43:50.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/startup_perms.out	2023-07-22 04:27:21.352868223 +0000
+@@ -1,14 +1,17 @@
+ -- test startup permissions failure
+ CREATE FUNCTION start() RETURNS void AS $$ plv8.elog(NOTICE, 'nope'); $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ CREATE ROLE someone_else;
+ REVOKE EXECUTE ON FUNCTION start() FROM public;
++ERROR:  function start() does not exist
+ SET plv8.start_proc = 'start';
+ REVOKE EXECUTE ON FUNCTION start() FROM public;
++ERROR:  function start() does not exist
+ SET ROLE TO someone_else;
+ DO $$ plv8.elog(NOTICE, 'hello') $$ LANGUAGE plv8;
+-WARNING:  failed to find js function start
+-NOTICE:  hello
++ERROR:  language "plv8" does not exist
+ RESET ROLE;
+ DROP ROLE someone_else;
+ RESET plv8.start_proc;
+ DROP FUNCTION start();
++ERROR:  function start() does not exist
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/bytea.out /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/bytea.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/bytea.out	2023-04-09 01:43:50.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/bytea.out	2023-07-22 04:27:21.384867958 +0000
+@@ -3,34 +3,34 @@
+ AS $$
+   return new ArrayBuffer(len);
+ $$;
++ERROR:  language "plv8" does not exist
+ SELECT length(valid_arraybuffer_bytea(20));
+- length 
+---------
+-     20
+-(1 row)
+-
++ERROR:  function valid_arraybuffer_bytea(integer) does not exist
++LINE 1: SELECT length(valid_arraybuffer_bytea(20));
++                      ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION valid_int8array_bytea(len integer) RETURNS bytea
+ LANGUAGE plv8 IMMUTABLE STRICT
+ AS $$
+   return new Int8Array(len);
+ $$;
++ERROR:  language "plv8" does not exist
+ SELECT length(valid_int8array_bytea(20));
+- length 
+---------
+-     20
+-(1 row)
+-
++ERROR:  function valid_int8array_bytea(integer) does not exist
++LINE 1: SELECT length(valid_int8array_bytea(20));
++                      ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ CREATE FUNCTION valid_int16array_bytea(len integer) RETURNS bytea
+ LANGUAGE plv8 IMMUTABLE STRICT
+ AS $$
+   return new Int16Array(len);
+ $$;
++ERROR:  language "plv8" does not exist
+ SELECT length(valid_int16array_bytea(20));
+- length 
+---------
+-     40
+-(1 row)
+-
++ERROR:  function valid_int16array_bytea(integer) does not exist
++LINE 1: SELECT length(valid_int16array_bytea(20));
++                      ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ DO $$
+   const test = 'string test'
+   const bytea = plv8.execute(`select $1::bytea`, [test])[0].bytea;
+@@ -41,4 +41,4 @@
+     plv8.elog(WARN, 'FAIL');
+   }
+ $$ language plv8;
+-INFO:  OK
++ERROR:  language "plv8" does not exist
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/find_function_perms.out /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/find_function_perms.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/find_function_perms.out	2023-04-09 01:43:50.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/find_function_perms.out	2023-07-22 04:27:21.416867695 +0000
+@@ -1,12 +1,15 @@
+ -- test find_function permissions failure
+ CREATE FUNCTION perm() RETURNS void AS $$ plv8.elog(NOTICE, 'nope'); $$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ CREATE ROLE someone_else;
+ REVOKE EXECUTE ON FUNCTION perm() FROM public;
++ERROR:  function perm() does not exist
+ SET ROLE TO someone_else;
+ DO $$ const func = plv8.find_function('perm') $$ LANGUAGE plv8;
+-WARNING:  failed to find or no permission for js function perm
++ERROR:  language "plv8" does not exist
+ DO $$ const func = plv8.find_function('perm()') $$ LANGUAGE plv8;
+-WARNING:  failed to find or no permission for js function perm()
++ERROR:  language "plv8" does not exist
+ RESET ROLE;
+ DROP ROLE someone_else;
+ DROP FUNCTION perm();
++ERROR:  function perm() does not exist
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/memory_limits.out /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/memory_limits.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/memory_limits.out	2023-04-09 01:43:50.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/memory_limits.out	2023-07-22 04:27:21.448867430 +0000
+@@ -2,16 +2,17 @@
+   const limit = plv8.execute(`select setting from pg_settings where name = $1`, ['plv8.memory_limit'])[0].setting;
+   const a = new ArrayBuffer(limit*1024*1024/2);
+ $$ language plv8;
++ERROR:  language "plv8" does not exist
+ do $$
+   const limit = plv8.execute(`select setting from pg_settings where name = $1`, ['plv8.memory_limit'])[0].setting;
+   const a = new ArrayBuffer(limit*1024*1024/2);
+ $$ language plv8;
++ERROR:  language "plv8" does not exist
+ do $$
+   const limit = plv8.execute(`select setting from pg_settings where name = $1`, ['plv8.memory_limit'])[0].setting;
+   const a = new ArrayBuffer(limit*1024*1024);
+ $$ language plv8;
+-ERROR:  RangeError: Array buffer allocation failed
+-CONTEXT:  undefined() LINE 3:   const a = new ArrayBuffer(limit*1024*1024);
++ERROR:  language "plv8" does not exist
+ do $$
+   const limit = plv8.execute(`select setting from pg_settings where name = $1`, ['plv8.memory_limit'])[0].setting;
+   const a = new ArrayBuffer(limit*1024*1024/1.5);
+@@ -20,5 +21,4 @@
+     s.push(new ArrayBuffer(63)) // small non-aligned allocations
+   }
+ $$ language plv8;
+-ERROR:  RangeError: Array buffer allocation failed
+-CONTEXT:  undefined() LINE 6:     s.push(new ArrayBuffer(63)) // small non-aligned allocations
++ERROR:  language "plv8" does not exist
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/reset.out /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/reset.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/reset.out	2023-04-09 01:43:50.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/reset.out	2023-07-22 04:27:21.476867199 +0000
+@@ -1,27 +1,28 @@
+ CREATE OR REPLACE FUNCTION test_context_value() RETURNS text as $V8$
+     return ctx_value;    
+ $V8$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ CREATE OR REPLACE FUNCTION set_context_value(val TEXT) RETURNS void as $V8$
+     ctx_value = val;    
+ $V8$ LANGUAGE plv8;
++ERROR:  language "plv8" does not exist
+ SELECT set_context_value('test');
+- set_context_value 
+--------------------
+- 
+-(1 row)
+-
++ERROR:  function set_context_value(unknown) does not exist
++LINE 1: SELECT set_context_value('test');
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT test_context_value();
+- test_context_value 
+---------------------
+- test
+-(1 row)
+-
++ERROR:  function test_context_value() does not exist
++LINE 1: SELECT test_context_value();
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT plv8_reset();
+- plv8_reset 
+-------------
+- 
+-(1 row)
+-
++ERROR:  function plv8_reset() does not exist
++LINE 1: SELECT plv8_reset();
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT test_context_value();
+-ERROR:  ReferenceError: ctx_value is not defined
+-CONTEXT:  test_context_value() LINE 2:     return ctx_value;    
++ERROR:  function test_context_value() does not exist
++LINE 1: SELECT test_context_value();
++               ^
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/show.out /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/show.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/show.out	2023-04-09 01:43:50.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/show.out	2023-07-22 04:27:21.504866968 +0000
+@@ -2,9 +2,9 @@
+     const res = plv8.execute('SHOW search_path');
+     plv8.elog(INFO, JSON.stringify(res));
+ $$ language plv8;
+-INFO:  [{"search_path":"\"$user\",public"}]
++ERROR:  language "plv8" does not exist
+ DO $$
+     const res = plv8.execute('EXPLAIN (FORMAT JSON, COSTS OFF) SELECT 1');
+     plv8.elog(INFO, JSON.stringify(res));
+ $$ language plv8;
+-INFO:  [{"QUERY PLAN":[{"Plan":{"Node Type":"Result","Parallel Aware":false}}]}]
++ERROR:  language "plv8" does not exist
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/array_spread.out /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/array_spread.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/array_spread.out	2023-04-09 01:43:50.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/array_spread.out	2023-07-22 04:27:21.548866605 +0000
+@@ -6,7 +6,7 @@
+   };
+   [...({})];
+ $$ language plv8;
+-ERROR:  Out of memory error
++ERROR:  language "plv8" does not exist
+ do $$
+   Object.prototype[Symbol.iterator] = function() {
+      return {
+@@ -15,4 +15,4 @@
+   };
+   [...({})];
+ $$ language plv8;
+-ERROR:  Out of memory error
++ERROR:  language "plv8" does not exist
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/regression.out /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/regression.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/expected/regression.out	2023-04-09 01:43:50.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/plv8-3.1.6/results/regression.out	2023-07-22 04:27:21.572866407 +0000
+@@ -2,5 +2,4 @@
+ DO $$
+   plv8.prepare('SELECT * FROM (VALUES (1)) AS foo').cursor().fetch.apply(null)
+ $$ language plv8;
+-ERROR:  cannot find cursor
+-CONTEXT:  undefined() LINE 2:   plv8.prepare('SELECT * FROM (VALUES (1)) AS foo').cursor().fetch.apply(null)
++ERROR:  language "plv8" does not exist

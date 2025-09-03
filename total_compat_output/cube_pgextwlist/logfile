@@ -1,0 +1,146 @@
+2023-07-25 20:35:19.748 UTC [1932072] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 20:35:19.748 UTC [1932072] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 20:35:19.763 UTC [1932072] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 20:35:19.780 UTC [1932075] LOG:  database system was shut down at 2023-07-25 20:35:19 UTC
+2023-07-25 20:35:19.789 UTC [1932072] LOG:  database system is ready to accept connections
+2023-07-25 20:35:19.929 UTC [1932088] ERROR:  invalid input syntax for cube at character 8
+2023-07-25 20:35:19.929 UTC [1932088] DETAIL:  syntax error at end of input
+2023-07-25 20:35:19.929 UTC [1932088] STATEMENT:  SELECT ''::cube AS cube;
+2023-07-25 20:35:19.929 UTC [1932088] ERROR:  invalid input syntax for cube at character 8
+2023-07-25 20:35:19.929 UTC [1932088] DETAIL:  syntax error at or near "A"
+2023-07-25 20:35:19.929 UTC [1932088] STATEMENT:  SELECT 'ABC'::cube AS cube;
+2023-07-25 20:35:19.929 UTC [1932088] ERROR:  invalid input syntax for cube at character 8
+2023-07-25 20:35:19.929 UTC [1932088] DETAIL:  syntax error at or near "]"
+2023-07-25 20:35:19.929 UTC [1932088] STATEMENT:  SELECT '[]'::cube AS cube;
+2023-07-25 20:35:19.929 UTC [1932088] ERROR:  invalid input syntax for cube at character 8
+2023-07-25 20:35:19.929 UTC [1932088] DETAIL:  syntax error at or near "]"
+2023-07-25 20:35:19.929 UTC [1932088] STATEMENT:  SELECT '[()]'::cube AS cube;
+2023-07-25 20:35:19.929 UTC [1932088] ERROR:  invalid input syntax for cube at character 8
+2023-07-25 20:35:19.929 UTC [1932088] DETAIL:  syntax error at or near "]"
+2023-07-25 20:35:19.929 UTC [1932088] STATEMENT:  SELECT '[(1)]'::cube AS cube;
+2023-07-25 20:35:19.929 UTC [1932088] ERROR:  invalid input syntax for cube at character 8
+2023-07-25 20:35:19.929 UTC [1932088] DETAIL:  syntax error at or near "]"
+2023-07-25 20:35:19.929 UTC [1932088] STATEMENT:  SELECT '[(1),]'::cube AS cube;
+2023-07-25 20:35:19.929 UTC [1932088] ERROR:  invalid input syntax for cube at character 8
+2023-07-25 20:35:19.929 UTC [1932088] DETAIL:  syntax error at or near "2"
+2023-07-25 20:35:19.929 UTC [1932088] STATEMENT:  SELECT '[(1),2]'::cube AS cube;
+2023-07-25 20:35:19.929 UTC [1932088] ERROR:  invalid input syntax for cube at character 8
+2023-07-25 20:35:19.929 UTC [1932088] DETAIL:  syntax error at or near ","
+2023-07-25 20:35:19.929 UTC [1932088] STATEMENT:  SELECT '[(1),(2),(3)]'::cube AS cube;
+2023-07-25 20:35:19.929 UTC [1932088] ERROR:  invalid input syntax for cube at character 8
+2023-07-25 20:35:19.929 UTC [1932088] DETAIL:  syntax error at end of input
+2023-07-25 20:35:19.929 UTC [1932088] STATEMENT:  SELECT '1,'::cube AS cube;
+2023-07-25 20:35:19.929 UTC [1932088] ERROR:  invalid input syntax for cube at character 8
+2023-07-25 20:35:19.929 UTC [1932088] DETAIL:  syntax error at end of input
+2023-07-25 20:35:19.929 UTC [1932088] STATEMENT:  SELECT '1,2,'::cube AS cube;
+2023-07-25 20:35:19.929 UTC [1932088] ERROR:  invalid input syntax for cube at character 8
+2023-07-25 20:35:19.929 UTC [1932088] DETAIL:  syntax error at or near ","
+2023-07-25 20:35:19.929 UTC [1932088] STATEMENT:  SELECT '1,,2'::cube AS cube;
+2023-07-25 20:35:19.929 UTC [1932088] ERROR:  invalid input syntax for cube at character 8
+2023-07-25 20:35:19.929 UTC [1932088] DETAIL:  syntax error at or near ")"
+2023-07-25 20:35:19.929 UTC [1932088] STATEMENT:  SELECT '(1,)'::cube AS cube;
+2023-07-25 20:35:19.929 UTC [1932088] ERROR:  invalid input syntax for cube at character 8
+2023-07-25 20:35:19.929 UTC [1932088] DETAIL:  syntax error at or near ")"
+2023-07-25 20:35:19.929 UTC [1932088] STATEMENT:  SELECT '(1,2,)'::cube AS cube;
+2023-07-25 20:35:19.929 UTC [1932088] ERROR:  invalid input syntax for cube at character 8
+2023-07-25 20:35:19.929 UTC [1932088] DETAIL:  syntax error at or near ","
+2023-07-25 20:35:19.929 UTC [1932088] STATEMENT:  SELECT '(1,,2)'::cube AS cube;
+2023-07-25 20:35:19.929 UTC [1932088] ERROR:  invalid input syntax for cube at character 8
+2023-07-25 20:35:19.929 UTC [1932088] DETAIL:  syntax error at or near ","
+2023-07-25 20:35:19.929 UTC [1932088] STATEMENT:  SELECT '[(1),(2)],'::cube AS cube;
+2023-07-25 20:35:19.929 UTC [1932088] ERROR:  invalid input syntax for cube at character 8
+2023-07-25 20:35:19.929 UTC [1932088] DETAIL:  Different point dimensions in (1,2,3) and (2,3).
+2023-07-25 20:35:19.929 UTC [1932088] STATEMENT:  SELECT '[(1,2,3),(2,3)]'::cube AS cube;
+2023-07-25 20:35:19.929 UTC [1932088] ERROR:  invalid input syntax for cube at character 8
+2023-07-25 20:35:19.929 UTC [1932088] DETAIL:  Different point dimensions in (1,2) and (1,2,3).
+2023-07-25 20:35:19.929 UTC [1932088] STATEMENT:  SELECT '[(1,2),(1,2,3)]'::cube AS cube;
+2023-07-25 20:35:19.930 UTC [1932088] ERROR:  invalid input syntax for cube at character 8
+2023-07-25 20:35:19.930 UTC [1932088] DETAIL:  syntax error at or near ","
+2023-07-25 20:35:19.930 UTC [1932088] STATEMENT:  SELECT '(1),(2),'::cube AS cube;
+2023-07-25 20:35:19.930 UTC [1932088] ERROR:  invalid input syntax for cube at character 8
+2023-07-25 20:35:19.930 UTC [1932088] DETAIL:  Different point dimensions in (1,2,3) and (2,3).
+2023-07-25 20:35:19.930 UTC [1932088] STATEMENT:  SELECT '(1,2,3),(2,3)'::cube AS cube;
+2023-07-25 20:35:19.930 UTC [1932088] ERROR:  invalid input syntax for cube at character 8
+2023-07-25 20:35:19.930 UTC [1932088] DETAIL:  Different point dimensions in (1,2) and (1,2,3).
+2023-07-25 20:35:19.930 UTC [1932088] STATEMENT:  SELECT '(1,2),(1,2,3)'::cube AS cube;
+2023-07-25 20:35:19.930 UTC [1932088] ERROR:  invalid input syntax for cube at character 8
+2023-07-25 20:35:19.930 UTC [1932088] DETAIL:  syntax error at or near "a"
+2023-07-25 20:35:19.930 UTC [1932088] STATEMENT:  SELECT '(1,2,3)ab'::cube AS cube;
+2023-07-25 20:35:19.930 UTC [1932088] ERROR:  invalid input syntax for cube at character 8
+2023-07-25 20:35:19.930 UTC [1932088] DETAIL:  syntax error at or near "a"
+2023-07-25 20:35:19.930 UTC [1932088] STATEMENT:  SELECT '(1,2,3)a'::cube AS cube;
+2023-07-25 20:35:19.930 UTC [1932088] ERROR:  invalid input syntax for cube at character 8
+2023-07-25 20:35:19.930 UTC [1932088] DETAIL:  syntax error at or near "("
+2023-07-25 20:35:19.930 UTC [1932088] STATEMENT:  SELECT '(1,2)('::cube AS cube;
+2023-07-25 20:35:19.930 UTC [1932088] ERROR:  invalid input syntax for cube at character 8
+2023-07-25 20:35:19.930 UTC [1932088] DETAIL:  syntax error at or near "a"
+2023-07-25 20:35:19.930 UTC [1932088] STATEMENT:  SELECT '1,2ab'::cube AS cube;
+2023-07-25 20:35:19.930 UTC [1932088] ERROR:  invalid input syntax for cube at character 8
+2023-07-25 20:35:19.930 UTC [1932088] DETAIL:  syntax error at or near "e"
+2023-07-25 20:35:19.930 UTC [1932088] STATEMENT:  SELECT '1 e7'::cube AS cube;
+2023-07-25 20:35:19.930 UTC [1932088] ERROR:  invalid input syntax for cube at character 8
+2023-07-25 20:35:19.930 UTC [1932088] DETAIL:  syntax error at or near "a"
+2023-07-25 20:35:19.930 UTC [1932088] STATEMENT:  SELECT '1,2a'::cube AS cube;
+2023-07-25 20:35:19.930 UTC [1932088] ERROR:  invalid input syntax for cube at character 8
+2023-07-25 20:35:19.930 UTC [1932088] DETAIL:  syntax error at or near ".2"
+2023-07-25 20:35:19.930 UTC [1932088] STATEMENT:  SELECT '1..2'::cube AS cube;
+2023-07-25 20:35:19.930 UTC [1932088] ERROR:  "-1e-700" is out of range for type double precision at character 8
+2023-07-25 20:35:19.930 UTC [1932088] STATEMENT:  SELECT '-1e-700'::cube AS cube;
+2023-07-25 20:35:19.931 UTC [1932088] ERROR:  UR and LL arrays must be of same length
+2023-07-25 20:35:19.931 UTC [1932088] STATEMENT:  SELECT cube('{0,1,2}'::float[], '{3}'::float[]);
+2023-07-25 20:35:19.931 UTC [1932088] ERROR:  Index out of bounds
+2023-07-25 20:35:19.931 UTC [1932088] STATEMENT:  SELECT cube_subset(cube('(1,3,5),(6,7,8)'), ARRAY[4,0]);
+2023-07-25 20:35:19.931 UTC [1932088] ERROR:  Index out of bounds
+2023-07-25 20:35:19.931 UTC [1932088] STATEMENT:  SELECT cube_subset(cube('(6,7,8),(6,7,8)'), ARRAY[4,0]);
+2023-07-25 20:35:19.932 UTC [1932088] ERROR:  array is too long
+2023-07-25 20:35:19.932 UTC [1932088] DETAIL:  A cube cannot have more than 100 dimensions.
+2023-07-25 20:35:19.932 UTC [1932088] STATEMENT:  SELECT cube_subset(cube('(6,7,8),(6,7,8)'), array(SELECT 1 as a FROM generate_series(1,101)));
+2023-07-25 20:35:19.932 UTC [1932088] ERROR:  invalid input syntax for cube at character 8
+2023-07-25 20:35:19.932 UTC [1932088] DETAIL:  A cube cannot have more than 100 dimensions.
+2023-07-25 20:35:19.932 UTC [1932088] STATEMENT:  select '(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)'::cube;
+2023-07-25 20:35:19.933 UTC [1932088] ERROR:  invalid input syntax for cube at character 8
+2023-07-25 20:35:19.933 UTC [1932088] DETAIL:  A cube cannot have more than 100 dimensions.
+2023-07-25 20:35:19.933 UTC [1932088] STATEMENT:  select '(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)'::cube;
+2023-07-25 20:35:19.933 UTC [1932088] ERROR:  array is too long
+2023-07-25 20:35:19.933 UTC [1932088] DETAIL:  A cube cannot have more than 100 dimensions.
+2023-07-25 20:35:19.933 UTC [1932088] STATEMENT:  select cube(array(SELECT 0 as a FROM generate_series(1,101)));
+2023-07-25 20:35:19.933 UTC [1932088] ERROR:  can't extend cube
+2023-07-25 20:35:19.933 UTC [1932088] DETAIL:  A cube cannot have more than 100 dimensions.
+2023-07-25 20:35:19.933 UTC [1932088] STATEMENT:  select cube(array(SELECT 0 as a FROM generate_series(1,101)),array(SELECT 0 as a FROM generate_series(1,101)));
+2023-07-25 20:35:19.933 UTC [1932088] ERROR:  can't extend cube
+2023-07-25 20:35:19.933 UTC [1932088] DETAIL:  A cube cannot have more than 100 dimensions.
+2023-07-25 20:35:19.933 UTC [1932088] STATEMENT:  select cube(cube(array(SELECT 0 as a FROM generate_series(1,100))), 0);
+2023-07-25 20:35:19.934 UTC [1932088] ERROR:  can't extend cube
+2023-07-25 20:35:19.934 UTC [1932088] DETAIL:  A cube cannot have more than 100 dimensions.
+2023-07-25 20:35:19.934 UTC [1932088] STATEMENT:  select cube(cube(array(SELECT 0 as a FROM generate_series(1,100)),array(SELECT 0 as a FROM generate_series(1,100))), 0, 0);
+2023-07-25 20:35:19.943 UTC [1932088] ERROR:  cube index 0 is out of bounds
+2023-07-25 20:35:19.943 UTC [1932088] STATEMENT:  SELECT cube(array[10,20,30], array[40,50,60])->0;
+2023-07-25 20:35:19.943 UTC [1932088] ERROR:  cube index 7 is out of bounds
+2023-07-25 20:35:19.943 UTC [1932088] STATEMENT:  SELECT cube(array[10,20,30], array[40,50,60])->7;
+2023-07-25 20:35:19.943 UTC [1932088] ERROR:  cube index -1 is out of bounds
+2023-07-25 20:35:19.943 UTC [1932088] STATEMENT:  SELECT cube(array[10,20,30], array[40,50,60])->-1;
+2023-07-25 20:35:19.943 UTC [1932088] ERROR:  cube index -6 is out of bounds
+2023-07-25 20:35:19.943 UTC [1932088] STATEMENT:  SELECT cube(array[10,20,30], array[40,50,60])->-6;
+2023-07-25 20:35:19.943 UTC [1932088] ERROR:  cube index -6 is out of bounds
+2023-07-25 20:35:19.943 UTC [1932088] STATEMENT:  SELECT cube(array[10,20,30])->-6;
+2023-07-25 20:35:19.943 UTC [1932088] ERROR:  zero cube index is not defined
+2023-07-25 20:35:19.943 UTC [1932088] STATEMENT:  SELECT cube(array[40,50,60], array[10,20,30])~>0;
+2023-07-25 20:35:20.219 UTC [1932072] LOG:  received SIGHUP, reloading configuration files
+2023-07-25 20:35:20.220 UTC [1932072] LOG:  parameter "session_preload_libraries" changed to "pgextwlist"
+2023-07-25 20:35:20.220 UTC [1932072] LOG:  parameter "extwlist.extensions" changed to "citext,earthdistance,pg_trgm,pg_stat_statements,refint"
+2023-07-25 20:35:20.220 UTC [1932072] LOG:  parameter "extwlist.custom_path" changed to "/home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/test-scripts"
+2023-07-25 20:35:20.313 UTC [1932118] ERROR:  extension "plpgsql" already exists
+2023-07-25 20:35:20.313 UTC [1932118] STATEMENT:  CREATE EXTENSION plpgsql;
+2023-07-25 20:35:20.314 UTC [1932118] ERROR:  extension "hstore" does not exist
+2023-07-25 20:35:20.314 UTC [1932118] STATEMENT:  COMMENT ON EXTENSION hstore IS 'plpgsql comment';
+2023-07-25 20:35:20.315 UTC [1932118] ERROR:  permission denied to create extension "hstore"
+2023-07-25 20:35:20.315 UTC [1932118] HINT:  Must have CREATE privilege on current database to create this extension.
+2023-07-25 20:35:20.315 UTC [1932118] STATEMENT:  CREATE EXTENSION hstore;
+2023-07-25 20:35:20.315 UTC [1932118] ERROR:  extension "hstore" does not exist
+2023-07-25 20:35:20.315 UTC [1932118] STATEMENT:  COMMENT ON EXTENSION hstore IS 'hstore comment';
+2023-07-25 20:35:20.319 UTC [1932118] ERROR:  must be owner of extension plpgsql
+2023-07-25 20:35:20.319 UTC [1932118] STATEMENT:  DROP EXTENSION plpgsql;
+2023-07-25 20:35:20.354 UTC [1932126] ERROR:  cannot drop extension citext because other objects depend on it
+2023-07-25 20:35:20.354 UTC [1932126] DETAIL:  column t of table mere_table depends on type citext
+2023-07-25 20:35:20.354 UTC [1932126] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 20:35:20.354 UTC [1932126] STATEMENT:  DROP EXTENSION citext;

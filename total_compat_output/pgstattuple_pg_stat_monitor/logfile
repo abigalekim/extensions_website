@@ -1,0 +1,98 @@
+2023-07-25 19:09:32.195 UTC [3285191] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 19:09:32.195 UTC [3285191] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 19:09:32.208 UTC [3285191] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 19:09:32.220 UTC [3285194] LOG:  database system was shut down at 2023-07-25 19:09:31 UTC
+2023-07-25 19:09:32.233 UTC [3285191] LOG:  database system is ready to accept connections
+2023-07-25 19:09:32.399 UTC [3285210] ERROR:  relation "test_pkey" is not a GIN index
+2023-07-25 19:09:32.399 UTC [3285210] STATEMENT:  select pgstatginindex('test_pkey');
+2023-07-25 19:09:32.399 UTC [3285210] ERROR:  relation "test_pkey" is not a hash index
+2023-07-25 19:09:32.399 UTC [3285210] STATEMENT:  select pgstathashindex('test_pkey');
+2023-07-25 19:09:32.399 UTC [3285210] ERROR:  relation "test_ginidx" is not a btree index
+2023-07-25 19:09:32.399 UTC [3285210] STATEMENT:  select pgstatindex('test_ginidx');
+2023-07-25 19:09:32.399 UTC [3285210] ERROR:  relation "test_ginidx" is not a hash index
+2023-07-25 19:09:32.399 UTC [3285210] STATEMENT:  select pgstathashindex('test_ginidx');
+2023-07-25 19:09:32.400 UTC [3285210] ERROR:  relation "test_hashidx" is not a btree index
+2023-07-25 19:09:32.400 UTC [3285210] STATEMENT:  select pgstatindex('test_hashidx');
+2023-07-25 19:09:32.400 UTC [3285210] ERROR:  relation "test_hashidx" is not a GIN index
+2023-07-25 19:09:32.400 UTC [3285210] STATEMENT:  select pgstatginindex('test_hashidx');
+2023-07-25 19:09:32.406 UTC [3285210] ERROR:  cannot get tuple-level statistics for relation "test_partitioned"
+2023-07-25 19:09:32.406 UTC [3285210] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-25 19:09:32.406 UTC [3285210] STATEMENT:  select pgstattuple('test_partitioned');
+2023-07-25 19:09:32.407 UTC [3285210] ERROR:  cannot get tuple-level statistics for relation "test_partitioned_index"
+2023-07-25 19:09:32.407 UTC [3285210] DETAIL:  This operation is not supported for partitioned indexes.
+2023-07-25 19:09:32.407 UTC [3285210] STATEMENT:  select pgstattuple('test_partitioned_index');
+2023-07-25 19:09:32.407 UTC [3285210] ERROR:  relation "test_partitioned" is of wrong relation kind
+2023-07-25 19:09:32.407 UTC [3285210] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-25 19:09:32.407 UTC [3285210] STATEMENT:  select pgstattuple_approx('test_partitioned');
+2023-07-25 19:09:32.407 UTC [3285210] ERROR:  cannot get page count of relation "test_partitioned"
+2023-07-25 19:09:32.407 UTC [3285210] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-25 19:09:32.407 UTC [3285210] STATEMENT:  select pg_relpages('test_partitioned');
+2023-07-25 19:09:32.408 UTC [3285210] ERROR:  relation "test_partitioned" is not a btree index
+2023-07-25 19:09:32.408 UTC [3285210] STATEMENT:  select pgstatindex('test_partitioned');
+2023-07-25 19:09:32.408 UTC [3285210] ERROR:  relation "test_partitioned" is not a GIN index
+2023-07-25 19:09:32.408 UTC [3285210] STATEMENT:  select pgstatginindex('test_partitioned');
+2023-07-25 19:09:32.408 UTC [3285210] ERROR:  "test_partitioned" is not an index
+2023-07-25 19:09:32.408 UTC [3285210] STATEMENT:  select pgstathashindex('test_partitioned');
+2023-07-25 19:09:32.410 UTC [3285210] ERROR:  cannot get tuple-level statistics for relation "test_view"
+2023-07-25 19:09:32.410 UTC [3285210] DETAIL:  This operation is not supported for views.
+2023-07-25 19:09:32.410 UTC [3285210] STATEMENT:  select pgstattuple('test_view');
+2023-07-25 19:09:32.410 UTC [3285210] ERROR:  relation "test_view" is of wrong relation kind
+2023-07-25 19:09:32.410 UTC [3285210] DETAIL:  This operation is not supported for views.
+2023-07-25 19:09:32.410 UTC [3285210] STATEMENT:  select pgstattuple_approx('test_view');
+2023-07-25 19:09:32.410 UTC [3285210] ERROR:  cannot get page count of relation "test_view"
+2023-07-25 19:09:32.410 UTC [3285210] DETAIL:  This operation is not supported for views.
+2023-07-25 19:09:32.410 UTC [3285210] STATEMENT:  select pg_relpages('test_view');
+2023-07-25 19:09:32.410 UTC [3285210] ERROR:  relation "test_view" is not a btree index
+2023-07-25 19:09:32.410 UTC [3285210] STATEMENT:  select pgstatindex('test_view');
+2023-07-25 19:09:32.411 UTC [3285210] ERROR:  relation "test_view" is not a GIN index
+2023-07-25 19:09:32.411 UTC [3285210] STATEMENT:  select pgstatginindex('test_view');
+2023-07-25 19:09:32.411 UTC [3285210] ERROR:  "test_view" is not an index
+2023-07-25 19:09:32.411 UTC [3285210] STATEMENT:  select pgstathashindex('test_view');
+2023-07-25 19:09:32.418 UTC [3285210] ERROR:  cannot get tuple-level statistics for relation "test_foreign_table"
+2023-07-25 19:09:32.418 UTC [3285210] DETAIL:  This operation is not supported for foreign tables.
+2023-07-25 19:09:32.418 UTC [3285210] STATEMENT:  select pgstattuple('test_foreign_table');
+2023-07-25 19:09:32.418 UTC [3285210] ERROR:  relation "test_foreign_table" is of wrong relation kind
+2023-07-25 19:09:32.418 UTC [3285210] DETAIL:  This operation is not supported for foreign tables.
+2023-07-25 19:09:32.418 UTC [3285210] STATEMENT:  select pgstattuple_approx('test_foreign_table');
+2023-07-25 19:09:32.419 UTC [3285210] ERROR:  cannot get page count of relation "test_foreign_table"
+2023-07-25 19:09:32.419 UTC [3285210] DETAIL:  This operation is not supported for foreign tables.
+2023-07-25 19:09:32.419 UTC [3285210] STATEMENT:  select pg_relpages('test_foreign_table');
+2023-07-25 19:09:32.419 UTC [3285210] ERROR:  relation "test_foreign_table" is not a btree index
+2023-07-25 19:09:32.419 UTC [3285210] STATEMENT:  select pgstatindex('test_foreign_table');
+2023-07-25 19:09:32.419 UTC [3285210] ERROR:  relation "test_foreign_table" is not a GIN index
+2023-07-25 19:09:32.419 UTC [3285210] STATEMENT:  select pgstatginindex('test_foreign_table');
+2023-07-25 19:09:32.420 UTC [3285210] ERROR:  "test_foreign_table" is not an index
+2023-07-25 19:09:32.420 UTC [3285210] STATEMENT:  select pgstathashindex('test_foreign_table');
+2023-07-25 19:09:32.437 UTC [3285210] ERROR:  relation "test_partition" is not a btree index
+2023-07-25 19:09:32.437 UTC [3285210] STATEMENT:  select pgstatindex('test_partition');
+2023-07-25 19:09:32.437 UTC [3285210] ERROR:  relation "test_partition" is not a GIN index
+2023-07-25 19:09:32.437 UTC [3285210] STATEMENT:  select pgstatginindex('test_partition');
+2023-07-25 19:09:32.438 UTC [3285210] ERROR:  "test_partition" is not an index
+2023-07-25 19:09:32.438 UTC [3285210] STATEMENT:  select pgstathashindex('test_partition');
+2023-07-25 19:09:32.501 UTC [3285192] LOG:  checkpoint starting: immediate force wait
+2023-07-25 19:09:32.546 UTC [3285192] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.014 s, sync=0.008 s, total=0.046 s; sync files=7, longest=0.006 s, average=0.002 s; distance=4287 kB, estimate=4287 kB
+2023-07-25 19:09:33.047 UTC [3285192] LOG:  checkpoint starting: immediate force wait
+2023-07-25 19:09:33.179 UTC [3285192] LOG:  checkpoint complete: wrote 1828 buffers (11.2%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.060 s, sync=0.040 s, total=0.133 s; sync files=496, longest=0.012 s, average=0.001 s; distance=12734 kB, estimate=12734 kB
+2023-07-25 19:09:33.202 UTC [3285192] LOG:  checkpoint starting: immediate force wait
+2023-07-25 19:09:33.236 UTC [3285192] LOG:  checkpoint complete: wrote 2 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.005 s, sync=0.008 s, total=0.035 s; sync files=2, longest=0.005 s, average=0.004 s; distance=1 kB, estimate=11461 kB
+2023-07-25 19:09:33.354 UTC [3285250] ERROR:  current user cannot be dropped
+2023-07-25 19:09:33.354 UTC [3285250] STATEMENT:  DROP USER su;
+2023-07-25 19:09:33.764 UTC [3285192] LOG:  checkpoint starting: immediate force wait
+2023-07-25 19:09:33.862 UTC [3285192] LOG:  checkpoint complete: wrote 1044 buffers (6.4%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.044 s, sync=0.031 s, total=0.099 s; sync files=297, longest=0.009 s, average=0.001 s; distance=9108 kB, estimate=11225 kB
+2023-07-25 19:09:33.896 UTC [3285192] LOG:  checkpoint starting: immediate force wait
+2023-07-25 19:09:33.938 UTC [3285192] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.013 s, sync=0.009 s, total=0.043 s; sync files=7, longest=0.005 s, average=0.002 s; distance=37 kB, estimate=10107 kB
+2023-07-25 19:09:34.044 UTC [3285278] ERROR:  duplicate key value violates unique constraint "company_pkey"
+2023-07-25 19:09:34.044 UTC [3285278] DETAIL:  Key (id)=(1) already exists.
+2023-07-25 19:09:34.044 UTC [3285278] STATEMENT:  INSERT  INTO Company(ID, Name) VALUES (1, 'Percona');
+2023-07-25 19:09:34.341 UTC [3285298] ERROR:  division by zero
+2023-07-25 19:09:34.341 UTC [3285298] STATEMENT:  SELECT 1/0;
+2023-07-25 19:09:34.342 UTC [3285298] ERROR:  relation "unknown" does not exist at character 15
+2023-07-25 19:09:34.342 UTC [3285298] STATEMENT:  SELECT * FROM unknown;
+2023-07-25 19:09:34.342 UTC [3285298] ERROR:  syntax error at or near "ELECET" at character 1
+2023-07-25 19:09:34.342 UTC [3285298] STATEMENT:  ELECET * FROM unknown;
+2023-07-25 19:09:34.342 UTC [3285298] WARNING:  warning message
+2023-07-25 19:09:34.342 UTC [3285298] CONTEXT:  PL/pgSQL function inline_code_block line 3 at RAISE
+2023-07-25 19:09:34.470 UTC [3285312] ERROR:  role "su" already exists
+2023-07-25 19:09:34.470 UTC [3285312] STATEMENT:  CREATE USER su WITH SUPERUSER;
+2023-07-25 19:09:34.496 UTC [3285312] ERROR:  permission denied for function pg_stat_monitor_reset
+2023-07-25 19:09:34.496 UTC [3285312] STATEMENT:  SELECT pg_stat_monitor_reset();

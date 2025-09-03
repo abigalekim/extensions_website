@@ -1,0 +1,39 @@
+2023-07-25 21:58:16.918 UTC [3317524] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 21:58:16.918 UTC [3317524] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 21:58:16.926 UTC [3317524] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 21:58:16.938 UTC [3317527] LOG:  database system was shut down at 2023-07-25 21:58:16 UTC
+2023-07-25 21:58:16.943 UTC [3317524] LOG:  database system is ready to accept connections
+2023-07-25 21:58:17.195 UTC [3317547] WARNING:  GLOBAL is deprecated in temporary table creation at character 8
+2023-07-25 21:58:17.252 UTC [3317547] ERROR:  can not drop a GTT that is in use.
+2023-07-25 21:58:17.252 UTC [3317547] STATEMENT:  DROP TABLE t_glob_temptable1;
+2023-07-25 21:58:17.297 UTC [3317552] WARNING:  GLOBAL is deprecated in temporary table creation at character 8
+2023-07-25 21:58:17.382 UTC [3317557] WARNING:  GLOBAL is deprecated in temporary table creation at character 8
+2023-07-25 21:58:17.559 UTC [3317562] ERROR:  a temporary table has been created and is active, can not rename the GTT table in this session.
+2023-07-25 21:58:17.559 UTC [3317562] STATEMENT:  ALTER TABLE t_glob_temptable2 RENAME TO t_glob_temptable1;
+2023-07-25 21:58:17.749 UTC [3317569] ERROR:  a temporary table has been created and is active, can not add an index on the GTT table in this session.
+2023-07-25 21:58:17.749 UTC [3317569] STATEMENT:  CREATE INDEX ON t_glob_temptable2 (lbl);
+2023-07-25 21:58:17.795 UTC [3317574] WARNING:  GLOBAL is deprecated in temporary table creation at character 8
+2023-07-25 21:58:17.874 UTC [3317579] WARNING:  GLOBAL is deprecated in temporary table creation at character 8
+2023-07-25 21:58:18.036 UTC [3317585] ERROR:  relation "t_glob_temptable1" already exists
+2023-07-25 21:58:18.036 UTC [3317585] CONTEXT:  SQL statement "CREATE UNLOGGED TABLE pgtt_schema.t_glob_temptable1 (id int, lbl text)"
+	SQL statement "CREATE /*GLOBAL*/ TEMPORARY TABLE t_glob_temptable1(id int, lbl text) ON COMMIT PRESERVE ROWS"
+	PL/pgSQL function test_temp_table() line 6 at SQL statement
+2023-07-25 21:58:18.036 UTC [3317585] STATEMENT:  SELECT test_temp_table();
+2023-07-25 21:58:18.105 UTC [3317590] ERROR:  relation "t_glob_temptable1" does not exist at character 15
+2023-07-25 21:58:18.105 UTC [3317590] STATEMENT:  SELECT * FROM t_glob_temptable1;
+2023-07-25 21:58:18.173 UTC [3317595] ERROR:  attempt to create referential integrity constraint on global temporary table
+2023-07-25 21:58:18.173 UTC [3317595] STATEMENT:  CREATE /*GLOBAL*/ TEMPORARY TABLE t2 (c1 integer, FOREIGN KEY (c1) REFERENCES source (id));
+2023-07-25 21:58:18.185 UTC [3317595] ERROR:  attempt to create referential integrity constraint on global temporary table
+2023-07-25 21:58:18.185 UTC [3317595] STATEMENT:  ALTER TABLE t2 ADD FOREIGN KEY (c1) REFERENCES source (id);
+2023-07-25 21:58:18.214 UTC [3317599] WARNING:  GLOBAL is deprecated in temporary table creation at character 8
+2023-07-25 21:58:18.248 UTC [3317599] ERROR:  column "two" does not exist at character 42
+2023-07-25 21:58:18.248 UTC [3317599] STATEMENT:  INSERT INTO t_glob_temptable1 VALUES (2, two);
+2023-07-25 21:58:18.925 UTC [3317627] ERROR:  could not create unique index "idx_badindex_n"
+2023-07-25 21:58:18.925 UTC [3317627] DETAIL:  Key (n)=(10) is duplicated.
+2023-07-25 21:58:18.925 UTC [3317627] STATEMENT:  CREATE UNIQUE INDEX CONCURRENTLY idx_badindex_n ON tbl_badindex (n);
+2023-07-25 21:58:24.805 UTC [3317842] ERROR:  permission denied for schema repack at character 8
+2023-07-25 21:58:24.805 UTC [3317842] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-25 21:58:27.296 UTC [3317933] ERROR:  table name not found for OID 1
+2023-07-25 21:58:27.296 UTC [3317933] STATEMENT:  SELECT repack.get_order_by('issue321_idx'::regclass::oid, 1);
+2023-07-25 21:58:27.296 UTC [3317933] ERROR:  cache lookup failed for index 1
+2023-07-25 21:58:27.296 UTC [3317933] STATEMENT:  SELECT repack.get_order_by(1, 1);

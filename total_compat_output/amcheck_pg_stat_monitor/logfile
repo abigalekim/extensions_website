@@ -1,0 +1,76 @@
+2023-07-25 07:09:34.191 UTC [1816758] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 07:09:34.192 UTC [1816758] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 07:09:34.206 UTC [1816758] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 07:09:34.219 UTC [1816761] LOG:  database system was shut down at 2023-07-25 07:09:33 UTC
+2023-07-25 07:09:34.226 UTC [1816758] LOG:  database system is ready to accept connections
+2023-07-25 07:09:35.170 UTC [1816781] ERROR:  permission denied for function bt_index_check
+2023-07-25 07:09:35.170 UTC [1816781] STATEMENT:  SELECT bt_index_check('bttest_a_idx'::regclass);
+2023-07-25 07:09:35.171 UTC [1816781] ERROR:  permission denied for function bt_index_parent_check
+2023-07-25 07:09:35.171 UTC [1816781] STATEMENT:  SELECT bt_index_parent_check('bttest_a_idx'::regclass);
+2023-07-25 07:09:35.232 UTC [1816781] ERROR:  "bttest_a" is not an index
+2023-07-25 07:09:35.232 UTC [1816781] STATEMENT:  SELECT bt_index_check('bttest_a');
+2023-07-25 07:09:35.232 UTC [1816781] ERROR:  "bttest_a" is not an index
+2023-07-25 07:09:35.232 UTC [1816781] STATEMENT:  SELECT bt_index_parent_check('bttest_a');
+2023-07-25 07:09:35.232 UTC [1816781] ERROR:  could not open relation with OID 17
+2023-07-25 07:09:35.232 UTC [1816781] STATEMENT:  SELECT bt_index_check(17);
+2023-07-25 07:09:35.232 UTC [1816781] ERROR:  could not open relation with OID 17
+2023-07-25 07:09:35.232 UTC [1816781] STATEMENT:  SELECT bt_index_parent_check(17);
+2023-07-25 07:09:35.245 UTC [1816781] ERROR:  only B-Tree indexes are supported as targets for verification
+2023-07-25 07:09:35.245 UTC [1816781] DETAIL:  Relation "bttest_a_brin_idx" is not a B-Tree index.
+2023-07-25 07:09:35.245 UTC [1816781] STATEMENT:  SELECT bt_index_parent_check('bttest_a_brin_idx');
+2023-07-25 07:09:36.264 UTC [1816785] ERROR:  invalid skip option
+2023-07-25 07:09:36.264 UTC [1816785] HINT:  Valid skip options are "all-visible", "all-frozen", and "none".
+2023-07-25 07:09:36.264 UTC [1816785] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest', skip := 'rope');
+2023-07-25 07:09:36.270 UTC [1816785] ERROR:  permission denied for function verify_heapam
+2023-07-25 07:09:36.270 UTC [1816785] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest');
+2023-07-25 07:09:36.274 UTC [1816785] ERROR:  ending block number must be between 0 and 0
+2023-07-25 07:09:36.274 UTC [1816785] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest', startblock := 0, endblock := 10000);
+2023-07-25 07:09:36.275 UTC [1816785] ERROR:  starting block number must be between 0 and 0
+2023-07-25 07:09:36.275 UTC [1816785] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest', startblock := 10000, endblock := 11000);
+2023-07-25 07:09:36.281 UTC [1816785] ERROR:  cannot check relation "test_partitioned"
+2023-07-25 07:09:36.281 UTC [1816785] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-25 07:09:36.281 UTC [1816785] STATEMENT:  SELECT * FROM verify_heapam('test_partitioned',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-25 07:09:36.448 UTC [1816785] ERROR:  cannot check relation "test_index"
+2023-07-25 07:09:36.448 UTC [1816785] DETAIL:  This operation is not supported for indexes.
+2023-07-25 07:09:36.448 UTC [1816785] STATEMENT:  SELECT * FROM verify_heapam('test_index',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-25 07:09:36.450 UTC [1816785] ERROR:  cannot check relation "test_view"
+2023-07-25 07:09:36.450 UTC [1816785] DETAIL:  This operation is not supported for views.
+2023-07-25 07:09:36.450 UTC [1816785] STATEMENT:  SELECT * FROM verify_heapam('test_view',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-25 07:09:36.466 UTC [1816785] ERROR:  cannot check relation "test_foreign_table"
+2023-07-25 07:09:36.466 UTC [1816785] DETAIL:  This operation is not supported for foreign tables.
+2023-07-25 07:09:36.466 UTC [1816785] STATEMENT:  SELECT * FROM verify_heapam('test_foreign_table',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-25 07:09:36.516 UTC [1816759] LOG:  checkpoint starting: immediate force wait
+2023-07-25 07:09:36.592 UTC [1816759] LOG:  checkpoint complete: wrote 18 buffers (0.1%); 0 WAL file(s) added, 0 removed, 4 recycled; write=0.014 s, sync=0.011 s, total=0.077 s; sync files=14, longest=0.006 s, average=0.001 s; distance=61017 kB, estimate=61017 kB
+2023-07-25 07:09:36.964 UTC [1816759] LOG:  checkpoint starting: immediate force wait
+2023-07-25 07:09:37.093 UTC [1816759] LOG:  checkpoint complete: wrote 1792 buffers (10.9%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.057 s, sync=0.048 s, total=0.129 s; sync files=496, longest=0.013 s, average=0.001 s; distance=12317 kB, estimate=56147 kB
+2023-07-25 07:09:37.116 UTC [1816759] LOG:  checkpoint starting: immediate force wait
+2023-07-25 07:09:37.163 UTC [1816759] LOG:  checkpoint complete: wrote 2 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.010 s, sync=0.008 s, total=0.047 s; sync files=2, longest=0.006 s, average=0.004 s; distance=1 kB, estimate=50532 kB
+2023-07-25 07:09:37.256 UTC [1816825] ERROR:  current user cannot be dropped
+2023-07-25 07:09:37.256 UTC [1816825] STATEMENT:  DROP USER su;
+2023-07-25 07:09:37.692 UTC [1816759] LOG:  checkpoint starting: immediate force wait
+2023-07-25 07:09:37.805 UTC [1816759] LOG:  checkpoint complete: wrote 1010 buffers (6.2%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.047 s, sync=0.034 s, total=0.113 s; sync files=295, longest=0.007 s, average=0.001 s; distance=8826 kB, estimate=46362 kB
+2023-07-25 07:09:37.864 UTC [1816759] LOG:  checkpoint starting: immediate force wait
+2023-07-25 07:09:37.908 UTC [1816759] LOG:  checkpoint complete: wrote 8 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.008 s, sync=0.007 s, total=0.045 s; sync files=7, longest=0.006 s, average=0.001 s; distance=34 kB, estimate=41729 kB
+2023-07-25 07:09:37.997 UTC [1816853] ERROR:  duplicate key value violates unique constraint "company_pkey"
+2023-07-25 07:09:37.997 UTC [1816853] DETAIL:  Key (id)=(1) already exists.
+2023-07-25 07:09:37.997 UTC [1816853] STATEMENT:  INSERT  INTO Company(ID, Name) VALUES (1, 'Percona');
+2023-07-25 07:09:38.250 UTC [1816873] ERROR:  division by zero
+2023-07-25 07:09:38.250 UTC [1816873] STATEMENT:  SELECT 1/0;
+2023-07-25 07:09:38.250 UTC [1816873] ERROR:  relation "unknown" does not exist at character 15
+2023-07-25 07:09:38.250 UTC [1816873] STATEMENT:  SELECT * FROM unknown;
+2023-07-25 07:09:38.251 UTC [1816873] ERROR:  syntax error at or near "ELECET" at character 1
+2023-07-25 07:09:38.251 UTC [1816873] STATEMENT:  ELECET * FROM unknown;
+2023-07-25 07:09:38.251 UTC [1816873] WARNING:  warning message
+2023-07-25 07:09:38.251 UTC [1816873] CONTEXT:  PL/pgSQL function inline_code_block line 3 at RAISE
+2023-07-25 07:09:38.358 UTC [1816887] ERROR:  role "su" already exists
+2023-07-25 07:09:38.358 UTC [1816887] STATEMENT:  CREATE USER su WITH SUPERUSER;
+2023-07-25 07:09:38.381 UTC [1816887] ERROR:  permission denied for function pg_stat_monitor_reset
+2023-07-25 07:09:38.381 UTC [1816887] STATEMENT:  SELECT pg_stat_monitor_reset();

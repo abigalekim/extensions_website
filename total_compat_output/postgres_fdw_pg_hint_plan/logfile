@@ -1,0 +1,270 @@
+2023-07-26 04:41:23.443 UTC [3398266] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 04:41:23.443 UTC [3398266] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 04:41:23.456 UTC [3398266] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 04:41:23.472 UTC [3398269] LOG:  database system was shut down at 2023-07-26 04:41:23 UTC
+2023-07-26 04:41:23.479 UTC [3398266] LOG:  database system is ready to accept connections
+2023-07-26 04:41:23.930 UTC [3398288] ERROR:  parameter "extensions" must be a list of extension names
+2023-07-26 04:41:23.930 UTC [3398288] STATEMENT:  ALTER SERVER testserver1 OPTIONS (ADD extensions 'foo; bar');
+2023-07-26 04:41:23.930 UTC [3398288] WARNING:  extension "foo" is not installed
+2023-07-26 04:41:23.931 UTC [3398288] WARNING:  extension "bar" is not installed
+2023-07-26 04:41:23.942 UTC [3398288] ERROR:  invalid option "sslmode"
+2023-07-26 04:41:23.942 UTC [3398288] HINT:  Valid options in this context are: user, password, sslpassword, password_required, sslcert, sslkey
+2023-07-26 04:41:23.942 UTC [3398288] STATEMENT:  ALTER USER MAPPING FOR public SERVER testserver1
+		OPTIONS (ADD sslmode 'require');
+2023-07-26 04:41:23.986 UTC [3398290] FATAL:  database "no such database" does not exist
+2023-07-26 04:41:23.986 UTC [3398288] ERROR:  could not connect to server "loopback"
+2023-07-26 04:41:23.986 UTC [3398288] DETAIL:  connection to server on socket "/tmp/.s.PGSQL.5432" failed: FATAL:  database "no such database" does not exist
+2023-07-26 04:41:23.986 UTC [3398288] STATEMENT:  SELECT c3, c4 FROM ft1 ORDER BY c3, c1 LIMIT 1;
+2023-07-26 04:41:23.996 UTC [3398292] FATAL:  role "no such user" does not exist
+2023-07-26 04:41:23.996 UTC [3398288] ERROR:  could not connect to server "loopback"
+2023-07-26 04:41:23.996 UTC [3398288] DETAIL:  connection to server on socket "/tmp/.s.PGSQL.5432" failed: FATAL:  role "no such user" does not exist
+2023-07-26 04:41:23.996 UTC [3398288] STATEMENT:  SELECT c3, c4 FROM ft1 ORDER BY c3, c1 LIMIT 1;
+2023-07-26 04:41:24.018 UTC [3398288] ERROR:  cannot add relation "ft1" to publication
+2023-07-26 04:41:24.018 UTC [3398288] DETAIL:  This operation is not supported for foreign tables.
+2023-07-26 04:41:24.018 UTC [3398288] STATEMENT:  CREATE PUBLICATION testpub_ftbl FOR TABLE ft1;
+2023-07-26 04:41:25.432 UTC [3398288] ERROR:  "reindex_foreign" is not a table or materialized view
+2023-07-26 04:41:25.432 UTC [3398288] STATEMENT:  REINDEX TABLE reindex_foreign;
+2023-07-26 04:41:25.432 UTC [3398288] ERROR:  "reindex_foreign" is not a table or materialized view
+2023-07-26 04:41:25.432 UTC [3398288] STATEMENT:  REINDEX TABLE CONCURRENTLY reindex_foreign;
+2023-07-26 04:41:25.461 UTC [3398288] ERROR:  invalid input syntax for type integer: "foo"
+2023-07-26 04:41:25.461 UTC [3398288] CONTEXT:  column "x8" of foreign table "ftx"
+2023-07-26 04:41:25.461 UTC [3398288] STATEMENT:  SELECT * FROM ft1 ftx(x1,x2,x3,x4,x5,x6,x7,x8) WHERE x1 = 1;
+2023-07-26 04:41:25.465 UTC [3398288] ERROR:  invalid input syntax for type integer: "foo"
+2023-07-26 04:41:25.465 UTC [3398288] CONTEXT:  column "x8" of foreign table "ftx"
+2023-07-26 04:41:25.465 UTC [3398288] STATEMENT:  SELECT ftx.x1, ft2.c2, ftx.x8 FROM ft1 ftx(x1,x2,x3,x4,x5,x6,x7,x8), ft2
+	  WHERE ftx.x1 = ft2.c1 AND ftx.x1 = 1;
+2023-07-26 04:41:25.470 UTC [3398288] ERROR:  invalid input syntax for type integer: "foo"
+2023-07-26 04:41:25.470 UTC [3398288] CONTEXT:  whole-row reference to foreign table "ftx"
+2023-07-26 04:41:25.470 UTC [3398288] STATEMENT:  SELECT ftx.x1, ft2.c2, ftx FROM ft1 ftx(x1,x2,x3,x4,x5,x6,x7,x8), ft2
+	  WHERE ftx.x1 = ft2.c1 AND ftx.x1 = 1;
+2023-07-26 04:41:25.474 UTC [3398288] ERROR:  invalid input syntax for type integer: "foo"
+2023-07-26 04:41:25.474 UTC [3398288] CONTEXT:  processing expression at position 2 in select list
+2023-07-26 04:41:25.474 UTC [3398288] STATEMENT:  SELECT sum(c2), array_agg(c8) FROM ft1 GROUP BY c8;
+2023-07-26 04:41:25.477 UTC [3398288] ERROR:  invalid input syntax for type integer: "foo"
+2023-07-26 04:41:25.477 UTC [3398288] CONTEXT:  column "c8" of foreign table "ft1"
+2023-07-26 04:41:25.477 UTC [3398288] STATEMENT:  ANALYZE ft1;
+2023-07-26 04:41:25.493 UTC [3398306] ERROR:  operator does not exist: public.user_enum ~~ unknown at character 92
+2023-07-26 04:41:25.493 UTC [3398306] HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+2023-07-26 04:41:25.493 UTC [3398306] STATEMENT:  DECLARE c1 CURSOR FOR
+	SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE ((c8 ~~ 'foo')) LIMIT 1::bigint
+2023-07-26 04:41:25.493 UTC [3398288] ERROR:  operator does not exist: public.user_enum ~~ unknown
+2023-07-26 04:41:25.493 UTC [3398288] HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+2023-07-26 04:41:25.493 UTC [3398288] CONTEXT:  remote SQL command: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE ((c8 ~~ 'foo')) LIMIT 1::bigint
+2023-07-26 04:41:25.493 UTC [3398288] STATEMENT:  SELECT * FROM ft1 WHERE c8 LIKE 'foo' LIMIT 1;
+2023-07-26 04:41:25.494 UTC [3398306] ERROR:  operator does not exist: public.user_enum ~~ unknown at character 92
+2023-07-26 04:41:25.494 UTC [3398306] HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+2023-07-26 04:41:25.494 UTC [3398306] STATEMENT:  DECLARE c1 CURSOR FOR
+	SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE ((c8 ~~ 'foo')) LIMIT 1::bigint
+2023-07-26 04:41:25.495 UTC [3398288] ERROR:  operator does not exist: public.user_enum ~~ unknown
+2023-07-26 04:41:25.495 UTC [3398288] HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+2023-07-26 04:41:25.495 UTC [3398288] CONTEXT:  remote SQL command: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE ((c8 ~~ 'foo')) LIMIT 1::bigint
+2023-07-26 04:41:25.495 UTC [3398288] STATEMENT:  SELECT * FROM ft1 WHERE c8::text LIKE 'foo' LIMIT 1;
+2023-07-26 04:41:25.504 UTC [3398288] ERROR:  syntax error at or near "ERROR" at character 1
+2023-07-26 04:41:25.504 UTC [3398288] STATEMENT:  ERROR OUT;
+2023-07-26 04:41:25.507 UTC [3398306] ERROR:  division by zero
+2023-07-26 04:41:25.507 UTC [3398306] STATEMENT:  FETCH 100 FROM c2
+2023-07-26 04:41:25.507 UTC [3398288] ERROR:  division by zero
+2023-07-26 04:41:25.507 UTC [3398288] CONTEXT:  remote SQL command: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE (((1 / ("C 1" - 1)) > 0))
+2023-07-26 04:41:25.507 UTC [3398288] STATEMENT:  SELECT * FROM ft1 WHERE 1 / (c1 - 1) > 0;
+2023-07-26 04:41:25.922 UTC [3398308] ERROR:  duplicate key value violates unique constraint "t1_pkey"
+2023-07-26 04:41:25.922 UTC [3398308] DETAIL:  Key ("C 1")=(11) already exists.
+2023-07-26 04:41:25.922 UTC [3398308] STATEMENT:  INSERT INTO "S 1"."T 1"("C 1", c2, c3, c4, c5, c6, c7, c8) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+2023-07-26 04:41:25.923 UTC [3398288] ERROR:  duplicate key value violates unique constraint "t1_pkey"
+2023-07-26 04:41:25.923 UTC [3398288] DETAIL:  Key ("C 1")=(11) already exists.
+2023-07-26 04:41:25.923 UTC [3398288] CONTEXT:  remote SQL command: INSERT INTO "S 1"."T 1"("C 1", c2, c3, c4, c5, c6, c7, c8) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+2023-07-26 04:41:25.923 UTC [3398288] STATEMENT:  INSERT INTO ft1(c1, c2) VALUES(11, 12);
+2023-07-26 04:41:25.926 UTC [3398288] ERROR:  there is no unique or exclusion constraint matching the ON CONFLICT specification
+2023-07-26 04:41:25.926 UTC [3398288] STATEMENT:  INSERT INTO ft1(c1, c2) VALUES(11, 12) ON CONFLICT (c1, c2) DO NOTHING;
+2023-07-26 04:41:25.927 UTC [3398288] ERROR:  there is no unique or exclusion constraint matching the ON CONFLICT specification
+2023-07-26 04:41:25.927 UTC [3398288] STATEMENT:  INSERT INTO ft1(c1, c2) VALUES(11, 12) ON CONFLICT (c1, c2) DO UPDATE SET c3 = 'ffg';
+2023-07-26 04:41:25.928 UTC [3398308] ERROR:  new row for relation "T 1" violates check constraint "c2positive"
+2023-07-26 04:41:25.928 UTC [3398308] DETAIL:  Failing row contains (1111, -2, null, null, null, null, ft1       , null).
+2023-07-26 04:41:25.928 UTC [3398308] STATEMENT:  INSERT INTO "S 1"."T 1"("C 1", c2, c3, c4, c5, c6, c7, c8) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+2023-07-26 04:41:25.928 UTC [3398288] ERROR:  new row for relation "T 1" violates check constraint "c2positive"
+2023-07-26 04:41:25.928 UTC [3398288] DETAIL:  Failing row contains (1111, -2, null, null, null, null, ft1       , null).
+2023-07-26 04:41:25.928 UTC [3398288] CONTEXT:  remote SQL command: INSERT INTO "S 1"."T 1"("C 1", c2, c3, c4, c5, c6, c7, c8) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+2023-07-26 04:41:25.928 UTC [3398288] STATEMENT:  INSERT INTO ft1(c1, c2) VALUES(1111, -2);
+2023-07-26 04:41:25.930 UTC [3398308] ERROR:  new row for relation "T 1" violates check constraint "c2positive"
+2023-07-26 04:41:25.930 UTC [3398308] DETAIL:  Failing row contains (1, -1, 00001_trig_update, 1970-01-02 08:00:00+00, 1970-01-02 00:00:00, 1, 1         , foo).
+2023-07-26 04:41:25.930 UTC [3398308] STATEMENT:  UPDATE "S 1"."T 1" SET c2 = (- c2) WHERE (("C 1" = 1))
+2023-07-26 04:41:25.931 UTC [3398288] ERROR:  new row for relation "T 1" violates check constraint "c2positive"
+2023-07-26 04:41:25.931 UTC [3398288] DETAIL:  Failing row contains (1, -1, 00001_trig_update, 1970-01-02 08:00:00+00, 1970-01-02 00:00:00, 1, 1         , foo).
+2023-07-26 04:41:25.931 UTC [3398288] CONTEXT:  remote SQL command: UPDATE "S 1"."T 1" SET c2 = (- c2) WHERE (("C 1" = 1))
+2023-07-26 04:41:25.931 UTC [3398288] STATEMENT:  UPDATE ft1 SET c2 = -c2 WHERE c1 = 1;
+2023-07-26 04:41:25.988 UTC [3398308] ERROR:  new row for relation "T 1" violates check constraint "c2positive"
+2023-07-26 04:41:25.988 UTC [3398308] DETAIL:  Failing row contains (10, -2, 00010_trig_update_trig_update, 1970-01-11 08:00:00+00, 1970-01-11 00:00:00, 0, 0         , foo).
+2023-07-26 04:41:25.988 UTC [3398308] STATEMENT:  UPDATE "S 1"."T 1" SET c2 = (-2) WHERE ((c2 = 42)) AND (("C 1" = 10))
+2023-07-26 04:41:25.989 UTC [3398288] ERROR:  new row for relation "T 1" violates check constraint "c2positive"
+2023-07-26 04:41:25.989 UTC [3398288] DETAIL:  Failing row contains (10, -2, 00010_trig_update_trig_update, 1970-01-11 08:00:00+00, 1970-01-11 00:00:00, 0, 0         , foo).
+2023-07-26 04:41:25.989 UTC [3398288] CONTEXT:  remote SQL command: UPDATE "S 1"."T 1" SET c2 = (-2) WHERE ((c2 = 42)) AND (("C 1" = 10))
+2023-07-26 04:41:25.989 UTC [3398288] STATEMENT:  update ft2 set c2 = -2 where c2 = 42 and c1 = 10;
+2023-07-26 04:41:26.063 UTC [3398308] ERROR:  new row for relation "T 1" violates check constraint "c2positive"
+2023-07-26 04:41:26.063 UTC [3398308] DETAIL:  Failing row contains (1111, -2, null, null, null, null, ft1       , null).
+2023-07-26 04:41:26.063 UTC [3398308] STATEMENT:  INSERT INTO "S 1"."T 1"("C 1", c2, c3, c4, c5, c6, c7, c8) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+2023-07-26 04:41:26.063 UTC [3398288] ERROR:  new row for relation "T 1" violates check constraint "c2positive"
+2023-07-26 04:41:26.063 UTC [3398288] DETAIL:  Failing row contains (1111, -2, null, null, null, null, ft1       , null).
+2023-07-26 04:41:26.063 UTC [3398288] CONTEXT:  remote SQL command: INSERT INTO "S 1"."T 1"("C 1", c2, c3, c4, c5, c6, c7, c8) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+2023-07-26 04:41:26.063 UTC [3398288] STATEMENT:  INSERT INTO ft1(c1, c2) VALUES(1111, -2);
+2023-07-26 04:41:26.065 UTC [3398308] ERROR:  new row for relation "T 1" violates check constraint "c2positive"
+2023-07-26 04:41:26.065 UTC [3398308] DETAIL:  Failing row contains (1, -1, 00001_trig_update, 1970-01-02 08:00:00+00, 1970-01-02 00:00:00, 1, 1         , foo).
+2023-07-26 04:41:26.065 UTC [3398308] STATEMENT:  UPDATE "S 1"."T 1" SET c2 = (- c2) WHERE (("C 1" = 1))
+2023-07-26 04:41:26.065 UTC [3398288] ERROR:  new row for relation "T 1" violates check constraint "c2positive"
+2023-07-26 04:41:26.065 UTC [3398288] DETAIL:  Failing row contains (1, -1, 00001_trig_update, 1970-01-02 08:00:00+00, 1970-01-02 00:00:00, 1, 1         , foo).
+2023-07-26 04:41:26.065 UTC [3398288] CONTEXT:  remote SQL command: UPDATE "S 1"."T 1" SET c2 = (- c2) WHERE (("C 1" = 1))
+2023-07-26 04:41:26.065 UTC [3398288] STATEMENT:  UPDATE ft1 SET c2 = -c2 WHERE c1 = 1;
+2023-07-26 04:41:26.129 UTC [3398288] ERROR:  new row violates check option for view "rw_view"
+2023-07-26 04:41:26.129 UTC [3398288] DETAIL:  Failing row contains (10, 5).
+2023-07-26 04:41:26.129 UTC [3398288] STATEMENT:  INSERT INTO rw_view VALUES (0, 5);
+2023-07-26 04:41:26.143 UTC [3398288] ERROR:  new row violates check option for view "rw_view"
+2023-07-26 04:41:26.143 UTC [3398288] DETAIL:  Failing row contains (20, 20).
+2023-07-26 04:41:26.143 UTC [3398288] STATEMENT:  UPDATE rw_view SET b = b + 5;
+2023-07-26 04:41:26.176 UTC [3398288] ERROR:  new row violates check option for view "rw_view"
+2023-07-26 04:41:26.176 UTC [3398288] DETAIL:  Failing row contains (10, 5).
+2023-07-26 04:41:26.176 UTC [3398288] STATEMENT:  INSERT INTO rw_view VALUES (0, 15), (0, 5);
+2023-07-26 04:41:26.259 UTC [3398288] ERROR:  new row violates check option for view "rw_view"
+2023-07-26 04:41:26.259 UTC [3398288] DETAIL:  Failing row contains (10, 5).
+2023-07-26 04:41:26.259 UTC [3398288] STATEMENT:  INSERT INTO rw_view VALUES (0, 5);
+2023-07-26 04:41:26.273 UTC [3398288] ERROR:  new row violates check option for view "rw_view"
+2023-07-26 04:41:26.273 UTC [3398288] DETAIL:  Failing row contains (20, 20).
+2023-07-26 04:41:26.273 UTC [3398288] STATEMENT:  UPDATE rw_view SET b = b + 5;
+2023-07-26 04:41:26.301 UTC [3398288] ERROR:  new row violates check option for view "rw_view"
+2023-07-26 04:41:26.301 UTC [3398288] DETAIL:  Failing row contains (10, 5).
+2023-07-26 04:41:26.301 UTC [3398288] STATEMENT:  INSERT INTO rw_view VALUES (0, 15), (0, 5);
+2023-07-26 04:41:27.445 UTC [3398288] ERROR:  WHERE CURRENT OF is not supported for this table type
+2023-07-26 04:41:27.445 UTC [3398288] STATEMENT:  update bar set f2 = null where current of c;
+2023-07-26 04:41:27.747 UTC [3398288] ERROR:  cannot execute MERGE on relation "remp1"
+2023-07-26 04:41:27.747 UTC [3398288] DETAIL:  This operation is not supported for foreign tables.
+2023-07-26 04:41:27.747 UTC [3398288] STATEMENT:  merge into itrtest using (select 1, 'foo') as source on (true)
+	  when matched then do nothing;
+2023-07-26 04:41:27.763 UTC [3398288] ERROR:  there is no unique or exclusion constraint matching the ON CONFLICT specification
+2023-07-26 04:41:27.763 UTC [3398288] STATEMENT:  insert into itrtest values (1, 'bar') on conflict (a) do nothing;
+2023-07-26 04:41:27.764 UTC [3398288] ERROR:  there is no unique or exclusion constraint matching the ON CONFLICT specification
+2023-07-26 04:41:27.764 UTC [3398288] STATEMENT:  insert into itrtest values (1, 'bar') on conflict (a) do update set b = excluded.b;
+2023-07-26 04:41:27.901 UTC [3398314] ERROR:  new row for relation "loct" violates check constraint "loct_a_check"
+2023-07-26 04:41:27.901 UTC [3398314] DETAIL:  Failing row contains (2, foo).
+2023-07-26 04:41:27.901 UTC [3398314] STATEMENT:  UPDATE public.loct SET a = 2 WHERE ((b = 'foo')) RETURNING a, b
+2023-07-26 04:41:27.902 UTC [3398288] ERROR:  new row for relation "loct" violates check constraint "loct_a_check"
+2023-07-26 04:41:27.902 UTC [3398288] DETAIL:  Failing row contains (2, foo).
+2023-07-26 04:41:27.902 UTC [3398288] CONTEXT:  remote SQL command: UPDATE public.loct SET a = 2 WHERE ((b = 'foo')) RETURNING a, b
+2023-07-26 04:41:27.902 UTC [3398288] STATEMENT:  update utrtest set a = 2 where b = 'foo' returning *;
+2023-07-26 04:41:27.904 UTC [3398288] ERROR:  cannot route tuples into foreign table to be updated "remp"
+2023-07-26 04:41:27.904 UTC [3398288] STATEMENT:  update utrtest set a = 1 where b = 'qux' returning *;
+2023-07-26 04:41:27.932 UTC [3398288] ERROR:  cannot route tuples into foreign table to be updated "remp"
+2023-07-26 04:41:27.932 UTC [3398288] STATEMENT:  update utrtest set a = 1 where a = 1 or a = 2 returning *;
+2023-07-26 04:41:27.968 UTC [3398288] ERROR:  cannot route tuples into foreign table to be updated "remp"
+2023-07-26 04:41:27.968 UTC [3398288] STATEMENT:  update utrtest set a = 1 returning *;
+2023-07-26 04:41:27.988 UTC [3398288] ERROR:  cannot route tuples into foreign table to be updated "remp"
+2023-07-26 04:41:27.988 UTC [3398288] STATEMENT:  update utrtest set a = 1 from (values (1), (2)) s(x) where a = s.x returning *;
+2023-07-26 04:41:28.034 UTC [3398288] ERROR:  cannot route tuples into foreign table to be updated "remp"
+2023-07-26 04:41:28.034 UTC [3398288] STATEMENT:  update utrtest set a = 3 returning *;
+2023-07-26 04:41:28.037 UTC [3398288] ERROR:  cannot route tuples into foreign table to be updated "remp"
+2023-07-26 04:41:28.037 UTC [3398288] STATEMENT:  update utrtest set a = 3 from (values (2), (3)) s(x) where a = s.x returning *;
+2023-07-26 04:41:28.185 UTC [3398314] ERROR:  new row for relation "loc2" violates check constraint "loc2_f1positive"
+2023-07-26 04:41:28.185 UTC [3398314] DETAIL:  Failing row contains (-1, xyzzy).
+2023-07-26 04:41:28.185 UTC [3398314] STATEMENT:  INSERT INTO public.loc2(f1, f2) VALUES ($1, $2)
+2023-07-26 04:41:28.186 UTC [3398288] ERROR:  new row for relation "loc2" violates check constraint "loc2_f1positive"
+2023-07-26 04:41:28.186 UTC [3398288] DETAIL:  Failing row contains (-1, xyzzy).
+2023-07-26 04:41:28.186 UTC [3398288] CONTEXT:  remote SQL command: INSERT INTO public.loc2(f1, f2) VALUES ($1, $2)
+	COPY rem2, line 1: "-1	xyzzy"
+2023-07-26 04:41:28.186 UTC [3398288] STATEMENT:  copy rem2 from stdin;
+2023-07-26 04:41:28.537 UTC [3398288] ERROR:  foreign table "tru_ftable" does not allow truncates
+2023-07-26 04:41:28.537 UTC [3398288] STATEMENT:  TRUNCATE tru_ftable;
+2023-07-26 04:41:28.572 UTC [3398288] ERROR:  foreign table "tru_ftable" does not allow truncates
+2023-07-26 04:41:28.572 UTC [3398288] STATEMENT:  TRUNCATE tru_ftable;
+2023-07-26 04:41:28.578 UTC [3398288] ERROR:  foreign table "tru_ftable" does not allow truncates
+2023-07-26 04:41:28.578 UTC [3398288] STATEMENT:  TRUNCATE tru_ftable;
+2023-07-26 04:41:28.640 UTC [3398316] ERROR:  cannot truncate a table referenced in a foreign key constraint
+2023-07-26 04:41:28.640 UTC [3398316] DETAIL:  Table "tru_fk_table" references "tru_pk_table".
+2023-07-26 04:41:28.640 UTC [3398316] HINT:  Truncate table "tru_fk_table" at the same time, or use TRUNCATE ... CASCADE.
+2023-07-26 04:41:28.640 UTC [3398316] STATEMENT:  TRUNCATE public.tru_pk_table CONTINUE IDENTITY RESTRICT
+2023-07-26 04:41:28.640 UTC [3398288] ERROR:  cannot truncate a table referenced in a foreign key constraint
+2023-07-26 04:41:28.640 UTC [3398288] DETAIL:  Table "tru_fk_table" references "tru_pk_table".
+2023-07-26 04:41:28.640 UTC [3398288] HINT:  Truncate table "tru_fk_table" at the same time, or use TRUNCATE ... CASCADE.
+2023-07-26 04:41:28.640 UTC [3398288] CONTEXT:  remote SQL command: TRUNCATE public.tru_pk_table CONTINUE IDENTITY RESTRICT
+2023-07-26 04:41:28.640 UTC [3398288] STATEMENT:  TRUNCATE tru_pk_ftable;
+NOTICE:  truncate cascades to table "tru_fk_table"
+NOTICE:  truncate cascades to table "tru_fk_table"
+2023-07-26 04:41:29.018 UTC [3398288] ERROR:  relation "t1" already exists
+2023-07-26 04:41:29.018 UTC [3398288] CONTEXT:  importing foreign table "t1"
+2023-07-26 04:41:29.018 UTC [3398288] STATEMENT:  IMPORT FOREIGN SCHEMA import_source FROM SERVER loopback INTO import_dest4;
+2023-07-26 04:41:29.019 UTC [3398288] ERROR:  schema "nonesuch" is not present on foreign server "loopback"
+2023-07-26 04:41:29.019 UTC [3398288] STATEMENT:  IMPORT FOREIGN SCHEMA nonesuch FROM SERVER loopback INTO import_dest4;
+2023-07-26 04:41:29.019 UTC [3398288] ERROR:  schema "notthere" does not exist
+2023-07-26 04:41:29.019 UTC [3398288] STATEMENT:  IMPORT FOREIGN SCHEMA nonesuch FROM SERVER loopback INTO notthere;
+2023-07-26 04:41:29.019 UTC [3398288] ERROR:  server "nowhere" does not exist
+2023-07-26 04:41:29.019 UTC [3398288] STATEMENT:  IMPORT FOREIGN SCHEMA nonesuch FROM SERVER nowhere INTO notthere;
+2023-07-26 04:41:29.041 UTC [3398288] ERROR:  type "public.Colors" does not exist at character 137
+2023-07-26 04:41:29.041 UTC [3398288] QUERY:  CREATE FOREIGN TABLE t5 (
+	  c1 integer OPTIONS (column_name 'c1'),
+	  c2 text OPTIONS (column_name 'c2') COLLATE pg_catalog."C",
+	  "Col" public."Colors" OPTIONS (column_name 'Col')
+	) SERVER loopback
+	OPTIONS (schema_name 'import_source', table_name 't5');
+2023-07-26 04:41:29.041 UTC [3398288] CONTEXT:  importing foreign table "t5"
+2023-07-26 04:41:29.041 UTC [3398288] STATEMENT:  IMPORT FOREIGN SCHEMA import_source LIMIT TO (t5)
+	  FROM SERVER loopback INTO import_dest5;
+2023-07-26 04:41:29.644 UTC [3398288] ERROR:  password is required
+2023-07-26 04:41:29.644 UTC [3398288] DETAIL:  Non-superusers must provide a password in the user mapping.
+2023-07-26 04:41:29.644 UTC [3398288] STATEMENT:  SELECT 1 FROM ft1_nopw LIMIT 1;
+2023-07-26 04:41:29.644 UTC [3398288] ERROR:  invalid option "password"
+2023-07-26 04:41:29.644 UTC [3398288] HINT:  Valid options in this context are: service, passfile, channel_binding, connect_timeout, dbname, host, hostaddr, port, options, application_name, keepalives, keepalives_idle, keepalives_interval, keepalives_count, tcp_user_timeout, sslmode, sslcompression, sslcert, sslkey, sslrootcert, sslcrl, sslcrldir, sslsni, requirepeer, ssl_min_protocol_version, ssl_max_protocol_version, gssencmode, krbsrvname, gsslib, target_session_attrs, use_remote_estimate, fdw_startup_cost, fdw_tuple_cost, extensions, updatable, truncatable, fetch_size, batch_size, async_capable, parallel_commit, keep_connections
+2023-07-26 04:41:29.644 UTC [3398288] CONTEXT:  SQL statement "ALTER SERVER loopback_nopw OPTIONS (ADD password 'dummypw')"
+	PL/pgSQL function inline_code_block line 3 at EXECUTE
+2023-07-26 04:41:29.644 UTC [3398288] STATEMENT:  DO $d$
+	    BEGIN
+	        EXECUTE $$ALTER SERVER loopback_nopw OPTIONS (ADD password 'dummypw')$$;
+	    END;
+	$d$;
+2023-07-26 04:41:29.654 UTC [3398288] ERROR:  password is required
+2023-07-26 04:41:29.654 UTC [3398288] DETAIL:  Non-superuser cannot connect if the server does not request a password.
+2023-07-26 04:41:29.654 UTC [3398288] HINT:  Target server's authentication method must be changed or password_required=false set in the user mapping attributes.
+2023-07-26 04:41:29.654 UTC [3398288] STATEMENT:  SELECT 1 FROM ft1_nopw LIMIT 1;
+2023-07-26 04:41:29.655 UTC [3398288] ERROR:  password_required=false is superuser-only
+2023-07-26 04:41:29.655 UTC [3398288] HINT:  User mappings with the password_required option set to false may only be created or modified by the superuser.
+2023-07-26 04:41:29.655 UTC [3398288] STATEMENT:  ALTER USER MAPPING FOR CURRENT_USER SERVER loopback_nopw OPTIONS (ADD password_required 'false');
+2023-07-26 04:41:29.657 UTC [3398288] ERROR:  password is required
+2023-07-26 04:41:29.657 UTC [3398288] DETAIL:  Non-superuser cannot connect if the server does not request a password.
+2023-07-26 04:41:29.657 UTC [3398288] HINT:  Target server's authentication method must be changed or password_required=false set in the user mapping attributes.
+2023-07-26 04:41:29.657 UTC [3398288] STATEMENT:  SELECT 1 FROM ft1_nopw LIMIT 1;
+2023-07-26 04:41:29.674 UTC [3398288] ERROR:  sslcert and sslkey are superuser-only
+2023-07-26 04:41:29.674 UTC [3398288] HINT:  User mappings with the sslcert or sslkey options set may only be created or modified by the superuser.
+2023-07-26 04:41:29.674 UTC [3398288] STATEMENT:  ALTER USER MAPPING FOR CURRENT_USER SERVER loopback_nopw OPTIONS (ADD sslcert 'foo.crt');
+2023-07-26 04:41:29.674 UTC [3398288] ERROR:  sslcert and sslkey are superuser-only
+2023-07-26 04:41:29.674 UTC [3398288] HINT:  User mappings with the sslcert or sslkey options set may only be created or modified by the superuser.
+2023-07-26 04:41:29.674 UTC [3398288] STATEMENT:  ALTER USER MAPPING FOR CURRENT_USER SERVER loopback_nopw OPTIONS (ADD sslkey 'foo.key');
+2023-07-26 04:41:29.678 UTC [3398288] ERROR:  password is required
+2023-07-26 04:41:29.678 UTC [3398288] DETAIL:  Non-superusers must provide a password in the user mapping.
+2023-07-26 04:41:29.678 UTC [3398288] STATEMENT:  SELECT 1 FROM ft1_nopw LIMIT 1;
+2023-07-26 04:41:29.709 UTC [3398288] ERROR:  cannot PREPARE a transaction that has operated on postgres_fdw foreign tables
+2023-07-26 04:41:29.709 UTC [3398288] STATEMENT:  PREPARE TRANSACTION 'fdw_tpc';
+2023-07-26 04:41:29.710 UTC [3398288] WARNING:  there is no transaction in progress
+2023-07-26 04:41:29.730 UTC [3398323] FATAL:  terminating connection due to administrator command
+2023-07-26 04:41:29.847 UTC [3398324] FATAL:  terminating connection due to administrator command
+2023-07-26 04:41:29.949 UTC [3398288] ERROR:  FATAL:  terminating connection due to administrator command
+	server closed the connection unexpectedly
+		This probably means the server terminated abnormally
+		before or while processing the request.
+2023-07-26 04:41:29.949 UTC [3398288] CONTEXT:  remote SQL command: SAVEPOINT s2
+2023-07-26 04:41:29.949 UTC [3398288] STATEMENT:  SELECT 1 FROM ft1 LIMIT 1;
+2023-07-26 04:41:29.989 UTC [3398288] WARNING:  cannot close connection for server "loopback" because it is still in use
+2023-07-26 04:41:29.990 UTC [3398288] WARNING:  cannot close connection for server "loopback2" because it is still in use
+2023-07-26 04:41:29.990 UTC [3398288] WARNING:  cannot close connection for server "loopback" because it is still in use
+2023-07-26 04:41:29.992 UTC [3398288] ERROR:  server "unknownserver" does not exist
+2023-07-26 04:41:29.992 UTC [3398288] STATEMENT:  SELECT postgres_fdw_disconnect('unknownserver');
+2023-07-26 04:41:30.537 UTC [3398288] ERROR:  cannot route tuples into foreign table to be updated "batch_cp_upd_test1_f"
+2023-07-26 04:41:30.537 UTC [3398288] STATEMENT:  UPDATE batch_cp_upd_test t SET a = 1 FROM (VALUES (1), (2)) s(a) WHERE t.a = s.a;
+2023-07-26 04:41:31.807 UTC [3398288] ERROR:  invalid value for floating point option "fdw_startup_cost": 100$%$#$#
+2023-07-26 04:41:31.807 UTC [3398288] STATEMENT:  CREATE SERVER inv_scst FOREIGN DATA WRAPPER postgres_fdw
+		OPTIONS(fdw_startup_cost '100$%$#$#');
+2023-07-26 04:41:31.808 UTC [3398288] ERROR:  invalid value for floating point option "fdw_tuple_cost": 100$%$#$#
+2023-07-26 04:41:31.808 UTC [3398288] STATEMENT:  CREATE SERVER inv_scst FOREIGN DATA WRAPPER postgres_fdw
+		OPTIONS(fdw_tuple_cost '100$%$#$#');
+2023-07-26 04:41:31.809 UTC [3398288] ERROR:  invalid value for integer option "fetch_size": 100$%$#$#
+2023-07-26 04:41:31.809 UTC [3398288] STATEMENT:  CREATE FOREIGN TABLE inv_fsz (c1 int )
+		SERVER loopback OPTIONS (fetch_size '100$%$#$#');
+2023-07-26 04:41:31.810 UTC [3398288] ERROR:  invalid value for integer option "batch_size": 100$%$#$#
+2023-07-26 04:41:31.810 UTC [3398288] STATEMENT:  CREATE FOREIGN TABLE inv_bsz (c1 int )
+		SERVER loopback OPTIONS (batch_size '100$%$#$#');
+2023-07-26 04:41:31.810 UTC [3398288] ERROR:  invalid option "nonexistent"
+2023-07-26 04:41:31.810 UTC [3398288] HINT:  There are no valid options in this context.
+2023-07-26 04:41:31.810 UTC [3398288] STATEMENT:  ALTER FOREIGN DATA WRAPPER postgres_fdw OPTIONS (nonexistent 'fdw');

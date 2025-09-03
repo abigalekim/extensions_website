@@ -1,0 +1,53 @@
+2023-07-25 07:05:59.848 UTC [1816021] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 07:05:59.848 UTC [1816021] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 07:05:59.854 UTC [1816021] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 07:05:59.863 UTC [1816024] LOG:  database system was shut down at 2023-07-25 07:05:59 UTC
+2023-07-25 07:05:59.868 UTC [1816021] LOG:  database system is ready to accept connections
+2023-07-25 07:06:00.723 UTC [1816047] ERROR:  permission denied for function bt_index_check
+2023-07-25 07:06:00.723 UTC [1816047] STATEMENT:  SELECT bt_index_check('bttest_a_idx'::regclass);
+2023-07-25 07:06:00.723 UTC [1816047] ERROR:  permission denied for function bt_index_parent_check
+2023-07-25 07:06:00.723 UTC [1816047] STATEMENT:  SELECT bt_index_parent_check('bttest_a_idx'::regclass);
+2023-07-25 07:06:00.778 UTC [1816047] ERROR:  "bttest_a" is not an index
+2023-07-25 07:06:00.778 UTC [1816047] STATEMENT:  SELECT bt_index_check('bttest_a');
+2023-07-25 07:06:00.778 UTC [1816047] ERROR:  "bttest_a" is not an index
+2023-07-25 07:06:00.778 UTC [1816047] STATEMENT:  SELECT bt_index_parent_check('bttest_a');
+2023-07-25 07:06:00.778 UTC [1816047] ERROR:  could not open relation with OID 17
+2023-07-25 07:06:00.778 UTC [1816047] STATEMENT:  SELECT bt_index_check(17);
+2023-07-25 07:06:00.778 UTC [1816047] ERROR:  could not open relation with OID 17
+2023-07-25 07:06:00.778 UTC [1816047] STATEMENT:  SELECT bt_index_parent_check(17);
+2023-07-25 07:06:00.792 UTC [1816047] ERROR:  only B-Tree indexes are supported as targets for verification
+2023-07-25 07:06:00.792 UTC [1816047] DETAIL:  Relation "bttest_a_brin_idx" is not a B-Tree index.
+2023-07-25 07:06:00.792 UTC [1816047] STATEMENT:  SELECT bt_index_parent_check('bttest_a_brin_idx');
+2023-07-25 07:06:00.865 UTC [1816047] ERROR:  cache lookup failed for type 2205
+2023-07-25 07:06:00.865 UTC [1816047] STATEMENT:  SELECT * FROM pg_locks
+	WHERE relation = ANY(ARRAY['bttest_a', 'bttest_a_idx', 'bttest_b', 'bttest_b_idx']::regclass[])
+	    AND pid = pg_backend_pid();
+2023-07-25 07:06:01.826 UTC [1816053] ERROR:  invalid skip option
+2023-07-25 07:06:01.826 UTC [1816053] HINT:  Valid skip options are "all-visible", "all-frozen", and "none".
+2023-07-25 07:06:01.826 UTC [1816053] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest', skip := 'rope');
+2023-07-25 07:06:01.834 UTC [1816053] ERROR:  permission denied for function verify_heapam
+2023-07-25 07:06:01.834 UTC [1816053] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest');
+2023-07-25 07:06:01.836 UTC [1816053] ERROR:  ending block number must be between 0 and 0
+2023-07-25 07:06:01.836 UTC [1816053] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest', startblock := 0, endblock := 10000);
+2023-07-25 07:06:01.836 UTC [1816053] ERROR:  starting block number must be between 0 and 0
+2023-07-25 07:06:01.836 UTC [1816053] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest', startblock := 10000, endblock := 11000);
+2023-07-25 07:06:01.839 UTC [1816053] ERROR:  cannot check relation "test_partitioned"
+2023-07-25 07:06:01.839 UTC [1816053] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-25 07:06:01.839 UTC [1816053] STATEMENT:  SELECT * FROM verify_heapam('test_partitioned',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-25 07:06:01.894 UTC [1816053] ERROR:  cannot check relation "test_index"
+2023-07-25 07:06:01.894 UTC [1816053] DETAIL:  This operation is not supported for indexes.
+2023-07-25 07:06:01.894 UTC [1816053] STATEMENT:  SELECT * FROM verify_heapam('test_index',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-25 07:06:01.895 UTC [1816053] ERROR:  cannot check relation "test_view"
+2023-07-25 07:06:01.895 UTC [1816053] DETAIL:  This operation is not supported for views.
+2023-07-25 07:06:01.895 UTC [1816053] STATEMENT:  SELECT * FROM verify_heapam('test_view',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-25 07:06:01.903 UTC [1816053] ERROR:  cannot check relation "test_foreign_table"
+2023-07-25 07:06:01.903 UTC [1816053] DETAIL:  This operation is not supported for foreign tables.
+2023-07-25 07:06:01.903 UTC [1816053] STATEMENT:  SELECT * FROM verify_heapam('test_foreign_table',
+								startblock := NULL,
+								endblock := NULL);

@@ -1,0 +1,157 @@
+2023-11-25 03:23:00.360 UTC [724195] LOG:  number of prepared transactions has not been configured, overriding
+2023-11-25 03:23:00.360 UTC [724195] DETAIL:  max_prepared_transactions is now set to 200
+2023-11-25 03:23:00.362 UTC [724195] LOG:  pgaudit extension initialized
+2023-11-25 03:23:00.378 UTC [724195] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-11-25 03:23:00.378 UTC [724195] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-11-25 03:23:00.383 UTC [724195] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-11-25 03:23:00.390 UTC [724198] LOG:  database system was shut down at 2023-11-25 03:23:00 UTC
+2023-11-25 03:23:00.398 UTC [724195] LOG:  database system is ready to accept connections
+2023-11-25 03:23:02.444 UTC [724351] LOG:  starting maintenance daemon on database 16389 user 10
+2023-11-25 03:23:02.444 UTC [724351] CONTEXT:  Citus maintenance daemon for database 16389 user 10
+2023-11-25 03:23:02.448 UTC [724350] LOG:  AUDIT: SESSION,1,1,MISC,SET,,,SET pgaudit.log = 'all';,<not logged>
+2023-11-25 03:23:02.448 UTC [724350] LOG:  AUDIT: SESSION,2,1,MISC,SET,,,SET pgaudit.log_client = ON;,<not logged>
+2023-11-25 03:23:02.457 UTC [724350] LOG:  AUDIT: SESSION,6,1,MISC,RESET,,,RESET pgaudit.log_client;,<not logged>
+2023-11-25 03:23:02.459 UTC [724350] LOG:  AUDIT: SESSION,7,1,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
+	                 WHERE object_type IN ('table', 'foreign table')",<not logged>
+2023-11-25 03:23:02.459 UTC [724350] LOG:  AUDIT: SESSION,7,2,READ,SELECT,,,"SELECT master_remove_distributed_table_metadata_from_workers(v_obj.objid, v_obj.schema_name, v_obj.object_name)",<not logged>
+2023-11-25 03:23:02.459 UTC [724350] LOG:  AUDIT: SESSION,7,3,READ,SELECT,,,SELECT (v_obj.original = false AND v_obj.normal = false),<not logged>
+2023-11-25 03:23:02.459 UTC [724350] LOG:  AUDIT: SESSION,7,4,READ,SELECT,,,"SELECT citus_drop_all_shards(v_obj.objid, v_obj.schema_name, v_obj.object_name, drop_shards_metadata_only := false)",<not logged>
+2023-11-25 03:23:02.459 UTC [724350] LOG:  AUDIT: SESSION,7,5,READ,SELECT,,,"SELECT master_remove_partition_metadata(v_obj.objid, v_obj.schema_name, v_obj.object_name)",<not logged>
+2023-11-25 03:23:02.459 UTC [724350] LOG:  AUDIT: SESSION,7,6,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<not logged>
+2023-11-25 03:23:02.459 UTC [724350] LOG:  AUDIT: SESSION,7,7,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
+2023-11-25 03:23:02.459 UTC [724350] LOG:  AUDIT: SESSION,7,8,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
+2023-11-25 03:23:02.459 UTC [724350] LOG:  AUDIT: SESSION,7,9,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
+2023-11-25 03:23:02.459 UTC [724350] LOG:  AUDIT: SESSION,7,10,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
+2023-11-25 03:23:02.459 UTC [724350] LOG:  AUDIT: SESSION,7,11,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
+2023-11-25 03:23:02.459 UTC [724350] LOG:  AUDIT: SESSION,7,12,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
+	    WHERE object_type IN ('table constraint')",<not logged>
+2023-11-25 03:23:02.459 UTC [724350] LOG:  AUDIT: SESSION,7,13,DDL,DROP TABLE,TABLE,public.tmp,DROP TABLE tmp;,<not logged>
+2023-11-25 03:23:02.461 UTC [724350] LOG:  AUDIT: SESSION,8,1,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
+	                 WHERE object_type IN ('table', 'foreign table')",<not logged>
+2023-11-25 03:23:02.461 UTC [724350] LOG:  AUDIT: SESSION,8,2,READ,SELECT,,,"SELECT master_remove_distributed_table_metadata_from_workers(v_obj.objid, v_obj.schema_name, v_obj.object_name)",<not logged>
+2023-11-25 03:23:02.461 UTC [724350] LOG:  AUDIT: SESSION,8,3,READ,SELECT,,,SELECT (v_obj.original = false AND v_obj.normal = false),<not logged>
+2023-11-25 03:23:02.461 UTC [724350] LOG:  AUDIT: SESSION,8,4,READ,SELECT,,,"SELECT citus_drop_all_shards(v_obj.objid, v_obj.schema_name, v_obj.object_name, drop_shards_metadata_only := false)",<not logged>
+2023-11-25 03:23:02.461 UTC [724350] LOG:  AUDIT: SESSION,8,5,READ,SELECT,,,"SELECT master_remove_partition_metadata(v_obj.objid, v_obj.schema_name, v_obj.object_name)",<not logged>
+2023-11-25 03:23:02.461 UTC [724350] LOG:  AUDIT: SESSION,8,6,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<not logged>
+2023-11-25 03:23:02.461 UTC [724350] LOG:  AUDIT: SESSION,8,7,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
+2023-11-25 03:23:02.461 UTC [724350] LOG:  AUDIT: SESSION,8,8,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
+2023-11-25 03:23:02.461 UTC [724350] LOG:  AUDIT: SESSION,8,9,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
+2023-11-25 03:23:02.461 UTC [724350] LOG:  AUDIT: SESSION,8,10,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
+2023-11-25 03:23:02.461 UTC [724350] LOG:  AUDIT: SESSION,8,11,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
+2023-11-25 03:23:02.461 UTC [724350] LOG:  AUDIT: SESSION,8,12,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
+	    WHERE object_type IN ('table constraint')",<not logged>
+2023-11-25 03:23:02.461 UTC [724350] LOG:  AUDIT: SESSION,8,13,DDL,DROP TABLE,TABLE,public.tmp2,DROP TABLE tmp2;,<not logged>
+2023-11-25 03:23:02.534 UTC [724355] WARNING:  AUDIT: SESSION,1,1,READ,SELECT,,,"SELECT *
+	  FROM test3, test2;",<not logged>
+2023-11-25 03:23:02.534 UTC [724355] WARNING:  AUDIT: OBJECT,1,1,READ,SELECT,TABLE,public.test2,<previously logged>,<previously logged>
+2023-11-25 03:23:02.534 UTC [724355] WARNING:  AUDIT: SESSION,2,1,READ,SELECT,,,"SELECT *
+	  FROM vw_test3, test2;",<not logged>
+2023-11-25 03:23:02.534 UTC [724355] WARNING:  AUDIT: OBJECT,2,1,READ,SELECT,TABLE,public.test2,<previously logged>,<previously logged>
+2023-11-25 03:23:02.534 UTC [724355] WARNING:  AUDIT: OBJECT,2,1,READ,SELECT,VIEW,public.vw_test3,<previously logged>,<previously logged>
+2023-11-25 03:23:02.535 UTC [724355] WARNING:  AUDIT: SESSION,3,1,WRITE,INSERT,,,"WITH CTE AS
+	(
+		SELECT id
+		  FROM test2
+	)
+	INSERT INTO test3
+	SELECT id
+	  FROM cte;",<not logged>
+2023-11-25 03:23:02.535 UTC [724355] WARNING:  AUDIT: OBJECT,3,1,WRITE,INSERT,TABLE,public.test3,<previously logged>,<previously logged>
+2023-11-25 03:23:02.535 UTC [724355] WARNING:  AUDIT: OBJECT,3,1,READ,SELECT,TABLE,public.test2,<previously logged>,<previously logged>
+2023-11-25 03:23:02.535 UTC [724355] WARNING:  AUDIT: SESSION,4,1,WRITE,INSERT,,,"WITH CTE AS
+	(
+		INSERT INTO test3 VALUES (1)
+					   RETURNING id
+	)
+	INSERT INTO test2
+	SELECT id
+	  FROM cte;",<not logged>
+2023-11-25 03:23:02.535 UTC [724355] WARNING:  AUDIT: OBJECT,4,1,WRITE,INSERT,TABLE,public.test3,<previously logged>,<previously logged>
+2023-11-25 03:23:02.537 UTC [724355] WARNING:  AUDIT: SESSION,5,1,READ,SELECT,,,SELECT test2_change(91),<not logged>
+2023-11-25 03:23:02.537 UTC [724355] WARNING:  AUDIT: SESSION,5,2,WRITE,UPDATE,,,"UPDATE test2
+		   SET id = id + 1
+		 WHERE id = change_id",<not logged>
+2023-11-25 03:23:02.537 UTC [724355] WARNING:  AUDIT: OBJECT,5,2,WRITE,UPDATE,TABLE,public.test2,<previously logged>,<previously logged>
+2023-11-25 03:23:02.538 UTC [724355] WARNING:  AUDIT: SESSION,6,1,WRITE,INSERT,,,"WITH CTE AS
+	(
+		UPDATE test2
+		   SET id = 45
+		 WHERE id = 92
+		RETURNING id
+	)
+	INSERT INTO test3
+	SELECT id
+	  FROM cte;",<not logged>
+2023-11-25 03:23:02.538 UTC [724355] WARNING:  AUDIT: OBJECT,6,1,WRITE,INSERT,TABLE,public.test3,<previously logged>,<previously logged>
+2023-11-25 03:23:02.538 UTC [724355] WARNING:  AUDIT: OBJECT,6,1,WRITE,UPDATE,TABLE,public.test2,<previously logged>,<previously logged>
+2023-11-25 03:23:02.539 UTC [724355] WARNING:  AUDIT: SESSION,7,1,WRITE,UPDATE,,,"WITH CTE AS
+	(
+		INSERT INTO test2 VALUES (37)
+					   RETURNING id
+	)
+	UPDATE test3
+	   SET id = cte.id
+	  FROM cte
+	 WHERE test3.id <> cte.id;",<not logged>
+2023-11-25 03:23:02.539 UTC [724355] WARNING:  AUDIT: OBJECT,7,1,WRITE,INSERT,TABLE,public.test2,<previously logged>,<previously logged>
+2023-11-25 03:23:02.540 UTC [724355] WARNING:  AUDIT: SESSION,8,1,READ,SELECT,,,"SELECT *
+	  FROM test2
+	 ORDER BY ID;",<not logged>
+2023-11-25 03:23:02.540 UTC [724355] WARNING:  AUDIT: OBJECT,8,1,READ,SELECT,TABLE,public.test2,<previously logged>,<previously logged>
+2023-11-25 03:23:02.555 UTC [724357] WARNING:  AUDIT: OBJECT,1,1,READ,SELECT,TABLE,public.test4,"SELECT name
+	  FROM public.test4;",<not logged>
+2023-11-25 03:23:02.556 UTC [724357] WARNING:  AUDIT: OBJECT,2,1,WRITE,INSERT,TABLE,public.test4,"INSERT INTO public.test4 (name)
+					  VALUES ('test');",<not logged>
+2023-11-25 03:23:02.558 UTC [724357] WARNING:  AUDIT: OBJECT,3,1,WRITE,UPDATE,TABLE,public.test4,"UPDATE public.test4
+	   SET id = 1;",<not logged>
+2023-11-25 03:23:02.559 UTC [724357] WARNING:  AUDIT: OBJECT,4,1,WRITE,UPDATE,TABLE,public.test4,update public.test4 set name = 'foo' where name = 'bar';,<not logged>
+2023-11-25 03:23:02.644 UTC [724366] ERROR:  schema "bogus" does not exist at character 14
+2023-11-25 03:23:02.644 UTC [724366] QUERY:  CREATE TABLE bogus.test_block
+		(
+			id INT
+		)
+2023-11-25 03:23:02.644 UTC [724366] CONTEXT:  PL/pgSQL function inline_code_block line 3 at SQL statement
+2023-11-25 03:23:02.644 UTC [724366] STATEMENT:  DO $$
+	BEGIN
+		CREATE TABLE bogus.test_block
+		(
+			id INT
+		);
+	END $$;
+2023-11-25 03:23:02.695 UTC [724196] LOG:  checkpoint starting: immediate force wait
+2023-11-25 03:23:02.777 UTC [724196] LOG:  checkpoint complete: wrote 1136 buffers (6.9%); 1 WAL file(s) added, 0 removed, 0 recycled; write=0.017 s, sync=0.022 s, total=0.083 s; sync files=312, longest=0.003 s, average=0.001 s; distance=10396 kB, estimate=10396 kB
+2023-11-25 03:23:02.934 UTC [724367] ERROR:  schema "bogus" does not exist at character 14
+2023-11-25 03:23:02.934 UTC [724367] QUERY:  CREATE TABLE bogus.test_block
+		(
+			id INT
+		)
+2023-11-25 03:23:02.934 UTC [724367] CONTEXT:  PL/pgSQL function inline_code_block line 3 at SQL statement
+2023-11-25 03:23:02.934 UTC [724367] STATEMENT:  DO $$
+	BEGIN
+		CREATE TABLE bogus.test_block
+		(
+			id INT
+		);
+	END $$;
+2023-11-25 03:23:02.980 UTC [724196] LOG:  checkpoint starting: immediate force wait
+2023-11-25 03:23:03.009 UTC [724196] LOG:  checkpoint complete: wrote 108 buffers (0.7%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.006 s, sync=0.009 s, total=0.030 s; sync files=82, longest=0.003 s, average=0.001 s; distance=4810 kB, estimate=9838 kB
+2023-11-25 03:23:03.104 UTC [724370] WARNING:  AUDIT: SESSION,3,1,DDL,CREATE EXTENSION,,,CREATE EXTENSION pg_stat_statements;,<not logged>
+2023-11-25 03:23:03.112 UTC [724370] WARNING:  AUDIT: SESSION,4,1,DDL,ALTER EXTENSION,,,ALTER EXTENSION pg_stat_statements UPDATE TO '1.10';,<not logged>
+2023-11-25 03:23:03.112 UTC [724370] WARNING:  AUDIT: SESSION,5,1,READ,SELECT,,,"SELECT * FROM pg_event_trigger_dropped_objects()
+	                 WHERE object_type IN ('table', 'foreign table')",<not logged>
+2023-11-25 03:23:03.112 UTC [724370] WARNING:  AUDIT: SESSION,5,2,READ,SELECT,,,SELECT * FROM pg_event_trigger_dropped_objects(),<not logged>
+2023-11-25 03:23:03.112 UTC [724370] WARNING:  AUDIT: SESSION,5,3,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
+2023-11-25 03:23:03.112 UTC [724370] WARNING:  AUDIT: SESSION,5,4,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
+2023-11-25 03:23:03.112 UTC [724370] WARNING:  AUDIT: SESSION,5,5,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
+2023-11-25 03:23:03.112 UTC [724370] WARNING:  AUDIT: SESSION,5,6,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
+2023-11-25 03:23:03.112 UTC [724370] WARNING:  AUDIT: SESSION,5,7,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
+2023-11-25 03:23:03.112 UTC [724370] WARNING:  AUDIT: SESSION,5,8,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
+2023-11-25 03:23:03.112 UTC [724370] WARNING:  AUDIT: SESSION,5,9,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
+2023-11-25 03:23:03.112 UTC [724370] WARNING:  AUDIT: SESSION,5,10,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
+2023-11-25 03:23:03.112 UTC [724370] WARNING:  AUDIT: SESSION,5,11,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
+2023-11-25 03:23:03.112 UTC [724370] WARNING:  AUDIT: SESSION,5,12,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
+2023-11-25 03:23:03.112 UTC [724370] WARNING:  AUDIT: SESSION,5,13,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
+2023-11-25 03:23:03.112 UTC [724370] WARNING:  AUDIT: SESSION,5,14,READ,SELECT,,,"SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)",<not logged>
+2023-11-25 03:23:03.112 UTC [724370] WARNING:  AUDIT: SESSION,5,15,READ,SELECT,,,"SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()
+	    WHERE object_type IN ('table constraint')",<not logged>
+2023-11-25 03:23:03.113 UTC [724370] WARNING:  AUDIT: SESSION,5,16,DDL,DROP EXTENSION,,,DROP EXTENSION pg_stat_statements;,<not logged>

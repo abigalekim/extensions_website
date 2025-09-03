@@ -1,0 +1,26 @@
+diff -u /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/drop_extension.out /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/drop_extension.out
+--- /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/drop_extension.out	2023-06-28 16:40:59.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/drop_extension.out	2023-10-28 03:41:00.160139777 +0000
+@@ -72,7 +72,7 @@
+ --test drops thru cascades of other objects
+ \c :TEST_DBNAME :ROLE_SUPERUSER
+ drop schema public cascade;
+-NOTICE:  drop cascades to 3 other objects
++NOTICE:  drop cascades to 4 other objects
+ \dn
+   List of schemas
+  Name |   Owner    
+diff -u /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/plain.out /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/plain.out
+--- /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/plain.out	2023-06-28 16:40:59.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/plain.out	2023-10-28 03:41:27.623958753 +0000
+@@ -38,8 +38,9 @@
+         |        |               |      | green   +|                   |                   | 
+         |        |               |      | blue    +|                   |                   | 
+         |        |               |      | purple   |                   |                   | 
++ public | gtrgm  | gtrgm         | var  |          | abigalek          |                   | 
+  public | rxid   | rxid          | 16   |          | super_user        |                   | 
+-(2 rows)
++(3 rows)
+ 
+ REINDEX TABLE regular_table;
+ \c :TEST_DBNAME :ROLE_SUPERUSER

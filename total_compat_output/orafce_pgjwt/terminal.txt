@@ -1,0 +1,119 @@
+The files belonging to this database system will be owned by user "abigalek".
+This user must also own the server process.
+
+The database cluster will be initialized with locale "en_US.UTF-8".
+The default database encoding has accordingly been set to "UTF8".
+The default text search configuration will be set to "english".
+
+Data page checksums are disabled.
+
+creating directory pg-15-data ... ok
+creating subdirectories ... ok
+selecting dynamic shared memory implementation ... posix
+selecting default max_connections ... 100
+selecting default shared_buffers ... 128MB
+selecting default time zone ... Etc/UTC
+creating configuration files ... ok
+running bootstrap script ... ok
+performing post-bootstrap initialization ... ok
+syncing data to disk ... ok
+
+initdb: warning: enabling "trust" authentication for local connections
+initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+
+Success. You can now start the database server using:
+
+    pg-15-dist/bin/pg_ctl -D pg-15-data -l logfile start
+
+waiting for server to start.... done
+server started
+(using postmaster on Unix socket, default port)
+============== dropping database "regression"         ==============
+SET
+DROP DATABASE
+============== creating database "regression"         ==============
+CREATE DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+============== installing pgcrypto                    ==============
+CREATE EXTENSION
+============== installing pgjwt                       ==============
+CREATE EXTENSION
+============== running regression test queries        ==============
+test init                         ... ok           69 ms
+parallel group (2 tests):  dbms_pipe_session_A dbms_pipe_session_B
+     dbms_pipe_session_A          ... ok          184 ms
+     dbms_pipe_session_B          ... ok        10247 ms
+parallel group (3 tests):  dbms_alert_session_C dbms_alert_session_A dbms_alert_session_B
+     dbms_alert_session_A         ... ok        11214 ms
+     dbms_alert_session_B         ... ok        13209 ms
+     dbms_alert_session_C         ... ok         3144 ms
+test orafce                       ... ok          125 ms
+test orafce2                      ... ok           15 ms
+test dbms_output                  ... ok          292 ms
+test dbms_utility                 ... ok         2033 ms
+test files                        ... ok           44 ms
+test varchar2                     ... ok           50 ms
+test nvarchar2                    ... ok           44 ms
+test aggregates                   ... ok           47 ms
+test nlssort                      ... ok          129 ms
+test dbms_random                  ... ok            6 ms
+test regexp_func                  ... ok           23 ms
+test dbms_sql                     ... ok           50 ms
+
+======================
+ All 18 tests passed. 
+======================
+
+CREATE EXTENSION
+CREATE EXTENSION
+CREATE EXTENSION
+dropping old tables...
+NOTICE:  table "pgbench_accounts" does not exist, skipping
+NOTICE:  table "pgbench_branches" does not exist, skipping
+NOTICE:  table "pgbench_history" does not exist, skipping
+NOTICE:  table "pgbench_tellers" does not exist, skipping
+creating tables...
+generating data (client-side)...
+100000 of 1000000 tuples (10%) done (elapsed 0.06 s, remaining 0.53 s)
+200000 of 1000000 tuples (20%) done (elapsed 0.17 s, remaining 0.69 s)
+300000 of 1000000 tuples (30%) done (elapsed 0.25 s, remaining 0.58 s)
+400000 of 1000000 tuples (40%) done (elapsed 0.36 s, remaining 0.55 s)
+500000 of 1000000 tuples (50%) done (elapsed 0.47 s, remaining 0.47 s)
+600000 of 1000000 tuples (60%) done (elapsed 0.55 s, remaining 0.37 s)
+700000 of 1000000 tuples (70%) done (elapsed 0.67 s, remaining 0.29 s)
+800000 of 1000000 tuples (80%) done (elapsed 0.81 s, remaining 0.20 s)
+900000 of 1000000 tuples (90%) done (elapsed 0.88 s, remaining 0.10 s)
+1000000 of 1000000 tuples (100%) done (elapsed 1.02 s, remaining 0.00 s)
+vacuuming...
+creating primary keys...
+done in 1.46 s (drop tables 0.00 s, create tables 0.00 s, client-side generate 1.04 s, vacuum 0.10 s, primary keys 0.31 s).
+CREATE EXTENSION
+CREATE EXTENSION
+CREATE EXTENSION
+dropping old tables...
+NOTICE:  table "pgbench_accounts" does not exist, skipping
+NOTICE:  table "pgbench_branches" does not exist, skipping
+NOTICE:  table "pgbench_history" does not exist, skipping
+NOTICE:  table "pgbench_tellers" does not exist, skipping
+creating tables...
+generating data (client-side)...
+100000 of 1000000 tuples (10%) done (elapsed 0.07 s, remaining 0.66 s)
+200000 of 1000000 tuples (20%) done (elapsed 0.15 s, remaining 0.62 s)
+300000 of 1000000 tuples (30%) done (elapsed 0.23 s, remaining 0.54 s)
+400000 of 1000000 tuples (40%) done (elapsed 0.31 s, remaining 0.47 s)
+500000 of 1000000 tuples (50%) done (elapsed 0.40 s, remaining 0.40 s)
+600000 of 1000000 tuples (60%) done (elapsed 0.48 s, remaining 0.32 s)
+700000 of 1000000 tuples (70%) done (elapsed 0.56 s, remaining 0.24 s)
+800000 of 1000000 tuples (80%) done (elapsed 0.64 s, remaining 0.16 s)
+900000 of 1000000 tuples (90%) done (elapsed 0.73 s, remaining 0.08 s)
+1000000 of 1000000 tuples (100%) done (elapsed 0.81 s, remaining 0.00 s)
+vacuuming...
+creating primary keys...
+done in 1.20 s (drop tables 0.00 s, create tables 0.01 s, client-side generate 0.82 s, vacuum 0.10 s, primary keys 0.27 s).
+waiting for server to shut down.... done
+server stopped

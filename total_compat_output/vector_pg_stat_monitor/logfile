@@ -1,0 +1,118 @@
+2023-07-26 19:37:35.963 UTC [3575924] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 19:37:35.963 UTC [3575924] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 19:37:35.976 UTC [3575924] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 19:37:35.991 UTC [3575927] LOG:  database system was shut down at 2023-07-26 19:37:35 UTC
+2023-07-26 19:37:36.000 UTC [3575924] LOG:  database system is ready to accept connections
+2023-07-26 19:37:36.284 UTC [3575950] ERROR:  array must not contain nulls
+2023-07-26 19:37:36.284 UTC [3575950] STATEMENT:  SELECT '{NULL}'::real[]::vector;
+2023-07-26 19:37:36.284 UTC [3575950] ERROR:  NaN not allowed in vector
+2023-07-26 19:37:36.284 UTC [3575950] STATEMENT:  SELECT '{NaN}'::real[]::vector;
+2023-07-26 19:37:36.284 UTC [3575950] ERROR:  infinite value not allowed in vector
+2023-07-26 19:37:36.284 UTC [3575950] STATEMENT:  SELECT '{Infinity}'::real[]::vector;
+2023-07-26 19:37:36.285 UTC [3575950] ERROR:  infinite value not allowed in vector
+2023-07-26 19:37:36.285 UTC [3575950] STATEMENT:  SELECT '{-Infinity}'::real[]::vector;
+2023-07-26 19:37:36.285 UTC [3575950] ERROR:  vector must have at least 1 dimension
+2023-07-26 19:37:36.285 UTC [3575950] STATEMENT:  SELECT '{}'::real[]::vector;
+2023-07-26 19:37:36.285 UTC [3575950] ERROR:  array must be 1-D
+2023-07-26 19:37:36.285 UTC [3575950] STATEMENT:  SELECT '{{1}}'::real[]::vector;
+2023-07-26 19:37:36.295 UTC [3575950] ERROR:  vector cannot have more than 16000 dimensions
+2023-07-26 19:37:36.295 UTC [3575950] STATEMENT:  SELECT array_agg(n)::vector FROM generate_series(1, 16001) n;
+2023-07-26 19:37:36.303 UTC [3575950] ERROR:  vector cannot have more than 16000 dimensions
+2023-07-26 19:37:36.303 UTC [3575950] STATEMENT:  SELECT array_to_vector(array_agg(n), 16001, false) FROM generate_series(1, 16001) n;
+2023-07-26 19:37:36.398 UTC [3575958] ERROR:  value out of range: overflow
+2023-07-26 19:37:36.398 UTC [3575958] STATEMENT:  SELECT '[3e38]'::vector + '[3e38]';
+2023-07-26 19:37:36.400 UTC [3575958] ERROR:  value out of range: overflow
+2023-07-26 19:37:36.400 UTC [3575958] STATEMENT:  SELECT '[-3e38]'::vector - '[3e38]';
+2023-07-26 19:37:36.401 UTC [3575958] ERROR:  value out of range: overflow
+2023-07-26 19:37:36.401 UTC [3575958] STATEMENT:  SELECT '[1e37]'::vector * '[1e37]';
+2023-07-26 19:37:36.401 UTC [3575958] ERROR:  value out of range: underflow
+2023-07-26 19:37:36.401 UTC [3575958] STATEMENT:  SELECT '[1e-37]'::vector * '[1e-37]';
+2023-07-26 19:37:36.405 UTC [3575958] ERROR:  different vector dimensions 2 and 1
+2023-07-26 19:37:36.405 UTC [3575958] STATEMENT:  SELECT l2_distance('[1,2]', '[3]');
+2023-07-26 19:37:36.407 UTC [3575958] ERROR:  different vector dimensions 2 and 1
+2023-07-26 19:37:36.407 UTC [3575958] STATEMENT:  SELECT inner_product('[1,2]', '[3]');
+2023-07-26 19:37:36.409 UTC [3575958] ERROR:  different vector dimensions 2 and 1
+2023-07-26 19:37:36.409 UTC [3575958] STATEMENT:  SELECT cosine_distance('[1,2]', '[3]');
+2023-07-26 19:37:36.411 UTC [3575958] ERROR:  different vector dimensions 2 and 1
+2023-07-26 19:37:36.411 UTC [3575958] STATEMENT:  SELECT l1_distance('[1,2]', '[3]');
+2023-07-26 19:37:36.414 UTC [3575958] ERROR:  expected 2 dimensions, not 1
+2023-07-26 19:37:36.414 UTC [3575958] STATEMENT:  SELECT avg(v) FROM unnest(ARRAY['[1,2]'::vector, '[3]']) v;
+2023-07-26 19:37:36.426 UTC [3575958] ERROR:  vector cannot have more than 16000 dimensions
+2023-07-26 19:37:36.426 UTC [3575958] STATEMENT:  SELECT vector_avg(array_agg(n)) FROM generate_series(1, 16002) n;
+2023-07-26 19:37:36.429 UTC [3575958] ERROR:  different vector dimensions 2 and 1
+2023-07-26 19:37:36.429 UTC [3575958] STATEMENT:  SELECT sum(v) FROM unnest(ARRAY['[1,2]'::vector, '[3]']) v;
+2023-07-26 19:37:36.430 UTC [3575958] ERROR:  value out of range: overflow
+2023-07-26 19:37:36.430 UTC [3575958] STATEMENT:  SELECT sum(v) FROM unnest(ARRAY['[3e38]'::vector, '[3e38]']) v;
+2023-07-26 19:37:36.447 UTC [3575962] ERROR:  invalid input syntax for type vector: "[hello,1]" at character 8
+2023-07-26 19:37:36.447 UTC [3575962] STATEMENT:  SELECT '[hello,1]'::vector;
+2023-07-26 19:37:36.447 UTC [3575962] ERROR:  NaN not allowed in vector at character 8
+2023-07-26 19:37:36.447 UTC [3575962] STATEMENT:  SELECT '[NaN,1]'::vector;
+2023-07-26 19:37:36.447 UTC [3575962] ERROR:  infinite value not allowed in vector at character 8
+2023-07-26 19:37:36.447 UTC [3575962] STATEMENT:  SELECT '[Infinity,1]'::vector;
+2023-07-26 19:37:36.447 UTC [3575962] ERROR:  infinite value not allowed in vector at character 8
+2023-07-26 19:37:36.447 UTC [3575962] STATEMENT:  SELECT '[-Infinity,1]'::vector;
+2023-07-26 19:37:36.448 UTC [3575962] ERROR:  infinite value not allowed in vector at character 8
+2023-07-26 19:37:36.448 UTC [3575962] STATEMENT:  SELECT '[4e38,1]'::vector;
+2023-07-26 19:37:36.448 UTC [3575962] ERROR:  malformed vector literal: "[1,2,3" at character 8
+2023-07-26 19:37:36.448 UTC [3575962] DETAIL:  Unexpected end of input.
+2023-07-26 19:37:36.448 UTC [3575962] STATEMENT:  SELECT '[1,2,3'::vector;
+2023-07-26 19:37:36.449 UTC [3575962] ERROR:  malformed vector literal: "[1,2,3]9" at character 8
+2023-07-26 19:37:36.449 UTC [3575962] DETAIL:  Junk after closing right brace.
+2023-07-26 19:37:36.449 UTC [3575962] STATEMENT:  SELECT '[1,2,3]9'::vector;
+2023-07-26 19:37:36.449 UTC [3575962] ERROR:  malformed vector literal: "1,2,3" at character 8
+2023-07-26 19:37:36.449 UTC [3575962] DETAIL:  Vector contents must start with "[".
+2023-07-26 19:37:36.449 UTC [3575962] STATEMENT:  SELECT '1,2,3'::vector;
+2023-07-26 19:37:36.449 UTC [3575962] ERROR:  malformed vector literal: "" at character 8
+2023-07-26 19:37:36.449 UTC [3575962] DETAIL:  Vector contents must start with "[".
+2023-07-26 19:37:36.449 UTC [3575962] STATEMENT:  SELECT ''::vector;
+2023-07-26 19:37:36.449 UTC [3575962] ERROR:  malformed vector literal: "[" at character 8
+2023-07-26 19:37:36.449 UTC [3575962] DETAIL:  Unexpected end of input.
+2023-07-26 19:37:36.449 UTC [3575962] STATEMENT:  SELECT '['::vector;
+2023-07-26 19:37:36.449 UTC [3575962] ERROR:  malformed vector literal: "[," at character 8
+2023-07-26 19:37:36.449 UTC [3575962] DETAIL:  Unexpected end of input.
+2023-07-26 19:37:36.449 UTC [3575962] STATEMENT:  SELECT '[,'::vector;
+2023-07-26 19:37:36.450 UTC [3575962] ERROR:  vector must have at least 1 dimension at character 8
+2023-07-26 19:37:36.450 UTC [3575962] STATEMENT:  SELECT '[]'::vector;
+2023-07-26 19:37:36.450 UTC [3575962] ERROR:  invalid input syntax for type vector: "[1,]" at character 8
+2023-07-26 19:37:36.450 UTC [3575962] STATEMENT:  SELECT '[1,]'::vector;
+2023-07-26 19:37:36.450 UTC [3575962] ERROR:  invalid input syntax for type vector: "[1a]" at character 8
+2023-07-26 19:37:36.450 UTC [3575962] STATEMENT:  SELECT '[1a]'::vector;
+2023-07-26 19:37:36.450 UTC [3575962] ERROR:  malformed vector literal: "[1,,3]" at character 8
+2023-07-26 19:37:36.450 UTC [3575962] STATEMENT:  SELECT '[1,,3]'::vector;
+2023-07-26 19:37:36.451 UTC [3575962] ERROR:  invalid input syntax for type vector: "[1, ,3]" at character 8
+2023-07-26 19:37:36.451 UTC [3575962] STATEMENT:  SELECT '[1, ,3]'::vector;
+2023-07-26 19:37:36.451 UTC [3575962] ERROR:  expected 2 dimensions, not 3
+2023-07-26 19:37:36.451 UTC [3575962] STATEMENT:  SELECT '[1,2,3]'::vector(2);
+2023-07-26 19:37:36.452 UTC [3575962] ERROR:  expected 2 dimensions, not 3
+2023-07-26 19:37:36.452 UTC [3575962] STATEMENT:  SELECT '{"[1,2,3]"}'::vector(2)[];
+2023-07-26 19:37:36.676 UTC [3575978] ERROR:  value 0 out of bounds for option "lists"
+2023-07-26 19:37:36.676 UTC [3575978] DETAIL:  Valid values are between "1" and "32768".
+2023-07-26 19:37:36.676 UTC [3575978] STATEMENT:  CREATE INDEX ON t USING ivfflat (val) WITH (lists = 0);
+2023-07-26 19:37:36.677 UTC [3575978] ERROR:  value 32769 out of bounds for option "lists"
+2023-07-26 19:37:36.677 UTC [3575978] DETAIL:  Valid values are between "1" and "32768".
+2023-07-26 19:37:36.677 UTC [3575978] STATEMENT:  CREATE INDEX ON t USING ivfflat (val) WITH (lists = 32769);
+2023-07-26 19:37:37.297 UTC [3575925] LOG:  checkpoint starting: immediate force wait
+2023-07-26 19:37:37.525 UTC [3575925] LOG:  checkpoint complete: wrote 2750 buffers (16.8%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.089 s, sync=0.100 s, total=0.228 s; sync files=753, longest=0.024 s, average=0.001 s; distance=17211 kB, estimate=17211 kB
+2023-07-26 19:37:37.541 UTC [3575925] LOG:  checkpoint starting: immediate force wait
+2023-07-26 19:37:37.594 UTC [3575925] LOG:  checkpoint complete: wrote 2 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.011 s, sync=0.011 s, total=0.053 s; sync files=2, longest=0.008 s, average=0.006 s; distance=1 kB, estimate=15490 kB
+2023-07-26 19:37:37.723 UTC [3576022] ERROR:  current user cannot be dropped
+2023-07-26 19:37:37.723 UTC [3576022] STATEMENT:  DROP USER su;
+2023-07-26 19:37:38.180 UTC [3575925] LOG:  checkpoint starting: immediate force wait
+2023-07-26 19:37:38.308 UTC [3575925] LOG:  checkpoint complete: wrote 1049 buffers (6.4%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.056 s, sync=0.042 s, total=0.129 s; sync files=297, longest=0.010 s, average=0.001 s; distance=9042 kB, estimate=14845 kB
+2023-07-26 19:37:38.368 UTC [3575925] LOG:  checkpoint starting: immediate force wait
+2023-07-26 19:37:38.426 UTC [3575925] LOG:  checkpoint complete: wrote 8 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.012 s, sync=0.012 s, total=0.058 s; sync files=7, longest=0.008 s, average=0.002 s; distance=34 kB, estimate=13364 kB
+2023-07-26 19:37:38.550 UTC [3576050] ERROR:  duplicate key value violates unique constraint "company_pkey"
+2023-07-26 19:37:38.550 UTC [3576050] DETAIL:  Key (id)=(1) already exists.
+2023-07-26 19:37:38.550 UTC [3576050] STATEMENT:  INSERT  INTO Company(ID, Name) VALUES (1, 'Percona');
+2023-07-26 19:37:38.783 UTC [3576070] ERROR:  division by zero
+2023-07-26 19:37:38.783 UTC [3576070] STATEMENT:  SELECT 1/0;
+2023-07-26 19:37:38.783 UTC [3576070] ERROR:  relation "unknown" does not exist at character 15
+2023-07-26 19:37:38.783 UTC [3576070] STATEMENT:  SELECT * FROM unknown;
+2023-07-26 19:37:38.783 UTC [3576070] ERROR:  syntax error at or near "ELECET" at character 1
+2023-07-26 19:37:38.783 UTC [3576070] STATEMENT:  ELECET * FROM unknown;
+2023-07-26 19:37:38.783 UTC [3576070] WARNING:  warning message
+2023-07-26 19:37:38.783 UTC [3576070] CONTEXT:  PL/pgSQL function inline_code_block line 3 at RAISE
+2023-07-26 19:37:38.962 UTC [3576084] ERROR:  role "su" already exists
+2023-07-26 19:37:38.962 UTC [3576084] STATEMENT:  CREATE USER su WITH SUPERUSER;
+2023-07-26 19:37:38.994 UTC [3576084] ERROR:  permission denied for function pg_stat_monitor_reset
+2023-07-26 19:37:38.994 UTC [3576084] STATEMENT:  SELECT pg_stat_monitor_reset();

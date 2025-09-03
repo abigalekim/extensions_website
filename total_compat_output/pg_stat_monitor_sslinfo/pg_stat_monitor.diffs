@@ -1,0 +1,41 @@
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/functions.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/functions.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/functions.out	2023-07-24 22:04:18.934416284 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/functions.out	2023-07-25 00:49:50.213687936 +0000
+@@ -26,7 +26,17 @@
+  public         | pgsm_create_15_view      | FUNCTION     | integer
+  public         | pgsm_create_view         | FUNCTION     | integer
+  public         | range                    | FUNCTION     | ARRAY
+-(13 rows)
++ public         | ssl_cipher               | FUNCTION     | text
++ public         | ssl_client_cert_present  | FUNCTION     | boolean
++ public         | ssl_client_dn            | FUNCTION     | text
++ public         | ssl_client_dn_field      | FUNCTION     | text
++ public         | ssl_client_serial        | FUNCTION     | numeric
++ public         | ssl_extension_info       | FUNCTION     | record
++ public         | ssl_is_used              | FUNCTION     | boolean
++ public         | ssl_issuer_dn            | FUNCTION     | text
++ public         | ssl_issuer_field         | FUNCTION     | text
++ public         | ssl_version              | FUNCTION     | text
++(23 rows)
+ 
+ SET ROLE u1;
+ SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+@@ -39,7 +49,17 @@
+  public         | pg_stat_monitor_internal | FUNCTION     | record
+  public         | pg_stat_monitor_version  | FUNCTION     | text
+  public         | range                    | FUNCTION     | ARRAY
+-(7 rows)
++ public         | ssl_cipher               | FUNCTION     | text
++ public         | ssl_client_cert_present  | FUNCTION     | boolean
++ public         | ssl_client_dn            | FUNCTION     | text
++ public         | ssl_client_dn_field      | FUNCTION     | text
++ public         | ssl_client_serial        | FUNCTION     | numeric
++ public         | ssl_extension_info       | FUNCTION     | record
++ public         | ssl_is_used              | FUNCTION     | boolean
++ public         | ssl_issuer_dn            | FUNCTION     | text
++ public         | ssl_issuer_field         | FUNCTION     | text
++ public         | ssl_version              | FUNCTION     | text
++(17 rows)
+ 
+ SET ROLE su;
+ DROP USER u1;

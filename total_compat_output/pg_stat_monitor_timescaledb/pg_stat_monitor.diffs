@@ -1,0 +1,232 @@
+diff -U3 /home/abigalek/pgext-cli/pgextworkdir/pg_stat_monitor/regression/expected/functions_1.out /home/abigalek/pgext-cli/pgextworkdir/pg_stat_monitor/results/functions.out
+--- /home/abigalek/pgext-cli/pgextworkdir/pg_stat_monitor/regression/expected/functions_1.out	2023-11-26 02:48:12.337518473 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/pg_stat_monitor/results/functions.out	2023-11-26 02:48:26.849462415 +0000
+@@ -11,32 +11,206 @@
+ (1 row)
+ 
+ SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+- routine_schema |       routine_name       | routine_type | data_type 
+-----------------+--------------------------+--------------+-----------
+- public         | decode_error_level       | FUNCTION     | text
+- public         | get_cmd_type             | FUNCTION     | text
+- public         | get_histogram_timings    | FUNCTION     | text
+- public         | histogram                | FUNCTION     | record
+- public         | pg_stat_monitor_internal | FUNCTION     | record
+- public         | pg_stat_monitor_reset    | FUNCTION     | void
+- public         | pg_stat_monitor_version  | FUNCTION     | text
+- public         | pgsm_create_11_view      | FUNCTION     | integer
+- public         | pgsm_create_13_view      | FUNCTION     | integer
+- public         | pgsm_create_14_view      | FUNCTION     | integer
+- public         | pgsm_create_15_view      | FUNCTION     | integer
+- public         | pgsm_create_view         | FUNCTION     | integer
+- public         | range                    | FUNCTION     | ARRAY
+-(13 rows)
++ routine_schema |            routine_name            | routine_type |          data_type          
++----------------+------------------------------------+--------------+-----------------------------
++ public         | add_compression_policy             | FUNCTION     | integer
++ public         | add_continuous_aggregate_policy    | FUNCTION     | integer
++ public         | add_data_node                      | FUNCTION     | record
++ public         | add_dimension                      | FUNCTION     | record
++ public         | add_job                            | FUNCTION     | integer
++ public         | add_reorder_policy                 | FUNCTION     | integer
++ public         | add_retention_policy               | FUNCTION     | integer
++ public         | alter_data_node                    | FUNCTION     | record
++ public         | alter_job                          | FUNCTION     | record
++ public         | approximate_row_count              | FUNCTION     | bigint
++ public         | attach_data_node                   | FUNCTION     | record
++ public         | attach_tablespace                  | FUNCTION     | void
++ public         | cagg_migrate                       | PROCEDURE    | 
++ public         | chunk_compression_stats            | FUNCTION     | record
++ public         | chunks_detailed_size               | FUNCTION     | record
++ public         | compress_chunk                     | FUNCTION     | regclass
++ public         | create_distributed_hypertable      | FUNCTION     | record
++ public         | create_distributed_restore_point   | FUNCTION     | record
++ public         | create_hypertable                  | FUNCTION     | record
++ public         | decode_error_level                 | FUNCTION     | text
++ public         | decompress_chunk                   | FUNCTION     | regclass
++ public         | delete_data_node                   | FUNCTION     | boolean
++ public         | delete_job                         | FUNCTION     | void
++ public         | detach_data_node                   | FUNCTION     | integer
++ public         | detach_tablespace                  | FUNCTION     | integer
++ public         | detach_tablespaces                 | FUNCTION     | integer
++ public         | distributed_exec                   | PROCEDURE    | 
++ public         | drop_chunks                        | FUNCTION     | text
++ public         | first                              |              | anyelement
++ public         | get_cmd_type                       | FUNCTION     | text
++ public         | get_histogram_timings              | FUNCTION     | text
++ public         | get_telemetry_report               | FUNCTION     | jsonb
++ public         | histogram                          | FUNCTION     | record
++ public         | histogram                          |              | ARRAY
++ public         | hypertable_compression_stats       | FUNCTION     | record
++ public         | hypertable_detailed_size           | FUNCTION     | record
++ public         | hypertable_index_size              | FUNCTION     | bigint
++ public         | hypertable_size                    | FUNCTION     | bigint
++ public         | interpolate                        | FUNCTION     | integer
++ public         | interpolate                        | FUNCTION     | smallint
++ public         | interpolate                        | FUNCTION     | bigint
++ public         | interpolate                        | FUNCTION     | real
++ public         | interpolate                        | FUNCTION     | double precision
++ public         | last                               |              | anyelement
++ public         | locf                               | FUNCTION     | anyelement
++ public         | move_chunk                         | FUNCTION     | void
++ public         | pg_stat_monitor_internal           | FUNCTION     | record
++ public         | pg_stat_monitor_reset              | FUNCTION     | void
++ public         | pg_stat_monitor_version            | FUNCTION     | text
++ public         | pgsm_create_11_view                | FUNCTION     | integer
++ public         | pgsm_create_13_view                | FUNCTION     | integer
++ public         | pgsm_create_14_view                | FUNCTION     | integer
++ public         | pgsm_create_15_view                | FUNCTION     | integer
++ public         | pgsm_create_view                   | FUNCTION     | integer
++ public         | range                              | FUNCTION     | ARRAY
++ public         | recompress_chunk                   | PROCEDURE    | 
++ public         | refresh_continuous_aggregate       | PROCEDURE    | 
++ public         | remove_compression_policy          | FUNCTION     | boolean
++ public         | remove_continuous_aggregate_policy | FUNCTION     | void
++ public         | remove_reorder_policy              | FUNCTION     | void
++ public         | remove_retention_policy            | FUNCTION     | void
++ public         | reorder_chunk                      | FUNCTION     | void
++ public         | run_job                            | PROCEDURE    | 
++ public         | set_adaptive_chunking              | FUNCTION     | record
++ public         | set_chunk_time_interval            | FUNCTION     | void
++ public         | set_integer_now_func               | FUNCTION     | void
++ public         | set_number_partitions              | FUNCTION     | void
++ public         | set_replication_factor             | FUNCTION     | void
++ public         | show_chunks                        | FUNCTION     | regclass
++ public         | show_tablespaces                   | FUNCTION     | name
++ public         | time_bucket                        | FUNCTION     | bigint
++ public         | time_bucket                        | FUNCTION     | timestamp with time zone
++ public         | time_bucket                        | FUNCTION     | timestamp without time zone
++ public         | time_bucket                        | FUNCTION     | integer
++ public         | time_bucket                        | FUNCTION     | date
++ public         | time_bucket                        | FUNCTION     | timestamp without time zone
++ public         | time_bucket                        | FUNCTION     | timestamp with time zone
++ public         | time_bucket                        | FUNCTION     | date
++ public         | time_bucket                        | FUNCTION     | timestamp without time zone
++ public         | time_bucket                        | FUNCTION     | timestamp with time zone
++ public         | time_bucket                        | FUNCTION     | smallint
++ public         | time_bucket                        | FUNCTION     | bigint
++ public         | time_bucket                        | FUNCTION     | smallint
++ public         | time_bucket                        | FUNCTION     | integer
++ public         | time_bucket                        | FUNCTION     | date
++ public         | time_bucket                        | FUNCTION     | timestamp with time zone
++ public         | time_bucket_gapfill                | FUNCTION     | timestamp with time zone
++ public         | time_bucket_gapfill                | FUNCTION     | timestamp with time zone
++ public         | time_bucket_gapfill                | FUNCTION     | smallint
++ public         | time_bucket_gapfill                | FUNCTION     | date
++ public         | time_bucket_gapfill                | FUNCTION     | bigint
++ public         | time_bucket_gapfill                | FUNCTION     | integer
++ public         | time_bucket_gapfill                | FUNCTION     | timestamp without time zone
++ public         | timescaledb_fdw_handler            | FUNCTION     | fdw_handler
++ public         | timescaledb_fdw_validator          | FUNCTION     | void
++ public         | timescaledb_post_restore           | FUNCTION     | boolean
++ public         | timescaledb_pre_restore            | FUNCTION     | boolean
++(97 rows)
+ 
+ SET ROLE u1;
+ SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+- routine_schema |      routine_name       | routine_type | data_type 
+-----------------+-------------------------+--------------+-----------
+- public         | histogram               | FUNCTION     | record
+- public         | pg_stat_monitor_reset   | FUNCTION     | void
+- public         | pg_stat_monitor_version | FUNCTION     | text
+-(3 rows)
++ routine_schema |            routine_name            | routine_type |          data_type          
++----------------+------------------------------------+--------------+-----------------------------
++ public         | add_compression_policy             | FUNCTION     | integer
++ public         | add_continuous_aggregate_policy    | FUNCTION     | integer
++ public         | add_data_node                      | FUNCTION     | record
++ public         | add_dimension                      | FUNCTION     | record
++ public         | add_job                            | FUNCTION     | integer
++ public         | add_reorder_policy                 | FUNCTION     | integer
++ public         | add_retention_policy               | FUNCTION     | integer
++ public         | alter_data_node                    | FUNCTION     | record
++ public         | alter_job                          | FUNCTION     | record
++ public         | approximate_row_count              | FUNCTION     | bigint
++ public         | attach_data_node                   | FUNCTION     | record
++ public         | attach_tablespace                  | FUNCTION     | void
++ public         | cagg_migrate                       | PROCEDURE    | 
++ public         | chunk_compression_stats            | FUNCTION     | record
++ public         | chunks_detailed_size               | FUNCTION     | record
++ public         | compress_chunk                     | FUNCTION     | regclass
++ public         | create_distributed_hypertable      | FUNCTION     | record
++ public         | create_distributed_restore_point   | FUNCTION     | record
++ public         | create_hypertable                  | FUNCTION     | record
++ public         | decode_error_level                 | FUNCTION     | text
++ public         | decompress_chunk                   | FUNCTION     | regclass
++ public         | delete_data_node                   | FUNCTION     | boolean
++ public         | delete_job                         | FUNCTION     | void
++ public         | detach_data_node                   | FUNCTION     | integer
++ public         | detach_tablespace                  | FUNCTION     | integer
++ public         | detach_tablespaces                 | FUNCTION     | integer
++ public         | distributed_exec                   | PROCEDURE    | 
++ public         | drop_chunks                        | FUNCTION     | text
++ public         | first                              |              | anyelement
++ public         | get_cmd_type                       | FUNCTION     | text
++ public         | get_histogram_timings              | FUNCTION     | text
++ public         | get_telemetry_report               | FUNCTION     | jsonb
++ public         | histogram                          | FUNCTION     | record
++ public         | histogram                          |              | ARRAY
++ public         | hypertable_compression_stats       | FUNCTION     | record
++ public         | hypertable_detailed_size           | FUNCTION     | record
++ public         | hypertable_index_size              | FUNCTION     | bigint
++ public         | hypertable_size                    | FUNCTION     | bigint
++ public         | interpolate                        | FUNCTION     | double precision
++ public         | interpolate                        | FUNCTION     | bigint
++ public         | interpolate                        | FUNCTION     | integer
++ public         | interpolate                        | FUNCTION     | smallint
++ public         | interpolate                        | FUNCTION     | real
++ public         | last                               |              | anyelement
++ public         | locf                               | FUNCTION     | anyelement
++ public         | move_chunk                         | FUNCTION     | void
++ public         | pg_stat_monitor_internal           | FUNCTION     | record
++ public         | pg_stat_monitor_version            | FUNCTION     | text
++ public         | range                              | FUNCTION     | ARRAY
++ public         | recompress_chunk                   | PROCEDURE    | 
++ public         | refresh_continuous_aggregate       | PROCEDURE    | 
++ public         | remove_compression_policy          | FUNCTION     | boolean
++ public         | remove_continuous_aggregate_policy | FUNCTION     | void
++ public         | remove_reorder_policy              | FUNCTION     | void
++ public         | remove_retention_policy            | FUNCTION     | void
++ public         | reorder_chunk                      | FUNCTION     | void
++ public         | run_job                            | PROCEDURE    | 
++ public         | set_adaptive_chunking              | FUNCTION     | record
++ public         | set_chunk_time_interval            | FUNCTION     | void
++ public         | set_integer_now_func               | FUNCTION     | void
++ public         | set_number_partitions              | FUNCTION     | void
++ public         | set_replication_factor             | FUNCTION     | void
++ public         | show_chunks                        | FUNCTION     | regclass
++ public         | show_tablespaces                   | FUNCTION     | name
++ public         | time_bucket                        | FUNCTION     | date
++ public         | time_bucket                        | FUNCTION     | timestamp with time zone
++ public         | time_bucket                        | FUNCTION     | timestamp with time zone
++ public         | time_bucket                        | FUNCTION     | bigint
++ public         | time_bucket                        | FUNCTION     | integer
++ public         | time_bucket                        | FUNCTION     | smallint
++ public         | time_bucket                        | FUNCTION     | timestamp without time zone
++ public         | time_bucket                        | FUNCTION     | smallint
++ public         | time_bucket                        | FUNCTION     | integer
++ public         | time_bucket                        | FUNCTION     | bigint
++ public         | time_bucket                        | FUNCTION     | date
++ public         | time_bucket                        | FUNCTION     | date
++ public         | time_bucket                        | FUNCTION     | timestamp with time zone
++ public         | time_bucket                        | FUNCTION     | timestamp with time zone
++ public         | time_bucket                        | FUNCTION     | timestamp without time zone
++ public         | time_bucket                        | FUNCTION     | timestamp without time zone
++ public         | time_bucket_gapfill                | FUNCTION     | timestamp with time zone
++ public         | time_bucket_gapfill                | FUNCTION     | timestamp with time zone
++ public         | time_bucket_gapfill                | FUNCTION     | timestamp without time zone
++ public         | time_bucket_gapfill                | FUNCTION     | date
++ public         | time_bucket_gapfill                | FUNCTION     | bigint
++ public         | time_bucket_gapfill                | FUNCTION     | integer
++ public         | time_bucket_gapfill                | FUNCTION     | smallint
++ public         | timescaledb_fdw_handler            | FUNCTION     | fdw_handler
++ public         | timescaledb_fdw_validator          | FUNCTION     | void
++ public         | timescaledb_post_restore           | FUNCTION     | boolean
++ public         | timescaledb_pre_restore            | FUNCTION     | boolean
++(91 rows)
+ 
+ SET ROLE su;
+ DROP USER u1;
+ DROP EXTENSION pg_stat_monitor;
++DROP USER su;
++ERROR:  current user cannot be dropped

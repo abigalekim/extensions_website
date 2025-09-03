@@ -1,0 +1,309 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out	2023-07-26 03:02:46.251975917 +0000
+@@ -1001,10 +1001,97 @@
+ (0 rows)
+ 
+ \df
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                                List of functions
++ Schema |              Name              | Result data type |                             Argument data types                              | Type 
++--------+--------------------------------+------------------+------------------------------------------------------------------------------+------
++ public | gin_btree_consistent           | boolean          | internal, smallint, anyelement, integer, internal, internal                  | func
++ public | gin_compare_prefix_anyenum     | integer          | anyenum, anyenum, smallint, internal                                         | func
++ public | gin_compare_prefix_bit         | integer          | bit, bit, smallint, internal                                                 | func
++ public | gin_compare_prefix_bool        | integer          | boolean, boolean, smallint, internal                                         | func
++ public | gin_compare_prefix_bpchar      | integer          | character, character, smallint, internal                                     | func
++ public | gin_compare_prefix_bytea       | integer          | bytea, bytea, smallint, internal                                             | func
++ public | gin_compare_prefix_char        | integer          | "char", "char", smallint, internal                                           | func
++ public | gin_compare_prefix_cidr        | integer          | cidr, cidr, smallint, internal                                               | func
++ public | gin_compare_prefix_date        | integer          | date, date, smallint, internal                                               | func
++ public | gin_compare_prefix_float4      | integer          | real, real, smallint, internal                                               | func
++ public | gin_compare_prefix_float8      | integer          | double precision, double precision, smallint, internal                       | func
++ public | gin_compare_prefix_inet        | integer          | inet, inet, smallint, internal                                               | func
++ public | gin_compare_prefix_int2        | integer          | smallint, smallint, smallint, internal                                       | func
++ public | gin_compare_prefix_int4        | integer          | integer, integer, smallint, internal                                         | func
++ public | gin_compare_prefix_int8        | integer          | bigint, bigint, smallint, internal                                           | func
++ public | gin_compare_prefix_interval    | integer          | interval, interval, smallint, internal                                       | func
++ public | gin_compare_prefix_macaddr     | integer          | macaddr, macaddr, smallint, internal                                         | func
++ public | gin_compare_prefix_macaddr8    | integer          | macaddr8, macaddr8, smallint, internal                                       | func
++ public | gin_compare_prefix_money       | integer          | money, money, smallint, internal                                             | func
++ public | gin_compare_prefix_name        | integer          | name, name, smallint, internal                                               | func
++ public | gin_compare_prefix_numeric     | integer          | numeric, numeric, smallint, internal                                         | func
++ public | gin_compare_prefix_oid         | integer          | oid, oid, smallint, internal                                                 | func
++ public | gin_compare_prefix_text        | integer          | text, text, smallint, internal                                               | func
++ public | gin_compare_prefix_time        | integer          | time without time zone, time without time zone, smallint, internal           | func
++ public | gin_compare_prefix_timestamp   | integer          | timestamp without time zone, timestamp without time zone, smallint, internal | func
++ public | gin_compare_prefix_timestamptz | integer          | timestamp with time zone, timestamp with time zone, smallint, internal       | func
++ public | gin_compare_prefix_timetz      | integer          | time with time zone, time with time zone, smallint, internal                 | func
++ public | gin_compare_prefix_uuid        | integer          | uuid, uuid, smallint, internal                                               | func
++ public | gin_compare_prefix_varbit      | integer          | bit varying, bit varying, smallint, internal                                 | func
++ public | gin_enum_cmp                   | integer          | anyenum, anyenum                                                             | func
++ public | gin_extract_query_anyenum      | internal         | anyenum, internal, smallint, internal, internal                              | func
++ public | gin_extract_query_bit          | internal         | bit, internal, smallint, internal, internal                                  | func
++ public | gin_extract_query_bool         | internal         | boolean, internal, smallint, internal, internal                              | func
++ public | gin_extract_query_bpchar       | internal         | character, internal, smallint, internal, internal                            | func
++ public | gin_extract_query_bytea        | internal         | bytea, internal, smallint, internal, internal                                | func
++ public | gin_extract_query_char         | internal         | "char", internal, smallint, internal, internal                               | func
++ public | gin_extract_query_cidr         | internal         | cidr, internal, smallint, internal, internal                                 | func
++ public | gin_extract_query_date         | internal         | date, internal, smallint, internal, internal                                 | func
++ public | gin_extract_query_float4       | internal         | real, internal, smallint, internal, internal                                 | func
++ public | gin_extract_query_float8       | internal         | double precision, internal, smallint, internal, internal                     | func
++ public | gin_extract_query_inet         | internal         | inet, internal, smallint, internal, internal                                 | func
++ public | gin_extract_query_int2         | internal         | smallint, internal, smallint, internal, internal                             | func
++ public | gin_extract_query_int4         | internal         | integer, internal, smallint, internal, internal                              | func
++ public | gin_extract_query_int8         | internal         | bigint, internal, smallint, internal, internal                               | func
++ public | gin_extract_query_interval     | internal         | interval, internal, smallint, internal, internal                             | func
++ public | gin_extract_query_macaddr      | internal         | macaddr, internal, smallint, internal, internal                              | func
++ public | gin_extract_query_macaddr8     | internal         | macaddr8, internal, smallint, internal, internal                             | func
++ public | gin_extract_query_money        | internal         | money, internal, smallint, internal, internal                                | func
++ public | gin_extract_query_name         | internal         | name, internal, smallint, internal, internal                                 | func
++ public | gin_extract_query_numeric      | internal         | numeric, internal, smallint, internal, internal                              | func
++ public | gin_extract_query_oid          | internal         | oid, internal, smallint, internal, internal                                  | func
++ public | gin_extract_query_text         | internal         | text, internal, smallint, internal, internal                                 | func
++ public | gin_extract_query_time         | internal         | time without time zone, internal, smallint, internal, internal               | func
++ public | gin_extract_query_timestamp    | internal         | timestamp without time zone, internal, smallint, internal, internal          | func
++ public | gin_extract_query_timestamptz  | internal         | timestamp with time zone, internal, smallint, internal, internal             | func
++ public | gin_extract_query_timetz       | internal         | time with time zone, internal, smallint, internal, internal                  | func
++ public | gin_extract_query_uuid         | internal         | uuid, internal, smallint, internal, internal                                 | func
++ public | gin_extract_query_varbit       | internal         | bit varying, internal, smallint, internal, internal                          | func
++ public | gin_extract_value_anyenum      | internal         | anyenum, internal                                                            | func
++ public | gin_extract_value_bit          | internal         | bit, internal                                                                | func
++ public | gin_extract_value_bool         | internal         | boolean, internal                                                            | func
++ public | gin_extract_value_bpchar       | internal         | character, internal                                                          | func
++ public | gin_extract_value_bytea        | internal         | bytea, internal                                                              | func
++ public | gin_extract_value_char         | internal         | "char", internal                                                             | func
++ public | gin_extract_value_cidr         | internal         | cidr, internal                                                               | func
++ public | gin_extract_value_date         | internal         | date, internal                                                               | func
++ public | gin_extract_value_float4       | internal         | real, internal                                                               | func
++ public | gin_extract_value_float8       | internal         | double precision, internal                                                   | func
++ public | gin_extract_value_inet         | internal         | inet, internal                                                               | func
++ public | gin_extract_value_int2         | internal         | smallint, internal                                                           | func
++ public | gin_extract_value_int4         | internal         | integer, internal                                                            | func
++ public | gin_extract_value_int8         | internal         | bigint, internal                                                             | func
++ public | gin_extract_value_interval     | internal         | interval, internal                                                           | func
++ public | gin_extract_value_macaddr      | internal         | macaddr, internal                                                            | func
++ public | gin_extract_value_macaddr8     | internal         | macaddr8, internal                                                           | func
++ public | gin_extract_value_money        | internal         | money, internal                                                              | func
++ public | gin_extract_value_name         | internal         | name, internal                                                               | func
++ public | gin_extract_value_numeric      | internal         | numeric, internal                                                            | func
++ public | gin_extract_value_oid          | internal         | oid, internal                                                                | func
++ public | gin_extract_value_text         | internal         | text, internal                                                               | func
++ public | gin_extract_value_time         | internal         | time without time zone, internal                                             | func
++ public | gin_extract_value_timestamp    | internal         | timestamp without time zone, internal                                        | func
++ public | gin_extract_value_timestamptz  | internal         | timestamp with time zone, internal                                           | func
++ public | gin_extract_value_timetz       | internal         | time with time zone, internal                                                | func
++ public | gin_extract_value_uuid         | internal         | uuid, internal                                                               | func
++ public | gin_extract_value_varbit       | internal         | bit varying, internal                                                        | func
++ public | gin_numeric_cmp                | integer          | numeric, numeric                                                             | func
++(87 rows)
+ 
+ \do
+                              List of operators
+@@ -1022,10 +1109,97 @@
+ (0 rows)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                                List of functions
++ Schema |              Name              | Result data type |                             Argument data types                              | Type 
++--------+--------------------------------+------------------+------------------------------------------------------------------------------+------
++ public | gin_btree_consistent           | boolean          | internal, smallint, anyelement, integer, internal, internal                  | func
++ public | gin_compare_prefix_anyenum     | integer          | anyenum, anyenum, smallint, internal                                         | func
++ public | gin_compare_prefix_bit         | integer          | bit, bit, smallint, internal                                                 | func
++ public | gin_compare_prefix_bool        | integer          | boolean, boolean, smallint, internal                                         | func
++ public | gin_compare_prefix_bpchar      | integer          | character, character, smallint, internal                                     | func
++ public | gin_compare_prefix_bytea       | integer          | bytea, bytea, smallint, internal                                             | func
++ public | gin_compare_prefix_char        | integer          | "char", "char", smallint, internal                                           | func
++ public | gin_compare_prefix_cidr        | integer          | cidr, cidr, smallint, internal                                               | func
++ public | gin_compare_prefix_date        | integer          | date, date, smallint, internal                                               | func
++ public | gin_compare_prefix_float4      | integer          | real, real, smallint, internal                                               | func
++ public | gin_compare_prefix_float8      | integer          | double precision, double precision, smallint, internal                       | func
++ public | gin_compare_prefix_inet        | integer          | inet, inet, smallint, internal                                               | func
++ public | gin_compare_prefix_int2        | integer          | smallint, smallint, smallint, internal                                       | func
++ public | gin_compare_prefix_int4        | integer          | integer, integer, smallint, internal                                         | func
++ public | gin_compare_prefix_int8        | integer          | bigint, bigint, smallint, internal                                           | func
++ public | gin_compare_prefix_interval    | integer          | interval, interval, smallint, internal                                       | func
++ public | gin_compare_prefix_macaddr     | integer          | macaddr, macaddr, smallint, internal                                         | func
++ public | gin_compare_prefix_macaddr8    | integer          | macaddr8, macaddr8, smallint, internal                                       | func
++ public | gin_compare_prefix_money       | integer          | money, money, smallint, internal                                             | func
++ public | gin_compare_prefix_name        | integer          | name, name, smallint, internal                                               | func
++ public | gin_compare_prefix_numeric     | integer          | numeric, numeric, smallint, internal                                         | func
++ public | gin_compare_prefix_oid         | integer          | oid, oid, smallint, internal                                                 | func
++ public | gin_compare_prefix_text        | integer          | text, text, smallint, internal                                               | func
++ public | gin_compare_prefix_time        | integer          | time without time zone, time without time zone, smallint, internal           | func
++ public | gin_compare_prefix_timestamp   | integer          | timestamp without time zone, timestamp without time zone, smallint, internal | func
++ public | gin_compare_prefix_timestamptz | integer          | timestamp with time zone, timestamp with time zone, smallint, internal       | func
++ public | gin_compare_prefix_timetz      | integer          | time with time zone, time with time zone, smallint, internal                 | func
++ public | gin_compare_prefix_uuid        | integer          | uuid, uuid, smallint, internal                                               | func
++ public | gin_compare_prefix_varbit      | integer          | bit varying, bit varying, smallint, internal                                 | func
++ public | gin_enum_cmp                   | integer          | anyenum, anyenum                                                             | func
++ public | gin_extract_query_anyenum      | internal         | anyenum, internal, smallint, internal, internal                              | func
++ public | gin_extract_query_bit          | internal         | bit, internal, smallint, internal, internal                                  | func
++ public | gin_extract_query_bool         | internal         | boolean, internal, smallint, internal, internal                              | func
++ public | gin_extract_query_bpchar       | internal         | character, internal, smallint, internal, internal                            | func
++ public | gin_extract_query_bytea        | internal         | bytea, internal, smallint, internal, internal                                | func
++ public | gin_extract_query_char         | internal         | "char", internal, smallint, internal, internal                               | func
++ public | gin_extract_query_cidr         | internal         | cidr, internal, smallint, internal, internal                                 | func
++ public | gin_extract_query_date         | internal         | date, internal, smallint, internal, internal                                 | func
++ public | gin_extract_query_float4       | internal         | real, internal, smallint, internal, internal                                 | func
++ public | gin_extract_query_float8       | internal         | double precision, internal, smallint, internal, internal                     | func
++ public | gin_extract_query_inet         | internal         | inet, internal, smallint, internal, internal                                 | func
++ public | gin_extract_query_int2         | internal         | smallint, internal, smallint, internal, internal                             | func
++ public | gin_extract_query_int4         | internal         | integer, internal, smallint, internal, internal                              | func
++ public | gin_extract_query_int8         | internal         | bigint, internal, smallint, internal, internal                               | func
++ public | gin_extract_query_interval     | internal         | interval, internal, smallint, internal, internal                             | func
++ public | gin_extract_query_macaddr      | internal         | macaddr, internal, smallint, internal, internal                              | func
++ public | gin_extract_query_macaddr8     | internal         | macaddr8, internal, smallint, internal, internal                             | func
++ public | gin_extract_query_money        | internal         | money, internal, smallint, internal, internal                                | func
++ public | gin_extract_query_name         | internal         | name, internal, smallint, internal, internal                                 | func
++ public | gin_extract_query_numeric      | internal         | numeric, internal, smallint, internal, internal                              | func
++ public | gin_extract_query_oid          | internal         | oid, internal, smallint, internal, internal                                  | func
++ public | gin_extract_query_text         | internal         | text, internal, smallint, internal, internal                                 | func
++ public | gin_extract_query_time         | internal         | time without time zone, internal, smallint, internal, internal               | func
++ public | gin_extract_query_timestamp    | internal         | timestamp without time zone, internal, smallint, internal, internal          | func
++ public | gin_extract_query_timestamptz  | internal         | timestamp with time zone, internal, smallint, internal, internal             | func
++ public | gin_extract_query_timetz       | internal         | time with time zone, internal, smallint, internal, internal                  | func
++ public | gin_extract_query_uuid         | internal         | uuid, internal, smallint, internal, internal                                 | func
++ public | gin_extract_query_varbit       | internal         | bit varying, internal, smallint, internal, internal                          | func
++ public | gin_extract_value_anyenum      | internal         | anyenum, internal                                                            | func
++ public | gin_extract_value_bit          | internal         | bit, internal                                                                | func
++ public | gin_extract_value_bool         | internal         | boolean, internal                                                            | func
++ public | gin_extract_value_bpchar       | internal         | character, internal                                                          | func
++ public | gin_extract_value_bytea        | internal         | bytea, internal                                                              | func
++ public | gin_extract_value_char         | internal         | "char", internal                                                             | func
++ public | gin_extract_value_cidr         | internal         | cidr, internal                                                               | func
++ public | gin_extract_value_date         | internal         | date, internal                                                               | func
++ public | gin_extract_value_float4       | internal         | real, internal                                                               | func
++ public | gin_extract_value_float8       | internal         | double precision, internal                                                   | func
++ public | gin_extract_value_inet         | internal         | inet, internal                                                               | func
++ public | gin_extract_value_int2         | internal         | smallint, internal                                                           | func
++ public | gin_extract_value_int4         | internal         | integer, internal                                                            | func
++ public | gin_extract_value_int8         | internal         | bigint, internal                                                             | func
++ public | gin_extract_value_interval     | internal         | interval, internal                                                           | func
++ public | gin_extract_value_macaddr      | internal         | macaddr, internal                                                            | func
++ public | gin_extract_value_macaddr8     | internal         | macaddr8, internal                                                           | func
++ public | gin_extract_value_money        | internal         | money, internal                                                              | func
++ public | gin_extract_value_name         | internal         | name, internal                                                               | func
++ public | gin_extract_value_numeric      | internal         | numeric, internal                                                            | func
++ public | gin_extract_value_oid          | internal         | oid, internal                                                                | func
++ public | gin_extract_value_text         | internal         | text, internal                                                               | func
++ public | gin_extract_value_time         | internal         | time without time zone, internal                                             | func
++ public | gin_extract_value_timestamp    | internal         | timestamp without time zone, internal                                        | func
++ public | gin_extract_value_timestamptz  | internal         | timestamp with time zone, internal                                           | func
++ public | gin_extract_value_timetz       | internal         | time with time zone, internal                                                | func
++ public | gin_extract_value_uuid         | internal         | uuid, internal                                                               | func
++ public | gin_extract_value_varbit       | internal         | bit varying, internal                                                        | func
++ public | gin_numeric_cmp                | integer          | numeric, numeric                                                             | func
++(87 rows)
+ 
+ \do public.*
+                              List of operators
+@@ -1066,10 +1240,97 @@
+ (0 rows)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                                List of functions
++ Schema |              Name              | Result data type |                             Argument data types                              | Type 
++--------+--------------------------------+------------------+------------------------------------------------------------------------------+------
++ public | gin_btree_consistent           | boolean          | internal, smallint, anyelement, integer, internal, internal                  | func
++ public | gin_compare_prefix_anyenum     | integer          | anyenum, anyenum, smallint, internal                                         | func
++ public | gin_compare_prefix_bit         | integer          | bit, bit, smallint, internal                                                 | func
++ public | gin_compare_prefix_bool        | integer          | boolean, boolean, smallint, internal                                         | func
++ public | gin_compare_prefix_bpchar      | integer          | character, character, smallint, internal                                     | func
++ public | gin_compare_prefix_bytea       | integer          | bytea, bytea, smallint, internal                                             | func
++ public | gin_compare_prefix_char        | integer          | "char", "char", smallint, internal                                           | func
++ public | gin_compare_prefix_cidr        | integer          | cidr, cidr, smallint, internal                                               | func
++ public | gin_compare_prefix_date        | integer          | date, date, smallint, internal                                               | func
++ public | gin_compare_prefix_float4      | integer          | real, real, smallint, internal                                               | func
++ public | gin_compare_prefix_float8      | integer          | double precision, double precision, smallint, internal                       | func
++ public | gin_compare_prefix_inet        | integer          | inet, inet, smallint, internal                                               | func
++ public | gin_compare_prefix_int2        | integer          | smallint, smallint, smallint, internal                                       | func
++ public | gin_compare_prefix_int4        | integer          | integer, integer, smallint, internal                                         | func
++ public | gin_compare_prefix_int8        | integer          | bigint, bigint, smallint, internal                                           | func
++ public | gin_compare_prefix_interval    | integer          | interval, interval, smallint, internal                                       | func
++ public | gin_compare_prefix_macaddr     | integer          | macaddr, macaddr, smallint, internal                                         | func
++ public | gin_compare_prefix_macaddr8    | integer          | macaddr8, macaddr8, smallint, internal                                       | func
++ public | gin_compare_prefix_money       | integer          | money, money, smallint, internal                                             | func
++ public | gin_compare_prefix_name        | integer          | name, name, smallint, internal                                               | func
++ public | gin_compare_prefix_numeric     | integer          | numeric, numeric, smallint, internal                                         | func
++ public | gin_compare_prefix_oid         | integer          | oid, oid, smallint, internal                                                 | func
++ public | gin_compare_prefix_text        | integer          | text, text, smallint, internal                                               | func
++ public | gin_compare_prefix_time        | integer          | time without time zone, time without time zone, smallint, internal           | func
++ public | gin_compare_prefix_timestamp   | integer          | timestamp without time zone, timestamp without time zone, smallint, internal | func
++ public | gin_compare_prefix_timestamptz | integer          | timestamp with time zone, timestamp with time zone, smallint, internal       | func
++ public | gin_compare_prefix_timetz      | integer          | time with time zone, time with time zone, smallint, internal                 | func
++ public | gin_compare_prefix_uuid        | integer          | uuid, uuid, smallint, internal                                               | func
++ public | gin_compare_prefix_varbit      | integer          | bit varying, bit varying, smallint, internal                                 | func
++ public | gin_enum_cmp                   | integer          | anyenum, anyenum                                                             | func
++ public | gin_extract_query_anyenum      | internal         | anyenum, internal, smallint, internal, internal                              | func
++ public | gin_extract_query_bit          | internal         | bit, internal, smallint, internal, internal                                  | func
++ public | gin_extract_query_bool         | internal         | boolean, internal, smallint, internal, internal                              | func
++ public | gin_extract_query_bpchar       | internal         | character, internal, smallint, internal, internal                            | func
++ public | gin_extract_query_bytea        | internal         | bytea, internal, smallint, internal, internal                                | func
++ public | gin_extract_query_char         | internal         | "char", internal, smallint, internal, internal                               | func
++ public | gin_extract_query_cidr         | internal         | cidr, internal, smallint, internal, internal                                 | func
++ public | gin_extract_query_date         | internal         | date, internal, smallint, internal, internal                                 | func
++ public | gin_extract_query_float4       | internal         | real, internal, smallint, internal, internal                                 | func
++ public | gin_extract_query_float8       | internal         | double precision, internal, smallint, internal, internal                     | func
++ public | gin_extract_query_inet         | internal         | inet, internal, smallint, internal, internal                                 | func
++ public | gin_extract_query_int2         | internal         | smallint, internal, smallint, internal, internal                             | func
++ public | gin_extract_query_int4         | internal         | integer, internal, smallint, internal, internal                              | func
++ public | gin_extract_query_int8         | internal         | bigint, internal, smallint, internal, internal                               | func
++ public | gin_extract_query_interval     | internal         | interval, internal, smallint, internal, internal                             | func
++ public | gin_extract_query_macaddr      | internal         | macaddr, internal, smallint, internal, internal                              | func
++ public | gin_extract_query_macaddr8     | internal         | macaddr8, internal, smallint, internal, internal                             | func
++ public | gin_extract_query_money        | internal         | money, internal, smallint, internal, internal                                | func
++ public | gin_extract_query_name         | internal         | name, internal, smallint, internal, internal                                 | func
++ public | gin_extract_query_numeric      | internal         | numeric, internal, smallint, internal, internal                              | func
++ public | gin_extract_query_oid          | internal         | oid, internal, smallint, internal, internal                                  | func
++ public | gin_extract_query_text         | internal         | text, internal, smallint, internal, internal                                 | func
++ public | gin_extract_query_time         | internal         | time without time zone, internal, smallint, internal, internal               | func
++ public | gin_extract_query_timestamp    | internal         | timestamp without time zone, internal, smallint, internal, internal          | func
++ public | gin_extract_query_timestamptz  | internal         | timestamp with time zone, internal, smallint, internal, internal             | func
++ public | gin_extract_query_timetz       | internal         | time with time zone, internal, smallint, internal, internal                  | func
++ public | gin_extract_query_uuid         | internal         | uuid, internal, smallint, internal, internal                                 | func
++ public | gin_extract_query_varbit       | internal         | bit varying, internal, smallint, internal, internal                          | func
++ public | gin_extract_value_anyenum      | internal         | anyenum, internal                                                            | func
++ public | gin_extract_value_bit          | internal         | bit, internal                                                                | func
++ public | gin_extract_value_bool         | internal         | boolean, internal                                                            | func
++ public | gin_extract_value_bpchar       | internal         | character, internal                                                          | func
++ public | gin_extract_value_bytea        | internal         | bytea, internal                                                              | func
++ public | gin_extract_value_char         | internal         | "char", internal                                                             | func
++ public | gin_extract_value_cidr         | internal         | cidr, internal                                                               | func
++ public | gin_extract_value_date         | internal         | date, internal                                                               | func
++ public | gin_extract_value_float4       | internal         | real, internal                                                               | func
++ public | gin_extract_value_float8       | internal         | double precision, internal                                                   | func
++ public | gin_extract_value_inet         | internal         | inet, internal                                                               | func
++ public | gin_extract_value_int2         | internal         | smallint, internal                                                           | func
++ public | gin_extract_value_int4         | internal         | integer, internal                                                            | func
++ public | gin_extract_value_int8         | internal         | bigint, internal                                                             | func
++ public | gin_extract_value_interval     | internal         | interval, internal                                                           | func
++ public | gin_extract_value_macaddr      | internal         | macaddr, internal                                                            | func
++ public | gin_extract_value_macaddr8     | internal         | macaddr8, internal                                                           | func
++ public | gin_extract_value_money        | internal         | money, internal                                                              | func
++ public | gin_extract_value_name         | internal         | name, internal                                                               | func
++ public | gin_extract_value_numeric      | internal         | numeric, internal                                                            | func
++ public | gin_extract_value_oid          | internal         | oid, internal                                                                | func
++ public | gin_extract_value_text         | internal         | text, internal                                                               | func
++ public | gin_extract_value_time         | internal         | time without time zone, internal                                             | func
++ public | gin_extract_value_timestamp    | internal         | timestamp without time zone, internal                                        | func
++ public | gin_extract_value_timestamptz  | internal         | timestamp with time zone, internal                                           | func
++ public | gin_extract_value_timetz       | internal         | time with time zone, internal                                                | func
++ public | gin_extract_value_uuid         | internal         | uuid, internal                                                               | func
++ public | gin_extract_value_varbit       | internal         | bit varying, internal                                                        | func
++ public | gin_numeric_cmp                | integer          | numeric, numeric                                                             | func
++(87 rows)
+ 
+ \do public.*
+                              List of operators

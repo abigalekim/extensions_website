@@ -1,0 +1,135 @@
+2023-07-26 04:18:11.403 UTC [1999890] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 04:18:11.404 UTC [1999890] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 04:18:11.418 UTC [1999890] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 04:18:11.435 UTC [1999893] LOG:  database system was shut down at 2023-07-26 04:18:11 UTC
+2023-07-26 04:18:11.444 UTC [1999890] LOG:  database system is ready to accept connections
+2023-07-26 04:18:11.653 UTC [1999906] ERROR:  permission denied to create foreign-data wrapper "file_fdw2"
+2023-07-26 04:18:11.653 UTC [1999906] HINT:  Must be superuser to create a foreign-data wrapper.
+2023-07-26 04:18:11.653 UTC [1999906] STATEMENT:  CREATE FOREIGN DATA WRAPPER file_fdw2 HANDLER file_fdw_handler VALIDATOR file_fdw_validator;
+2023-07-26 04:18:11.654 UTC [1999906] ERROR:  permission denied for foreign-data wrapper file_fdw
+2023-07-26 04:18:11.654 UTC [1999906] STATEMENT:  CREATE SERVER file_server2 FOREIGN DATA WRAPPER file_fdw;
+2023-07-26 04:18:11.654 UTC [1999906] ERROR:  permission denied for foreign server file_server
+2023-07-26 04:18:11.654 UTC [1999906] STATEMENT:  CREATE USER MAPPING FOR regress_file_fdw_user SERVER file_server;
+2023-07-26 04:18:11.671 UTC [1999906] ERROR:  COPY format "xml" not recognized
+2023-07-26 04:18:11.671 UTC [1999906] STATEMENT:  CREATE FOREIGN TABLE tbl () SERVER file_server OPTIONS (format 'xml');
+2023-07-26 04:18:11.673 UTC [1999906] ERROR:  COPY quote available only in CSV mode
+2023-07-26 04:18:11.673 UTC [1999906] STATEMENT:  CREATE FOREIGN TABLE tbl () SERVER file_server OPTIONS (format 'text', quote ':');
+2023-07-26 04:18:11.674 UTC [1999906] ERROR:  COPY escape available only in CSV mode
+2023-07-26 04:18:11.674 UTC [1999906] STATEMENT:  CREATE FOREIGN TABLE tbl () SERVER file_server OPTIONS (format 'text', escape ':');
+2023-07-26 04:18:11.675 UTC [1999906] ERROR:  cannot specify HEADER in BINARY mode
+2023-07-26 04:18:11.675 UTC [1999906] STATEMENT:  CREATE FOREIGN TABLE tbl () SERVER file_server OPTIONS (format 'binary', header 'true');
+2023-07-26 04:18:11.677 UTC [1999906] ERROR:  COPY quote available only in CSV mode
+2023-07-26 04:18:11.677 UTC [1999906] STATEMENT:  CREATE FOREIGN TABLE tbl () SERVER file_server OPTIONS (format 'binary', quote ':');
+2023-07-26 04:18:11.678 UTC [1999906] ERROR:  COPY escape available only in CSV mode
+2023-07-26 04:18:11.678 UTC [1999906] STATEMENT:  CREATE FOREIGN TABLE tbl () SERVER file_server OPTIONS (format 'binary', escape ':');
+2023-07-26 04:18:11.679 UTC [1999906] ERROR:  COPY delimiter cannot be "a"
+2023-07-26 04:18:11.679 UTC [1999906] STATEMENT:  CREATE FOREIGN TABLE tbl () SERVER file_server OPTIONS (format 'text', delimiter 'a');
+2023-07-26 04:18:11.681 UTC [1999906] ERROR:  COPY escape available only in CSV mode
+2023-07-26 04:18:11.681 UTC [1999906] STATEMENT:  CREATE FOREIGN TABLE tbl () SERVER file_server OPTIONS (format 'text', escape '-');
+2023-07-26 04:18:11.682 UTC [1999906] ERROR:  CSV quote character must not appear in the NULL specification
+2023-07-26 04:18:11.682 UTC [1999906] STATEMENT:  CREATE FOREIGN TABLE tbl () SERVER file_server OPTIONS (format 'csv', quote '-', null '=-=');
+2023-07-26 04:18:11.683 UTC [1999906] ERROR:  COPY delimiter must not appear in the NULL specification
+2023-07-26 04:18:11.683 UTC [1999906] STATEMENT:  CREATE FOREIGN TABLE tbl () SERVER file_server OPTIONS (format 'csv', delimiter '-', null '=-=');
+2023-07-26 04:18:11.684 UTC [1999906] ERROR:  COPY delimiter and quote must be different
+2023-07-26 04:18:11.684 UTC [1999906] STATEMENT:  CREATE FOREIGN TABLE tbl () SERVER file_server OPTIONS (format 'csv', delimiter '-', quote '-');
+2023-07-26 04:18:11.685 UTC [1999906] ERROR:  COPY delimiter must be a single one-byte character
+2023-07-26 04:18:11.685 UTC [1999906] STATEMENT:  CREATE FOREIGN TABLE tbl () SERVER file_server OPTIONS (format 'csv', delimiter '---');
+2023-07-26 04:18:11.686 UTC [1999906] ERROR:  COPY quote must be a single one-byte character
+2023-07-26 04:18:11.686 UTC [1999906] STATEMENT:  CREATE FOREIGN TABLE tbl () SERVER file_server OPTIONS (format 'csv', quote '---');
+2023-07-26 04:18:11.687 UTC [1999906] ERROR:  COPY escape must be a single one-byte character
+2023-07-26 04:18:11.687 UTC [1999906] STATEMENT:  CREATE FOREIGN TABLE tbl () SERVER file_server OPTIONS (format 'csv', escape '---');
+2023-07-26 04:18:11.689 UTC [1999906] ERROR:  COPY delimiter cannot be "\"
+2023-07-26 04:18:11.689 UTC [1999906] STATEMENT:  CREATE FOREIGN TABLE tbl () SERVER file_server OPTIONS (format 'text', delimiter '\');
+2023-07-26 04:18:11.690 UTC [1999906] ERROR:  COPY delimiter cannot be "."
+2023-07-26 04:18:11.690 UTC [1999906] STATEMENT:  CREATE FOREIGN TABLE tbl () SERVER file_server OPTIONS (format 'text', delimiter '.');
+2023-07-26 04:18:11.691 UTC [1999906] ERROR:  COPY delimiter cannot be "1"
+2023-07-26 04:18:11.691 UTC [1999906] STATEMENT:  CREATE FOREIGN TABLE tbl () SERVER file_server OPTIONS (format 'text', delimiter '1');
+2023-07-26 04:18:11.692 UTC [1999906] ERROR:  COPY delimiter cannot be "a"
+2023-07-26 04:18:11.692 UTC [1999906] STATEMENT:  CREATE FOREIGN TABLE tbl () SERVER file_server OPTIONS (format 'text', delimiter 'a');
+2023-07-26 04:18:11.692 UTC [1999906] ERROR:  COPY delimiter cannot be newline or carriage return
+2023-07-26 04:18:11.692 UTC [1999906] STATEMENT:  CREATE FOREIGN TABLE tbl () SERVER file_server OPTIONS (format 'csv', delimiter '
+	');
+2023-07-26 04:18:11.693 UTC [1999906] ERROR:  COPY null representation cannot use newline or carriage return
+2023-07-26 04:18:11.693 UTC [1999906] STATEMENT:  CREATE FOREIGN TABLE tbl () SERVER file_server OPTIONS (format 'csv', null '
+	');
+2023-07-26 04:18:11.694 UTC [1999906] ERROR:  either filename or program is required for file_fdw foreign tables
+2023-07-26 04:18:11.694 UTC [1999906] STATEMENT:  CREATE FOREIGN TABLE tbl () SERVER file_server;
+2023-07-26 04:18:11.731 UTC [1999906] ERROR:  column name mismatch in header line field 1: got "1", expected "a"
+2023-07-26 04:18:11.731 UTC [1999906] CONTEXT:  COPY header_doesnt_match, line 1: "1,foo"
+2023-07-26 04:18:11.731 UTC [1999906] STATEMENT:  SELECT * FROM header_doesnt_match;
+2023-07-26 04:18:11.738 UTC [1999906] ERROR:  COPY force not null available only in CSV mode
+2023-07-26 04:18:11.738 UTC [1999906] STATEMENT:  SELECT * FROM text_csv;
+2023-07-26 04:18:11.751 UTC [1999906] ERROR:  invalid option "force_not_null"
+2023-07-26 04:18:11.751 UTC [1999906] HINT:  There are no valid options in this context.
+2023-07-26 04:18:11.751 UTC [1999906] STATEMENT:  ALTER FOREIGN DATA WRAPPER file_fdw OPTIONS (ADD force_not_null '*');
+2023-07-26 04:18:11.752 UTC [1999906] ERROR:  invalid option "force_not_null"
+2023-07-26 04:18:11.752 UTC [1999906] HINT:  There are no valid options in this context.
+2023-07-26 04:18:11.752 UTC [1999906] STATEMENT:  ALTER SERVER file_server OPTIONS (ADD force_not_null '*');
+2023-07-26 04:18:11.752 UTC [1999906] ERROR:  invalid option "force_not_null"
+2023-07-26 04:18:11.752 UTC [1999906] HINT:  There are no valid options in this context.
+2023-07-26 04:18:11.752 UTC [1999906] STATEMENT:  CREATE USER MAPPING FOR public SERVER file_server OPTIONS (force_not_null '*');
+2023-07-26 04:18:11.754 UTC [1999906] ERROR:  invalid option "force_not_null"
+2023-07-26 04:18:11.754 UTC [1999906] HINT:  Valid options in this context are: filename, program, format, header, delimiter, quote, escape, null, encoding
+2023-07-26 04:18:11.754 UTC [1999906] STATEMENT:  CREATE FOREIGN TABLE tbl () SERVER file_server OPTIONS (force_not_null '*');
+2023-07-26 04:18:11.754 UTC [1999906] ERROR:  invalid option "force_null"
+2023-07-26 04:18:11.754 UTC [1999906] HINT:  There are no valid options in this context.
+2023-07-26 04:18:11.754 UTC [1999906] STATEMENT:  ALTER FOREIGN DATA WRAPPER file_fdw OPTIONS (ADD force_null '*');
+2023-07-26 04:18:11.755 UTC [1999906] ERROR:  invalid option "force_null"
+2023-07-26 04:18:11.755 UTC [1999906] HINT:  There are no valid options in this context.
+2023-07-26 04:18:11.755 UTC [1999906] STATEMENT:  ALTER SERVER file_server OPTIONS (ADD force_null '*');
+2023-07-26 04:18:11.755 UTC [1999906] ERROR:  invalid option "force_null"
+2023-07-26 04:18:11.755 UTC [1999906] HINT:  There are no valid options in this context.
+2023-07-26 04:18:11.755 UTC [1999906] STATEMENT:  CREATE USER MAPPING FOR public SERVER file_server OPTIONS (force_null '*');
+2023-07-26 04:18:11.756 UTC [1999906] ERROR:  invalid option "force_null"
+2023-07-26 04:18:11.756 UTC [1999906] HINT:  Valid options in this context are: filename, program, format, header, delimiter, quote, escape, null, encoding
+2023-07-26 04:18:11.756 UTC [1999906] STATEMENT:  CREATE FOREIGN TABLE tbl () SERVER file_server OPTIONS (force_null '*');
+2023-07-26 04:18:11.762 UTC [1999906] ERROR:  invalid input syntax for type real: "aaa"
+2023-07-26 04:18:11.762 UTC [1999906] CONTEXT:  COPY agg_bad, line 3, column b: "aaa"
+2023-07-26 04:18:11.762 UTC [1999906] STATEMENT:  SELECT * FROM agg_bad;
+2023-07-26 04:18:11.767 UTC [1999906] ERROR:  cannot insert into foreign table "agg_csv"
+2023-07-26 04:18:11.767 UTC [1999906] STATEMENT:  INSERT INTO agg_csv VALUES(1,2.0);
+2023-07-26 04:18:11.768 UTC [1999906] ERROR:  cannot update foreign table "agg_csv"
+2023-07-26 04:18:11.768 UTC [1999906] STATEMENT:  UPDATE agg_csv SET a = 1;
+2023-07-26 04:18:11.768 UTC [1999906] ERROR:  cannot delete from foreign table "agg_csv"
+2023-07-26 04:18:11.768 UTC [1999906] STATEMENT:  DELETE FROM agg_csv WHERE a = 100;
+2023-07-26 04:18:11.770 UTC [1999906] ERROR:  cannot insert into foreign table "agg_csv"
+2023-07-26 04:18:11.770 UTC [1999906] STATEMENT:  COPY agg_csv FROM STDIN;
+2023-07-26 04:18:11.786 UTC [1999906] ERROR:  cannot update foreign table "agg_csv"
+2023-07-26 04:18:11.786 UTC [1999906] STATEMENT:  UPDATE agg SET a = 1;
+2023-07-26 04:18:11.787 UTC [1999906] ERROR:  cannot delete from foreign table "agg_csv"
+2023-07-26 04:18:11.787 UTC [1999906] STATEMENT:  DELETE FROM agg WHERE a = 100;
+2023-07-26 04:18:11.824 UTC [1999906] ERROR:  cannot insert into foreign table "p1"
+2023-07-26 04:18:11.824 UTC [1999906] CONTEXT:  COPY pt, line 2: "1,qux"
+2023-07-26 04:18:11.824 UTC [1999906] STATEMENT:  COPY pt FROM '/home/abigalek/pgext-cli-python/postgresql-15.3/contrib/file_fdw/data/list2.bad' with (format 'csv', delimiter ',');
+2023-07-26 04:18:11.830 UTC [1999906] ERROR:  cannot insert into foreign table "p1"
+2023-07-26 04:18:11.830 UTC [1999906] STATEMENT:  INSERT INTO pt VALUES (1, 'xyzzy');
+2023-07-26 04:18:11.835 UTC [1999906] ERROR:  cannot insert into foreign table "p1"
+2023-07-26 04:18:11.835 UTC [1999906] STATEMENT:  UPDATE pt set a = 1 where a = 2;
+2023-07-26 04:18:11.858 UTC [1999906] ERROR:  permission denied for foreign table agg_text
+2023-07-26 04:18:11.858 UTC [1999906] STATEMENT:  SELECT * FROM agg_text ORDER BY a;
+2023-07-26 04:18:11.873 UTC [1999906] ERROR:  only superuser or a role with privileges of the pg_read_server_files role may specify the filename option of a file_fdw foreign table
+2023-07-26 04:18:11.873 UTC [1999906] STATEMENT:  ALTER FOREIGN TABLE agg_text OPTIONS (SET format 'text');
+2023-07-26 04:18:11.914 UTC [1999891] LOG:  checkpoint starting: immediate force wait
+2023-07-26 04:18:11.979 UTC [1999891] LOG:  checkpoint complete: wrote 18 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.019 s, sync=0.015 s, total=0.065 s; sync files=14, longest=0.008 s, average=0.002 s; distance=4200 kB, estimate=4200 kB
+2023-07-26 04:18:12.162 UTC [1999890] LOG:  received SIGHUP, reloading configuration files
+2023-07-26 04:18:12.164 UTC [1999890] LOG:  parameter "session_preload_libraries" changed to "pgextwlist"
+2023-07-26 04:18:12.164 UTC [1999890] LOG:  parameter "extwlist.extensions" changed to "citext,earthdistance,pg_trgm,pg_stat_statements,refint"
+2023-07-26 04:18:12.164 UTC [1999890] LOG:  parameter "extwlist.custom_path" changed to "/home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/test-scripts"
+2023-07-26 04:18:12.263 UTC [1999932] ERROR:  extension "plpgsql" already exists
+2023-07-26 04:18:12.263 UTC [1999932] STATEMENT:  CREATE EXTENSION plpgsql;
+2023-07-26 04:18:12.263 UTC [1999932] ERROR:  extension "hstore" does not exist
+2023-07-26 04:18:12.263 UTC [1999932] STATEMENT:  COMMENT ON EXTENSION hstore IS 'plpgsql comment';
+2023-07-26 04:18:12.264 UTC [1999932] ERROR:  permission denied to create extension "hstore"
+2023-07-26 04:18:12.264 UTC [1999932] HINT:  Must have CREATE privilege on current database to create this extension.
+2023-07-26 04:18:12.264 UTC [1999932] STATEMENT:  CREATE EXTENSION hstore;
+2023-07-26 04:18:12.264 UTC [1999932] ERROR:  extension "hstore" does not exist
+2023-07-26 04:18:12.264 UTC [1999932] STATEMENT:  COMMENT ON EXTENSION hstore IS 'hstore comment';
+2023-07-26 04:18:12.264 UTC [1999932] ERROR:  required extension "cube" is not installed
+2023-07-26 04:18:12.264 UTC [1999932] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-26 04:18:12.264 UTC [1999932] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-26 04:18:12.265 UTC [1999932] ERROR:  must be owner of extension plpgsql
+2023-07-26 04:18:12.265 UTC [1999932] STATEMENT:  DROP EXTENSION plpgsql;
+2023-07-26 04:18:12.293 UTC [1999940] ERROR:  cannot drop extension citext because other objects depend on it
+2023-07-26 04:18:12.293 UTC [1999940] DETAIL:  column t of table mere_table depends on type citext
+2023-07-26 04:18:12.293 UTC [1999940] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 04:18:12.293 UTC [1999940] STATEMENT:  DROP EXTENSION citext;

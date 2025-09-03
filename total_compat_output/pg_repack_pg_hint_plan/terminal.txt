@@ -1,0 +1,105 @@
+The files belonging to this database system will be owned by user "abigalek".
+This user must also own the server process.
+
+The database cluster will be initialized with locale "en_US.UTF-8".
+The default database encoding has accordingly been set to "UTF8".
+The default text search configuration will be set to "english".
+
+Data page checksums are disabled.
+
+creating directory pg-15-data ... ok
+creating subdirectories ... ok
+selecting dynamic shared memory implementation ... posix
+selecting default max_connections ... 100
+selecting default shared_buffers ... 128MB
+selecting default time zone ... Etc/UTC
+creating configuration files ... ok
+running bootstrap script ... ok
+performing post-bootstrap initialization ... ok
+syncing data to disk ... ok
+
+initdb: warning: enabling "trust" authentication for local connections
+initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+
+Success. You can now start the database server using:
+
+    pg-15-dist/bin/pg_ctl -D pg-15-data -l logfile start
+
+waiting for server to start.... done
+server started
+CREATE TABLESPACE
+(using postmaster on Unix socket, default port)
+============== dropping database "contrib_regression" ==============
+SET
+DROP DATABASE
+============== creating database "contrib_regression" ==============
+CREATE DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+============== installing pg_stat_statements          ==============
+CREATE EXTENSION
+============== installing pg_hint_plan                ==============
+CREATE EXTENSION
+============== running regression test queries        ==============
+test init-extension               ... ok           37 ms
+test repack-setup                 ... ok          543 ms
+test repack-run                   ... FAILED     1529 ms
+test error-on-invalid-idx         ... FAILED     1315 ms
+test after-schema                 ... ok           66 ms
+test repack-check                 ... ok         4081 ms
+test nosuper                      ... ok          250 ms
+test tablespace                   ... ok         1891 ms
+test get_order_by                 ... ok          964 ms
+
+======================
+ 2 of 9 tests failed. 
+======================
+
+The differences that caused some tests to fail can be viewed in the
+file "/home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/regression.diffs".  A copy of the test summary that you see
+above is saved in the file "/home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/regression.out".
+
+ERROR:  tablespace "testts" is not empty
+(using postmaster on Unix socket, default port)
+============== dropping database "contrib_regression" ==============
+SET
+DROP DATABASE
+============== creating database "contrib_regression" ==============
+CREATE DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+============== installing pg_repack                   ==============
+CREATE EXTENSION
+============== running regression test queries        ==============
+test init                         ... ok         2732 ms
+test base_plan                    ... ok           20 ms
+test pg_hint_plan                 ... ok         7591 ms
+test ut-init                      ... ok         1251 ms
+test ut-A                         ... ok          559 ms
+test ut-S                         ... ok          228 ms
+test ut-J                         ... ok          135 ms
+test ut-L                         ... ok           97 ms
+test ut-G                         ... ok           48 ms
+test ut-R                         ... ok         1055 ms
+test ut-fdw                       ... ok           47 ms
+test ut-W                         ... ok          114 ms
+test ut-T                         ... ok           23 ms
+test ut-fini                      ... ok           15 ms
+test hints_anywhere               ... ok            7 ms
+test plpgsql                      ... ok           53 ms
+test oldextversions               ... ok          127 ms
+
+======================
+ All 17 tests passed. 
+======================
+
+waiting for server to shut down.... done
+server stopped

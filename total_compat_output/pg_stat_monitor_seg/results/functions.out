@@ -1,0 +1,102 @@
+DROP ROLE IF EXISTS su;
+NOTICE:  role "su" does not exist, skipping
+CREATE USER su WITH SUPERUSER;
+SET ROLE su;
+CREATE EXTENSION pg_stat_monitor;
+CREATE USER u1;
+SELECT pg_stat_monitor_reset();
+ pg_stat_monitor_reset 
+-----------------------
+ 
+(1 row)
+
+SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+ routine_schema |       routine_name       | routine_type |  data_type   
+----------------+--------------------------+--------------+--------------
+ public         | decode_error_level       | FUNCTION     | text
+ public         | get_cmd_type             | FUNCTION     | text
+ public         | get_histogram_timings    | FUNCTION     | text
+ public         | gseg_consistent          | FUNCTION     | boolean
+ public         | gseg_penalty             | FUNCTION     | internal
+ public         | gseg_picksplit           | FUNCTION     | internal
+ public         | gseg_same                | FUNCTION     | internal
+ public         | gseg_union               | FUNCTION     | USER-DEFINED
+ public         | histogram                | FUNCTION     | record
+ public         | pg_stat_monitor_internal | FUNCTION     | record
+ public         | pg_stat_monitor_reset    | FUNCTION     | void
+ public         | pg_stat_monitor_version  | FUNCTION     | text
+ public         | pgsm_create_11_view      | FUNCTION     | integer
+ public         | pgsm_create_13_view      | FUNCTION     | integer
+ public         | pgsm_create_14_view      | FUNCTION     | integer
+ public         | pgsm_create_15_view      | FUNCTION     | integer
+ public         | pgsm_create_view         | FUNCTION     | integer
+ public         | range                    | FUNCTION     | ARRAY
+ public         | seg_center               | FUNCTION     | real
+ public         | seg_cmp                  | FUNCTION     | integer
+ public         | seg_contained            | FUNCTION     | boolean
+ public         | seg_contains             | FUNCTION     | boolean
+ public         | seg_different            | FUNCTION     | boolean
+ public         | seg_ge                   | FUNCTION     | boolean
+ public         | seg_gt                   | FUNCTION     | boolean
+ public         | seg_in                   | FUNCTION     | USER-DEFINED
+ public         | seg_inter                | FUNCTION     | USER-DEFINED
+ public         | seg_le                   | FUNCTION     | boolean
+ public         | seg_left                 | FUNCTION     | boolean
+ public         | seg_lower                | FUNCTION     | real
+ public         | seg_lt                   | FUNCTION     | boolean
+ public         | seg_out                  | FUNCTION     | cstring
+ public         | seg_over_left            | FUNCTION     | boolean
+ public         | seg_over_right           | FUNCTION     | boolean
+ public         | seg_overlap              | FUNCTION     | boolean
+ public         | seg_right                | FUNCTION     | boolean
+ public         | seg_same                 | FUNCTION     | boolean
+ public         | seg_size                 | FUNCTION     | real
+ public         | seg_union                | FUNCTION     | USER-DEFINED
+ public         | seg_upper                | FUNCTION     | real
+(40 rows)
+
+SET ROLE u1;
+SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+ routine_schema |       routine_name       | routine_type |  data_type   
+----------------+--------------------------+--------------+--------------
+ public         | decode_error_level       | FUNCTION     | text
+ public         | get_cmd_type             | FUNCTION     | text
+ public         | get_histogram_timings    | FUNCTION     | text
+ public         | gseg_consistent          | FUNCTION     | boolean
+ public         | gseg_penalty             | FUNCTION     | internal
+ public         | gseg_picksplit           | FUNCTION     | internal
+ public         | gseg_same                | FUNCTION     | internal
+ public         | gseg_union               | FUNCTION     | USER-DEFINED
+ public         | histogram                | FUNCTION     | record
+ public         | pg_stat_monitor_internal | FUNCTION     | record
+ public         | pg_stat_monitor_version  | FUNCTION     | text
+ public         | range                    | FUNCTION     | ARRAY
+ public         | seg_center               | FUNCTION     | real
+ public         | seg_cmp                  | FUNCTION     | integer
+ public         | seg_contained            | FUNCTION     | boolean
+ public         | seg_contains             | FUNCTION     | boolean
+ public         | seg_different            | FUNCTION     | boolean
+ public         | seg_ge                   | FUNCTION     | boolean
+ public         | seg_gt                   | FUNCTION     | boolean
+ public         | seg_in                   | FUNCTION     | USER-DEFINED
+ public         | seg_inter                | FUNCTION     | USER-DEFINED
+ public         | seg_le                   | FUNCTION     | boolean
+ public         | seg_left                 | FUNCTION     | boolean
+ public         | seg_lower                | FUNCTION     | real
+ public         | seg_lt                   | FUNCTION     | boolean
+ public         | seg_out                  | FUNCTION     | cstring
+ public         | seg_over_left            | FUNCTION     | boolean
+ public         | seg_over_right           | FUNCTION     | boolean
+ public         | seg_overlap              | FUNCTION     | boolean
+ public         | seg_right                | FUNCTION     | boolean
+ public         | seg_same                 | FUNCTION     | boolean
+ public         | seg_size                 | FUNCTION     | real
+ public         | seg_union                | FUNCTION     | USER-DEFINED
+ public         | seg_upper                | FUNCTION     | real
+(34 rows)
+
+SET ROLE su;
+DROP USER u1;
+DROP EXTENSION pg_stat_monitor;
+DROP USER su;
+ERROR:  current user cannot be dropped

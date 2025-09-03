@@ -1,0 +1,14 @@
+2023-07-27 03:19:26.478 UTC [2223726] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-27 03:19:26.479 UTC [2223726] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-27 03:19:26.485 UTC [2223726] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-27 03:19:26.495 UTC [2223729] LOG:  database system was shut down at 2023-07-27 03:19:26 UTC
+2023-07-27 03:19:26.504 UTC [2223726] LOG:  database system is ready to accept connections
+2023-07-27 03:19:26.723 UTC [2223745] ERROR:  ltree syntax error at character 1
+2023-07-27 03:19:26.723 UTC [2223745] CONTEXT:  while creating return value
+	PL/Python function "test2"
+2023-07-27 03:19:26.723 UTC [2223745] STATEMENT:  SELECT test2();
+2023-07-27 03:19:26.743 UTC [2223727] LOG:  checkpoint starting: immediate force wait
+2023-07-27 03:19:26.770 UTC [2223727] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.009 s, sync=0.006 s, total=0.028 s; sync files=7, longest=0.004 s, average=0.001 s; distance=4316 kB, estimate=4316 kB
+2023-07-27 03:19:26.875 UTC [2223761] ERROR:  required extension "ltree" is not installed
+2023-07-27 03:19:26.875 UTC [2223761] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-27 03:19:26.875 UTC [2223761] STATEMENT:  CREATE EXTENSION IF NOT EXISTS "ltree_plpython3u"

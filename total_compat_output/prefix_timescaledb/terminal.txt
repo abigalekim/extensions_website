@@ -1,0 +1,188 @@
+The files belonging to this database system will be owned by user "abigalek".
+This user must also own the server process.
+
+The database cluster will be initialized with locale "en_US.UTF-8".
+The default database encoding has accordingly been set to "UTF8".
+The default text search configuration will be set to "english".
+
+Data page checksums are disabled.
+
+creating directory pg-15-data ... ok
+creating subdirectories ... ok
+selecting dynamic shared memory implementation ... posix
+selecting default max_connections ... 100
+selecting default shared_buffers ... 128MB
+selecting default time zone ... Etc/UTC
+creating configuration files ... ok
+running bootstrap script ... ok
+performing post-bootstrap initialization ... ok
+syncing data to disk ... ok
+
+initdb: warning: enabling "trust" authentication for local connections
+initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+
+Success. You can now start the database server using:
+
+    pg-15-dist/bin/pg_ctl -D pg-15-data -l logfile start
+
+waiting for server to start.... done
+server started
+CREATE EXTENSION
+waiting for server to shut down.... done
+server stopped
+TESTS 
+IGNORES 
+SKIPS 
+(using postmaster on localhost, port 5432)
+============== dropping database "single"             ==============
+SET
+DROP DATABASE
+============== dropping role "super_user"             ==============
+SET
+DROP ROLE
+============== dropping role "default_perm_user"      ==============
+SET
+DROP ROLE
+============== dropping role "default_perm_user_2"    ==============
+SET
+DROP ROLE
+============== dropping role "cluster_super_user"     ==============
+SET
+DROP ROLE
+============== dropping role "test_role_1"            ==============
+SET
+DROP ROLE
+============== dropping role "test_role_2"            ==============
+SET
+DROP ROLE
+============== dropping role "test_role_3"            ==============
+SET
+DROP ROLE
+============== dropping role "test_role_4"            ==============
+SET
+DROP ROLE
+============== dropping role "test_role_read_only"    ==============
+SET
+DROP ROLE
+============== creating database "single"             ==============
+CREATE DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+============== creating role "super_user"             ==============
+CREATE ROLE
+GRANT
+============== creating role "default_perm_user"      ==============
+CREATE ROLE
+GRANT
+============== creating role "default_perm_user_2"    ==============
+CREATE ROLE
+GRANT
+============== creating role "cluster_super_user"     ==============
+CREATE ROLE
+GRANT
+============== creating role "test_role_1"            ==============
+CREATE ROLE
+GRANT
+============== creating role "test_role_2"            ==============
+CREATE ROLE
+GRANT
+============== creating role "test_role_3"            ==============
+CREATE ROLE
+GRANT
+============== creating role "test_role_4"            ==============
+CREATE ROLE
+GRANT
+============== creating role "test_role_read_only"    ==============
+CREATE ROLE
+GRANT
+============== running regression test queries        ==============
+test alter                        ... ok         1120 ms
+test alternate_users              ... ok          815 ms
+test chunk_utils                  ... ok          847 ms
+test index                        ... ok         1032 ms
+test pg_dump_unprivileged         ... ok          772 ms
+test tablespace                   ... ok          712 ms
+parallel group (21 tests):  ddl_errors ddl_extra baserel_cache drop_hypertable chunk_adaptive agg_bookends-15 delete-15 create_chunks chunks broken_tables cluster-15 create_table cursor-15 custom_type ddl-15 drop_extension create_hypertable copy-15 constraint-15 drop_owned append-15
+     agg_bookends-15              ... ok         5267 ms
+     append-15                    ... ok         6556 ms
+     baserel_cache                ... ok         5261 ms
+     broken_tables                ... ok         5273 ms
+     chunk_adaptive               ... ok         5264 ms
+     chunks                       ... ok         5273 ms
+     cluster-15                   ... ok         5273 ms
+     constraint-15                ... ok         5344 ms
+     copy-15                      ... ok         5288 ms
+     create_chunks                ... ok         5270 ms
+     create_hypertable            ... ok         5286 ms
+     create_table                 ... ok         5276 ms
+     cursor-15                    ... ok         5276 ms
+     custom_type                  ... ok         5278 ms
+     ddl-15                       ... ok         5280 ms
+     ddl_errors                   ... ok         5257 ms
+     ddl_extra                    ... ok         5258 ms
+     delete-15                    ... ok         5265 ms
+     drop_extension               ... FAILED     5279 ms
+     drop_hypertable              ... ok         5259 ms
+     drop_owned                   ... ok         5378 ms
+parallel group (21 tests):  partitioning hash insert_returning insert_single histogram_test information_views grant_hypertable license drop_rename_hypertable merge partition lateral null_exclusion generated_as_identity dump_meta parallel-15 extension_scripts drop_schema misc insert-15 insert_many
+     drop_rename_hypertable       ... ok         6290 ms
+     drop_schema                  ... ok         6320 ms
+     dump_meta                    ... ok         6293 ms
+     extension_scripts            ... ok         6304 ms
+     generated_as_identity        ... ok         6293 ms
+     grant_hypertable             ... ok         6287 ms
+     hash                         ... ok         6276 ms
+     histogram_test               ... ok         6286 ms
+     information_views            ... ok         6287 ms
+     insert-15                    ... ok         6474 ms
+     insert_many                  ... ok         7591 ms
+     insert_returning             ... ok         6285 ms
+     insert_single                ... ok         6285 ms
+     lateral                      ... ok         6292 ms
+     license                      ... ok         6288 ms
+     merge                        ... ok         6288 ms
+     misc                         ... ok         6324 ms
+     null_exclusion               ... ok         6292 ms
+     parallel-15                  ... ok         6296 ms
+     partition                    ... ok         6288 ms
+     partitioning                 ... ok         4893 ms
+parallel group (21 tests):  tableam timestamp plain triggers reloptions partitionwise-15 sql_query plan_hypertable_inline-15 sort_optimization update-15 upsert size_utils query-15 rowsecurity-15 plan_expand_hypertable-15 plan_ordered_append truncate trusted_extension relocate_extension plan_hashagg-15 pg_join
+     partitionwise-15             ... ok         7303 ms
+     pg_join                      ... ok         9851 ms
+     plain                        ... FAILED     7294 ms
+     plan_expand_hypertable-15    ... ok         7331 ms
+     plan_hashagg-15              ... ok         8991 ms
+     plan_hypertable_inline-15    ... ok         7309 ms
+     plan_ordered_append          ... ok         7430 ms
+     query-15                     ... ok         7325 ms
+     relocate_extension           ... ok         7971 ms
+     reloptions                   ... ok         7294 ms
+     rowsecurity-15               ... ok         7330 ms
+     size_utils                   ... ok         7315 ms
+     sort_optimization            ... ok         7308 ms
+     sql_query                    ... ok         7303 ms
+     tableam                      ... ok         6753 ms
+     timestamp                    ... ok         7291 ms
+     triggers                     ... ok         7293 ms
+     truncate                     ... ok         7732 ms
+     trusted_extension            ... ok         7733 ms
+     update-15                    ... ok         7308 ms
+     upsert                       ... ok         7312 ms
+parallel group (4 tests):  util version vacuum_parallel vacuum
+     util                         ... ok          672 ms
+     vacuum                       ... ok          681 ms
+     vacuum_parallel              ... ok          679 ms
+     version                      ... ok          678 ms
+
+=======================
+ 2 of 73 tests failed. 
+=======================
+
+The differences that caused some tests to fail can be viewed in the
+file "/home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/regression.diffs".  A copy of the test summary that you see
+above is saved in the file "/home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/regression.out".
+

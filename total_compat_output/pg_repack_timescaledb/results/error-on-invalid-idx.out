@@ -1,0 +1,46 @@
+--
+-- do repack
+--
+\! pg_repack --dbname=contrib_regression --table=tbl_cluster --error-on-invalid-index
+INFO: repacking table "public.tbl_cluster"
+\! pg_repack --dbname=contrib_regression --table=tbl_badindex --error-on-invalid-index
+INFO: repacking table "public.tbl_badindex"
+WARNING: Invalid index: CREATE UNIQUE INDEX idx_badindex_n ON public.tbl_badindex USING btree (n)
+\! pg_repack --dbname=contrib_regression --error-on-invalid-index
+INFO: repacking table "public.tbl_badindex"
+WARNING: Invalid index: CREATE UNIQUE INDEX idx_badindex_n ON public.tbl_badindex USING btree (n)
+INFO: repacking table "public.tbl_cluster"
+INFO: repacking table "public.tbl_gistkey"
+INFO: repacking table "public.tbl_idxopts"
+INFO: repacking table "public.tbl_only_pkey"
+INFO: repacking table "public.tbl_order"
+INFO: repacking table "public.tbl_storage_plain"
+INFO: repacking table "public.tbl_with_dropped_column"
+INFO: repacking table "public.tbl_with_dropped_toast"
+INFO: repacking table "public.tbl_with_mod_column_storage"
+INFO: repacking table "public.tbl_with_toast"
+INFO: repacking table "_timescaledb_catalog.chunk"
+INFO: repacking table "_timescaledb_catalog.chunk_constraint"
+INFO: repacking table "_timescaledb_catalog.chunk_copy_operation"
+INFO: repacking table "_timescaledb_catalog.chunk_data_node"
+INFO: repacking table "_timescaledb_catalog.chunk_index"
+INFO: repacking table "_timescaledb_catalog.compression_algorithm"
+INFO: repacking table "_timescaledb_catalog.compression_chunk_size"
+INFO: repacking table "_timescaledb_catalog.continuous_agg"
+INFO: repacking table "_timescaledb_catalog.continuous_agg_migrate_plan"
+INFO: repacking table "_timescaledb_catalog.continuous_agg_migrate_plan_step"
+INFO: repacking table "_timescaledb_catalog.continuous_aggs_bucket_function"
+INFO: repacking table "_timescaledb_catalog.continuous_aggs_invalidation_threshold"
+INFO: repacking table "_timescaledb_catalog.continuous_aggs_watermark"
+INFO: repacking table "_timescaledb_catalog.dimension"
+INFO: repacking table "_timescaledb_catalog.dimension_partition"
+INFO: repacking table "_timescaledb_catalog.dimension_slice"
+INFO: repacking table "_timescaledb_catalog.hypertable"
+INFO: repacking table "_timescaledb_catalog.hypertable_compression"
+INFO: repacking table "_timescaledb_catalog.hypertable_data_node"
+INFO: repacking table "_timescaledb_catalog.metadata"
+INFO: repacking table "_timescaledb_catalog.remote_txn"
+INFO: repacking table "_timescaledb_catalog.tablespace"
+INFO: repacking table "_timescaledb_config.bgw_job"
+INFO: repacking table "_timescaledb_internal.bgw_job_stat"
+INFO: repacking table "_timescaledb_internal.bgw_policy_chunk_stats"

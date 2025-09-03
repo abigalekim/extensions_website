@@ -1,0 +1,183 @@
+2023-07-21 21:59:58.831 UTC [1508770] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-21 21:59:58.831 UTC [1508770] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-21 21:59:58.841 UTC [1508770] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-21 21:59:58.850 UTC [1508773] LOG:  database system was shut down at 2023-07-21 21:59:58 UTC
+2023-07-21 21:59:58.857 UTC [1508770] LOG:  database system is ready to accept connections
+2023-07-21 21:59:59.076 UTC [1508771] LOG:  checkpoint starting: immediate force wait
+2023-07-21 21:59:59.110 UTC [1508771] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.012 s, sync=0.006 s, total=0.034 s; sync files=7, longest=0.004 s, average=0.001 s; distance=4204 kB, estimate=4204 kB
+2023-07-21 21:59:59.310 UTC [1508821] ERROR:  not a Python mapping
+2023-07-21 21:59:59.310 UTC [1508821] CONTEXT:  while creating return value
+	PL/Python function "test1bad"
+2023-07-21 21:59:59.310 UTC [1508821] STATEMENT:  SELECT test1bad();
+2023-07-21 21:59:59.318 UTC [1508821] ERROR:  value for domain hstore_foo violates check constraint "hstore_foo_check"
+2023-07-21 21:59:59.318 UTC [1508821] CONTEXT:  while creating return value
+	PL/Python function "test2dom"
+2023-07-21 21:59:59.318 UTC [1508821] STATEMENT:  SELECT test2dom('bar');
+2023-07-21 22:00:31.085 UTC [1508771] LOG:  checkpoint starting: immediate force wait
+2023-07-21 22:00:31.173 UTC [1508771] LOG:  checkpoint complete: wrote 755 buffers (4.6%); 0 WAL file(s) added, 0 removed, 9 recycled; write=0.018 s, sync=0.024 s, total=0.088 s; sync files=254, longest=0.006 s, average=0.001 s; distance=140969 kB, estimate=140969 kB
+2023-07-21 22:01:02.631 UTC [1508771] LOG:  checkpoint starting: immediate force wait
+2023-07-21 22:01:02.683 UTC [1508771] LOG:  checkpoint complete: wrote 11 buffers (0.1%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.008 s, sync=0.004 s, total=0.053 s; sync files=4, longest=0.003 s, average=0.001 s; distance=136766 kB, estimate=140548 kB
+2023-07-21 22:01:02.743 UTC [1508770] LOG:  received fast shutdown request
+2023-07-21 22:01:02.746 UTC [1508770] LOG:  aborting any active transactions
+2023-07-21 22:01:02.747 UTC [1508770] LOG:  background worker "logical replication launcher" (PID 1508776) exited with exit code 1
+2023-07-21 22:01:02.747 UTC [1508771] LOG:  shutting down
+2023-07-21 22:01:02.750 UTC [1508771] LOG:  checkpoint starting: shutdown immediate
+2023-07-21 22:01:02.769 UTC [1508771] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.007 s, sync=0.001 s, total=0.022 s; sync files=1, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=126493 kB
+2023-07-21 22:01:02.788 UTC [1508770] LOG:  database system is shut down
+2023-07-21 22:01:03.504 UTC [1508958] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-21 22:01:03.505 UTC [1508958] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-21 22:01:03.510 UTC [1508958] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-21 22:01:03.517 UTC [1508961] LOG:  database system was shut down at 2023-07-21 22:01:03 UTC
+2023-07-21 22:01:03.527 UTC [1508958] LOG:  database system is ready to accept connections
+2023-07-21 22:01:03.796 UTC [1508959] LOG:  checkpoint starting: immediate force wait
+2023-07-21 22:01:03.820 UTC [1508959] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.007 s, sync=0.005 s, total=0.025 s; sync files=7, longest=0.003 s, average=0.001 s; distance=4047 kB, estimate=4047 kB
+2023-07-21 22:01:03.954 UTC [1509002] ERROR:  could not convert value "(1+2j)" to jsonb
+2023-07-21 22:01:03.954 UTC [1509002] CONTEXT:  while creating return value
+	PL/Python function "testcomplexnumbers"
+2023-07-21 22:01:03.954 UTC [1509002] STATEMENT:  SELECT testComplexNumbers();
+2023-07-21 22:01:35.647 UTC [1508959] LOG:  checkpoint starting: immediate force wait
+2023-07-21 22:01:35.775 UTC [1508959] LOG:  checkpoint complete: wrote 548 buffers (3.3%); 0 WAL file(s) added, 0 removed, 9 recycled; write=0.020 s, sync=0.061 s, total=0.129 s; sync files=252, longest=0.007 s, average=0.001 s; distance=140871 kB, estimate=140871 kB
+2023-07-21 22:02:07.195 UTC [1508959] LOG:  checkpoint starting: immediate force wait
+2023-07-21 22:02:07.246 UTC [1508959] LOG:  checkpoint complete: wrote 10 buffers (0.1%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.007 s, sync=0.004 s, total=0.052 s; sync files=4, longest=0.003 s, average=0.001 s; distance=136525 kB, estimate=140436 kB
+2023-07-21 22:02:07.294 UTC [1508958] LOG:  received fast shutdown request
+2023-07-21 22:02:07.297 UTC [1508958] LOG:  aborting any active transactions
+2023-07-21 22:02:07.298 UTC [1508958] LOG:  background worker "logical replication launcher" (PID 1508964) exited with exit code 1
+2023-07-21 22:02:07.298 UTC [1508959] LOG:  shutting down
+2023-07-21 22:02:07.301 UTC [1508959] LOG:  checkpoint starting: shutdown immediate
+2023-07-21 22:02:07.317 UTC [1508959] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.003 s, sync=0.001 s, total=0.019 s; sync files=1, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=126393 kB
+2023-07-21 22:02:07.336 UTC [1508958] LOG:  database system is shut down
+2023-07-21 22:02:07.969 UTC [1509086] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-21 22:02:07.969 UTC [1509086] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-21 22:02:07.975 UTC [1509086] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-21 22:02:07.983 UTC [1509089] LOG:  database system was shut down at 2023-07-21 22:02:07 UTC
+2023-07-21 22:02:07.988 UTC [1509086] LOG:  database system is ready to accept connections
+2023-07-21 22:02:08.259 UTC [1509087] LOG:  checkpoint starting: immediate force wait
+2023-07-21 22:02:08.295 UTC [1509087] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.009 s, sync=0.005 s, total=0.036 s; sync files=7, longest=0.003 s, average=0.001 s; distance=4352 kB, estimate=4352 kB
+2023-07-21 22:02:08.429 UTC [1509136] ERROR:  ltree syntax error at character 1
+2023-07-21 22:02:08.429 UTC [1509136] CONTEXT:  while creating return value
+	PL/Python function "test2"
+2023-07-21 22:02:08.429 UTC [1509136] STATEMENT:  SELECT test2();
+2023-07-21 22:02:40.095 UTC [1509087] LOG:  checkpoint starting: immediate force wait
+2023-07-21 22:02:40.185 UTC [1509087] LOG:  checkpoint complete: wrote 687 buffers (4.2%); 0 WAL file(s) added, 0 removed, 9 recycled; write=0.021 s, sync=0.031 s, total=0.091 s; sync files=252, longest=0.003 s, average=0.001 s; distance=141283 kB, estimate=141283 kB
+2023-07-21 22:03:11.560 UTC [1509087] LOG:  checkpoint starting: immediate force wait
+2023-07-21 22:03:11.616 UTC [1509087] LOG:  checkpoint complete: wrote 11 buffers (0.1%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.007 s, sync=0.004 s, total=0.057 s; sync files=4, longest=0.003 s, average=0.001 s; distance=137073 kB, estimate=140862 kB
+2023-07-21 22:03:11.654 UTC [1509086] LOG:  received fast shutdown request
+2023-07-21 22:03:11.658 UTC [1509086] LOG:  aborting any active transactions
+2023-07-21 22:03:11.660 UTC [1509086] LOG:  background worker "logical replication launcher" (PID 1509092) exited with exit code 1
+2023-07-21 22:03:11.660 UTC [1509087] LOG:  shutting down
+2023-07-21 22:03:11.663 UTC [1509087] LOG:  checkpoint starting: shutdown immediate
+2023-07-21 22:03:11.682 UTC [1509087] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.004 s, sync=0.001 s, total=0.022 s; sync files=1, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=126776 kB
+2023-07-21 22:03:11.722 UTC [1509086] LOG:  database system is shut down
+2023-07-21 22:03:12.398 UTC [1509266] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-21 22:03:12.398 UTC [1509266] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-21 22:03:12.405 UTC [1509266] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-21 22:03:12.414 UTC [1509269] LOG:  database system was shut down at 2023-07-21 22:03:12 UTC
+2023-07-21 22:03:12.421 UTC [1509266] LOG:  database system is ready to accept connections
+2023-07-21 22:03:12.597 UTC [1509291] ERROR:  cannot transform non-hash Perl value to hstore
+2023-07-21 22:03:12.597 UTC [1509291] CONTEXT:  PL/Perl function "test2"
+2023-07-21 22:03:12.597 UTC [1509291] STATEMENT:  SELECT test2();
+2023-07-21 22:03:12.599 UTC [1509291] ERROR:  cannot transform non-hash Perl value to hstore
+2023-07-21 22:03:12.599 UTC [1509291] CONTEXT:  PL/Perl function "test2"
+2023-07-21 22:03:12.599 UTC [1509291] STATEMENT:  SELECT test2();
+2023-07-21 22:03:12.610 UTC [1509291] ERROR:  cannot drop extension hstore because other objects depend on it
+2023-07-21 22:03:12.610 UTC [1509291] DETAIL:  extension hstore_plpython3u depends on extension hstore
+2023-07-21 22:03:12.610 UTC [1509291] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-21 22:03:12.610 UTC [1509291] STATEMENT:  DROP EXTENSION hstore;
+2023-07-21 22:03:12.698 UTC [1509297] ERROR:  cannot drop extension hstore because other objects depend on it
+2023-07-21 22:03:12.698 UTC [1509297] DETAIL:  extension hstore_plpython3u depends on extension hstore
+2023-07-21 22:03:12.698 UTC [1509297] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-21 22:03:12.698 UTC [1509297] STATEMENT:  DROP EXTENSION hstore;
+2023-07-21 22:03:12.758 UTC [1509303] ERROR:  type "foo" does not exist
+2023-07-21 22:03:12.758 UTC [1509303] STATEMENT:  CREATE TRANSFORM FOR foo LANGUAGE plperl (FROM SQL WITH FUNCTION hstore_to_plperl(internal), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-21 22:03:12.759 UTC [1509303] ERROR:  language "foo" does not exist
+2023-07-21 22:03:12.759 UTC [1509303] STATEMENT:  CREATE TRANSFORM FOR hstore LANGUAGE foo (FROM SQL WITH FUNCTION hstore_to_plperl(internal), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-21 22:03:12.759 UTC [1509303] ERROR:  return data type of FROM SQL function must be internal
+2023-07-21 22:03:12.759 UTC [1509303] STATEMENT:  CREATE TRANSFORM FOR hstore LANGUAGE plperl (FROM SQL WITH FUNCTION hstore_out(hstore), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-21 22:03:12.759 UTC [1509303] ERROR:  first argument of transform function must be type internal
+2023-07-21 22:03:12.759 UTC [1509303] STATEMENT:  CREATE TRANSFORM FOR hstore LANGUAGE plperl (FROM SQL WITH FUNCTION internal_in(cstring), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-21 22:03:12.760 UTC [1509303] ERROR:  transform for type hstore language "plperl" already exists
+2023-07-21 22:03:12.760 UTC [1509303] STATEMENT:  CREATE TRANSFORM FOR hstore LANGUAGE plperl (FROM SQL WITH FUNCTION hstore_to_plperl(internal), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-21 22:03:12.766 UTC [1509303] ERROR:  type "foo" does not exist
+2023-07-21 22:03:12.766 UTC [1509303] STATEMENT:  DROP TRANSFORM FOR foo LANGUAGE plperl;
+2023-07-21 22:03:12.767 UTC [1509303] ERROR:  language "foo" does not exist
+2023-07-21 22:03:12.767 UTC [1509303] STATEMENT:  DROP TRANSFORM FOR hstore LANGUAGE foo;
+2023-07-21 22:03:12.834 UTC [1509267] LOG:  checkpoint starting: immediate force wait
+2023-07-21 22:03:12.869 UTC [1509267] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.012 s, sync=0.010 s, total=0.036 s; sync files=7, longest=0.008 s, average=0.002 s; distance=4474 kB, estimate=4474 kB
+2023-07-21 22:03:12.998 UTC [1509330] ERROR:  not a Python mapping
+2023-07-21 22:03:12.998 UTC [1509330] CONTEXT:  while creating return value
+	PL/Python function "test1bad"
+2023-07-21 22:03:12.998 UTC [1509330] STATEMENT:  SELECT test1bad();
+2023-07-21 22:03:13.011 UTC [1509330] ERROR:  value for domain hstore_foo violates check constraint "hstore_foo_check"
+2023-07-21 22:03:13.011 UTC [1509330] CONTEXT:  while creating return value
+	PL/Python function "test2dom"
+2023-07-21 22:03:13.011 UTC [1509330] STATEMENT:  SELECT test2dom('bar');
+2023-07-21 22:03:13.039 UTC [1509266] LOG:  received fast shutdown request
+2023-07-21 22:03:13.042 UTC [1509266] LOG:  aborting any active transactions
+2023-07-21 22:03:13.044 UTC [1509266] LOG:  background worker "logical replication launcher" (PID 1509272) exited with exit code 1
+2023-07-21 22:03:13.045 UTC [1509267] LOG:  shutting down
+2023-07-21 22:03:13.048 UTC [1509267] LOG:  checkpoint starting: shutdown immediate
+2023-07-21 22:03:13.123 UTC [1509267] LOG:  checkpoint complete: wrote 907 buffers (5.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.038 s, sync=0.025 s, total=0.079 s; sync files=254, longest=0.004 s, average=0.001 s; distance=4202 kB, estimate=4447 kB
+2023-07-21 22:03:13.141 UTC [1509266] LOG:  database system is shut down
+2023-07-21 22:03:13.868 UTC [1509361] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-21 22:03:13.868 UTC [1509361] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-21 22:03:13.874 UTC [1509361] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-21 22:03:13.881 UTC [1509364] LOG:  database system was shut down at 2023-07-21 22:03:13 UTC
+2023-07-21 22:03:13.886 UTC [1509361] LOG:  database system is ready to accept connections
+2023-07-21 22:03:14.103 UTC [1509383] ERROR:  cannot transform non-hash Perl value to hstore
+2023-07-21 22:03:14.103 UTC [1509383] CONTEXT:  PL/Perl function "test2"
+2023-07-21 22:03:14.103 UTC [1509383] STATEMENT:  SELECT test2();
+2023-07-21 22:03:14.105 UTC [1509383] ERROR:  cannot transform non-hash Perl value to hstore
+2023-07-21 22:03:14.105 UTC [1509383] CONTEXT:  PL/Perl function "test2"
+2023-07-21 22:03:14.105 UTC [1509383] STATEMENT:  SELECT test2();
+2023-07-21 22:03:14.288 UTC [1509395] ERROR:  type "foo" does not exist
+2023-07-21 22:03:14.288 UTC [1509395] STATEMENT:  CREATE TRANSFORM FOR foo LANGUAGE plperl (FROM SQL WITH FUNCTION hstore_to_plperl(internal), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-21 22:03:14.288 UTC [1509395] ERROR:  language "foo" does not exist
+2023-07-21 22:03:14.288 UTC [1509395] STATEMENT:  CREATE TRANSFORM FOR hstore LANGUAGE foo (FROM SQL WITH FUNCTION hstore_to_plperl(internal), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-21 22:03:14.289 UTC [1509395] ERROR:  return data type of FROM SQL function must be internal
+2023-07-21 22:03:14.289 UTC [1509395] STATEMENT:  CREATE TRANSFORM FOR hstore LANGUAGE plperl (FROM SQL WITH FUNCTION hstore_out(hstore), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-21 22:03:14.289 UTC [1509395] ERROR:  first argument of transform function must be type internal
+2023-07-21 22:03:14.289 UTC [1509395] STATEMENT:  CREATE TRANSFORM FOR hstore LANGUAGE plperl (FROM SQL WITH FUNCTION internal_in(cstring), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-21 22:03:14.290 UTC [1509395] ERROR:  transform for type hstore language "plperl" already exists
+2023-07-21 22:03:14.290 UTC [1509395] STATEMENT:  CREATE TRANSFORM FOR hstore LANGUAGE plperl (FROM SQL WITH FUNCTION hstore_to_plperl(internal), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-21 22:03:14.295 UTC [1509395] ERROR:  type "foo" does not exist
+2023-07-21 22:03:14.295 UTC [1509395] STATEMENT:  DROP TRANSFORM FOR foo LANGUAGE plperl;
+2023-07-21 22:03:14.295 UTC [1509395] ERROR:  language "foo" does not exist
+2023-07-21 22:03:14.295 UTC [1509395] STATEMENT:  DROP TRANSFORM FOR hstore LANGUAGE foo;
+2023-07-21 22:03:14.328 UTC [1509362] LOG:  checkpoint starting: immediate force wait
+2023-07-21 22:03:14.352 UTC [1509362] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.007 s, sync=0.005 s, total=0.024 s; sync files=7, longest=0.003 s, average=0.001 s; distance=4659 kB, estimate=4659 kB
+2023-07-21 22:03:14.537 UTC [1509420] ERROR:  could not convert value "(1+2j)" to jsonb
+2023-07-21 22:03:14.537 UTC [1509420] CONTEXT:  while creating return value
+	PL/Python function "testcomplexnumbers"
+2023-07-21 22:03:14.537 UTC [1509420] STATEMENT:  SELECT testComplexNumbers();
+2023-07-21 22:03:14.547 UTC [1509361] LOG:  received fast shutdown request
+2023-07-21 22:03:14.550 UTC [1509361] LOG:  aborting any active transactions
+2023-07-21 22:03:14.550 UTC [1509361] LOG:  background worker "logical replication launcher" (PID 1509367) exited with exit code 1
+2023-07-21 22:03:14.550 UTC [1509362] LOG:  shutting down
+2023-07-21 22:03:14.553 UTC [1509362] LOG:  checkpoint starting: shutdown immediate
+2023-07-21 22:03:14.624 UTC [1509362] LOG:  checkpoint complete: wrote 903 buffers (5.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.036 s, sync=0.025 s, total=0.074 s; sync files=252, longest=0.009 s, average=0.001 s; distance=4194 kB, estimate=4613 kB
+2023-07-21 22:03:14.631 UTC [1509361] LOG:  database system is shut down
+2023-07-21 22:03:15.236 UTC [1509451] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-21 22:03:15.237 UTC [1509451] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-21 22:03:15.242 UTC [1509451] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-21 22:03:15.250 UTC [1509454] LOG:  database system was shut down at 2023-07-21 22:03:15 UTC
+2023-07-21 22:03:15.255 UTC [1509451] LOG:  database system is ready to accept connections
+2023-07-21 22:03:15.463 UTC [1509476] ERROR:  cannot transform non-hash Perl value to hstore
+2023-07-21 22:03:15.463 UTC [1509476] CONTEXT:  PL/Perl function "test2"
+2023-07-21 22:03:15.463 UTC [1509476] STATEMENT:  SELECT test2();
+2023-07-21 22:03:15.466 UTC [1509476] ERROR:  cannot transform non-hash Perl value to hstore
+2023-07-21 22:03:15.466 UTC [1509476] CONTEXT:  PL/Perl function "test2"
+2023-07-21 22:03:15.466 UTC [1509476] STATEMENT:  SELECT test2();
+2023-07-21 22:03:15.620 UTC [1509488] ERROR:  type "foo" does not exist
+2023-07-21 22:03:15.620 UTC [1509488] STATEMENT:  CREATE TRANSFORM FOR foo LANGUAGE plperl (FROM SQL WITH FUNCTION hstore_to_plperl(internal), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-21 22:03:15.620 UTC [1509488] ERROR:  language "foo" does not exist
+2023-07-21 22:03:15.620 UTC [1509488] STATEMENT:  CREATE TRANSFORM FOR hstore LANGUAGE foo (FROM SQL WITH FUNCTION hstore_to_plperl(internal), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-21 22:03:15.621 UTC [1509488] ERROR:  return data type of FROM SQL function must be internal
+2023-07-21 22:03:15.621 UTC [1509488] STATEMENT:  CREATE TRANSFORM FOR hstore LANGUAGE plperl (FROM SQL WITH FUNCTION hstore_out(hstore), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-21 22:03:15.622 UTC [1509488] ERROR:  first argument of transform function must be type internal
+2023-07-21 22:03:15.622 UTC [1509488] STATEMENT:  CREATE TRANSFORM FOR hstore LANGUAGE plperl (FROM SQL WITH FUNCTION internal_in(cstring), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-21 22:03:15.624 UTC [1509488] ERROR:  transform for type hstore language "plperl" already exists
+2023-07-21 22:03:15.624 UTC [1509488] STATEMENT:  CREATE TRANSFORM FOR hstore LANGUAGE plperl (FROM SQL WITH FUNCTION hstore_to_plperl(internal), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-21 22:03:15.629 UTC [1509488] ERROR:  type "foo" does not exist
+2023-07-21 22:03:15.629 UTC [1509488] STATEMENT:  DROP TRANSFORM FOR foo LANGUAGE plperl;
+2023-07-21 22:03:15.629 UTC [1509488] ERROR:  language "foo" does not exist
+2023-07-21 22:03:15.629 UTC [1509488] STATEMENT:  DROP TRANSFORM FOR hstore LANGUAGE foo;

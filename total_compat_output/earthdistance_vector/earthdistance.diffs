@@ -1,0 +1,289 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out	2023-07-26 03:18:49.976143080 +0000
+@@ -964,11 +964,12 @@
+ -- list what's installed
+ \dT
+                                               List of data types
+- Schema | Name  |                                         Description                                         
+---------+-------+---------------------------------------------------------------------------------------------
+- public | cube  | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
+- public | earth | 
+-(2 rows)
++ Schema |  Name  |                                         Description                                         
++--------+--------+---------------------------------------------------------------------------------------------
++ public | cube   | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
++ public | earth  | 
++ public | vector | 
++(3 rows)
+ 
+ drop extension cube;  -- fail, earthdistance requires it
+ ERROR:  cannot drop extension cube because other objects depend on it
+@@ -980,11 +981,12 @@
+ HINT:  You can drop extension cube instead.
+ -- list what's installed
+ \dT
+-                                             List of data types
+- Schema | Name |                                         Description                                         
+---------+------+---------------------------------------------------------------------------------------------
+- public | cube | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
+-(1 row)
++                                              List of data types
++ Schema |  Name  |                                         Description                                         
++--------+--------+---------------------------------------------------------------------------------------------
++ public | cube   | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
++ public | vector | 
++(2 rows)
+ 
+ create table foo (f1 cube, f2 int);
+ drop extension cube;  -- fail, foo.f1 requires it
+@@ -995,43 +997,141 @@
+ drop extension cube;
+ -- list what's installed
+ \dT
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++      List of data types
++ Schema |  Name  | Description 
++--------+--------+-------------
++ public | vector | 
++(1 row)
+ 
+ \df
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                              List of functions
++ Schema |             Name              |  Result data type  |          Argument data types           | Type 
++--------+-------------------------------+--------------------+----------------------------------------+------
++ public | array_to_vector               | vector             | double precision[], integer, boolean   | func
++ public | array_to_vector               | vector             | integer[], integer, boolean            | func
++ public | array_to_vector               | vector             | numeric[], integer, boolean            | func
++ public | array_to_vector               | vector             | real[], integer, boolean               | func
++ public | avg                           | vector             | vector                                 | agg
++ public | cosine_distance               | double precision   | vector, vector                         | func
++ public | inner_product                 | double precision   | vector, vector                         | func
++ public | ivfflathandler                | index_am_handler   | internal                               | func
++ public | l1_distance                   | double precision   | vector, vector                         | func
++ public | l2_distance                   | double precision   | vector, vector                         | func
++ public | sum                           | vector             | vector                                 | agg
++ public | vector                        | vector             | vector, integer, boolean               | func
++ public | vector_accum                  | double precision[] | double precision[], vector             | func
++ public | vector_add                    | vector             | vector, vector                         | func
++ public | vector_avg                    | vector             | double precision[]                     | func
++ public | vector_cmp                    | integer            | vector, vector                         | func
++ public | vector_combine                | double precision[] | double precision[], double precision[] | func
++ public | vector_dims                   | integer            | vector                                 | func
++ public | vector_eq                     | boolean            | vector, vector                         | func
++ public | vector_ge                     | boolean            | vector, vector                         | func
++ public | vector_gt                     | boolean            | vector, vector                         | func
++ public | vector_in                     | vector             | cstring, oid, integer                  | func
++ public | vector_l2_squared_distance    | double precision   | vector, vector                         | func
++ public | vector_le                     | boolean            | vector, vector                         | func
++ public | vector_lt                     | boolean            | vector, vector                         | func
++ public | vector_mul                    | vector             | vector, vector                         | func
++ public | vector_ne                     | boolean            | vector, vector                         | func
++ public | vector_negative_inner_product | double precision   | vector, vector                         | func
++ public | vector_norm                   | double precision   | vector                                 | func
++ public | vector_out                    | cstring            | vector                                 | func
++ public | vector_recv                   | vector             | internal, oid, integer                 | func
++ public | vector_send                   | bytea              | vector                                 | func
++ public | vector_spherical_distance     | double precision   | vector, vector                         | func
++ public | vector_sub                    | vector             | vector, vector                         | func
++ public | vector_to_float4              | real[]             | vector, integer, boolean               | func
++ public | vector_typmod_in              | integer            | cstring[]                              | func
++(36 rows)
+ 
+ \do
+-                             List of operators
+- Schema | Name | Left arg type | Right arg type | Result type | Description 
+---------+------+---------------+----------------+-------------+-------------
+-(0 rows)
++                                List of operators
++ Schema | Name | Left arg type | Right arg type |   Result type    | Description 
++--------+------+---------------+----------------+------------------+-------------
++ public | *    | vector        | vector         | vector           | 
++ public | +    | vector        | vector         | vector           | 
++ public | -    | vector        | vector         | vector           | 
++ public | <    | vector        | vector         | boolean          | 
++ public | <#>  | vector        | vector         | double precision | 
++ public | <->  | vector        | vector         | double precision | 
++ public | <=   | vector        | vector         | boolean          | 
++ public | <=>  | vector        | vector         | double precision | 
++ public | <>   | vector        | vector         | boolean          | 
++ public | =    | vector        | vector         | boolean          | 
++ public | >    | vector        | vector         | boolean          | 
++ public | >=   | vector        | vector         | boolean          | 
++(12 rows)
+ 
+ create schema c;
+ create extension cube with schema c;
+ -- list what's installed
+ \dT public.*
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++      List of data types
++ Schema |  Name  | Description 
++--------+--------+-------------
++ public | vector | 
++(1 row)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                              List of functions
++ Schema |             Name              |  Result data type  |          Argument data types           | Type 
++--------+-------------------------------+--------------------+----------------------------------------+------
++ public | array_to_vector               | vector             | double precision[], integer, boolean   | func
++ public | array_to_vector               | vector             | integer[], integer, boolean            | func
++ public | array_to_vector               | vector             | numeric[], integer, boolean            | func
++ public | array_to_vector               | vector             | real[], integer, boolean               | func
++ public | avg                           | vector             | vector                                 | agg
++ public | cosine_distance               | double precision   | vector, vector                         | func
++ public | inner_product                 | double precision   | vector, vector                         | func
++ public | ivfflathandler                | index_am_handler   | internal                               | func
++ public | l1_distance                   | double precision   | vector, vector                         | func
++ public | l2_distance                   | double precision   | vector, vector                         | func
++ public | sum                           | vector             | vector                                 | agg
++ public | vector                        | vector             | vector, integer, boolean               | func
++ public | vector_accum                  | double precision[] | double precision[], vector             | func
++ public | vector_add                    | vector             | vector, vector                         | func
++ public | vector_avg                    | vector             | double precision[]                     | func
++ public | vector_cmp                    | integer            | vector, vector                         | func
++ public | vector_combine                | double precision[] | double precision[], double precision[] | func
++ public | vector_dims                   | integer            | vector                                 | func
++ public | vector_eq                     | boolean            | vector, vector                         | func
++ public | vector_ge                     | boolean            | vector, vector                         | func
++ public | vector_gt                     | boolean            | vector, vector                         | func
++ public | vector_in                     | vector             | cstring, oid, integer                  | func
++ public | vector_l2_squared_distance    | double precision   | vector, vector                         | func
++ public | vector_le                     | boolean            | vector, vector                         | func
++ public | vector_lt                     | boolean            | vector, vector                         | func
++ public | vector_mul                    | vector             | vector, vector                         | func
++ public | vector_ne                     | boolean            | vector, vector                         | func
++ public | vector_negative_inner_product | double precision   | vector, vector                         | func
++ public | vector_norm                   | double precision   | vector                                 | func
++ public | vector_out                    | cstring            | vector                                 | func
++ public | vector_recv                   | vector             | internal, oid, integer                 | func
++ public | vector_send                   | bytea              | vector                                 | func
++ public | vector_spherical_distance     | double precision   | vector, vector                         | func
++ public | vector_sub                    | vector             | vector, vector                         | func
++ public | vector_to_float4              | real[]             | vector, integer, boolean               | func
++ public | vector_typmod_in              | integer            | cstring[]                              | func
++(36 rows)
+ 
+ \do public.*
+-                             List of operators
+- Schema | Name | Left arg type | Right arg type | Result type | Description 
+---------+------+---------------+----------------+-------------+-------------
+-(0 rows)
++                                List of operators
++ Schema | Name | Left arg type | Right arg type |   Result type    | Description 
++--------+------+---------------+----------------+------------------+-------------
++ public | *    | vector        | vector         | vector           | 
++ public | +    | vector        | vector         | vector           | 
++ public | -    | vector        | vector         | vector           | 
++ public | <    | vector        | vector         | boolean          | 
++ public | <#>  | vector        | vector         | double precision | 
++ public | <->  | vector        | vector         | double precision | 
++ public | <=   | vector        | vector         | boolean          | 
++ public | <=>  | vector        | vector         | double precision | 
++ public | <>   | vector        | vector         | boolean          | 
++ public | =    | vector        | vector         | boolean          | 
++ public | >    | vector        | vector         | boolean          | 
++ public | >=   | vector        | vector         | boolean          | 
++(12 rows)
+ 
+ \dT c.*
+                                               List of data types
+@@ -1060,22 +1160,71 @@
+ 
+ -- list what's installed
+ \dT public.*
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++      List of data types
++ Schema |  Name  | Description 
++--------+--------+-------------
++ public | vector | 
++(1 row)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                              List of functions
++ Schema |             Name              |  Result data type  |          Argument data types           | Type 
++--------+-------------------------------+--------------------+----------------------------------------+------
++ public | array_to_vector               | vector             | double precision[], integer, boolean   | func
++ public | array_to_vector               | vector             | integer[], integer, boolean            | func
++ public | array_to_vector               | vector             | numeric[], integer, boolean            | func
++ public | array_to_vector               | vector             | real[], integer, boolean               | func
++ public | avg                           | vector             | vector                                 | agg
++ public | cosine_distance               | double precision   | vector, vector                         | func
++ public | inner_product                 | double precision   | vector, vector                         | func
++ public | ivfflathandler                | index_am_handler   | internal                               | func
++ public | l1_distance                   | double precision   | vector, vector                         | func
++ public | l2_distance                   | double precision   | vector, vector                         | func
++ public | sum                           | vector             | vector                                 | agg
++ public | vector                        | vector             | vector, integer, boolean               | func
++ public | vector_accum                  | double precision[] | double precision[], vector             | func
++ public | vector_add                    | vector             | vector, vector                         | func
++ public | vector_avg                    | vector             | double precision[]                     | func
++ public | vector_cmp                    | integer            | vector, vector                         | func
++ public | vector_combine                | double precision[] | double precision[], double precision[] | func
++ public | vector_dims                   | integer            | vector                                 | func
++ public | vector_eq                     | boolean            | vector, vector                         | func
++ public | vector_ge                     | boolean            | vector, vector                         | func
++ public | vector_gt                     | boolean            | vector, vector                         | func
++ public | vector_in                     | vector             | cstring, oid, integer                  | func
++ public | vector_l2_squared_distance    | double precision   | vector, vector                         | func
++ public | vector_le                     | boolean            | vector, vector                         | func
++ public | vector_lt                     | boolean            | vector, vector                         | func
++ public | vector_mul                    | vector             | vector, vector                         | func
++ public | vector_ne                     | boolean            | vector, vector                         | func
++ public | vector_negative_inner_product | double precision   | vector, vector                         | func
++ public | vector_norm                   | double precision   | vector                                 | func
++ public | vector_out                    | cstring            | vector                                 | func
++ public | vector_recv                   | vector             | internal, oid, integer                 | func
++ public | vector_send                   | bytea              | vector                                 | func
++ public | vector_spherical_distance     | double precision   | vector, vector                         | func
++ public | vector_sub                    | vector             | vector, vector                         | func
++ public | vector_to_float4              | real[]             | vector, integer, boolean               | func
++ public | vector_typmod_in              | integer            | cstring[]                              | func
++(36 rows)
+ 
+ \do public.*
+-                             List of operators
+- Schema | Name | Left arg type | Right arg type | Result type | Description 
+---------+------+---------------+----------------+-------------+-------------
+-(0 rows)
++                                List of operators
++ Schema | Name | Left arg type | Right arg type |   Result type    | Description 
++--------+------+---------------+----------------+------------------+-------------
++ public | *    | vector        | vector         | vector           | 
++ public | +    | vector        | vector         | vector           | 
++ public | -    | vector        | vector         | vector           | 
++ public | <    | vector        | vector         | boolean          | 
++ public | <#>  | vector        | vector         | double precision | 
++ public | <->  | vector        | vector         | double precision | 
++ public | <=   | vector        | vector         | boolean          | 
++ public | <=>  | vector        | vector         | double precision | 
++ public | <>   | vector        | vector         | boolean          | 
++ public | =    | vector        | vector         | boolean          | 
++ public | >    | vector        | vector         | boolean          | 
++ public | >=   | vector        | vector         | boolean          | 
++(12 rows)
+ 
+ \dT c.*
+      List of data types

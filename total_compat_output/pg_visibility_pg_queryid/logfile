@@ -1,0 +1,84 @@
+2023-07-25 09:13:08.073 UTC [3165677] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 09:13:08.073 UTC [3165677] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 09:13:08.079 UTC [3165677] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 09:13:08.087 UTC [3165680] LOG:  database system was shut down at 2023-07-25 09:13:07 UTC
+2023-07-25 09:13:08.091 UTC [3165677] LOG:  database system is ready to accept connections
+2023-07-25 09:13:08.271 UTC [3165699] ERROR:  could not open relation with OID 16427
+2023-07-25 09:13:08.271 UTC [3165699] STATEMENT:  SELECT * FROM pg_visibility_map(16427);
+2023-07-25 09:13:08.272 UTC [3165699] ERROR:  could not open relation with OID 16427
+2023-07-25 09:13:08.272 UTC [3165699] STATEMENT:  SELECT * FROM pg_visibility_map(16427);
+2023-07-25 09:13:08.273 UTC [3165699] ERROR:  relation "test_partitioned" is of wrong relation kind
+2023-07-25 09:13:08.273 UTC [3165699] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-25 09:13:08.273 UTC [3165699] STATEMENT:  select pg_visibility('test_partitioned', 0);
+2023-07-25 09:13:08.274 UTC [3165699] ERROR:  relation "test_partitioned" is of wrong relation kind
+2023-07-25 09:13:08.274 UTC [3165699] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-25 09:13:08.274 UTC [3165699] STATEMENT:  select pg_visibility_map('test_partitioned');
+2023-07-25 09:13:08.274 UTC [3165699] ERROR:  relation "test_partitioned" is of wrong relation kind
+2023-07-25 09:13:08.274 UTC [3165699] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-25 09:13:08.274 UTC [3165699] STATEMENT:  select pg_visibility_map_summary('test_partitioned');
+2023-07-25 09:13:08.274 UTC [3165699] ERROR:  relation "test_partitioned" is of wrong relation kind
+2023-07-25 09:13:08.274 UTC [3165699] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-25 09:13:08.274 UTC [3165699] STATEMENT:  select pg_check_frozen('test_partitioned');
+2023-07-25 09:13:08.274 UTC [3165699] ERROR:  relation "test_partitioned" is of wrong relation kind
+2023-07-25 09:13:08.274 UTC [3165699] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-25 09:13:08.274 UTC [3165699] STATEMENT:  select pg_truncate_visibility_map('test_partitioned');
+2023-07-25 09:13:08.280 UTC [3165699] ERROR:  relation "test_index" is of wrong relation kind
+2023-07-25 09:13:08.280 UTC [3165699] DETAIL:  This operation is not supported for indexes.
+2023-07-25 09:13:08.280 UTC [3165699] STATEMENT:  select pg_visibility('test_index', 0);
+2023-07-25 09:13:08.280 UTC [3165699] ERROR:  relation "test_index" is of wrong relation kind
+2023-07-25 09:13:08.280 UTC [3165699] DETAIL:  This operation is not supported for indexes.
+2023-07-25 09:13:08.280 UTC [3165699] STATEMENT:  select pg_visibility_map('test_index');
+2023-07-25 09:13:08.280 UTC [3165699] ERROR:  relation "test_index" is of wrong relation kind
+2023-07-25 09:13:08.280 UTC [3165699] DETAIL:  This operation is not supported for indexes.
+2023-07-25 09:13:08.280 UTC [3165699] STATEMENT:  select pg_visibility_map_summary('test_index');
+2023-07-25 09:13:08.280 UTC [3165699] ERROR:  relation "test_index" is of wrong relation kind
+2023-07-25 09:13:08.280 UTC [3165699] DETAIL:  This operation is not supported for indexes.
+2023-07-25 09:13:08.280 UTC [3165699] STATEMENT:  select pg_check_frozen('test_index');
+2023-07-25 09:13:08.281 UTC [3165699] ERROR:  relation "test_index" is of wrong relation kind
+2023-07-25 09:13:08.281 UTC [3165699] DETAIL:  This operation is not supported for indexes.
+2023-07-25 09:13:08.281 UTC [3165699] STATEMENT:  select pg_truncate_visibility_map('test_index');
+2023-07-25 09:13:08.282 UTC [3165699] ERROR:  relation "test_view" is of wrong relation kind
+2023-07-25 09:13:08.282 UTC [3165699] DETAIL:  This operation is not supported for views.
+2023-07-25 09:13:08.282 UTC [3165699] STATEMENT:  select pg_visibility('test_view', 0);
+2023-07-25 09:13:08.282 UTC [3165699] ERROR:  relation "test_view" is of wrong relation kind
+2023-07-25 09:13:08.282 UTC [3165699] DETAIL:  This operation is not supported for views.
+2023-07-25 09:13:08.282 UTC [3165699] STATEMENT:  select pg_visibility_map('test_view');
+2023-07-25 09:13:08.282 UTC [3165699] ERROR:  relation "test_view" is of wrong relation kind
+2023-07-25 09:13:08.282 UTC [3165699] DETAIL:  This operation is not supported for views.
+2023-07-25 09:13:08.282 UTC [3165699] STATEMENT:  select pg_visibility_map_summary('test_view');
+2023-07-25 09:13:08.282 UTC [3165699] ERROR:  relation "test_view" is of wrong relation kind
+2023-07-25 09:13:08.282 UTC [3165699] DETAIL:  This operation is not supported for views.
+2023-07-25 09:13:08.282 UTC [3165699] STATEMENT:  select pg_check_frozen('test_view');
+2023-07-25 09:13:08.282 UTC [3165699] ERROR:  relation "test_view" is of wrong relation kind
+2023-07-25 09:13:08.282 UTC [3165699] DETAIL:  This operation is not supported for views.
+2023-07-25 09:13:08.282 UTC [3165699] STATEMENT:  select pg_truncate_visibility_map('test_view');
+2023-07-25 09:13:08.283 UTC [3165699] ERROR:  relation "test_sequence" is of wrong relation kind
+2023-07-25 09:13:08.283 UTC [3165699] DETAIL:  This operation is not supported for sequences.
+2023-07-25 09:13:08.283 UTC [3165699] STATEMENT:  select pg_visibility('test_sequence', 0);
+2023-07-25 09:13:08.283 UTC [3165699] ERROR:  relation "test_sequence" is of wrong relation kind
+2023-07-25 09:13:08.283 UTC [3165699] DETAIL:  This operation is not supported for sequences.
+2023-07-25 09:13:08.283 UTC [3165699] STATEMENT:  select pg_visibility_map('test_sequence');
+2023-07-25 09:13:08.284 UTC [3165699] ERROR:  relation "test_sequence" is of wrong relation kind
+2023-07-25 09:13:08.284 UTC [3165699] DETAIL:  This operation is not supported for sequences.
+2023-07-25 09:13:08.284 UTC [3165699] STATEMENT:  select pg_visibility_map_summary('test_sequence');
+2023-07-25 09:13:08.284 UTC [3165699] ERROR:  relation "test_sequence" is of wrong relation kind
+2023-07-25 09:13:08.284 UTC [3165699] DETAIL:  This operation is not supported for sequences.
+2023-07-25 09:13:08.284 UTC [3165699] STATEMENT:  select pg_check_frozen('test_sequence');
+2023-07-25 09:13:08.284 UTC [3165699] ERROR:  relation "test_sequence" is of wrong relation kind
+2023-07-25 09:13:08.284 UTC [3165699] DETAIL:  This operation is not supported for sequences.
+2023-07-25 09:13:08.284 UTC [3165699] STATEMENT:  select pg_truncate_visibility_map('test_sequence');
+2023-07-25 09:13:08.287 UTC [3165699] ERROR:  relation "test_foreign_table" is of wrong relation kind
+2023-07-25 09:13:08.287 UTC [3165699] DETAIL:  This operation is not supported for foreign tables.
+2023-07-25 09:13:08.287 UTC [3165699] STATEMENT:  select pg_visibility('test_foreign_table', 0);
+2023-07-25 09:13:08.287 UTC [3165699] ERROR:  relation "test_foreign_table" is of wrong relation kind
+2023-07-25 09:13:08.287 UTC [3165699] DETAIL:  This operation is not supported for foreign tables.
+2023-07-25 09:13:08.287 UTC [3165699] STATEMENT:  select pg_visibility_map('test_foreign_table');
+2023-07-25 09:13:08.287 UTC [3165699] ERROR:  relation "test_foreign_table" is of wrong relation kind
+2023-07-25 09:13:08.287 UTC [3165699] DETAIL:  This operation is not supported for foreign tables.
+2023-07-25 09:13:08.287 UTC [3165699] STATEMENT:  select pg_visibility_map_summary('test_foreign_table');
+2023-07-25 09:13:08.288 UTC [3165699] ERROR:  relation "test_foreign_table" is of wrong relation kind
+2023-07-25 09:13:08.288 UTC [3165699] DETAIL:  This operation is not supported for foreign tables.
+2023-07-25 09:13:08.288 UTC [3165699] STATEMENT:  select pg_check_frozen('test_foreign_table');
+2023-07-25 09:13:08.288 UTC [3165699] ERROR:  relation "test_foreign_table" is of wrong relation kind
+2023-07-25 09:13:08.288 UTC [3165699] DETAIL:  This operation is not supported for foreign tables.
+2023-07-25 09:13:08.288 UTC [3165699] STATEMENT:  select pg_truncate_visibility_map('test_foreign_table');

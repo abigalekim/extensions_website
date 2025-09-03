@@ -1,0 +1,32 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/dblink/expected/dblink.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/dblink/results/dblink.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/dblink/expected/dblink.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/dblink/results/dblink.out	2023-07-25 21:50:05.464945348 +0000
+@@ -999,6 +999,7 @@
+ 	col2b INT NOT NULL DEFAULT 113
+ );
+ INSERT INTO test_dropped VALUES(default);
++ERROR:  cache lookup failed for type 23
+ ALTER TABLE test_dropped
+ 	DROP COLUMN col1,
+ 	DROP COLUMN col2,
+@@ -1006,18 +1007,10 @@
+ 	ADD COLUMN col4 INT NOT NULL DEFAULT 42;
+ SELECT dblink_build_sql_insert('test_dropped', '1', 1,
+                                ARRAY['1'::TEXT], ARRAY['2'::TEXT]);
+-                          dblink_build_sql_insert                          
+----------------------------------------------------------------------------
+- INSERT INTO test_dropped(id,col2b,col3,col4) VALUES('2','113','foo','42')
+-(1 row)
+-
++ERROR:  source row not found
+ SELECT dblink_build_sql_update('test_dropped', '1', 1,
+                                ARRAY['1'::TEXT], ARRAY['2'::TEXT]);
+-                                  dblink_build_sql_update                                  
+--------------------------------------------------------------------------------------------
+- UPDATE test_dropped SET id = '2', col2b = '113', col3 = 'foo', col4 = '42' WHERE id = '2'
+-(1 row)
+-
++ERROR:  source row not found
+ SELECT dblink_build_sql_delete('test_dropped', '1', 1,
+                                ARRAY['2'::TEXT]);
+          dblink_build_sql_delete         

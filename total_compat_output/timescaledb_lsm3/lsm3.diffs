@@ -1,0 +1,36 @@
+diff -U3 /home/abigalek/pgext-cli/pgextworkdir/lsm3/expected/test.out /home/abigalek/pgext-cli/pgextworkdir/lsm3/results/test.out
+--- /home/abigalek/pgext-cli/pgextworkdir/lsm3/expected/test.out	2023-10-28 02:04:32.950468498 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/lsm3/results/test.out	2023-10-28 03:14:36.718518796 +0000
+@@ -151,27 +151,8 @@
+ 
+ truncate table t;
+ insert into t values (generate_series(1,1000000), 1);
+-select * from t where k = 1;
+- k | val 
+----+-----
+- 1 |   1
+-(1 row)
+-
+-reindex table t;
+-select * from t where k = 1;
+- k | val 
+----+-----
+- 1 |   1
+-(1 row)
+-
+-drop table t;
+-create table lsm(k bigint);
+-insert into lsm values (generate_series(1, 1000000));
+-create index concurrently on lsm using lsm3(k);
+-select * from lsm where k = 1;
+- k 
+----
+- 1
+-(1 row)
+-
+-drop table lsm;
++ERROR:  cache "(null)" is not initialized
++server closed the connection unexpectedly
++	This probably means the server terminated abnormally
++	before or while processing the request.
++connection to server was lost

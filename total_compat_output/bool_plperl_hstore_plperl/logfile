@@ -1,0 +1,31 @@
+2023-07-26 19:08:05.675 UTC [1153006] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 19:08:05.676 UTC [1153006] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 19:08:05.682 UTC [1153006] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 19:08:05.689 UTC [1153009] LOG:  database system was shut down at 2023-07-26 19:08:05 UTC
+2023-07-26 19:08:05.693 UTC [1153006] LOG:  database system is ready to accept connections
+2023-07-26 19:08:05.948 UTC [1153007] LOG:  checkpoint starting: immediate force wait
+2023-07-26 19:08:05.972 UTC [1153007] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.007 s, sync=0.005 s, total=0.024 s; sync files=7, longest=0.003 s, average=0.001 s; distance=4202 kB, estimate=4202 kB
+2023-07-26 19:08:06.090 UTC [1153059] ERROR:  cannot transform non-hash Perl value to hstore
+2023-07-26 19:08:06.090 UTC [1153059] CONTEXT:  PL/Perl function "test2"
+2023-07-26 19:08:06.090 UTC [1153059] STATEMENT:  SELECT test2();
+2023-07-26 19:08:06.091 UTC [1153059] ERROR:  cannot transform non-hash Perl value to hstore
+2023-07-26 19:08:06.091 UTC [1153059] CONTEXT:  PL/Perl function "test2"
+2023-07-26 19:08:06.091 UTC [1153059] STATEMENT:  SELECT test2();
+2023-07-26 19:08:06.098 UTC [1153059] ERROR:  cannot drop extension plperl because other objects depend on it
+2023-07-26 19:08:06.098 UTC [1153059] DETAIL:  extension bool_plperl depends on extension plperl
+2023-07-26 19:08:06.098 UTC [1153059] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 19:08:06.098 UTC [1153059] STATEMENT:  DROP EXTENSION plperl;
+2023-07-26 19:08:06.247 UTC [1153071] ERROR:  type "foo" does not exist
+2023-07-26 19:08:06.247 UTC [1153071] STATEMENT:  CREATE TRANSFORM FOR foo LANGUAGE plperl (FROM SQL WITH FUNCTION hstore_to_plperl(internal), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-26 19:08:06.247 UTC [1153071] ERROR:  language "foo" does not exist
+2023-07-26 19:08:06.247 UTC [1153071] STATEMENT:  CREATE TRANSFORM FOR hstore LANGUAGE foo (FROM SQL WITH FUNCTION hstore_to_plperl(internal), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-26 19:08:06.247 UTC [1153071] ERROR:  return data type of FROM SQL function must be internal
+2023-07-26 19:08:06.247 UTC [1153071] STATEMENT:  CREATE TRANSFORM FOR hstore LANGUAGE plperl (FROM SQL WITH FUNCTION hstore_out(hstore), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-26 19:08:06.247 UTC [1153071] ERROR:  first argument of transform function must be type internal
+2023-07-26 19:08:06.247 UTC [1153071] STATEMENT:  CREATE TRANSFORM FOR hstore LANGUAGE plperl (FROM SQL WITH FUNCTION internal_in(cstring), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-26 19:08:06.248 UTC [1153071] ERROR:  transform for type hstore language "plperl" already exists
+2023-07-26 19:08:06.248 UTC [1153071] STATEMENT:  CREATE TRANSFORM FOR hstore LANGUAGE plperl (FROM SQL WITH FUNCTION hstore_to_plperl(internal), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-26 19:08:06.252 UTC [1153071] ERROR:  type "foo" does not exist
+2023-07-26 19:08:06.252 UTC [1153071] STATEMENT:  DROP TRANSFORM FOR foo LANGUAGE plperl;
+2023-07-26 19:08:06.253 UTC [1153071] ERROR:  language "foo" does not exist
+2023-07-26 19:08:06.253 UTC [1153071] STATEMENT:  DROP TRANSFORM FOR hstore LANGUAGE foo;

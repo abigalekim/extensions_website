@@ -1,0 +1,163 @@
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/functions.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/functions.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/functions.out	2023-07-25 04:55:55.016790254 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/functions.out	2023-07-26 10:06:21.303057977 +0000
+@@ -11,12 +11,72 @@
+ (1 row)
+ 
+ SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+- routine_schema |       routine_name       | routine_type | data_type 
+-----------------+--------------------------+--------------+-----------
++ routine_schema |       routine_name       | routine_type |    data_type     
++----------------+--------------------------+--------------+------------------
+  public         | decode_error_level       | FUNCTION     | text
+  public         | get_cmd_type             | FUNCTION     | text
+  public         | get_histogram_timings    | FUNCTION     | text
+  public         | histogram                | FUNCTION     | record
++ public         | hll                      | FUNCTION     | USER-DEFINED
++ public         | hll_add                  | FUNCTION     | USER-DEFINED
++ public         | hll_add_agg              |              | USER-DEFINED
++ public         | hll_add_agg              |              | USER-DEFINED
++ public         | hll_add_agg              |              | USER-DEFINED
++ public         | hll_add_agg              |              | USER-DEFINED
++ public         | hll_add_agg              |              | USER-DEFINED
++ public         | hll_add_rev              | FUNCTION     | USER-DEFINED
++ public         | hll_add_trans0           | FUNCTION     | internal
++ public         | hll_add_trans1           | FUNCTION     | internal
++ public         | hll_add_trans2           | FUNCTION     | internal
++ public         | hll_add_trans3           | FUNCTION     | internal
++ public         | hll_add_trans4           | FUNCTION     | internal
++ public         | hll_card_unpacked        | FUNCTION     | double precision
++ public         | hll_cardinality          | FUNCTION     | double precision
++ public         | hll_ceil_card_unpacked   | FUNCTION     | bigint
++ public         | hll_deserialize          | FUNCTION     | internal
++ public         | hll_empty                | FUNCTION     | USER-DEFINED
++ public         | hll_empty                | FUNCTION     | USER-DEFINED
++ public         | hll_empty                | FUNCTION     | USER-DEFINED
++ public         | hll_empty                | FUNCTION     | USER-DEFINED
++ public         | hll_empty                | FUNCTION     | USER-DEFINED
++ public         | hll_eq                   | FUNCTION     | boolean
++ public         | hll_expthresh            | FUNCTION     | record
++ public         | hll_floor_card_unpacked  | FUNCTION     | bigint
++ public         | hll_hash_any             | FUNCTION     | USER-DEFINED
++ public         | hll_hash_bigint          | FUNCTION     | USER-DEFINED
++ public         | hll_hash_boolean         | FUNCTION     | USER-DEFINED
++ public         | hll_hash_bytea           | FUNCTION     | USER-DEFINED
++ public         | hll_hash_integer         | FUNCTION     | USER-DEFINED
++ public         | hll_hash_smallint        | FUNCTION     | USER-DEFINED
++ public         | hll_hash_text            | FUNCTION     | USER-DEFINED
++ public         | hll_hashval              | FUNCTION     | USER-DEFINED
++ public         | hll_hashval_eq           | FUNCTION     | boolean
++ public         | hll_hashval_in           | FUNCTION     | USER-DEFINED
++ public         | hll_hashval_int4         | FUNCTION     | USER-DEFINED
++ public         | hll_hashval_ne           | FUNCTION     | boolean
++ public         | hll_hashval_out          | FUNCTION     | cstring
++ public         | hll_in                   | FUNCTION     | USER-DEFINED
++ public         | hll_log2m                | FUNCTION     | integer
++ public         | hll_ne                   | FUNCTION     | boolean
++ public         | hll_out                  | FUNCTION     | cstring
++ public         | hll_pack                 | FUNCTION     | USER-DEFINED
++ public         | hll_print                | FUNCTION     | cstring
++ public         | hll_recv                 | FUNCTION     | USER-DEFINED
++ public         | hll_regwidth             | FUNCTION     | integer
++ public         | hll_schema_version       | FUNCTION     | integer
++ public         | hll_send                 | FUNCTION     | bytea
++ public         | hll_serialize            | FUNCTION     | bytea
++ public         | hll_set_defaults         | FUNCTION     | record
++ public         | hll_set_max_sparse       | FUNCTION     | integer
++ public         | hll_set_output_version   | FUNCTION     | integer
++ public         | hll_sparseon             | FUNCTION     | integer
++ public         | hll_type                 | FUNCTION     | integer
++ public         | hll_typmod_in            | FUNCTION     | integer
++ public         | hll_typmod_out           | FUNCTION     | cstring
++ public         | hll_union                | FUNCTION     | USER-DEFINED
++ public         | hll_union_agg            |              | USER-DEFINED
++ public         | hll_union_internal       | FUNCTION     | internal
++ public         | hll_union_trans          | FUNCTION     | internal
+  public         | pg_stat_monitor_internal | FUNCTION     | record
+  public         | pg_stat_monitor_reset    | FUNCTION     | void
+  public         | pg_stat_monitor_version  | FUNCTION     | text
+@@ -26,20 +86,80 @@
+  public         | pgsm_create_15_view      | FUNCTION     | integer
+  public         | pgsm_create_view         | FUNCTION     | integer
+  public         | range                    | FUNCTION     | ARRAY
+-(13 rows)
++(73 rows)
+ 
+ SET ROLE u1;
+ SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+- routine_schema |       routine_name       | routine_type | data_type 
+-----------------+--------------------------+--------------+-----------
++ routine_schema |       routine_name       | routine_type |    data_type     
++----------------+--------------------------+--------------+------------------
+  public         | decode_error_level       | FUNCTION     | text
+  public         | get_cmd_type             | FUNCTION     | text
+  public         | get_histogram_timings    | FUNCTION     | text
+  public         | histogram                | FUNCTION     | record
++ public         | hll                      | FUNCTION     | USER-DEFINED
++ public         | hll_add                  | FUNCTION     | USER-DEFINED
++ public         | hll_add_agg              |              | USER-DEFINED
++ public         | hll_add_agg              |              | USER-DEFINED
++ public         | hll_add_agg              |              | USER-DEFINED
++ public         | hll_add_agg              |              | USER-DEFINED
++ public         | hll_add_agg              |              | USER-DEFINED
++ public         | hll_add_rev              | FUNCTION     | USER-DEFINED
++ public         | hll_add_trans0           | FUNCTION     | internal
++ public         | hll_add_trans1           | FUNCTION     | internal
++ public         | hll_add_trans2           | FUNCTION     | internal
++ public         | hll_add_trans3           | FUNCTION     | internal
++ public         | hll_add_trans4           | FUNCTION     | internal
++ public         | hll_card_unpacked        | FUNCTION     | double precision
++ public         | hll_cardinality          | FUNCTION     | double precision
++ public         | hll_ceil_card_unpacked   | FUNCTION     | bigint
++ public         | hll_deserialize          | FUNCTION     | internal
++ public         | hll_empty                | FUNCTION     | USER-DEFINED
++ public         | hll_empty                | FUNCTION     | USER-DEFINED
++ public         | hll_empty                | FUNCTION     | USER-DEFINED
++ public         | hll_empty                | FUNCTION     | USER-DEFINED
++ public         | hll_empty                | FUNCTION     | USER-DEFINED
++ public         | hll_eq                   | FUNCTION     | boolean
++ public         | hll_expthresh            | FUNCTION     | record
++ public         | hll_floor_card_unpacked  | FUNCTION     | bigint
++ public         | hll_hash_any             | FUNCTION     | USER-DEFINED
++ public         | hll_hash_bigint          | FUNCTION     | USER-DEFINED
++ public         | hll_hash_boolean         | FUNCTION     | USER-DEFINED
++ public         | hll_hash_bytea           | FUNCTION     | USER-DEFINED
++ public         | hll_hash_integer         | FUNCTION     | USER-DEFINED
++ public         | hll_hash_smallint        | FUNCTION     | USER-DEFINED
++ public         | hll_hash_text            | FUNCTION     | USER-DEFINED
++ public         | hll_hashval              | FUNCTION     | USER-DEFINED
++ public         | hll_hashval_eq           | FUNCTION     | boolean
++ public         | hll_hashval_in           | FUNCTION     | USER-DEFINED
++ public         | hll_hashval_int4         | FUNCTION     | USER-DEFINED
++ public         | hll_hashval_ne           | FUNCTION     | boolean
++ public         | hll_hashval_out          | FUNCTION     | cstring
++ public         | hll_in                   | FUNCTION     | USER-DEFINED
++ public         | hll_log2m                | FUNCTION     | integer
++ public         | hll_ne                   | FUNCTION     | boolean
++ public         | hll_out                  | FUNCTION     | cstring
++ public         | hll_pack                 | FUNCTION     | USER-DEFINED
++ public         | hll_print                | FUNCTION     | cstring
++ public         | hll_recv                 | FUNCTION     | USER-DEFINED
++ public         | hll_regwidth             | FUNCTION     | integer
++ public         | hll_schema_version       | FUNCTION     | integer
++ public         | hll_send                 | FUNCTION     | bytea
++ public         | hll_serialize            | FUNCTION     | bytea
++ public         | hll_set_defaults         | FUNCTION     | record
++ public         | hll_set_max_sparse       | FUNCTION     | integer
++ public         | hll_set_output_version   | FUNCTION     | integer
++ public         | hll_sparseon             | FUNCTION     | integer
++ public         | hll_type                 | FUNCTION     | integer
++ public         | hll_typmod_in            | FUNCTION     | integer
++ public         | hll_typmod_out           | FUNCTION     | cstring
++ public         | hll_union                | FUNCTION     | USER-DEFINED
++ public         | hll_union_agg            |              | USER-DEFINED
++ public         | hll_union_internal       | FUNCTION     | internal
++ public         | hll_union_trans          | FUNCTION     | internal
+  public         | pg_stat_monitor_internal | FUNCTION     | record
+  public         | pg_stat_monitor_version  | FUNCTION     | text
+  public         | range                    | FUNCTION     | ARRAY
+-(7 rows)
++(67 rows)
+ 
+ SET ROLE su;
+ DROP USER u1;

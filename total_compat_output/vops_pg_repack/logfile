@@ -1,0 +1,15 @@
+2023-07-26 21:01:10.636 UTC [3592195] LOG:  Initialize VOPS extension
+2023-07-26 21:01:10.670 UTC [3592195] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 21:01:10.670 UTC [3592195] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 21:01:10.676 UTC [3592195] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 21:01:10.685 UTC [3592198] LOG:  database system was shut down at 2023-07-26 21:01:10 UTC
+2023-07-26 21:01:10.694 UTC [3592195] LOG:  database system is ready to accept connections
+2023-07-26 21:01:11.532 UTC [3592237] ERROR:  could not create unique index "idx_badindex_n"
+2023-07-26 21:01:11.532 UTC [3592237] DETAIL:  Key (n)=(10) is duplicated.
+2023-07-26 21:01:11.532 UTC [3592237] STATEMENT:  CREATE UNIQUE INDEX CONCURRENTLY idx_badindex_n ON tbl_badindex (n);
+2023-07-26 21:01:16.290 UTC [3592410] ERROR:  permission denied for schema repack at character 8
+2023-07-26 21:01:16.290 UTC [3592410] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 21:01:18.270 UTC [3592499] ERROR:  table name not found for OID 1
+2023-07-26 21:01:18.270 UTC [3592499] STATEMENT:  SELECT repack.get_order_by('issue321_idx'::regclass::oid, 1);
+2023-07-26 21:01:18.270 UTC [3592499] ERROR:  cache lookup failed for index 1
+2023-07-26 21:01:18.270 UTC [3592499] STATEMENT:  SELECT repack.get_order_by(1, 1);

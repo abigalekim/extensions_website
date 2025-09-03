@@ -1,0 +1,49 @@
+2023-07-26 20:23:56.791 UTC [2154553] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 20:23:56.791 UTC [2154553] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 20:23:56.798 UTC [2154553] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 20:23:56.805 UTC [2154556] LOG:  database system was shut down at 2023-07-26 20:23:56 UTC
+2023-07-26 20:23:56.809 UTC [2154553] LOG:  database system is ready to accept connections
+2023-07-26 20:23:56.899 UTC [2154582] ERROR:  function blah() does not exist at character 8
+2023-07-26 20:23:56.899 UTC [2154582] HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+2023-07-26 20:23:56.899 UTC [2154582] STATEMENT:  SELECT blah();
+2023-07-26 20:24:06.904 UTC [2154582] ERROR:  XXXXX
+2023-07-26 20:24:06.904 UTC [2154582] CONTEXT:  PL/pgSQL function inline_code_block line 3 at RAISE
+2023-07-26 20:24:06.904 UTC [2154582] STATEMENT:  DO LANGUAGE plpgsql $$
+	BEGIN
+	    RAISE SQLSTATE 'XXXXX';
+	END;
+	$$;
+2023-07-26 20:24:06.905 UTC [2154582] ERROR:  XXXXY
+2023-07-26 20:24:06.905 UTC [2154582] CONTEXT:  PL/pgSQL function inline_code_block line 3 at RAISE
+2023-07-26 20:24:06.905 UTC [2154582] STATEMENT:  DO LANGUAGE plpgsql $$
+	BEGIN
+	    RAISE SQLSTATE 'XXXXY';
+	END;
+	$$;
+2023-07-26 20:24:11.930 UTC [2154554] LOG:  checkpoint starting: immediate force wait
+2023-07-26 20:24:11.959 UTC [2154554] LOG:  checkpoint complete: wrote 18 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.009 s, sync=0.008 s, total=0.029 s; sync files=14, longest=0.003 s, average=0.001 s; distance=4071 kB, estimate=4071 kB
+2023-07-26 20:24:12.274 UTC [2154554] LOG:  checkpoint starting: immediate force wait
+2023-07-26 20:24:12.360 UTC [2154554] LOG:  checkpoint complete: wrote 1791 buffers (10.9%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.036 s, sync=0.036 s, total=0.087 s; sync files=496, longest=0.003 s, average=0.001 s; distance=12315 kB, estimate=12315 kB
+2023-07-26 20:24:12.369 UTC [2154554] LOG:  checkpoint starting: immediate force wait
+2023-07-26 20:24:12.391 UTC [2154554] LOG:  checkpoint complete: wrote 2 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.005 s, sync=0.004 s, total=0.023 s; sync files=2, longest=0.003 s, average=0.002 s; distance=1 kB, estimate=11084 kB
+2023-07-26 20:24:12.472 UTC [2154622] ERROR:  current user cannot be dropped
+2023-07-26 20:24:12.472 UTC [2154622] STATEMENT:  DROP USER su;
+2023-07-26 20:24:12.743 UTC [2154554] LOG:  checkpoint starting: immediate force wait
+2023-07-26 20:24:12.798 UTC [2154554] LOG:  checkpoint complete: wrote 1010 buffers (6.2%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.017 s, sync=0.026 s, total=0.056 s; sync files=296, longest=0.004 s, average=0.001 s; distance=8800 kB, estimate=10855 kB
+2023-07-26 20:24:12.841 UTC [2154554] LOG:  checkpoint starting: immediate force wait
+2023-07-26 20:24:12.864 UTC [2154554] LOG:  checkpoint complete: wrote 10 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.005 s, sync=0.005 s, total=0.023 s; sync files=7, longest=0.003 s, average=0.001 s; distance=42 kB, estimate=9774 kB
+2023-07-26 20:24:12.943 UTC [2154650] ERROR:  duplicate key value violates unique constraint "company_pkey"
+2023-07-26 20:24:12.943 UTC [2154650] DETAIL:  Key (id)=(1) already exists.
+2023-07-26 20:24:12.943 UTC [2154650] STATEMENT:  INSERT  INTO Company(ID, Name) VALUES (1, 'Percona');
+2023-07-26 20:24:13.089 UTC [2154670] ERROR:  division by zero
+2023-07-26 20:24:13.089 UTC [2154670] STATEMENT:  SELECT 1/0;
+2023-07-26 20:24:13.089 UTC [2154670] ERROR:  relation "unknown" does not exist at character 15
+2023-07-26 20:24:13.089 UTC [2154670] STATEMENT:  SELECT * FROM unknown;
+2023-07-26 20:24:13.089 UTC [2154670] ERROR:  syntax error at or near "ELECET" at character 1
+2023-07-26 20:24:13.089 UTC [2154670] STATEMENT:  ELECET * FROM unknown;
+2023-07-26 20:24:13.089 UTC [2154670] WARNING:  warning message
+2023-07-26 20:24:13.089 UTC [2154670] CONTEXT:  PL/pgSQL function inline_code_block line 3 at RAISE
+2023-07-26 20:24:13.185 UTC [2154684] ERROR:  role "su" already exists
+2023-07-26 20:24:13.185 UTC [2154684] STATEMENT:  CREATE USER su WITH SUPERUSER;
+2023-07-26 20:24:13.198 UTC [2154684] ERROR:  permission denied for function pg_stat_monitor_reset
+2023-07-26 20:24:13.198 UTC [2154684] STATEMENT:  SELECT pg_stat_monitor_reset();

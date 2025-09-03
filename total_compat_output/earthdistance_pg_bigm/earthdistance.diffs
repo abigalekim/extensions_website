@@ -1,0 +1,105 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out	2023-07-26 03:07:53.102747875 +0000
+@@ -1001,16 +1001,28 @@
+ (0 rows)
+ 
+ \df
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                            List of functions
++ Schema |           Name           | Result data type |                            Argument data types                            | Type 
++--------+--------------------------+------------------+---------------------------------------------------------------------------+------
++ public | bigm_similarity          | real             | text, text                                                                | func
++ public | bigm_similarity_op       | boolean          | text, text                                                                | func
++ public | bigmtextcmp              | integer          | text, text                                                                | func
++ public | gin_bigm_compare_partial | boolean          | text, text, smallint, internal                                            | func
++ public | gin_bigm_consistent      | boolean          | internal, smallint, text, integer, internal, internal, internal, internal | func
++ public | gin_bigm_triconsistent   | "char"           | internal, smallint, text, integer, internal, internal, internal           | func
++ public | gin_extract_query_bigm   | internal         | text, internal, smallint, internal, internal, internal, internal          | func
++ public | gin_extract_value_bigm   | internal         | text, internal                                                            | func
++ public | likequery                | text             | text                                                                      | func
++ public | pg_gin_pending_stats     | record           | index regclass, OUT pages integer, OUT tuples bigint                      | func
++ public | show_bigm                | text[]           | text                                                                      | func
++(11 rows)
+ 
+ \do
+                              List of operators
+  Schema | Name | Left arg type | Right arg type | Result type | Description 
+ --------+------+---------------+----------------+-------------+-------------
+-(0 rows)
++ public | =%   | text          | text           | boolean     | 
++(1 row)
+ 
+ create schema c;
+ create extension cube with schema c;
+@@ -1022,16 +1034,28 @@
+ (0 rows)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                            List of functions
++ Schema |           Name           | Result data type |                            Argument data types                            | Type 
++--------+--------------------------+------------------+---------------------------------------------------------------------------+------
++ public | bigm_similarity          | real             | text, text                                                                | func
++ public | bigm_similarity_op       | boolean          | text, text                                                                | func
++ public | bigmtextcmp              | integer          | text, text                                                                | func
++ public | gin_bigm_compare_partial | boolean          | text, text, smallint, internal                                            | func
++ public | gin_bigm_consistent      | boolean          | internal, smallint, text, integer, internal, internal, internal, internal | func
++ public | gin_bigm_triconsistent   | "char"           | internal, smallint, text, integer, internal, internal, internal           | func
++ public | gin_extract_query_bigm   | internal         | text, internal, smallint, internal, internal, internal, internal          | func
++ public | gin_extract_value_bigm   | internal         | text, internal                                                            | func
++ public | likequery                | text             | text                                                                      | func
++ public | pg_gin_pending_stats     | record           | index regclass, OUT pages integer, OUT tuples bigint                      | func
++ public | show_bigm                | text[]           | text                                                                      | func
++(11 rows)
+ 
+ \do public.*
+                              List of operators
+  Schema | Name | Left arg type | Right arg type | Result type | Description 
+ --------+------+---------------+----------------+-------------+-------------
+-(0 rows)
++ public | =%   | text          | text           | boolean     | 
++(1 row)
+ 
+ \dT c.*
+                                               List of data types
+@@ -1066,16 +1090,28 @@
+ (0 rows)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                            List of functions
++ Schema |           Name           | Result data type |                            Argument data types                            | Type 
++--------+--------------------------+------------------+---------------------------------------------------------------------------+------
++ public | bigm_similarity          | real             | text, text                                                                | func
++ public | bigm_similarity_op       | boolean          | text, text                                                                | func
++ public | bigmtextcmp              | integer          | text, text                                                                | func
++ public | gin_bigm_compare_partial | boolean          | text, text, smallint, internal                                            | func
++ public | gin_bigm_consistent      | boolean          | internal, smallint, text, integer, internal, internal, internal, internal | func
++ public | gin_bigm_triconsistent   | "char"           | internal, smallint, text, integer, internal, internal, internal           | func
++ public | gin_extract_query_bigm   | internal         | text, internal, smallint, internal, internal, internal, internal          | func
++ public | gin_extract_value_bigm   | internal         | text, internal                                                            | func
++ public | likequery                | text             | text                                                                      | func
++ public | pg_gin_pending_stats     | record           | index regclass, OUT pages integer, OUT tuples bigint                      | func
++ public | show_bigm                | text[]           | text                                                                      | func
++(11 rows)
+ 
+ \do public.*
+                              List of operators
+  Schema | Name | Left arg type | Right arg type | Result type | Description 
+ --------+------+---------------+----------------+-------------+-------------
+-(0 rows)
++ public | =%   | text          | text           | boolean     | 
++(1 row)
+ 
+ \dT c.*
+      List of data types

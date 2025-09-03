@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}PostgreSQL Extensions Analysis Registry{% endblock %}
+
+{% block content %}
+<h1>PostgreSQL Extensions Analysis Registry</h1>
+
+<div class="search-container">
+    <input type="text" id="searchInput" placeholder="Search extensions..." class="search-input">
+</div>
+
+<div class="extension-grid" id="extensionGrid">
+    {% for ext in extension_data %}
+    <div class="extension-card" data-extension="{{ ext.name|lower }}">
+        <h3><a href="{{ ext.name }}.html">{{ ext.name }}</a></h3>
+        {% if include_descriptions and ext.description %}
+        <p class="description">{{ ext.description }}</p>
+        {% endif %}
+        {% if ext.source_code %}
+        <p class="source-code"><a href="{{ ext.source_code }}" target="_blank">Source Code</a></p>
+        {% endif %}
+        {% if ext.has_compatibility_data %}
+        <div class="stats">
+            <p><strong>Failed Extensions:</strong> {{ ext.failed_extensions|length }}</p>
+        </div>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    const extensionCards = document.querySelectorAll('.extension-card');
+
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        
+        extensionCards.forEach(function(card) {
+            const extensionName = card.getAttribute('data-extension');
+            
+            if (extensionName.includes(searchTerm)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,18 @@
+-- predictability
+SET synchronous_commit = on;
+SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+ERROR:  logical decoding requires wal_level >= logical
+-- succeeds, textual plugin, textual consumer
+SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'force-binary', '0', 'skip-empty-xacts', '1');
+ERROR:  logical decoding requires wal_level >= logical
+-- fails, binary plugin, textual consumer
+SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'force-binary', '1', 'skip-empty-xacts', '1');
+ERROR:  logical decoding requires wal_level >= logical
+-- succeeds, textual plugin, binary consumer
+SELECT data FROM pg_logical_slot_get_binary_changes('regression_slot', NULL, NULL, 'force-binary', '0', 'skip-empty-xacts', '1');
+ERROR:  logical decoding requires wal_level >= logical
+-- succeeds, binary plugin, binary consumer
+SELECT data FROM pg_logical_slot_get_binary_changes('regression_slot', NULL, NULL, 'force-binary', '1', 'skip-empty-xacts', '1');
+ERROR:  logical decoding requires wal_level >= logical
+SELECT 'init' FROM pg_drop_replication_slot('regression_slot');
+ERROR:  replication slot "regression_slot" does not exist

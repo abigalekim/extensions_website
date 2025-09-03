@@ -1,0 +1,118 @@
+2023-07-26 19:02:00.255 UTC [3567378] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 19:02:00.255 UTC [3567378] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 19:02:00.268 UTC [3567378] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 19:02:00.282 UTC [3567381] LOG:  database system was shut down at 2023-07-26 19:01:59 UTC
+2023-07-26 19:02:00.292 UTC [3567378] LOG:  database system is ready to accept connections
+2023-07-26 19:02:00.570 UTC [3567407] ERROR:  array must not contain nulls
+2023-07-26 19:02:00.570 UTC [3567407] STATEMENT:  SELECT '{NULL}'::real[]::vector;
+2023-07-26 19:02:00.571 UTC [3567407] ERROR:  NaN not allowed in vector
+2023-07-26 19:02:00.571 UTC [3567407] STATEMENT:  SELECT '{NaN}'::real[]::vector;
+2023-07-26 19:02:00.571 UTC [3567407] ERROR:  infinite value not allowed in vector
+2023-07-26 19:02:00.571 UTC [3567407] STATEMENT:  SELECT '{Infinity}'::real[]::vector;
+2023-07-26 19:02:00.571 UTC [3567407] ERROR:  infinite value not allowed in vector
+2023-07-26 19:02:00.571 UTC [3567407] STATEMENT:  SELECT '{-Infinity}'::real[]::vector;
+2023-07-26 19:02:00.571 UTC [3567407] ERROR:  vector must have at least 1 dimension
+2023-07-26 19:02:00.571 UTC [3567407] STATEMENT:  SELECT '{}'::real[]::vector;
+2023-07-26 19:02:00.571 UTC [3567407] ERROR:  array must be 1-D
+2023-07-26 19:02:00.571 UTC [3567407] STATEMENT:  SELECT '{{1}}'::real[]::vector;
+2023-07-26 19:02:00.574 UTC [3567407] ERROR:  vector cannot have more than 16000 dimensions
+2023-07-26 19:02:00.574 UTC [3567407] STATEMENT:  SELECT array_agg(n)::vector FROM generate_series(1, 16001) n;
+2023-07-26 19:02:00.577 UTC [3567407] ERROR:  vector cannot have more than 16000 dimensions
+2023-07-26 19:02:00.577 UTC [3567407] STATEMENT:  SELECT array_to_vector(array_agg(n), 16001, false) FROM generate_series(1, 16001) n;
+2023-07-26 19:02:00.648 UTC [3567415] ERROR:  value out of range: overflow
+2023-07-26 19:02:00.648 UTC [3567415] STATEMENT:  SELECT '[3e38]'::vector + '[3e38]';
+2023-07-26 19:02:00.649 UTC [3567415] ERROR:  value out of range: overflow
+2023-07-26 19:02:00.649 UTC [3567415] STATEMENT:  SELECT '[-3e38]'::vector - '[3e38]';
+2023-07-26 19:02:00.650 UTC [3567415] ERROR:  value out of range: overflow
+2023-07-26 19:02:00.650 UTC [3567415] STATEMENT:  SELECT '[1e37]'::vector * '[1e37]';
+2023-07-26 19:02:00.650 UTC [3567415] ERROR:  value out of range: underflow
+2023-07-26 19:02:00.650 UTC [3567415] STATEMENT:  SELECT '[1e-37]'::vector * '[1e-37]';
+2023-07-26 19:02:00.654 UTC [3567415] ERROR:  different vector dimensions 2 and 1
+2023-07-26 19:02:00.654 UTC [3567415] STATEMENT:  SELECT l2_distance('[1,2]', '[3]');
+2023-07-26 19:02:00.655 UTC [3567415] ERROR:  different vector dimensions 2 and 1
+2023-07-26 19:02:00.655 UTC [3567415] STATEMENT:  SELECT inner_product('[1,2]', '[3]');
+2023-07-26 19:02:00.657 UTC [3567415] ERROR:  different vector dimensions 2 and 1
+2023-07-26 19:02:00.657 UTC [3567415] STATEMENT:  SELECT cosine_distance('[1,2]', '[3]');
+2023-07-26 19:02:00.658 UTC [3567415] ERROR:  different vector dimensions 2 and 1
+2023-07-26 19:02:00.658 UTC [3567415] STATEMENT:  SELECT l1_distance('[1,2]', '[3]');
+2023-07-26 19:02:00.661 UTC [3567415] ERROR:  expected 2 dimensions, not 1
+2023-07-26 19:02:00.661 UTC [3567415] STATEMENT:  SELECT avg(v) FROM unnest(ARRAY['[1,2]'::vector, '[3]']) v;
+2023-07-26 19:02:00.673 UTC [3567415] ERROR:  vector cannot have more than 16000 dimensions
+2023-07-26 19:02:00.673 UTC [3567415] STATEMENT:  SELECT vector_avg(array_agg(n)) FROM generate_series(1, 16002) n;
+2023-07-26 19:02:00.675 UTC [3567415] ERROR:  different vector dimensions 2 and 1
+2023-07-26 19:02:00.675 UTC [3567415] STATEMENT:  SELECT sum(v) FROM unnest(ARRAY['[1,2]'::vector, '[3]']) v;
+2023-07-26 19:02:00.676 UTC [3567415] ERROR:  value out of range: overflow
+2023-07-26 19:02:00.676 UTC [3567415] STATEMENT:  SELECT sum(v) FROM unnest(ARRAY['[3e38]'::vector, '[3e38]']) v;
+2023-07-26 19:02:00.688 UTC [3567419] ERROR:  invalid input syntax for type vector: "[hello,1]" at character 8
+2023-07-26 19:02:00.688 UTC [3567419] STATEMENT:  SELECT '[hello,1]'::vector;
+2023-07-26 19:02:00.688 UTC [3567419] ERROR:  NaN not allowed in vector at character 8
+2023-07-26 19:02:00.688 UTC [3567419] STATEMENT:  SELECT '[NaN,1]'::vector;
+2023-07-26 19:02:00.689 UTC [3567419] ERROR:  infinite value not allowed in vector at character 8
+2023-07-26 19:02:00.689 UTC [3567419] STATEMENT:  SELECT '[Infinity,1]'::vector;
+2023-07-26 19:02:00.689 UTC [3567419] ERROR:  infinite value not allowed in vector at character 8
+2023-07-26 19:02:00.689 UTC [3567419] STATEMENT:  SELECT '[-Infinity,1]'::vector;
+2023-07-26 19:02:00.689 UTC [3567419] ERROR:  infinite value not allowed in vector at character 8
+2023-07-26 19:02:00.689 UTC [3567419] STATEMENT:  SELECT '[4e38,1]'::vector;
+2023-07-26 19:02:00.689 UTC [3567419] ERROR:  malformed vector literal: "[1,2,3" at character 8
+2023-07-26 19:02:00.689 UTC [3567419] DETAIL:  Unexpected end of input.
+2023-07-26 19:02:00.689 UTC [3567419] STATEMENT:  SELECT '[1,2,3'::vector;
+2023-07-26 19:02:00.689 UTC [3567419] ERROR:  malformed vector literal: "[1,2,3]9" at character 8
+2023-07-26 19:02:00.689 UTC [3567419] DETAIL:  Junk after closing right brace.
+2023-07-26 19:02:00.689 UTC [3567419] STATEMENT:  SELECT '[1,2,3]9'::vector;
+2023-07-26 19:02:00.689 UTC [3567419] ERROR:  malformed vector literal: "1,2,3" at character 8
+2023-07-26 19:02:00.689 UTC [3567419] DETAIL:  Vector contents must start with "[".
+2023-07-26 19:02:00.689 UTC [3567419] STATEMENT:  SELECT '1,2,3'::vector;
+2023-07-26 19:02:00.689 UTC [3567419] ERROR:  malformed vector literal: "" at character 8
+2023-07-26 19:02:00.689 UTC [3567419] DETAIL:  Vector contents must start with "[".
+2023-07-26 19:02:00.689 UTC [3567419] STATEMENT:  SELECT ''::vector;
+2023-07-26 19:02:00.689 UTC [3567419] ERROR:  malformed vector literal: "[" at character 8
+2023-07-26 19:02:00.689 UTC [3567419] DETAIL:  Unexpected end of input.
+2023-07-26 19:02:00.689 UTC [3567419] STATEMENT:  SELECT '['::vector;
+2023-07-26 19:02:00.689 UTC [3567419] ERROR:  malformed vector literal: "[," at character 8
+2023-07-26 19:02:00.689 UTC [3567419] DETAIL:  Unexpected end of input.
+2023-07-26 19:02:00.689 UTC [3567419] STATEMENT:  SELECT '[,'::vector;
+2023-07-26 19:02:00.689 UTC [3567419] ERROR:  vector must have at least 1 dimension at character 8
+2023-07-26 19:02:00.689 UTC [3567419] STATEMENT:  SELECT '[]'::vector;
+2023-07-26 19:02:00.690 UTC [3567419] ERROR:  invalid input syntax for type vector: "[1,]" at character 8
+2023-07-26 19:02:00.690 UTC [3567419] STATEMENT:  SELECT '[1,]'::vector;
+2023-07-26 19:02:00.690 UTC [3567419] ERROR:  invalid input syntax for type vector: "[1a]" at character 8
+2023-07-26 19:02:00.690 UTC [3567419] STATEMENT:  SELECT '[1a]'::vector;
+2023-07-26 19:02:00.690 UTC [3567419] ERROR:  malformed vector literal: "[1,,3]" at character 8
+2023-07-26 19:02:00.690 UTC [3567419] STATEMENT:  SELECT '[1,,3]'::vector;
+2023-07-26 19:02:00.690 UTC [3567419] ERROR:  invalid input syntax for type vector: "[1, ,3]" at character 8
+2023-07-26 19:02:00.690 UTC [3567419] STATEMENT:  SELECT '[1, ,3]'::vector;
+2023-07-26 19:02:00.690 UTC [3567419] ERROR:  expected 2 dimensions, not 3
+2023-07-26 19:02:00.690 UTC [3567419] STATEMENT:  SELECT '[1,2,3]'::vector(2);
+2023-07-26 19:02:00.690 UTC [3567419] ERROR:  expected 2 dimensions, not 3
+2023-07-26 19:02:00.690 UTC [3567419] STATEMENT:  SELECT '{"[1,2,3]"}'::vector(2)[];
+2023-07-26 19:02:00.894 UTC [3567435] ERROR:  value 0 out of bounds for option "lists"
+2023-07-26 19:02:00.894 UTC [3567435] DETAIL:  Valid values are between "1" and "32768".
+2023-07-26 19:02:00.894 UTC [3567435] STATEMENT:  CREATE INDEX ON t USING ivfflat (val) WITH (lists = 0);
+2023-07-26 19:02:00.894 UTC [3567435] ERROR:  value 32769 out of bounds for option "lists"
+2023-07-26 19:02:00.894 UTC [3567435] DETAIL:  Valid values are between "1" and "32768".
+2023-07-26 19:02:00.894 UTC [3567435] STATEMENT:  CREATE INDEX ON t USING ivfflat (val) WITH (lists = 32769);
+2023-07-26 19:02:00.995 UTC [3567379] LOG:  checkpoint starting: immediate force wait
+2023-07-26 19:02:01.058 UTC [3567379] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.018 s, sync=0.015 s, total=0.064 s; sync files=7, longest=0.008 s, average=0.003 s; distance=4484 kB, estimate=4484 kB
+2023-07-26 19:02:01.202 UTC [3567454] ERROR:  required extension "cube" is not installed
+2023-07-26 19:02:01.202 UTC [3567454] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-26 19:02:01.202 UTC [3567454] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-26 19:02:01.262 UTC [3567454] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-26 19:02:01.262 UTC [3567454] DETAIL:  extension earthdistance depends on extension cube
+2023-07-26 19:02:01.262 UTC [3567454] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 19:02:01.262 UTC [3567454] STATEMENT:  drop extension cube;
+2023-07-26 19:02:01.266 UTC [3567454] ERROR:  cannot drop type cube because extension cube requires it
+2023-07-26 19:02:01.266 UTC [3567454] HINT:  You can drop extension cube instead.
+2023-07-26 19:02:01.266 UTC [3567454] STATEMENT:  drop type cube;
+2023-07-26 19:02:01.271 UTC [3567454] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-26 19:02:01.271 UTC [3567454] DETAIL:  column f1 of table foo depends on type cube
+2023-07-26 19:02:01.271 UTC [3567454] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 19:02:01.271 UTC [3567454] STATEMENT:  drop extension cube;
+2023-07-26 19:02:01.369 UTC [3567454] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-26 19:02:01.369 UTC [3567454] DETAIL:  column f1 of table foo depends on type c.cube
+2023-07-26 19:02:01.369 UTC [3567454] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 19:02:01.369 UTC [3567454] STATEMENT:  drop extension cube;
+2023-07-26 19:02:01.370 UTC [3567454] ERROR:  cannot drop schema c because other objects depend on it
+2023-07-26 19:02:01.370 UTC [3567454] DETAIL:  extension cube depends on schema c
+	column f1 of table foo depends on type c.cube
+2023-07-26 19:02:01.370 UTC [3567454] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 19:02:01.370 UTC [3567454] STATEMENT:  drop schema c;

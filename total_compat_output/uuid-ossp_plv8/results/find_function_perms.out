@@ -1,0 +1,15 @@
+-- test find_function permissions failure
+CREATE FUNCTION perm() RETURNS void AS $$ plv8.elog(NOTICE, 'nope'); $$ LANGUAGE plv8;
+ERROR:  language "plv8" does not exist
+CREATE ROLE someone_else;
+REVOKE EXECUTE ON FUNCTION perm() FROM public;
+ERROR:  function perm() does not exist
+SET ROLE TO someone_else;
+DO $$ const func = plv8.find_function('perm') $$ LANGUAGE plv8;
+ERROR:  language "plv8" does not exist
+DO $$ const func = plv8.find_function('perm()') $$ LANGUAGE plv8;
+ERROR:  language "plv8" does not exist
+RESET ROLE;
+DROP ROLE someone_else;
+DROP FUNCTION perm();
+ERROR:  function perm() does not exist

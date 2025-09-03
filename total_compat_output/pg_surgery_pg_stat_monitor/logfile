@@ -1,0 +1,40 @@
+2023-07-26 12:31:30.675 UTC [1084571] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 12:31:30.675 UTC [1084571] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 12:31:30.690 UTC [1084571] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 12:31:30.705 UTC [1084574] LOG:  database system was shut down at 2023-07-26 12:31:30 UTC
+2023-07-26 12:31:30.714 UTC [1084571] LOG:  database system is ready to accept connections
+2023-07-26 12:31:30.914 UTC [1084590] ERROR:  argument must be empty or one-dimensional array
+2023-07-26 12:31:30.914 UTC [1084590] STATEMENT:  select heap_force_kill('htab2'::regclass, ARRAY[['(0, 2)']]::tid[]);
+2023-07-26 12:31:30.914 UTC [1084590] ERROR:  array must not contain nulls
+2023-07-26 12:31:30.914 UTC [1084590] STATEMENT:  select heap_force_kill('htab2'::regclass, ARRAY[NULL]::tid[]);
+2023-07-26 12:31:30.919 UTC [1084590] ERROR:  cannot operate on relation "vw"
+2023-07-26 12:31:30.919 UTC [1084590] DETAIL:  This operation is not supported for views.
+2023-07-26 12:31:30.919 UTC [1084590] STATEMENT:  select heap_force_kill('vw'::regclass, ARRAY['(0, 1)']::tid[]);
+2023-07-26 12:31:30.920 UTC [1084590] ERROR:  cannot operate on relation "vw"
+2023-07-26 12:31:30.920 UTC [1084590] DETAIL:  This operation is not supported for views.
+2023-07-26 12:31:30.920 UTC [1084590] STATEMENT:  select heap_force_freeze('vw'::regclass, ARRAY['(0, 1)']::tid[]);
+2023-07-26 12:31:31.484 UTC [1084572] LOG:  checkpoint starting: immediate force wait
+2023-07-26 12:31:31.718 UTC [1084572] LOG:  checkpoint complete: wrote 2686 buffers (16.4%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.081 s, sync=0.115 s, total=0.234 s; sync files=743, longest=0.031 s, average=0.001 s; distance=16406 kB, estimate=16406 kB
+2023-07-26 12:31:31.736 UTC [1084572] LOG:  checkpoint starting: immediate force wait
+2023-07-26 12:31:31.796 UTC [1084572] LOG:  checkpoint complete: wrote 2 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.012 s, sync=0.011 s, total=0.061 s; sync files=2, longest=0.008 s, average=0.006 s; distance=1 kB, estimate=14765 kB
+2023-07-26 12:31:31.923 UTC [1084630] ERROR:  current user cannot be dropped
+2023-07-26 12:31:31.923 UTC [1084630] STATEMENT:  DROP USER su;
+2023-07-26 12:31:32.438 UTC [1084572] LOG:  checkpoint starting: immediate force wait
+2023-07-26 12:31:32.547 UTC [1084572] LOG:  checkpoint complete: wrote 1009 buffers (6.2%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.031 s, sync=0.045 s, total=0.109 s; sync files=296, longest=0.019 s, average=0.001 s; distance=8802 kB, estimate=14169 kB
+2023-07-26 12:31:32.595 UTC [1084572] LOG:  checkpoint starting: immediate force wait
+2023-07-26 12:31:32.649 UTC [1084572] LOG:  checkpoint complete: wrote 10 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.011 s, sync=0.011 s, total=0.055 s; sync files=7, longest=0.008 s, average=0.002 s; distance=45 kB, estimate=12756 kB
+2023-07-26 12:31:32.767 UTC [1084658] ERROR:  duplicate key value violates unique constraint "company_pkey"
+2023-07-26 12:31:32.767 UTC [1084658] DETAIL:  Key (id)=(1) already exists.
+2023-07-26 12:31:32.767 UTC [1084658] STATEMENT:  INSERT  INTO Company(ID, Name) VALUES (1, 'Percona');
+2023-07-26 12:31:33.016 UTC [1084678] ERROR:  division by zero
+2023-07-26 12:31:33.016 UTC [1084678] STATEMENT:  SELECT 1/0;
+2023-07-26 12:31:33.016 UTC [1084678] ERROR:  relation "unknown" does not exist at character 15
+2023-07-26 12:31:33.016 UTC [1084678] STATEMENT:  SELECT * FROM unknown;
+2023-07-26 12:31:33.016 UTC [1084678] ERROR:  syntax error at or near "ELECET" at character 1
+2023-07-26 12:31:33.016 UTC [1084678] STATEMENT:  ELECET * FROM unknown;
+2023-07-26 12:31:33.017 UTC [1084678] WARNING:  warning message
+2023-07-26 12:31:33.017 UTC [1084678] CONTEXT:  PL/pgSQL function inline_code_block line 3 at RAISE
+2023-07-26 12:31:33.172 UTC [1084692] ERROR:  role "su" already exists
+2023-07-26 12:31:33.172 UTC [1084692] STATEMENT:  CREATE USER su WITH SUPERUSER;
+2023-07-26 12:31:33.208 UTC [1084692] ERROR:  permission denied for function pg_stat_monitor_reset
+2023-07-26 12:31:33.208 UTC [1084692] STATEMENT:  SELECT pg_stat_monitor_reset();

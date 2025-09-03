@@ -1,0 +1,16 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out	2023-07-25 19:55:02.015159127 +0000
+@@ -8,10 +8,10 @@
+ -- it has a dependency on the cube extension.
+ --
+ CREATE EXTENSION earthdistance;  -- fail, must install cube first
+-ERROR:  required extension "cube" is not installed
+-HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+ CREATE EXTENSION cube;
++ERROR:  extension "cube" already exists
+ CREATE EXTENSION earthdistance;
++ERROR:  extension "earthdistance" already exists
+ --
+ -- The radius of the Earth we are using.
+ --

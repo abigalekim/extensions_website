@@ -1,0 +1,25 @@
+2023-07-26 08:17:13.978 UTC [1027848] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 08:17:13.978 UTC [1027848] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 08:17:13.993 UTC [1027848] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 08:17:14.008 UTC [1027851] LOG:  database system was shut down at 2023-07-26 08:17:13 UTC
+2023-07-26 08:17:14.017 UTC [1027848] LOG:  database system is ready to accept connections
+2023-07-26 08:17:14.018 UTC [1027854] LOG:  starting bgworker pgsentinel
+2023-07-26 08:17:14.018 UTC [1027854] FATAL:  database "contrib_regression" does not exist
+2023-07-26 08:17:14.025 UTC [1027848] LOG:  background worker "pgsentinel" (PID 1027854) exited with exit code 1
+2023-07-26 08:17:14.692 UTC [1027879] ERROR:  could not create unique index "idx_badindex_n"
+2023-07-26 08:17:14.692 UTC [1027879] DETAIL:  Key (n)=(10) is duplicated.
+2023-07-26 08:17:14.692 UTC [1027879] STATEMENT:  CREATE UNIQUE INDEX CONCURRENTLY idx_badindex_n ON tbl_badindex (n);
+2023-07-26 08:17:16.028 UTC [1027896] LOG:  starting bgworker pgsentinel
+2023-07-26 08:17:21.758 UTC [1028047] ERROR:  permission denied for schema repack at character 8
+2023-07-26 08:17:21.758 UTC [1028047] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 08:17:24.751 UTC [1028136] ERROR:  table name not found for OID 1
+2023-07-26 08:17:24.751 UTC [1028136] STATEMENT:  SELECT repack.get_order_by('issue321_idx'::regclass::oid, 1);
+2023-07-26 08:17:24.752 UTC [1028136] ERROR:  cache lookup failed for index 1
+2023-07-26 08:17:24.752 UTC [1028136] STATEMENT:  SELECT repack.get_order_by(1, 1);
+2023-07-26 08:17:24.775 UTC [1027849] LOG:  checkpoint starting: immediate force wait
+2023-07-26 08:17:25.019 UTC [1027849] LOG:  checkpoint complete: wrote 1050 buffers (6.4%); 1 WAL file(s) added, 0 removed, 0 recycled; write=0.058 s, sync=0.046 s, total=0.245 s; sync files=405, longest=0.008 s, average=0.001 s; distance=7867 kB, estimate=7867 kB
+2023-07-26 08:17:25.022 UTC [1028162] ERROR:  tablespace "testts" is not empty
+2023-07-26 08:17:25.022 UTC [1028162] STATEMENT:  DROP TABLESPACE testts
+2023-07-26 08:17:30.062 UTC [1028168] ERROR:  database "contrib_regression" is being accessed by other users
+2023-07-26 08:17:30.062 UTC [1028168] DETAIL:  There is 1 other session using the database.
+2023-07-26 08:17:30.062 UTC [1028168] STATEMENT:  DROP DATABASE IF EXISTS "contrib_regression"

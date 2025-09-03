@@ -1,0 +1,19 @@
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/expected/pgextwlist.out /home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/results/pgextwlist.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/expected/pgextwlist.out	2022-09-28 10:59:06.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/results/pgextwlist.out	2023-07-26 15:28:13.568019519 +0000
+@@ -8,12 +8,14 @@
+ SELECT extname FROM pg_extension ORDER BY 1;
+  extname 
+ ---------
++ pg_trgm
+  plpgsql
+-(1 row)
++(2 rows)
+ 
+ -- whitelisted extensions
+ CREATE EXTENSION citext;
+ CREATE EXTENSION pg_trgm;
++ERROR:  extension "pg_trgm" already exists
+ COMMENT ON EXTENSION pg_trgm IS 'pg_trgm comment';
+ SELECT extname FROM pg_extension ORDER BY 1;
+  extname 

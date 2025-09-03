@@ -1,0 +1,54 @@
+2023-07-25 22:12:08.805 UTC [3320892] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 22:12:08.805 UTC [3320892] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 22:12:08.818 UTC [3320892] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 22:12:08.834 UTC [3320895] LOG:  database system was shut down at 2023-07-25 22:12:08 UTC
+2023-07-25 22:12:08.844 UTC [3320892] LOG:  database system is ready to accept connections
+2023-07-25 22:12:09.093 UTC [3320912] WARNING:  GLOBAL is deprecated in temporary table creation at character 8
+2023-07-25 22:12:09.157 UTC [3320912] ERROR:  can not drop a GTT that is in use.
+2023-07-25 22:12:09.157 UTC [3320912] STATEMENT:  DROP TABLE t_glob_temptable1;
+2023-07-25 22:12:09.203 UTC [3320917] WARNING:  GLOBAL is deprecated in temporary table creation at character 8
+2023-07-25 22:12:09.296 UTC [3320922] WARNING:  GLOBAL is deprecated in temporary table creation at character 8
+2023-07-25 22:12:09.505 UTC [3320927] ERROR:  a temporary table has been created and is active, can not rename the GTT table in this session.
+2023-07-25 22:12:09.505 UTC [3320927] STATEMENT:  ALTER TABLE t_glob_temptable2 RENAME TO t_glob_temptable1;
+2023-07-25 22:12:09.722 UTC [3320934] ERROR:  a temporary table has been created and is active, can not add an index on the GTT table in this session.
+2023-07-25 22:12:09.722 UTC [3320934] STATEMENT:  CREATE INDEX ON t_glob_temptable2 (lbl);
+2023-07-25 22:12:09.769 UTC [3320939] WARNING:  GLOBAL is deprecated in temporary table creation at character 8
+2023-07-25 22:12:09.858 UTC [3320944] WARNING:  GLOBAL is deprecated in temporary table creation at character 8
+2023-07-25 22:12:10.054 UTC [3320950] ERROR:  relation "t_glob_temptable1" already exists
+2023-07-25 22:12:10.054 UTC [3320950] CONTEXT:  SQL statement "CREATE UNLOGGED TABLE pgtt_schema.t_glob_temptable1 (id int, lbl text)"
+	SQL statement "CREATE /*GLOBAL*/ TEMPORARY TABLE t_glob_temptable1(id int, lbl text) ON COMMIT PRESERVE ROWS"
+	PL/pgSQL function test_temp_table() line 6 at SQL statement
+2023-07-25 22:12:10.054 UTC [3320950] STATEMENT:  SELECT test_temp_table();
+2023-07-25 22:12:10.157 UTC [3320955] ERROR:  relation "t_glob_temptable1" does not exist at character 15
+2023-07-25 22:12:10.157 UTC [3320955] STATEMENT:  SELECT * FROM t_glob_temptable1;
+2023-07-25 22:12:10.234 UTC [3320960] ERROR:  attempt to create referential integrity constraint on global temporary table
+2023-07-25 22:12:10.234 UTC [3320960] STATEMENT:  CREATE /*GLOBAL*/ TEMPORARY TABLE t2 (c1 integer, FOREIGN KEY (c1) REFERENCES source (id));
+2023-07-25 22:12:10.246 UTC [3320960] ERROR:  attempt to create referential integrity constraint on global temporary table
+2023-07-25 22:12:10.246 UTC [3320960] STATEMENT:  ALTER TABLE t2 ADD FOREIGN KEY (c1) REFERENCES source (id);
+2023-07-25 22:12:10.276 UTC [3320964] WARNING:  GLOBAL is deprecated in temporary table creation at character 8
+2023-07-25 22:12:10.319 UTC [3320964] ERROR:  column "two" does not exist at character 42
+2023-07-25 22:12:10.319 UTC [3320964] STATEMENT:  INSERT INTO t_glob_temptable1 VALUES (2, two);
+2023-07-25 22:12:10.460 UTC [3320893] LOG:  checkpoint starting: immediate force wait
+2023-07-25 22:12:10.528 UTC [3320893] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.020 s, sync=0.016 s, total=0.069 s; sync files=7, longest=0.007 s, average=0.003 s; distance=4604 kB, estimate=4604 kB
+2023-07-25 22:12:10.736 UTC [3320892] LOG:  received SIGHUP, reloading configuration files
+2023-07-25 22:12:10.738 UTC [3320892] LOG:  parameter "session_preload_libraries" changed to "pgextwlist"
+2023-07-25 22:12:10.738 UTC [3320892] LOG:  parameter "extwlist.extensions" changed to "citext,earthdistance,pg_trgm,pg_stat_statements,refint"
+2023-07-25 22:12:10.738 UTC [3320892] LOG:  parameter "extwlist.custom_path" changed to "/home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/test-scripts"
+2023-07-25 22:12:10.840 UTC [3320995] ERROR:  extension "plpgsql" already exists
+2023-07-25 22:12:10.840 UTC [3320995] STATEMENT:  CREATE EXTENSION plpgsql;
+2023-07-25 22:12:10.840 UTC [3320995] ERROR:  extension "hstore" does not exist
+2023-07-25 22:12:10.840 UTC [3320995] STATEMENT:  COMMENT ON EXTENSION hstore IS 'plpgsql comment';
+2023-07-25 22:12:10.841 UTC [3320995] ERROR:  permission denied to create extension "hstore"
+2023-07-25 22:12:10.841 UTC [3320995] HINT:  Must have CREATE privilege on current database to create this extension.
+2023-07-25 22:12:10.841 UTC [3320995] STATEMENT:  CREATE EXTENSION hstore;
+2023-07-25 22:12:10.841 UTC [3320995] ERROR:  extension "hstore" does not exist
+2023-07-25 22:12:10.841 UTC [3320995] STATEMENT:  COMMENT ON EXTENSION hstore IS 'hstore comment';
+2023-07-25 22:12:10.841 UTC [3320995] ERROR:  required extension "cube" is not installed
+2023-07-25 22:12:10.841 UTC [3320995] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-25 22:12:10.841 UTC [3320995] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-25 22:12:10.841 UTC [3320995] ERROR:  must be owner of extension plpgsql
+2023-07-25 22:12:10.841 UTC [3320995] STATEMENT:  DROP EXTENSION plpgsql;
+2023-07-25 22:12:10.878 UTC [3321003] ERROR:  cannot drop extension citext because other objects depend on it
+2023-07-25 22:12:10.878 UTC [3321003] DETAIL:  column t of table mere_table depends on type citext
+2023-07-25 22:12:10.878 UTC [3321003] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 22:12:10.878 UTC [3321003] STATEMENT:  DROP EXTENSION citext;

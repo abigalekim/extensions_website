@@ -1,0 +1,120 @@
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/functions.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/functions.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/functions.out	2023-07-25 04:55:55.016790254 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/functions.out	2023-07-26 10:04:45.503227149 +0000
+@@ -11,9 +11,49 @@
+ (1 row)
+ 
+ SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+- routine_schema |       routine_name       | routine_type | data_type 
+-----------------+--------------------------+--------------+-----------
++ routine_schema |       routine_name       | routine_type |    data_type     
++----------------+--------------------------+--------------+------------------
++ public         | cube                     | FUNCTION     | USER-DEFINED
++ public         | cube                     | FUNCTION     | USER-DEFINED
++ public         | cube                     | FUNCTION     | USER-DEFINED
++ public         | cube                     | FUNCTION     | USER-DEFINED
++ public         | cube                     | FUNCTION     | USER-DEFINED
++ public         | cube                     | FUNCTION     | USER-DEFINED
++ public         | cube_cmp                 | FUNCTION     | integer
++ public         | cube_contained           | FUNCTION     | boolean
++ public         | cube_contains            | FUNCTION     | boolean
++ public         | cube_coord               | FUNCTION     | double precision
++ public         | cube_coord_llur          | FUNCTION     | double precision
++ public         | cube_dim                 | FUNCTION     | integer
++ public         | cube_distance            | FUNCTION     | double precision
++ public         | cube_enlarge             | FUNCTION     | USER-DEFINED
++ public         | cube_eq                  | FUNCTION     | boolean
++ public         | cube_ge                  | FUNCTION     | boolean
++ public         | cube_gt                  | FUNCTION     | boolean
++ public         | cube_in                  | FUNCTION     | USER-DEFINED
++ public         | cube_inter               | FUNCTION     | USER-DEFINED
++ public         | cube_is_point            | FUNCTION     | boolean
++ public         | cube_le                  | FUNCTION     | boolean
++ public         | cube_ll_coord            | FUNCTION     | double precision
++ public         | cube_lt                  | FUNCTION     | boolean
++ public         | cube_ne                  | FUNCTION     | boolean
++ public         | cube_out                 | FUNCTION     | cstring
++ public         | cube_overlap             | FUNCTION     | boolean
++ public         | cube_recv                | FUNCTION     | USER-DEFINED
++ public         | cube_send                | FUNCTION     | bytea
++ public         | cube_size                | FUNCTION     | double precision
++ public         | cube_subset              | FUNCTION     | USER-DEFINED
++ public         | cube_union               | FUNCTION     | USER-DEFINED
++ public         | cube_ur_coord            | FUNCTION     | double precision
+  public         | decode_error_level       | FUNCTION     | text
++ public         | distance_chebyshev       | FUNCTION     | double precision
++ public         | distance_taxicab         | FUNCTION     | double precision
++ public         | g_cube_consistent        | FUNCTION     | boolean
++ public         | g_cube_distance          | FUNCTION     | double precision
++ public         | g_cube_penalty           | FUNCTION     | internal
++ public         | g_cube_picksplit         | FUNCTION     | internal
++ public         | g_cube_same              | FUNCTION     | internal
++ public         | g_cube_union             | FUNCTION     | USER-DEFINED
+  public         | get_cmd_type             | FUNCTION     | text
+  public         | get_histogram_timings    | FUNCTION     | text
+  public         | histogram                | FUNCTION     | record
+@@ -26,20 +66,60 @@
+  public         | pgsm_create_15_view      | FUNCTION     | integer
+  public         | pgsm_create_view         | FUNCTION     | integer
+  public         | range                    | FUNCTION     | ARRAY
+-(13 rows)
++(53 rows)
+ 
+ SET ROLE u1;
+ SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+- routine_schema |       routine_name       | routine_type | data_type 
+-----------------+--------------------------+--------------+-----------
++ routine_schema |       routine_name       | routine_type |    data_type     
++----------------+--------------------------+--------------+------------------
++ public         | cube                     | FUNCTION     | USER-DEFINED
++ public         | cube                     | FUNCTION     | USER-DEFINED
++ public         | cube                     | FUNCTION     | USER-DEFINED
++ public         | cube                     | FUNCTION     | USER-DEFINED
++ public         | cube                     | FUNCTION     | USER-DEFINED
++ public         | cube                     | FUNCTION     | USER-DEFINED
++ public         | cube_cmp                 | FUNCTION     | integer
++ public         | cube_contained           | FUNCTION     | boolean
++ public         | cube_contains            | FUNCTION     | boolean
++ public         | cube_coord               | FUNCTION     | double precision
++ public         | cube_coord_llur          | FUNCTION     | double precision
++ public         | cube_dim                 | FUNCTION     | integer
++ public         | cube_distance            | FUNCTION     | double precision
++ public         | cube_enlarge             | FUNCTION     | USER-DEFINED
++ public         | cube_eq                  | FUNCTION     | boolean
++ public         | cube_ge                  | FUNCTION     | boolean
++ public         | cube_gt                  | FUNCTION     | boolean
++ public         | cube_in                  | FUNCTION     | USER-DEFINED
++ public         | cube_inter               | FUNCTION     | USER-DEFINED
++ public         | cube_is_point            | FUNCTION     | boolean
++ public         | cube_le                  | FUNCTION     | boolean
++ public         | cube_ll_coord            | FUNCTION     | double precision
++ public         | cube_lt                  | FUNCTION     | boolean
++ public         | cube_ne                  | FUNCTION     | boolean
++ public         | cube_out                 | FUNCTION     | cstring
++ public         | cube_overlap             | FUNCTION     | boolean
++ public         | cube_recv                | FUNCTION     | USER-DEFINED
++ public         | cube_send                | FUNCTION     | bytea
++ public         | cube_size                | FUNCTION     | double precision
++ public         | cube_subset              | FUNCTION     | USER-DEFINED
++ public         | cube_union               | FUNCTION     | USER-DEFINED
++ public         | cube_ur_coord            | FUNCTION     | double precision
+  public         | decode_error_level       | FUNCTION     | text
++ public         | distance_chebyshev       | FUNCTION     | double precision
++ public         | distance_taxicab         | FUNCTION     | double precision
++ public         | g_cube_consistent        | FUNCTION     | boolean
++ public         | g_cube_distance          | FUNCTION     | double precision
++ public         | g_cube_penalty           | FUNCTION     | internal
++ public         | g_cube_picksplit         | FUNCTION     | internal
++ public         | g_cube_same              | FUNCTION     | internal
++ public         | g_cube_union             | FUNCTION     | USER-DEFINED
+  public         | get_cmd_type             | FUNCTION     | text
+  public         | get_histogram_timings    | FUNCTION     | text
+  public         | histogram                | FUNCTION     | record
+  public         | pg_stat_monitor_internal | FUNCTION     | record
+  public         | pg_stat_monitor_version  | FUNCTION     | text
+  public         | range                    | FUNCTION     | ARRAY
+-(7 rows)
++(47 rows)
+ 
+ SET ROLE su;
+ DROP USER u1;

@@ -1,0 +1,48 @@
+2023-07-26 21:11:06.760 UTC [1171276] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 21:11:06.761 UTC [1171276] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 21:11:06.775 UTC [1171276] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 21:11:06.791 UTC [1171279] LOG:  database system was shut down at 2023-07-26 21:11:06 UTC
+2023-07-26 21:11:06.802 UTC [1171276] LOG:  database system is ready to accept connections
+2023-07-26 21:11:07.054 UTC [1171298] ERROR:  cannot transform non-hash Perl value to hstore
+2023-07-26 21:11:07.054 UTC [1171298] CONTEXT:  PL/Perl function "test2"
+2023-07-26 21:11:07.054 UTC [1171298] STATEMENT:  SELECT test2();
+2023-07-26 21:11:07.059 UTC [1171298] ERROR:  cannot transform non-hash Perl value to hstore
+2023-07-26 21:11:07.059 UTC [1171298] CONTEXT:  PL/Perl function "test2"
+2023-07-26 21:11:07.059 UTC [1171298] STATEMENT:  SELECT test2();
+2023-07-26 21:11:07.355 UTC [1171306] ERROR:  type "foo" does not exist
+2023-07-26 21:11:07.355 UTC [1171306] STATEMENT:  CREATE TRANSFORM FOR foo LANGUAGE plperl (FROM SQL WITH FUNCTION hstore_to_plperl(internal), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-26 21:11:07.355 UTC [1171306] ERROR:  language "foo" does not exist
+2023-07-26 21:11:07.355 UTC [1171306] STATEMENT:  CREATE TRANSFORM FOR hstore LANGUAGE foo (FROM SQL WITH FUNCTION hstore_to_plperl(internal), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-26 21:11:07.355 UTC [1171306] ERROR:  return data type of FROM SQL function must be internal
+2023-07-26 21:11:07.355 UTC [1171306] STATEMENT:  CREATE TRANSFORM FOR hstore LANGUAGE plperl (FROM SQL WITH FUNCTION hstore_out(hstore), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-26 21:11:07.355 UTC [1171306] ERROR:  first argument of transform function must be type internal
+2023-07-26 21:11:07.355 UTC [1171306] STATEMENT:  CREATE TRANSFORM FOR hstore LANGUAGE plperl (FROM SQL WITH FUNCTION internal_in(cstring), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-26 21:11:07.359 UTC [1171306] ERROR:  transform for type hstore language "plperl" already exists
+2023-07-26 21:11:07.359 UTC [1171306] STATEMENT:  CREATE TRANSFORM FOR hstore LANGUAGE plperl (FROM SQL WITH FUNCTION hstore_to_plperl(internal), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-26 21:11:07.375 UTC [1171306] ERROR:  type "foo" does not exist
+2023-07-26 21:11:07.375 UTC [1171306] STATEMENT:  DROP TRANSFORM FOR foo LANGUAGE plperl;
+2023-07-26 21:11:07.375 UTC [1171306] ERROR:  language "foo" does not exist
+2023-07-26 21:11:07.375 UTC [1171306] STATEMENT:  DROP TRANSFORM FOR hstore LANGUAGE foo;
+2023-07-26 21:11:07.613 UTC [1171327] ERROR:  required extension "cube" is not installed
+2023-07-26 21:11:07.613 UTC [1171327] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-26 21:11:07.613 UTC [1171327] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-26 21:11:07.677 UTC [1171327] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-26 21:11:07.677 UTC [1171327] DETAIL:  extension earthdistance depends on extension cube
+2023-07-26 21:11:07.677 UTC [1171327] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 21:11:07.677 UTC [1171327] STATEMENT:  drop extension cube;
+2023-07-26 21:11:07.680 UTC [1171327] ERROR:  cannot drop type cube because extension cube requires it
+2023-07-26 21:11:07.680 UTC [1171327] HINT:  You can drop extension cube instead.
+2023-07-26 21:11:07.680 UTC [1171327] STATEMENT:  drop type cube;
+2023-07-26 21:11:07.685 UTC [1171327] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-26 21:11:07.685 UTC [1171327] DETAIL:  column f1 of table foo depends on type cube
+2023-07-26 21:11:07.685 UTC [1171327] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 21:11:07.685 UTC [1171327] STATEMENT:  drop extension cube;
+2023-07-26 21:11:07.781 UTC [1171327] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-26 21:11:07.781 UTC [1171327] DETAIL:  column f1 of table foo depends on type c.cube
+2023-07-26 21:11:07.781 UTC [1171327] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 21:11:07.781 UTC [1171327] STATEMENT:  drop extension cube;
+2023-07-26 21:11:07.781 UTC [1171327] ERROR:  cannot drop schema c because other objects depend on it
+2023-07-26 21:11:07.781 UTC [1171327] DETAIL:  extension cube depends on schema c
+	column f1 of table foo depends on type c.cube
+2023-07-26 21:11:07.781 UTC [1171327] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 21:11:07.781 UTC [1171327] STATEMENT:  drop schema c;

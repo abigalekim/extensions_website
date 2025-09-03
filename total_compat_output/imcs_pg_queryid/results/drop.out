@@ -1,0 +1,70 @@
+select Quote_delete('IBM', date('02-Nov-2013'));
+ quote_delete 
+--------------
+            2
+(1 row)
+
+select Quote_count('IBM');
+ quote_count 
+-------------
+           3
+(1 row)
+
+select Day from Quote_get('IBM');
+                   day                   
+-----------------------------------------
+ date:{11-04-2013,11-05-2013,11-06-2013}
+(1 row)
+
+select Quote_delete('ABB', date('03-Nov-2013'), date('06-Nov-2013'));
+ quote_delete 
+--------------
+            2
+(1 row)
+
+select Quote_truncate();
+ quote_truncate 
+----------------
+ 
+(1 row)
+
+select Quote_count('IBM');
+ quote_count 
+-------------
+           0
+(1 row)
+
+select Quote_count('ABB');
+ quote_count 
+-------------
+           0
+(1 row)
+
+select * from Quote_get('IBM');
+ symbol | day | open | high | low | close | volume 
+--------+-----+------+------+-----+-------+--------
+(0 rows)
+
+select * from Quote_get('ABB');
+ symbol | day | open | high | low | close | volume 
+--------+-----+------+------+-----+-------+--------
+(0 rows)
+
+select CrashLog_delete('2014-04-14 11:54', '2014-04-14 11:56');
+ crashlog_delete 
+-----------------
+               3
+(1 row)
+
+select Quote_drop();
+ quote_drop 
+------------
+ 
+(1 row)
+
+select CrashLog_drop();
+ crashlog_drop 
+---------------
+ 
+(1 row)
+

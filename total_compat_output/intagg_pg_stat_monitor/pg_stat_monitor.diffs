@@ -1,0 +1,39 @@
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/functions.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/functions.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/functions.out	2023-07-25 04:12:42.052174645 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/functions.out	2023-07-26 13:09:02.641022698 +0000
+@@ -17,6 +17,10 @@
+  public         | get_cmd_type             | FUNCTION     | text
+  public         | get_histogram_timings    | FUNCTION     | text
+  public         | histogram                | FUNCTION     | record
++ public         | int_agg_final_array      | FUNCTION     | ARRAY
++ public         | int_agg_state            | FUNCTION     | internal
++ public         | int_array_aggregate      |              | ARRAY
++ public         | int_array_enum           | FUNCTION     | integer
+  public         | pg_stat_monitor_internal | FUNCTION     | record
+  public         | pg_stat_monitor_reset    | FUNCTION     | void
+  public         | pg_stat_monitor_version  | FUNCTION     | text
+@@ -26,7 +30,7 @@
+  public         | pgsm_create_15_view      | FUNCTION     | integer
+  public         | pgsm_create_view         | FUNCTION     | integer
+  public         | range                    | FUNCTION     | ARRAY
+-(13 rows)
++(17 rows)
+ 
+ SET ROLE u1;
+ SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+@@ -36,10 +40,14 @@
+  public         | get_cmd_type             | FUNCTION     | text
+  public         | get_histogram_timings    | FUNCTION     | text
+  public         | histogram                | FUNCTION     | record
++ public         | int_agg_final_array      | FUNCTION     | ARRAY
++ public         | int_agg_state            | FUNCTION     | internal
++ public         | int_array_aggregate      |              | ARRAY
++ public         | int_array_enum           | FUNCTION     | integer
+  public         | pg_stat_monitor_internal | FUNCTION     | record
+  public         | pg_stat_monitor_version  | FUNCTION     | text
+  public         | range                    | FUNCTION     | ARRAY
+-(7 rows)
++(11 rows)
+ 
+ SET ROLE su;
+ DROP USER u1;

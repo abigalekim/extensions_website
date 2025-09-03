@@ -1,0 +1,963 @@
+2023-11-25 05:22:57.024 UTC [1332481] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-11-25 05:22:57.024 UTC [1332481] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-11-25 05:22:57.030 UTC [1332481] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-11-25 05:22:57.038 UTC [1332484] LOG:  database system was shut down at 2023-11-25 05:22:56 UTC
+2023-11-25 05:22:57.047 UTC [1332481] LOG:  database system is ready to accept connections
+2023-11-25 05:24:50.419 UTC [1349298] LOG:  starting maintenance daemon on database 16384 user 10
+2023-11-25 05:24:50.419 UTC [1349298] CONTEXT:  Citus maintenance daemon for database 16384 user 10
+2023-11-25 05:24:50.437 UTC [1349297] LOG:  logical decoding found consistent point at 0/1B49320
+2023-11-25 05:24:50.437 UTC [1349297] DETAIL:  There are no running transactions.
+2023-11-25 05:24:50.437 UTC [1349297] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-11-25 05:24:50.444 UTC [1349297] ERROR:  replication slot "regression_slot" already exists
+2023-11-25 05:24:50.444 UTC [1349297] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-11-25 05:24:50.444 UTC [1349297] ERROR:  replication slot name "Invalid Name" contains invalid character
+2023-11-25 05:24:50.444 UTC [1349297] HINT:  Replication slot names may only contain lower case letters, numbers, and the underscore character.
+2023-11-25 05:24:50.444 UTC [1349297] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('Invalid Name', 'test_decoding');
+2023-11-25 05:24:50.445 UTC [1349297] ERROR:  could not parse value "frakbar" for parameter "include-xids"
+2023-11-25 05:24:50.445 UTC [1349297] CONTEXT:  slot "regression_slot", output plugin "test_decoding", in the startup callback
+2023-11-25 05:24:50.445 UTC [1349297] STATEMENT:  SELECT 'init' FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', 'frakbar');
+2023-11-25 05:24:50.445 UTC [1349297] ERROR:  option "nonexistent-option" = "frakbar" is unknown
+2023-11-25 05:24:50.445 UTC [1349297] CONTEXT:  slot "regression_slot", output plugin "test_decoding", in the startup callback
+2023-11-25 05:24:50.445 UTC [1349297] STATEMENT:  SELECT 'init' FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'nonexistent-option', 'frakbar');
+2023-11-25 05:24:50.446 UTC [1349297] ERROR:  could not parse value "frakbar" for parameter "include-xids"
+2023-11-25 05:24:50.446 UTC [1349297] CONTEXT:  slot "regression_slot", output plugin "test_decoding", in the startup callback
+2023-11-25 05:24:50.446 UTC [1349297] STATEMENT:  SELECT 'init' FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', 'frakbar');
+2023-11-25 05:24:50.449 UTC [1349297] ERROR:  replication slot "regression_slot" does not exist
+2023-11-25 05:24:50.449 UTC [1349297] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot');
+2023-11-25 05:24:50.461 UTC [1349297] ERROR:  cannot use physical replication slot for logical decoding
+2023-11-25 05:24:50.461 UTC [1349297] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('repl', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:50.484 UTC [1349297] LOG:  logical decoding found consistent point at 0/1B49450
+2023-11-25 05:24:50.484 UTC [1349297] DETAIL:  There are no running transactions.
+2023-11-25 05:24:50.484 UTC [1349297] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-11-25 05:24:50.507 UTC [1349297] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:50.507 UTC [1349297] DETAIL:  Streaming transactions committing after 0/1B49488, reading WAL from 0/1B49450.
+2023-11-25 05:24:50.507 UTC [1349297] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:50.507 UTC [1349297] LOG:  logical decoding found consistent point at 0/1B49450
+2023-11-25 05:24:50.507 UTC [1349297] DETAIL:  There are no running transactions.
+2023-11-25 05:24:50.507 UTC [1349297] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:50.513 UTC [1349297] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:50.513 UTC [1349297] DETAIL:  Streaming transactions committing after 0/1B4ECF0, reading WAL from 0/1B49450.
+2023-11-25 05:24:50.513 UTC [1349297] STATEMENT:  SELECT count(data) FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:50.513 UTC [1349297] LOG:  logical decoding found consistent point at 0/1B49450
+2023-11-25 05:24:50.513 UTC [1349297] DETAIL:  There are no running transactions.
+2023-11-25 05:24:50.513 UTC [1349297] STATEMENT:  SELECT count(data) FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:50.516 UTC [1349297] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:50.516 UTC [1349297] DETAIL:  Streaming transactions committing after 0/1B52380, reading WAL from 0/1B49450.
+2023-11-25 05:24:50.516 UTC [1349297] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:50.516 UTC [1349297] LOG:  logical decoding found consistent point at 0/1B49450
+2023-11-25 05:24:50.516 UTC [1349297] DETAIL:  There are no running transactions.
+2023-11-25 05:24:50.516 UTC [1349297] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:50.518 UTC [1349297] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:50.518 UTC [1349297] DETAIL:  Streaming transactions committing after 0/1B52CE0, reading WAL from 0/1B49450.
+2023-11-25 05:24:50.518 UTC [1349297] STATEMENT:  /* display results */
+	SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:50.518 UTC [1349297] LOG:  logical decoding found consistent point at 0/1B49450
+2023-11-25 05:24:50.518 UTC [1349297] DETAIL:  There are no running transactions.
+2023-11-25 05:24:50.518 UTC [1349297] STATEMENT:  /* display results */
+	SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:50.521 UTC [1349297] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:50.521 UTC [1349297] DETAIL:  Streaming transactions committing after 0/1B540F8, reading WAL from 0/1B49450.
+2023-11-25 05:24:50.521 UTC [1349297] STATEMENT:  /* display results */
+	SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:50.521 UTC [1349297] LOG:  logical decoding found consistent point at 0/1B49450
+2023-11-25 05:24:50.521 UTC [1349297] DETAIL:  There are no running transactions.
+2023-11-25 05:24:50.521 UTC [1349297] STATEMENT:  /* display results */
+	SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:50.536 UTC [1349297] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:50.536 UTC [1349297] DETAIL:  Streaming transactions committing after 0/1B54A00, reading WAL from 0/1B49450.
+2023-11-25 05:24:50.536 UTC [1349297] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1', 'include-rewrites', '1');
+2023-11-25 05:24:50.536 UTC [1349297] LOG:  logical decoding found consistent point at 0/1B49450
+2023-11-25 05:24:50.536 UTC [1349297] DETAIL:  There are no running transactions.
+2023-11-25 05:24:50.536 UTC [1349297] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1', 'include-rewrites', '1');
+2023-11-25 05:24:50.539 UTC [1349297] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:50.539 UTC [1349297] DETAIL:  Streaming transactions committing after 0/1B60290, reading WAL from 0/1B49450.
+2023-11-25 05:24:50.539 UTC [1349297] STATEMENT:  /* display results */
+	SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:50.539 UTC [1349297] LOG:  logical decoding found consistent point at 0/1B49450
+2023-11-25 05:24:50.539 UTC [1349297] DETAIL:  There are no running transactions.
+2023-11-25 05:24:50.539 UTC [1349297] STATEMENT:  /* display results */
+	SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:50.587 UTC [1349297] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:50.587 UTC [1349297] DETAIL:  Streaming transactions committing after 0/1B60438, reading WAL from 0/1B49450.
+2023-11-25 05:24:50.587 UTC [1349297] STATEMENT:  /* display results, but hide most of the output */
+	SELECT count(*), min(data), max(data)
+	FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1')
+	GROUP BY substring(data, 1, 24)
+	ORDER BY 1,2;
+2023-11-25 05:24:50.587 UTC [1349297] LOG:  logical decoding found consistent point at 0/1B49450
+2023-11-25 05:24:50.587 UTC [1349297] DETAIL:  There are no running transactions.
+2023-11-25 05:24:50.587 UTC [1349297] STATEMENT:  /* display results, but hide most of the output */
+	SELECT count(*), min(data), max(data)
+	FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1')
+	GROUP BY substring(data, 1, 24)
+	ORDER BY 1,2;
+2023-11-25 05:24:50.711 UTC [1349297] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:50.711 UTC [1349297] DETAIL:  Streaming transactions committing after 0/1E20598, reading WAL from 0/1B49450.
+2023-11-25 05:24:50.711 UTC [1349297] STATEMENT:  SELECT data
+	FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1')
+	WHERE data ~ 'UPDATE';
+2023-11-25 05:24:50.711 UTC [1349297] LOG:  logical decoding found consistent point at 0/1B49450
+2023-11-25 05:24:50.711 UTC [1349297] DETAIL:  There are no running transactions.
+2023-11-25 05:24:50.711 UTC [1349297] STATEMENT:  SELECT data
+	FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1')
+	WHERE data ~ 'UPDATE';
+2023-11-25 05:24:50.803 UTC [1349297] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:50.803 UTC [1349297] DETAIL:  Streaming transactions committing after 0/1EB5788, reading WAL from 0/1B49450.
+2023-11-25 05:24:50.803 UTC [1349297] STATEMENT:  SELECT substring(data, 1, 29), count(*)
+	FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1') WITH ORDINALITY
+	GROUP BY 1
+	ORDER BY min(ordinality);
+2023-11-25 05:24:50.803 UTC [1349297] LOG:  logical decoding found consistent point at 0/1B49450
+2023-11-25 05:24:50.803 UTC [1349297] DETAIL:  There are no running transactions.
+2023-11-25 05:24:50.803 UTC [1349297] STATEMENT:  SELECT substring(data, 1, 29), count(*)
+	FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1') WITH ORDINALITY
+	GROUP BY 1
+	ORDER BY min(ordinality);
+2023-11-25 05:24:50.885 UTC [1349297] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:50.885 UTC [1349297] DETAIL:  Streaming transactions committing after 0/1F980A0, reading WAL from 0/1B49450.
+2023-11-25 05:24:50.885 UTC [1349297] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:50.885 UTC [1349297] LOG:  logical decoding found consistent point at 0/1B49450
+2023-11-25 05:24:50.885 UTC [1349297] DETAIL:  There are no running transactions.
+2023-11-25 05:24:50.885 UTC [1349297] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:50.948 UTC [1349297] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:50.948 UTC [1349297] DETAIL:  Streaming transactions committing after 0/1F9EAA8, reading WAL from 0/1B49450.
+2023-11-25 05:24:50.948 UTC [1349297] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:50.948 UTC [1349297] LOG:  logical decoding found consistent point at 0/1B49450
+2023-11-25 05:24:50.948 UTC [1349297] DETAIL:  There are no running transactions.
+2023-11-25 05:24:50.948 UTC [1349297] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:51.010 UTC [1349297] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:51.010 UTC [1349297] DETAIL:  Streaming transactions committing after 0/1F9EFA8, reading WAL from 0/1B49450.
+2023-11-25 05:24:51.010 UTC [1349297] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:51.010 UTC [1349297] LOG:  logical decoding found consistent point at 0/1B49450
+2023-11-25 05:24:51.010 UTC [1349297] DETAIL:  There are no running transactions.
+2023-11-25 05:24:51.010 UTC [1349297] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:51.073 UTC [1349297] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:51.073 UTC [1349297] DETAIL:  Streaming transactions committing after 0/1F9F248, reading WAL from 0/1B49450.
+2023-11-25 05:24:51.073 UTC [1349297] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:51.073 UTC [1349297] LOG:  logical decoding found consistent point at 0/1B49450
+2023-11-25 05:24:51.073 UTC [1349297] DETAIL:  There are no running transactions.
+2023-11-25 05:24:51.073 UTC [1349297] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:51.144 UTC [1349297] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:51.144 UTC [1349297] DETAIL:  Streaming transactions committing after 0/1F9F428, reading WAL from 0/1B49450.
+2023-11-25 05:24:51.144 UTC [1349297] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:51.144 UTC [1349297] LOG:  logical decoding found consistent point at 0/1B49450
+2023-11-25 05:24:51.144 UTC [1349297] DETAIL:  There are no running transactions.
+2023-11-25 05:24:51.144 UTC [1349297] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:51.231 UTC [1349297] ERROR:  cannot rewrite table "replication_metadata" used as a catalog table
+2023-11-25 05:24:51.231 UTC [1349297] STATEMENT:  ALTER TABLE replication_metadata ALTER COLUMN rewritemeornot TYPE text;
+2023-11-25 05:24:51.236 UTC [1349297] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:51.236 UTC [1349297] DETAIL:  Streaming transactions committing after 0/1FAA550, reading WAL from 0/1B49450.
+2023-11-25 05:24:51.236 UTC [1349297] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:51.237 UTC [1349297] LOG:  logical decoding found consistent point at 0/1B49450
+2023-11-25 05:24:51.237 UTC [1349297] DETAIL:  There are no running transactions.
+2023-11-25 05:24:51.237 UTC [1349297] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:51.397 UTC [1349297] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:51.397 UTC [1349297] DETAIL:  Streaming transactions committing after 0/1FB1FB0, reading WAL from 0/1B49450.
+2023-11-25 05:24:51.397 UTC [1349297] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:51.397 UTC [1349297] LOG:  logical decoding found consistent point at 0/1B49450
+2023-11-25 05:24:51.397 UTC [1349297] DETAIL:  There are no running transactions.
+2023-11-25 05:24:51.397 UTC [1349297] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:51.471 UTC [1349297] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:51.471 UTC [1349297] DETAIL:  Streaming transactions committing after 0/1FD86C0, reading WAL from 0/1B49450.
+2023-11-25 05:24:51.471 UTC [1349297] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:51.471 UTC [1349297] LOG:  logical decoding found consistent point at 0/1B49450
+2023-11-25 05:24:51.471 UTC [1349297] DETAIL:  There are no running transactions.
+2023-11-25 05:24:51.471 UTC [1349297] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:51.533 UTC [1349297] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:51.533 UTC [1349297] DETAIL:  Streaming transactions committing after 0/1FDF308, reading WAL from 0/1B49450.
+2023-11-25 05:24:51.533 UTC [1349297] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:51.533 UTC [1349297] LOG:  logical decoding found consistent point at 0/1B49450
+2023-11-25 05:24:51.533 UTC [1349297] DETAIL:  There are no running transactions.
+2023-11-25 05:24:51.533 UTC [1349297] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:51.629 UTC [1349302] LOG:  logical decoding found consistent point at 0/1FDF3A0
+2023-11-25 05:24:51.629 UTC [1349302] DETAIL:  There are no running transactions.
+2023-11-25 05:24:51.629 UTC [1349302] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-11-25 05:24:51.642 UTC [1349302] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:51.642 UTC [1349302] DETAIL:  Streaming transactions committing after 0/1FDF3D8, reading WAL from 0/1FDF3A0.
+2023-11-25 05:24:51.642 UTC [1349302] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:51.642 UTC [1349302] LOG:  logical decoding found consistent point at 0/1FDF3A0
+2023-11-25 05:24:51.642 UTC [1349302] DETAIL:  There are no running transactions.
+2023-11-25 05:24:51.642 UTC [1349302] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:51.644 UTC [1349302] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:51.644 UTC [1349302] DETAIL:  Streaming transactions committing after 0/1FE2BC8, reading WAL from 0/1FDF3A0.
+2023-11-25 05:24:51.644 UTC [1349302] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:51.644 UTC [1349302] LOG:  logical decoding found consistent point at 0/1FDF3A0
+2023-11-25 05:24:51.644 UTC [1349302] DETAIL:  There are no running transactions.
+2023-11-25 05:24:51.644 UTC [1349302] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:51.696 UTC [1349306] LOG:  logical decoding found consistent point at 0/1FEF1F8
+2023-11-25 05:24:51.696 UTC [1349306] DETAIL:  There are no running transactions.
+2023-11-25 05:24:51.696 UTC [1349306] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-11-25 05:24:51.712 UTC [1349306] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:51.712 UTC [1349306] DETAIL:  Streaming transactions committing after 0/1FEF230, reading WAL from 0/1FEF1F8.
+2023-11-25 05:24:51.712 UTC [1349306] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:51.712 UTC [1349306] LOG:  logical decoding found consistent point at 0/1FEF1F8
+2023-11-25 05:24:51.712 UTC [1349306] DETAIL:  There are no running transactions.
+2023-11-25 05:24:51.712 UTC [1349306] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:52.309 UTC [1332482] LOG:  checkpoint starting: immediate force wait
+2023-11-25 05:24:52.375 UTC [1332482] LOG:  checkpoint complete: wrote 992 buffers (6.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.016 s, sync=0.026 s, total=0.066 s; sync files=315, longest=0.003 s, average=0.001 s; distance=14472 kB, estimate=14472 kB
+2023-11-25 05:24:52.375 UTC [1349306] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:52.375 UTC [1349306] DETAIL:  Streaming transactions committing after 0/1FF38A0, reading WAL from 0/1FEF1F8.
+2023-11-25 05:24:52.375 UTC [1349306] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:52.376 UTC [1349306] LOG:  logical decoding found consistent point at 0/1FEF1F8
+2023-11-25 05:24:52.376 UTC [1349306] DETAIL:  There are no running transactions.
+2023-11-25 05:24:52.376 UTC [1349306] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:52.534 UTC [1349306] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:52.534 UTC [1349306] DETAIL:  Streaming transactions committing after 0/2320CB0, reading WAL from 0/2320C00.
+2023-11-25 05:24:52.534 UTC [1349306] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:52.534 UTC [1349306] LOG:  logical decoding found consistent point at 0/2320C00
+2023-11-25 05:24:52.534 UTC [1349306] DETAIL:  There are no running transactions.
+2023-11-25 05:24:52.534 UTC [1349306] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:52.573 UTC [1349311] LOG:  logical decoding found consistent point at 0/26F0EA8
+2023-11-25 05:24:52.573 UTC [1349311] DETAIL:  There are no running transactions.
+2023-11-25 05:24:52.573 UTC [1349311] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-11-25 05:24:52.622 UTC [1349311] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:52.622 UTC [1349311] DETAIL:  Streaming transactions committing after 0/26F0EE0, reading WAL from 0/26F0EA8.
+2023-11-25 05:24:52.622 UTC [1349311] STATEMENT:  SELECT substr(data, 1, 200) FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:52.623 UTC [1349311] LOG:  logical decoding found consistent point at 0/26F0EA8
+2023-11-25 05:24:52.623 UTC [1349311] DETAIL:  There are no running transactions.
+2023-11-25 05:24:52.623 UTC [1349311] STATEMENT:  SELECT substr(data, 1, 200) FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:52.645 UTC [1349311] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:52.645 UTC [1349311] DETAIL:  Streaming transactions committing after 0/2720E90, reading WAL from 0/26F0EA8.
+2023-11-25 05:24:52.645 UTC [1349311] STATEMENT:  SELECT regexp_replace(data, '^(.{100}).*(.{100})$', '\1..\2') FROM pg_logical_slot_peek_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:52.645 UTC [1349311] LOG:  logical decoding found consistent point at 0/26F0EA8
+2023-11-25 05:24:52.645 UTC [1349311] DETAIL:  There are no running transactions.
+2023-11-25 05:24:52.645 UTC [1349311] STATEMENT:  SELECT regexp_replace(data, '^(.{100}).*(.{100})$', '\1..\2') FROM pg_logical_slot_peek_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:52.651 UTC [1349311] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:52.651 UTC [1349311] DETAIL:  Streaming transactions committing after 0/2720E90, reading WAL from 0/26F0EA8.
+2023-11-25 05:24:52.651 UTC [1349311] STATEMENT:  SELECT regexp_replace(data, '^(.{100}).*(.{100})$', '\1..\2') FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:52.651 UTC [1349311] LOG:  logical decoding found consistent point at 0/26F0EA8
+2023-11-25 05:24:52.651 UTC [1349311] DETAIL:  There are no running transactions.
+2023-11-25 05:24:52.651 UTC [1349311] STATEMENT:  SELECT regexp_replace(data, '^(.{100}).*(.{100})$', '\1..\2') FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:52.708 UTC [1349311] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:52.708 UTC [1349311] DETAIL:  Streaming transactions committing after 0/27C1C00, reading WAL from 0/26F0EA8.
+2023-11-25 05:24:52.708 UTC [1349311] STATEMENT:  SELECT regexp_replace(data, '^(.{100}).*(.{100})$', '\1..\2') FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1')
+	WHERE data NOT LIKE '%INSERT: %';
+2023-11-25 05:24:52.708 UTC [1349311] LOG:  logical decoding found consistent point at 0/26F0EA8
+2023-11-25 05:24:52.708 UTC [1349311] DETAIL:  There are no running transactions.
+2023-11-25 05:24:52.708 UTC [1349311] STATEMENT:  SELECT regexp_replace(data, '^(.{100}).*(.{100})$', '\1..\2') FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1')
+	WHERE data NOT LIKE '%INSERT: %';
+2023-11-25 05:24:52.791 UTC [1349311] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:52.791 UTC [1349311] DETAIL:  Streaming transactions committing after 0/2A8A528, reading WAL from 0/26F0EA8.
+2023-11-25 05:24:52.791 UTC [1349311] STATEMENT:  SELECT substr(data, 1, 200) FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:52.791 UTC [1349311] LOG:  logical decoding found consistent point at 0/26F0EA8
+2023-11-25 05:24:52.791 UTC [1349311] DETAIL:  There are no running transactions.
+2023-11-25 05:24:52.791 UTC [1349311] STATEMENT:  SELECT substr(data, 1, 200) FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:52.853 UTC [1349315] LOG:  logical decoding found consistent point at 0/2AA3708
+2023-11-25 05:24:52.853 UTC [1349315] DETAIL:  There are no running transactions.
+2023-11-25 05:24:52.853 UTC [1349315] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-11-25 05:24:52.860 UTC [1349315] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:52.860 UTC [1349315] DETAIL:  Streaming transactions committing after 0/2AA3740, reading WAL from 0/2AA3708.
+2023-11-25 05:24:52.860 UTC [1349315] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:52.860 UTC [1349315] LOG:  logical decoding found consistent point at 0/2AA3708
+2023-11-25 05:24:52.860 UTC [1349315] DETAIL:  There are no running transactions.
+2023-11-25 05:24:52.860 UTC [1349315] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:52.880 UTC [1349315] LOG:  logical decoding found consistent point at 0/2AA3820
+2023-11-25 05:24:52.880 UTC [1349315] DETAIL:  There are no running transactions.
+2023-11-25 05:24:52.880 UTC [1349315] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-11-25 05:24:52.886 UTC [1349315] ERROR:  permission denied for table lr_test
+2023-11-25 05:24:52.886 UTC [1349315] STATEMENT:  INSERT INTO lr_test VALUES('lr_superuser_init');
+2023-11-25 05:24:52.886 UTC [1349315] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:52.886 UTC [1349315] DETAIL:  Streaming transactions committing after 0/2AA3858, reading WAL from 0/2AA3820.
+2023-11-25 05:24:52.886 UTC [1349315] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:52.886 UTC [1349315] LOG:  logical decoding found consistent point at 0/2AA3820
+2023-11-25 05:24:52.886 UTC [1349315] DETAIL:  There are no running transactions.
+2023-11-25 05:24:52.886 UTC [1349315] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:52.890 UTC [1349315] ERROR:  must be superuser or replication role to use replication slots
+2023-11-25 05:24:52.890 UTC [1349315] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-11-25 05:24:52.890 UTC [1349315] ERROR:  permission denied for table lr_test
+2023-11-25 05:24:52.890 UTC [1349315] STATEMENT:  INSERT INTO lr_test VALUES('lr_superuser_init');
+2023-11-25 05:24:52.891 UTC [1349315] ERROR:  must be superuser or replication role to use replication slots
+2023-11-25 05:24:52.891 UTC [1349315] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:52.891 UTC [1349315] ERROR:  must be superuser or replication role to use replication slots
+2023-11-25 05:24:52.891 UTC [1349315] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot');
+2023-11-25 05:24:52.912 UTC [1349315] LOG:  logical decoding found consistent point at 0/2AA3858
+2023-11-25 05:24:52.912 UTC [1349315] DETAIL:  There are no running transactions.
+2023-11-25 05:24:52.912 UTC [1349315] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-11-25 05:24:52.939 UTC [1349315] LOG:  logical decoding found consistent point at 0/2AA3890
+2023-11-25 05:24:52.939 UTC [1349315] DETAIL:  There are no running transactions.
+2023-11-25 05:24:52.939 UTC [1349315] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-11-25 05:24:52.948 UTC [1349315] ERROR:  must be superuser or replication role to use replication slots
+2023-11-25 05:24:52.948 UTC [1349315] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot');
+2023-11-25 05:24:52.980 UTC [1349319] ERROR:  cannot create logical replication slot in transaction that has performed writes
+2023-11-25 05:24:52.980 UTC [1349319] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-11-25 05:24:52.998 UTC [1349319] ERROR:  cannot create logical replication slot in transaction that has performed writes
+2023-11-25 05:24:52.998 UTC [1349319] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-11-25 05:24:53.030 UTC [1349319] LOG:  logical decoding found consistent point at 0/2AA5338
+2023-11-25 05:24:53.030 UTC [1349319] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.030 UTC [1349319] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-11-25 05:24:53.057 UTC [1349319] LOG:  logical decoding found consistent point at 0/2AA5370
+2023-11-25 05:24:53.057 UTC [1349319] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.057 UTC [1349319] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-11-25 05:24:53.073 UTC [1349319] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:53.073 UTC [1349319] DETAIL:  Streaming transactions committing after 0/2AA53A8, reading WAL from 0/2AA5370.
+2023-11-25 05:24:53.073 UTC [1349319] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.073 UTC [1349319] LOG:  logical decoding found consistent point at 0/2AA5370
+2023-11-25 05:24:53.073 UTC [1349319] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.073 UTC [1349319] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.076 UTC [1349319] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:53.076 UTC [1349319] DETAIL:  Streaming transactions committing after 0/2AAC720, reading WAL from 0/2AA5370.
+2023-11-25 05:24:53.076 UTC [1349319] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.076 UTC [1349319] LOG:  logical decoding found consistent point at 0/2AA5370
+2023-11-25 05:24:53.076 UTC [1349319] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.076 UTC [1349319] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.103 UTC [1349323] LOG:  logical decoding found consistent point at 0/2AAC880
+2023-11-25 05:24:53.103 UTC [1349323] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.103 UTC [1349323] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-11-25 05:24:53.109 UTC [1349323] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:53.109 UTC [1349323] DETAIL:  Streaming transactions committing after 0/2AAC8B8, reading WAL from 0/2AAC880.
+2023-11-25 05:24:53.109 UTC [1349323] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.109 UTC [1349323] LOG:  logical decoding found consistent point at 0/2AAC880
+2023-11-25 05:24:53.109 UTC [1349323] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.109 UTC [1349323] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.120 UTC [1349323] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:53.120 UTC [1349323] DETAIL:  Streaming transactions committing after 0/2AAC8B8, reading WAL from 0/2AAC880.
+2023-11-25 05:24:53.120 UTC [1349323] STATEMENT:  CREATE TABLE changeresult AS
+	    SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.120 UTC [1349323] LOG:  logical decoding found consistent point at 0/2AAC880
+2023-11-25 05:24:53.120 UTC [1349323] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.120 UTC [1349323] STATEMENT:  CREATE TABLE changeresult AS
+	    SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.122 UTC [1349323] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:53.122 UTC [1349323] DETAIL:  Streaming transactions committing after 0/2AB0B60, reading WAL from 0/2AAC880.
+2023-11-25 05:24:53.122 UTC [1349323] STATEMENT:  INSERT INTO changeresult
+	    SELECT data FROM pg_logical_slot_peek_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.122 UTC [1349323] LOG:  logical decoding found consistent point at 0/2AAC880
+2023-11-25 05:24:53.122 UTC [1349323] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.122 UTC [1349323] STATEMENT:  INSERT INTO changeresult
+	    SELECT data FROM pg_logical_slot_peek_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.123 UTC [1349323] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:53.123 UTC [1349323] DETAIL:  Streaming transactions committing after 0/2AB0B60, reading WAL from 0/2AAC880.
+2023-11-25 05:24:53.123 UTC [1349323] STATEMENT:  INSERT INTO changeresult
+	    SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.123 UTC [1349323] LOG:  logical decoding found consistent point at 0/2AAC880
+2023-11-25 05:24:53.123 UTC [1349323] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.123 UTC [1349323] STATEMENT:  INSERT INTO changeresult
+	    SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.131 UTC [1349323] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:53.131 UTC [1349323] DETAIL:  Streaming transactions committing after 0/2AB44B8, reading WAL from 0/2AAC880.
+2023-11-25 05:24:53.131 UTC [1349323] CONTEXT:  SQL statement "SELECT data FROM pg_logical_slot_peek_changes(slot_name, NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1')"
+	PL/pgSQL function slot_changes_wrapper(name) line 3 at RETURN QUERY
+2023-11-25 05:24:53.131 UTC [1349323] STATEMENT:  SELECT * FROM slot_changes_wrapper('regression_slot');
+2023-11-25 05:24:53.131 UTC [1349323] LOG:  logical decoding found consistent point at 0/2AAC880
+2023-11-25 05:24:53.131 UTC [1349323] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.131 UTC [1349323] CONTEXT:  SQL statement "SELECT data FROM pg_logical_slot_peek_changes(slot_name, NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1')"
+	PL/pgSQL function slot_changes_wrapper(name) line 3 at RETURN QUERY
+2023-11-25 05:24:53.131 UTC [1349323] STATEMENT:  SELECT * FROM slot_changes_wrapper('regression_slot');
+2023-11-25 05:24:53.132 UTC [1349323] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:53.132 UTC [1349323] DETAIL:  Streaming transactions committing after 0/2AB44B8, reading WAL from 0/2AAC880.
+2023-11-25 05:24:53.132 UTC [1349323] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.132 UTC [1349323] LOG:  logical decoding found consistent point at 0/2AAC880
+2023-11-25 05:24:53.132 UTC [1349323] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.132 UTC [1349323] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.159 UTC [1349327] LOG:  logical decoding found consistent point at 0/2AB93A0
+2023-11-25 05:24:53.159 UTC [1349327] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.159 UTC [1349327] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-11-25 05:24:53.169 UTC [1349327] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:53.169 UTC [1349327] DETAIL:  Streaming transactions committing after 0/2AB93D8, reading WAL from 0/2AB93A0.
+2023-11-25 05:24:53.169 UTC [1349327] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'force-binary', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.169 UTC [1349327] LOG:  logical decoding found consistent point at 0/2AB93A0
+2023-11-25 05:24:53.169 UTC [1349327] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.169 UTC [1349327] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'force-binary', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.170 UTC [1349327] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:53.170 UTC [1349327] DETAIL:  Streaming transactions committing after 0/2AB93D8, reading WAL from 0/2AB93A0.
+2023-11-25 05:24:53.170 UTC [1349327] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'force-binary', '1', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.170 UTC [1349327] ERROR:  logical decoding output plugin "test_decoding" produces binary output, but function "pg_logical_slot_get_changes(name,pg_lsn,integer,text[])" expects textual data
+2023-11-25 05:24:53.170 UTC [1349327] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'force-binary', '1', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.170 UTC [1349327] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:53.170 UTC [1349327] DETAIL:  Streaming transactions committing after 0/2AB93D8, reading WAL from 0/2AB93A0.
+2023-11-25 05:24:53.170 UTC [1349327] STATEMENT:  SELECT data FROM pg_logical_slot_get_binary_changes('regression_slot', NULL, NULL, 'force-binary', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.170 UTC [1349327] LOG:  logical decoding found consistent point at 0/2AB93A0
+2023-11-25 05:24:53.170 UTC [1349327] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.170 UTC [1349327] STATEMENT:  SELECT data FROM pg_logical_slot_get_binary_changes('regression_slot', NULL, NULL, 'force-binary', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.171 UTC [1349327] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:53.171 UTC [1349327] DETAIL:  Streaming transactions committing after 0/2AB93D8, reading WAL from 0/2AB93A0.
+2023-11-25 05:24:53.171 UTC [1349327] STATEMENT:  SELECT data FROM pg_logical_slot_get_binary_changes('regression_slot', NULL, NULL, 'force-binary', '1', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.171 UTC [1349327] LOG:  logical decoding found consistent point at 0/2AB93A0
+2023-11-25 05:24:53.171 UTC [1349327] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.171 UTC [1349327] STATEMENT:  SELECT data FROM pg_logical_slot_get_binary_changes('regression_slot', NULL, NULL, 'force-binary', '1', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.198 UTC [1349331] LOG:  logical decoding found consistent point at 0/2AB93D8
+2023-11-25 05:24:53.198 UTC [1349331] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.198 UTC [1349331] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-11-25 05:24:53.228 UTC [1349331] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:53.228 UTC [1349331] DETAIL:  Streaming transactions committing after 0/2AB9410, reading WAL from 0/2AB93D8.
+2023-11-25 05:24:53.228 UTC [1349331] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.228 UTC [1349331] LOG:  logical decoding found consistent point at 0/2AB93D8
+2023-11-25 05:24:53.228 UTC [1349331] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.228 UTC [1349331] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.242 UTC [1349335] ERROR:  permission denied for function pg_replication_origin_advance
+2023-11-25 05:24:53.242 UTC [1349335] STATEMENT:  SELECT pg_replication_origin_advance('regress_test_decoding: perm', '0/1');
+2023-11-25 05:24:53.242 UTC [1349335] ERROR:  permission denied for function pg_replication_origin_create
+2023-11-25 05:24:53.242 UTC [1349335] STATEMENT:  SELECT pg_replication_origin_create('regress_test_decoding: perm');
+2023-11-25 05:24:53.242 UTC [1349335] ERROR:  permission denied for function pg_replication_origin_drop
+2023-11-25 05:24:53.242 UTC [1349335] STATEMENT:  SELECT pg_replication_origin_drop('regress_test_decoding: perm');
+2023-11-25 05:24:53.242 UTC [1349335] ERROR:  permission denied for function pg_replication_origin_oid
+2023-11-25 05:24:53.242 UTC [1349335] STATEMENT:  SELECT pg_replication_origin_oid('regress_test_decoding: perm');
+2023-11-25 05:24:53.242 UTC [1349335] ERROR:  permission denied for function pg_replication_origin_progress
+2023-11-25 05:24:53.242 UTC [1349335] STATEMENT:  SELECT pg_replication_origin_progress('regress_test_decoding: perm', false);
+2023-11-25 05:24:53.242 UTC [1349335] ERROR:  permission denied for function pg_replication_origin_session_is_setup
+2023-11-25 05:24:53.242 UTC [1349335] STATEMENT:  SELECT pg_replication_origin_session_is_setup();
+2023-11-25 05:24:53.242 UTC [1349335] ERROR:  permission denied for function pg_replication_origin_session_progress
+2023-11-25 05:24:53.242 UTC [1349335] STATEMENT:  SELECT pg_replication_origin_session_progress(false);
+2023-11-25 05:24:53.242 UTC [1349335] ERROR:  permission denied for function pg_replication_origin_session_reset
+2023-11-25 05:24:53.242 UTC [1349335] STATEMENT:  SELECT pg_replication_origin_session_reset();
+2023-11-25 05:24:53.242 UTC [1349335] ERROR:  permission denied for function pg_replication_origin_session_setup
+2023-11-25 05:24:53.242 UTC [1349335] STATEMENT:  SELECT pg_replication_origin_session_setup('regress_test_decoding: perm');
+2023-11-25 05:24:53.242 UTC [1349335] ERROR:  permission denied for function pg_replication_origin_xact_reset
+2023-11-25 05:24:53.242 UTC [1349335] STATEMENT:  SELECT pg_replication_origin_xact_reset();
+2023-11-25 05:24:53.243 UTC [1349335] ERROR:  permission denied for function pg_replication_origin_xact_setup
+2023-11-25 05:24:53.243 UTC [1349335] STATEMENT:  SELECT pg_replication_origin_xact_setup('0/1', '2013-01-01 00:00');
+2023-11-25 05:24:53.243 UTC [1349335] ERROR:  permission denied for function pg_show_replication_origin_status
+2023-11-25 05:24:53.243 UTC [1349335] STATEMENT:  SELECT pg_show_replication_origin_status();
+2023-11-25 05:24:53.261 UTC [1349335] ERROR:  duplicate key value violates unique constraint "pg_replication_origin_roname_index"
+2023-11-25 05:24:53.261 UTC [1349335] DETAIL:  Key (roname)=(regress_test_decoding: regression_slot) already exists.
+2023-11-25 05:24:53.261 UTC [1349335] STATEMENT:  SELECT pg_replication_origin_create('regress_test_decoding: regression_slot');
+2023-11-25 05:24:53.263 UTC [1349335] ERROR:  replication origin "regress_test_decoding: temp" does not exist
+2023-11-25 05:24:53.263 UTC [1349335] STATEMENT:  SELECT pg_replication_origin_drop('regress_test_decoding: temp');
+2023-11-25 05:24:53.264 UTC [1349335] ERROR:  replication origin "regress_test_decoding: temp" does not exist
+2023-11-25 05:24:53.264 UTC [1349335] STATEMENT:  select pg_replication_origin_advance('regress_test_decoding: temp', '0/1');
+2023-11-25 05:24:53.264 UTC [1349335] ERROR:  replication origin "regress_test_decoding: temp" does not exist
+2023-11-25 05:24:53.264 UTC [1349335] STATEMENT:  select pg_replication_origin_session_setup('regress_test_decoding: temp');
+2023-11-25 05:24:53.264 UTC [1349335] ERROR:  replication origin "regress_test_decoding: temp" does not exist
+2023-11-25 05:24:53.264 UTC [1349335] STATEMENT:  select pg_replication_origin_progress('regress_test_decoding: temp', true);
+2023-11-25 05:24:53.282 UTC [1349335] LOG:  logical decoding found consistent point at 0/2ACF2E0
+2023-11-25 05:24:53.282 UTC [1349335] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.282 UTC [1349335] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-11-25 05:24:53.289 UTC [1349335] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:53.289 UTC [1349335] DETAIL:  Streaming transactions committing after 0/2ACF318, reading WAL from 0/2ACF2E0.
+2023-11-25 05:24:53.289 UTC [1349335] STATEMENT:  INSERT INTO target_tbl(data)
+	SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.290 UTC [1349335] LOG:  logical decoding found consistent point at 0/2ACF2E0
+2023-11-25 05:24:53.290 UTC [1349335] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.290 UTC [1349335] STATEMENT:  INSERT INTO target_tbl(data)
+	SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.291 UTC [1349335] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:53.291 UTC [1349335] DETAIL:  Streaming transactions committing after 0/2ACF500, reading WAL from 0/2ACF2E0.
+2023-11-25 05:24:53.291 UTC [1349335] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.291 UTC [1349335] LOG:  logical decoding found consistent point at 0/2ACF2E0
+2023-11-25 05:24:53.291 UTC [1349335] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.291 UTC [1349335] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.293 UTC [1349335] ERROR:  cannot setup replication origin when one is already setup
+2023-11-25 05:24:53.293 UTC [1349335] STATEMENT:  SELECT pg_replication_origin_session_setup('regress_test_decoding: regression_slot');
+2023-11-25 05:24:53.293 UTC [1349335] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:53.293 UTC [1349335] DETAIL:  Streaming transactions committing after 0/2ACF7F0, reading WAL from 0/2ACF2E0.
+2023-11-25 05:24:53.293 UTC [1349335] STATEMENT:  INSERT INTO target_tbl(data)
+	SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1', 'only-local', '1');
+2023-11-25 05:24:53.293 UTC [1349335] LOG:  logical decoding found consistent point at 0/2ACF2E0
+2023-11-25 05:24:53.293 UTC [1349335] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.293 UTC [1349335] STATEMENT:  INSERT INTO target_tbl(data)
+	SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1', 'only-local', '1');
+2023-11-25 05:24:53.295 UTC [1349335] ERROR:  no replication origin is configured
+2023-11-25 05:24:53.295 UTC [1349335] STATEMENT:  SELECT pg_replication_origin_session_reset();
+2023-11-25 05:24:53.295 UTC [1349335] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:53.295 UTC [1349335] DETAIL:  Streaming transactions committing after 0/2ACF8C8, reading WAL from 0/2ACF2E0.
+2023-11-25 05:24:53.295 UTC [1349335] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1', 'only-local', '1');
+2023-11-25 05:24:53.296 UTC [1349335] LOG:  logical decoding found consistent point at 0/2ACF2E0
+2023-11-25 05:24:53.296 UTC [1349335] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.296 UTC [1349335] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1', 'only-local', '1');
+2023-11-25 05:24:53.297 UTC [1349335] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:53.297 UTC [1349335] DETAIL:  Streaming transactions committing after 0/2ACFB68, reading WAL from 0/2ACF2E0.
+2023-11-25 05:24:53.297 UTC [1349335] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1',  'only-local', '1');
+2023-11-25 05:24:53.297 UTC [1349335] LOG:  logical decoding found consistent point at 0/2ACF2E0
+2023-11-25 05:24:53.297 UTC [1349335] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.297 UTC [1349335] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1',  'only-local', '1');
+2023-11-25 05:24:53.323 UTC [1349335] LOG:  logical decoding found consistent point at 0/2ACFD58
+2023-11-25 05:24:53.323 UTC [1349335] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.323 UTC [1349335] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot_no_lsn', 'test_decoding');
+2023-11-25 05:24:53.340 UTC [1349335] LOG:  starting logical decoding for slot "regression_slot_no_lsn"
+2023-11-25 05:24:53.340 UTC [1349335] DETAIL:  Streaming transactions committing after 0/2ACFD90, reading WAL from 0/2ACFD58.
+2023-11-25 05:24:53.340 UTC [1349335] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot_no_lsn', NULL, NULL, 'skip-empty-xacts', '1', 'include-xids', '0');
+2023-11-25 05:24:53.340 UTC [1349335] LOG:  logical decoding found consistent point at 0/2ACFD58
+2023-11-25 05:24:53.340 UTC [1349335] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.340 UTC [1349335] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot_no_lsn', NULL, NULL, 'skip-empty-xacts', '1', 'include-xids', '0');
+2023-11-25 05:24:53.374 UTC [1349339] LOG:  logical decoding found consistent point at 0/2AD3CB0
+2023-11-25 05:24:53.374 UTC [1349339] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.374 UTC [1349339] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-11-25 05:24:53.381 UTC [1349339] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:53.381 UTC [1349339] DETAIL:  Streaming transactions committing after 0/2AD3CE8, reading WAL from 0/2AD3CB0.
+2023-11-25 05:24:53.381 UTC [1349339] STATEMENT:  SELECT set_config('test.time_after', regexp_replace(data, '^COMMIT \(at (.*)\)$', '\1'), false) IS NOT NULL
+	FROM pg_logical_slot_peek_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1', 'include-timestamp', '1')
+	WHERE data ~ 'COMMIT' LIMIT 1;
+2023-11-25 05:24:53.381 UTC [1349339] LOG:  logical decoding found consistent point at 0/2AD3CB0
+2023-11-25 05:24:53.381 UTC [1349339] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.381 UTC [1349339] STATEMENT:  SELECT set_config('test.time_after', regexp_replace(data, '^COMMIT \(at (.*)\)$', '\1'), false) IS NOT NULL
+	FROM pg_logical_slot_peek_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1', 'include-timestamp', '1')
+	WHERE data ~ 'COMMIT' LIMIT 1;
+2023-11-25 05:24:53.409 UTC [1349343] LOG:  logical decoding found consistent point at 0/2AD3D50
+2023-11-25 05:24:53.409 UTC [1349343] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.409 UTC [1349343] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-11-25 05:24:53.419 UTC [1349343] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:53.419 UTC [1349343] DETAIL:  Streaming transactions committing after 0/2AD3D88, reading WAL from 0/2AD3D50.
+2023-11-25 05:24:53.419 UTC [1349343] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'force-binary', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.419 UTC [1349343] LOG:  logical decoding found consistent point at 0/2AD3D50
+2023-11-25 05:24:53.419 UTC [1349343] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.419 UTC [1349343] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'force-binary', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.428 UTC [1349345] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:53.428 UTC [1349345] DETAIL:  Streaming transactions committing after 0/2AD4060, reading WAL from 0/2AD3D50.
+2023-11-25 05:24:53.428 UTC [1349345] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'force-binary', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.428 UTC [1349345] LOG:  logical decoding found consistent point at 0/2AD3D50
+2023-11-25 05:24:53.428 UTC [1349345] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.428 UTC [1349345] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'force-binary', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.455 UTC [1349349] LOG:  logical decoding found consistent point at 0/2AD4110
+2023-11-25 05:24:53.455 UTC [1349349] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.455 UTC [1349349] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-11-25 05:24:53.466 UTC [1349349] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:53.466 UTC [1349349] DETAIL:  Streaming transactions committing after 0/2AD4148, reading WAL from 0/2AD4110.
+2023-11-25 05:24:53.466 UTC [1349349] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.466 UTC [1349349] LOG:  logical decoding found consistent point at 0/2AD4110
+2023-11-25 05:24:53.466 UTC [1349349] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.466 UTC [1349349] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:53.476 UTC [1349349] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:53.476 UTC [1349349] DETAIL:  Streaming transactions committing after 0/2AD7A78, reading WAL from 0/2AD4110.
+2023-11-25 05:24:53.476 UTC [1349349] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4], COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-11-25 05:24:53.476 UTC [1349349] LOG:  logical decoding found consistent point at 0/2AD4110
+2023-11-25 05:24:53.476 UTC [1349349] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.476 UTC [1349349] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4], COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-11-25 05:24:53.519 UTC [1349349] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:53.519 UTC [1349349] DETAIL:  Streaming transactions committing after 0/2B399C0, reading WAL from 0/2AD4110.
+2023-11-25 05:24:53.519 UTC [1349349] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4], COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-11-25 05:24:53.519 UTC [1349349] LOG:  logical decoding found consistent point at 0/2AD4110
+2023-11-25 05:24:53.519 UTC [1349349] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.519 UTC [1349349] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4], COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-11-25 05:24:53.571 UTC [1349349] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:53.571 UTC [1349349] DETAIL:  Streaming transactions committing after 0/2B9B940, reading WAL from 0/2AD4110.
+2023-11-25 05:24:53.571 UTC [1349349] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4], COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-11-25 05:24:53.571 UTC [1349349] LOG:  logical decoding found consistent point at 0/2AD4110
+2023-11-25 05:24:53.571 UTC [1349349] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.571 UTC [1349349] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4], COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-11-25 05:24:53.665 UTC [1349349] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:53.665 UTC [1349349] DETAIL:  Streaming transactions committing after 0/2C73148, reading WAL from 0/2AD4110.
+2023-11-25 05:24:53.665 UTC [1349349] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4], COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-11-25 05:24:53.665 UTC [1349349] LOG:  logical decoding found consistent point at 0/2AD4110
+2023-11-25 05:24:53.665 UTC [1349349] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.665 UTC [1349349] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4], COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-11-25 05:24:53.748 UTC [1349349] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:53.748 UTC [1349349] DETAIL:  Streaming transactions committing after 0/2CE6B48, reading WAL from 0/2AD4110.
+2023-11-25 05:24:53.748 UTC [1349349] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4], COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-11-25 05:24:53.748 UTC [1349349] LOG:  logical decoding found consistent point at 0/2AD4110
+2023-11-25 05:24:53.748 UTC [1349349] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.748 UTC [1349349] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4], COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-11-25 05:24:53.869 UTC [1349349] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:53.869 UTC [1349349] DETAIL:  Streaming transactions committing after 0/2DBE350, reading WAL from 0/2AD4110.
+2023-11-25 05:24:53.869 UTC [1349349] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4], COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-11-25 05:24:53.869 UTC [1349349] LOG:  logical decoding found consistent point at 0/2AD4110
+2023-11-25 05:24:53.869 UTC [1349349] DETAIL:  There are no running transactions.
+2023-11-25 05:24:53.869 UTC [1349349] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4], COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-11-25 05:24:54.004 UTC [1349349] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:54.004 UTC [1349349] DETAIL:  Streaming transactions committing after 0/2E95B18, reading WAL from 0/2AD4110.
+2023-11-25 05:24:54.004 UTC [1349349] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4], COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-11-25 05:24:54.004 UTC [1349349] LOG:  logical decoding found consistent point at 0/2AD4110
+2023-11-25 05:24:54.004 UTC [1349349] DETAIL:  There are no running transactions.
+2023-11-25 05:24:54.004 UTC [1349349] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4], COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-11-25 05:24:54.121 UTC [1349349] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:54.121 UTC [1349349] DETAIL:  Streaming transactions committing after 0/2F094E8, reading WAL from 0/2AD4110.
+2023-11-25 05:24:54.121 UTC [1349349] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4], COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-11-25 05:24:54.121 UTC [1349349] LOG:  logical decoding found consistent point at 0/2AD4110
+2023-11-25 05:24:54.121 UTC [1349349] DETAIL:  There are no running transactions.
+2023-11-25 05:24:54.121 UTC [1349349] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4], COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-11-25 05:24:54.305 UTC [1349349] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:54.305 UTC [1349349] DETAIL:  Streaming transactions committing after 0/2FE0D00, reading WAL from 0/2AD4110.
+2023-11-25 05:24:54.305 UTC [1349349] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4], COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-11-25 05:24:54.305 UTC [1349349] LOG:  logical decoding found consistent point at 0/2AD4110
+2023-11-25 05:24:54.305 UTC [1349349] DETAIL:  There are no running transactions.
+2023-11-25 05:24:54.305 UTC [1349349] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4], COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-11-25 05:24:54.444 UTC [1349349] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:54.444 UTC [1349349] DETAIL:  Streaming transactions committing after 0/3054718, reading WAL from 0/2AD4110.
+2023-11-25 05:24:54.444 UTC [1349349] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4] COLLATE "C", COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-11-25 05:24:54.444 UTC [1349349] LOG:  logical decoding found consistent point at 0/2AD4110
+2023-11-25 05:24:54.444 UTC [1349349] DETAIL:  There are no running transactions.
+2023-11-25 05:24:54.444 UTC [1349349] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4] COLLATE "C", COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-11-25 05:24:54.594 UTC [1349349] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:54.594 UTC [1349349] DETAIL:  Streaming transactions committing after 0/30C8128, reading WAL from 0/2AD4110.
+2023-11-25 05:24:54.594 UTC [1349349] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4] COLLATE "C", COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-11-25 05:24:54.594 UTC [1349349] LOG:  logical decoding found consistent point at 0/2AD4110
+2023-11-25 05:24:54.594 UTC [1349349] DETAIL:  There are no running transactions.
+2023-11-25 05:24:54.594 UTC [1349349] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4] COLLATE "C", COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-11-25 05:24:54.786 UTC [1349349] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:54.786 UTC [1349349] DETAIL:  Streaming transactions committing after 0/31B3298, reading WAL from 0/2AD4110.
+2023-11-25 05:24:54.786 UTC [1349349] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4] COLLATE "C", COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-11-25 05:24:54.786 UTC [1349349] LOG:  logical decoding found consistent point at 0/2AD4110
+2023-11-25 05:24:54.786 UTC [1349349] DETAIL:  There are no running transactions.
+2023-11-25 05:24:54.786 UTC [1349349] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4] COLLATE "C", COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-11-25 05:24:54.957 UTC [1349349] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:54.957 UTC [1349349] DETAIL:  Streaming transactions committing after 0/3228BF8, reading WAL from 0/2AD4110.
+2023-11-25 05:24:54.957 UTC [1349349] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4] COLLATE "C", COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-11-25 05:24:54.957 UTC [1349349] LOG:  logical decoding found consistent point at 0/2AD4110
+2023-11-25 05:24:54.957 UTC [1349349] DETAIL:  There are no running transactions.
+2023-11-25 05:24:54.957 UTC [1349349] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4] COLLATE "C", COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-11-25 05:24:55.143 UTC [1349349] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:55.143 UTC [1349349] DETAIL:  Streaming transactions committing after 0/329E558, reading WAL from 0/2AD4110.
+2023-11-25 05:24:55.143 UTC [1349349] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4] COLLATE "C", COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-11-25 05:24:55.143 UTC [1349349] LOG:  logical decoding found consistent point at 0/2AD4110
+2023-11-25 05:24:55.143 UTC [1349349] DETAIL:  There are no running transactions.
+2023-11-25 05:24:55.143 UTC [1349349] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4] COLLATE "C", COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-11-25 05:24:55.406 UTC [1349353] LOG:  logical decoding found consistent point at 0/34278E0
+2023-11-25 05:24:55.406 UTC [1349353] DETAIL:  There are no running transactions.
+2023-11-25 05:24:55.406 UTC [1349353] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot_p', 'test_decoding');
+2023-11-25 05:24:55.431 UTC [1349353] LOG:  logical decoding found consistent point at 0/3427918
+2023-11-25 05:24:55.431 UTC [1349353] DETAIL:  There are no running transactions.
+2023-11-25 05:24:55.431 UTC [1349353] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot_t', 'test_decoding', true);
+2023-11-25 05:24:55.453 UTC [1349353] LOG:  logical decoding found consistent point at 0/3427950
+2023-11-25 05:24:55.453 UTC [1349353] DETAIL:  There are no running transactions.
+2023-11-25 05:24:55.453 UTC [1349353] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot_p', 'test_decoding', false);
+2023-11-25 05:24:55.479 UTC [1349353] LOG:  logical decoding found consistent point at 0/3427988
+2023-11-25 05:24:55.479 UTC [1349353] DETAIL:  There are no running transactions.
+2023-11-25 05:24:55.479 UTC [1349353] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot_t2', 'test_decoding', true);
+2023-11-25 05:24:55.498 UTC [1349353] ERROR:  could not access file "nonexistent": No such file or directory
+2023-11-25 05:24:55.498 UTC [1349353] STATEMENT:  SELECT pg_create_logical_replication_slot('foo', 'nonexistent');
+2023-11-25 05:24:55.515 UTC [1349354] LOG:  slot test looped 0 times
+2023-11-25 05:24:55.515 UTC [1349354] CONTEXT:  PL/pgSQL function inline_code_block line 4 at RAISE
+2023-11-25 05:24:55.515 UTC [1349354] STATEMENT:  do 'declare c int = 0;
+	begin
+	  while (select count(*) from pg_replication_slots where active_pid = '
+	    '1349353'
+	  ') > 0 loop c := c + 1; perform pg_sleep(0.01); end loop;
+	  raise log ''slot test looped % times'', c;
+	end';
+2023-11-25 05:24:55.516 UTC [1349354] ERROR:  replication slot "regression_slot_t" does not exist
+2023-11-25 05:24:55.516 UTC [1349354] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot_t');
+2023-11-25 05:24:55.516 UTC [1349354] ERROR:  replication slot "regression_slot_t2" does not exist
+2023-11-25 05:24:55.516 UTC [1349354] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot_t2');
+2023-11-25 05:24:55.517 UTC [1349354] ERROR:  replication slot "not_existing_slot" does not exist
+2023-11-25 05:24:55.517 UTC [1349354] STATEMENT:  SELECT count(*) >= 0 AS ok FROM pg_ls_replslotdir('not_existing_slot');
+2023-11-25 05:24:55.539 UTC [1349354] LOG:  logical decoding found consistent point at 0/34279F8
+2023-11-25 05:24:55.539 UTC [1349354] DETAIL:  There are no running transactions.
+2023-11-25 05:24:55.539 UTC [1349354] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot1', 'test_decoding', true);
+2023-11-25 05:24:55.564 UTC [1349354] LOG:  logical decoding found consistent point at 0/342C3C8
+2023-11-25 05:24:55.564 UTC [1349354] DETAIL:  There are no running transactions.
+2023-11-25 05:24:55.564 UTC [1349354] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot2', 'test_decoding', true);
+2023-11-25 05:24:55.565 UTC [1349354] LOG:  starting logical decoding for slot "regression_slot1"
+2023-11-25 05:24:55.565 UTC [1349354] DETAIL:  Streaming transactions committing after 0/3427A30, reading WAL from 0/34279F8.
+2023-11-25 05:24:55.565 UTC [1349354] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot1', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:55.566 UTC [1349354] LOG:  logical decoding found consistent point at 0/34279F8
+2023-11-25 05:24:55.566 UTC [1349354] DETAIL:  There are no running transactions.
+2023-11-25 05:24:55.566 UTC [1349354] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot1', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:55.578 UTC [1349354] LOG:  starting logical decoding for slot "regression_slot2"
+2023-11-25 05:24:55.578 UTC [1349354] DETAIL:  Streaming transactions committing after 0/342C400, reading WAL from 0/342C3C8.
+2023-11-25 05:24:55.578 UTC [1349354] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot2', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:55.578 UTC [1349354] LOG:  logical decoding found consistent point at 0/342C3C8
+2023-11-25 05:24:55.578 UTC [1349354] DETAIL:  There are no running transactions.
+2023-11-25 05:24:55.578 UTC [1349354] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot2', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:55.582 UTC [1349354] LOG:  starting logical decoding for slot "regression_slot1"
+2023-11-25 05:24:55.582 UTC [1349354] DETAIL:  Streaming transactions committing after 0/342C4B8, reading WAL from 0/342C3C8.
+2023-11-25 05:24:55.582 UTC [1349354] STATEMENT:  SELECT end_lsn FROM pg_replication_slot_advance('regression_slot1', '0/342C628') 
+2023-11-25 05:24:55.582 UTC [1349354] LOG:  logical decoding found consistent point at 0/342C3C8
+2023-11-25 05:24:55.582 UTC [1349354] DETAIL:  There are no running transactions.
+2023-11-25 05:24:55.582 UTC [1349354] STATEMENT:  SELECT end_lsn FROM pg_replication_slot_advance('regression_slot1', '0/342C628') 
+2023-11-25 05:24:55.582 UTC [1349354] LOG:  starting logical decoding for slot "regression_slot2"
+2023-11-25 05:24:55.582 UTC [1349354] DETAIL:  Streaming transactions committing after 0/342C4B8, reading WAL from 0/342C3C8.
+2023-11-25 05:24:55.582 UTC [1349354] STATEMENT:  SELECT slot_name FROM pg_replication_slot_advance('regression_slot2', pg_current_wal_lsn());
+2023-11-25 05:24:55.582 UTC [1349354] LOG:  logical decoding found consistent point at 0/342C3C8
+2023-11-25 05:24:55.582 UTC [1349354] DETAIL:  There are no running transactions.
+2023-11-25 05:24:55.582 UTC [1349354] STATEMENT:  SELECT slot_name FROM pg_replication_slot_advance('regression_slot2', pg_current_wal_lsn());
+2023-11-25 05:24:55.583 UTC [1349354] LOG:  starting logical decoding for slot "regression_slot1"
+2023-11-25 05:24:55.583 UTC [1349354] DETAIL:  Streaming transactions committing after 0/342C628, reading WAL from 0/342C3C8.
+2023-11-25 05:24:55.583 UTC [1349354] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot1', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:55.583 UTC [1349354] LOG:  logical decoding found consistent point at 0/342C3C8
+2023-11-25 05:24:55.583 UTC [1349354] DETAIL:  There are no running transactions.
+2023-11-25 05:24:55.583 UTC [1349354] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot1', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:55.584 UTC [1349354] LOG:  starting logical decoding for slot "regression_slot2"
+2023-11-25 05:24:55.584 UTC [1349354] DETAIL:  Streaming transactions committing after 0/342C6E0, reading WAL from 0/342C3C8.
+2023-11-25 05:24:55.584 UTC [1349354] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot2', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:55.584 UTC [1349354] LOG:  logical decoding found consistent point at 0/342C3C8
+2023-11-25 05:24:55.584 UTC [1349354] DETAIL:  There are no running transactions.
+2023-11-25 05:24:55.584 UTC [1349354] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot2', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:55.586 UTC [1349354] ERROR:  replication slot "regression_slot1" already exists
+2023-11-25 05:24:55.586 UTC [1349354] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot1', 'test_decoding', true);
+2023-11-25 05:24:55.595 UTC [1349354] ERROR:  replication slot "regression_slot1" does not exist
+2023-11-25 05:24:55.595 UTC [1349354] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot1');
+2023-11-25 05:24:55.596 UTC [1349354] ERROR:  replication slot "regression_slot2" does not exist
+2023-11-25 05:24:55.596 UTC [1349354] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot2');
+2023-11-25 05:24:55.608 UTC [1349354] ERROR:  invalid target WAL LSN
+2023-11-25 05:24:55.608 UTC [1349354] STATEMENT:  SELECT pg_replication_slot_advance('regression_slot3', '0/0');
+2023-11-25 05:24:55.608 UTC [1349354] ERROR:  replication slot "regression_slot3" cannot be advanced
+2023-11-25 05:24:55.608 UTC [1349354] DETAIL:  This slot has never previously reserved WAL, or it has been invalidated.
+2023-11-25 05:24:55.608 UTC [1349354] STATEMENT:  SELECT pg_replication_slot_advance('regression_slot3', '0/1');
+2023-11-25 05:24:55.631 UTC [1349354] LOG:  logical decoding found consistent point at 0/342E348
+2023-11-25 05:24:55.631 UTC [1349354] DETAIL:  There are no running transactions.
+2023-11-25 05:24:55.631 UTC [1349354] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('orig_slot1', 'test_decoding', false);
+2023-11-25 05:24:55.731 UTC [1349354] ERROR:  all replication slots are in use
+2023-11-25 05:24:55.731 UTC [1349354] HINT:  Free one or increase max_replication_slots.
+2023-11-25 05:24:55.731 UTC [1349354] STATEMENT:  SELECT 'copy' FROM pg_copy_logical_replication_slot('orig_slot1', 'failed');
+2023-11-25 05:24:55.766 UTC [1349354] LOG:  logical decoding found consistent point at 0/342E380
+2023-11-25 05:24:55.766 UTC [1349354] DETAIL:  There are no running transactions.
+2023-11-25 05:24:55.766 UTC [1349354] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('orig_slot2', 'test_decoding', true);
+2023-11-25 05:24:55.855 UTC [1349354] ERROR:  cannot copy physical replication slot "orig_slot2" as a logical replication slot
+2023-11-25 05:24:55.855 UTC [1349354] STATEMENT:  SELECT 'copy' FROM pg_copy_physical_replication_slot('orig_slot2', 'failed');
+2023-11-25 05:24:55.955 UTC [1349354] ERROR:  cannot copy logical replication slot "orig_slot1" as a physical replication slot
+2023-11-25 05:24:55.955 UTC [1349354] STATEMENT:  SELECT 'copy' FROM pg_copy_logical_replication_slot('orig_slot1', 'failed');
+2023-11-25 05:24:55.961 UTC [1349354] ERROR:  cannot copy a replication slot that doesn't reserve WAL
+2023-11-25 05:24:55.961 UTC [1349354] STATEMENT:  SELECT 'copy' FROM pg_copy_physical_replication_slot('orig_slot2', 'failed');
+2023-11-25 05:24:56.080 UTC [1349358] LOG:  logical decoding found consistent point at 0/342E3B8
+2023-11-25 05:24:56.080 UTC [1349358] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.080 UTC [1349358] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-11-25 05:24:56.111 UTC [1349358] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:56.111 UTC [1349358] DETAIL:  Streaming transactions committing after 0/342E3F0, reading WAL from 0/342E3B8.
+2023-11-25 05:24:56.111 UTC [1349358] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.111 UTC [1349358] LOG:  logical decoding found consistent point at 0/342E3B8
+2023-11-25 05:24:56.111 UTC [1349358] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.111 UTC [1349358] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.139 UTC [1349362] LOG:  logical decoding found consistent point at 0/34387F0
+2023-11-25 05:24:56.139 UTC [1349362] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.139 UTC [1349362] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-11-25 05:24:56.150 UTC [1349362] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:56.150 UTC [1349362] DETAIL:  Streaming transactions committing after 0/3438828, reading WAL from 0/34387F0.
+2023-11-25 05:24:56.150 UTC [1349362] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.150 UTC [1349362] LOG:  logical decoding found consistent point at 0/34387F0
+2023-11-25 05:24:56.150 UTC [1349362] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.150 UTC [1349362] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.159 UTC [1349362] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:56.159 UTC [1349362] DETAIL:  Streaming transactions committing after 0/343BEB8, reading WAL from 0/34387F0.
+2023-11-25 05:24:56.159 UTC [1349362] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL, 'include-xids', '0', 'skip-empty-xacts', '1', 'stream-changes', '1');
+2023-11-25 05:24:56.160 UTC [1349362] LOG:  logical decoding found consistent point at 0/34387F0
+2023-11-25 05:24:56.160 UTC [1349362] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.160 UTC [1349362] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL, 'include-xids', '0', 'skip-empty-xacts', '1', 'stream-changes', '1');
+2023-11-25 05:24:56.161 UTC [1349362] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:56.161 UTC [1349362] DETAIL:  Streaming transactions committing after 0/344E948, reading WAL from 0/34387F0.
+2023-11-25 05:24:56.161 UTC [1349362] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.161 UTC [1349362] LOG:  logical decoding found consistent point at 0/34387F0
+2023-11-25 05:24:56.161 UTC [1349362] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.161 UTC [1349362] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.163 UTC [1349362] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:56.163 UTC [1349362] DETAIL:  Streaming transactions committing after 0/344EB00, reading WAL from 0/34387F0.
+2023-11-25 05:24:56.163 UTC [1349362] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL, 'include-xids', '0', 'skip-empty-xacts', '1', 'stream-changes', '1');
+2023-11-25 05:24:56.163 UTC [1349362] LOG:  logical decoding found consistent point at 0/34387F0
+2023-11-25 05:24:56.163 UTC [1349362] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.163 UTC [1349362] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL, 'include-xids', '0', 'skip-empty-xacts', '1', 'stream-changes', '1');
+2023-11-25 05:24:56.166 UTC [1349362] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:56.166 UTC [1349362] DETAIL:  Streaming transactions committing after 0/345EE78, reading WAL from 0/34387F0.
+2023-11-25 05:24:56.166 UTC [1349362] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL, 'include-xids', '0', 'skip-empty-xacts', '1', 'stream-changes', '1');
+2023-11-25 05:24:56.166 UTC [1349362] LOG:  logical decoding found consistent point at 0/34387F0
+2023-11-25 05:24:56.166 UTC [1349362] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.166 UTC [1349362] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL, 'include-xids', '0', 'skip-empty-xacts', '1', 'stream-changes', '1');
+2023-11-25 05:24:56.197 UTC [1349366] LOG:  logical decoding found consistent point at 0/3473A88
+2023-11-25 05:24:56.197 UTC [1349366] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.197 UTC [1349366] STATEMENT:  SELECT 'init' FROM
+	    pg_create_logical_replication_slot('regression_slot_stats1', 'test_decoding') s1,
+	    pg_create_logical_replication_slot('regression_slot_stats2', 'test_decoding') s2,
+	    pg_create_logical_replication_slot('regression_slot_stats3', 'test_decoding') s3;
+2023-11-25 05:24:56.221 UTC [1349366] LOG:  logical decoding found consistent point at 0/3473AC0
+2023-11-25 05:24:56.221 UTC [1349366] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.221 UTC [1349366] STATEMENT:  SELECT 'init' FROM
+	    pg_create_logical_replication_slot('regression_slot_stats1', 'test_decoding') s1,
+	    pg_create_logical_replication_slot('regression_slot_stats2', 'test_decoding') s2,
+	    pg_create_logical_replication_slot('regression_slot_stats3', 'test_decoding') s3;
+2023-11-25 05:24:56.245 UTC [1349366] LOG:  logical decoding found consistent point at 0/3473AF8
+2023-11-25 05:24:56.245 UTC [1349366] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.245 UTC [1349366] STATEMENT:  SELECT 'init' FROM
+	    pg_create_logical_replication_slot('regression_slot_stats1', 'test_decoding') s1,
+	    pg_create_logical_replication_slot('regression_slot_stats2', 'test_decoding') s2,
+	    pg_create_logical_replication_slot('regression_slot_stats3', 'test_decoding') s3;
+2023-11-25 05:24:56.257 UTC [1349366] LOG:  starting logical decoding for slot "regression_slot_stats1"
+2023-11-25 05:24:56.257 UTC [1349366] DETAIL:  Streaming transactions committing after 0/3473AC0, reading WAL from 0/3473A88.
+2023-11-25 05:24:56.257 UTC [1349366] STATEMENT:  SELECT count(*) FROM pg_logical_slot_get_changes('regression_slot_stats1', NULL, NULL, 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.257 UTC [1349366] LOG:  logical decoding found consistent point at 0/3473A88
+2023-11-25 05:24:56.257 UTC [1349366] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.257 UTC [1349366] STATEMENT:  SELECT count(*) FROM pg_logical_slot_get_changes('regression_slot_stats1', NULL, NULL, 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.286 UTC [1349366] LOG:  starting logical decoding for slot "regression_slot_stats2"
+2023-11-25 05:24:56.286 UTC [1349366] DETAIL:  Streaming transactions committing after 0/3473AF8, reading WAL from 0/3473AC0.
+2023-11-25 05:24:56.286 UTC [1349366] STATEMENT:  SELECT count(*) FROM pg_logical_slot_get_changes('regression_slot_stats2', NULL, NULL, 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.286 UTC [1349366] LOG:  logical decoding found consistent point at 0/3473AC0
+2023-11-25 05:24:56.286 UTC [1349366] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.286 UTC [1349366] STATEMENT:  SELECT count(*) FROM pg_logical_slot_get_changes('regression_slot_stats2', NULL, NULL, 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.296 UTC [1349366] LOG:  starting logical decoding for slot "regression_slot_stats3"
+2023-11-25 05:24:56.296 UTC [1349366] DETAIL:  Streaming transactions committing after 0/3473B30, reading WAL from 0/3473AF8.
+2023-11-25 05:24:56.296 UTC [1349366] STATEMENT:  SELECT count(*) FROM pg_logical_slot_get_changes('regression_slot_stats3', NULL, NULL, 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.296 UTC [1349366] LOG:  logical decoding found consistent point at 0/3473AF8
+2023-11-25 05:24:56.296 UTC [1349366] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.296 UTC [1349366] STATEMENT:  SELECT count(*) FROM pg_logical_slot_get_changes('regression_slot_stats3', NULL, NULL, 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.299 UTC [1349366] ERROR:  replication slot "do-not-exist" does not exist
+2023-11-25 05:24:56.299 UTC [1349366] STATEMENT:  SELECT pg_stat_reset_replication_slot('do-not-exist');
+2023-11-25 05:24:56.307 UTC [1349366] LOG:  starting logical decoding for slot "regression_slot_stats1"
+2023-11-25 05:24:56.307 UTC [1349366] DETAIL:  Streaming transactions committing after 0/34771D0, reading WAL from 0/3473AF8.
+2023-11-25 05:24:56.307 UTC [1349366] STATEMENT:  SELECT count(*) FROM pg_logical_slot_peek_changes('regression_slot_stats1', NULL, NULL, 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.307 UTC [1349366] LOG:  logical decoding found consistent point at 0/3473AF8
+2023-11-25 05:24:56.307 UTC [1349366] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.307 UTC [1349366] STATEMENT:  SELECT count(*) FROM pg_logical_slot_peek_changes('regression_slot_stats1', NULL, NULL, 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.364 UTC [1349370] LOG:  logical decoding found consistent point at 0/34DA808
+2023-11-25 05:24:56.364 UTC [1349370] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.364 UTC [1349370] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding', false, true);
+2023-11-25 05:24:56.380 UTC [1349370] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:56.380 UTC [1349370] DETAIL:  Streaming transactions committing after 0/34DA840, reading WAL from 0/34DA808.
+2023-11-25 05:24:56.380 UTC [1349370] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.380 UTC [1349370] LOG:  logical decoding found consistent point at 0/34DA808
+2023-11-25 05:24:56.380 UTC [1349370] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.380 UTC [1349370] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.382 UTC [1349370] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:56.382 UTC [1349370] DETAIL:  Streaming transactions committing after 0/34DF3B8, reading WAL from 0/34DA808.
+2023-11-25 05:24:56.382 UTC [1349370] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.382 UTC [1349370] LOG:  logical decoding found consistent point at 0/34DA808
+2023-11-25 05:24:56.382 UTC [1349370] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.382 UTC [1349370] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.383 UTC [1349370] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:56.383 UTC [1349370] DETAIL:  Streaming transactions committing after 0/34DF638, reading WAL from 0/34DA808.
+2023-11-25 05:24:56.383 UTC [1349370] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.383 UTC [1349370] LOG:  logical decoding found consistent point at 0/34DA808
+2023-11-25 05:24:56.383 UTC [1349370] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.383 UTC [1349370] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.384 UTC [1349370] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:56.384 UTC [1349370] DETAIL:  Streaming transactions committing after 0/34DF680, reading WAL from 0/34DA808.
+2023-11-25 05:24:56.384 UTC [1349370] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.384 UTC [1349370] LOG:  logical decoding found consistent point at 0/34DA808
+2023-11-25 05:24:56.384 UTC [1349370] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.384 UTC [1349370] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.386 UTC [1349370] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:56.386 UTC [1349370] DETAIL:  Streaming transactions committing after 0/34DF820, reading WAL from 0/34DA808.
+2023-11-25 05:24:56.386 UTC [1349370] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.386 UTC [1349370] LOG:  logical decoding found consistent point at 0/34DA808
+2023-11-25 05:24:56.386 UTC [1349370] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.386 UTC [1349370] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.392 UTC [1349370] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:56.392 UTC [1349370] DETAIL:  Streaming transactions committing after 0/34DF868, reading WAL from 0/34DA808.
+2023-11-25 05:24:56.392 UTC [1349370] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.392 UTC [1349370] LOG:  logical decoding found consistent point at 0/34DA808
+2023-11-25 05:24:56.392 UTC [1349370] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.392 UTC [1349370] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.394 UTC [1349370] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:56.394 UTC [1349370] DETAIL:  Streaming transactions committing after 0/34E1FE8, reading WAL from 0/34DA808.
+2023-11-25 05:24:56.394 UTC [1349370] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.394 UTC [1349370] LOG:  logical decoding found consistent point at 0/34DA808
+2023-11-25 05:24:56.394 UTC [1349370] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.394 UTC [1349370] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.395 UTC [1349370] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:56.395 UTC [1349370] DETAIL:  Streaming transactions committing after 0/34E2110, reading WAL from 0/34DA808.
+2023-11-25 05:24:56.395 UTC [1349370] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.395 UTC [1349370] LOG:  logical decoding found consistent point at 0/34DA808
+2023-11-25 05:24:56.395 UTC [1349370] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.395 UTC [1349370] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.397 UTC [1349370] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:56.397 UTC [1349370] DETAIL:  Streaming transactions committing after 0/34E2440, reading WAL from 0/34DA808.
+2023-11-25 05:24:56.397 UTC [1349370] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.397 UTC [1349370] LOG:  logical decoding found consistent point at 0/34DA808
+2023-11-25 05:24:56.397 UTC [1349370] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.397 UTC [1349370] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.410 UTC [1349370] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:56.410 UTC [1349370] DETAIL:  Streaming transactions committing after 0/34E25A0, reading WAL from 0/34DA808.
+2023-11-25 05:24:56.410 UTC [1349370] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.411 UTC [1349370] LOG:  logical decoding found consistent point at 0/34DA808
+2023-11-25 05:24:56.411 UTC [1349370] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.411 UTC [1349370] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.412 UTC [1349370] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:56.412 UTC [1349370] DETAIL:  Streaming transactions committing after 0/34E9380, reading WAL from 0/34DA808.
+2023-11-25 05:24:56.412 UTC [1349370] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.412 UTC [1349370] LOG:  logical decoding found consistent point at 0/34DA808
+2023-11-25 05:24:56.412 UTC [1349370] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.412 UTC [1349370] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.419 UTC [1349370] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:56.419 UTC [1349370] DETAIL:  Streaming transactions committing after 0/34E9DB8, reading WAL from 0/34DA808.
+2023-11-25 05:24:56.419 UTC [1349370] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.419 UTC [1349370] LOG:  logical decoding found consistent point at 0/34DA808
+2023-11-25 05:24:56.419 UTC [1349370] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.419 UTC [1349370] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.420 UTC [1349370] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:56.420 UTC [1349370] DETAIL:  Streaming transactions committing after 0/34EB690, reading WAL from 0/34DA808.
+2023-11-25 05:24:56.420 UTC [1349370] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.420 UTC [1349370] LOG:  logical decoding found consistent point at 0/34DA808
+2023-11-25 05:24:56.420 UTC [1349370] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.420 UTC [1349370] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.422 UTC [1349370] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:56.422 UTC [1349370] DETAIL:  Streaming transactions committing after 0/34EB848, reading WAL from 0/34DA808.
+2023-11-25 05:24:56.422 UTC [1349370] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.422 UTC [1349370] LOG:  logical decoding found consistent point at 0/34DA808
+2023-11-25 05:24:56.422 UTC [1349370] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.422 UTC [1349370] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.423 UTC [1349370] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:56.423 UTC [1349370] DETAIL:  Streaming transactions committing after 0/34EB9F0, reading WAL from 0/34DA808.
+2023-11-25 05:24:56.423 UTC [1349370] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.423 UTC [1349370] LOG:  logical decoding found consistent point at 0/34DA808
+2023-11-25 05:24:56.423 UTC [1349370] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.423 UTC [1349370] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.428 UTC [1349370] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:56.428 UTC [1349370] DETAIL:  Streaming transactions committing after 0/34EBA40, reading WAL from 0/34DA808.
+2023-11-25 05:24:56.428 UTC [1349370] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.428 UTC [1349370] LOG:  logical decoding found consistent point at 0/34DA808
+2023-11-25 05:24:56.428 UTC [1349370] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.428 UTC [1349370] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.458 UTC [1349376] LOG:  logical decoding found consistent point at 0/34EE538
+2023-11-25 05:24:56.458 UTC [1349376] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.458 UTC [1349376] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding', false, true);
+2023-11-25 05:24:56.470 UTC [1349376] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:56.470 UTC [1349376] DETAIL:  Streaming transactions committing after 0/34EE570, reading WAL from 0/34EE538.
+2023-11-25 05:24:56.470 UTC [1349376] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.470 UTC [1349376] LOG:  logical decoding found consistent point at 0/34EE538
+2023-11-25 05:24:56.470 UTC [1349376] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.470 UTC [1349376] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-11-25 05:24:56.476 UTC [1349376] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:56.476 UTC [1349376] DETAIL:  Streaming transactions committing after 0/34F1BE8, reading WAL from 0/34EE538.
+2023-11-25 05:24:56.476 UTC [1349376] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL, 'include-xids', '0', 'skip-empty-xacts', '1', 'stream-changes', '1');
+2023-11-25 05:24:56.476 UTC [1349376] LOG:  logical decoding found consistent point at 0/34EE538
+2023-11-25 05:24:56.476 UTC [1349376] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.476 UTC [1349376] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL, 'include-xids', '0', 'skip-empty-xacts', '1', 'stream-changes', '1');
+2023-11-25 05:24:56.478 UTC [1349376] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:56.478 UTC [1349376] DETAIL:  Streaming transactions committing after 0/3504728, reading WAL from 0/34EE538.
+2023-11-25 05:24:56.478 UTC [1349376] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL, 'include-xids', '0', 'skip-empty-xacts', '1', 'stream-changes', '1');
+2023-11-25 05:24:56.478 UTC [1349376] LOG:  logical decoding found consistent point at 0/34EE538
+2023-11-25 05:24:56.478 UTC [1349376] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.478 UTC [1349376] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL, 'include-xids', '0', 'skip-empty-xacts', '1', 'stream-changes', '1');
+2023-11-25 05:24:56.484 UTC [1349376] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:56.484 UTC [1349376] DETAIL:  Streaming transactions committing after 0/3504768, reading WAL from 0/34EE538.
+2023-11-25 05:24:56.484 UTC [1349376] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL, 'include-xids', '0', 'skip-empty-xacts', '1', 'stream-changes', '1');
+2023-11-25 05:24:56.484 UTC [1349376] LOG:  logical decoding found consistent point at 0/34EE538
+2023-11-25 05:24:56.484 UTC [1349376] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.484 UTC [1349376] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL, 'include-xids', '0', 'skip-empty-xacts', '1', 'stream-changes', '1');
+2023-11-25 05:24:56.485 UTC [1349376] LOG:  starting logical decoding for slot "regression_slot"
+2023-11-25 05:24:56.485 UTC [1349376] DETAIL:  Streaming transactions committing after 0/3517298, reading WAL from 0/34EE538.
+2023-11-25 05:24:56.485 UTC [1349376] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL, 'include-xids', '0', 'skip-empty-xacts', '1', 'stream-changes', '1');
+2023-11-25 05:24:56.485 UTC [1349376] LOG:  logical decoding found consistent point at 0/34EE538
+2023-11-25 05:24:56.485 UTC [1349376] DETAIL:  There are no running transactions.
+2023-11-25 05:24:56.485 UTC [1349376] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL, 'include-xids', '0', 'skip-empty-xacts', '1', 'stream-changes', '1');

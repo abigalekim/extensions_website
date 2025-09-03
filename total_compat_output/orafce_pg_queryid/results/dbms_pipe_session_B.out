@@ -1,0 +1,99 @@
+\set ECHO none
+ERROR:  schema "dbms_pipe" does not exist at character 8
+ERROR:  role "pipe_test_owner" does not exist
+-- Receives messages sent via an implicit pipe
+SELECT receiveFrom('named_pipe');
+ERROR:  schema "dbms_pipe" does not exist at character 8
+-- Bulk receive messages
+SELECT bulkReceive();
+ERROR:  schema "dbms_pipe" does not exist at character 1
+-- Receives messages sent via an explicit private pipe under the same user
+-- 'pipe_test_owner'
+SELECT dbms_pipe.receive_message('recv_private1_notifier');
+ERROR:  schema "dbms_pipe" does not exist at character 8
+SELECT receiveFrom('private_pipe_1');
+ERROR:  schema "dbms_pipe" does not exist at character 8
+-- Switch user to 'pipe_test_other'
+DROP USER IF EXISTS pipe_test_other;
+NOTICE:  role "pipe_test_other" does not exist, skipping
+CREATE USER pipe_test_other;
+SET SESSION AUTHORIZATION pipe_test_other;
+-- Try to receive messages sent via an explicit private pipe under the user
+-- 'pipe_test_other' who is not the owner of pipe.
+-- insufficient privileges in case of 'private_pipe_2'.
+SELECT dbms_pipe.receive_message('recv_private2_notifier');
+ERROR:  schema "dbms_pipe" does not exist at character 8
+SELECT receiveFrom('private_pipe_2');
+ERROR:  schema "dbms_pipe" does not exist at character 8
+-- These are explicit private pipes created using create_pipe(text,integer)
+-- and create_pipe(text)
+SELECT dbms_pipe.receive_message('recv_public1_notifier');
+ERROR:  schema "dbms_pipe" does not exist at character 8
+SELECT receiveFrom('public_pipe_3');
+ERROR:  schema "dbms_pipe" does not exist at character 8
+SELECT dbms_pipe.receive_message('recv_public2_notifier');
+ERROR:  schema "dbms_pipe" does not exist at character 8
+SELECT receiveFrom('public_pipe_4');
+ERROR:  schema "dbms_pipe" does not exist at character 8
+-- Switch back to user 'pipe_test_owner'
+SET SESSION AUTHORIZATION pipe_test_owner;
+DROP USER pipe_test_other;
+-- Tests receive_message(text)
+SELECT checkReceive1('pipe_name_1');
+ERROR:  schema "dbms_pipe" does not exist at character 8
+SELECT checkReceive1('pipe_name_2');
+ERROR:  schema "dbms_pipe" does not exist at character 8
+-- Tests dbms_pipe.db_pipes view
+SELECT name, items, "limit", private, owner
+FROM dbms_pipe.db_pipes
+WHERE name LIKE 'private%'
+ORDER BY name;
+ERROR:  relation "dbms_pipe.db_pipes" does not exist at character 50
+-- Tests dbms_pipe.__list_pipes(); attribute size is not included
+-- since it can be different across runs.
+SELECT name, items, "limit", private, owner
+FROM dbms_pipe.__list_pipes()  AS  (name varchar, items int4, siz int4, "limit" int4, private bool, owner varchar)
+WHERE name <> 'pipe_name_4'
+ORDER BY 1;
+ERROR:  schema "dbms_pipe" does not exist at character 50
+-- Tests remove_pipe(text)
+SELECT dbms_pipe.remove_pipe('private_pipe_1');
+ERROR:  schema "dbms_pipe" does not exist at character 8
+SELECT dbms_pipe.remove_pipe('private_pipe_2');
+ERROR:  schema "dbms_pipe" does not exist at character 8
+SELECT dbms_pipe.remove_pipe('public_pipe_3');
+ERROR:  schema "dbms_pipe" does not exist at character 8
+SELECT dbms_pipe.remove_pipe('public_pipe_4');
+ERROR:  schema "dbms_pipe" does not exist at character 8
+SELECT dbms_pipe.purge('pipe_name_1');
+ERROR:  schema "dbms_pipe" does not exist at character 8
+SELECT dbms_pipe.purge('pipe_name_2');
+ERROR:  schema "dbms_pipe" does not exist at character 8
+-- Receives drop table notification from session A via 'pipe_name_3'
+SELECT  dropTempTable();
+ERROR:  schema "dbms_pipe" does not exist at character 1
+SELECT dbms_pipe.purge('pipe_name_3');
+ERROR:  schema "dbms_pipe" does not exist at character 8
+-- tests unique_session_name() (uses 'pipe_name_4')
+SELECT checkUniqueSessionNameB();
+ERROR:  schema "dbms_pipe" does not exist at character 8
+SELECT dbms_pipe.purge('pipe_name_4');
+ERROR:  schema "dbms_pipe" does not exist at character 8
+DROP FUNCTION receiveFrom(text);
+ERROR:  must be owner of function receivefrom
+DROP FUNCTION checkReceive1(text);
+ERROR:  must be owner of function checkreceive1
+DROP FUNCTION checkUniqueSessionNameB();
+ERROR:  must be owner of function checkuniquesessionnameb
+DROP FUNCTION bulkReceive();
+ERROR:  must be owner of function bulkreceive
+DROP FUNCTION dropTempTable();
+ERROR:  must be owner of function droptemptable
+-- Perform a recieve on removed pipe resulting on timeout
+SELECT dbms_pipe.receive_message('public_pipe_4',2);
+ERROR:  schema "dbms_pipe" does not exist at character 8
+SELECT dbms_pipe.purge('public_pipe_4');
+ERROR:  schema "dbms_pipe" does not exist at character 8
+SET SESSION AUTHORIZATION DEFAULT;
+DROP USER pipe_test_owner;
+ERROR:  role "pipe_test_owner" cannot be dropped because some objects depend on it

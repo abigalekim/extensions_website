@@ -1,0 +1,43 @@
+2023-07-25 05:50:19.405 UTC [693631] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 05:50:19.405 UTC [693631] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 05:50:19.411 UTC [693631] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 05:50:19.419 UTC [693634] LOG:  database system was shut down at 2023-07-25 05:50:19 UTC
+2023-07-25 05:50:19.425 UTC [693631] LOG:  database system is ready to accept connections
+2023-07-25 05:50:19.649 UTC [693650] LOG:  lsm3_build lsm3_index
+2023-07-25 05:50:19.649 UTC [693650] STATEMENT:  create index lsm3_index on t using lsm3(k);
+2023-07-25 05:50:20.987 UTC [693651] LOG:  Lsm3: merge top index lsm3_index_top0 with size 2 blocks
+2023-07-25 05:50:20.988 UTC [693651] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:50:21.728 UTC [693651] LOG:  Lsm3: merge top index lsm3_index_top1 with size 2 blocks
+2023-07-25 05:50:21.728 UTC [693651] LOG:  Lsm3: truncate index lsm3_index_top1
+2023-07-25 05:50:22.738 UTC [693651] LOG:  Lsm3: merge top index lsm3_index_top0 with size 2 blocks
+2023-07-25 05:50:22.739 UTC [693651] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:50:23.749 UTC [693651] LOG:  Lsm3: merge top index lsm3_index_top1 with size 2 blocks
+2023-07-25 05:50:23.749 UTC [693651] LOG:  Lsm3: truncate index lsm3_index_top1
+2023-07-25 05:50:24.759 UTC [693651] LOG:  Lsm3: merge top index lsm3_index_top0 with size 2 blocks
+2023-07-25 05:50:24.760 UTC [693651] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:50:25.894 UTC [693651] LOG:  Lsm3: merge top index lsm3_index_top1 with size 181 blocks
+2023-07-25 05:50:25.988 UTC [693651] LOG:  Lsm3: truncate index lsm3_index_top1
+2023-07-25 05:50:26.080 UTC [693651] LOG:  Lsm3: merge top index lsm3_index_top0 with size 250 blocks
+2023-07-25 05:50:26.202 UTC [693651] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:50:26.266 UTC [693651] LOG:  Lsm3: merge top index lsm3_index_top1 with size 181 blocks
+2023-07-25 05:50:26.346 UTC [693650] LOG:  lsm3_build lsm3_index
+2023-07-25 05:50:26.346 UTC [693650] STATEMENT:  truncate table t;
+2023-07-25 05:50:27.347 UTC [693651] ERROR:  deadlock detected
+2023-07-25 05:50:27.347 UTC [693651] DETAIL:  Process 693651 waits for AccessShareLock on relation 17111 of database 16384; blocked by process 693650.
+	Process 693650 waits for AccessExclusiveLock on relation 17116 of database 16384; blocked by process 693651.
+	Process 693651: truncate
+	Process 693650: truncate table t;
+2023-07-25 05:50:27.347 UTC [693651] HINT:  See server log for query details.
+2023-07-25 05:50:27.351 UTC [693631] LOG:  background worker "lsm3-merger-17114" (PID 693651) exited with exit code 1
+2023-07-25 05:50:29.227 UTC [693650] LOG:  lsm3_build lsm3_index
+2023-07-25 05:50:29.227 UTC [693650] STATEMENT:  reindex table t;
+2023-07-25 05:50:30.327 UTC [693650] LOG:  lsm3_build lsm_k_idx
+2023-07-25 05:50:30.327 UTC [693650] STATEMENT:  create index concurrently on lsm using lsm3(k);
+2023-07-25 05:50:30.958 UTC [693667] ERROR:  value 0 out of bounds for option "siglen"
+2023-07-25 05:50:30.958 UTC [693667] DETAIL:  Valid values are between "1" and "2024".
+2023-07-25 05:50:30.958 UTC [693667] STATEMENT:  create index trgm_idx on test_trgm using gist (t gist_trgm_ops(siglen=0));
+2023-07-25 05:50:30.958 UTC [693667] ERROR:  value 2025 out of bounds for option "siglen"
+2023-07-25 05:50:30.958 UTC [693667] DETAIL:  Valid values are between "1" and "2024".
+2023-07-25 05:50:30.958 UTC [693667] STATEMENT:  create index trgm_idx on test_trgm using gist (t gist_trgm_ops(siglen=2025));
+2023-07-25 05:50:31.362 UTC [693677] ERROR:  relation "test_trgm3" does not exist
+2023-07-25 05:50:31.362 UTC [693677] STATEMENT:  COPY  test_trgm3 FROM STDIN 

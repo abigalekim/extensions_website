@@ -1,0 +1,17 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/pageinspect/expected/oldextversions.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/pageinspect/results/oldextversions.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/pageinspect/expected/oldextversions.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/pageinspect/results/oldextversions.out	2023-07-25 12:04:54.763589789 +0000
+@@ -40,12 +40,7 @@
+ -- pagesize in pageinspect >= 1.10.
+ ALTER EXTENSION pageinspect UPDATE TO '1.9';
+ \df page_header
+-                                                                                                                  List of functions
+- Schema |    Name     | Result data type |                                                                                         Argument data types                                                                                         | Type 
+---------+-------------+------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------
+- public | page_header | record           | page bytea, OUT lsn pg_lsn, OUT checksum smallint, OUT flags smallint, OUT lower smallint, OUT upper smallint, OUT special smallint, OUT pagesize smallint, OUT version smallint, OUT prune_xid xid | func
+-(1 row)
+-
++ERROR:  cache lookup failed for type 18
+ SELECT pagesize, version FROM page_header(get_raw_page('test1', 0));
+  pagesize | version 
+ ----------+---------

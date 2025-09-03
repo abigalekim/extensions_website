@@ -1,0 +1,65 @@
+\set VERBOSITY terse
+-- Create pgaudit extension
+CREATE EXTENSION IF NOT EXISTS pgaudit;
+-- Grant all on public schema to public
+GRANT ALL ON SCHEMA public TO public;
+-- Make sure events don't get logged twice when session logging
+SET pgaudit.log = 'all';
+SET pgaudit.log_client = ON;
+SET pgaudit.log_level = 'notice';
+NOTICE:  AUDIT: SESSION,3,1,MISC,SET,,,SET pgaudit.log_level = 'notice';,<not logged>
+CREATE TABLE tmp (id int, data text);
+NOTICE:  AUDIT: SESSION,4,1,DDL,CREATE TABLE,TABLE,public.tmp,"CREATE TABLE tmp (id int, data text);",<not logged>
+CREATE TABLE tmp2 AS (SELECT * FROM tmp);
+NOTICE:  AUDIT: SESSION,5,1,READ,SELECT,,,CREATE TABLE tmp2 AS (SELECT * FROM tmp);,<not logged>
+NOTICE:  AUDIT: SESSION,5,2,DDL,CREATE TABLE AS,TABLE,public.tmp2,CREATE TABLE tmp2 AS (SELECT * FROM tmp);,<not logged>
+-- Reset log_client first to show that audits logs are not set to client
+RESET pgaudit.log_client;
+DROP TABLE tmp;
+DROP TABLE tmp2;
+RESET pgaudit.log;
+RESET pgaudit.log_level;
+--
+-- Audit log fields are:
+--     AUDIT_TYPE - SESSION or OBJECT
+--     STATEMENT_ID - ID of the statement in the current backend
+--     SUBSTATEMENT_ID - ID of the substatement in the current backend
+--     CLASS - Class of statement being logged (e.g. ROLE, READ, WRITE)
+--     COMMAND - e.g. SELECT, CREATE ROLE, UPDATE
+--     OBJECT_TYPE - When available, type of object acted on (e.g. TABLE, VIEW)
+--     OBJECT_NAME - When available, fully-qualified table of object
+--     STATEMENT - The statement being logged
+--     PARAMETER - If parameter logging is requested, they will follow the
+--                 statement
+--     ROWS - If rows logging is requested, they will follow the parameter
+SELECT current_user \gset
+--
+-- Set pgaudit parameters for the current (super)user.
+ALTER ROLE :current_user SET pgaudit.log = 'Role';
+ALTER ROLE :current_user SET pgaudit.log_level = 'notice';
+ALTER ROLE :current_user SET pgaudit.log_client = ON;
+\connect - :current_user;
+--
+-- Create auditor role
+CREATE ROLE auditor;
+NOTICE:  AUDIT: SESSION,1,1,ROLE,CREATE ROLE,,,CREATE ROLE auditor;,<not logged>
+--
+-- Create first test user
+CREATE USER user1 password 'password';
+ERROR:  password must contain both letters and nonletters
+ALTER ROLE user1 SET pgaudit.log = 'ddl, ROLE';
+ERROR:  role "user1" does not exist
+ALTER ROLE user1 SET pgaudit.log_level = 'notice';
+ERROR:  role "user1" does not exist
+ALTER ROLE user1 PassWord 'password2' NOLOGIN;
+ERROR:  role "user1" does not exist
+ALTER USER user1 encrypted /* random comment */PASSWORD
+	/* random comment */
+    'md565cb1da342495ea6bb0418a6e5718c38' LOGIN;
+ERROR:  role "user1" does not exist
+ALTER ROLE user1 SET pgaudit.log_client = ON;
+ERROR:  role "user1" does not exist
+--
+-- Create, select, drop (select will not be audited)
+\connect - user1
+\connect: connection to server on socket "/tmp/.s.PGSQL.5432" failed: FATAL:  role "user1" does not exist

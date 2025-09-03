@@ -1,0 +1,31 @@
+2023-07-26 21:03:31.242 UTC [3592899] LOG:  Initialize VOPS extension
+2023-07-26 21:03:31.401 UTC [3592899] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 21:03:31.401 UTC [3592899] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 21:03:31.416 UTC [3592899] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 21:03:31.432 UTC [3592902] LOG:  database system was shut down at 2023-07-26 21:03:30 UTC
+2023-07-26 21:03:31.443 UTC [3592899] LOG:  database system is ready to accept connections
+2023-07-26 21:03:32.624 UTC [3592900] LOG:  checkpoint starting: immediate force wait
+2023-07-26 21:03:32.863 UTC [3592900] LOG:  checkpoint complete: wrote 3112 buffers (19.0%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.092 s, sync=0.104 s, total=0.239 s; sync files=780, longest=0.030 s, average=0.001 s; distance=21357 kB, estimate=21357 kB
+2023-07-26 21:03:32.890 UTC [3592900] LOG:  checkpoint starting: immediate force wait
+2023-07-26 21:03:32.947 UTC [3592900] LOG:  checkpoint complete: wrote 2 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.012 s, sync=0.011 s, total=0.057 s; sync files=2, longest=0.008 s, average=0.006 s; distance=1 kB, estimate=19222 kB
+2023-07-26 21:03:33.055 UTC [3592958] ERROR:  current user cannot be dropped
+2023-07-26 21:03:33.055 UTC [3592958] STATEMENT:  DROP USER su;
+2023-07-26 21:03:33.569 UTC [3592900] LOG:  checkpoint starting: immediate force wait
+2023-07-26 21:03:33.709 UTC [3592900] LOG:  checkpoint complete: wrote 1086 buffers (6.6%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.062 s, sync=0.037 s, total=0.140 s; sync files=296, longest=0.008 s, average=0.001 s; distance=8998 kB, estimate=18199 kB
+2023-07-26 21:03:33.769 UTC [3592900] LOG:  checkpoint starting: immediate force wait
+2023-07-26 21:03:33.827 UTC [3592900] LOG:  checkpoint complete: wrote 8 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.013 s, sync=0.012 s, total=0.059 s; sync files=7, longest=0.008 s, average=0.002 s; distance=34 kB, estimate=16383 kB
+2023-07-26 21:03:33.950 UTC [3592986] ERROR:  duplicate key value violates unique constraint "company_pkey"
+2023-07-26 21:03:33.950 UTC [3592986] DETAIL:  Key (id)=(1) already exists.
+2023-07-26 21:03:33.950 UTC [3592986] STATEMENT:  INSERT  INTO Company(ID, Name) VALUES (1, 'Percona');
+2023-07-26 21:03:34.224 UTC [3593006] ERROR:  division by zero
+2023-07-26 21:03:34.224 UTC [3593006] STATEMENT:  SELECT 1/0;
+2023-07-26 21:03:34.224 UTC [3593006] ERROR:  relation "unknown" does not exist at character 15
+2023-07-26 21:03:34.224 UTC [3593006] STATEMENT:  SELECT * FROM unknown;
+2023-07-26 21:03:34.224 UTC [3593006] ERROR:  syntax error at or near "ELECET" at character 1
+2023-07-26 21:03:34.224 UTC [3593006] STATEMENT:  ELECET * FROM unknown;
+2023-07-26 21:03:34.225 UTC [3593006] WARNING:  warning message
+2023-07-26 21:03:34.225 UTC [3593006] CONTEXT:  PL/pgSQL function inline_code_block line 3 at RAISE
+2023-07-26 21:03:34.401 UTC [3593020] ERROR:  role "su" already exists
+2023-07-26 21:03:34.401 UTC [3593020] STATEMENT:  CREATE USER su WITH SUPERUSER;
+2023-07-26 21:03:34.439 UTC [3593020] ERROR:  permission denied for function pg_stat_monitor_reset
+2023-07-26 21:03:34.439 UTC [3593020] STATEMENT:  SELECT pg_stat_monitor_reset();

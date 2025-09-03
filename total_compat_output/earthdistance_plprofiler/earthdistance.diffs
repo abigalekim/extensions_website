@@ -1,0 +1,120 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out	2023-07-26 03:14:23.593196971 +0000
+@@ -1001,10 +1001,34 @@
+ (0 rows)
+ 
+ \df
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                                                   List of functions
++ Schema |               Name               | Result data type |                                               Argument data types                                               | Type 
++--------+----------------------------------+------------------+-----------------------------------------------------------------------------------------------------------------+------
++ public | pl_profiler_callgraph_local      | SETOF record     | OUT stack oid[], OUT call_count bigint, OUT us_total bigint, OUT us_children bigint, OUT us_self bigint         | func
++ public | pl_profiler_callgraph_overflow   | boolean          |                                                                                                                 | func
++ public | pl_profiler_callgraph_shared     | SETOF record     | OUT stack oid[], OUT call_count bigint, OUT us_total bigint, OUT us_children bigint, OUT us_self bigint         | func
++ public | pl_profiler_collect_data         | integer          |                                                                                                                 | func
++ public | pl_profiler_func_oids_local      | oid[]            |                                                                                                                 | func
++ public | pl_profiler_func_oids_shared     | oid[]            |                                                                                                                 | func
++ public | pl_profiler_funcs_source         | SETOF record     | func_oids oid[], OUT func_oid oid, OUT line_number bigint, OUT source text                                      | func
++ public | pl_profiler_functions_overflow   | boolean          |                                                                                                                 | func
++ public | pl_profiler_get_collect_interval | boolean          |                                                                                                                 | func
++ public | pl_profiler_get_enabled_global   | boolean          |                                                                                                                 | func
++ public | pl_profiler_get_enabled_local    | boolean          |                                                                                                                 | func
++ public | pl_profiler_get_enabled_pid      | boolean          |                                                                                                                 | func
++ public | pl_profiler_get_stack            | text[]           | stack oid[]                                                                                                     | func
++ public | pl_profiler_lines_overflow       | boolean          |                                                                                                                 | func
++ public | pl_profiler_linestats_local      | SETOF record     | OUT func_oid oid, OUT line_number bigint, OUT exec_count bigint, OUT total_time bigint, OUT longest_time bigint | func
++ public | pl_profiler_linestats_shared     | SETOF record     | OUT func_oid oid, OUT line_number bigint, OUT exec_count bigint, OUT total_time bigint, OUT longest_time bigint | func
++ public | pl_profiler_reset_local          | void             |                                                                                                                 | func
++ public | pl_profiler_reset_shared         | void             |                                                                                                                 | func
++ public | pl_profiler_set_collect_interval | boolean          | seconds integer                                                                                                 | func
++ public | pl_profiler_set_enabled_global   | boolean          | enabled boolean                                                                                                 | func
++ public | pl_profiler_set_enabled_local    | boolean          | enabled boolean                                                                                                 | func
++ public | pl_profiler_set_enabled_pid      | boolean          | pid integer                                                                                                     | func
++ public | pl_profiler_version              | integer          |                                                                                                                 | func
++ public | pl_profiler_versionstr           | text             |                                                                                                                 | func
++(24 rows)
+ 
+ \do
+                              List of operators
+@@ -1022,10 +1046,34 @@
+ (0 rows)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                                                   List of functions
++ Schema |               Name               | Result data type |                                               Argument data types                                               | Type 
++--------+----------------------------------+------------------+-----------------------------------------------------------------------------------------------------------------+------
++ public | pl_profiler_callgraph_local      | SETOF record     | OUT stack oid[], OUT call_count bigint, OUT us_total bigint, OUT us_children bigint, OUT us_self bigint         | func
++ public | pl_profiler_callgraph_overflow   | boolean          |                                                                                                                 | func
++ public | pl_profiler_callgraph_shared     | SETOF record     | OUT stack oid[], OUT call_count bigint, OUT us_total bigint, OUT us_children bigint, OUT us_self bigint         | func
++ public | pl_profiler_collect_data         | integer          |                                                                                                                 | func
++ public | pl_profiler_func_oids_local      | oid[]            |                                                                                                                 | func
++ public | pl_profiler_func_oids_shared     | oid[]            |                                                                                                                 | func
++ public | pl_profiler_funcs_source         | SETOF record     | func_oids oid[], OUT func_oid oid, OUT line_number bigint, OUT source text                                      | func
++ public | pl_profiler_functions_overflow   | boolean          |                                                                                                                 | func
++ public | pl_profiler_get_collect_interval | boolean          |                                                                                                                 | func
++ public | pl_profiler_get_enabled_global   | boolean          |                                                                                                                 | func
++ public | pl_profiler_get_enabled_local    | boolean          |                                                                                                                 | func
++ public | pl_profiler_get_enabled_pid      | boolean          |                                                                                                                 | func
++ public | pl_profiler_get_stack            | text[]           | stack oid[]                                                                                                     | func
++ public | pl_profiler_lines_overflow       | boolean          |                                                                                                                 | func
++ public | pl_profiler_linestats_local      | SETOF record     | OUT func_oid oid, OUT line_number bigint, OUT exec_count bigint, OUT total_time bigint, OUT longest_time bigint | func
++ public | pl_profiler_linestats_shared     | SETOF record     | OUT func_oid oid, OUT line_number bigint, OUT exec_count bigint, OUT total_time bigint, OUT longest_time bigint | func
++ public | pl_profiler_reset_local          | void             |                                                                                                                 | func
++ public | pl_profiler_reset_shared         | void             |                                                                                                                 | func
++ public | pl_profiler_set_collect_interval | boolean          | seconds integer                                                                                                 | func
++ public | pl_profiler_set_enabled_global   | boolean          | enabled boolean                                                                                                 | func
++ public | pl_profiler_set_enabled_local    | boolean          | enabled boolean                                                                                                 | func
++ public | pl_profiler_set_enabled_pid      | boolean          | pid integer                                                                                                     | func
++ public | pl_profiler_version              | integer          |                                                                                                                 | func
++ public | pl_profiler_versionstr           | text             |                                                                                                                 | func
++(24 rows)
+ 
+ \do public.*
+                              List of operators
+@@ -1066,10 +1114,34 @@
+ (0 rows)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                                                   List of functions
++ Schema |               Name               | Result data type |                                               Argument data types                                               | Type 
++--------+----------------------------------+------------------+-----------------------------------------------------------------------------------------------------------------+------
++ public | pl_profiler_callgraph_local      | SETOF record     | OUT stack oid[], OUT call_count bigint, OUT us_total bigint, OUT us_children bigint, OUT us_self bigint         | func
++ public | pl_profiler_callgraph_overflow   | boolean          |                                                                                                                 | func
++ public | pl_profiler_callgraph_shared     | SETOF record     | OUT stack oid[], OUT call_count bigint, OUT us_total bigint, OUT us_children bigint, OUT us_self bigint         | func
++ public | pl_profiler_collect_data         | integer          |                                                                                                                 | func
++ public | pl_profiler_func_oids_local      | oid[]            |                                                                                                                 | func
++ public | pl_profiler_func_oids_shared     | oid[]            |                                                                                                                 | func
++ public | pl_profiler_funcs_source         | SETOF record     | func_oids oid[], OUT func_oid oid, OUT line_number bigint, OUT source text                                      | func
++ public | pl_profiler_functions_overflow   | boolean          |                                                                                                                 | func
++ public | pl_profiler_get_collect_interval | boolean          |                                                                                                                 | func
++ public | pl_profiler_get_enabled_global   | boolean          |                                                                                                                 | func
++ public | pl_profiler_get_enabled_local    | boolean          |                                                                                                                 | func
++ public | pl_profiler_get_enabled_pid      | boolean          |                                                                                                                 | func
++ public | pl_profiler_get_stack            | text[]           | stack oid[]                                                                                                     | func
++ public | pl_profiler_lines_overflow       | boolean          |                                                                                                                 | func
++ public | pl_profiler_linestats_local      | SETOF record     | OUT func_oid oid, OUT line_number bigint, OUT exec_count bigint, OUT total_time bigint, OUT longest_time bigint | func
++ public | pl_profiler_linestats_shared     | SETOF record     | OUT func_oid oid, OUT line_number bigint, OUT exec_count bigint, OUT total_time bigint, OUT longest_time bigint | func
++ public | pl_profiler_reset_local          | void             |                                                                                                                 | func
++ public | pl_profiler_reset_shared         | void             |                                                                                                                 | func
++ public | pl_profiler_set_collect_interval | boolean          | seconds integer                                                                                                 | func
++ public | pl_profiler_set_enabled_global   | boolean          | enabled boolean                                                                                                 | func
++ public | pl_profiler_set_enabled_local    | boolean          | enabled boolean                                                                                                 | func
++ public | pl_profiler_set_enabled_pid      | boolean          | pid integer                                                                                                     | func
++ public | pl_profiler_version              | integer          |                                                                                                                 | func
++ public | pl_profiler_versionstr           | text             |                                                                                                                 | func
++(24 rows)
+ 
+ \do public.*
+                              List of operators

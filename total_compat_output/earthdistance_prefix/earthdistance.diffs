@@ -1,0 +1,279 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out	2023-07-26 03:17:26.352473682 +0000
+@@ -963,12 +963,13 @@
+ --
+ -- list what's installed
+ \dT
+-                                              List of data types
+- Schema | Name  |                                         Description                                         
+---------+-------+---------------------------------------------------------------------------------------------
+- public | cube  | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
+- public | earth | 
+-(2 rows)
++                                                 List of data types
++ Schema |     Name     |                                         Description                                         
++--------+--------------+---------------------------------------------------------------------------------------------
++ public | cube         | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
++ public | earth        | 
++ public | prefix_range | prefix range: (prefix)?([a-b])?
++(3 rows)
+ 
+ drop extension cube;  -- fail, earthdistance requires it
+ ERROR:  cannot drop extension cube because other objects depend on it
+@@ -980,11 +981,12 @@
+ HINT:  You can drop extension cube instead.
+ -- list what's installed
+ \dT
+-                                             List of data types
+- Schema | Name |                                         Description                                         
+---------+------+---------------------------------------------------------------------------------------------
+- public | cube | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
+-(1 row)
++                                                 List of data types
++ Schema |     Name     |                                         Description                                         
++--------+--------------+---------------------------------------------------------------------------------------------
++ public | cube         | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
++ public | prefix_range | prefix range: (prefix)?([a-b])?
++(2 rows)
+ 
+ create table foo (f1 cube, f2 int);
+ drop extension cube;  -- fail, foo.f1 requires it
+@@ -995,43 +997,133 @@
+ drop extension cube;
+ -- list what's installed
+ \dT
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++                   List of data types
++ Schema |     Name     |           Description           
++--------+--------------+---------------------------------
++ public | prefix_range | prefix range: (prefix)?([a-b])?
++(1 row)
+ 
+ \df
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                   List of functions
++ Schema |               Name               | Result data type |               Argument data types               | Type 
++--------+----------------------------------+------------------+-------------------------------------------------+------
++ public | gpr_compress                     | internal         | internal                                        | func
++ public | gpr_consistent                   | boolean          | internal, prefix_range, smallint, oid           | func
++ public | gpr_consistent                   | boolean          | internal, prefix_range, smallint, oid, internal | func
++ public | gpr_decompress                   | internal         | internal                                        | func
++ public | gpr_penalty                      | internal         | internal, internal, internal                    | func
++ public | gpr_picksplit                    | internal         | internal, internal                              | func
++ public | gpr_picksplit_jordan             | internal         | internal, internal                              | func
++ public | gpr_picksplit_presort            | internal         | internal, internal                              | func
++ public | gpr_same                         | internal         | prefix_range, prefix_range, internal            | func
++ public | gpr_union                        | text             | internal, internal                              | func
++ public | length                           | integer          | prefix_range                                    | func
++ public | pr_penalty                       | real             | prefix_range, prefix_range                      | func
++ public | prefix_range                     | prefix_range     | text                                            | func
++ public | prefix_range                     | prefix_range     | text, text, text                                | func
++ public | prefix_range_cmp                 | integer          | prefix_range, prefix_range                      | func
++ public | prefix_range_contained_by        | boolean          | prefix_range, prefix_range                      | func
++ public | prefix_range_contained_by_strict | boolean          | prefix_range, prefix_range                      | func
++ public | prefix_range_contains            | boolean          | prefix_range, prefix_range                      | func
++ public | prefix_range_contains_strict     | boolean          | prefix_range, prefix_range                      | func
++ public | prefix_range_eq                  | boolean          | prefix_range, prefix_range                      | func
++ public | prefix_range_ge                  | boolean          | prefix_range, prefix_range                      | func
++ public | prefix_range_gt                  | boolean          | prefix_range, prefix_range                      | func
++ public | prefix_range_in                  | prefix_range     | cstring                                         | func
++ public | prefix_range_inter               | prefix_range     | prefix_range, prefix_range                      | func
++ public | prefix_range_le                  | boolean          | prefix_range, prefix_range                      | func
++ public | prefix_range_lt                  | boolean          | prefix_range, prefix_range                      | func
++ public | prefix_range_neq                 | boolean          | prefix_range, prefix_range                      | func
++ public | prefix_range_out                 | cstring          | prefix_range                                    | func
++ public | prefix_range_overlaps            | boolean          | prefix_range, prefix_range                      | func
++ public | prefix_range_recv                | prefix_range     | internal                                        | func
++ public | prefix_range_send                | bytea            | prefix_range                                    | func
++ public | prefix_range_union               | prefix_range     | prefix_range, prefix_range                      | func
++ public | text                             | text             | prefix_range                                    | func
++(33 rows)
+ 
+ \do
+-                             List of operators
+- Schema | Name | Left arg type | Right arg type | Result type | Description 
+---------+------+---------------+----------------+-------------+-------------
+-(0 rows)
++                                   List of operators
++ Schema | Name | Left arg type | Right arg type | Result type  |      Description      
++--------+------+---------------+----------------+--------------+-----------------------
++ public | &    | prefix_range  | prefix_range   | prefix_range | intersection
++ public | &&   | prefix_range  | prefix_range   | boolean      | overlaps?
++ public | <    | prefix_range  | prefix_range   | boolean      | less-than
++ public | <=   | prefix_range  | prefix_range   | boolean      | less-than-or-equal
++ public | <>   | prefix_range  | prefix_range   | boolean      | not equals?
++ public | <@   | prefix_range  | prefix_range   | boolean      | contained by?
++ public | =    | prefix_range  | prefix_range   | boolean      | equals?
++ public | >    | prefix_range  | prefix_range   | boolean      | greater-than
++ public | >=   | prefix_range  | prefix_range   | boolean      | greater-than-or-equal
++ public | @>   | prefix_range  | prefix_range   | boolean      | contains?
++ public | |    | prefix_range  | prefix_range   | prefix_range | union
++(11 rows)
+ 
+ create schema c;
+ create extension cube with schema c;
+ -- list what's installed
+ \dT public.*
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++                   List of data types
++ Schema |     Name     |           Description           
++--------+--------------+---------------------------------
++ public | prefix_range | prefix range: (prefix)?([a-b])?
++(1 row)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                   List of functions
++ Schema |               Name               | Result data type |               Argument data types               | Type 
++--------+----------------------------------+------------------+-------------------------------------------------+------
++ public | gpr_compress                     | internal         | internal                                        | func
++ public | gpr_consistent                   | boolean          | internal, prefix_range, smallint, oid           | func
++ public | gpr_consistent                   | boolean          | internal, prefix_range, smallint, oid, internal | func
++ public | gpr_decompress                   | internal         | internal                                        | func
++ public | gpr_penalty                      | internal         | internal, internal, internal                    | func
++ public | gpr_picksplit                    | internal         | internal, internal                              | func
++ public | gpr_picksplit_jordan             | internal         | internal, internal                              | func
++ public | gpr_picksplit_presort            | internal         | internal, internal                              | func
++ public | gpr_same                         | internal         | prefix_range, prefix_range, internal            | func
++ public | gpr_union                        | text             | internal, internal                              | func
++ public | length                           | integer          | prefix_range                                    | func
++ public | pr_penalty                       | real             | prefix_range, prefix_range                      | func
++ public | prefix_range                     | prefix_range     | text                                            | func
++ public | prefix_range                     | prefix_range     | text, text, text                                | func
++ public | prefix_range_cmp                 | integer          | prefix_range, prefix_range                      | func
++ public | prefix_range_contained_by        | boolean          | prefix_range, prefix_range                      | func
++ public | prefix_range_contained_by_strict | boolean          | prefix_range, prefix_range                      | func
++ public | prefix_range_contains            | boolean          | prefix_range, prefix_range                      | func
++ public | prefix_range_contains_strict     | boolean          | prefix_range, prefix_range                      | func
++ public | prefix_range_eq                  | boolean          | prefix_range, prefix_range                      | func
++ public | prefix_range_ge                  | boolean          | prefix_range, prefix_range                      | func
++ public | prefix_range_gt                  | boolean          | prefix_range, prefix_range                      | func
++ public | prefix_range_in                  | prefix_range     | cstring                                         | func
++ public | prefix_range_inter               | prefix_range     | prefix_range, prefix_range                      | func
++ public | prefix_range_le                  | boolean          | prefix_range, prefix_range                      | func
++ public | prefix_range_lt                  | boolean          | prefix_range, prefix_range                      | func
++ public | prefix_range_neq                 | boolean          | prefix_range, prefix_range                      | func
++ public | prefix_range_out                 | cstring          | prefix_range                                    | func
++ public | prefix_range_overlaps            | boolean          | prefix_range, prefix_range                      | func
++ public | prefix_range_recv                | prefix_range     | internal                                        | func
++ public | prefix_range_send                | bytea            | prefix_range                                    | func
++ public | prefix_range_union               | prefix_range     | prefix_range, prefix_range                      | func
++ public | text                             | text             | prefix_range                                    | func
++(33 rows)
+ 
+ \do public.*
+-                             List of operators
+- Schema | Name | Left arg type | Right arg type | Result type | Description 
+---------+------+---------------+----------------+-------------+-------------
+-(0 rows)
++                                   List of operators
++ Schema | Name | Left arg type | Right arg type | Result type  |      Description      
++--------+------+---------------+----------------+--------------+-----------------------
++ public | &    | prefix_range  | prefix_range   | prefix_range | intersection
++ public | &&   | prefix_range  | prefix_range   | boolean      | overlaps?
++ public | <    | prefix_range  | prefix_range   | boolean      | less-than
++ public | <=   | prefix_range  | prefix_range   | boolean      | less-than-or-equal
++ public | <>   | prefix_range  | prefix_range   | boolean      | not equals?
++ public | <@   | prefix_range  | prefix_range   | boolean      | contained by?
++ public | =    | prefix_range  | prefix_range   | boolean      | equals?
++ public | >    | prefix_range  | prefix_range   | boolean      | greater-than
++ public | >=   | prefix_range  | prefix_range   | boolean      | greater-than-or-equal
++ public | @>   | prefix_range  | prefix_range   | boolean      | contains?
++ public | |    | prefix_range  | prefix_range   | prefix_range | union
++(11 rows)
+ 
+ \dT c.*
+                                               List of data types
+@@ -1060,22 +1152,67 @@
+ 
+ -- list what's installed
+ \dT public.*
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++                   List of data types
++ Schema |     Name     |           Description           
++--------+--------------+---------------------------------
++ public | prefix_range | prefix range: (prefix)?([a-b])?
++(1 row)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                   List of functions
++ Schema |               Name               | Result data type |               Argument data types               | Type 
++--------+----------------------------------+------------------+-------------------------------------------------+------
++ public | gpr_compress                     | internal         | internal                                        | func
++ public | gpr_consistent                   | boolean          | internal, prefix_range, smallint, oid           | func
++ public | gpr_consistent                   | boolean          | internal, prefix_range, smallint, oid, internal | func
++ public | gpr_decompress                   | internal         | internal                                        | func
++ public | gpr_penalty                      | internal         | internal, internal, internal                    | func
++ public | gpr_picksplit                    | internal         | internal, internal                              | func
++ public | gpr_picksplit_jordan             | internal         | internal, internal                              | func
++ public | gpr_picksplit_presort            | internal         | internal, internal                              | func
++ public | gpr_same                         | internal         | prefix_range, prefix_range, internal            | func
++ public | gpr_union                        | text             | internal, internal                              | func
++ public | length                           | integer          | prefix_range                                    | func
++ public | pr_penalty                       | real             | prefix_range, prefix_range                      | func
++ public | prefix_range                     | prefix_range     | text                                            | func
++ public | prefix_range                     | prefix_range     | text, text, text                                | func
++ public | prefix_range_cmp                 | integer          | prefix_range, prefix_range                      | func
++ public | prefix_range_contained_by        | boolean          | prefix_range, prefix_range                      | func
++ public | prefix_range_contained_by_strict | boolean          | prefix_range, prefix_range                      | func
++ public | prefix_range_contains            | boolean          | prefix_range, prefix_range                      | func
++ public | prefix_range_contains_strict     | boolean          | prefix_range, prefix_range                      | func
++ public | prefix_range_eq                  | boolean          | prefix_range, prefix_range                      | func
++ public | prefix_range_ge                  | boolean          | prefix_range, prefix_range                      | func
++ public | prefix_range_gt                  | boolean          | prefix_range, prefix_range                      | func
++ public | prefix_range_in                  | prefix_range     | cstring                                         | func
++ public | prefix_range_inter               | prefix_range     | prefix_range, prefix_range                      | func
++ public | prefix_range_le                  | boolean          | prefix_range, prefix_range                      | func
++ public | prefix_range_lt                  | boolean          | prefix_range, prefix_range                      | func
++ public | prefix_range_neq                 | boolean          | prefix_range, prefix_range                      | func
++ public | prefix_range_out                 | cstring          | prefix_range                                    | func
++ public | prefix_range_overlaps            | boolean          | prefix_range, prefix_range                      | func
++ public | prefix_range_recv                | prefix_range     | internal                                        | func
++ public | prefix_range_send                | bytea            | prefix_range                                    | func
++ public | prefix_range_union               | prefix_range     | prefix_range, prefix_range                      | func
++ public | text                             | text             | prefix_range                                    | func
++(33 rows)
+ 
+ \do public.*
+-                             List of operators
+- Schema | Name | Left arg type | Right arg type | Result type | Description 
+---------+------+---------------+----------------+-------------+-------------
+-(0 rows)
++                                   List of operators
++ Schema | Name | Left arg type | Right arg type | Result type  |      Description      
++--------+------+---------------+----------------+--------------+-----------------------
++ public | &    | prefix_range  | prefix_range   | prefix_range | intersection
++ public | &&   | prefix_range  | prefix_range   | boolean      | overlaps?
++ public | <    | prefix_range  | prefix_range   | boolean      | less-than
++ public | <=   | prefix_range  | prefix_range   | boolean      | less-than-or-equal
++ public | <>   | prefix_range  | prefix_range   | boolean      | not equals?
++ public | <@   | prefix_range  | prefix_range   | boolean      | contained by?
++ public | =    | prefix_range  | prefix_range   | boolean      | equals?
++ public | >    | prefix_range  | prefix_range   | boolean      | greater-than
++ public | >=   | prefix_range  | prefix_range   | boolean      | greater-than-or-equal
++ public | @>   | prefix_range  | prefix_range   | boolean      | contains?
++ public | |    | prefix_range  | prefix_range   | prefix_range | union
++(11 rows)
+ 
+ \dT c.*
+      List of data types

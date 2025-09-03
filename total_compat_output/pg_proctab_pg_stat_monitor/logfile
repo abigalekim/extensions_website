@@ -1,0 +1,34 @@
+2023-07-26 03:29:47.926 UTC [942385] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 03:29:47.926 UTC [942385] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 03:29:47.941 UTC [942385] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 03:29:47.957 UTC [942388] LOG:  database system was shut down at 2023-07-26 03:29:47 UTC
+2023-07-26 03:29:47.965 UTC [942385] LOG:  database system is ready to accept connections
+2023-07-26 03:29:48.049 UTC [942397] FATAL:  database "abigalek" does not exist
+2023-07-26 03:29:48.057 UTC [942399] FATAL:  database "abigalek" does not exist
+2023-07-26 03:29:48.065 UTC [942401] FATAL:  database "abigalek" does not exist
+2023-07-26 03:29:48.072 UTC [942403] FATAL:  database "abigalek" does not exist
+2023-07-26 03:29:48.670 UTC [942386] LOG:  checkpoint starting: immediate force wait
+2023-07-26 03:29:48.836 UTC [942386] LOG:  checkpoint complete: wrote 1795 buffers (11.0%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.070 s, sync=0.052 s, total=0.166 s; sync files=497, longest=0.016 s, average=0.001 s; distance=12314 kB, estimate=12314 kB
+2023-07-26 03:29:48.861 UTC [942386] LOG:  checkpoint starting: immediate force wait
+2023-07-26 03:29:48.918 UTC [942386] LOG:  checkpoint complete: wrote 2 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.012 s, sync=0.011 s, total=0.057 s; sync files=2, longest=0.008 s, average=0.006 s; distance=1 kB, estimate=11083 kB
+2023-07-26 03:29:49.048 UTC [942441] ERROR:  current user cannot be dropped
+2023-07-26 03:29:49.048 UTC [942441] STATEMENT:  DROP USER su;
+2023-07-26 03:29:49.540 UTC [942386] LOG:  checkpoint starting: immediate force wait
+2023-07-26 03:29:49.655 UTC [942386] LOG:  checkpoint complete: wrote 1019 buffers (6.2%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.050 s, sync=0.033 s, total=0.115 s; sync files=297, longest=0.010 s, average=0.001 s; distance=8826 kB, estimate=10857 kB
+2023-07-26 03:29:49.701 UTC [942386] LOG:  checkpoint starting: immediate force wait
+2023-07-26 03:29:49.758 UTC [942386] LOG:  checkpoint complete: wrote 10 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.012 s, sync=0.011 s, total=0.057 s; sync files=7, longest=0.008 s, average=0.002 s; distance=45 kB, estimate=9776 kB
+2023-07-26 03:29:49.877 UTC [942469] ERROR:  duplicate key value violates unique constraint "company_pkey"
+2023-07-26 03:29:49.877 UTC [942469] DETAIL:  Key (id)=(1) already exists.
+2023-07-26 03:29:49.877 UTC [942469] STATEMENT:  INSERT  INTO Company(ID, Name) VALUES (1, 'Percona');
+2023-07-26 03:29:50.129 UTC [942489] ERROR:  division by zero
+2023-07-26 03:29:50.129 UTC [942489] STATEMENT:  SELECT 1/0;
+2023-07-26 03:29:50.130 UTC [942489] ERROR:  relation "unknown" does not exist at character 15
+2023-07-26 03:29:50.130 UTC [942489] STATEMENT:  SELECT * FROM unknown;
+2023-07-26 03:29:50.130 UTC [942489] ERROR:  syntax error at or near "ELECET" at character 1
+2023-07-26 03:29:50.130 UTC [942489] STATEMENT:  ELECET * FROM unknown;
+2023-07-26 03:29:50.131 UTC [942489] WARNING:  warning message
+2023-07-26 03:29:50.131 UTC [942489] CONTEXT:  PL/pgSQL function inline_code_block line 3 at RAISE
+2023-07-26 03:29:50.311 UTC [942503] ERROR:  role "su" already exists
+2023-07-26 03:29:50.311 UTC [942503] STATEMENT:  CREATE USER su WITH SUPERUSER;
+2023-07-26 03:29:50.352 UTC [942503] ERROR:  permission denied for function pg_stat_monitor_reset
+2023-07-26 03:29:50.352 UTC [942503] STATEMENT:  SELECT pg_stat_monitor_reset();

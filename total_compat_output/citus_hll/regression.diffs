@@ -1,0 +1,401 @@
+diff -dU10 -w /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/expected/multi_agg_approximate_distinct_0.out /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/results/multi_agg_approximate_distinct.out
+--- /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/expected/multi_agg_approximate_distinct_0.out.modified	2023-11-25 00:17:28.519778709 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/results/multi_agg_approximate_distinct.out.modified	2023-11-25 00:17:28.527778684 +0000
+@@ -2,107 +2,106 @@
+ -- MULTI_AGG_APPROXIMATE_DISTINCT
+ --
+ -- Create HLL extension if present, print false result otherwise
+ SELECT CASE WHEN COUNT(*) > 0 THEN
+ 	'CREATE EXTENSION HLL'
+ ELSE 'SELECT false AS hll_present' END
+ AS create_cmd FROM pg_available_extensions()
+ WHERE name = 'hll'
+ \gset
+ :create_cmd;
+- hll_present
+----------------------------------------------------------------------
+- f
+-(1 row)
+-
++ERROR:  extension "hll" already exists
+ SELECT public.explain_has_distributed_subplan($$
+  EXPLAIN SELECT symbol_id,
+         HLL_ADD_AGG(HLL_HASH_BIGINT(event_id)) AS event_hll_hash,
+         HLL_CARDINALITY(HLL_ADD_AGG(HLL_HASH_BIGINT(event_id))) AS event_n_users
+  FROM (
+     SELECT event_time, composite_id, event_id, 4640476 symbol_id FROM "events"
+  UNION ALL
+     SELECT event_time, composite_id, event_id, 4640477 symbol_id FROM "events"
+  ) pushdown_events
+  GROUP BY symbol_id;
+  $$);
+-ERROR:  function hll_hash_bigint(bigint) does not exist
+-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+-QUERY:
+- EXPLAIN SELECT symbol_id,
+-        HLL_ADD_AGG(HLL_HASH_BIGINT(event_id)) AS event_hll_hash,
+-        HLL_CARDINALITY(HLL_ADD_AGG(HLL_HASH_BIGINT(event_id))) AS event_n_users
+- FROM (
+-    SELECT event_time, composite_id, event_id, 4640476 symbol_id FROM "events"
+- UNION ALL
+-    SELECT event_time, composite_id, event_id, 4640477 symbol_id FROM "events"
+- ) pushdown_events
+- GROUP BY symbol_id;
++ explain_has_distributed_subplan 
++---------------------------------
++ f
++(1 row)
+ 
+-CONTEXT:  PL/pgSQL function explain_has_distributed_subplan(text) line XX at FOR over EXECUTE statement
+ SET citus.coordinator_aggregation_strategy TO 'disabled';
+ -- Try to execute count(distinct) when approximate distincts aren't enabled
+ SELECT count(distinct l_orderkey) FROM lineitem;
+  count 
+ -------
+   2985
+ (1 row)
+ 
+ -- Check approximate count(distinct) at different precisions / error rates
+ SET citus.count_distinct_error_rate = 0.1;
+ SELECT count(distinct l_orderkey) FROM lineitem;
+-ERROR:  cannot compute count (distinct) approximation
+-HINT:  You need to have the hll extension loaded.
++ERROR:  function public.hll_hash_bigint(bigint) does not exist
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
++CONTEXT:  while executing command on localhost:57637
+ SET citus.count_distinct_error_rate = 0.01;
+ SELECT count(distinct l_orderkey) FROM lineitem;
+-ERROR:  cannot compute count (distinct) approximation
+-HINT:  You need to have the hll extension loaded.
++ERROR:  function public.hll_hash_bigint(bigint) does not exist
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
++CONTEXT:  while executing command on localhost:57638
+ -- Check approximate count(distinct) for different data types
+ SELECT count(distinct l_partkey) FROM lineitem;
+-ERROR:  cannot compute count (distinct) approximation
+-HINT:  You need to have the hll extension loaded.
++ERROR:  function public.hll_hash_integer(integer) does not exist
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
++CONTEXT:  while executing command on localhost:57637
+ SELECT count(distinct l_extendedprice) FROM lineitem;
+-ERROR:  cannot compute count (distinct) approximation
+-HINT:  You need to have the hll extension loaded.
++ERROR:  function public.hll_hash_any(numeric) does not exist
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
++CONTEXT:  while executing command on localhost:57637
+ SELECT count(distinct l_shipdate) FROM lineitem;
+-ERROR:  cannot compute count (distinct) approximation
+-HINT:  You need to have the hll extension loaded.
++ERROR:  function public.hll_hash_any(date) does not exist
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
++CONTEXT:  while executing command on localhost:57637
+ SELECT count(distinct l_comment) FROM lineitem;
+-ERROR:  cannot compute count (distinct) approximation
+-HINT:  You need to have the hll extension loaded.
++ERROR:  function public.hll_hash_text(character varying) does not exist
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
++CONTEXT:  while executing command on localhost:57638
+ -- Check that we can execute approximate count(distinct) on complex expressions
+ SELECT count(distinct (l_orderkey * 2 + 1)) FROM lineitem;
+-ERROR:  cannot compute count (distinct) approximation
+-HINT:  You need to have the hll extension loaded.
++ERROR:  function public.hll_hash_bigint(bigint) does not exist
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
++CONTEXT:  while executing command on localhost:57638
+ SELECT count(distinct extract(month from l_shipdate)) AS my_month FROM lineitem;
+-ERROR:  cannot compute count (distinct) approximation
+-HINT:  You need to have the hll extension loaded.
++ERROR:  function public.hll_hash_any(numeric) does not exist
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
++CONTEXT:  while executing command on localhost:57638
+ SELECT count(distinct l_partkey) / count(distinct l_orderkey) FROM lineitem;
+-ERROR:  cannot compute count (distinct) approximation
+-HINT:  You need to have the hll extension loaded.
++ERROR:  function public.hll_hash_integer(integer) does not exist
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
++CONTEXT:  while executing command on localhost:57638
+ -- Check that we can execute approximate count(distinct) on select queries that
+ -- contain different filter, join, sort and limit clauses
+ SELECT count(distinct l_orderkey) FROM lineitem
+ 	WHERE octet_length(l_comment) + octet_length('randomtext'::text) > 40;
+-ERROR:  cannot compute count (distinct) approximation
+-HINT:  You need to have the hll extension loaded.
++ERROR:  function public.hll_hash_bigint(bigint) does not exist
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
++CONTEXT:  while executing command on localhost:57637
+ SELECT count(DISTINCT l_orderkey) FROM lineitem, orders
+ 	WHERE l_orderkey = o_orderkey AND l_quantity < 5;
+-ERROR:  cannot compute count (distinct) approximation
+-HINT:  You need to have the hll extension loaded.
++ERROR:  function public.hll_hash_bigint(bigint) does not exist
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
++CONTEXT:  while executing command on localhost:57638
+ SELECT count(DISTINCT l_orderkey) as distinct_order_count, l_quantity FROM lineitem
+ 	WHERE l_quantity < 32.0
+ 	GROUP BY l_quantity
+ 	ORDER BY distinct_order_count ASC, l_quantity ASC
+ 	LIMIT 10;
+-ERROR:  cannot compute count (distinct) approximation
+-HINT:  You need to have the hll extension loaded.
++ERROR:  function public.hll_hash_bigint(bigint) does not exist
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
++CONTEXT:  while executing command on localhost:57637
+ -- Check that approximate count(distinct) works at a table in a schema other than public
+ -- create necessary objects
+ SET citus.next_shard_id TO 20000000;
+ SET citus.next_placement_id TO 20000000;
+ CREATE SCHEMA test_count_distinct_schema;
+ CREATE TABLE test_count_distinct_schema.nation_hash(
+     n_nationkey integer not null,
+     n_name char(25) not null,
+     n_regionkey integer not null,
+     n_comment varchar(152)
+@@ -110,54 +109,58 @@
+ SELECT create_distributed_table('test_count_distinct_schema.nation_hash', 'n_nationkey', 'hash');
+  create_distributed_table 
+ --------------------------
+  
+ (1 row)
+ 
+ \copy test_count_distinct_schema.nation_hash FROM STDIN with delimiter '|';
+ SET search_path TO public;
+ SET citus.count_distinct_error_rate TO 0.01;
+ SELECT COUNT (DISTINCT n_regionkey) FROM test_count_distinct_schema.nation_hash;
+-ERROR:  cannot compute count (distinct) approximation
+-HINT:  You need to have the hll extension loaded.
++ERROR:  function public.hll_hash_integer(integer) does not exist
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
++CONTEXT:  while executing command on localhost:57637
+ -- test with search_path is set
+ SET search_path TO test_count_distinct_schema;
+ SELECT COUNT (DISTINCT n_regionkey) FROM nation_hash;
+-ERROR:  cannot compute count (distinct) approximation
+-HINT:  You need to have the hll extension loaded.
++ERROR:  function public.hll_hash_integer(integer) does not exist
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
++CONTEXT:  while executing command on localhost:57638
+ SET search_path TO public;
+ -- If we have an order by on count(distinct) that we intend to push down to
+ -- worker nodes, we need to error out. Otherwise, we are fine.
+ SET citus.limit_clause_row_fetch_count = 1000;
+ SELECT l_returnflag, count(DISTINCT l_shipdate) as count_distinct, count(*) as total
+ 	FROM lineitem
+ 	GROUP BY l_returnflag
+ 	ORDER BY count_distinct
+ 	LIMIT 10;
+-ERROR:  cannot compute count (distinct) approximation
+-HINT:  You need to have the hll extension loaded.
++ERROR:  cannot approximate count(distinct) and order by it
++HINT:  You might need to disable approximations for either count(distinct) or limit through configuration.
+ SELECT l_returnflag, count(DISTINCT l_shipdate) as count_distinct, count(*) as total
+ 	FROM lineitem
+ 	GROUP BY l_returnflag
+ 	ORDER BY total
+ 	LIMIT 10;
+-ERROR:  cannot compute count (distinct) approximation
+-HINT:  You need to have the hll extension loaded.
++ERROR:  function public.hll_hash_any(date) does not exist
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
++CONTEXT:  while executing command on localhost:57637
+ SELECT
+ 	l_partkey,
+ 	count(l_partkey) FILTER (WHERE l_shipmode = 'AIR'),
+ 	count(DISTINCT l_partkey) FILTER (WHERE l_shipmode = 'AIR'),
+ 	count(DISTINCT CASE WHEN l_shipmode = 'AIR' THEN l_partkey ELSE NULL END)
+ 	FROM lineitem
+ 	GROUP BY l_partkey
+ 	ORDER BY 2 DESC, 1 DESC
+ 	LIMIT 10;
+-ERROR:  cannot compute count (distinct) approximation
+-HINT:  You need to have the hll extension loaded.
++ERROR:  function public.hll_hash_integer(integer) does not exist
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
++CONTEXT:  while executing command on localhost:57637
+ -- Check that we can revert config and disable count(distinct) approximations
+ SET citus.count_distinct_error_rate = 0.0;
+ SELECT count(distinct l_orderkey) FROM lineitem;
+  count 
+ -------
+   2985
+ (1 row)
+ 
+diff -dU10 -w /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/expected/custom_aggregate_support.out /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/results/custom_aggregate_support.out
+--- /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/expected/custom_aggregate_support.out.modified	2023-11-25 00:18:11.963642572 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/results/custom_aggregate_support.out.modified	2023-11-25 00:18:11.979642522 +0000
+@@ -487,20 +487,25 @@
+ DROP TABLE daily_uniques;
+ -- Check if TopN aggregates work as expected
+ -- Create TopN extension if present, print false result otherwise
+ SELECT CASE WHEN COUNT(*) > 0 THEN
+   'CREATE EXTENSION TOPN'
+ ELSE 'SELECT false AS topn_present' END
+ AS create_topn FROM pg_available_extensions()
+ WHERE name = 'topn'
+ \gset
+ :create_topn;
++ topn_present 
++--------------
++ f
++(1 row)
++
+ CREATE TABLE customer_reviews (day date, user_id int, review int);
+ CREATE TABLE popular_reviewer(day date, reviewers jsonb);
+ SELECT create_distributed_table('customer_reviews', 'user_id');
+  create_distributed_table 
+ --------------------------
+  
+ (1 row)
+ 
+ SELECT create_distributed_table('popular_reviewer', 'day');
+  create_distributed_table 
+@@ -516,132 +521,80 @@
+   SELECT day, user_id % 13, review % 3
+   FROM generate_series('2018-06-10'::timestamp, '2018-07-10'::timestamp, '1 day'::interval) as f(day),
+        generate_series(1,30) as g(user_id), generate_series(0,30) AS r(review);
+ -- Run topn on raw data
+ SELECT (topn(agg, 10)).*
+ FROM (
+   SELECT topn_add_agg(user_id::text) AS agg
+   FROM customer_reviews
+   )a
+ ORDER BY 2 DESC, 1;
+- item | frequency
+----------------------------------------------------------------------
+- 1    |      7843
+- 2    |      7843
+- 3    |      6851
+- 4    |      6851
+- 0    |      5890
+- 5    |      5890
+- 6    |      5890
+- 7    |      1922
+- 8    |      1922
+- 9    |      1922
+-(10 rows)
+-
++ERROR:  function topn_add_agg(text) does not exist
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ -- Aggregate the data into popular_reviewer
+ INSERT INTO popular_reviewer
+   SELECT day, topn_add_agg(user_id::text)
+   FROM customer_reviews
+   GROUP BY 1;
++ERROR:  function topn_add_agg(text) does not exist
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ -- Basic topn check on aggregated data
+ SELECT day, (topn(reviewers, 10)).*
+ FROM popular_reviewer
+ WHERE day >= '2018-06-20' and day <= '2018-06-30'
+ ORDER BY 3 DESC, 1, 2
+ LIMIT 10;
+-    day     | item | frequency
+----------------------------------------------------------------------
+- 06-20-2018 | 1    |       248
+- 06-20-2018 | 2    |       248
+- 06-21-2018 | 1    |       248
+- 06-21-2018 | 2    |       248
+- 06-22-2018 | 1    |       248
+- 06-22-2018 | 2    |       248
+- 06-23-2018 | 1    |       248
+- 06-23-2018 | 2    |       248
+- 06-24-2018 | 1    |       248
+- 06-24-2018 | 2    |       248
+-(10 rows)
+-
++ERROR:  function topn(jsonb, integer) does not exist
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ -- Union aggregated data for one week
+ SELECT (topn(agg, 10)).*
+ FROM (
+ 	SELECT topn_union_agg(reviewers) AS agg
+ 	FROM popular_reviewer
+ 	WHERE day >= '2018-05-24'::date AND day <= '2018-05-31'::date
+ 	)a
+ ORDER BY 2 DESC, 1;
+- item | frequency
+----------------------------------------------------------------------
+- 1    |      1240
+- 2    |      1240
+- 0    |       992
+- 3    |       992
+- 4    |       992
+- 5    |       992
+- 6    |       992
+-(7 rows)
+-
++ERROR:  function topn_union_agg(jsonb) does not exist
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT month, (topn(agg, 5)).*
+ FROM (
+ 	SELECT EXTRACT(MONTH FROM day) AS month, topn_union_agg(reviewers) AS agg
+ 	FROM popular_reviewer
+ 	WHERE day >= '2018-06-23' AND day <= '2018-07-01'
+ 	GROUP BY 1
+ 	ORDER BY 1
+ 	)a
+ ORDER BY 1, 3 DESC, 2;
+- month | item | frequency
+----------------------------------------------------------------------
+-     6 | 1    |      1054
+-     6 | 2    |      1054
+-     6 | 3    |       992
+-     6 | 4    |       992
+-     6 | 0    |       744
+-     7 | 1    |        93
+-     7 | 2    |        93
+-     7 | 3    |        93
+-     7 | 4    |        93
+-     7 | 8    |        62
+-(10 rows)
+-
++ERROR:  function topn_union_agg(jsonb) does not exist
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ -- TODO the following queries will be supported after we fix #2265
+ -- They work for PG9.6 but not for PG10
+ SELECT (topn(topn_union_agg(reviewers), 10)).*
+ FROM popular_reviewer
+ WHERE day >= '2018-05-24'::date AND day <= '2018-05-31'::date
+ ORDER BY 2 DESC, 1;
+-ERROR:  set-valued function called in context that cannot accept a set
++ERROR:  function topn_union_agg(jsonb) does not exist
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT (topn(topn_add_agg(user_id::text), 10)).*
+ FROM customer_reviews
+ ORDER BY 2 DESC, 1;
+-ERROR:  set-valued function called in context that cannot accept a set
++ERROR:  function topn_add_agg(text) does not exist
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT day, (topn(agg, 10)).*
+ FROM (
+ 	SELECT day, topn_union_agg(reviewers) OVER seven_days AS agg
+ 	FROM popular_reviewer
+ 	WINDOW seven_days AS (ORDER BY day ASC ROWS 6 PRECEDING)
+ 	)a
+ ORDER BY 3 DESC, 1, 2
+ LIMIT 10;
+-    day     | item | frequency
+----------------------------------------------------------------------
+- 06-16-2018 | 1    |      1736
+- 06-16-2018 | 2    |      1736
+- 06-17-2018 | 1    |      1736
+- 06-17-2018 | 2    |      1736
+- 06-18-2018 | 1    |      1736
+- 06-18-2018 | 2    |      1736
+- 06-19-2018 | 1    |      1736
+- 06-19-2018 | 2    |      1736
+- 06-20-2018 | 1    |      1736
+- 06-20-2018 | 2    |      1736
+-(10 rows)
+-
++ERROR:  function topn_union_agg(jsonb) does not exist
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ SELECT day, (topn(topn_add_agg(user_id::text) OVER seven_days, 10)).*
+ FROM customer_reviews
+ WINDOW seven_days AS (ORDER BY day ASC ROWS 6 PRECEDING)
+ ORDER BY 3 DESC, 1, 2
+ LIMIT 10;
+-ERROR:  set-valued function called in context that cannot accept a set
++ERROR:  function topn_add_agg(text) does not exist
++HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+ DROP TABLE customer_reviews;
+ DROP TABLE popular_reviewer;

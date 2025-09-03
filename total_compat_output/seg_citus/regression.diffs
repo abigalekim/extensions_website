@@ -1,0 +1,38 @@
+diff -dU10 -w /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/expected/citus_table_triggers.out /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/results/citus_table_triggers.out
+--- /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/expected/citus_table_triggers.out.modified	2023-11-25 13:09:21.220904506 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/results/citus_table_triggers.out.modified	2023-11-25 13:09:21.228904470 +0000
+@@ -47,20 +47,21 @@
+ CREATE TRIGGER update_value_dist
+ AFTER INSERT ON distributed_table
+ FOR EACH ROW EXECUTE FUNCTION update_value();
+ CREATE TRIGGER update_value_ref
+ AFTER INSERT ON reference_table
+ FOR EACH ROW EXECUTE FUNCTION update_value();
+ -- enable ddl propagation back
+ SET citus.enable_ddl_propagation to ON;
+ -- create an extension for "depends on" commands
+ CREATE EXTENSION seg;
++ERROR:  extension "seg" already exists
+ -- below all should error out
+ ALTER TRIGGER update_value_dist ON distributed_table RENAME TO update_value_dist1;
+ ERROR:  triggers are not supported on distributed tables
+ ALTER TRIGGER update_value_dist ON distributed_table DEPENDS ON EXTENSION seg;
+ ERROR:  trigger "update_value_dist" depends on an extension and this is not supported for distributed tables and local tables added to metadata
+ DROP TRIGGER update_value_dist ON distributed_table;
+ ERROR:  triggers are not supported on distributed tables
+ ALTER TABLE distributed_table DISABLE TRIGGER ALL;
+ ERROR:  triggers are not supported on distributed tables
+ ALTER TABLE distributed_table DISABLE TRIGGER USER;
+@@ -148,11 +149,11 @@
+  CREATE TRIGGER test_table_delete AFTER DELETE ON table_triggers_schema.test_table FOR EACH STATEMENT EXECUTE FUNCTION table_triggers_schema.test_table_trigger_function()
+  ALTER TABLE table_triggers_schema.test_table ENABLE TRIGGER test_table_delete;
+  CREATE CONSTRAINT TRIGGER test_table_insert AFTER INSERT ON table_triggers_schema.test_table DEFERRABLE INITIALLY IMMEDIATE FOR EACH ROW WHEN (((new.id > 5) OR ((new.text_col IS NOT NULL) AND ((new.id)::numeric < to_number(new.text_number, '9999'::text))))) EXECUTE FUNCTION table_triggers_schema.test_table_trigger_function()
+  ALTER TABLE table_triggers_schema.test_table ENABLE TRIGGER test_table_insert;
+  CREATE CONSTRAINT TRIGGER test_table_update AFTER UPDATE OF id ON table_triggers_schema.test_table NOT DEFERRABLE INITIALLY IMMEDIATE FOR EACH ROW WHEN (((NOT (old.* IS DISTINCT FROM new.*)) AND (old.text_number IS NOT NULL))) EXECUTE FUNCTION table_triggers_schema.test_table_trigger_function()
+  ALTER TABLE table_triggers_schema.test_table ENABLE TRIGGER test_table_update;
+ (8 rows)
+ 
+ -- cleanup at exit
+ DROP SCHEMA table_triggers_schema CASCADE;
+-NOTICE:  drop cascades to 8 other objects
++NOTICE:  drop cascades to 7 other objects

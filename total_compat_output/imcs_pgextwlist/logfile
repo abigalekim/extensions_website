@@ -1,0 +1,33 @@
+2023-07-26 11:50:20.600 UTC [2086311] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 11:50:20.600 UTC [2086311] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 11:50:20.619 UTC [2086311] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 11:50:20.634 UTC [2086314] LOG:  database system was shut down at 2023-07-26 11:50:20 UTC
+2023-07-26 11:50:20.644 UTC [2086311] LOG:  database system is ready to accept connections
+2023-07-26 11:50:21.122 UTC [2086355] ERROR:  Type of sequence element int4 doesn't match with function cs_to_float4_array return type
+2023-07-26 11:50:21.122 UTC [2086355] STATEMENT:  select cs_to_float4_array('int4:{1,2,3,4,5}');
+2023-07-26 11:50:21.268 UTC [2086431] ERROR:  no matching timestamp in timeseries
+2023-07-26 11:50:21.268 UTC [2086431] STATEMENT:  select (Quote_project(Quote_get('IBM'), Quote_join('IBM', 'date:{2-Nov-2013,4-Nov-2013,03-Nov-2013,01-Nov-2013}', 0))).*;
+2023-07-26 11:50:21.304 UTC [2086312] LOG:  checkpoint starting: immediate force wait
+2023-07-26 11:50:21.371 UTC [2086312] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.020 s, sync=0.014 s, total=0.067 s; sync files=7, longest=0.008 s, average=0.002 s; distance=4695 kB, estimate=4695 kB
+2023-07-26 11:50:21.617 UTC [2086311] LOG:  received SIGHUP, reloading configuration files
+2023-07-26 11:50:21.619 UTC [2086311] LOG:  parameter "session_preload_libraries" changed to "pgextwlist"
+2023-07-26 11:50:21.619 UTC [2086311] LOG:  parameter "extwlist.extensions" changed to "citext,earthdistance,pg_trgm,pg_stat_statements,refint"
+2023-07-26 11:50:21.619 UTC [2086311] LOG:  parameter "extwlist.custom_path" changed to "/home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/test-scripts"
+2023-07-26 11:50:21.722 UTC [2086469] ERROR:  extension "plpgsql" already exists
+2023-07-26 11:50:21.722 UTC [2086469] STATEMENT:  CREATE EXTENSION plpgsql;
+2023-07-26 11:50:21.722 UTC [2086469] ERROR:  extension "hstore" does not exist
+2023-07-26 11:50:21.722 UTC [2086469] STATEMENT:  COMMENT ON EXTENSION hstore IS 'plpgsql comment';
+2023-07-26 11:50:21.723 UTC [2086469] ERROR:  permission denied to create extension "hstore"
+2023-07-26 11:50:21.723 UTC [2086469] HINT:  Must have CREATE privilege on current database to create this extension.
+2023-07-26 11:50:21.723 UTC [2086469] STATEMENT:  CREATE EXTENSION hstore;
+2023-07-26 11:50:21.723 UTC [2086469] ERROR:  extension "hstore" does not exist
+2023-07-26 11:50:21.723 UTC [2086469] STATEMENT:  COMMENT ON EXTENSION hstore IS 'hstore comment';
+2023-07-26 11:50:21.723 UTC [2086469] ERROR:  required extension "cube" is not installed
+2023-07-26 11:50:21.723 UTC [2086469] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-26 11:50:21.723 UTC [2086469] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-26 11:50:21.724 UTC [2086469] ERROR:  must be owner of extension plpgsql
+2023-07-26 11:50:21.724 UTC [2086469] STATEMENT:  DROP EXTENSION plpgsql;
+2023-07-26 11:50:21.763 UTC [2086477] ERROR:  cannot drop extension citext because other objects depend on it
+2023-07-26 11:50:21.763 UTC [2086477] DETAIL:  column t of table mere_table depends on type citext
+2023-07-26 11:50:21.763 UTC [2086477] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 11:50:21.763 UTC [2086477] STATEMENT:  DROP EXTENSION citext;

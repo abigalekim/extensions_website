@@ -1,0 +1,18 @@
+2023-07-26 09:27:41.447 UTC [1042625] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 09:27:41.448 UTC [1042625] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 09:27:41.462 UTC [1042625] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 09:27:41.479 UTC [1042628] LOG:  database system was shut down at 2023-07-26 09:27:41 UTC
+2023-07-26 09:27:41.488 UTC [1042625] LOG:  database system is ready to accept connections
+2023-07-26 09:27:41.647 UTC [1042644] ERROR:  parameter "pg_show_plans.plan_format" cannot be changed without restarting the server
+2023-07-26 09:27:41.647 UTC [1042644] STATEMENT:  set pg_show_plans.plan_format = 'json';
+2023-07-26 09:27:42.370 UTC [1042672] ERROR:  could not create unique index "idx_badindex_n"
+2023-07-26 09:27:42.370 UTC [1042672] DETAIL:  Key (n)=(10) is duplicated.
+2023-07-26 09:27:42.370 UTC [1042672] STATEMENT:  CREATE UNIQUE INDEX CONCURRENTLY idx_badindex_n ON tbl_badindex (n);
+2023-07-26 09:27:49.486 UTC [1042839] ERROR:  permission denied for schema repack at character 8
+2023-07-26 09:27:49.486 UTC [1042839] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 09:27:49.635 UTC [1042625] LOG:  server process (PID 1042844) was terminated by signal 11: Segmentation fault
+2023-07-26 09:27:49.635 UTC [1042625] DETAIL:  Failed process was running: SELECT spcname FROM pg_tablespace WHERE spcname = 'testts';
+2023-07-26 09:27:49.635 UTC [1042625] LOG:  terminating any other active server processes
+2023-07-26 09:27:49.635 UTC [1042625] LOG:  all server processes terminated; reinitializing
+2023-07-26 09:27:49.657 UTC [1042859] LOG:  database system was interrupted; last known up at 2023-07-26 09:27:41 UTC
+2023-07-26 09:27:49.657 UTC [1042862] FATAL:  the database system is in recovery mode

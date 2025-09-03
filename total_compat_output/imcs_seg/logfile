@@ -1,0 +1,35 @@
+2023-07-26 12:02:15.917 UTC [2088952] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 12:02:15.917 UTC [2088952] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 12:02:15.923 UTC [2088952] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 12:02:15.931 UTC [2088955] LOG:  database system was shut down at 2023-07-26 12:02:15 UTC
+2023-07-26 12:02:15.936 UTC [2088952] LOG:  database system is ready to accept connections
+2023-07-26 12:02:16.288 UTC [2088999] ERROR:  Type of sequence element int4 doesn't match with function cs_to_float4_array return type
+2023-07-26 12:02:16.288 UTC [2088999] STATEMENT:  select cs_to_float4_array('int4:{1,2,3,4,5}');
+2023-07-26 12:02:16.457 UTC [2089075] ERROR:  no matching timestamp in timeseries
+2023-07-26 12:02:16.457 UTC [2089075] STATEMENT:  select (Quote_project(Quote_get('IBM'), Quote_join('IBM', 'date:{2-Nov-2013,4-Nov-2013,03-Nov-2013,01-Nov-2013}', 0))).*;
+2023-07-26 12:02:16.658 UTC [2089106] ERROR:  bad seg representation at character 8
+2023-07-26 12:02:16.658 UTC [2089106] DETAIL:  syntax error at end of input
+2023-07-26 12:02:16.658 UTC [2089106] STATEMENT:  SELECT ''::seg AS seg;
+2023-07-26 12:02:16.658 UTC [2089106] ERROR:  bad seg representation at character 8
+2023-07-26 12:02:16.658 UTC [2089106] DETAIL:  syntax error at or near "A"
+2023-07-26 12:02:16.658 UTC [2089106] STATEMENT:  SELECT 'ABC'::seg AS seg;
+2023-07-26 12:02:16.658 UTC [2089106] ERROR:  bad seg representation at character 8
+2023-07-26 12:02:16.658 UTC [2089106] DETAIL:  syntax error at or near "A"
+2023-07-26 12:02:16.658 UTC [2089106] STATEMENT:  SELECT '1ABC'::seg AS seg;
+2023-07-26 12:02:16.658 UTC [2089106] ERROR:  bad seg representation at character 8
+2023-07-26 12:02:16.658 UTC [2089106] DETAIL:  syntax error at or near "."
+2023-07-26 12:02:16.658 UTC [2089106] STATEMENT:  SELECT '1.'::seg AS seg;
+2023-07-26 12:02:16.658 UTC [2089106] ERROR:  bad seg representation at character 8
+2023-07-26 12:02:16.658 UTC [2089106] DETAIL:  syntax error at or near ".."
+2023-07-26 12:02:16.658 UTC [2089106] STATEMENT:  SELECT '1.....'::seg AS seg;
+2023-07-26 12:02:16.658 UTC [2089106] ERROR:  bad seg representation at character 8
+2023-07-26 12:02:16.658 UTC [2089106] DETAIL:  syntax error at or near "."
+2023-07-26 12:02:16.658 UTC [2089106] STATEMENT:  SELECT '.1'::seg AS seg;
+2023-07-26 12:02:16.658 UTC [2089106] ERROR:  bad seg representation at character 8
+2023-07-26 12:02:16.658 UTC [2089106] DETAIL:  syntax error at or near "."
+2023-07-26 12:02:16.658 UTC [2089106] STATEMENT:  SELECT '1..2.'::seg AS seg;
+2023-07-26 12:02:16.658 UTC [2089106] ERROR:  bad seg representation at character 8
+2023-07-26 12:02:16.658 UTC [2089106] DETAIL:  syntax error at or near "e"
+2023-07-26 12:02:16.658 UTC [2089106] STATEMENT:  SELECT '1 e7'::seg AS seg;
+2023-07-26 12:02:16.658 UTC [2089106] ERROR:  "1e700" is out of range for type real at character 8
+2023-07-26 12:02:16.658 UTC [2089106] STATEMENT:  SELECT '1e700'::seg AS seg;

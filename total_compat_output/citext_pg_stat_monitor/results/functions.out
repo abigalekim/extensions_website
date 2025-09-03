@@ -1,0 +1,142 @@
+DROP ROLE IF EXISTS su;
+NOTICE:  role "su" does not exist, skipping
+CREATE USER su WITH SUPERUSER;
+SET ROLE su;
+CREATE EXTENSION pg_stat_monitor;
+CREATE USER u1;
+SELECT pg_stat_monitor_reset();
+ pg_stat_monitor_reset 
+-----------------------
+ 
+(1 row)
+
+SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+ routine_schema |       routine_name       | routine_type |  data_type   
+----------------+--------------------------+--------------+--------------
+ public         | citext                   | FUNCTION     | USER-DEFINED
+ public         | citext                   | FUNCTION     | USER-DEFINED
+ public         | citext                   | FUNCTION     | USER-DEFINED
+ public         | citext_cmp               | FUNCTION     | integer
+ public         | citext_eq                | FUNCTION     | boolean
+ public         | citext_ge                | FUNCTION     | boolean
+ public         | citext_gt                | FUNCTION     | boolean
+ public         | citext_hash              | FUNCTION     | integer
+ public         | citext_hash_extended     | FUNCTION     | bigint
+ public         | citext_larger            | FUNCTION     | USER-DEFINED
+ public         | citext_le                | FUNCTION     | boolean
+ public         | citext_lt                | FUNCTION     | boolean
+ public         | citext_ne                | FUNCTION     | boolean
+ public         | citext_pattern_cmp       | FUNCTION     | integer
+ public         | citext_pattern_ge        | FUNCTION     | boolean
+ public         | citext_pattern_gt        | FUNCTION     | boolean
+ public         | citext_pattern_le        | FUNCTION     | boolean
+ public         | citext_pattern_lt        | FUNCTION     | boolean
+ public         | citext_smaller           | FUNCTION     | USER-DEFINED
+ public         | citextin                 | FUNCTION     | USER-DEFINED
+ public         | citextout                | FUNCTION     | cstring
+ public         | citextrecv               | FUNCTION     | USER-DEFINED
+ public         | citextsend               | FUNCTION     | bytea
+ public         | decode_error_level       | FUNCTION     | text
+ public         | get_cmd_type             | FUNCTION     | text
+ public         | get_histogram_timings    | FUNCTION     | text
+ public         | histogram                | FUNCTION     | record
+ public         | max                      |              | USER-DEFINED
+ public         | min                      |              | USER-DEFINED
+ public         | pg_stat_monitor_internal | FUNCTION     | record
+ public         | pg_stat_monitor_reset    | FUNCTION     | void
+ public         | pg_stat_monitor_version  | FUNCTION     | text
+ public         | pgsm_create_11_view      | FUNCTION     | integer
+ public         | pgsm_create_13_view      | FUNCTION     | integer
+ public         | pgsm_create_14_view      | FUNCTION     | integer
+ public         | pgsm_create_15_view      | FUNCTION     | integer
+ public         | pgsm_create_view         | FUNCTION     | integer
+ public         | range                    | FUNCTION     | ARRAY
+ public         | regexp_match             | FUNCTION     | ARRAY
+ public         | regexp_match             | FUNCTION     | ARRAY
+ public         | regexp_matches           | FUNCTION     | ARRAY
+ public         | regexp_matches           | FUNCTION     | ARRAY
+ public         | regexp_replace           | FUNCTION     | text
+ public         | regexp_replace           | FUNCTION     | text
+ public         | regexp_split_to_array    | FUNCTION     | ARRAY
+ public         | regexp_split_to_array    | FUNCTION     | ARRAY
+ public         | regexp_split_to_table    | FUNCTION     | text
+ public         | regexp_split_to_table    | FUNCTION     | text
+ public         | replace                  | FUNCTION     | text
+ public         | split_part               | FUNCTION     | text
+ public         | strpos                   | FUNCTION     | integer
+ public         | texticlike               | FUNCTION     | boolean
+ public         | texticlike               | FUNCTION     | boolean
+ public         | texticnlike              | FUNCTION     | boolean
+ public         | texticnlike              | FUNCTION     | boolean
+ public         | texticregexeq            | FUNCTION     | boolean
+ public         | texticregexeq            | FUNCTION     | boolean
+ public         | texticregexne            | FUNCTION     | boolean
+ public         | texticregexne            | FUNCTION     | boolean
+ public         | translate                | FUNCTION     | text
+(60 rows)
+
+SET ROLE u1;
+SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+ routine_schema |       routine_name       | routine_type |  data_type   
+----------------+--------------------------+--------------+--------------
+ public         | citext                   | FUNCTION     | USER-DEFINED
+ public         | citext                   | FUNCTION     | USER-DEFINED
+ public         | citext                   | FUNCTION     | USER-DEFINED
+ public         | citext_cmp               | FUNCTION     | integer
+ public         | citext_eq                | FUNCTION     | boolean
+ public         | citext_ge                | FUNCTION     | boolean
+ public         | citext_gt                | FUNCTION     | boolean
+ public         | citext_hash              | FUNCTION     | integer
+ public         | citext_hash_extended     | FUNCTION     | bigint
+ public         | citext_larger            | FUNCTION     | USER-DEFINED
+ public         | citext_le                | FUNCTION     | boolean
+ public         | citext_lt                | FUNCTION     | boolean
+ public         | citext_ne                | FUNCTION     | boolean
+ public         | citext_pattern_cmp       | FUNCTION     | integer
+ public         | citext_pattern_ge        | FUNCTION     | boolean
+ public         | citext_pattern_gt        | FUNCTION     | boolean
+ public         | citext_pattern_le        | FUNCTION     | boolean
+ public         | citext_pattern_lt        | FUNCTION     | boolean
+ public         | citext_smaller           | FUNCTION     | USER-DEFINED
+ public         | citextin                 | FUNCTION     | USER-DEFINED
+ public         | citextout                | FUNCTION     | cstring
+ public         | citextrecv               | FUNCTION     | USER-DEFINED
+ public         | citextsend               | FUNCTION     | bytea
+ public         | decode_error_level       | FUNCTION     | text
+ public         | get_cmd_type             | FUNCTION     | text
+ public         | get_histogram_timings    | FUNCTION     | text
+ public         | histogram                | FUNCTION     | record
+ public         | max                      |              | USER-DEFINED
+ public         | min                      |              | USER-DEFINED
+ public         | pg_stat_monitor_internal | FUNCTION     | record
+ public         | pg_stat_monitor_version  | FUNCTION     | text
+ public         | range                    | FUNCTION     | ARRAY
+ public         | regexp_match             | FUNCTION     | ARRAY
+ public         | regexp_match             | FUNCTION     | ARRAY
+ public         | regexp_matches           | FUNCTION     | ARRAY
+ public         | regexp_matches           | FUNCTION     | ARRAY
+ public         | regexp_replace           | FUNCTION     | text
+ public         | regexp_replace           | FUNCTION     | text
+ public         | regexp_split_to_array    | FUNCTION     | ARRAY
+ public         | regexp_split_to_array    | FUNCTION     | ARRAY
+ public         | regexp_split_to_table    | FUNCTION     | text
+ public         | regexp_split_to_table    | FUNCTION     | text
+ public         | replace                  | FUNCTION     | text
+ public         | split_part               | FUNCTION     | text
+ public         | strpos                   | FUNCTION     | integer
+ public         | texticlike               | FUNCTION     | boolean
+ public         | texticlike               | FUNCTION     | boolean
+ public         | texticnlike              | FUNCTION     | boolean
+ public         | texticnlike              | FUNCTION     | boolean
+ public         | texticregexeq            | FUNCTION     | boolean
+ public         | texticregexeq            | FUNCTION     | boolean
+ public         | texticregexne            | FUNCTION     | boolean
+ public         | texticregexne            | FUNCTION     | boolean
+ public         | translate                | FUNCTION     | text
+(54 rows)
+
+SET ROLE su;
+DROP USER u1;
+DROP EXTENSION pg_stat_monitor;
+DROP USER su;
+ERROR:  current user cannot be dropped

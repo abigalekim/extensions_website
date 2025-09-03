@@ -1,0 +1,44 @@
+CREATE FUNCTION valid_arraybuffer_bytea(len integer) RETURNS bytea
+LANGUAGE plv8 IMMUTABLE STRICT
+AS $$
+  return new ArrayBuffer(len);
+$$;
+ERROR:  language "plv8" does not exist
+SELECT length(valid_arraybuffer_bytea(20));
+ERROR:  function valid_arraybuffer_bytea(integer) does not exist
+LINE 1: SELECT length(valid_arraybuffer_bytea(20));
+                      ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+CREATE FUNCTION valid_int8array_bytea(len integer) RETURNS bytea
+LANGUAGE plv8 IMMUTABLE STRICT
+AS $$
+  return new Int8Array(len);
+$$;
+ERROR:  language "plv8" does not exist
+SELECT length(valid_int8array_bytea(20));
+ERROR:  function valid_int8array_bytea(integer) does not exist
+LINE 1: SELECT length(valid_int8array_bytea(20));
+                      ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+CREATE FUNCTION valid_int16array_bytea(len integer) RETURNS bytea
+LANGUAGE plv8 IMMUTABLE STRICT
+AS $$
+  return new Int16Array(len);
+$$;
+ERROR:  language "plv8" does not exist
+SELECT length(valid_int16array_bytea(20));
+ERROR:  function valid_int16array_bytea(integer) does not exist
+LINE 1: SELECT length(valid_int16array_bytea(20));
+                      ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+DO $$
+  const test = 'string test'
+  const bytea = plv8.execute(`select $1::bytea`, [test])[0].bytea;
+  const result = String.fromCharCode.apply(null, bytea);
+  if (result === test) {
+    plv8.elog(INFO, 'OK');
+  } else {
+    plv8.elog(WARN, 'FAIL');
+  }
+$$ language plv8;
+ERROR:  language "plv8" does not exist

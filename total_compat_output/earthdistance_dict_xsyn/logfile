@@ -1,0 +1,28 @@
+2023-07-26 03:03:00.000 UTC [1983283] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 03:03:00.000 UTC [1983283] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 03:03:00.014 UTC [1983283] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 03:03:00.029 UTC [1983286] LOG:  database system was shut down at 2023-07-26 03:02:59 UTC
+2023-07-26 03:03:00.040 UTC [1983283] LOG:  database system is ready to accept connections
+2023-07-26 03:03:00.185 UTC [1983302] ERROR:  required extension "cube" is not installed
+2023-07-26 03:03:00.185 UTC [1983302] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-26 03:03:00.185 UTC [1983302] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-26 03:03:00.239 UTC [1983302] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-26 03:03:00.239 UTC [1983302] DETAIL:  extension earthdistance depends on extension cube
+2023-07-26 03:03:00.239 UTC [1983302] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 03:03:00.239 UTC [1983302] STATEMENT:  drop extension cube;
+2023-07-26 03:03:00.242 UTC [1983302] ERROR:  cannot drop type cube because extension cube requires it
+2023-07-26 03:03:00.242 UTC [1983302] HINT:  You can drop extension cube instead.
+2023-07-26 03:03:00.242 UTC [1983302] STATEMENT:  drop type cube;
+2023-07-26 03:03:00.248 UTC [1983302] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-26 03:03:00.248 UTC [1983302] DETAIL:  column f1 of table foo depends on type cube
+2023-07-26 03:03:00.248 UTC [1983302] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 03:03:00.248 UTC [1983302] STATEMENT:  drop extension cube;
+2023-07-26 03:03:00.343 UTC [1983302] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-26 03:03:00.343 UTC [1983302] DETAIL:  column f1 of table foo depends on type c.cube
+2023-07-26 03:03:00.343 UTC [1983302] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 03:03:00.343 UTC [1983302] STATEMENT:  drop extension cube;
+2023-07-26 03:03:00.344 UTC [1983302] ERROR:  cannot drop schema c because other objects depend on it
+2023-07-26 03:03:00.344 UTC [1983302] DETAIL:  extension cube depends on schema c
+	column f1 of table foo depends on type c.cube
+2023-07-26 03:03:00.344 UTC [1983302] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 03:03:00.344 UTC [1983302] STATEMENT:  drop schema c;

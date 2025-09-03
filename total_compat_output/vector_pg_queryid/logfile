@@ -1,0 +1,95 @@
+2023-07-26 19:34:09.229 UTC [3574846] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 19:34:09.230 UTC [3574846] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 19:34:09.242 UTC [3574846] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 19:34:09.257 UTC [3574849] LOG:  database system was shut down at 2023-07-26 19:34:08 UTC
+2023-07-26 19:34:09.264 UTC [3574846] LOG:  database system is ready to accept connections
+2023-07-26 19:34:09.515 UTC [3574875] ERROR:  array must not contain nulls
+2023-07-26 19:34:09.515 UTC [3574875] STATEMENT:  SELECT '{NULL}'::real[]::vector;
+2023-07-26 19:34:09.516 UTC [3574875] ERROR:  NaN not allowed in vector
+2023-07-26 19:34:09.516 UTC [3574875] STATEMENT:  SELECT '{NaN}'::real[]::vector;
+2023-07-26 19:34:09.516 UTC [3574875] ERROR:  infinite value not allowed in vector
+2023-07-26 19:34:09.516 UTC [3574875] STATEMENT:  SELECT '{Infinity}'::real[]::vector;
+2023-07-26 19:34:09.517 UTC [3574875] ERROR:  infinite value not allowed in vector
+2023-07-26 19:34:09.517 UTC [3574875] STATEMENT:  SELECT '{-Infinity}'::real[]::vector;
+2023-07-26 19:34:09.517 UTC [3574875] ERROR:  vector must have at least 1 dimension
+2023-07-26 19:34:09.517 UTC [3574875] STATEMENT:  SELECT '{}'::real[]::vector;
+2023-07-26 19:34:09.518 UTC [3574875] ERROR:  array must be 1-D
+2023-07-26 19:34:09.518 UTC [3574875] STATEMENT:  SELECT '{{1}}'::real[]::vector;
+2023-07-26 19:34:09.529 UTC [3574875] ERROR:  vector cannot have more than 16000 dimensions
+2023-07-26 19:34:09.529 UTC [3574875] STATEMENT:  SELECT array_agg(n)::vector FROM generate_series(1, 16001) n;
+2023-07-26 19:34:09.539 UTC [3574875] ERROR:  vector cannot have more than 16000 dimensions
+2023-07-26 19:34:09.539 UTC [3574875] STATEMENT:  SELECT array_to_vector(array_agg(n), 16001, false) FROM generate_series(1, 16001) n;
+2023-07-26 19:34:09.614 UTC [3574883] ERROR:  value out of range: overflow
+2023-07-26 19:34:09.614 UTC [3574883] STATEMENT:  SELECT '[3e38]'::vector + '[3e38]';
+2023-07-26 19:34:09.615 UTC [3574883] ERROR:  value out of range: overflow
+2023-07-26 19:34:09.615 UTC [3574883] STATEMENT:  SELECT '[-3e38]'::vector - '[3e38]';
+2023-07-26 19:34:09.617 UTC [3574883] ERROR:  value out of range: overflow
+2023-07-26 19:34:09.617 UTC [3574883] STATEMENT:  SELECT '[1e37]'::vector * '[1e37]';
+2023-07-26 19:34:09.617 UTC [3574883] ERROR:  value out of range: underflow
+2023-07-26 19:34:09.617 UTC [3574883] STATEMENT:  SELECT '[1e-37]'::vector * '[1e-37]';
+2023-07-26 19:34:09.621 UTC [3574883] ERROR:  different vector dimensions 2 and 1
+2023-07-26 19:34:09.621 UTC [3574883] STATEMENT:  SELECT l2_distance('[1,2]', '[3]');
+2023-07-26 19:34:09.622 UTC [3574883] ERROR:  different vector dimensions 2 and 1
+2023-07-26 19:34:09.622 UTC [3574883] STATEMENT:  SELECT inner_product('[1,2]', '[3]');
+2023-07-26 19:34:09.625 UTC [3574883] ERROR:  different vector dimensions 2 and 1
+2023-07-26 19:34:09.625 UTC [3574883] STATEMENT:  SELECT cosine_distance('[1,2]', '[3]');
+2023-07-26 19:34:09.626 UTC [3574883] ERROR:  different vector dimensions 2 and 1
+2023-07-26 19:34:09.626 UTC [3574883] STATEMENT:  SELECT l1_distance('[1,2]', '[3]');
+2023-07-26 19:34:09.629 UTC [3574883] ERROR:  expected 2 dimensions, not 1
+2023-07-26 19:34:09.629 UTC [3574883] STATEMENT:  SELECT avg(v) FROM unnest(ARRAY['[1,2]'::vector, '[3]']) v;
+2023-07-26 19:34:09.631 UTC [3574883] ERROR:  cache lookup failed for type 23
+2023-07-26 19:34:09.631 UTC [3574883] STATEMENT:  SELECT vector_avg(array_agg(n)) FROM generate_series(1, 16002) n;
+2023-07-26 19:34:09.633 UTC [3574883] ERROR:  different vector dimensions 2 and 1
+2023-07-26 19:34:09.633 UTC [3574883] STATEMENT:  SELECT sum(v) FROM unnest(ARRAY['[1,2]'::vector, '[3]']) v;
+2023-07-26 19:34:09.634 UTC [3574883] ERROR:  value out of range: overflow
+2023-07-26 19:34:09.634 UTC [3574883] STATEMENT:  SELECT sum(v) FROM unnest(ARRAY['[3e38]'::vector, '[3e38]']) v;
+2023-07-26 19:34:09.665 UTC [3574889] ERROR:  invalid input syntax for type vector: "[hello,1]" at character 8
+2023-07-26 19:34:09.665 UTC [3574889] STATEMENT:  SELECT '[hello,1]'::vector;
+2023-07-26 19:34:09.665 UTC [3574889] ERROR:  NaN not allowed in vector at character 8
+2023-07-26 19:34:09.665 UTC [3574889] STATEMENT:  SELECT '[NaN,1]'::vector;
+2023-07-26 19:34:09.666 UTC [3574889] ERROR:  infinite value not allowed in vector at character 8
+2023-07-26 19:34:09.666 UTC [3574889] STATEMENT:  SELECT '[Infinity,1]'::vector;
+2023-07-26 19:34:09.666 UTC [3574889] ERROR:  infinite value not allowed in vector at character 8
+2023-07-26 19:34:09.666 UTC [3574889] STATEMENT:  SELECT '[-Infinity,1]'::vector;
+2023-07-26 19:34:09.668 UTC [3574889] ERROR:  infinite value not allowed in vector at character 8
+2023-07-26 19:34:09.668 UTC [3574889] STATEMENT:  SELECT '[4e38,1]'::vector;
+2023-07-26 19:34:09.668 UTC [3574889] ERROR:  malformed vector literal: "[1,2,3" at character 8
+2023-07-26 19:34:09.668 UTC [3574889] DETAIL:  Unexpected end of input.
+2023-07-26 19:34:09.668 UTC [3574889] STATEMENT:  SELECT '[1,2,3'::vector;
+2023-07-26 19:34:09.668 UTC [3574889] ERROR:  malformed vector literal: "[1,2,3]9" at character 8
+2023-07-26 19:34:09.668 UTC [3574889] DETAIL:  Junk after closing right brace.
+2023-07-26 19:34:09.668 UTC [3574889] STATEMENT:  SELECT '[1,2,3]9'::vector;
+2023-07-26 19:34:09.669 UTC [3574889] ERROR:  malformed vector literal: "1,2,3" at character 8
+2023-07-26 19:34:09.669 UTC [3574889] DETAIL:  Vector contents must start with "[".
+2023-07-26 19:34:09.669 UTC [3574889] STATEMENT:  SELECT '1,2,3'::vector;
+2023-07-26 19:34:09.669 UTC [3574889] ERROR:  malformed vector literal: "" at character 8
+2023-07-26 19:34:09.669 UTC [3574889] DETAIL:  Vector contents must start with "[".
+2023-07-26 19:34:09.669 UTC [3574889] STATEMENT:  SELECT ''::vector;
+2023-07-26 19:34:09.669 UTC [3574889] ERROR:  malformed vector literal: "[" at character 8
+2023-07-26 19:34:09.669 UTC [3574889] DETAIL:  Unexpected end of input.
+2023-07-26 19:34:09.669 UTC [3574889] STATEMENT:  SELECT '['::vector;
+2023-07-26 19:34:09.669 UTC [3574889] ERROR:  malformed vector literal: "[," at character 8
+2023-07-26 19:34:09.669 UTC [3574889] DETAIL:  Unexpected end of input.
+2023-07-26 19:34:09.669 UTC [3574889] STATEMENT:  SELECT '[,'::vector;
+2023-07-26 19:34:09.670 UTC [3574889] ERROR:  vector must have at least 1 dimension at character 8
+2023-07-26 19:34:09.670 UTC [3574889] STATEMENT:  SELECT '[]'::vector;
+2023-07-26 19:34:09.670 UTC [3574889] ERROR:  invalid input syntax for type vector: "[1,]" at character 8
+2023-07-26 19:34:09.670 UTC [3574889] STATEMENT:  SELECT '[1,]'::vector;
+2023-07-26 19:34:09.670 UTC [3574889] ERROR:  invalid input syntax for type vector: "[1a]" at character 8
+2023-07-26 19:34:09.670 UTC [3574889] STATEMENT:  SELECT '[1a]'::vector;
+2023-07-26 19:34:09.671 UTC [3574889] ERROR:  malformed vector literal: "[1,,3]" at character 8
+2023-07-26 19:34:09.671 UTC [3574889] STATEMENT:  SELECT '[1,,3]'::vector;
+2023-07-26 19:34:09.671 UTC [3574889] ERROR:  invalid input syntax for type vector: "[1, ,3]" at character 8
+2023-07-26 19:34:09.671 UTC [3574889] STATEMENT:  SELECT '[1, ,3]'::vector;
+2023-07-26 19:34:09.672 UTC [3574889] ERROR:  expected 2 dimensions, not 3
+2023-07-26 19:34:09.672 UTC [3574889] STATEMENT:  SELECT '[1,2,3]'::vector(2);
+2023-07-26 19:34:09.673 UTC [3574889] ERROR:  cache lookup failed for type 16386
+2023-07-26 19:34:09.673 UTC [3574889] STATEMENT:  SELECT '{"[1,2,3]"}'::vector(2)[];
+2023-07-26 19:34:09.897 UTC [3574907] ERROR:  value 0 out of bounds for option "lists"
+2023-07-26 19:34:09.897 UTC [3574907] DETAIL:  Valid values are between "1" and "32768".
+2023-07-26 19:34:09.897 UTC [3574907] STATEMENT:  CREATE INDEX ON t USING ivfflat (val) WITH (lists = 0);
+2023-07-26 19:34:09.898 UTC [3574907] ERROR:  value 32769 out of bounds for option "lists"
+2023-07-26 19:34:09.898 UTC [3574907] DETAIL:  Valid values are between "1" and "32768".
+2023-07-26 19:34:09.898 UTC [3574907] STATEMENT:  CREATE INDEX ON t USING ivfflat (val) WITH (lists = 32769);
+2023-07-26 19:34:10.025 UTC [3574847] LOG:  checkpoint starting: immediate force wait
+2023-07-26 19:34:10.085 UTC [3574847] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.017 s, sync=0.013 s, total=0.060 s; sync files=7, longest=0.006 s, average=0.002 s; distance=4455 kB, estimate=4455 kB

@@ -1,0 +1,22 @@
+2023-07-25 17:51:55.668 UTC [3270101] LOG:  Auto detecting pg_stat_kcache.linux_hz parameter...
+2023-07-25 17:51:55.668 UTC [3270101] LOG:  pg_stat_kcache.linux_hz is set to 500000
+2023-07-25 17:51:55.707 UTC [3270101] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 17:51:55.708 UTC [3270101] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 17:51:55.714 UTC [3270101] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 17:51:55.721 UTC [3270104] LOG:  database system was shut down at 2023-07-25 17:51:55 UTC
+2023-07-25 17:51:55.726 UTC [3270101] LOG:  database system is ready to accept connections
+2023-07-25 17:51:55.726 UTC [3270107] LOG:  starting bgworker pgsentinel
+2023-07-25 17:51:55.727 UTC [3270107] FATAL:  database "contrib_regression" does not exist
+2023-07-25 17:51:55.729 UTC [3270101] LOG:  background worker "pgsentinel" (PID 3270107) exited with exit code 1
+2023-07-25 17:51:55.850 UTC [3270124] ERROR:  extension "pg_stat_statements" already exists
+2023-07-25 17:51:55.850 UTC [3270124] STATEMENT:  CREATE EXTENSION pg_stat_statements;
+2023-07-25 17:51:57.733 UTC [3270125] LOG:  starting bgworker pgsentinel
+2023-07-25 17:52:01.884 UTC [3270101] LOG:  received SIGHUP, reloading configuration files
+2023-07-25 17:52:01.886 UTC [3270101] LOG:  parameter "pgsentinel_ash.track_idle_trans" changed to "true"
+2023-07-25 17:52:01.888 UTC [3270125] LOG:  bgworker pgsentinel signal: processed SIGHUP
+2023-07-25 17:52:04.905 UTC [3270124] ERROR:  cannot drop extension pg_stat_statements because other objects depend on it
+2023-07-25 17:52:04.905 UTC [3270124] DETAIL:  extension pg_stat_kcache depends on extension pg_stat_statements
+2023-07-25 17:52:04.905 UTC [3270124] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 17:52:04.905 UTC [3270124] STATEMENT:  DROP EXTENSION pg_stat_statements;
+2023-07-25 17:52:05.059 UTC [3270157] ERROR:  extension "pg_stat_statements" already exists
+2023-07-25 17:52:05.059 UTC [3270157] STATEMENT:  CREATE EXTENSION pg_stat_statements;

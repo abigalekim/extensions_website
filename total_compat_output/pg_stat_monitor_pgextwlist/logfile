@@ -1,0 +1,52 @@
+2023-07-26 10:14:57.316 UTC [1062190] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 10:14:57.316 UTC [1062190] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 10:14:57.322 UTC [1062190] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 10:14:57.330 UTC [1062193] LOG:  database system was shut down at 2023-07-26 10:14:57 UTC
+2023-07-26 10:14:57.334 UTC [1062190] LOG:  database system is ready to accept connections
+2023-07-26 10:14:57.862 UTC [1062191] LOG:  checkpoint starting: immediate force wait
+2023-07-26 10:14:57.979 UTC [1062191] LOG:  checkpoint complete: wrote 1795 buffers (11.0%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.059 s, sync=0.035 s, total=0.117 s; sync files=497, longest=0.006 s, average=0.001 s; distance=12305 kB, estimate=12305 kB
+2023-07-26 10:14:57.986 UTC [1062191] LOG:  checkpoint starting: immediate force wait
+2023-07-26 10:14:58.006 UTC [1062191] LOG:  checkpoint complete: wrote 2 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.004 s, sync=0.004 s, total=0.020 s; sync files=2, longest=0.003 s, average=0.002 s; distance=1 kB, estimate=11074 kB
+2023-07-26 10:14:58.101 UTC [1062231] ERROR:  current user cannot be dropped
+2023-07-26 10:14:58.101 UTC [1062231] STATEMENT:  DROP USER su;
+2023-07-26 10:14:58.373 UTC [1062191] LOG:  checkpoint starting: immediate force wait
+2023-07-26 10:14:58.448 UTC [1062191] LOG:  checkpoint complete: wrote 1008 buffers (6.2%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.039 s, sync=0.023 s, total=0.075 s; sync files=298, longest=0.004 s, average=0.001 s; distance=8783 kB, estimate=10845 kB
+2023-07-26 10:14:58.475 UTC [1062191] LOG:  checkpoint starting: immediate force wait
+2023-07-26 10:14:58.498 UTC [1062191] LOG:  checkpoint complete: wrote 10 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.005 s, sync=0.005 s, total=0.023 s; sync files=7, longest=0.003 s, average=0.001 s; distance=42 kB, estimate=9765 kB
+2023-07-26 10:14:58.564 UTC [1062255] ERROR:  duplicate key value violates unique constraint "company_pkey"
+2023-07-26 10:14:58.564 UTC [1062255] DETAIL:  Key (id)=(1) already exists.
+2023-07-26 10:14:58.564 UTC [1062255] STATEMENT:  INSERT  INTO Company(ID, Name) VALUES (1, 'Percona');
+2023-07-26 10:14:58.744 UTC [1062275] ERROR:  division by zero
+2023-07-26 10:14:58.744 UTC [1062275] STATEMENT:  SELECT 1/0;
+2023-07-26 10:14:58.745 UTC [1062275] ERROR:  relation "unknown" does not exist at character 15
+2023-07-26 10:14:58.745 UTC [1062275] STATEMENT:  SELECT * FROM unknown;
+2023-07-26 10:14:58.745 UTC [1062275] ERROR:  syntax error at or near "ELECET" at character 1
+2023-07-26 10:14:58.745 UTC [1062275] STATEMENT:  ELECET * FROM unknown;
+2023-07-26 10:14:58.746 UTC [1062275] WARNING:  warning message
+2023-07-26 10:14:58.746 UTC [1062275] CONTEXT:  PL/pgSQL function inline_code_block line 3 at RAISE
+2023-07-26 10:14:58.857 UTC [1062289] ERROR:  role "su" already exists
+2023-07-26 10:14:58.857 UTC [1062289] STATEMENT:  CREATE USER su WITH SUPERUSER;
+2023-07-26 10:14:58.871 UTC [1062289] ERROR:  permission denied for function pg_stat_monitor_reset
+2023-07-26 10:14:58.871 UTC [1062289] STATEMENT:  SELECT pg_stat_monitor_reset();
+2023-07-26 10:14:58.982 UTC [1062190] LOG:  received SIGHUP, reloading configuration files
+2023-07-26 10:14:58.984 UTC [1062190] LOG:  parameter "session_preload_libraries" changed to "pgextwlist"
+2023-07-26 10:14:58.984 UTC [1062190] LOG:  parameter "extwlist.extensions" changed to "citext,earthdistance,pg_trgm,pg_stat_statements,refint"
+2023-07-26 10:14:58.984 UTC [1062190] LOG:  parameter "extwlist.custom_path" changed to "/home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/test-scripts"
+2023-07-26 10:14:59.067 UTC [1062315] ERROR:  extension "plpgsql" already exists
+2023-07-26 10:14:59.067 UTC [1062315] STATEMENT:  CREATE EXTENSION plpgsql;
+2023-07-26 10:14:59.067 UTC [1062315] ERROR:  extension "hstore" does not exist
+2023-07-26 10:14:59.067 UTC [1062315] STATEMENT:  COMMENT ON EXTENSION hstore IS 'plpgsql comment';
+2023-07-26 10:14:59.068 UTC [1062315] ERROR:  permission denied to create extension "hstore"
+2023-07-26 10:14:59.068 UTC [1062315] HINT:  Must have CREATE privilege on current database to create this extension.
+2023-07-26 10:14:59.068 UTC [1062315] STATEMENT:  CREATE EXTENSION hstore;
+2023-07-26 10:14:59.068 UTC [1062315] ERROR:  extension "hstore" does not exist
+2023-07-26 10:14:59.068 UTC [1062315] STATEMENT:  COMMENT ON EXTENSION hstore IS 'hstore comment';
+2023-07-26 10:14:59.068 UTC [1062315] ERROR:  required extension "cube" is not installed
+2023-07-26 10:14:59.068 UTC [1062315] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-26 10:14:59.068 UTC [1062315] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-26 10:14:59.068 UTC [1062315] ERROR:  must be owner of extension plpgsql
+2023-07-26 10:14:59.068 UTC [1062315] STATEMENT:  DROP EXTENSION plpgsql;
+2023-07-26 10:14:59.085 UTC [1062323] ERROR:  cannot drop extension citext because other objects depend on it
+2023-07-26 10:14:59.085 UTC [1062323] DETAIL:  column t of table mere_table depends on type citext
+2023-07-26 10:14:59.085 UTC [1062323] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 10:14:59.085 UTC [1062323] STATEMENT:  DROP EXTENSION citext;

@@ -1,0 +1,37 @@
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_hint_plan-REL15_1_5_0/expected/pg_hint_plan.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_hint_plan-REL15_1_5_0/results/pg_hint_plan.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_hint_plan-REL15_1_5_0/expected/pg_hint_plan.out	2023-01-25 03:40:47.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_hint_plan-REL15_1_5_0/results/pg_hint_plan.out	2023-07-26 13:47:33.995258658 +0000
+@@ -8135,6 +8135,16 @@
+ 
+ -- Perform
+ DROP FUNCTION testfunc();
++LOG:  pg_hint_plan:
++used hint:
++not used hint:
++IndexScan(t1)
++duplication hint:
++error hint:
++
++CONTEXT:  SQL statement "SELECT count(*)                   FROM pgtle.feature_info
++				WHERE obj_identity = obj.object_identity"
++PL/pgSQL function pgtle.pg_tle_feature_info_sql_drop() line 22 at SQL statement
+ CREATE FUNCTION testfunc() RETURNS void AS $$
+ BEGIN
+   PERFORM  1, /*+ SeqScan(t1) */ * from t1;
+@@ -8157,6 +8167,16 @@
+ 
+ -- FOR loop
+ DROP FUNCTION testfunc();
++LOG:  pg_hint_plan:
++used hint:
++not used hint:
++SeqScan(t1)
++duplication hint:
++error hint:
++
++CONTEXT:  SQL statement "SELECT count(*)                   FROM pgtle.feature_info
++				WHERE obj_identity = obj.object_identity"
++PL/pgSQL function pgtle.pg_tle_feature_info_sql_drop() line 22 at SQL statement
+ CREATE FUNCTION testfunc() RETURNS int AS $$
+ DECLARE
+   sum int;

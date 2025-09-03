@@ -1,0 +1,25 @@
+diff -dU10 -w /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/expected/pg14.out /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/results/pg14.out
+--- /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/expected/pg14.out.modified	2023-11-25 13:01:26.867118238 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/results/pg14.out.modified	2023-11-25 13:01:26.899118082 +0000
+@@ -1342,20 +1342,21 @@
+ -- will test truncating foreign tables later
+ CREATE TABLE foreign_table_test (id integer NOT NULL, data text, a bigserial);
+ INSERT INTO foreign_table_test VALUES (1, 'text_test');
+ SELECT citus_add_local_table_to_metadata('foreign_table_test');
+  citus_add_local_table_to_metadata 
+ -----------------------------------
+  
+ (1 row)
+ 
+ CREATE EXTENSION postgres_fdw;
++ERROR:  extension "postgres_fdw" already exists
+ CREATE SERVER foreign_server
+         FOREIGN DATA WRAPPER postgres_fdw
+         OPTIONS (host 'localhost', port :'master_port', dbname 'regression');
+ CREATE USER MAPPING FOR CURRENT_USER
+         SERVER foreign_server
+         OPTIONS (user 'postgres');
+ CREATE FOREIGN TABLE foreign_table (
+         id integer NOT NULL,
+         data text,
+         a bigserial

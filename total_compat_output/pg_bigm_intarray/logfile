@@ -1,0 +1,26 @@
+2023-07-25 14:29:39.134 UTC [762512] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 14:29:39.134 UTC [762512] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 14:29:39.148 UTC [762512] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 14:29:39.164 UTC [762515] LOG:  database system was shut down at 2023-07-25 14:29:38 UTC
+2023-07-25 14:29:39.172 UTC [762512] LOG:  database system is ready to accept connections
+2023-07-25 14:29:39.332 UTC [762531] ERROR:  parameter "pg_bigm.last_update" cannot be changed
+2023-07-25 14:29:39.332 UTC [762531] STATEMENT:  SET pg_bigm.last_update = '2013.09.18';
+2023-07-25 14:29:39.372 UTC [762531] ERROR:  relation "test_bigm" is not a GIN index
+2023-07-25 14:29:39.372 UTC [762531] STATEMENT:  SELECT * FROM pg_gin_pending_stats('test_bigm');
+2023-07-25 14:29:39.385 UTC [762531] ERROR:  relation "test_bigm_btree" is not a GIN index
+2023-07-25 14:29:39.385 UTC [762531] STATEMENT:  SELECT * FROM pg_gin_pending_stats('test_bigm_btree');
+2023-07-25 14:29:39.476 UTC [762531] ERROR:  function likequery(unknown) does not exist at character 8
+2023-07-25 14:29:39.476 UTC [762531] HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+2023-07-25 14:29:39.476 UTC [762531] STATEMENT:  SELECT likequery('test');
+2023-07-25 14:29:39.962 UTC [762550] ERROR:  value 0 out of bounds for option "numranges"
+2023-07-25 14:29:39.962 UTC [762550] DETAIL:  Valid values are between "1" and "252".
+2023-07-25 14:29:39.962 UTC [762550] STATEMENT:  CREATE INDEX text_idx on test__int using gist (a gist__int_ops(numranges = 0));
+2023-07-25 14:29:39.962 UTC [762550] ERROR:  value 253 out of bounds for option "numranges"
+2023-07-25 14:29:39.962 UTC [762550] DETAIL:  Valid values are between "1" and "252".
+2023-07-25 14:29:39.962 UTC [762550] STATEMENT:  CREATE INDEX text_idx on test__int using gist (a gist__int_ops(numranges = 253));
+2023-07-25 14:29:40.187 UTC [762550] ERROR:  value 0 out of bounds for option "siglen"
+2023-07-25 14:29:40.187 UTC [762550] DETAIL:  Valid values are between "1" and "2024".
+2023-07-25 14:29:40.187 UTC [762550] STATEMENT:  CREATE INDEX text_idx on test__int using gist (a gist__intbig_ops(siglen = 0));
+2023-07-25 14:29:40.187 UTC [762550] ERROR:  value 2025 out of bounds for option "siglen"
+2023-07-25 14:29:40.187 UTC [762550] DETAIL:  Valid values are between "1" and "2024".
+2023-07-25 14:29:40.187 UTC [762550] STATEMENT:  CREATE INDEX text_idx on test__int using gist (a gist__intbig_ops(siglen = 2025));

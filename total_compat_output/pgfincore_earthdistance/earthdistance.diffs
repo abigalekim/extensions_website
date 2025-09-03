@@ -1,0 +1,90 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out	2023-07-25 14:34:09.358038892 +0000
+@@ -1001,10 +1001,24 @@
+ (0 rows)
+ 
+ \df
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                                                                                                                     List of functions
++ Schema |         Name         | Result data type |                                                                                                                       Argument data types                                                                                                                       | Type 
++--------+----------------------+------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------
++ public | pgfadvise            | SETOF record     | regclass, text, integer, OUT relpath text, OUT os_page_size bigint, OUT rel_os_pages bigint, OUT os_pages_free bigint                                                                                                                                           | func
++ public | pgfadvise_dontneed   | SETOF record     | regclass, OUT relpath text, OUT os_page_size bigint, OUT rel_os_pages bigint, OUT os_pages_free bigint                                                                                                                                                          | func
++ public | pgfadvise_loader     | SETOF record     | regclass, integer, boolean, boolean, bit varying, OUT relpath text, OUT os_page_size bigint, OUT os_pages_free bigint, OUT pages_loaded bigint, OUT pages_unloaded bigint                                                                                       | func
++ public | pgfadvise_loader     | SETOF record     | regclass, text, integer, boolean, boolean, bit varying, OUT relpath text, OUT os_page_size bigint, OUT os_pages_free bigint, OUT pages_loaded bigint, OUT pages_unloaded bigint                                                                                 | func
++ public | pgfadvise_normal     | SETOF record     | regclass, OUT relpath text, OUT os_page_size bigint, OUT rel_os_pages bigint, OUT os_pages_free bigint                                                                                                                                                          | func
++ public | pgfadvise_random     | SETOF record     | regclass, OUT relpath text, OUT os_page_size bigint, OUT rel_os_pages bigint, OUT os_pages_free bigint                                                                                                                                                          | func
++ public | pgfadvise_sequential | SETOF record     | regclass, OUT relpath text, OUT os_page_size bigint, OUT rel_os_pages bigint, OUT os_pages_free bigint                                                                                                                                                          | func
++ public | pgfadvise_willneed   | SETOF record     | regclass, OUT relpath text, OUT os_page_size bigint, OUT rel_os_pages bigint, OUT os_pages_free bigint                                                                                                                                                          | func
++ public | pgfincore            | SETOF record     | regclass, boolean, OUT relpath text, OUT segment integer, OUT os_page_size bigint, OUT rel_os_pages bigint, OUT pages_mem bigint, OUT group_mem bigint, OUT os_pages_free bigint, OUT databit bit varying, OUT pages_dirty bigint, OUT group_dirty bigint       | func
++ public | pgfincore            | SETOF record     | regclass, OUT relpath text, OUT segment integer, OUT os_page_size bigint, OUT rel_os_pages bigint, OUT pages_mem bigint, OUT group_mem bigint, OUT os_pages_free bigint, OUT databit bit varying, OUT pages_dirty bigint, OUT group_dirty bigint                | func
++ public | pgfincore            | SETOF record     | regclass, text, boolean, OUT relpath text, OUT segment integer, OUT os_page_size bigint, OUT rel_os_pages bigint, OUT pages_mem bigint, OUT group_mem bigint, OUT os_pages_free bigint, OUT databit bit varying, OUT pages_dirty bigint, OUT group_dirty bigint | func
++ public | pgfincore_drawer     | cstring          | bit varying, OUT drawer cstring                                                                                                                                                                                                                                 | func
++ public | pgsysconf            | record           | OUT os_page_size bigint, OUT os_pages_free bigint, OUT os_total_pages bigint                                                                                                                                                                                    | func
++ public | pgsysconf_pretty     | record           | OUT os_page_size text, OUT os_pages_free text, OUT os_total_pages text                                                                                                                                                                                          | func
++(14 rows)
+ 
+ \do
+                              List of operators
+@@ -1022,10 +1036,24 @@
+ (0 rows)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                                                                                                                     List of functions
++ Schema |         Name         | Result data type |                                                                                                                       Argument data types                                                                                                                       | Type 
++--------+----------------------+------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------
++ public | pgfadvise            | SETOF record     | regclass, text, integer, OUT relpath text, OUT os_page_size bigint, OUT rel_os_pages bigint, OUT os_pages_free bigint                                                                                                                                           | func
++ public | pgfadvise_dontneed   | SETOF record     | regclass, OUT relpath text, OUT os_page_size bigint, OUT rel_os_pages bigint, OUT os_pages_free bigint                                                                                                                                                          | func
++ public | pgfadvise_loader     | SETOF record     | regclass, integer, boolean, boolean, bit varying, OUT relpath text, OUT os_page_size bigint, OUT os_pages_free bigint, OUT pages_loaded bigint, OUT pages_unloaded bigint                                                                                       | func
++ public | pgfadvise_loader     | SETOF record     | regclass, text, integer, boolean, boolean, bit varying, OUT relpath text, OUT os_page_size bigint, OUT os_pages_free bigint, OUT pages_loaded bigint, OUT pages_unloaded bigint                                                                                 | func
++ public | pgfadvise_normal     | SETOF record     | regclass, OUT relpath text, OUT os_page_size bigint, OUT rel_os_pages bigint, OUT os_pages_free bigint                                                                                                                                                          | func
++ public | pgfadvise_random     | SETOF record     | regclass, OUT relpath text, OUT os_page_size bigint, OUT rel_os_pages bigint, OUT os_pages_free bigint                                                                                                                                                          | func
++ public | pgfadvise_sequential | SETOF record     | regclass, OUT relpath text, OUT os_page_size bigint, OUT rel_os_pages bigint, OUT os_pages_free bigint                                                                                                                                                          | func
++ public | pgfadvise_willneed   | SETOF record     | regclass, OUT relpath text, OUT os_page_size bigint, OUT rel_os_pages bigint, OUT os_pages_free bigint                                                                                                                                                          | func
++ public | pgfincore            | SETOF record     | regclass, boolean, OUT relpath text, OUT segment integer, OUT os_page_size bigint, OUT rel_os_pages bigint, OUT pages_mem bigint, OUT group_mem bigint, OUT os_pages_free bigint, OUT databit bit varying, OUT pages_dirty bigint, OUT group_dirty bigint       | func
++ public | pgfincore            | SETOF record     | regclass, OUT relpath text, OUT segment integer, OUT os_page_size bigint, OUT rel_os_pages bigint, OUT pages_mem bigint, OUT group_mem bigint, OUT os_pages_free bigint, OUT databit bit varying, OUT pages_dirty bigint, OUT group_dirty bigint                | func
++ public | pgfincore            | SETOF record     | regclass, text, boolean, OUT relpath text, OUT segment integer, OUT os_page_size bigint, OUT rel_os_pages bigint, OUT pages_mem bigint, OUT group_mem bigint, OUT os_pages_free bigint, OUT databit bit varying, OUT pages_dirty bigint, OUT group_dirty bigint | func
++ public | pgfincore_drawer     | cstring          | bit varying, OUT drawer cstring                                                                                                                                                                                                                                 | func
++ public | pgsysconf            | record           | OUT os_page_size bigint, OUT os_pages_free bigint, OUT os_total_pages bigint                                                                                                                                                                                    | func
++ public | pgsysconf_pretty     | record           | OUT os_page_size text, OUT os_pages_free text, OUT os_total_pages text                                                                                                                                                                                          | func
++(14 rows)
+ 
+ \do public.*
+                              List of operators
+@@ -1066,10 +1094,24 @@
+ (0 rows)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                                                                                                                     List of functions
++ Schema |         Name         | Result data type |                                                                                                                       Argument data types                                                                                                                       | Type 
++--------+----------------------+------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------
++ public | pgfadvise            | SETOF record     | regclass, text, integer, OUT relpath text, OUT os_page_size bigint, OUT rel_os_pages bigint, OUT os_pages_free bigint                                                                                                                                           | func
++ public | pgfadvise_dontneed   | SETOF record     | regclass, OUT relpath text, OUT os_page_size bigint, OUT rel_os_pages bigint, OUT os_pages_free bigint                                                                                                                                                          | func
++ public | pgfadvise_loader     | SETOF record     | regclass, integer, boolean, boolean, bit varying, OUT relpath text, OUT os_page_size bigint, OUT os_pages_free bigint, OUT pages_loaded bigint, OUT pages_unloaded bigint                                                                                       | func
++ public | pgfadvise_loader     | SETOF record     | regclass, text, integer, boolean, boolean, bit varying, OUT relpath text, OUT os_page_size bigint, OUT os_pages_free bigint, OUT pages_loaded bigint, OUT pages_unloaded bigint                                                                                 | func
++ public | pgfadvise_normal     | SETOF record     | regclass, OUT relpath text, OUT os_page_size bigint, OUT rel_os_pages bigint, OUT os_pages_free bigint                                                                                                                                                          | func
++ public | pgfadvise_random     | SETOF record     | regclass, OUT relpath text, OUT os_page_size bigint, OUT rel_os_pages bigint, OUT os_pages_free bigint                                                                                                                                                          | func
++ public | pgfadvise_sequential | SETOF record     | regclass, OUT relpath text, OUT os_page_size bigint, OUT rel_os_pages bigint, OUT os_pages_free bigint                                                                                                                                                          | func
++ public | pgfadvise_willneed   | SETOF record     | regclass, OUT relpath text, OUT os_page_size bigint, OUT rel_os_pages bigint, OUT os_pages_free bigint                                                                                                                                                          | func
++ public | pgfincore            | SETOF record     | regclass, boolean, OUT relpath text, OUT segment integer, OUT os_page_size bigint, OUT rel_os_pages bigint, OUT pages_mem bigint, OUT group_mem bigint, OUT os_pages_free bigint, OUT databit bit varying, OUT pages_dirty bigint, OUT group_dirty bigint       | func
++ public | pgfincore            | SETOF record     | regclass, OUT relpath text, OUT segment integer, OUT os_page_size bigint, OUT rel_os_pages bigint, OUT pages_mem bigint, OUT group_mem bigint, OUT os_pages_free bigint, OUT databit bit varying, OUT pages_dirty bigint, OUT group_dirty bigint                | func
++ public | pgfincore            | SETOF record     | regclass, text, boolean, OUT relpath text, OUT segment integer, OUT os_page_size bigint, OUT rel_os_pages bigint, OUT pages_mem bigint, OUT group_mem bigint, OUT os_pages_free bigint, OUT databit bit varying, OUT pages_dirty bigint, OUT group_dirty bigint | func
++ public | pgfincore_drawer     | cstring          | bit varying, OUT drawer cstring                                                                                                                                                                                                                                 | func
++ public | pgsysconf            | record           | OUT os_page_size bigint, OUT os_pages_free bigint, OUT os_total_pages bigint                                                                                                                                                                                    | func
++ public | pgsysconf_pretty     | record           | OUT os_page_size text, OUT os_pages_free text, OUT os_total_pages text                                                                                                                                                                                          | func
++(14 rows)
+ 
+ \do public.*
+                              List of operators

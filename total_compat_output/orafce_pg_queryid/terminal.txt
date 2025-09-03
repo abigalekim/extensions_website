@@ -1,0 +1,92 @@
+The files belonging to this database system will be owned by user "abigalek".
+This user must also own the server process.
+
+The database cluster will be initialized with locale "en_US.UTF-8".
+The default database encoding has accordingly been set to "UTF8".
+The default text search configuration will be set to "english".
+
+Data page checksums are disabled.
+
+creating directory pg-15-data ... ok
+creating subdirectories ... ok
+selecting dynamic shared memory implementation ... posix
+selecting default max_connections ... 100
+selecting default shared_buffers ... 128MB
+selecting default time zone ... Etc/UTC
+creating configuration files ... ok
+running bootstrap script ... ok
+performing post-bootstrap initialization ... ok
+syncing data to disk ... ok
+
+initdb: warning: enabling "trust" authentication for local connections
+initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+
+Success. You can now start the database server using:
+
+    pg-15-dist/bin/pg_ctl -D pg-15-data -l logfile start
+
+waiting for server to start.... done
+server started
+(using postmaster on Unix socket, default port)
+============== dropping database "regression"         ==============
+SET
+DROP DATABASE
+============== creating database "regression"         ==============
+CREATE DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+============== installing pg_stat_statements          ==============
+CREATE EXTENSION
+============== installing pg_queryid                  ==============
+CREATE EXTENSION
+============== running regression test queries        ==============
+test init                         ... FAILED       51 ms
+parallel group (2 tests):  dbms_pipe_session_B dbms_pipe_session_A
+     dbms_pipe_session_A          ... FAILED      154 ms
+     dbms_pipe_session_B          ... FAILED      129 ms
+parallel group (3 tests):  dbms_alert_session_C dbms_alert_session_B dbms_alert_session_A
+     dbms_alert_session_A         ... FAILED     3132 ms
+     dbms_alert_session_B         ... FAILED      131 ms
+     dbms_alert_session_C         ... FAILED      124 ms
+test orafce                       ... FAILED       77 ms
+test orafce2                      ... FAILED        4 ms
+test dbms_output                  ... FAILED      226 ms
+test dbms_utility                 ... FAILED       24 ms
+test files                        ... FAILED       28 ms
+test varchar2                     ... FAILED       31 ms
+test nvarchar2                    ... FAILED       32 ms
+test aggregates                   ... FAILED       42 ms
+test nlssort                      ... FAILED      116 ms
+test dbms_random                  ... FAILED       14 ms
+test regexp_func                  ... FAILED       52 ms
+test dbms_sql                     ... FAILED       55 ms
+
+========================
+ 18 of 18 tests failed. 
+========================
+
+The differences that caused some tests to fail can be viewed in the
+file "/home/abigalek/pgext-cli-python/pgextworkdir/orafce-VERSION_4_2_1/regression.diffs".  A copy of the test summary that you see
+above is saved in the file "/home/abigalek/pgext-cli-python/pgextworkdir/orafce-VERSION_4_2_1/regression.out".
+
+(using postmaster on Unix socket, default port)
+============== dropping database "regression"         ==============
+SET
+DROP DATABASE
+============== creating database "regression"         ==============
+CREATE DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+============== installing orafce                      ==============
+ERROR:  cache lookup failed for type 18
+command failed: "/home/abigalek/pgext-cli-python/pg-15-dist/bin/psql" -X -c "CREATE EXTENSION IF NOT EXISTS \"orafce\"" "regression"
+waiting for server to shut down.... done
+server stopped

@@ -1,0 +1,93 @@
+2023-07-25 05:20:31.404 UTC [689285] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 05:20:31.404 UTC [689285] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 05:20:31.411 UTC [689285] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 05:20:31.419 UTC [689288] LOG:  database system was shut down at 2023-07-25 05:20:31 UTC
+2023-07-25 05:20:31.424 UTC [689285] LOG:  database system is ready to accept connections
+2023-07-25 05:20:31.623 UTC [689304] LOG:  lsm3_build lsm3_index
+2023-07-25 05:20:31.623 UTC [689304] STATEMENT:  create index lsm3_index on t using lsm3(k);
+2023-07-25 05:20:32.900 UTC [689305] LOG:  Lsm3: merge top index lsm3_index_top0 with size 2 blocks
+2023-07-25 05:20:32.901 UTC [689305] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:20:33.703 UTC [689305] LOG:  Lsm3: merge top index lsm3_index_top1 with size 2 blocks
+2023-07-25 05:20:33.703 UTC [689305] LOG:  Lsm3: truncate index lsm3_index_top1
+2023-07-25 05:20:34.709 UTC [689305] LOG:  Lsm3: merge top index lsm3_index_top0 with size 2 blocks
+2023-07-25 05:20:34.709 UTC [689305] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:20:35.719 UTC [689305] LOG:  Lsm3: merge top index lsm3_index_top1 with size 2 blocks
+2023-07-25 05:20:35.719 UTC [689305] LOG:  Lsm3: truncate index lsm3_index_top1
+2023-07-25 05:20:36.730 UTC [689305] LOG:  Lsm3: merge top index lsm3_index_top0 with size 2 blocks
+2023-07-25 05:20:36.730 UTC [689305] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:20:37.879 UTC [689305] LOG:  Lsm3: merge top index lsm3_index_top1 with size 181 blocks
+2023-07-25 05:20:37.966 UTC [689305] LOG:  Lsm3: truncate index lsm3_index_top1
+2023-07-25 05:20:38.056 UTC [689305] LOG:  Lsm3: merge top index lsm3_index_top0 with size 250 blocks
+2023-07-25 05:20:38.187 UTC [689305] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:20:38.266 UTC [689305] LOG:  Lsm3: merge top index lsm3_index_top1 with size 181 blocks
+2023-07-25 05:20:38.341 UTC [689304] LOG:  lsm3_build lsm3_index
+2023-07-25 05:20:38.341 UTC [689304] STATEMENT:  truncate table t;
+2023-07-25 05:20:39.341 UTC [689305] ERROR:  deadlock detected
+2023-07-25 05:20:39.341 UTC [689305] DETAIL:  Process 689305 waits for AccessShareLock on relation 17702 of database 16384; blocked by process 689304.
+	Process 689304 waits for AccessExclusiveLock on relation 17707 of database 16384; blocked by process 689305.
+	Process 689305: truncate
+	Process 689304: truncate table t;
+2023-07-25 05:20:39.341 UTC [689305] HINT:  See server log for query details.
+2023-07-25 05:20:39.345 UTC [689285] LOG:  background worker "lsm3-merger-17705" (PID 689305) exited with exit code 1
+2023-07-25 05:20:41.429 UTC [689304] LOG:  lsm3_build lsm3_index
+2023-07-25 05:20:41.429 UTC [689304] STATEMENT:  reindex table t;
+2023-07-25 05:20:42.537 UTC [689304] LOG:  lsm3_build lsm_k_idx
+2023-07-25 05:20:42.537 UTC [689304] STATEMENT:  create index concurrently on lsm using lsm3(k);
+2023-07-25 05:20:43.214 UTC [689320] ERROR:  invalid check digit for ISBN number: "1234567890", should be X at character 8
+2023-07-25 05:20:43.214 UTC [689320] STATEMENT:  SELECT '1234567890'::ISBN;
+2023-07-25 05:20:43.214 UTC [689320] ERROR:  invalid check digit for ISMN number: "M123456780", should be 5 at character 8
+2023-07-25 05:20:43.214 UTC [689320] STATEMENT:  SELECT 'M123456780'::ISMN;
+2023-07-25 05:20:43.214 UTC [689320] ERROR:  invalid check digit for ISSN number: "12345670", should be 9 at character 8
+2023-07-25 05:20:43.214 UTC [689320] STATEMENT:  SELECT '12345670'::ISSN;
+2023-07-25 05:20:43.214 UTC [689320] ERROR:  invalid check digit for ISBN number: "9780123456780", should be 6 at character 8
+2023-07-25 05:20:43.214 UTC [689320] STATEMENT:  SELECT '9780123456780'::ISBN;
+2023-07-25 05:20:43.214 UTC [689320] ERROR:  invalid check digit for ISBN number: "9791234567890", should be 6 at character 8
+2023-07-25 05:20:43.214 UTC [689320] STATEMENT:  SELECT '9791234567890'::ISBN13;
+2023-07-25 05:20:43.214 UTC [689320] ERROR:  invalid check digit for UPC number: "0123456789010", should be 2 at character 8
+2023-07-25 05:20:43.214 UTC [689320] STATEMENT:  SELECT '0123456789010'::UPC;
+2023-07-25 05:20:43.214 UTC [689320] ERROR:  invalid check digit for EAN13 number: "1234567890120", should be 8 at character 8
+2023-07-25 05:20:43.214 UTC [689320] STATEMENT:  SELECT '1234567890120'::EAN13;
+2023-07-25 05:20:43.214 UTC [689320] ERROR:  cannot cast ISMN to ISBN for number: "9790123456785" at character 8
+2023-07-25 05:20:43.214 UTC [689320] STATEMENT:  SELECT '9790123456785'::ISBN;
+2023-07-25 05:20:43.214 UTC [689320] ERROR:  cannot cast ISSN to ISBN for number: "9771234567898" at character 8
+2023-07-25 05:20:43.214 UTC [689320] STATEMENT:  SELECT '9771234567898'::ISBN;
+2023-07-25 05:20:43.214 UTC [689320] ERROR:  cannot cast UPC to ISBN for number: "0123456789012" at character 8
+2023-07-25 05:20:43.214 UTC [689320] STATEMENT:  SELECT '0123456789012'::ISBN;
+2023-07-25 05:20:43.214 UTC [689320] ERROR:  cannot cast ISMN to ISBN for number: "9790123456785" at character 8
+2023-07-25 05:20:43.214 UTC [689320] STATEMENT:  SELECT '9790123456785'::ISBN13;
+2023-07-25 05:20:43.214 UTC [689320] ERROR:  cannot cast ISSN to ISBN for number: "9771234567898" at character 8
+2023-07-25 05:20:43.214 UTC [689320] STATEMENT:  SELECT '9771234567898'::ISBN13;
+2023-07-25 05:20:43.214 UTC [689320] ERROR:  cannot cast UPC to ISBN for number: "0123456789012" at character 8
+2023-07-25 05:20:43.214 UTC [689320] STATEMENT:  SELECT '0123456789012'::ISBN13;
+2023-07-25 05:20:43.214 UTC [689320] ERROR:  cannot cast ISBN to ISMN for number: "9780123456786" at character 8
+2023-07-25 05:20:43.214 UTC [689320] STATEMENT:  SELECT '9780123456786'::ISMN;
+2023-07-25 05:20:43.214 UTC [689320] ERROR:  cannot cast ISSN to ISMN for number: "9771234567898" at character 8
+2023-07-25 05:20:43.214 UTC [689320] STATEMENT:  SELECT '9771234567898'::ISMN;
+2023-07-25 05:20:43.215 UTC [689320] ERROR:  cannot cast ISBN to ISMN for number: "9791234567896" at character 8
+2023-07-25 05:20:43.215 UTC [689320] STATEMENT:  SELECT '9791234567896'::ISMN;
+2023-07-25 05:20:43.215 UTC [689320] ERROR:  cannot cast UPC to ISMN for number: "0123456789012" at character 8
+2023-07-25 05:20:43.215 UTC [689320] STATEMENT:  SELECT '0123456789012'::ISMN;
+2023-07-25 05:20:43.215 UTC [689320] ERROR:  cannot cast ISBN to ISSN for number: "9780123456786" at character 8
+2023-07-25 05:20:43.215 UTC [689320] STATEMENT:  SELECT '9780123456786'::ISSN;
+2023-07-25 05:20:43.215 UTC [689320] ERROR:  cannot cast ISMN to ISSN for number: "9790123456785" at character 8
+2023-07-25 05:20:43.215 UTC [689320] STATEMENT:  SELECT '9790123456785'::ISSN;
+2023-07-25 05:20:43.215 UTC [689320] ERROR:  cannot cast ISBN to ISSN for number: "9791234567896" at character 8
+2023-07-25 05:20:43.215 UTC [689320] STATEMENT:  SELECT '9791234567896'::ISSN;
+2023-07-25 05:20:43.215 UTC [689320] ERROR:  cannot cast UPC to ISSN for number: "0123456789012" at character 8
+2023-07-25 05:20:43.215 UTC [689320] STATEMENT:  SELECT '0123456789012'::ISSN;
+2023-07-25 05:20:43.215 UTC [689320] ERROR:  cannot cast ISBN to UPC for number: "9780123456786" at character 8
+2023-07-25 05:20:43.215 UTC [689320] STATEMENT:  SELECT '9780123456786'::UPC;
+2023-07-25 05:20:43.215 UTC [689320] ERROR:  cannot cast ISSN to UPC for number: "9771234567898" at character 8
+2023-07-25 05:20:43.215 UTC [689320] STATEMENT:  SELECT '9771234567898'::UPC;
+2023-07-25 05:20:43.215 UTC [689320] ERROR:  cannot cast ISMN to UPC for number: "9790123456785" at character 8
+2023-07-25 05:20:43.215 UTC [689320] STATEMENT:  SELECT '9790123456785'::UPC;
+2023-07-25 05:20:43.215 UTC [689320] ERROR:  cannot cast ISBN to UPC for number: "9791234567896" at character 8
+2023-07-25 05:20:43.215 UTC [689320] STATEMENT:  SELECT '9791234567896'::UPC;
+2023-07-25 05:20:43.215 UTC [689320] ERROR:  invalid input syntax for EAN13 number: "postgresql..." at character 8
+2023-07-25 05:20:43.215 UTC [689320] STATEMENT:  SELECT 'postgresql...'::EAN13;
+2023-07-25 05:20:43.215 UTC [689320] ERROR:  invalid input syntax for ISBN number: "postgresql..." at character 8
+2023-07-25 05:20:43.215 UTC [689320] STATEMENT:  SELECT 'postgresql...'::ISBN;
+2023-07-25 05:20:43.215 UTC [689320] ERROR:  cannot cast type bigint to ean13 at character 21
+2023-07-25 05:20:43.215 UTC [689320] STATEMENT:  SELECT 9780123456786::EAN13;
+2023-07-25 05:20:43.215 UTC [689320] ERROR:  cannot cast type bigint to isbn at character 21
+2023-07-25 05:20:43.215 UTC [689320] STATEMENT:  SELECT 9780123456786::ISBN;

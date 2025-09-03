@@ -1,0 +1,19 @@
+2023-07-26 23:47:57.564 UTC [2193735] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 23:47:57.564 UTC [2193735] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 23:47:57.570 UTC [2193735] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 23:47:57.577 UTC [2193738] LOG:  database system was shut down at 2023-07-26 23:47:57 UTC
+2023-07-26 23:47:57.583 UTC [2193735] LOG:  database system is ready to accept connections
+2023-07-26 23:47:57.825 UTC [2193763] ERROR:  not a Python mapping
+2023-07-26 23:47:57.825 UTC [2193763] CONTEXT:  while creating return value
+	PL/Python function "test1bad"
+2023-07-26 23:47:57.825 UTC [2193763] STATEMENT:  SELECT test1bad();
+2023-07-26 23:47:57.841 UTC [2193763] ERROR:  value for domain hstore_foo violates check constraint "hstore_foo_check"
+2023-07-26 23:47:57.841 UTC [2193763] CONTEXT:  while creating return value
+	PL/Python function "test2dom"
+2023-07-26 23:47:57.841 UTC [2193763] STATEMENT:  SELECT test2dom('bar');
+2023-07-26 23:47:57.907 UTC [2193736] LOG:  checkpoint starting: immediate force wait
+2023-07-26 23:47:57.936 UTC [2193736] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.010 s, sync=0.006 s, total=0.029 s; sync files=7, longest=0.003 s, average=0.001 s; distance=4508 kB, estimate=4508 kB
+2023-07-26 23:47:58.144 UTC [2193793] ERROR:  ltree syntax error at character 1
+2023-07-26 23:47:58.144 UTC [2193793] CONTEXT:  while creating return value
+	PL/Python function "test2"
+2023-07-26 23:47:58.144 UTC [2193793] STATEMENT:  SELECT test2();

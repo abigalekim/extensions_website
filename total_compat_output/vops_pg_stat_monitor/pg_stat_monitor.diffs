@@ -1,0 +1,2080 @@
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/functions_1.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/functions.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/functions_1.out	2023-07-25 07:50:23.517342055 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/functions.out	2023-07-26 21:03:33.052570916 +0000
+@@ -11,32 +11,2054 @@
+ (1 row)
+ 
+ SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+- routine_schema |       routine_name       | routine_type | data_type 
+-----------------+--------------------------+--------------+-----------
+- public         | decode_error_level       | FUNCTION     | text
+- public         | get_cmd_type             | FUNCTION     | text
+- public         | get_histogram_timings    | FUNCTION     | text
+- public         | histogram                | FUNCTION     | record
+- public         | pg_stat_monitor_internal | FUNCTION     | record
+- public         | pg_stat_monitor_reset    | FUNCTION     | void
+- public         | pg_stat_monitor_version  | FUNCTION     | text
+- public         | pgsm_create_11_view      | FUNCTION     | integer
+- public         | pgsm_create_13_view      | FUNCTION     | integer
+- public         | pgsm_create_14_view      | FUNCTION     | integer
+- public         | pgsm_create_15_view      | FUNCTION     | integer
+- public         | pgsm_create_view         | FUNCTION     | integer
+- public         | range                    | FUNCTION     | ARRAY
+-(13 rows)
++ routine_schema |            routine_name            | routine_type |          data_type          
++----------------+------------------------------------+--------------+-----------------------------
++ public         | approxdc                           |              | bigint
++ public         | approxdc                           |              | bigint
++ public         | approxdc                           |              | bigint
++ public         | approxdc                           |              | bigint
++ public         | approxdc                           |              | bigint
++ public         | approxdc                           |              | bigint
++ public         | approxdc                           |              | bigint
++ public         | approxdc                           |              | bigint
++ public         | approxdc                           |              | bigint
++ public         | approxdc                           |              | bigint
++ public         | avg                                |              | double precision
++ public         | avg                                |              | double precision
++ public         | avg                                |              | double precision
++ public         | avg                                |              | double precision
++ public         | avg                                |              | double precision
++ public         | avg                                |              | double precision
++ public         | avg                                |              | double precision
++ public         | avg                                |              | double precision
++ public         | avg                                |              | double precision
++ public         | betwixt                            | FUNCTION     | USER-DEFINED
++ public         | betwixt                            | FUNCTION     | USER-DEFINED
++ public         | betwixt                            | FUNCTION     | USER-DEFINED
++ public         | betwixt                            | FUNCTION     | USER-DEFINED
++ public         | betwixt                            | FUNCTION     | USER-DEFINED
++ public         | betwixt                            | FUNCTION     | USER-DEFINED
++ public         | betwixt                            | FUNCTION     | USER-DEFINED
++ public         | betwixt                            | FUNCTION     | USER-DEFINED
++ public         | betwixt                            | FUNCTION     | USER-DEFINED
++ public         | betwixt                            | FUNCTION     | USER-DEFINED
++ public         | count                              |              | bigint
++ public         | count                              |              | bigint
++ public         | count                              |              | bigint
++ public         | count                              |              | bigint
++ public         | count                              |              | bigint
++ public         | count                              |              | bigint
++ public         | count                              |              | bigint
++ public         | count                              |              | bigint
++ public         | count                              |              | bigint
++ public         | countall                           |              | bigint
++ public         | create_projection                  | FUNCTION     | void
++ public         | date_bucket                        | FUNCTION     | USER-DEFINED
++ public         | decode_error_level                 | FUNCTION     | text
++ public         | drop_projection                    | FUNCTION     | void
++ public         | filter                             | FUNCTION     | boolean
++ public         | first                              | FUNCTION     | double precision
++ public         | first                              | FUNCTION     | smallint
++ public         | first                              |              | smallint
++ public         | first                              |              | integer
++ public         | first                              | FUNCTION     | boolean
++ public         | first                              |              | boolean
++ public         | first                              |              | double precision
++ public         | first                              | FUNCTION     | integer
++ public         | first                              |              | text
++ public         | first                              |              | date
++ public         | first                              | FUNCTION     | date
++ public         | first                              | FUNCTION     | text
++ public         | first                              | FUNCTION     | real
++ public         | first                              |              | real
++ public         | first                              | FUNCTION     | timestamp without time zone
++ public         | first                              | FUNCTION     | bigint
++ public         | first                              |              | bigint
++ public         | first                              | FUNCTION     | "char"
++ public         | first                              |              | "char"
++ public         | first                              |              | bigint
++ public         | first                              | FUNCTION     | USER-DEFINED
++ public         | get_cmd_type                       | FUNCTION     | text
++ public         | get_histogram_timings              | FUNCTION     | text
++ public         | high                               | FUNCTION     | real
++ public         | high                               | FUNCTION     | timestamp without time zone
++ public         | high                               | FUNCTION     | double precision
++ public         | high                               | FUNCTION     | USER-DEFINED
++ public         | high                               | FUNCTION     | smallint
++ public         | high                               | FUNCTION     | integer
++ public         | high                               | FUNCTION     | date
++ public         | high                               | FUNCTION     | "char"
++ public         | high                               | FUNCTION     | text
++ public         | high                               | FUNCTION     | bigint
++ public         | histogram                          | FUNCTION     | record
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | import                             | FUNCTION     | bigint
++ public         | is_not_null                        | FUNCTION     | USER-DEFINED
++ public         | is_null                            | FUNCTION     | USER-DEFINED
++ public         | lag                                |              | USER-DEFINED
++ public         | lag                                |              | USER-DEFINED
++ public         | lag                                |              | USER-DEFINED
++ public         | lag                                |              | USER-DEFINED
++ public         | lag                                |              | USER-DEFINED
++ public         | lag                                |              | USER-DEFINED
++ public         | lag                                |              | USER-DEFINED
++ public         | lag                                |              | USER-DEFINED
++ public         | lag                                |              | USER-DEFINED
++ public         | last                               |              | bigint
++ public         | last                               |              | double precision
++ public         | last                               | FUNCTION     | bigint
++ public         | last                               | FUNCTION     | integer
++ public         | last                               | FUNCTION     | smallint
++ public         | last                               |              | real
++ public         | last                               | FUNCTION     | date
++ public         | last                               | FUNCTION     | double precision
++ public         | last                               |              | date
++ public         | last                               | FUNCTION     | real
++ public         | last                               |              | integer
++ public         | last                               |              | boolean
++ public         | last                               | FUNCTION     | boolean
++ public         | last                               | FUNCTION     | timestamp without time zone
++ public         | last                               |              | smallint
++ public         | last                               |              | bigint
++ public         | last                               |              | text
++ public         | last                               | FUNCTION     | "char"
++ public         | last                               | FUNCTION     | USER-DEFINED
++ public         | last                               | FUNCTION     | text
++ public         | last                               |              | "char"
++ public         | low                                | FUNCTION     | bigint
++ public         | low                                | FUNCTION     | timestamp without time zone
++ public         | low                                | FUNCTION     | USER-DEFINED
++ public         | low                                | FUNCTION     | "char"
++ public         | low                                | FUNCTION     | double precision
++ public         | low                                | FUNCTION     | smallint
++ public         | low                                | FUNCTION     | text
++ public         | low                                | FUNCTION     | integer
++ public         | low                                | FUNCTION     | date
++ public         | low                                | FUNCTION     | real
++ public         | map                                |              | bigint
++ public         | map                                |              | bigint
++ public         | map                                |              | bigint
++ public         | map                                |              | bigint
++ public         | map                                |              | bigint
++ public         | map                                |              | bigint
++ public         | map                                |              | bigint
++ public         | mavg                               |              | USER-DEFINED
++ public         | mavg                               |              | USER-DEFINED
++ public         | mavg                               |              | USER-DEFINED
++ public         | mavg                               |              | USER-DEFINED
++ public         | mavg                               |              | USER-DEFINED
++ public         | mavg                               |              | USER-DEFINED
++ public         | mavg                               |              | USER-DEFINED
++ public         | mavg                               |              | USER-DEFINED
++ public         | mavg                               |              | USER-DEFINED
++ public         | max                                |              | integer
++ public         | max                                |              | double precision
++ public         | max                                |              | bigint
++ public         | max                                |              | bigint
++ public         | max                                |              | character
++ public         | max                                |              | timestamp without time zone
++ public         | max                                |              | date
++ public         | max                                |              | real
++ public         | max                                |              | smallint
++ public         | mcount                             |              | USER-DEFINED
++ public         | mcount                             |              | USER-DEFINED
++ public         | mcount                             |              | USER-DEFINED
++ public         | mcount                             |              | USER-DEFINED
++ public         | mcount                             |              | USER-DEFINED
++ public         | mcount                             |              | USER-DEFINED
++ public         | mcount                             |              | USER-DEFINED
++ public         | mcount                             |              | USER-DEFINED
++ public         | mcount                             |              | USER-DEFINED
++ public         | mcount                             |              | USER-DEFINED
++ public         | min                                |              | bigint
++ public         | min                                |              | timestamp without time zone
++ public         | min                                |              | character
++ public         | min                                |              | integer
++ public         | min                                |              | smallint
++ public         | min                                |              | date
++ public         | min                                |              | bigint
++ public         | min                                |              | double precision
++ public         | min                                |              | real
++ public         | mmax                               |              | USER-DEFINED
++ public         | mmax                               |              | USER-DEFINED
++ public         | mmax                               |              | USER-DEFINED
++ public         | mmax                               |              | USER-DEFINED
++ public         | mmax                               |              | USER-DEFINED
++ public         | mmax                               |              | USER-DEFINED
++ public         | mmax                               |              | USER-DEFINED
++ public         | mmax                               |              | USER-DEFINED
++ public         | mmax                               |              | USER-DEFINED
++ public         | mmin                               |              | USER-DEFINED
++ public         | mmin                               |              | USER-DEFINED
++ public         | mmin                               |              | USER-DEFINED
++ public         | mmin                               |              | USER-DEFINED
++ public         | mmin                               |              | USER-DEFINED
++ public         | mmin                               |              | USER-DEFINED
++ public         | mmin                               |              | USER-DEFINED
++ public         | mmin                               |              | USER-DEFINED
++ public         | mmin                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | pg_stat_monitor_internal           | FUNCTION     | record
++ public         | pg_stat_monitor_reset              | FUNCTION     | void
++ public         | pg_stat_monitor_version            | FUNCTION     | text
++ public         | pgsm_create_11_view                | FUNCTION     | integer
++ public         | pgsm_create_13_view                | FUNCTION     | integer
++ public         | pgsm_create_14_view                | FUNCTION     | integer
++ public         | pgsm_create_15_view                | FUNCTION     | integer
++ public         | pgsm_create_view                   | FUNCTION     | integer
++ public         | populate                           | FUNCTION     | bigint
++ public         | range                              | FUNCTION     | ARRAY
++ public         | reduce                             | FUNCTION     | USER-DEFINED
++ public         | stddev                             |              | double precision
++ public         | stddev                             |              | double precision
++ public         | stddev                             |              | double precision
++ public         | stddev                             |              | double precision
++ public         | stddev                             |              | double precision
++ public         | stddev                             |              | double precision
++ public         | stddev                             |              | double precision
++ public         | stddev                             |              | double precision
++ public         | stddev                             |              | double precision
++ public         | stddev_pop                         |              | double precision
++ public         | stddev_pop                         |              | double precision
++ public         | stddev_pop                         |              | double precision
++ public         | stddev_pop                         |              | double precision
++ public         | stddev_pop                         |              | double precision
++ public         | stddev_pop                         |              | double precision
++ public         | stddev_pop                         |              | double precision
++ public         | stddev_pop                         |              | double precision
++ public         | stddev_pop                         |              | double precision
++ public         | stddev_samp                        |              | double precision
++ public         | stddev_samp                        |              | double precision
++ public         | stddev_samp                        |              | double precision
++ public         | stddev_samp                        |              | double precision
++ public         | stddev_samp                        |              | double precision
++ public         | stddev_samp                        |              | double precision
++ public         | stddev_samp                        |              | double precision
++ public         | stddev_samp                        |              | double precision
++ public         | stddev_samp                        |              | double precision
++ public         | sum                                |              | bigint
++ public         | sum                                |              | bigint
++ public         | sum                                |              | bigint
++ public         | sum                                |              | double precision
++ public         | sum                                |              | bigint
++ public         | sum                                |              | double precision
++ public         | sum                                |              | bigint
++ public         | sum                                |              | bigint
++ public         | sum                                |              | bigint
++ public         | time_bucket                        | FUNCTION     | USER-DEFINED
++ public         | var_pop                            |              | double precision
++ public         | var_pop                            |              | double precision
++ public         | var_pop                            |              | double precision
++ public         | var_pop                            |              | double precision
++ public         | var_pop                            |              | double precision
++ public         | var_pop                            |              | double precision
++ public         | var_pop                            |              | double precision
++ public         | var_pop                            |              | double precision
++ public         | var_pop                            |              | double precision
++ public         | var_samp                           |              | double precision
++ public         | var_samp                           |              | double precision
++ public         | var_samp                           |              | double precision
++ public         | var_samp                           |              | double precision
++ public         | var_samp                           |              | double precision
++ public         | var_samp                           |              | double precision
++ public         | var_samp                           |              | double precision
++ public         | var_samp                           |              | double precision
++ public         | var_samp                           |              | double precision
++ public         | variance                           |              | double precision
++ public         | variance                           |              | double precision
++ public         | variance                           |              | double precision
++ public         | variance                           |              | double precision
++ public         | variance                           |              | double precision
++ public         | variance                           |              | double precision
++ public         | variance                           |              | double precision
++ public         | variance                           |              | double precision
++ public         | variance                           |              | double precision
++ public         | vcount                             |              | bigint
++ public         | vops_agg_combine                   | FUNCTION     | internal
++ public         | vops_agg_deserial                  | FUNCTION     | internal
++ public         | vops_agg_final                     | FUNCTION     | bigint
++ public         | vops_agg_serial                    | FUNCTION     | bytea
++ public         | vops_approxdc_combine              | FUNCTION     | internal
++ public         | vops_approxdc_deserial             | FUNCTION     | internal
++ public         | vops_approxdc_final                | FUNCTION     | bigint
++ public         | vops_approxdc_serial               | FUNCTION     | bytea
++ public         | vops_avg_combine                   | FUNCTION     | internal
++ public         | vops_avg_deserial                  | FUNCTION     | internal
++ public         | vops_avg_final                     | FUNCTION     | double precision
++ public         | vops_avg_serial                    | FUNCTION     | bytea
++ public         | vops_bool_and                      | FUNCTION     | USER-DEFINED
++ public         | vops_bool_first_accumulate         | FUNCTION     | internal
++ public         | vops_bool_first_final              | FUNCTION     | boolean
++ public         | vops_bool_input                    | FUNCTION     | USER-DEFINED
++ public         | vops_bool_last_accumulate          | FUNCTION     | internal
++ public         | vops_bool_not                      | FUNCTION     | USER-DEFINED
++ public         | vops_bool_or                       | FUNCTION     | USER-DEFINED
++ public         | vops_bool_output                   | FUNCTION     | cstring
++ public         | vops_char_add                      | FUNCTION     | USER-DEFINED
++ public         | vops_char_add_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_char_add_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_char_approxdc_accumulate      | FUNCTION     | internal
++ public         | vops_char_avg_accumulate           | FUNCTION     | internal
++ public         | vops_char_avg_extend               | FUNCTION     | internal
++ public         | vops_char_avg_reduce               | FUNCTION     | internal
++ public         | vops_char_avg_stub                 | FUNCTION     | internal
++ public         | vops_char_concat                   | FUNCTION     | USER-DEFINED
++ public         | vops_char_const                    | FUNCTION     | USER-DEFINED
++ public         | vops_char_count_accumulate         | FUNCTION     | bigint
++ public         | vops_char_count_extend             | FUNCTION     | USER-DEFINED
++ public         | vops_char_count_reduce             | FUNCTION     | USER-DEFINED
++ public         | vops_char_count_stub               | FUNCTION     | USER-DEFINED
++ public         | vops_char_div                      | FUNCTION     | USER-DEFINED
++ public         | vops_char_div_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_char_div_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_char_eq                       | FUNCTION     | USER-DEFINED
++ public         | vops_char_eq_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_char_eq_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_char_first_accumulate         | FUNCTION     | internal
++ public         | vops_char_first_final              | FUNCTION     | "char"
++ public         | vops_char_ge                       | FUNCTION     | USER-DEFINED
++ public         | vops_char_ge_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_char_ge_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_char_group_by                 | FUNCTION     | internal
++ public         | vops_char_gt                       | FUNCTION     | USER-DEFINED
++ public         | vops_char_gt_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_char_gt_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_char_input                    | FUNCTION     | USER-DEFINED
++ public         | vops_char_lag_accumulate           | FUNCTION     | internal
++ public         | vops_char_lag_extend               | FUNCTION     | internal
++ public         | vops_char_lag_reduce               | FUNCTION     | internal
++ public         | vops_char_last_accumulate          | FUNCTION     | internal
++ public         | vops_char_le                       | FUNCTION     | USER-DEFINED
++ public         | vops_char_le_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_char_le_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_char_lt                       | FUNCTION     | USER-DEFINED
++ public         | vops_char_lt_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_char_lt_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_char_max_accumulate           | FUNCTION     | character
++ public         | vops_char_max_extend               | FUNCTION     | USER-DEFINED
++ public         | vops_char_max_reduce               | FUNCTION     | USER-DEFINED
++ public         | vops_char_max_stub                 | FUNCTION     | USER-DEFINED
++ public         | vops_char_min_accumulate           | FUNCTION     | character
++ public         | vops_char_min_extend               | FUNCTION     | USER-DEFINED
++ public         | vops_char_min_reduce               | FUNCTION     | USER-DEFINED
++ public         | vops_char_min_stub                 | FUNCTION     | USER-DEFINED
++ public         | vops_char_msum_extend              | FUNCTION     | internal
++ public         | vops_char_msum_final               | FUNCTION     | USER-DEFINED
++ public         | vops_char_msum_reduce              | FUNCTION     | internal
++ public         | vops_char_msum_stub                | FUNCTION     | internal
++ public         | vops_char_mul                      | FUNCTION     | USER-DEFINED
++ public         | vops_char_mul_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_char_mul_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_char_ne                       | FUNCTION     | USER-DEFINED
++ public         | vops_char_ne_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_char_ne_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_char_neg                      | FUNCTION     | USER-DEFINED
++ public         | vops_char_output                   | FUNCTION     | cstring
++ public         | vops_char_rem                      | FUNCTION     | USER-DEFINED
++ public         | vops_char_rem_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_char_rem_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_char_sub                      | FUNCTION     | USER-DEFINED
++ public         | vops_char_sub_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_char_sub_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_char_sum_accumulate           | FUNCTION     | bigint
++ public         | vops_char_sum_extend               | FUNCTION     | USER-DEFINED
++ public         | vops_char_sum_reduce               | FUNCTION     | USER-DEFINED
++ public         | vops_char_sum_stub                 | FUNCTION     | USER-DEFINED
++ public         | vops_char_var_accumulate           | FUNCTION     | internal
++ public         | vops_char_wavg_accumulate          | FUNCTION     | internal
++ public         | vops_count_accumulate              | FUNCTION     | bigint
++ public         | vops_count_all_accumulate          | FUNCTION     | bigint
++ public         | vops_count_extend                  | FUNCTION     | USER-DEFINED
++ public         | vops_count_reduce                  | FUNCTION     | USER-DEFINED
++ public         | vops_count_stub                    | FUNCTION     | USER-DEFINED
++ public         | vops_date_add                      | FUNCTION     | USER-DEFINED
++ public         | vops_date_add_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_date_add_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_date_approxdc_accumulate      | FUNCTION     | internal
++ public         | vops_date_avg_accumulate           | FUNCTION     | internal
++ public         | vops_date_avg_extend               | FUNCTION     | internal
++ public         | vops_date_avg_reduce               | FUNCTION     | internal
++ public         | vops_date_avg_stub                 | FUNCTION     | internal
++ public         | vops_date_const                    | FUNCTION     | USER-DEFINED
++ public         | vops_date_count_accumulate         | FUNCTION     | bigint
++ public         | vops_date_count_extend             | FUNCTION     | USER-DEFINED
++ public         | vops_date_count_reduce             | FUNCTION     | USER-DEFINED
++ public         | vops_date_count_stub               | FUNCTION     | USER-DEFINED
++ public         | vops_date_div                      | FUNCTION     | USER-DEFINED
++ public         | vops_date_div_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_date_eq                       | FUNCTION     | USER-DEFINED
++ public         | vops_date_eq_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_date_eq_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_date_first_accumulate         | FUNCTION     | internal
++ public         | vops_date_first_final              | FUNCTION     | date
++ public         | vops_date_ge                       | FUNCTION     | USER-DEFINED
++ public         | vops_date_ge_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_date_ge_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_date_group_by                 | FUNCTION     | internal
++ public         | vops_date_gt                       | FUNCTION     | USER-DEFINED
++ public         | vops_date_gt_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_date_gt_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_date_input                    | FUNCTION     | USER-DEFINED
++ public         | vops_date_lag_accumulate           | FUNCTION     | internal
++ public         | vops_date_lag_extend               | FUNCTION     | internal
++ public         | vops_date_lag_final                | FUNCTION     | USER-DEFINED
++ public         | vops_date_lag_reduce               | FUNCTION     | internal
++ public         | vops_date_last_accumulate          | FUNCTION     | internal
++ public         | vops_date_le                       | FUNCTION     | USER-DEFINED
++ public         | vops_date_le_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_date_le_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_date_lt                       | FUNCTION     | USER-DEFINED
++ public         | vops_date_lt_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_date_lt_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_date_max_accumulate           | FUNCTION     | date
++ public         | vops_date_max_extend               | FUNCTION     | USER-DEFINED
++ public         | vops_date_max_reduce               | FUNCTION     | USER-DEFINED
++ public         | vops_date_max_stub                 | FUNCTION     | USER-DEFINED
++ public         | vops_date_min_accumulate           | FUNCTION     | date
++ public         | vops_date_min_extend               | FUNCTION     | USER-DEFINED
++ public         | vops_date_min_reduce               | FUNCTION     | USER-DEFINED
++ public         | vops_date_min_stub                 | FUNCTION     | USER-DEFINED
++ public         | vops_date_msum_extend              | FUNCTION     | internal
++ public         | vops_date_msum_final               | FUNCTION     | USER-DEFINED
++ public         | vops_date_msum_reduce              | FUNCTION     | internal
++ public         | vops_date_msum_stub                | FUNCTION     | internal
++ public         | vops_date_mul                      | FUNCTION     | USER-DEFINED
++ public         | vops_date_mul_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_date_mul_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_date_ne                       | FUNCTION     | USER-DEFINED
++ public         | vops_date_ne_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_date_ne_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_date_neg                      | FUNCTION     | USER-DEFINED
++ public         | vops_date_output                   | FUNCTION     | cstring
++ public         | vops_date_rem                      | FUNCTION     | USER-DEFINED
++ public         | vops_date_rem_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_date_sub                      | FUNCTION     | USER-DEFINED
++ public         | vops_date_sub_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_date_sub_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_date_sum_accumulate           | FUNCTION     | bigint
++ public         | vops_date_sum_extend               | FUNCTION     | USER-DEFINED
++ public         | vops_date_sum_reduce               | FUNCTION     | USER-DEFINED
++ public         | vops_date_sum_stub                 | FUNCTION     | USER-DEFINED
++ public         | vops_date_var_accumulate           | FUNCTION     | internal
++ public         | vops_date_wavg_accumulate          | FUNCTION     | internal
++ public         | vops_deltatime_input               | FUNCTION     | USER-DEFINED
++ public         | vops_deltatime_output              | FUNCTION     | cstring
++ public         | vops_fdw_handler                   | FUNCTION     | fdw_handler
++ public         | vops_fdw_validator                 | FUNCTION     | void
++ public         | vops_first_combine                 | FUNCTION     | internal
++ public         | vops_float4_add                    | FUNCTION     | USER-DEFINED
++ public         | vops_float4_add_lconst             | FUNCTION     | USER-DEFINED
++ public         | vops_float4_add_rconst             | FUNCTION     | USER-DEFINED
++ public         | vops_float4_approxdc_accumulate    | FUNCTION     | internal
++ public         | vops_float4_avg_accumulate         | FUNCTION     | internal
++ public         | vops_float4_avg_extend             | FUNCTION     | internal
++ public         | vops_float4_avg_reduce             | FUNCTION     | internal
++ public         | vops_float4_avg_stub               | FUNCTION     | internal
++ public         | vops_float4_const                  | FUNCTION     | USER-DEFINED
++ public         | vops_float4_count_accumulate       | FUNCTION     | bigint
++ public         | vops_float4_count_extend           | FUNCTION     | USER-DEFINED
++ public         | vops_float4_count_reduce           | FUNCTION     | USER-DEFINED
++ public         | vops_float4_count_stub             | FUNCTION     | USER-DEFINED
++ public         | vops_float4_div                    | FUNCTION     | USER-DEFINED
++ public         | vops_float4_div_lconst             | FUNCTION     | USER-DEFINED
++ public         | vops_float4_div_rconst             | FUNCTION     | USER-DEFINED
++ public         | vops_float4_eq                     | FUNCTION     | USER-DEFINED
++ public         | vops_float4_eq_lconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float4_eq_rconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float4_first_accumulate       | FUNCTION     | internal
++ public         | vops_float4_first_final            | FUNCTION     | real
++ public         | vops_float4_ge                     | FUNCTION     | USER-DEFINED
++ public         | vops_float4_ge_lconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float4_ge_rconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float4_gt                     | FUNCTION     | USER-DEFINED
++ public         | vops_float4_gt_lconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float4_gt_rconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float4_input                  | FUNCTION     | USER-DEFINED
++ public         | vops_float4_lag_accumulate         | FUNCTION     | internal
++ public         | vops_float4_lag_extend             | FUNCTION     | internal
++ public         | vops_float4_lag_final              | FUNCTION     | USER-DEFINED
++ public         | vops_float4_lag_reduce             | FUNCTION     | internal
++ public         | vops_float4_last_accumulate        | FUNCTION     | internal
++ public         | vops_float4_le                     | FUNCTION     | USER-DEFINED
++ public         | vops_float4_le_lconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float4_le_rconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float4_lt                     | FUNCTION     | USER-DEFINED
++ public         | vops_float4_lt_lconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float4_lt_rconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float4_max_accumulate         | FUNCTION     | real
++ public         | vops_float4_max_extend             | FUNCTION     | USER-DEFINED
++ public         | vops_float4_max_reduce             | FUNCTION     | USER-DEFINED
++ public         | vops_float4_max_stub               | FUNCTION     | USER-DEFINED
++ public         | vops_float4_min_accumulate         | FUNCTION     | real
++ public         | vops_float4_min_extend             | FUNCTION     | USER-DEFINED
++ public         | vops_float4_min_reduce             | FUNCTION     | USER-DEFINED
++ public         | vops_float4_min_stub               | FUNCTION     | USER-DEFINED
++ public         | vops_float4_msum_extend            | FUNCTION     | internal
++ public         | vops_float4_msum_final             | FUNCTION     | USER-DEFINED
++ public         | vops_float4_msum_reduce            | FUNCTION     | internal
++ public         | vops_float4_msum_stub              | FUNCTION     | internal
++ public         | vops_float4_mul                    | FUNCTION     | USER-DEFINED
++ public         | vops_float4_mul_lconst             | FUNCTION     | USER-DEFINED
++ public         | vops_float4_mul_rconst             | FUNCTION     | USER-DEFINED
++ public         | vops_float4_ne                     | FUNCTION     | USER-DEFINED
++ public         | vops_float4_ne_lconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float4_ne_rconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float4_neg                    | FUNCTION     | USER-DEFINED
++ public         | vops_float4_output                 | FUNCTION     | cstring
++ public         | vops_float4_sub                    | FUNCTION     | USER-DEFINED
++ public         | vops_float4_sub_lconst             | FUNCTION     | USER-DEFINED
++ public         | vops_float4_sub_rconst             | FUNCTION     | USER-DEFINED
++ public         | vops_float4_sum_accumulate         | FUNCTION     | double precision
++ public         | vops_float4_sum_extend             | FUNCTION     | USER-DEFINED
++ public         | vops_float4_sum_reduce             | FUNCTION     | USER-DEFINED
++ public         | vops_float4_sum_stub               | FUNCTION     | USER-DEFINED
++ public         | vops_float4_var_accumulate         | FUNCTION     | internal
++ public         | vops_float4_wavg_accumulate        | FUNCTION     | internal
++ public         | vops_float8_add                    | FUNCTION     | USER-DEFINED
++ public         | vops_float8_add_lconst             | FUNCTION     | USER-DEFINED
++ public         | vops_float8_add_rconst             | FUNCTION     | USER-DEFINED
++ public         | vops_float8_approxdc_accumulate    | FUNCTION     | internal
++ public         | vops_float8_avg_accumulate         | FUNCTION     | internal
++ public         | vops_float8_avg_extend             | FUNCTION     | internal
++ public         | vops_float8_avg_reduce             | FUNCTION     | internal
++ public         | vops_float8_avg_stub               | FUNCTION     | internal
++ public         | vops_float8_const                  | FUNCTION     | USER-DEFINED
++ public         | vops_float8_count_accumulate       | FUNCTION     | bigint
++ public         | vops_float8_count_extend           | FUNCTION     | USER-DEFINED
++ public         | vops_float8_count_reduce           | FUNCTION     | USER-DEFINED
++ public         | vops_float8_count_stub             | FUNCTION     | USER-DEFINED
++ public         | vops_float8_div                    | FUNCTION     | USER-DEFINED
++ public         | vops_float8_div_lconst             | FUNCTION     | USER-DEFINED
++ public         | vops_float8_div_rconst             | FUNCTION     | USER-DEFINED
++ public         | vops_float8_eq                     | FUNCTION     | USER-DEFINED
++ public         | vops_float8_eq_lconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float8_eq_rconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float8_first_accumulate       | FUNCTION     | internal
++ public         | vops_float8_first_final            | FUNCTION     | double precision
++ public         | vops_float8_ge                     | FUNCTION     | USER-DEFINED
++ public         | vops_float8_ge_lconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float8_ge_rconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float8_gt                     | FUNCTION     | USER-DEFINED
++ public         | vops_float8_gt_lconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float8_gt_rconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float8_input                  | FUNCTION     | USER-DEFINED
++ public         | vops_float8_lag_accumulate         | FUNCTION     | internal
++ public         | vops_float8_lag_extend             | FUNCTION     | internal
++ public         | vops_float8_lag_final              | FUNCTION     | USER-DEFINED
++ public         | vops_float8_lag_reduce             | FUNCTION     | internal
++ public         | vops_float8_last_accumulate        | FUNCTION     | internal
++ public         | vops_float8_le                     | FUNCTION     | USER-DEFINED
++ public         | vops_float8_le_lconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float8_le_rconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float8_lt                     | FUNCTION     | USER-DEFINED
++ public         | vops_float8_lt_lconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float8_lt_rconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float8_max_accumulate         | FUNCTION     | double precision
++ public         | vops_float8_max_extend             | FUNCTION     | USER-DEFINED
++ public         | vops_float8_max_reduce             | FUNCTION     | USER-DEFINED
++ public         | vops_float8_max_stub               | FUNCTION     | USER-DEFINED
++ public         | vops_float8_min_accumulate         | FUNCTION     | double precision
++ public         | vops_float8_min_extend             | FUNCTION     | USER-DEFINED
++ public         | vops_float8_min_reduce             | FUNCTION     | USER-DEFINED
++ public         | vops_float8_min_stub               | FUNCTION     | USER-DEFINED
++ public         | vops_float8_msum_extend            | FUNCTION     | internal
++ public         | vops_float8_msum_final             | FUNCTION     | USER-DEFINED
++ public         | vops_float8_msum_reduce            | FUNCTION     | internal
++ public         | vops_float8_msum_stub              | FUNCTION     | internal
++ public         | vops_float8_mul                    | FUNCTION     | USER-DEFINED
++ public         | vops_float8_mul_lconst             | FUNCTION     | USER-DEFINED
++ public         | vops_float8_mul_rconst             | FUNCTION     | USER-DEFINED
++ public         | vops_float8_ne                     | FUNCTION     | USER-DEFINED
++ public         | vops_float8_ne_lconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float8_ne_rconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float8_neg                    | FUNCTION     | USER-DEFINED
++ public         | vops_float8_output                 | FUNCTION     | cstring
++ public         | vops_float8_sub                    | FUNCTION     | USER-DEFINED
++ public         | vops_float8_sub_lconst             | FUNCTION     | USER-DEFINED
++ public         | vops_float8_sub_rconst             | FUNCTION     | USER-DEFINED
++ public         | vops_float8_sum_accumulate         | FUNCTION     | double precision
++ public         | vops_float8_sum_extend             | FUNCTION     | USER-DEFINED
++ public         | vops_float8_sum_reduce             | FUNCTION     | USER-DEFINED
++ public         | vops_float8_sum_stub               | FUNCTION     | USER-DEFINED
++ public         | vops_float8_var_accumulate         | FUNCTION     | internal
++ public         | vops_float8_wavg_accumulate        | FUNCTION     | internal
++ public         | vops_initialize                    | FUNCTION     | void
++ public         | vops_int2_add                      | FUNCTION     | USER-DEFINED
++ public         | vops_int2_add_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_add_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_approxdc_accumulate      | FUNCTION     | internal
++ public         | vops_int2_avg_accumulate           | FUNCTION     | internal
++ public         | vops_int2_avg_extend               | FUNCTION     | internal
++ public         | vops_int2_avg_reduce               | FUNCTION     | internal
++ public         | vops_int2_avg_stub                 | FUNCTION     | internal
++ public         | vops_int2_concat                   | FUNCTION     | USER-DEFINED
++ public         | vops_int2_const                    | FUNCTION     | USER-DEFINED
++ public         | vops_int2_count_accumulate         | FUNCTION     | bigint
++ public         | vops_int2_count_extend             | FUNCTION     | USER-DEFINED
++ public         | vops_int2_count_reduce             | FUNCTION     | USER-DEFINED
++ public         | vops_int2_count_stub               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_div                      | FUNCTION     | USER-DEFINED
++ public         | vops_int2_div_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_div_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_eq                       | FUNCTION     | USER-DEFINED
++ public         | vops_int2_eq_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int2_eq_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int2_first_accumulate         | FUNCTION     | internal
++ public         | vops_int2_first_final              | FUNCTION     | smallint
++ public         | vops_int2_ge                       | FUNCTION     | USER-DEFINED
++ public         | vops_int2_ge_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int2_ge_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int2_group_by                 | FUNCTION     | internal
++ public         | vops_int2_gt                       | FUNCTION     | USER-DEFINED
++ public         | vops_int2_gt_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int2_gt_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int2_input                    | FUNCTION     | USER-DEFINED
++ public         | vops_int2_lag_accumulate           | FUNCTION     | internal
++ public         | vops_int2_lag_extend               | FUNCTION     | internal
++ public         | vops_int2_lag_final                | FUNCTION     | USER-DEFINED
++ public         | vops_int2_lag_reduce               | FUNCTION     | internal
++ public         | vops_int2_last_accumulate          | FUNCTION     | internal
++ public         | vops_int2_le                       | FUNCTION     | USER-DEFINED
++ public         | vops_int2_le_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int2_le_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int2_lt                       | FUNCTION     | USER-DEFINED
++ public         | vops_int2_lt_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int2_lt_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int2_max_accumulate           | FUNCTION     | smallint
++ public         | vops_int2_max_extend               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_max_reduce               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_max_stub                 | FUNCTION     | USER-DEFINED
++ public         | vops_int2_min_accumulate           | FUNCTION     | smallint
++ public         | vops_int2_min_extend               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_min_reduce               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_min_stub                 | FUNCTION     | USER-DEFINED
++ public         | vops_int2_msum_extend              | FUNCTION     | internal
++ public         | vops_int2_msum_final               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_msum_reduce              | FUNCTION     | internal
++ public         | vops_int2_msum_stub                | FUNCTION     | internal
++ public         | vops_int2_mul                      | FUNCTION     | USER-DEFINED
++ public         | vops_int2_mul_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_mul_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_ne                       | FUNCTION     | USER-DEFINED
++ public         | vops_int2_ne_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int2_ne_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int2_neg                      | FUNCTION     | USER-DEFINED
++ public         | vops_int2_output                   | FUNCTION     | cstring
++ public         | vops_int2_rem                      | FUNCTION     | USER-DEFINED
++ public         | vops_int2_rem_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_rem_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_sub                      | FUNCTION     | USER-DEFINED
++ public         | vops_int2_sub_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_sub_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_sum_accumulate           | FUNCTION     | bigint
++ public         | vops_int2_sum_extend               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_sum_reduce               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_sum_stub                 | FUNCTION     | USER-DEFINED
++ public         | vops_int2_var_accumulate           | FUNCTION     | internal
++ public         | vops_int2_wavg_accumulate          | FUNCTION     | internal
++ public         | vops_int4_add                      | FUNCTION     | USER-DEFINED
++ public         | vops_int4_add_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_add_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_approxdc_accumulate      | FUNCTION     | internal
++ public         | vops_int4_avg_accumulate           | FUNCTION     | internal
++ public         | vops_int4_avg_extend               | FUNCTION     | internal
++ public         | vops_int4_avg_reduce               | FUNCTION     | internal
++ public         | vops_int4_avg_stub                 | FUNCTION     | internal
++ public         | vops_int4_concat                   | FUNCTION     | USER-DEFINED
++ public         | vops_int4_const                    | FUNCTION     | USER-DEFINED
++ public         | vops_int4_count_accumulate         | FUNCTION     | bigint
++ public         | vops_int4_count_extend             | FUNCTION     | USER-DEFINED
++ public         | vops_int4_count_reduce             | FUNCTION     | USER-DEFINED
++ public         | vops_int4_count_stub               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_div                      | FUNCTION     | USER-DEFINED
++ public         | vops_int4_div_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_div_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_eq                       | FUNCTION     | USER-DEFINED
++ public         | vops_int4_eq_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int4_eq_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int4_first_accumulate         | FUNCTION     | internal
++ public         | vops_int4_first_final              | FUNCTION     | integer
++ public         | vops_int4_ge                       | FUNCTION     | USER-DEFINED
++ public         | vops_int4_ge_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int4_ge_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int4_group_by                 | FUNCTION     | internal
++ public         | vops_int4_gt                       | FUNCTION     | USER-DEFINED
++ public         | vops_int4_gt_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int4_gt_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int4_input                    | FUNCTION     | USER-DEFINED
++ public         | vops_int4_lag_accumulate           | FUNCTION     | internal
++ public         | vops_int4_lag_extend               | FUNCTION     | internal
++ public         | vops_int4_lag_final                | FUNCTION     | USER-DEFINED
++ public         | vops_int4_lag_reduce               | FUNCTION     | internal
++ public         | vops_int4_last_accumulate          | FUNCTION     | internal
++ public         | vops_int4_le                       | FUNCTION     | USER-DEFINED
++ public         | vops_int4_le_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int4_le_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int4_lt                       | FUNCTION     | USER-DEFINED
++ public         | vops_int4_lt_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int4_lt_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int4_max_accumulate           | FUNCTION     | integer
++ public         | vops_int4_max_extend               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_max_reduce               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_max_stub                 | FUNCTION     | USER-DEFINED
++ public         | vops_int4_min_accumulate           | FUNCTION     | integer
++ public         | vops_int4_min_extend               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_min_reduce               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_min_stub                 | FUNCTION     | USER-DEFINED
++ public         | vops_int4_msum_extend              | FUNCTION     | internal
++ public         | vops_int4_msum_final               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_msum_reduce              | FUNCTION     | internal
++ public         | vops_int4_msum_stub                | FUNCTION     | internal
++ public         | vops_int4_mul                      | FUNCTION     | USER-DEFINED
++ public         | vops_int4_mul_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_mul_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_ne                       | FUNCTION     | USER-DEFINED
++ public         | vops_int4_ne_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int4_ne_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int4_neg                      | FUNCTION     | USER-DEFINED
++ public         | vops_int4_output                   | FUNCTION     | cstring
++ public         | vops_int4_rem                      | FUNCTION     | USER-DEFINED
++ public         | vops_int4_rem_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_rem_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_sub                      | FUNCTION     | USER-DEFINED
++ public         | vops_int4_sub_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_sub_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_sum_accumulate           | FUNCTION     | bigint
++ public         | vops_int4_sum_extend               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_sum_reduce               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_sum_stub                 | FUNCTION     | USER-DEFINED
++ public         | vops_int4_var_accumulate           | FUNCTION     | internal
++ public         | vops_int4_wavg_accumulate          | FUNCTION     | internal
++ public         | vops_int8_add                      | FUNCTION     | USER-DEFINED
++ public         | vops_int8_add_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_add_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_approxdc_accumulate      | FUNCTION     | internal
++ public         | vops_int8_avg_accumulate           | FUNCTION     | internal
++ public         | vops_int8_avg_extend               | FUNCTION     | internal
++ public         | vops_int8_avg_reduce               | FUNCTION     | internal
++ public         | vops_int8_avg_stub                 | FUNCTION     | internal
++ public         | vops_int8_const                    | FUNCTION     | USER-DEFINED
++ public         | vops_int8_count_accumulate         | FUNCTION     | bigint
++ public         | vops_int8_count_extend             | FUNCTION     | USER-DEFINED
++ public         | vops_int8_count_reduce             | FUNCTION     | USER-DEFINED
++ public         | vops_int8_count_stub               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_div                      | FUNCTION     | USER-DEFINED
++ public         | vops_int8_div_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_div_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_eq                       | FUNCTION     | USER-DEFINED
++ public         | vops_int8_eq_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int8_eq_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int8_first_accumulate         | FUNCTION     | internal
++ public         | vops_int8_first_final              | FUNCTION     | bigint
++ public         | vops_int8_ge                       | FUNCTION     | USER-DEFINED
++ public         | vops_int8_ge_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int8_ge_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int8_group_by                 | FUNCTION     | internal
++ public         | vops_int8_gt                       | FUNCTION     | USER-DEFINED
++ public         | vops_int8_gt_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int8_gt_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int8_input                    | FUNCTION     | USER-DEFINED
++ public         | vops_int8_lag_accumulate           | FUNCTION     | internal
++ public         | vops_int8_lag_extend               | FUNCTION     | internal
++ public         | vops_int8_lag_final                | FUNCTION     | USER-DEFINED
++ public         | vops_int8_lag_reduce               | FUNCTION     | internal
++ public         | vops_int8_last_accumulate          | FUNCTION     | internal
++ public         | vops_int8_le                       | FUNCTION     | USER-DEFINED
++ public         | vops_int8_le_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int8_le_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int8_lt                       | FUNCTION     | USER-DEFINED
++ public         | vops_int8_lt_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int8_lt_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int8_max_accumulate           | FUNCTION     | bigint
++ public         | vops_int8_max_extend               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_max_reduce               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_max_stub                 | FUNCTION     | USER-DEFINED
++ public         | vops_int8_min_accumulate           | FUNCTION     | bigint
++ public         | vops_int8_min_extend               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_min_reduce               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_min_stub                 | FUNCTION     | USER-DEFINED
++ public         | vops_int8_msum_extend              | FUNCTION     | internal
++ public         | vops_int8_msum_final               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_msum_reduce              | FUNCTION     | internal
++ public         | vops_int8_msum_stub                | FUNCTION     | internal
++ public         | vops_int8_mul                      | FUNCTION     | USER-DEFINED
++ public         | vops_int8_mul_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_mul_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_ne                       | FUNCTION     | USER-DEFINED
++ public         | vops_int8_ne_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int8_ne_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int8_neg                      | FUNCTION     | USER-DEFINED
++ public         | vops_int8_output                   | FUNCTION     | cstring
++ public         | vops_int8_rem                      | FUNCTION     | USER-DEFINED
++ public         | vops_int8_rem_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_rem_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_sub                      | FUNCTION     | USER-DEFINED
++ public         | vops_int8_sub_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_sub_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_sum_accumulate           | FUNCTION     | bigint
++ public         | vops_int8_sum_extend               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_sum_reduce               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_sum_stub                 | FUNCTION     | USER-DEFINED
++ public         | vops_int8_var_accumulate           | FUNCTION     | internal
++ public         | vops_int8_wavg_accumulate          | FUNCTION     | internal
++ public         | vops_int_interval_mul              | FUNCTION     | USER-DEFINED
++ public         | vops_interval_add                  | FUNCTION     | USER-DEFINED
++ public         | vops_interval_add_lconst           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_add_rconst           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_approxdc_accumulate  | FUNCTION     | internal
++ public         | vops_interval_avg_accumulate       | FUNCTION     | internal
++ public         | vops_interval_avg_extend           | FUNCTION     | internal
++ public         | vops_interval_avg_reduce           | FUNCTION     | internal
++ public         | vops_interval_avg_stub             | FUNCTION     | internal
++ public         | vops_interval_const                | FUNCTION     | USER-DEFINED
++ public         | vops_interval_count_accumulate     | FUNCTION     | bigint
++ public         | vops_interval_count_extend         | FUNCTION     | USER-DEFINED
++ public         | vops_interval_count_reduce         | FUNCTION     | USER-DEFINED
++ public         | vops_interval_count_stub           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_div                  | FUNCTION     | USER-DEFINED
++ public         | vops_interval_div_int_rconst       | FUNCTION     | USER-DEFINED
++ public         | vops_interval_div_lconst           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_div_rconst           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_eq                   | FUNCTION     | USER-DEFINED
++ public         | vops_interval_eq_lconst            | FUNCTION     | USER-DEFINED
++ public         | vops_interval_eq_rconst            | FUNCTION     | USER-DEFINED
++ public         | vops_interval_first_accumulate     | FUNCTION     | internal
++ public         | vops_interval_first_final          | FUNCTION     | bigint
++ public         | vops_interval_ge                   | FUNCTION     | USER-DEFINED
++ public         | vops_interval_ge_lconst            | FUNCTION     | USER-DEFINED
++ public         | vops_interval_ge_rconst            | FUNCTION     | USER-DEFINED
++ public         | vops_interval_group_by             | FUNCTION     | internal
++ public         | vops_interval_gt                   | FUNCTION     | USER-DEFINED
++ public         | vops_interval_gt_lconst            | FUNCTION     | USER-DEFINED
++ public         | vops_interval_gt_rconst            | FUNCTION     | USER-DEFINED
++ public         | vops_interval_input                | FUNCTION     | USER-DEFINED
++ public         | vops_interval_int_div              | FUNCTION     | USER-DEFINED
++ public         | vops_interval_int_mul              | FUNCTION     | USER-DEFINED
++ public         | vops_interval_int_rem              | FUNCTION     | USER-DEFINED
++ public         | vops_interval_lag_accumulate       | FUNCTION     | internal
++ public         | vops_interval_lag_extend           | FUNCTION     | internal
++ public         | vops_interval_lag_final            | FUNCTION     | USER-DEFINED
++ public         | vops_interval_lag_reduce           | FUNCTION     | internal
++ public         | vops_interval_last_accumulate      | FUNCTION     | internal
++ public         | vops_interval_le                   | FUNCTION     | USER-DEFINED
++ public         | vops_interval_le_lconst            | FUNCTION     | USER-DEFINED
++ public         | vops_interval_le_rconst            | FUNCTION     | USER-DEFINED
++ public         | vops_interval_lt                   | FUNCTION     | USER-DEFINED
++ public         | vops_interval_lt_lconst            | FUNCTION     | USER-DEFINED
++ public         | vops_interval_lt_rconst            | FUNCTION     | USER-DEFINED
++ public         | vops_interval_max_accumulate       | FUNCTION     | bigint
++ public         | vops_interval_max_extend           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_max_reduce           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_max_stub             | FUNCTION     | USER-DEFINED
++ public         | vops_interval_min_accumulate       | FUNCTION     | bigint
++ public         | vops_interval_min_extend           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_min_reduce           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_min_stub             | FUNCTION     | USER-DEFINED
++ public         | vops_interval_msum_extend          | FUNCTION     | internal
++ public         | vops_interval_msum_final           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_msum_reduce          | FUNCTION     | internal
++ public         | vops_interval_msum_stub            | FUNCTION     | internal
++ public         | vops_interval_mul_lconst           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_mul_rconst           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_ne                   | FUNCTION     | USER-DEFINED
++ public         | vops_interval_ne_lconst            | FUNCTION     | USER-DEFINED
++ public         | vops_interval_ne_rconst            | FUNCTION     | USER-DEFINED
++ public         | vops_interval_neg                  | FUNCTION     | USER-DEFINED
++ public         | vops_interval_output               | FUNCTION     | cstring
++ public         | vops_interval_rem                  | FUNCTION     | USER-DEFINED
++ public         | vops_interval_rem_int_rconst       | FUNCTION     | USER-DEFINED
++ public         | vops_interval_rem_lconst           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_rem_rconst           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_sub                  | FUNCTION     | USER-DEFINED
++ public         | vops_interval_sub_lconst           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_sub_rconst           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_sum_accumulate       | FUNCTION     | bigint
++ public         | vops_interval_sum_extend           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_sum_reduce           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_sum_stub             | FUNCTION     | USER-DEFINED
++ public         | vops_interval_timestamp_add        | FUNCTION     | USER-DEFINED
++ public         | vops_interval_var_accumulate       | FUNCTION     | internal
++ public         | vops_interval_wavg_accumulate      | FUNCTION     | internal
++ public         | vops_last_combine                  | FUNCTION     | internal
++ public         | vops_mavg_final                    | FUNCTION     | USER-DEFINED
++ public         | vops_stddev_pop_final              | FUNCTION     | double precision
++ public         | vops_stddev_samp_final             | FUNCTION     | double precision
++ public         | vops_text_approxdc_accumulate      | FUNCTION     | internal
++ public         | vops_text_concat                   | FUNCTION     | USER-DEFINED
++ public         | vops_text_const                    | FUNCTION     | USER-DEFINED
++ public         | vops_text_eq                       | FUNCTION     | USER-DEFINED
++ public         | vops_text_eq_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_text_eq_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_text_first_accumulate         | FUNCTION     | internal
++ public         | vops_text_first_final              | FUNCTION     | text
++ public         | vops_text_ge                       | FUNCTION     | USER-DEFINED
++ public         | vops_text_ge_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_text_ge_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_text_gt                       | FUNCTION     | USER-DEFINED
++ public         | vops_text_gt_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_text_gt_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_text_input                    | FUNCTION     | USER-DEFINED
++ public         | vops_text_last_accumulate          | FUNCTION     | internal
++ public         | vops_text_le                       | FUNCTION     | USER-DEFINED
++ public         | vops_text_le_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_text_le_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_text_lt                       | FUNCTION     | USER-DEFINED
++ public         | vops_text_lt_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_text_lt_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_text_ne                       | FUNCTION     | USER-DEFINED
++ public         | vops_text_ne_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_text_ne_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_text_output                   | FUNCTION     | cstring
++ public         | vops_text_typmod_in                | FUNCTION     | integer
++ public         | vops_time_interval                 | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_add_lconst          | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_add_rconst          | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_approxdc_accumulate | FUNCTION     | internal
++ public         | vops_timestamp_avg_accumulate      | FUNCTION     | internal
++ public         | vops_timestamp_avg_extend          | FUNCTION     | internal
++ public         | vops_timestamp_avg_reduce          | FUNCTION     | internal
++ public         | vops_timestamp_avg_stub            | FUNCTION     | internal
++ public         | vops_timestamp_const               | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_count_accumulate    | FUNCTION     | bigint
++ public         | vops_timestamp_count_extend        | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_count_reduce        | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_count_stub          | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_div                 | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_div_rconst          | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_eq                  | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_eq_lconst           | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_eq_rconst           | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_ge                  | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_ge_lconst           | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_ge_rconst           | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_group_by            | FUNCTION     | internal
++ public         | vops_timestamp_gt                  | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_gt_lconst           | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_gt_rconst           | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_input               | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_interval_add        | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_interval_sub        | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_lag_accumulate      | FUNCTION     | internal
++ public         | vops_timestamp_lag_extend          | FUNCTION     | internal
++ public         | vops_timestamp_lag_final           | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_lag_reduce          | FUNCTION     | internal
++ public         | vops_timestamp_le                  | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_le_lconst           | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_le_rconst           | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_lt                  | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_lt_lconst           | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_lt_rconst           | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_max_accumulate      | FUNCTION     | timestamp without time zone
++ public         | vops_timestamp_max_extend          | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_max_reduce          | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_max_stub            | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_min_accumulate      | FUNCTION     | timestamp without time zone
++ public         | vops_timestamp_min_extend          | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_min_reduce          | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_min_stub            | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_msum_extend         | FUNCTION     | internal
++ public         | vops_timestamp_msum_final          | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_msum_reduce         | FUNCTION     | internal
++ public         | vops_timestamp_msum_stub           | FUNCTION     | internal
++ public         | vops_timestamp_mul                 | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_mul_lconst          | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_mul_rconst          | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_ne                  | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_ne_lconst           | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_ne_rconst           | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_neg                 | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_output              | FUNCTION     | cstring
++ public         | vops_timestamp_rem                 | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_rem_rconst          | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_sub                 | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_sub_interval_lconst | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_sub_interval_rconst | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_sub_lconst          | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_sub_rconst          | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_sum_accumulate      | FUNCTION     | bigint
++ public         | vops_timestamp_sum_extend          | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_sum_reduce          | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_sum_stub            | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_var_accumulate      | FUNCTION     | internal
++ public         | vops_timestamp_wavg_accumulate     | FUNCTION     | internal
++ public         | vops_unnest                        | FUNCTION     | record
++ public         | vops_var_combine                   | FUNCTION     | internal
++ public         | vops_var_deserial                  | FUNCTION     | internal
++ public         | vops_var_pop_final                 | FUNCTION     | double precision
++ public         | vops_var_samp_final                | FUNCTION     | double precision
++ public         | vops_var_serial                    | FUNCTION     | bytea
++ public         | vops_wavg_final                    | FUNCTION     | double precision
++ public         | vops_win_char_final                | FUNCTION     | USER-DEFINED
++ public         | wavg                               |              | double precision
++ public         | wavg                               |              | double precision
++ public         | wavg                               |              | double precision
++ public         | wavg                               |              | double precision
++ public         | wavg                               |              | double precision
++ public         | wavg                               |              | double precision
++ public         | wavg                               |              | double precision
++ public         | wavg                               |              | double precision
++ public         | wavg                               |              | double precision
++(1021 rows)
+ 
+ SET ROLE u1;
+ SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+- routine_schema |      routine_name       | routine_type | data_type 
+-----------------+-------------------------+--------------+-----------
+- public         | histogram               | FUNCTION     | record
+- public         | pg_stat_monitor_reset   | FUNCTION     | void
+- public         | pg_stat_monitor_version | FUNCTION     | text
+-(3 rows)
++ routine_schema |            routine_name            | routine_type |          data_type          
++----------------+------------------------------------+--------------+-----------------------------
++ public         | approxdc                           |              | bigint
++ public         | approxdc                           |              | bigint
++ public         | approxdc                           |              | bigint
++ public         | approxdc                           |              | bigint
++ public         | approxdc                           |              | bigint
++ public         | approxdc                           |              | bigint
++ public         | approxdc                           |              | bigint
++ public         | approxdc                           |              | bigint
++ public         | approxdc                           |              | bigint
++ public         | approxdc                           |              | bigint
++ public         | avg                                |              | double precision
++ public         | avg                                |              | double precision
++ public         | avg                                |              | double precision
++ public         | avg                                |              | double precision
++ public         | avg                                |              | double precision
++ public         | avg                                |              | double precision
++ public         | avg                                |              | double precision
++ public         | avg                                |              | double precision
++ public         | avg                                |              | double precision
++ public         | betwixt                            | FUNCTION     | USER-DEFINED
++ public         | betwixt                            | FUNCTION     | USER-DEFINED
++ public         | betwixt                            | FUNCTION     | USER-DEFINED
++ public         | betwixt                            | FUNCTION     | USER-DEFINED
++ public         | betwixt                            | FUNCTION     | USER-DEFINED
++ public         | betwixt                            | FUNCTION     | USER-DEFINED
++ public         | betwixt                            | FUNCTION     | USER-DEFINED
++ public         | betwixt                            | FUNCTION     | USER-DEFINED
++ public         | betwixt                            | FUNCTION     | USER-DEFINED
++ public         | betwixt                            | FUNCTION     | USER-DEFINED
++ public         | count                              |              | bigint
++ public         | count                              |              | bigint
++ public         | count                              |              | bigint
++ public         | count                              |              | bigint
++ public         | count                              |              | bigint
++ public         | count                              |              | bigint
++ public         | count                              |              | bigint
++ public         | count                              |              | bigint
++ public         | count                              |              | bigint
++ public         | countall                           |              | bigint
++ public         | create_projection                  | FUNCTION     | void
++ public         | date_bucket                        | FUNCTION     | USER-DEFINED
++ public         | decode_error_level                 | FUNCTION     | text
++ public         | drop_projection                    | FUNCTION     | void
++ public         | filter                             | FUNCTION     | boolean
++ public         | first                              |              | double precision
++ public         | first                              | FUNCTION     | smallint
++ public         | first                              | FUNCTION     | boolean
++ public         | first                              |              | boolean
++ public         | first                              |              | smallint
++ public         | first                              | FUNCTION     | double precision
++ public         | first                              |              | integer
++ public         | first                              | FUNCTION     | integer
++ public         | first                              |              | text
++ public         | first                              |              | date
++ public         | first                              | FUNCTION     | date
++ public         | first                              | FUNCTION     | text
++ public         | first                              | FUNCTION     | real
++ public         | first                              |              | real
++ public         | first                              | FUNCTION     | timestamp without time zone
++ public         | first                              | FUNCTION     | bigint
++ public         | first                              |              | bigint
++ public         | first                              | FUNCTION     | "char"
++ public         | first                              |              | "char"
++ public         | first                              |              | bigint
++ public         | first                              | FUNCTION     | USER-DEFINED
++ public         | get_cmd_type                       | FUNCTION     | text
++ public         | get_histogram_timings              | FUNCTION     | text
++ public         | high                               | FUNCTION     | date
++ public         | high                               | FUNCTION     | USER-DEFINED
++ public         | high                               | FUNCTION     | text
++ public         | high                               | FUNCTION     | "char"
++ public         | high                               | FUNCTION     | real
++ public         | high                               | FUNCTION     | integer
++ public         | high                               | FUNCTION     | timestamp without time zone
++ public         | high                               | FUNCTION     | double precision
++ public         | high                               | FUNCTION     | smallint
++ public         | high                               | FUNCTION     | bigint
++ public         | histogram                          | FUNCTION     | record
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | ifnull                             | FUNCTION     | USER-DEFINED
++ public         | import                             | FUNCTION     | bigint
++ public         | is_not_null                        | FUNCTION     | USER-DEFINED
++ public         | is_null                            | FUNCTION     | USER-DEFINED
++ public         | lag                                |              | USER-DEFINED
++ public         | lag                                |              | USER-DEFINED
++ public         | lag                                |              | USER-DEFINED
++ public         | lag                                |              | USER-DEFINED
++ public         | lag                                |              | USER-DEFINED
++ public         | lag                                |              | USER-DEFINED
++ public         | lag                                |              | USER-DEFINED
++ public         | lag                                |              | USER-DEFINED
++ public         | lag                                |              | USER-DEFINED
++ public         | last                               | FUNCTION     | USER-DEFINED
++ public         | last                               | FUNCTION     | timestamp without time zone
++ public         | last                               | FUNCTION     | date
++ public         | last                               |              | date
++ public         | last                               |              | boolean
++ public         | last                               |              | integer
++ public         | last                               | FUNCTION     | bigint
++ public         | last                               | FUNCTION     | boolean
++ public         | last                               |              | bigint
++ public         | last                               | FUNCTION     | smallint
++ public         | last                               | FUNCTION     | text
++ public         | last                               | FUNCTION     | integer
++ public         | last                               | FUNCTION     | "char"
++ public         | last                               |              | "char"
++ public         | last                               |              | real
++ public         | last                               |              | double precision
++ public         | last                               |              | text
++ public         | last                               | FUNCTION     | double precision
++ public         | last                               | FUNCTION     | real
++ public         | last                               |              | smallint
++ public         | last                               |              | bigint
++ public         | low                                | FUNCTION     | double precision
++ public         | low                                | FUNCTION     | bigint
++ public         | low                                | FUNCTION     | text
++ public         | low                                | FUNCTION     | integer
++ public         | low                                | FUNCTION     | "char"
++ public         | low                                | FUNCTION     | timestamp without time zone
++ public         | low                                | FUNCTION     | date
++ public         | low                                | FUNCTION     | USER-DEFINED
++ public         | low                                | FUNCTION     | smallint
++ public         | low                                | FUNCTION     | real
++ public         | map                                |              | bigint
++ public         | map                                |              | bigint
++ public         | map                                |              | bigint
++ public         | map                                |              | bigint
++ public         | map                                |              | bigint
++ public         | map                                |              | bigint
++ public         | map                                |              | bigint
++ public         | mavg                               |              | USER-DEFINED
++ public         | mavg                               |              | USER-DEFINED
++ public         | mavg                               |              | USER-DEFINED
++ public         | mavg                               |              | USER-DEFINED
++ public         | mavg                               |              | USER-DEFINED
++ public         | mavg                               |              | USER-DEFINED
++ public         | mavg                               |              | USER-DEFINED
++ public         | mavg                               |              | USER-DEFINED
++ public         | mavg                               |              | USER-DEFINED
++ public         | max                                |              | smallint
++ public         | max                                |              | integer
++ public         | max                                |              | character
++ public         | max                                |              | bigint
++ public         | max                                |              | double precision
++ public         | max                                |              | real
++ public         | max                                |              | timestamp without time zone
++ public         | max                                |              | bigint
++ public         | max                                |              | date
++ public         | mcount                             |              | USER-DEFINED
++ public         | mcount                             |              | USER-DEFINED
++ public         | mcount                             |              | USER-DEFINED
++ public         | mcount                             |              | USER-DEFINED
++ public         | mcount                             |              | USER-DEFINED
++ public         | mcount                             |              | USER-DEFINED
++ public         | mcount                             |              | USER-DEFINED
++ public         | mcount                             |              | USER-DEFINED
++ public         | mcount                             |              | USER-DEFINED
++ public         | mcount                             |              | USER-DEFINED
++ public         | min                                |              | real
++ public         | min                                |              | timestamp without time zone
++ public         | min                                |              | double precision
++ public         | min                                |              | integer
++ public         | min                                |              | date
++ public         | min                                |              | smallint
++ public         | min                                |              | bigint
++ public         | min                                |              | character
++ public         | min                                |              | bigint
++ public         | mmax                               |              | USER-DEFINED
++ public         | mmax                               |              | USER-DEFINED
++ public         | mmax                               |              | USER-DEFINED
++ public         | mmax                               |              | USER-DEFINED
++ public         | mmax                               |              | USER-DEFINED
++ public         | mmax                               |              | USER-DEFINED
++ public         | mmax                               |              | USER-DEFINED
++ public         | mmax                               |              | USER-DEFINED
++ public         | mmax                               |              | USER-DEFINED
++ public         | mmin                               |              | USER-DEFINED
++ public         | mmin                               |              | USER-DEFINED
++ public         | mmin                               |              | USER-DEFINED
++ public         | mmin                               |              | USER-DEFINED
++ public         | mmin                               |              | USER-DEFINED
++ public         | mmin                               |              | USER-DEFINED
++ public         | mmin                               |              | USER-DEFINED
++ public         | mmin                               |              | USER-DEFINED
++ public         | mmin                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | msum                               |              | USER-DEFINED
++ public         | pg_stat_monitor_internal           | FUNCTION     | record
++ public         | pg_stat_monitor_version            | FUNCTION     | text
++ public         | populate                           | FUNCTION     | bigint
++ public         | range                              | FUNCTION     | ARRAY
++ public         | reduce                             | FUNCTION     | USER-DEFINED
++ public         | stddev                             |              | double precision
++ public         | stddev                             |              | double precision
++ public         | stddev                             |              | double precision
++ public         | stddev                             |              | double precision
++ public         | stddev                             |              | double precision
++ public         | stddev                             |              | double precision
++ public         | stddev                             |              | double precision
++ public         | stddev                             |              | double precision
++ public         | stddev                             |              | double precision
++ public         | stddev_pop                         |              | double precision
++ public         | stddev_pop                         |              | double precision
++ public         | stddev_pop                         |              | double precision
++ public         | stddev_pop                         |              | double precision
++ public         | stddev_pop                         |              | double precision
++ public         | stddev_pop                         |              | double precision
++ public         | stddev_pop                         |              | double precision
++ public         | stddev_pop                         |              | double precision
++ public         | stddev_pop                         |              | double precision
++ public         | stddev_samp                        |              | double precision
++ public         | stddev_samp                        |              | double precision
++ public         | stddev_samp                        |              | double precision
++ public         | stddev_samp                        |              | double precision
++ public         | stddev_samp                        |              | double precision
++ public         | stddev_samp                        |              | double precision
++ public         | stddev_samp                        |              | double precision
++ public         | stddev_samp                        |              | double precision
++ public         | stddev_samp                        |              | double precision
++ public         | sum                                |              | double precision
++ public         | sum                                |              | bigint
++ public         | sum                                |              | bigint
++ public         | sum                                |              | bigint
++ public         | sum                                |              | bigint
++ public         | sum                                |              | bigint
++ public         | sum                                |              | bigint
++ public         | sum                                |              | double precision
++ public         | sum                                |              | bigint
++ public         | time_bucket                        | FUNCTION     | USER-DEFINED
++ public         | var_pop                            |              | double precision
++ public         | var_pop                            |              | double precision
++ public         | var_pop                            |              | double precision
++ public         | var_pop                            |              | double precision
++ public         | var_pop                            |              | double precision
++ public         | var_pop                            |              | double precision
++ public         | var_pop                            |              | double precision
++ public         | var_pop                            |              | double precision
++ public         | var_pop                            |              | double precision
++ public         | var_samp                           |              | double precision
++ public         | var_samp                           |              | double precision
++ public         | var_samp                           |              | double precision
++ public         | var_samp                           |              | double precision
++ public         | var_samp                           |              | double precision
++ public         | var_samp                           |              | double precision
++ public         | var_samp                           |              | double precision
++ public         | var_samp                           |              | double precision
++ public         | var_samp                           |              | double precision
++ public         | variance                           |              | double precision
++ public         | variance                           |              | double precision
++ public         | variance                           |              | double precision
++ public         | variance                           |              | double precision
++ public         | variance                           |              | double precision
++ public         | variance                           |              | double precision
++ public         | variance                           |              | double precision
++ public         | variance                           |              | double precision
++ public         | variance                           |              | double precision
++ public         | vcount                             |              | bigint
++ public         | vops_agg_combine                   | FUNCTION     | internal
++ public         | vops_agg_deserial                  | FUNCTION     | internal
++ public         | vops_agg_final                     | FUNCTION     | bigint
++ public         | vops_agg_serial                    | FUNCTION     | bytea
++ public         | vops_approxdc_combine              | FUNCTION     | internal
++ public         | vops_approxdc_deserial             | FUNCTION     | internal
++ public         | vops_approxdc_final                | FUNCTION     | bigint
++ public         | vops_approxdc_serial               | FUNCTION     | bytea
++ public         | vops_avg_combine                   | FUNCTION     | internal
++ public         | vops_avg_deserial                  | FUNCTION     | internal
++ public         | vops_avg_final                     | FUNCTION     | double precision
++ public         | vops_avg_serial                    | FUNCTION     | bytea
++ public         | vops_bool_and                      | FUNCTION     | USER-DEFINED
++ public         | vops_bool_first_accumulate         | FUNCTION     | internal
++ public         | vops_bool_first_final              | FUNCTION     | boolean
++ public         | vops_bool_input                    | FUNCTION     | USER-DEFINED
++ public         | vops_bool_last_accumulate          | FUNCTION     | internal
++ public         | vops_bool_not                      | FUNCTION     | USER-DEFINED
++ public         | vops_bool_or                       | FUNCTION     | USER-DEFINED
++ public         | vops_bool_output                   | FUNCTION     | cstring
++ public         | vops_char_add                      | FUNCTION     | USER-DEFINED
++ public         | vops_char_add_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_char_add_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_char_approxdc_accumulate      | FUNCTION     | internal
++ public         | vops_char_avg_accumulate           | FUNCTION     | internal
++ public         | vops_char_avg_extend               | FUNCTION     | internal
++ public         | vops_char_avg_reduce               | FUNCTION     | internal
++ public         | vops_char_avg_stub                 | FUNCTION     | internal
++ public         | vops_char_concat                   | FUNCTION     | USER-DEFINED
++ public         | vops_char_const                    | FUNCTION     | USER-DEFINED
++ public         | vops_char_count_accumulate         | FUNCTION     | bigint
++ public         | vops_char_count_extend             | FUNCTION     | USER-DEFINED
++ public         | vops_char_count_reduce             | FUNCTION     | USER-DEFINED
++ public         | vops_char_count_stub               | FUNCTION     | USER-DEFINED
++ public         | vops_char_div                      | FUNCTION     | USER-DEFINED
++ public         | vops_char_div_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_char_div_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_char_eq                       | FUNCTION     | USER-DEFINED
++ public         | vops_char_eq_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_char_eq_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_char_first_accumulate         | FUNCTION     | internal
++ public         | vops_char_first_final              | FUNCTION     | "char"
++ public         | vops_char_ge                       | FUNCTION     | USER-DEFINED
++ public         | vops_char_ge_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_char_ge_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_char_group_by                 | FUNCTION     | internal
++ public         | vops_char_gt                       | FUNCTION     | USER-DEFINED
++ public         | vops_char_gt_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_char_gt_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_char_input                    | FUNCTION     | USER-DEFINED
++ public         | vops_char_lag_accumulate           | FUNCTION     | internal
++ public         | vops_char_lag_extend               | FUNCTION     | internal
++ public         | vops_char_lag_reduce               | FUNCTION     | internal
++ public         | vops_char_last_accumulate          | FUNCTION     | internal
++ public         | vops_char_le                       | FUNCTION     | USER-DEFINED
++ public         | vops_char_le_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_char_le_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_char_lt                       | FUNCTION     | USER-DEFINED
++ public         | vops_char_lt_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_char_lt_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_char_max_accumulate           | FUNCTION     | character
++ public         | vops_char_max_extend               | FUNCTION     | USER-DEFINED
++ public         | vops_char_max_reduce               | FUNCTION     | USER-DEFINED
++ public         | vops_char_max_stub                 | FUNCTION     | USER-DEFINED
++ public         | vops_char_min_accumulate           | FUNCTION     | character
++ public         | vops_char_min_extend               | FUNCTION     | USER-DEFINED
++ public         | vops_char_min_reduce               | FUNCTION     | USER-DEFINED
++ public         | vops_char_min_stub                 | FUNCTION     | USER-DEFINED
++ public         | vops_char_msum_extend              | FUNCTION     | internal
++ public         | vops_char_msum_final               | FUNCTION     | USER-DEFINED
++ public         | vops_char_msum_reduce              | FUNCTION     | internal
++ public         | vops_char_msum_stub                | FUNCTION     | internal
++ public         | vops_char_mul                      | FUNCTION     | USER-DEFINED
++ public         | vops_char_mul_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_char_mul_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_char_ne                       | FUNCTION     | USER-DEFINED
++ public         | vops_char_ne_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_char_ne_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_char_neg                      | FUNCTION     | USER-DEFINED
++ public         | vops_char_output                   | FUNCTION     | cstring
++ public         | vops_char_rem                      | FUNCTION     | USER-DEFINED
++ public         | vops_char_rem_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_char_rem_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_char_sub                      | FUNCTION     | USER-DEFINED
++ public         | vops_char_sub_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_char_sub_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_char_sum_accumulate           | FUNCTION     | bigint
++ public         | vops_char_sum_extend               | FUNCTION     | USER-DEFINED
++ public         | vops_char_sum_reduce               | FUNCTION     | USER-DEFINED
++ public         | vops_char_sum_stub                 | FUNCTION     | USER-DEFINED
++ public         | vops_char_var_accumulate           | FUNCTION     | internal
++ public         | vops_char_wavg_accumulate          | FUNCTION     | internal
++ public         | vops_count_accumulate              | FUNCTION     | bigint
++ public         | vops_count_all_accumulate          | FUNCTION     | bigint
++ public         | vops_count_extend                  | FUNCTION     | USER-DEFINED
++ public         | vops_count_reduce                  | FUNCTION     | USER-DEFINED
++ public         | vops_count_stub                    | FUNCTION     | USER-DEFINED
++ public         | vops_date_add                      | FUNCTION     | USER-DEFINED
++ public         | vops_date_add_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_date_add_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_date_approxdc_accumulate      | FUNCTION     | internal
++ public         | vops_date_avg_accumulate           | FUNCTION     | internal
++ public         | vops_date_avg_extend               | FUNCTION     | internal
++ public         | vops_date_avg_reduce               | FUNCTION     | internal
++ public         | vops_date_avg_stub                 | FUNCTION     | internal
++ public         | vops_date_const                    | FUNCTION     | USER-DEFINED
++ public         | vops_date_count_accumulate         | FUNCTION     | bigint
++ public         | vops_date_count_extend             | FUNCTION     | USER-DEFINED
++ public         | vops_date_count_reduce             | FUNCTION     | USER-DEFINED
++ public         | vops_date_count_stub               | FUNCTION     | USER-DEFINED
++ public         | vops_date_div                      | FUNCTION     | USER-DEFINED
++ public         | vops_date_div_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_date_eq                       | FUNCTION     | USER-DEFINED
++ public         | vops_date_eq_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_date_eq_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_date_first_accumulate         | FUNCTION     | internal
++ public         | vops_date_first_final              | FUNCTION     | date
++ public         | vops_date_ge                       | FUNCTION     | USER-DEFINED
++ public         | vops_date_ge_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_date_ge_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_date_group_by                 | FUNCTION     | internal
++ public         | vops_date_gt                       | FUNCTION     | USER-DEFINED
++ public         | vops_date_gt_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_date_gt_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_date_input                    | FUNCTION     | USER-DEFINED
++ public         | vops_date_lag_accumulate           | FUNCTION     | internal
++ public         | vops_date_lag_extend               | FUNCTION     | internal
++ public         | vops_date_lag_final                | FUNCTION     | USER-DEFINED
++ public         | vops_date_lag_reduce               | FUNCTION     | internal
++ public         | vops_date_last_accumulate          | FUNCTION     | internal
++ public         | vops_date_le                       | FUNCTION     | USER-DEFINED
++ public         | vops_date_le_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_date_le_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_date_lt                       | FUNCTION     | USER-DEFINED
++ public         | vops_date_lt_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_date_lt_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_date_max_accumulate           | FUNCTION     | date
++ public         | vops_date_max_extend               | FUNCTION     | USER-DEFINED
++ public         | vops_date_max_reduce               | FUNCTION     | USER-DEFINED
++ public         | vops_date_max_stub                 | FUNCTION     | USER-DEFINED
++ public         | vops_date_min_accumulate           | FUNCTION     | date
++ public         | vops_date_min_extend               | FUNCTION     | USER-DEFINED
++ public         | vops_date_min_reduce               | FUNCTION     | USER-DEFINED
++ public         | vops_date_min_stub                 | FUNCTION     | USER-DEFINED
++ public         | vops_date_msum_extend              | FUNCTION     | internal
++ public         | vops_date_msum_final               | FUNCTION     | USER-DEFINED
++ public         | vops_date_msum_reduce              | FUNCTION     | internal
++ public         | vops_date_msum_stub                | FUNCTION     | internal
++ public         | vops_date_mul                      | FUNCTION     | USER-DEFINED
++ public         | vops_date_mul_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_date_mul_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_date_ne                       | FUNCTION     | USER-DEFINED
++ public         | vops_date_ne_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_date_ne_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_date_neg                      | FUNCTION     | USER-DEFINED
++ public         | vops_date_output                   | FUNCTION     | cstring
++ public         | vops_date_rem                      | FUNCTION     | USER-DEFINED
++ public         | vops_date_rem_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_date_sub                      | FUNCTION     | USER-DEFINED
++ public         | vops_date_sub_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_date_sub_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_date_sum_accumulate           | FUNCTION     | bigint
++ public         | vops_date_sum_extend               | FUNCTION     | USER-DEFINED
++ public         | vops_date_sum_reduce               | FUNCTION     | USER-DEFINED
++ public         | vops_date_sum_stub                 | FUNCTION     | USER-DEFINED
++ public         | vops_date_var_accumulate           | FUNCTION     | internal
++ public         | vops_date_wavg_accumulate          | FUNCTION     | internal
++ public         | vops_deltatime_input               | FUNCTION     | USER-DEFINED
++ public         | vops_deltatime_output              | FUNCTION     | cstring
++ public         | vops_fdw_handler                   | FUNCTION     | fdw_handler
++ public         | vops_fdw_validator                 | FUNCTION     | void
++ public         | vops_first_combine                 | FUNCTION     | internal
++ public         | vops_float4_add                    | FUNCTION     | USER-DEFINED
++ public         | vops_float4_add_lconst             | FUNCTION     | USER-DEFINED
++ public         | vops_float4_add_rconst             | FUNCTION     | USER-DEFINED
++ public         | vops_float4_approxdc_accumulate    | FUNCTION     | internal
++ public         | vops_float4_avg_accumulate         | FUNCTION     | internal
++ public         | vops_float4_avg_extend             | FUNCTION     | internal
++ public         | vops_float4_avg_reduce             | FUNCTION     | internal
++ public         | vops_float4_avg_stub               | FUNCTION     | internal
++ public         | vops_float4_const                  | FUNCTION     | USER-DEFINED
++ public         | vops_float4_count_accumulate       | FUNCTION     | bigint
++ public         | vops_float4_count_extend           | FUNCTION     | USER-DEFINED
++ public         | vops_float4_count_reduce           | FUNCTION     | USER-DEFINED
++ public         | vops_float4_count_stub             | FUNCTION     | USER-DEFINED
++ public         | vops_float4_div                    | FUNCTION     | USER-DEFINED
++ public         | vops_float4_div_lconst             | FUNCTION     | USER-DEFINED
++ public         | vops_float4_div_rconst             | FUNCTION     | USER-DEFINED
++ public         | vops_float4_eq                     | FUNCTION     | USER-DEFINED
++ public         | vops_float4_eq_lconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float4_eq_rconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float4_first_accumulate       | FUNCTION     | internal
++ public         | vops_float4_first_final            | FUNCTION     | real
++ public         | vops_float4_ge                     | FUNCTION     | USER-DEFINED
++ public         | vops_float4_ge_lconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float4_ge_rconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float4_gt                     | FUNCTION     | USER-DEFINED
++ public         | vops_float4_gt_lconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float4_gt_rconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float4_input                  | FUNCTION     | USER-DEFINED
++ public         | vops_float4_lag_accumulate         | FUNCTION     | internal
++ public         | vops_float4_lag_extend             | FUNCTION     | internal
++ public         | vops_float4_lag_final              | FUNCTION     | USER-DEFINED
++ public         | vops_float4_lag_reduce             | FUNCTION     | internal
++ public         | vops_float4_last_accumulate        | FUNCTION     | internal
++ public         | vops_float4_le                     | FUNCTION     | USER-DEFINED
++ public         | vops_float4_le_lconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float4_le_rconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float4_lt                     | FUNCTION     | USER-DEFINED
++ public         | vops_float4_lt_lconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float4_lt_rconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float4_max_accumulate         | FUNCTION     | real
++ public         | vops_float4_max_extend             | FUNCTION     | USER-DEFINED
++ public         | vops_float4_max_reduce             | FUNCTION     | USER-DEFINED
++ public         | vops_float4_max_stub               | FUNCTION     | USER-DEFINED
++ public         | vops_float4_min_accumulate         | FUNCTION     | real
++ public         | vops_float4_min_extend             | FUNCTION     | USER-DEFINED
++ public         | vops_float4_min_reduce             | FUNCTION     | USER-DEFINED
++ public         | vops_float4_min_stub               | FUNCTION     | USER-DEFINED
++ public         | vops_float4_msum_extend            | FUNCTION     | internal
++ public         | vops_float4_msum_final             | FUNCTION     | USER-DEFINED
++ public         | vops_float4_msum_reduce            | FUNCTION     | internal
++ public         | vops_float4_msum_stub              | FUNCTION     | internal
++ public         | vops_float4_mul                    | FUNCTION     | USER-DEFINED
++ public         | vops_float4_mul_lconst             | FUNCTION     | USER-DEFINED
++ public         | vops_float4_mul_rconst             | FUNCTION     | USER-DEFINED
++ public         | vops_float4_ne                     | FUNCTION     | USER-DEFINED
++ public         | vops_float4_ne_lconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float4_ne_rconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float4_neg                    | FUNCTION     | USER-DEFINED
++ public         | vops_float4_output                 | FUNCTION     | cstring
++ public         | vops_float4_sub                    | FUNCTION     | USER-DEFINED
++ public         | vops_float4_sub_lconst             | FUNCTION     | USER-DEFINED
++ public         | vops_float4_sub_rconst             | FUNCTION     | USER-DEFINED
++ public         | vops_float4_sum_accumulate         | FUNCTION     | double precision
++ public         | vops_float4_sum_extend             | FUNCTION     | USER-DEFINED
++ public         | vops_float4_sum_reduce             | FUNCTION     | USER-DEFINED
++ public         | vops_float4_sum_stub               | FUNCTION     | USER-DEFINED
++ public         | vops_float4_var_accumulate         | FUNCTION     | internal
++ public         | vops_float4_wavg_accumulate        | FUNCTION     | internal
++ public         | vops_float8_add                    | FUNCTION     | USER-DEFINED
++ public         | vops_float8_add_lconst             | FUNCTION     | USER-DEFINED
++ public         | vops_float8_add_rconst             | FUNCTION     | USER-DEFINED
++ public         | vops_float8_approxdc_accumulate    | FUNCTION     | internal
++ public         | vops_float8_avg_accumulate         | FUNCTION     | internal
++ public         | vops_float8_avg_extend             | FUNCTION     | internal
++ public         | vops_float8_avg_reduce             | FUNCTION     | internal
++ public         | vops_float8_avg_stub               | FUNCTION     | internal
++ public         | vops_float8_const                  | FUNCTION     | USER-DEFINED
++ public         | vops_float8_count_accumulate       | FUNCTION     | bigint
++ public         | vops_float8_count_extend           | FUNCTION     | USER-DEFINED
++ public         | vops_float8_count_reduce           | FUNCTION     | USER-DEFINED
++ public         | vops_float8_count_stub             | FUNCTION     | USER-DEFINED
++ public         | vops_float8_div                    | FUNCTION     | USER-DEFINED
++ public         | vops_float8_div_lconst             | FUNCTION     | USER-DEFINED
++ public         | vops_float8_div_rconst             | FUNCTION     | USER-DEFINED
++ public         | vops_float8_eq                     | FUNCTION     | USER-DEFINED
++ public         | vops_float8_eq_lconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float8_eq_rconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float8_first_accumulate       | FUNCTION     | internal
++ public         | vops_float8_first_final            | FUNCTION     | double precision
++ public         | vops_float8_ge                     | FUNCTION     | USER-DEFINED
++ public         | vops_float8_ge_lconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float8_ge_rconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float8_gt                     | FUNCTION     | USER-DEFINED
++ public         | vops_float8_gt_lconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float8_gt_rconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float8_input                  | FUNCTION     | USER-DEFINED
++ public         | vops_float8_lag_accumulate         | FUNCTION     | internal
++ public         | vops_float8_lag_extend             | FUNCTION     | internal
++ public         | vops_float8_lag_final              | FUNCTION     | USER-DEFINED
++ public         | vops_float8_lag_reduce             | FUNCTION     | internal
++ public         | vops_float8_last_accumulate        | FUNCTION     | internal
++ public         | vops_float8_le                     | FUNCTION     | USER-DEFINED
++ public         | vops_float8_le_lconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float8_le_rconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float8_lt                     | FUNCTION     | USER-DEFINED
++ public         | vops_float8_lt_lconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float8_lt_rconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float8_max_accumulate         | FUNCTION     | double precision
++ public         | vops_float8_max_extend             | FUNCTION     | USER-DEFINED
++ public         | vops_float8_max_reduce             | FUNCTION     | USER-DEFINED
++ public         | vops_float8_max_stub               | FUNCTION     | USER-DEFINED
++ public         | vops_float8_min_accumulate         | FUNCTION     | double precision
++ public         | vops_float8_min_extend             | FUNCTION     | USER-DEFINED
++ public         | vops_float8_min_reduce             | FUNCTION     | USER-DEFINED
++ public         | vops_float8_min_stub               | FUNCTION     | USER-DEFINED
++ public         | vops_float8_msum_extend            | FUNCTION     | internal
++ public         | vops_float8_msum_final             | FUNCTION     | USER-DEFINED
++ public         | vops_float8_msum_reduce            | FUNCTION     | internal
++ public         | vops_float8_msum_stub              | FUNCTION     | internal
++ public         | vops_float8_mul                    | FUNCTION     | USER-DEFINED
++ public         | vops_float8_mul_lconst             | FUNCTION     | USER-DEFINED
++ public         | vops_float8_mul_rconst             | FUNCTION     | USER-DEFINED
++ public         | vops_float8_ne                     | FUNCTION     | USER-DEFINED
++ public         | vops_float8_ne_lconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float8_ne_rconst              | FUNCTION     | USER-DEFINED
++ public         | vops_float8_neg                    | FUNCTION     | USER-DEFINED
++ public         | vops_float8_output                 | FUNCTION     | cstring
++ public         | vops_float8_sub                    | FUNCTION     | USER-DEFINED
++ public         | vops_float8_sub_lconst             | FUNCTION     | USER-DEFINED
++ public         | vops_float8_sub_rconst             | FUNCTION     | USER-DEFINED
++ public         | vops_float8_sum_accumulate         | FUNCTION     | double precision
++ public         | vops_float8_sum_extend             | FUNCTION     | USER-DEFINED
++ public         | vops_float8_sum_reduce             | FUNCTION     | USER-DEFINED
++ public         | vops_float8_sum_stub               | FUNCTION     | USER-DEFINED
++ public         | vops_float8_var_accumulate         | FUNCTION     | internal
++ public         | vops_float8_wavg_accumulate        | FUNCTION     | internal
++ public         | vops_initialize                    | FUNCTION     | void
++ public         | vops_int2_add                      | FUNCTION     | USER-DEFINED
++ public         | vops_int2_add_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_add_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_approxdc_accumulate      | FUNCTION     | internal
++ public         | vops_int2_avg_accumulate           | FUNCTION     | internal
++ public         | vops_int2_avg_extend               | FUNCTION     | internal
++ public         | vops_int2_avg_reduce               | FUNCTION     | internal
++ public         | vops_int2_avg_stub                 | FUNCTION     | internal
++ public         | vops_int2_concat                   | FUNCTION     | USER-DEFINED
++ public         | vops_int2_const                    | FUNCTION     | USER-DEFINED
++ public         | vops_int2_count_accumulate         | FUNCTION     | bigint
++ public         | vops_int2_count_extend             | FUNCTION     | USER-DEFINED
++ public         | vops_int2_count_reduce             | FUNCTION     | USER-DEFINED
++ public         | vops_int2_count_stub               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_div                      | FUNCTION     | USER-DEFINED
++ public         | vops_int2_div_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_div_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_eq                       | FUNCTION     | USER-DEFINED
++ public         | vops_int2_eq_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int2_eq_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int2_first_accumulate         | FUNCTION     | internal
++ public         | vops_int2_first_final              | FUNCTION     | smallint
++ public         | vops_int2_ge                       | FUNCTION     | USER-DEFINED
++ public         | vops_int2_ge_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int2_ge_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int2_group_by                 | FUNCTION     | internal
++ public         | vops_int2_gt                       | FUNCTION     | USER-DEFINED
++ public         | vops_int2_gt_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int2_gt_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int2_input                    | FUNCTION     | USER-DEFINED
++ public         | vops_int2_lag_accumulate           | FUNCTION     | internal
++ public         | vops_int2_lag_extend               | FUNCTION     | internal
++ public         | vops_int2_lag_final                | FUNCTION     | USER-DEFINED
++ public         | vops_int2_lag_reduce               | FUNCTION     | internal
++ public         | vops_int2_last_accumulate          | FUNCTION     | internal
++ public         | vops_int2_le                       | FUNCTION     | USER-DEFINED
++ public         | vops_int2_le_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int2_le_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int2_lt                       | FUNCTION     | USER-DEFINED
++ public         | vops_int2_lt_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int2_lt_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int2_max_accumulate           | FUNCTION     | smallint
++ public         | vops_int2_max_extend               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_max_reduce               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_max_stub                 | FUNCTION     | USER-DEFINED
++ public         | vops_int2_min_accumulate           | FUNCTION     | smallint
++ public         | vops_int2_min_extend               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_min_reduce               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_min_stub                 | FUNCTION     | USER-DEFINED
++ public         | vops_int2_msum_extend              | FUNCTION     | internal
++ public         | vops_int2_msum_final               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_msum_reduce              | FUNCTION     | internal
++ public         | vops_int2_msum_stub                | FUNCTION     | internal
++ public         | vops_int2_mul                      | FUNCTION     | USER-DEFINED
++ public         | vops_int2_mul_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_mul_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_ne                       | FUNCTION     | USER-DEFINED
++ public         | vops_int2_ne_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int2_ne_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int2_neg                      | FUNCTION     | USER-DEFINED
++ public         | vops_int2_output                   | FUNCTION     | cstring
++ public         | vops_int2_rem                      | FUNCTION     | USER-DEFINED
++ public         | vops_int2_rem_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_rem_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_sub                      | FUNCTION     | USER-DEFINED
++ public         | vops_int2_sub_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_sub_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_sum_accumulate           | FUNCTION     | bigint
++ public         | vops_int2_sum_extend               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_sum_reduce               | FUNCTION     | USER-DEFINED
++ public         | vops_int2_sum_stub                 | FUNCTION     | USER-DEFINED
++ public         | vops_int2_var_accumulate           | FUNCTION     | internal
++ public         | vops_int2_wavg_accumulate          | FUNCTION     | internal
++ public         | vops_int4_add                      | FUNCTION     | USER-DEFINED
++ public         | vops_int4_add_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_add_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_approxdc_accumulate      | FUNCTION     | internal
++ public         | vops_int4_avg_accumulate           | FUNCTION     | internal
++ public         | vops_int4_avg_extend               | FUNCTION     | internal
++ public         | vops_int4_avg_reduce               | FUNCTION     | internal
++ public         | vops_int4_avg_stub                 | FUNCTION     | internal
++ public         | vops_int4_concat                   | FUNCTION     | USER-DEFINED
++ public         | vops_int4_const                    | FUNCTION     | USER-DEFINED
++ public         | vops_int4_count_accumulate         | FUNCTION     | bigint
++ public         | vops_int4_count_extend             | FUNCTION     | USER-DEFINED
++ public         | vops_int4_count_reduce             | FUNCTION     | USER-DEFINED
++ public         | vops_int4_count_stub               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_div                      | FUNCTION     | USER-DEFINED
++ public         | vops_int4_div_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_div_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_eq                       | FUNCTION     | USER-DEFINED
++ public         | vops_int4_eq_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int4_eq_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int4_first_accumulate         | FUNCTION     | internal
++ public         | vops_int4_first_final              | FUNCTION     | integer
++ public         | vops_int4_ge                       | FUNCTION     | USER-DEFINED
++ public         | vops_int4_ge_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int4_ge_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int4_group_by                 | FUNCTION     | internal
++ public         | vops_int4_gt                       | FUNCTION     | USER-DEFINED
++ public         | vops_int4_gt_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int4_gt_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int4_input                    | FUNCTION     | USER-DEFINED
++ public         | vops_int4_lag_accumulate           | FUNCTION     | internal
++ public         | vops_int4_lag_extend               | FUNCTION     | internal
++ public         | vops_int4_lag_final                | FUNCTION     | USER-DEFINED
++ public         | vops_int4_lag_reduce               | FUNCTION     | internal
++ public         | vops_int4_last_accumulate          | FUNCTION     | internal
++ public         | vops_int4_le                       | FUNCTION     | USER-DEFINED
++ public         | vops_int4_le_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int4_le_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int4_lt                       | FUNCTION     | USER-DEFINED
++ public         | vops_int4_lt_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int4_lt_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int4_max_accumulate           | FUNCTION     | integer
++ public         | vops_int4_max_extend               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_max_reduce               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_max_stub                 | FUNCTION     | USER-DEFINED
++ public         | vops_int4_min_accumulate           | FUNCTION     | integer
++ public         | vops_int4_min_extend               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_min_reduce               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_min_stub                 | FUNCTION     | USER-DEFINED
++ public         | vops_int4_msum_extend              | FUNCTION     | internal
++ public         | vops_int4_msum_final               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_msum_reduce              | FUNCTION     | internal
++ public         | vops_int4_msum_stub                | FUNCTION     | internal
++ public         | vops_int4_mul                      | FUNCTION     | USER-DEFINED
++ public         | vops_int4_mul_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_mul_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_ne                       | FUNCTION     | USER-DEFINED
++ public         | vops_int4_ne_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int4_ne_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int4_neg                      | FUNCTION     | USER-DEFINED
++ public         | vops_int4_output                   | FUNCTION     | cstring
++ public         | vops_int4_rem                      | FUNCTION     | USER-DEFINED
++ public         | vops_int4_rem_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_rem_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_sub                      | FUNCTION     | USER-DEFINED
++ public         | vops_int4_sub_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_sub_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_sum_accumulate           | FUNCTION     | bigint
++ public         | vops_int4_sum_extend               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_sum_reduce               | FUNCTION     | USER-DEFINED
++ public         | vops_int4_sum_stub                 | FUNCTION     | USER-DEFINED
++ public         | vops_int4_var_accumulate           | FUNCTION     | internal
++ public         | vops_int4_wavg_accumulate          | FUNCTION     | internal
++ public         | vops_int8_add                      | FUNCTION     | USER-DEFINED
++ public         | vops_int8_add_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_add_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_approxdc_accumulate      | FUNCTION     | internal
++ public         | vops_int8_avg_accumulate           | FUNCTION     | internal
++ public         | vops_int8_avg_extend               | FUNCTION     | internal
++ public         | vops_int8_avg_reduce               | FUNCTION     | internal
++ public         | vops_int8_avg_stub                 | FUNCTION     | internal
++ public         | vops_int8_const                    | FUNCTION     | USER-DEFINED
++ public         | vops_int8_count_accumulate         | FUNCTION     | bigint
++ public         | vops_int8_count_extend             | FUNCTION     | USER-DEFINED
++ public         | vops_int8_count_reduce             | FUNCTION     | USER-DEFINED
++ public         | vops_int8_count_stub               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_div                      | FUNCTION     | USER-DEFINED
++ public         | vops_int8_div_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_div_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_eq                       | FUNCTION     | USER-DEFINED
++ public         | vops_int8_eq_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int8_eq_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int8_first_accumulate         | FUNCTION     | internal
++ public         | vops_int8_first_final              | FUNCTION     | bigint
++ public         | vops_int8_ge                       | FUNCTION     | USER-DEFINED
++ public         | vops_int8_ge_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int8_ge_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int8_group_by                 | FUNCTION     | internal
++ public         | vops_int8_gt                       | FUNCTION     | USER-DEFINED
++ public         | vops_int8_gt_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int8_gt_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int8_input                    | FUNCTION     | USER-DEFINED
++ public         | vops_int8_lag_accumulate           | FUNCTION     | internal
++ public         | vops_int8_lag_extend               | FUNCTION     | internal
++ public         | vops_int8_lag_final                | FUNCTION     | USER-DEFINED
++ public         | vops_int8_lag_reduce               | FUNCTION     | internal
++ public         | vops_int8_last_accumulate          | FUNCTION     | internal
++ public         | vops_int8_le                       | FUNCTION     | USER-DEFINED
++ public         | vops_int8_le_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int8_le_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int8_lt                       | FUNCTION     | USER-DEFINED
++ public         | vops_int8_lt_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int8_lt_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int8_max_accumulate           | FUNCTION     | bigint
++ public         | vops_int8_max_extend               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_max_reduce               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_max_stub                 | FUNCTION     | USER-DEFINED
++ public         | vops_int8_min_accumulate           | FUNCTION     | bigint
++ public         | vops_int8_min_extend               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_min_reduce               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_min_stub                 | FUNCTION     | USER-DEFINED
++ public         | vops_int8_msum_extend              | FUNCTION     | internal
++ public         | vops_int8_msum_final               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_msum_reduce              | FUNCTION     | internal
++ public         | vops_int8_msum_stub                | FUNCTION     | internal
++ public         | vops_int8_mul                      | FUNCTION     | USER-DEFINED
++ public         | vops_int8_mul_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_mul_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_ne                       | FUNCTION     | USER-DEFINED
++ public         | vops_int8_ne_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int8_ne_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_int8_neg                      | FUNCTION     | USER-DEFINED
++ public         | vops_int8_output                   | FUNCTION     | cstring
++ public         | vops_int8_rem                      | FUNCTION     | USER-DEFINED
++ public         | vops_int8_rem_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_rem_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_sub                      | FUNCTION     | USER-DEFINED
++ public         | vops_int8_sub_lconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_sub_rconst               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_sum_accumulate           | FUNCTION     | bigint
++ public         | vops_int8_sum_extend               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_sum_reduce               | FUNCTION     | USER-DEFINED
++ public         | vops_int8_sum_stub                 | FUNCTION     | USER-DEFINED
++ public         | vops_int8_var_accumulate           | FUNCTION     | internal
++ public         | vops_int8_wavg_accumulate          | FUNCTION     | internal
++ public         | vops_int_interval_mul              | FUNCTION     | USER-DEFINED
++ public         | vops_interval_add                  | FUNCTION     | USER-DEFINED
++ public         | vops_interval_add_lconst           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_add_rconst           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_approxdc_accumulate  | FUNCTION     | internal
++ public         | vops_interval_avg_accumulate       | FUNCTION     | internal
++ public         | vops_interval_avg_extend           | FUNCTION     | internal
++ public         | vops_interval_avg_reduce           | FUNCTION     | internal
++ public         | vops_interval_avg_stub             | FUNCTION     | internal
++ public         | vops_interval_const                | FUNCTION     | USER-DEFINED
++ public         | vops_interval_count_accumulate     | FUNCTION     | bigint
++ public         | vops_interval_count_extend         | FUNCTION     | USER-DEFINED
++ public         | vops_interval_count_reduce         | FUNCTION     | USER-DEFINED
++ public         | vops_interval_count_stub           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_div                  | FUNCTION     | USER-DEFINED
++ public         | vops_interval_div_int_rconst       | FUNCTION     | USER-DEFINED
++ public         | vops_interval_div_lconst           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_div_rconst           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_eq                   | FUNCTION     | USER-DEFINED
++ public         | vops_interval_eq_lconst            | FUNCTION     | USER-DEFINED
++ public         | vops_interval_eq_rconst            | FUNCTION     | USER-DEFINED
++ public         | vops_interval_first_accumulate     | FUNCTION     | internal
++ public         | vops_interval_first_final          | FUNCTION     | bigint
++ public         | vops_interval_ge                   | FUNCTION     | USER-DEFINED
++ public         | vops_interval_ge_lconst            | FUNCTION     | USER-DEFINED
++ public         | vops_interval_ge_rconst            | FUNCTION     | USER-DEFINED
++ public         | vops_interval_group_by             | FUNCTION     | internal
++ public         | vops_interval_gt                   | FUNCTION     | USER-DEFINED
++ public         | vops_interval_gt_lconst            | FUNCTION     | USER-DEFINED
++ public         | vops_interval_gt_rconst            | FUNCTION     | USER-DEFINED
++ public         | vops_interval_input                | FUNCTION     | USER-DEFINED
++ public         | vops_interval_int_div              | FUNCTION     | USER-DEFINED
++ public         | vops_interval_int_mul              | FUNCTION     | USER-DEFINED
++ public         | vops_interval_int_rem              | FUNCTION     | USER-DEFINED
++ public         | vops_interval_lag_accumulate       | FUNCTION     | internal
++ public         | vops_interval_lag_extend           | FUNCTION     | internal
++ public         | vops_interval_lag_final            | FUNCTION     | USER-DEFINED
++ public         | vops_interval_lag_reduce           | FUNCTION     | internal
++ public         | vops_interval_last_accumulate      | FUNCTION     | internal
++ public         | vops_interval_le                   | FUNCTION     | USER-DEFINED
++ public         | vops_interval_le_lconst            | FUNCTION     | USER-DEFINED
++ public         | vops_interval_le_rconst            | FUNCTION     | USER-DEFINED
++ public         | vops_interval_lt                   | FUNCTION     | USER-DEFINED
++ public         | vops_interval_lt_lconst            | FUNCTION     | USER-DEFINED
++ public         | vops_interval_lt_rconst            | FUNCTION     | USER-DEFINED
++ public         | vops_interval_max_accumulate       | FUNCTION     | bigint
++ public         | vops_interval_max_extend           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_max_reduce           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_max_stub             | FUNCTION     | USER-DEFINED
++ public         | vops_interval_min_accumulate       | FUNCTION     | bigint
++ public         | vops_interval_min_extend           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_min_reduce           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_min_stub             | FUNCTION     | USER-DEFINED
++ public         | vops_interval_msum_extend          | FUNCTION     | internal
++ public         | vops_interval_msum_final           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_msum_reduce          | FUNCTION     | internal
++ public         | vops_interval_msum_stub            | FUNCTION     | internal
++ public         | vops_interval_mul_lconst           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_mul_rconst           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_ne                   | FUNCTION     | USER-DEFINED
++ public         | vops_interval_ne_lconst            | FUNCTION     | USER-DEFINED
++ public         | vops_interval_ne_rconst            | FUNCTION     | USER-DEFINED
++ public         | vops_interval_neg                  | FUNCTION     | USER-DEFINED
++ public         | vops_interval_output               | FUNCTION     | cstring
++ public         | vops_interval_rem                  | FUNCTION     | USER-DEFINED
++ public         | vops_interval_rem_int_rconst       | FUNCTION     | USER-DEFINED
++ public         | vops_interval_rem_lconst           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_rem_rconst           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_sub                  | FUNCTION     | USER-DEFINED
++ public         | vops_interval_sub_lconst           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_sub_rconst           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_sum_accumulate       | FUNCTION     | bigint
++ public         | vops_interval_sum_extend           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_sum_reduce           | FUNCTION     | USER-DEFINED
++ public         | vops_interval_sum_stub             | FUNCTION     | USER-DEFINED
++ public         | vops_interval_timestamp_add        | FUNCTION     | USER-DEFINED
++ public         | vops_interval_var_accumulate       | FUNCTION     | internal
++ public         | vops_interval_wavg_accumulate      | FUNCTION     | internal
++ public         | vops_last_combine                  | FUNCTION     | internal
++ public         | vops_mavg_final                    | FUNCTION     | USER-DEFINED
++ public         | vops_stddev_pop_final              | FUNCTION     | double precision
++ public         | vops_stddev_samp_final             | FUNCTION     | double precision
++ public         | vops_text_approxdc_accumulate      | FUNCTION     | internal
++ public         | vops_text_concat                   | FUNCTION     | USER-DEFINED
++ public         | vops_text_const                    | FUNCTION     | USER-DEFINED
++ public         | vops_text_eq                       | FUNCTION     | USER-DEFINED
++ public         | vops_text_eq_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_text_eq_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_text_first_accumulate         | FUNCTION     | internal
++ public         | vops_text_first_final              | FUNCTION     | text
++ public         | vops_text_ge                       | FUNCTION     | USER-DEFINED
++ public         | vops_text_ge_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_text_ge_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_text_gt                       | FUNCTION     | USER-DEFINED
++ public         | vops_text_gt_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_text_gt_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_text_input                    | FUNCTION     | USER-DEFINED
++ public         | vops_text_last_accumulate          | FUNCTION     | internal
++ public         | vops_text_le                       | FUNCTION     | USER-DEFINED
++ public         | vops_text_le_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_text_le_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_text_lt                       | FUNCTION     | USER-DEFINED
++ public         | vops_text_lt_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_text_lt_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_text_ne                       | FUNCTION     | USER-DEFINED
++ public         | vops_text_ne_lconst                | FUNCTION     | USER-DEFINED
++ public         | vops_text_ne_rconst                | FUNCTION     | USER-DEFINED
++ public         | vops_text_output                   | FUNCTION     | cstring
++ public         | vops_text_typmod_in                | FUNCTION     | integer
++ public         | vops_time_interval                 | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_add_lconst          | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_add_rconst          | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_approxdc_accumulate | FUNCTION     | internal
++ public         | vops_timestamp_avg_accumulate      | FUNCTION     | internal
++ public         | vops_timestamp_avg_extend          | FUNCTION     | internal
++ public         | vops_timestamp_avg_reduce          | FUNCTION     | internal
++ public         | vops_timestamp_avg_stub            | FUNCTION     | internal
++ public         | vops_timestamp_const               | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_count_accumulate    | FUNCTION     | bigint
++ public         | vops_timestamp_count_extend        | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_count_reduce        | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_count_stub          | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_div                 | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_div_rconst          | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_eq                  | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_eq_lconst           | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_eq_rconst           | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_ge                  | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_ge_lconst           | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_ge_rconst           | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_group_by            | FUNCTION     | internal
++ public         | vops_timestamp_gt                  | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_gt_lconst           | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_gt_rconst           | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_input               | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_interval_add        | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_interval_sub        | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_lag_accumulate      | FUNCTION     | internal
++ public         | vops_timestamp_lag_extend          | FUNCTION     | internal
++ public         | vops_timestamp_lag_final           | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_lag_reduce          | FUNCTION     | internal
++ public         | vops_timestamp_le                  | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_le_lconst           | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_le_rconst           | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_lt                  | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_lt_lconst           | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_lt_rconst           | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_max_accumulate      | FUNCTION     | timestamp without time zone
++ public         | vops_timestamp_max_extend          | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_max_reduce          | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_max_stub            | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_min_accumulate      | FUNCTION     | timestamp without time zone
++ public         | vops_timestamp_min_extend          | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_min_reduce          | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_min_stub            | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_msum_extend         | FUNCTION     | internal
++ public         | vops_timestamp_msum_final          | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_msum_reduce         | FUNCTION     | internal
++ public         | vops_timestamp_msum_stub           | FUNCTION     | internal
++ public         | vops_timestamp_mul                 | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_mul_lconst          | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_mul_rconst          | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_ne                  | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_ne_lconst           | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_ne_rconst           | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_neg                 | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_output              | FUNCTION     | cstring
++ public         | vops_timestamp_rem                 | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_rem_rconst          | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_sub                 | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_sub_interval_lconst | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_sub_interval_rconst | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_sub_lconst          | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_sub_rconst          | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_sum_accumulate      | FUNCTION     | bigint
++ public         | vops_timestamp_sum_extend          | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_sum_reduce          | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_sum_stub            | FUNCTION     | USER-DEFINED
++ public         | vops_timestamp_var_accumulate      | FUNCTION     | internal
++ public         | vops_timestamp_wavg_accumulate     | FUNCTION     | internal
++ public         | vops_unnest                        | FUNCTION     | record
++ public         | vops_var_combine                   | FUNCTION     | internal
++ public         | vops_var_deserial                  | FUNCTION     | internal
++ public         | vops_var_pop_final                 | FUNCTION     | double precision
++ public         | vops_var_samp_final                | FUNCTION     | double precision
++ public         | vops_var_serial                    | FUNCTION     | bytea
++ public         | vops_wavg_final                    | FUNCTION     | double precision
++ public         | vops_win_char_final                | FUNCTION     | USER-DEFINED
++ public         | wavg                               |              | double precision
++ public         | wavg                               |              | double precision
++ public         | wavg                               |              | double precision
++ public         | wavg                               |              | double precision
++ public         | wavg                               |              | double precision
++ public         | wavg                               |              | double precision
++ public         | wavg                               |              | double precision
++ public         | wavg                               |              | double precision
++ public         | wavg                               |              | double precision
++(1015 rows)
+ 
+ SET ROLE su;
+ DROP USER u1;
+ DROP EXTENSION pg_stat_monitor;
++DROP USER su;
++ERROR:  current user cannot be dropped

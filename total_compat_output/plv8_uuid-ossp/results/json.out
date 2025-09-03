@@ -1,0 +1,45 @@
+CREATE SCHEMA plv8;
+CREATE FUNCTION valid_json(js text) RETURNS boolean
+LANGUAGE plv8 IMMUTABLE STRICT
+AS $$
+  try {
+    JSON.parse(js);
+    return true;
+  } catch(e) {
+    return false;
+  }
+$$;
+ERROR:  language "plv8" does not exist
+CREATE DOMAIN plv8.json AS text
+        CONSTRAINT json_check CHECK (valid_json(VALUE));
+ERROR:  function valid_json(text) does not exist
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+CREATE FUNCTION get_key(key text, json_raw text) RETURNS plv8.json
+LANGUAGE plv8 IMMUTABLE STRICT
+AS $$
+  var val = JSON.parse(json_raw)[key];
+  var ret = {};
+  ret[key] = val;
+  return JSON.stringify(ret);
+$$;
+ERROR:  language "plv8" does not exist
+CREATE TABLE jsononly (
+    data plv8.json
+);
+ERROR:  type "plv8.json" does not exist
+LINE 2:     data plv8.json
+                 ^
+COPY jsononly (data) FROM stdin;
+ERROR:  relation "jsononly" does not exist
+{"ok": true}
+\.
+invalid command \.
+-- Call twice to test the function cache.
+SELECT get_key('ok', data) FROM jsononly;
+ERROR:  syntax error at or near "{"
+LINE 1: {"ok": true}
+        ^
+SELECT get_key('ok', data) FROM jsononly;
+ERROR:  relation "jsononly" does not exist
+LINE 1: SELECT get_key('ok', data) FROM jsononly;
+                                        ^

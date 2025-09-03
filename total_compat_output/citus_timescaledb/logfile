@@ -1,0 +1,420 @@
+2023-11-25 05:26:54.837 UTC:  [1366192]  LOG:  number of prepared transactions has not been configured, overriding
+2023-11-25 05:26:54.837 UTC:  [1366192]  DETAIL:  max_prepared_transactions is now set to 200
+2023-11-25 05:26:54.855 UTC:  [1366192]  LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-11-25 05:26:54.855 UTC:  [1366192]  LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-11-25 05:26:54.861 UTC:  [1366192]  LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-11-25 05:26:54.864 UTC:  [1366192]  LOG:  hostssl record cannot match because SSL is disabled
+2023-11-25 05:26:54.864 UTC:  [1366192]  HINT:  Set ssl = on in postgresql.conf.
+2023-11-25 05:26:54.864 UTC:  [1366192]  CONTEXT:  line 7 of configuration file "/home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/pg_hba.conf"
+2023-11-25 05:26:54.864 UTC:  [1366192]  LOG:  hostssl record cannot match because SSL is disabled
+2023-11-25 05:26:54.864 UTC:  [1366192]  HINT:  Set ssl = on in postgresql.conf.
+2023-11-25 05:26:54.864 UTC:  [1366192]  CONTEXT:  line 8 of configuration file "/home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/pg_hba.conf"
+2023-11-25 05:26:54.864 UTC:  [1366192]  LOG:  hostssl record cannot match because SSL is disabled
+2023-11-25 05:26:54.864 UTC:  [1366192]  HINT:  Set ssl = on in postgresql.conf.
+2023-11-25 05:26:54.864 UTC:  [1366192]  CONTEXT:  line 14 of configuration file "/home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/pg_hba.conf"
+2023-11-25 05:26:54.864 UTC:  [1366192]  LOG:  hostssl record cannot match because SSL is disabled
+2023-11-25 05:26:54.864 UTC:  [1366192]  HINT:  Set ssl = on in postgresql.conf.
+2023-11-25 05:26:54.864 UTC:  [1366192]  CONTEXT:  line 15 of configuration file "/home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/pg_hba.conf"
+2023-11-25 05:26:54.868 UTC:  [1366195]  LOG:  database system was shut down at 2023-11-25 05:26:54 UTC
+2023-11-25 05:26:54.876 UTC:  [1366192]  LOG:  database system is ready to accept connections
+2023-11-25 05:26:54.876 UTC:  [1366197]  LOG:  TimescaleDB background worker launcher connected to shared catalogs
+2023-11-25 05:26:55.173 UTC: abigalek [1366204] template1 WARNING:  
+	WELCOME TO
+	 _____ _                               _     ____________  
+	|_   _(_)                             | |    |  _  \ ___ \ 
+	  | |  _ _ __ ___   ___  ___  ___ __ _| | ___| | | | |_/ / 
+	  | | | |  _ ` _ \ / _ \/ __|/ __/ _` | |/ _ \ | | | ___ \ 
+	  | | | | | | | | |  __/\__ \ (_| (_| | |  __/ |/ /| |_/ /
+	  |_| |_|_| |_| |_|\___||___/\___\__,_|_|\___|___/ \____/
+	               Running version 2.11.1
+	For more information on TimescaleDB, please visit the following links:
+	
+	 1. Getting started: https://docs.timescale.com/timescaledb/latest/getting-started
+	 2. API reference documentation: https://docs.timescale.com/api/latest
+	 3. How TimescaleDB is designed: https://docs.timescale.com/timescaledb/latest/overview/core-concepts
+	
+	Note: Please enable telemetry to help us improve our product by running: ALTER DATABASE "template1" SET timescaledb.telemetry_level = 'basic';
+	
+2023-11-25 05:26:55.173 UTC: abigalek [1366204] template1 CONTEXT:  PL/pgSQL function inline_code_block line 16 at RAISE
+2023-11-25 05:26:55.179 UTC:  [1366205]  ERROR:  TimescaleDB background worker connected to template database, exiting
+2023-11-25 05:26:55.181 UTC:  [1366192]  LOG:  background worker "TimescaleDB Background Worker Scheduler" (PID 1366205) exited with exit code 1
+2023-11-25 05:26:57.430 UTC: abigalek [1366341] template1 LOG:  citus extension created on postgres without ssl enabled, turning it on during creation of the extension
+2023-11-25 05:26:57.430 UTC: abigalek [1366341] template1 CONTEXT:  SQL statement "SELECT citus_setup_ssl()"
+	PL/pgSQL function inline_code_block line 5 at PERFORM
+2023-11-25 05:26:57.430 UTC: abigalek [1366341] template1 STATEMENT:  CREATE EXTENSION citus;
+2023-11-25 05:26:57.443 UTC: abigalek [1366341] template1 LOG:  no certificate present, generating self signed certificate
+2023-11-25 05:26:57.443 UTC: abigalek [1366341] template1 CONTEXT:  SQL statement "SELECT citus_setup_ssl()"
+	PL/pgSQL function inline_code_block line 5 at PERFORM
+2023-11-25 05:26:57.443 UTC: abigalek [1366341] template1 STATEMENT:  CREATE EXTENSION citus;
+2023-11-25 05:26:57.752 UTC:  [1366192]  LOG:  received SIGHUP, reloading configuration files
+2023-11-25 05:26:57.753 UTC:  [1366192]  LOG:  parameter "ssl" changed to "on"
+2023-11-25 05:26:57.753 UTC:  [1366192]  LOG:  parameter "ssl_ciphers" changed to "ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384"
+2023-11-25 05:26:58.198 UTC:  [1366401]  FATAL:  database "template0" is not currently accepting connections
+2023-11-25 05:26:58.200 UTC:  [1366192]  LOG:  background worker "TimescaleDB Background Worker Scheduler" (PID 1366401) exited with exit code 1
+2023-11-25 05:26:58.320 UTC:  [1366435]  LOG:  starting maintenance daemon on database 1 user 10
+2023-11-25 05:26:58.320 UTC:  [1366435]  CONTEXT:  Citus maintenance daemon for database 1 user 10
+2023-11-25 05:27:03.398 UTC: super_user [1366440] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:03.398 UTC: super_user [1366440] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:03.398 UTC: super_user [1366440] postgres STATEMENT:  CREATE DATABASE "db_alter";
+2023-11-25 05:27:03.415 UTC: super_user [1366443] postgres ERROR:  database "db_alter" does not exist
+2023-11-25 05:27:03.415 UTC: super_user [1366443] postgres STATEMENT:  DROP DATABASE "db_alter";
+2023-11-25 05:27:08.458 UTC: super_user [1366452] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:08.458 UTC: super_user [1366452] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:08.458 UTC: super_user [1366452] postgres STATEMENT:  CREATE DATABASE "db_alternate_users";
+2023-11-25 05:27:08.474 UTC: super_user [1366455] postgres ERROR:  database "db_alternate_users" does not exist
+2023-11-25 05:27:08.474 UTC: super_user [1366455] postgres STATEMENT:  DROP DATABASE "db_alternate_users";
+2023-11-25 05:27:13.516 UTC: super_user [1366464] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:13.516 UTC: super_user [1366464] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:13.516 UTC: super_user [1366464] postgres STATEMENT:  CREATE DATABASE "db_chunk_utils";
+2023-11-25 05:27:13.532 UTC: super_user [1366467] postgres ERROR:  database "db_chunk_utils" does not exist
+2023-11-25 05:27:13.532 UTC: super_user [1366467] postgres STATEMENT:  DROP DATABASE "db_chunk_utils";
+2023-11-25 05:27:18.573 UTC: super_user [1366476] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:18.573 UTC: super_user [1366476] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:18.573 UTC: super_user [1366476] postgres STATEMENT:  CREATE DATABASE "db_index";
+2023-11-25 05:27:18.589 UTC: super_user [1366479] postgres ERROR:  database "db_index" does not exist
+2023-11-25 05:27:18.589 UTC: super_user [1366479] postgres STATEMENT:  DROP DATABASE "db_index";
+2023-11-25 05:27:23.625 UTC: super_user [1366488] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:23.625 UTC: super_user [1366488] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:23.625 UTC: super_user [1366488] postgres STATEMENT:  CREATE DATABASE "db_pg_dump_unprivileged";
+2023-11-25 05:27:23.641 UTC: super_user [1366491] postgres ERROR:  database "db_pg_dump_unprivileged" does not exist
+2023-11-25 05:27:23.641 UTC: super_user [1366491] postgres STATEMENT:  DROP DATABASE "db_pg_dump_unprivileged";
+2023-11-25 05:27:28.683 UTC: super_user [1366500] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:28.683 UTC: super_user [1366500] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:28.683 UTC: super_user [1366500] postgres STATEMENT:  CREATE DATABASE "db_tablespace";
+2023-11-25 05:27:28.699 UTC: super_user [1366503] postgres ERROR:  database "db_tablespace" does not exist
+2023-11-25 05:27:28.699 UTC: super_user [1366503] postgres STATEMENT:  DROP DATABASE "db_tablespace";
+2023-11-25 05:27:33.758 UTC: super_user [1366584] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:33.758 UTC: super_user [1366584] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:33.758 UTC: super_user [1366584] postgres STATEMENT:  CREATE DATABASE "db_agg_bookends";
+2023-11-25 05:27:33.758 UTC: super_user [1366589] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:33.758 UTC: super_user [1366589] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:33.758 UTC: super_user [1366589] postgres STATEMENT:  CREATE DATABASE "db_append";
+2023-11-25 05:27:33.758 UTC: super_user [1366585] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:33.758 UTC: super_user [1366585] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:33.758 UTC: super_user [1366585] postgres STATEMENT:  CREATE DATABASE "db_ddl";
+2023-11-25 05:27:33.760 UTC: super_user [1366587] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:33.760 UTC: super_user [1366587] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:33.760 UTC: super_user [1366587] postgres STATEMENT:  CREATE DATABASE "db_create_table";
+2023-11-25 05:27:33.760 UTC: super_user [1366579] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:33.760 UTC: super_user [1366579] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:33.760 UTC: super_user [1366579] postgres STATEMENT:  CREATE DATABASE "db_chunks";
+2023-11-25 05:27:33.761 UTC: super_user [1366595] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:33.761 UTC: super_user [1366595] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:33.761 UTC: super_user [1366595] postgres STATEMENT:  CREATE DATABASE "db_ddl_errors";
+2023-11-25 05:27:33.761 UTC: super_user [1366606] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:33.761 UTC: super_user [1366606] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:33.761 UTC: super_user [1366606] postgres STATEMENT:  CREATE DATABASE "db_custom_type";
+2023-11-25 05:27:33.766 UTC: super_user [1366604] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:33.766 UTC: super_user [1366604] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:33.766 UTC: super_user [1366604] postgres STATEMENT:  CREATE DATABASE "db_copy";
+2023-11-25 05:27:33.761 UTC: super_user [1366597] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:33.761 UTC: super_user [1366597] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:33.761 UTC: super_user [1366597] postgres STATEMENT:  CREATE DATABASE "db_cursor";
+2023-11-25 05:27:33.768 UTC: super_user [1366593] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:33.768 UTC: super_user [1366593] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:33.768 UTC: super_user [1366593] postgres STATEMENT:  CREATE DATABASE "db_broken_tables";
+2023-11-25 05:27:33.768 UTC: super_user [1366601] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:33.768 UTC: super_user [1366601] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:33.768 UTC: super_user [1366601] postgres STATEMENT:  CREATE DATABASE "db_baserel_cache";
+2023-11-25 05:27:33.768 UTC: super_user [1366594] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:33.768 UTC: super_user [1366594] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:33.768 UTC: super_user [1366594] postgres STATEMENT:  CREATE DATABASE "db_drop_hypertable";
+2023-11-25 05:27:33.769 UTC: super_user [1366591] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:33.769 UTC: super_user [1366591] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:33.769 UTC: super_user [1366591] postgres STATEMENT:  CREATE DATABASE "db_chunk_adaptive";
+2023-11-25 05:27:33.770 UTC: super_user [1366583] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:33.770 UTC: super_user [1366583] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:33.770 UTC: super_user [1366583] postgres STATEMENT:  CREATE DATABASE "db_delete";
+2023-11-25 05:27:33.773 UTC: super_user [1366600] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:33.773 UTC: super_user [1366600] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:33.773 UTC: super_user [1366600] postgres STATEMENT:  CREATE DATABASE "db_cluster";
+2023-11-25 05:27:33.782 UTC: super_user [1366610] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:33.782 UTC: super_user [1366610] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:33.782 UTC: super_user [1366610] postgres STATEMENT:  CREATE DATABASE "db_ddl_extra";
+2023-11-25 05:27:33.782 UTC: super_user [1366612] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:33.782 UTC: super_user [1366612] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:33.782 UTC: super_user [1366612] postgres STATEMENT:  CREATE DATABASE "db_drop_extension";
+2023-11-25 05:27:33.782 UTC: super_user [1366609] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:33.782 UTC: super_user [1366609] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:33.782 UTC: super_user [1366609] postgres STATEMENT:  CREATE DATABASE "db_create_chunks";
+2023-11-25 05:27:33.782 UTC: super_user [1366608] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:33.782 UTC: super_user [1366608] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:33.782 UTC: super_user [1366608] postgres STATEMENT:  CREATE DATABASE "db_drop_owned";
+2023-11-25 05:27:33.782 UTC: super_user [1366596] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:33.782 UTC: super_user [1366596] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:33.782 UTC: super_user [1366596] postgres STATEMENT:  CREATE DATABASE "db_constraint";
+2023-11-25 05:27:33.782 UTC: super_user [1366611] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:33.782 UTC: super_user [1366611] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:33.782 UTC: super_user [1366611] postgres STATEMENT:  CREATE DATABASE "db_create_hypertable";
+2023-11-25 05:27:33.801 UTC: super_user [1366640] postgres ERROR:  database "db_append" does not exist
+2023-11-25 05:27:33.801 UTC: super_user [1366640] postgres STATEMENT:  DROP DATABASE "db_append";
+2023-11-25 05:27:33.804 UTC: super_user [1366646] postgres ERROR:  database "db_broken_tables" does not exist
+2023-11-25 05:27:33.804 UTC: super_user [1366646] postgres STATEMENT:  DROP DATABASE "db_broken_tables";
+2023-11-25 05:27:33.808 UTC: super_user [1366645] postgres ERROR:  database "db_agg_bookends" does not exist
+2023-11-25 05:27:33.808 UTC: super_user [1366645] postgres STATEMENT:  DROP DATABASE "db_agg_bookends";
+2023-11-25 05:27:33.809 UTC: super_user [1366648] postgres ERROR:  database "db_create_table" does not exist
+2023-11-25 05:27:33.809 UTC: super_user [1366648] postgres STATEMENT:  DROP DATABASE "db_create_table";
+2023-11-25 05:27:33.811 UTC: super_user [1366647] postgres ERROR:  database "db_chunks" does not exist
+2023-11-25 05:27:33.811 UTC: super_user [1366647] postgres STATEMENT:  DROP DATABASE "db_chunks";
+2023-11-25 05:27:33.815 UTC: super_user [1366637] postgres ERROR:  database "db_custom_type" does not exist
+2023-11-25 05:27:33.815 UTC: super_user [1366637] postgres STATEMENT:  DROP DATABASE "db_custom_type";
+2023-11-25 05:27:33.818 UTC: super_user [1366666] postgres ERROR:  database "db_cluster" does not exist
+2023-11-25 05:27:33.818 UTC: super_user [1366666] postgres STATEMENT:  DROP DATABASE "db_cluster";
+2023-11-25 05:27:33.822 UTC: super_user [1366651] postgres ERROR:  database "db_delete" does not exist
+2023-11-25 05:27:33.822 UTC: super_user [1366651] postgres STATEMENT:  DROP DATABASE "db_delete";
+2023-11-25 05:27:33.822 UTC: super_user [1366653] postgres ERROR:  database "db_baserel_cache" does not exist
+2023-11-25 05:27:33.822 UTC: super_user [1366653] postgres STATEMENT:  DROP DATABASE "db_baserel_cache";
+2023-11-25 05:27:33.823 UTC: super_user [1366674] postgres ERROR:  database "db_ddl_extra" does not exist
+2023-11-25 05:27:33.823 UTC: super_user [1366674] postgres STATEMENT:  DROP DATABASE "db_ddl_extra";
+2023-11-25 05:27:33.824 UTC: super_user [1366649] postgres ERROR:  database "db_ddl_errors" does not exist
+2023-11-25 05:27:33.824 UTC: super_user [1366649] postgres STATEMENT:  DROP DATABASE "db_ddl_errors";
+2023-11-25 05:27:33.827 UTC: super_user [1366667] postgres ERROR:  database "db_ddl" does not exist
+2023-11-25 05:27:33.827 UTC: super_user [1366667] postgres STATEMENT:  DROP DATABASE "db_ddl";
+2023-11-25 05:27:33.830 UTC: super_user [1366652] postgres ERROR:  database "db_copy" does not exist
+2023-11-25 05:27:33.830 UTC: super_user [1366652] postgres STATEMENT:  DROP DATABASE "db_copy";
+2023-11-25 05:27:33.830 UTC: super_user [1366669] postgres ERROR:  database "db_drop_hypertable" does not exist
+2023-11-25 05:27:33.830 UTC: super_user [1366669] postgres STATEMENT:  DROP DATABASE "db_drop_hypertable";
+2023-11-25 05:27:33.831 UTC: super_user [1366650] postgres ERROR:  database "db_cursor" does not exist
+2023-11-25 05:27:33.831 UTC: super_user [1366650] postgres STATEMENT:  DROP DATABASE "db_cursor";
+2023-11-25 05:27:33.831 UTC: super_user [1366671] postgres ERROR:  database "db_chunk_adaptive" does not exist
+2023-11-25 05:27:33.831 UTC: super_user [1366671] postgres STATEMENT:  DROP DATABASE "db_chunk_adaptive";
+2023-11-25 05:27:33.832 UTC: super_user [1366670] postgres ERROR:  database "db_create_hypertable" does not exist
+2023-11-25 05:27:33.832 UTC: super_user [1366670] postgres STATEMENT:  DROP DATABASE "db_create_hypertable";
+2023-11-25 05:27:33.832 UTC: super_user [1366668] postgres ERROR:  database "db_create_chunks" does not exist
+2023-11-25 05:27:33.832 UTC: super_user [1366668] postgres STATEMENT:  DROP DATABASE "db_create_chunks";
+2023-11-25 05:27:33.832 UTC: super_user [1366675] postgres ERROR:  database "db_drop_owned" does not exist
+2023-11-25 05:27:33.832 UTC: super_user [1366675] postgres STATEMENT:  DROP DATABASE "db_drop_owned";
+2023-11-25 05:27:33.835 UTC: super_user [1366672] postgres ERROR:  database "db_constraint" does not exist
+2023-11-25 05:27:33.835 UTC: super_user [1366672] postgres STATEMENT:  DROP DATABASE "db_constraint";
+2023-11-25 05:27:33.837 UTC: super_user [1366673] postgres ERROR:  database "db_drop_extension" does not exist
+2023-11-25 05:27:33.837 UTC: super_user [1366673] postgres STATEMENT:  DROP DATABASE "db_drop_extension";
+2023-11-25 05:27:38.949 UTC: super_user [1366839] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:38.949 UTC: super_user [1366839] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:38.949 UTC: super_user [1366839] postgres STATEMENT:  CREATE DATABASE "db_null_exclusion";
+2023-11-25 05:27:38.949 UTC: super_user [1366837] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:38.949 UTC: super_user [1366837] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:38.949 UTC: super_user [1366837] postgres STATEMENT:  CREATE DATABASE "db_generated_as_identity";
+2023-11-25 05:27:38.950 UTC: super_user [1366833] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:38.950 UTC: super_user [1366833] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:38.950 UTC: super_user [1366833] postgres STATEMENT:  CREATE DATABASE "db_drop_schema";
+2023-11-25 05:27:38.950 UTC: super_user [1366850] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:38.950 UTC: super_user [1366850] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:38.950 UTC: super_user [1366850] postgres STATEMENT:  CREATE DATABASE "db_parallel";
+2023-11-25 05:27:38.959 UTC: super_user [1366851] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:38.959 UTC: super_user [1366851] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:38.959 UTC: super_user [1366851] postgres STATEMENT:  CREATE DATABASE "db_insert_single";
+2023-11-25 05:27:38.959 UTC: super_user [1366858] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:38.959 UTC: super_user [1366858] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:38.959 UTC: super_user [1366858] postgres STATEMENT:  CREATE DATABASE "db_histogram_test";
+2023-11-25 05:27:38.959 UTC: super_user [1366855] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:38.959 UTC: super_user [1366855] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:38.959 UTC: super_user [1366855] postgres STATEMENT:  CREATE DATABASE "db_extension_scripts";
+2023-11-25 05:27:38.959 UTC: super_user [1366854] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:38.959 UTC: super_user [1366854] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:38.959 UTC: super_user [1366854] postgres STATEMENT:  CREATE DATABASE "db_insert_many";
+2023-11-25 05:27:38.959 UTC: super_user [1366843] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:38.959 UTC: super_user [1366843] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:38.959 UTC: super_user [1366843] postgres STATEMENT:  CREATE DATABASE "db_hash";
+2023-11-25 05:27:38.959 UTC: super_user [1366860] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:38.959 UTC: super_user [1366860] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:38.959 UTC: super_user [1366860] postgres STATEMENT:  CREATE DATABASE "db_insert_returning";
+2023-11-25 05:27:38.959 UTC: super_user [1366844] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:38.959 UTC: super_user [1366844] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:38.959 UTC: super_user [1366844] postgres STATEMENT:  CREATE DATABASE "db_lateral";
+2023-11-25 05:27:38.959 UTC: super_user [1366859] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:38.959 UTC: super_user [1366859] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:38.959 UTC: super_user [1366859] postgres STATEMENT:  CREATE DATABASE "db_license";
+2023-11-25 05:27:38.959 UTC: super_user [1366845] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:38.959 UTC: super_user [1366845] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:38.959 UTC: super_user [1366845] postgres STATEMENT:  CREATE DATABASE "db_dump_meta";
+2023-11-25 05:27:38.959 UTC: super_user [1366852] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:38.959 UTC: super_user [1366852] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:38.959 UTC: super_user [1366852] postgres STATEMENT:  CREATE DATABASE "db_information_views";
+2023-11-25 05:27:38.959 UTC: super_user [1366849] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:38.959 UTC: super_user [1366849] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:38.959 UTC: super_user [1366849] postgres STATEMENT:  CREATE DATABASE "db_drop_rename_hypertable";
+2023-11-25 05:27:38.963 UTC: super_user [1366857] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:38.963 UTC: super_user [1366857] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:38.963 UTC: super_user [1366857] postgres STATEMENT:  CREATE DATABASE "db_partition";
+2023-11-25 05:27:38.964 UTC: super_user [1366856] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:38.964 UTC: super_user [1366856] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:38.964 UTC: super_user [1366856] postgres STATEMENT:  CREATE DATABASE "db_merge";
+2023-11-25 05:27:38.964 UTC: super_user [1366861] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:38.964 UTC: super_user [1366861] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:38.964 UTC: super_user [1366861] postgres STATEMENT:  CREATE DATABASE "db_partitioning";
+2023-11-25 05:27:38.970 UTC: super_user [1366863] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:38.970 UTC: super_user [1366863] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:38.970 UTC: super_user [1366863] postgres STATEMENT:  CREATE DATABASE "db_insert";
+2023-11-25 05:27:38.971 UTC: super_user [1366876] postgres ERROR:  database "db_parallel" does not exist
+2023-11-25 05:27:38.971 UTC: super_user [1366876] postgres STATEMENT:  DROP DATABASE "db_parallel";
+2023-11-25 05:27:38.972 UTC: super_user [1366874] postgres ERROR:  database "db_null_exclusion" does not exist
+2023-11-25 05:27:38.972 UTC: super_user [1366874] postgres STATEMENT:  DROP DATABASE "db_null_exclusion";
+2023-11-25 05:27:38.973 UTC: super_user [1366873] postgres ERROR:  database "db_generated_as_identity" does not exist
+2023-11-25 05:27:38.973 UTC: super_user [1366873] postgres STATEMENT:  DROP DATABASE "db_generated_as_identity";
+2023-11-25 05:27:38.973 UTC: super_user [1366864] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:38.973 UTC: super_user [1366864] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:38.973 UTC: super_user [1366864] postgres STATEMENT:  CREATE DATABASE "db_misc";
+2023-11-25 05:27:38.973 UTC: super_user [1366862] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:38.973 UTC: super_user [1366862] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:38.973 UTC: super_user [1366862] postgres STATEMENT:  CREATE DATABASE "db_grant_hypertable";
+2023-11-25 05:27:38.981 UTC: super_user [1366875] postgres ERROR:  database "db_drop_schema" does not exist
+2023-11-25 05:27:38.981 UTC: super_user [1366875] postgres STATEMENT:  DROP DATABASE "db_drop_schema";
+2023-11-25 05:27:38.996 UTC: super_user [1366901] postgres ERROR:  database "db_license" does not exist
+2023-11-25 05:27:38.996 UTC: super_user [1366901] postgres STATEMENT:  DROP DATABASE "db_license";
+2023-11-25 05:27:38.996 UTC: super_user [1366911] postgres ERROR:  database "db_partition" does not exist
+2023-11-25 05:27:38.996 UTC: super_user [1366911] postgres STATEMENT:  DROP DATABASE "db_partition";
+2023-11-25 05:27:39.000 UTC: super_user [1366925] postgres ERROR:  database "db_hash" does not exist
+2023-11-25 05:27:39.000 UTC: super_user [1366925] postgres STATEMENT:  DROP DATABASE "db_hash";
+2023-11-25 05:27:39.002 UTC: super_user [1366922] postgres ERROR:  database "db_insert_single" does not exist
+2023-11-25 05:27:39.002 UTC: super_user [1366922] postgres STATEMENT:  DROP DATABASE "db_insert_single";
+2023-11-25 05:27:39.002 UTC: super_user [1366926] postgres ERROR:  database "db_information_views" does not exist
+2023-11-25 05:27:39.002 UTC: super_user [1366926] postgres STATEMENT:  DROP DATABASE "db_information_views";
+2023-11-25 05:27:39.007 UTC: super_user [1366918] postgres ERROR:  database "db_insert" does not exist
+2023-11-25 05:27:39.007 UTC: super_user [1366918] postgres STATEMENT:  DROP DATABASE "db_insert";
+2023-11-25 05:27:39.007 UTC: super_user [1366916] postgres ERROR:  database "db_grant_hypertable" does not exist
+2023-11-25 05:27:39.007 UTC: super_user [1366916] postgres STATEMENT:  DROP DATABASE "db_grant_hypertable";
+2023-11-25 05:27:39.007 UTC: super_user [1366904] postgres ERROR:  database "db_extension_scripts" does not exist
+2023-11-25 05:27:39.007 UTC: super_user [1366904] postgres STATEMENT:  DROP DATABASE "db_extension_scripts";
+2023-11-25 05:27:39.008 UTC: super_user [1366912] postgres ERROR:  database "db_lateral" does not exist
+2023-11-25 05:27:39.008 UTC: super_user [1366912] postgres STATEMENT:  DROP DATABASE "db_lateral";
+2023-11-25 05:27:39.015 UTC: super_user [1366921] postgres ERROR:  database "db_drop_rename_hypertable" does not exist
+2023-11-25 05:27:39.015 UTC: super_user [1366921] postgres STATEMENT:  DROP DATABASE "db_drop_rename_hypertable";
+2023-11-25 05:27:39.015 UTC: super_user [1366915] postgres ERROR:  database "db_merge" does not exist
+2023-11-25 05:27:39.015 UTC: super_user [1366915] postgres STATEMENT:  DROP DATABASE "db_merge";
+2023-11-25 05:27:39.018 UTC: super_user [1366913] postgres ERROR:  database "db_insert_returning" does not exist
+2023-11-25 05:27:39.018 UTC: super_user [1366913] postgres STATEMENT:  DROP DATABASE "db_insert_returning";
+2023-11-25 05:27:39.019 UTC: super_user [1366917] postgres ERROR:  database "db_misc" does not exist
+2023-11-25 05:27:39.019 UTC: super_user [1366917] postgres STATEMENT:  DROP DATABASE "db_misc";
+2023-11-25 05:27:39.019 UTC: super_user [1366914] postgres ERROR:  database "db_dump_meta" does not exist
+2023-11-25 05:27:39.019 UTC: super_user [1366914] postgres STATEMENT:  DROP DATABASE "db_dump_meta";
+2023-11-25 05:27:39.020 UTC: super_user [1366923] postgres ERROR:  database "db_insert_many" does not exist
+2023-11-25 05:27:39.020 UTC: super_user [1366923] postgres STATEMENT:  DROP DATABASE "db_insert_many";
+2023-11-25 05:27:39.020 UTC: super_user [1366927] postgres ERROR:  database "db_partitioning" does not exist
+2023-11-25 05:27:39.020 UTC: super_user [1366927] postgres STATEMENT:  DROP DATABASE "db_partitioning";
+2023-11-25 05:27:39.021 UTC: super_user [1366924] postgres ERROR:  database "db_histogram_test" does not exist
+2023-11-25 05:27:39.021 UTC: super_user [1366924] postgres STATEMENT:  DROP DATABASE "db_histogram_test";
+2023-11-25 05:27:44.124 UTC: super_user [1367073] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:44.124 UTC: super_user [1367073] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:44.124 UTC: super_user [1367073] postgres STATEMENT:  CREATE DATABASE "db_partitionwise";
+2023-11-25 05:27:44.126 UTC: super_user [1367071] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:44.126 UTC: super_user [1367071] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:44.126 UTC: super_user [1367071] postgres STATEMENT:  CREATE DATABASE "db_plain";
+2023-11-25 05:27:44.129 UTC: super_user [1367087] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:44.129 UTC: super_user [1367087] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:44.129 UTC: super_user [1367087] postgres STATEMENT:  CREATE DATABASE "db_pg_join";
+2023-11-25 05:27:44.129 UTC: super_user [1367090] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:44.129 UTC: super_user [1367090] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:44.129 UTC: super_user [1367090] postgres STATEMENT:  CREATE DATABASE "db_plan_expand_hypertable";
+2023-11-25 05:27:44.129 UTC: super_user [1367077] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:44.129 UTC: super_user [1367077] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:44.129 UTC: super_user [1367077] postgres STATEMENT:  CREATE DATABASE "db_plan_hypertable_inline";
+2023-11-25 05:27:44.129 UTC: super_user [1367081] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:44.129 UTC: super_user [1367081] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:44.129 UTC: super_user [1367081] postgres STATEMENT:  CREATE DATABASE "db_update";
+2023-11-25 05:27:44.130 UTC: super_user [1367099] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:44.130 UTC: super_user [1367099] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:44.130 UTC: super_user [1367099] postgres STATEMENT:  CREATE DATABASE "db_query";
+2023-11-25 05:27:44.130 UTC: super_user [1367106] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:44.130 UTC: super_user [1367106] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:44.130 UTC: super_user [1367106] postgres STATEMENT:  CREATE DATABASE "db_reloptions";
+2023-11-25 05:27:44.130 UTC: super_user [1367097] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:44.130 UTC: super_user [1367097] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:44.130 UTC: super_user [1367097] postgres STATEMENT:  CREATE DATABASE "db_rowsecurity";
+2023-11-25 05:27:44.136 UTC: super_user [1367110] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:44.136 UTC: super_user [1367110] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:44.136 UTC: super_user [1367110] postgres STATEMENT:  CREATE DATABASE "db_upsert";
+2023-11-25 05:27:44.136 UTC: super_user [1367102] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:44.136 UTC: super_user [1367102] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:44.136 UTC: super_user [1367102] postgres STATEMENT:  CREATE DATABASE "db_sort_optimization";
+2023-11-25 05:27:44.136 UTC: super_user [1367112] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:44.136 UTC: super_user [1367112] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:44.136 UTC: super_user [1367112] postgres STATEMENT:  CREATE DATABASE "db_plan_ordered_append";
+2023-11-25 05:27:44.136 UTC: super_user [1367098] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:44.136 UTC: super_user [1367098] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:44.136 UTC: super_user [1367098] postgres STATEMENT:  CREATE DATABASE "db_triggers";
+2023-11-25 05:27:44.139 UTC: super_user [1367107] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:44.139 UTC: super_user [1367107] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:44.139 UTC: super_user [1367107] postgres STATEMENT:  CREATE DATABASE "db_tableam";
+2023-11-25 05:27:44.140 UTC: super_user [1367104] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:44.140 UTC: super_user [1367104] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:44.140 UTC: super_user [1367104] postgres STATEMENT:  CREATE DATABASE "db_plan_hashagg";
+2023-11-25 05:27:44.141 UTC: super_user [1367105] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:44.141 UTC: super_user [1367105] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:44.141 UTC: super_user [1367105] postgres STATEMENT:  CREATE DATABASE "db_truncate";
+2023-11-25 05:27:44.152 UTC: super_user [1367115] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:44.152 UTC: super_user [1367115] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:44.152 UTC: super_user [1367115] postgres STATEMENT:  CREATE DATABASE "db_relocate_extension";
+2023-11-25 05:27:44.152 UTC: super_user [1367114] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:44.152 UTC: super_user [1367114] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:44.152 UTC: super_user [1367114] postgres STATEMENT:  CREATE DATABASE "db_timestamp";
+2023-11-25 05:27:44.152 UTC: super_user [1367103] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:44.152 UTC: super_user [1367103] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:44.152 UTC: super_user [1367103] postgres STATEMENT:  CREATE DATABASE "db_size_utils";
+2023-11-25 05:27:44.152 UTC: super_user [1367116] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:44.152 UTC: super_user [1367116] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:44.152 UTC: super_user [1367116] postgres STATEMENT:  CREATE DATABASE "db_trusted_extension";
+2023-11-25 05:27:44.154 UTC: super_user [1367111] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:44.154 UTC: super_user [1367111] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:44.154 UTC: super_user [1367111] postgres STATEMENT:  CREATE DATABASE "db_sql_query";
+2023-11-25 05:27:44.166 UTC: super_user [1367145] postgres ERROR:  database "db_update" does not exist
+2023-11-25 05:27:44.166 UTC: super_user [1367145] postgres STATEMENT:  DROP DATABASE "db_update";
+2023-11-25 05:27:44.170 UTC: super_user [1367154] postgres ERROR:  database "db_plan_expand_hypertable" does not exist
+2023-11-25 05:27:44.170 UTC: super_user [1367154] postgres STATEMENT:  DROP DATABASE "db_plan_expand_hypertable";
+2023-11-25 05:27:44.176 UTC: super_user [1367153] postgres ERROR:  database "db_reloptions" does not exist
+2023-11-25 05:27:44.176 UTC: super_user [1367153] postgres STATEMENT:  DROP DATABASE "db_reloptions";
+2023-11-25 05:27:44.177 UTC: super_user [1367133] postgres ERROR:  database "db_partitionwise" does not exist
+2023-11-25 05:27:44.177 UTC: super_user [1367133] postgres STATEMENT:  DROP DATABASE "db_partitionwise";
+2023-11-25 05:27:44.179 UTC: super_user [1367157] postgres ERROR:  database "db_sort_optimization" does not exist
+2023-11-25 05:27:44.179 UTC: super_user [1367157] postgres STATEMENT:  DROP DATABASE "db_sort_optimization";
+2023-11-25 05:27:44.182 UTC: super_user [1367148] postgres ERROR:  database "db_plain" does not exist
+2023-11-25 05:27:44.182 UTC: super_user [1367148] postgres STATEMENT:  DROP DATABASE "db_plain";
+2023-11-25 05:27:44.183 UTC: super_user [1367156] postgres ERROR:  database "db_plan_ordered_append" does not exist
+2023-11-25 05:27:44.183 UTC: super_user [1367156] postgres STATEMENT:  DROP DATABASE "db_plan_ordered_append";
+2023-11-25 05:27:44.184 UTC: super_user [1367159] postgres ERROR:  database "db_tableam" does not exist
+2023-11-25 05:27:44.184 UTC: super_user [1367159] postgres STATEMENT:  DROP DATABASE "db_tableam";
+2023-11-25 05:27:44.184 UTC: super_user [1367160] postgres ERROR:  database "db_upsert" does not exist
+2023-11-25 05:27:44.184 UTC: super_user [1367160] postgres STATEMENT:  DROP DATABASE "db_upsert";
+2023-11-25 05:27:44.186 UTC: super_user [1367142] postgres ERROR:  database "db_rowsecurity" does not exist
+2023-11-25 05:27:44.186 UTC: super_user [1367142] postgres STATEMENT:  DROP DATABASE "db_rowsecurity";
+2023-11-25 05:27:44.189 UTC: super_user [1367155] postgres ERROR:  database "db_plan_hypertable_inline" does not exist
+2023-11-25 05:27:44.189 UTC: super_user [1367155] postgres STATEMENT:  DROP DATABASE "db_plan_hypertable_inline";
+2023-11-25 05:27:44.189 UTC: super_user [1367162] postgres ERROR:  database "db_truncate" does not exist
+2023-11-25 05:27:44.189 UTC: super_user [1367162] postgres STATEMENT:  DROP DATABASE "db_truncate";
+2023-11-25 05:27:44.193 UTC: super_user [1367163] postgres ERROR:  database "db_plan_hashagg" does not exist
+2023-11-25 05:27:44.193 UTC: super_user [1367163] postgres STATEMENT:  DROP DATABASE "db_plan_hashagg";
+2023-11-25 05:27:44.194 UTC: super_user [1367168] postgres ERROR:  database "db_pg_join" does not exist
+2023-11-25 05:27:44.194 UTC: super_user [1367168] postgres STATEMENT:  DROP DATABASE "db_pg_join";
+2023-11-25 05:27:44.195 UTC: super_user [1367161] postgres ERROR:  database "db_triggers" does not exist
+2023-11-25 05:27:44.195 UTC: super_user [1367161] postgres STATEMENT:  DROP DATABASE "db_triggers";
+2023-11-25 05:27:44.197 UTC: super_user [1367158] postgres ERROR:  database "db_query" does not exist
+2023-11-25 05:27:44.197 UTC: super_user [1367158] postgres STATEMENT:  DROP DATABASE "db_query";
+2023-11-25 05:27:44.198 UTC: super_user [1367177] postgres ERROR:  database "db_sql_query" does not exist
+2023-11-25 05:27:44.198 UTC: super_user [1367177] postgres STATEMENT:  DROP DATABASE "db_sql_query";
+2023-11-25 05:27:44.202 UTC: super_user [1367176] postgres ERROR:  database "db_trusted_extension" does not exist
+2023-11-25 05:27:44.202 UTC: super_user [1367176] postgres STATEMENT:  DROP DATABASE "db_trusted_extension";
+2023-11-25 05:27:44.202 UTC: super_user [1367178] postgres ERROR:  database "db_relocate_extension" does not exist
+2023-11-25 05:27:44.202 UTC: super_user [1367178] postgres STATEMENT:  DROP DATABASE "db_relocate_extension";
+2023-11-25 05:27:44.202 UTC: super_user [1367179] postgres ERROR:  database "db_size_utils" does not exist
+2023-11-25 05:27:44.202 UTC: super_user [1367179] postgres STATEMENT:  DROP DATABASE "db_size_utils";
+2023-11-25 05:27:44.202 UTC: super_user [1367175] postgres ERROR:  database "db_timestamp" does not exist
+2023-11-25 05:27:44.202 UTC: super_user [1367175] postgres STATEMENT:  DROP DATABASE "db_timestamp";
+2023-11-25 05:27:49.297 UTC: super_user [1367281] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:49.297 UTC: super_user [1367281] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:49.297 UTC: super_user [1367281] postgres STATEMENT:  CREATE DATABASE "db_version";
+2023-11-25 05:27:49.297 UTC: super_user [1367280] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:49.297 UTC: super_user [1367280] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:49.297 UTC: super_user [1367280] postgres STATEMENT:  CREATE DATABASE "db_util";
+2023-11-25 05:27:49.297 UTC: super_user [1367282] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:49.297 UTC: super_user [1367282] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:49.297 UTC: super_user [1367282] postgres STATEMENT:  CREATE DATABASE "db_vacuum_parallel";
+2023-11-25 05:27:49.297 UTC: super_user [1367283] postgres ERROR:  source database "template1" is being accessed by other users
+2023-11-25 05:27:49.297 UTC: super_user [1367283] postgres DETAIL:  There is 1 other session using the database.
+2023-11-25 05:27:49.297 UTC: super_user [1367283] postgres STATEMENT:  CREATE DATABASE "db_vacuum";
+2023-11-25 05:27:49.316 UTC: super_user [1367295] postgres ERROR:  database "db_util" does not exist
+2023-11-25 05:27:49.316 UTC: super_user [1367295] postgres STATEMENT:  DROP DATABASE "db_util";
+2023-11-25 05:27:49.316 UTC: super_user [1367293] postgres ERROR:  database "db_vacuum" does not exist
+2023-11-25 05:27:49.316 UTC: super_user [1367293] postgres STATEMENT:  DROP DATABASE "db_vacuum";
+2023-11-25 05:27:49.316 UTC: super_user [1367292] postgres ERROR:  database "db_version" does not exist
+2023-11-25 05:27:49.316 UTC: super_user [1367292] postgres STATEMENT:  DROP DATABASE "db_version";
+2023-11-25 05:27:49.316 UTC: super_user [1367294] postgres ERROR:  database "db_vacuum_parallel" does not exist
+2023-11-25 05:27:49.316 UTC: super_user [1367294] postgres STATEMENT:  DROP DATABASE "db_vacuum_parallel";

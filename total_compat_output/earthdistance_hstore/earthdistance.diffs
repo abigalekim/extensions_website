@@ -1,0 +1,383 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out	2023-07-26 03:04:30.439557616 +0000
+@@ -963,12 +963,14 @@
+ --
+ -- list what's installed
+ \dT
+-                                              List of data types
+- Schema | Name  |                                         Description                                         
+---------+-------+---------------------------------------------------------------------------------------------
+- public | cube  | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
+- public | earth | 
+-(2 rows)
++                                               List of data types
++ Schema |  Name   |                                         Description                                         
++--------+---------+---------------------------------------------------------------------------------------------
++ public | cube    | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
++ public | earth   | 
++ public | ghstore | 
++ public | hstore  | 
++(4 rows)
+ 
+ drop extension cube;  -- fail, earthdistance requires it
+ ERROR:  cannot drop extension cube because other objects depend on it
+@@ -980,11 +982,13 @@
+ HINT:  You can drop extension cube instead.
+ -- list what's installed
+ \dT
+-                                             List of data types
+- Schema | Name |                                         Description                                         
+---------+------+---------------------------------------------------------------------------------------------
+- public | cube | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
+-(1 row)
++                                               List of data types
++ Schema |  Name   |                                         Description                                         
++--------+---------+---------------------------------------------------------------------------------------------
++ public | cube    | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
++ public | ghstore | 
++ public | hstore  | 
++(3 rows)
+ 
+ create table foo (f1 cube, f2 int);
+ drop extension cube;  -- fail, foo.f1 requires it
+@@ -995,43 +999,207 @@
+ drop extension cube;
+ -- list what's installed
+ \dT
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++       List of data types
++ Schema |  Name   | Description 
++--------+---------+-------------
++ public | ghstore | 
++ public | hstore  | 
++(2 rows)
+ 
+ \df
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                   List of functions
++ Schema |           Name           | Result data type |                   Argument data types                   | Type 
++--------+--------------------------+------------------+---------------------------------------------------------+------
++ public | akeys                    | text[]           | hstore                                                  | func
++ public | avals                    | text[]           | hstore                                                  | func
++ public | defined                  | boolean          | hstore, text                                            | func
++ public | delete                   | hstore           | hstore, hstore                                          | func
++ public | delete                   | hstore           | hstore, text                                            | func
++ public | delete                   | hstore           | hstore, text[]                                          | func
++ public | each                     | SETOF record     | hs hstore, OUT key text, OUT value text                 | func
++ public | exist                    | boolean          | hstore, text                                            | func
++ public | exists_all               | boolean          | hstore, text[]                                          | func
++ public | exists_any               | boolean          | hstore, text[]                                          | func
++ public | fetchval                 | text             | hstore, text                                            | func
++ public | ghstore_compress         | internal         | internal                                                | func
++ public | ghstore_consistent       | boolean          | internal, hstore, smallint, oid, internal               | func
++ public | ghstore_decompress       | internal         | internal                                                | func
++ public | ghstore_in               | ghstore          | cstring                                                 | func
++ public | ghstore_options          | void             | internal                                                | func
++ public | ghstore_out              | cstring          | ghstore                                                 | func
++ public | ghstore_penalty          | internal         | internal, internal, internal                            | func
++ public | ghstore_picksplit        | internal         | internal, internal                                      | func
++ public | ghstore_same             | internal         | ghstore, ghstore, internal                              | func
++ public | ghstore_union            | ghstore          | internal, internal                                      | func
++ public | gin_consistent_hstore    | boolean          | internal, smallint, hstore, integer, internal, internal | func
++ public | gin_extract_hstore       | internal         | hstore, internal                                        | func
++ public | gin_extract_hstore_query | internal         | hstore, internal, smallint, internal, internal          | func
++ public | hs_concat                | hstore           | hstore, hstore                                          | func
++ public | hs_contained             | boolean          | hstore, hstore                                          | func
++ public | hs_contains              | boolean          | hstore, hstore                                          | func
++ public | hstore                   | hstore           | record                                                  | func
++ public | hstore                   | hstore           | text[]                                                  | func
++ public | hstore                   | hstore           | text, text                                              | func
++ public | hstore                   | hstore           | text[], text[]                                          | func
++ public | hstore_cmp               | integer          | hstore, hstore                                          | func
++ public | hstore_eq                | boolean          | hstore, hstore                                          | func
++ public | hstore_ge                | boolean          | hstore, hstore                                          | func
++ public | hstore_gt                | boolean          | hstore, hstore                                          | func
++ public | hstore_hash              | integer          | hstore                                                  | func
++ public | hstore_hash_extended     | bigint           | hstore, bigint                                          | func
++ public | hstore_in                | hstore           | cstring                                                 | func
++ public | hstore_le                | boolean          | hstore, hstore                                          | func
++ public | hstore_lt                | boolean          | hstore, hstore                                          | func
++ public | hstore_ne                | boolean          | hstore, hstore                                          | func
++ public | hstore_out               | cstring          | hstore                                                  | func
++ public | hstore_recv              | hstore           | internal                                                | func
++ public | hstore_send              | bytea            | hstore                                                  | func
++ public | hstore_subscript_handler | internal         | internal                                                | func
++ public | hstore_to_array          | text[]           | hstore                                                  | func
++ public | hstore_to_json           | json             | hstore                                                  | func
++ public | hstore_to_json_loose     | json             | hstore                                                  | func
++ public | hstore_to_jsonb          | jsonb            | hstore                                                  | func
++ public | hstore_to_jsonb_loose    | jsonb            | hstore                                                  | func
++ public | hstore_to_matrix         | text[]           | hstore                                                  | func
++ public | hstore_version_diag      | integer          | hstore                                                  | func
++ public | isdefined                | boolean          | hstore, text                                            | func
++ public | isexists                 | boolean          | hstore, text                                            | func
++ public | populate_record          | anyelement       | anyelement, hstore                                      | func
++ public | skeys                    | SETOF text       | hstore                                                  | func
++ public | slice                    | hstore           | hstore, text[]                                          | func
++ public | slice_array              | text[]           | hstore, text[]                                          | func
++ public | svals                    | SETOF text       | hstore                                                  | func
++ public | tconvert                 | hstore           | text, text                                              | func
++(60 rows)
+ 
+ \do
+                              List of operators
+  Schema | Name | Left arg type | Right arg type | Result type | Description 
+ --------+------+---------------+----------------+-------------+-------------
+-(0 rows)
++ public | #<#  | hstore        | hstore         | boolean     | 
++ public | #<=# | hstore        | hstore         | boolean     | 
++ public | #=   | anyelement    | hstore         | anyelement  | 
++ public | #>#  | hstore        | hstore         | boolean     | 
++ public | #>=# | hstore        | hstore         | boolean     | 
++ public | %#   |               | hstore         | text[]      | 
++ public | %%   |               | hstore         | text[]      | 
++ public | -    | hstore        | hstore         | hstore      | 
++ public | -    | hstore        | text           | hstore      | 
++ public | -    | hstore        | text[]         | hstore      | 
++ public | ->   | hstore        | text           | text        | 
++ public | ->   | hstore        | text[]         | text[]      | 
++ public | <>   | hstore        | hstore         | boolean     | 
++ public | <@   | hstore        | hstore         | boolean     | 
++ public | =    | hstore        | hstore         | boolean     | 
++ public | ?    | hstore        | text           | boolean     | 
++ public | ?&   | hstore        | text[]         | boolean     | 
++ public | ?|   | hstore        | text[]         | boolean     | 
++ public | @>   | hstore        | hstore         | boolean     | 
++ public | ||   | hstore        | hstore         | hstore      | 
++(20 rows)
+ 
+ create schema c;
+ create extension cube with schema c;
+ -- list what's installed
+ \dT public.*
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++       List of data types
++ Schema |  Name   | Description 
++--------+---------+-------------
++ public | ghstore | 
++ public | hstore  | 
++(2 rows)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                   List of functions
++ Schema |           Name           | Result data type |                   Argument data types                   | Type 
++--------+--------------------------+------------------+---------------------------------------------------------+------
++ public | akeys                    | text[]           | hstore                                                  | func
++ public | avals                    | text[]           | hstore                                                  | func
++ public | defined                  | boolean          | hstore, text                                            | func
++ public | delete                   | hstore           | hstore, hstore                                          | func
++ public | delete                   | hstore           | hstore, text                                            | func
++ public | delete                   | hstore           | hstore, text[]                                          | func
++ public | each                     | SETOF record     | hs hstore, OUT key text, OUT value text                 | func
++ public | exist                    | boolean          | hstore, text                                            | func
++ public | exists_all               | boolean          | hstore, text[]                                          | func
++ public | exists_any               | boolean          | hstore, text[]                                          | func
++ public | fetchval                 | text             | hstore, text                                            | func
++ public | ghstore_compress         | internal         | internal                                                | func
++ public | ghstore_consistent       | boolean          | internal, hstore, smallint, oid, internal               | func
++ public | ghstore_decompress       | internal         | internal                                                | func
++ public | ghstore_in               | ghstore          | cstring                                                 | func
++ public | ghstore_options          | void             | internal                                                | func
++ public | ghstore_out              | cstring          | ghstore                                                 | func
++ public | ghstore_penalty          | internal         | internal, internal, internal                            | func
++ public | ghstore_picksplit        | internal         | internal, internal                                      | func
++ public | ghstore_same             | internal         | ghstore, ghstore, internal                              | func
++ public | ghstore_union            | ghstore          | internal, internal                                      | func
++ public | gin_consistent_hstore    | boolean          | internal, smallint, hstore, integer, internal, internal | func
++ public | gin_extract_hstore       | internal         | hstore, internal                                        | func
++ public | gin_extract_hstore_query | internal         | hstore, internal, smallint, internal, internal          | func
++ public | hs_concat                | hstore           | hstore, hstore                                          | func
++ public | hs_contained             | boolean          | hstore, hstore                                          | func
++ public | hs_contains              | boolean          | hstore, hstore                                          | func
++ public | hstore                   | hstore           | record                                                  | func
++ public | hstore                   | hstore           | text[]                                                  | func
++ public | hstore                   | hstore           | text, text                                              | func
++ public | hstore                   | hstore           | text[], text[]                                          | func
++ public | hstore_cmp               | integer          | hstore, hstore                                          | func
++ public | hstore_eq                | boolean          | hstore, hstore                                          | func
++ public | hstore_ge                | boolean          | hstore, hstore                                          | func
++ public | hstore_gt                | boolean          | hstore, hstore                                          | func
++ public | hstore_hash              | integer          | hstore                                                  | func
++ public | hstore_hash_extended     | bigint           | hstore, bigint                                          | func
++ public | hstore_in                | hstore           | cstring                                                 | func
++ public | hstore_le                | boolean          | hstore, hstore                                          | func
++ public | hstore_lt                | boolean          | hstore, hstore                                          | func
++ public | hstore_ne                | boolean          | hstore, hstore                                          | func
++ public | hstore_out               | cstring          | hstore                                                  | func
++ public | hstore_recv              | hstore           | internal                                                | func
++ public | hstore_send              | bytea            | hstore                                                  | func
++ public | hstore_subscript_handler | internal         | internal                                                | func
++ public | hstore_to_array          | text[]           | hstore                                                  | func
++ public | hstore_to_json           | json             | hstore                                                  | func
++ public | hstore_to_json_loose     | json             | hstore                                                  | func
++ public | hstore_to_jsonb          | jsonb            | hstore                                                  | func
++ public | hstore_to_jsonb_loose    | jsonb            | hstore                                                  | func
++ public | hstore_to_matrix         | text[]           | hstore                                                  | func
++ public | hstore_version_diag      | integer          | hstore                                                  | func
++ public | isdefined                | boolean          | hstore, text                                            | func
++ public | isexists                 | boolean          | hstore, text                                            | func
++ public | populate_record          | anyelement       | anyelement, hstore                                      | func
++ public | skeys                    | SETOF text       | hstore                                                  | func
++ public | slice                    | hstore           | hstore, text[]                                          | func
++ public | slice_array              | text[]           | hstore, text[]                                          | func
++ public | svals                    | SETOF text       | hstore                                                  | func
++ public | tconvert                 | hstore           | text, text                                              | func
++(60 rows)
+ 
+ \do public.*
+                              List of operators
+  Schema | Name | Left arg type | Right arg type | Result type | Description 
+ --------+------+---------------+----------------+-------------+-------------
+-(0 rows)
++ public | #<#  | hstore        | hstore         | boolean     | 
++ public | #<=# | hstore        | hstore         | boolean     | 
++ public | #=   | anyelement    | hstore         | anyelement  | 
++ public | #>#  | hstore        | hstore         | boolean     | 
++ public | #>=# | hstore        | hstore         | boolean     | 
++ public | %#   |               | hstore         | text[]      | 
++ public | %%   |               | hstore         | text[]      | 
++ public | -    | hstore        | hstore         | hstore      | 
++ public | -    | hstore        | text           | hstore      | 
++ public | -    | hstore        | text[]         | hstore      | 
++ public | ->   | hstore        | text           | text        | 
++ public | ->   | hstore        | text[]         | text[]      | 
++ public | <>   | hstore        | hstore         | boolean     | 
++ public | <@   | hstore        | hstore         | boolean     | 
++ public | =    | hstore        | hstore         | boolean     | 
++ public | ?    | hstore        | text           | boolean     | 
++ public | ?&   | hstore        | text[]         | boolean     | 
++ public | ?|   | hstore        | text[]         | boolean     | 
++ public | @>   | hstore        | hstore         | boolean     | 
++ public | ||   | hstore        | hstore         | hstore      | 
++(20 rows)
+ 
+ \dT c.*
+                                               List of data types
+@@ -1060,22 +1228,104 @@
+ 
+ -- list what's installed
+ \dT public.*
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++       List of data types
++ Schema |  Name   | Description 
++--------+---------+-------------
++ public | ghstore | 
++ public | hstore  | 
++(2 rows)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                   List of functions
++ Schema |           Name           | Result data type |                   Argument data types                   | Type 
++--------+--------------------------+------------------+---------------------------------------------------------+------
++ public | akeys                    | text[]           | hstore                                                  | func
++ public | avals                    | text[]           | hstore                                                  | func
++ public | defined                  | boolean          | hstore, text                                            | func
++ public | delete                   | hstore           | hstore, hstore                                          | func
++ public | delete                   | hstore           | hstore, text                                            | func
++ public | delete                   | hstore           | hstore, text[]                                          | func
++ public | each                     | SETOF record     | hs hstore, OUT key text, OUT value text                 | func
++ public | exist                    | boolean          | hstore, text                                            | func
++ public | exists_all               | boolean          | hstore, text[]                                          | func
++ public | exists_any               | boolean          | hstore, text[]                                          | func
++ public | fetchval                 | text             | hstore, text                                            | func
++ public | ghstore_compress         | internal         | internal                                                | func
++ public | ghstore_consistent       | boolean          | internal, hstore, smallint, oid, internal               | func
++ public | ghstore_decompress       | internal         | internal                                                | func
++ public | ghstore_in               | ghstore          | cstring                                                 | func
++ public | ghstore_options          | void             | internal                                                | func
++ public | ghstore_out              | cstring          | ghstore                                                 | func
++ public | ghstore_penalty          | internal         | internal, internal, internal                            | func
++ public | ghstore_picksplit        | internal         | internal, internal                                      | func
++ public | ghstore_same             | internal         | ghstore, ghstore, internal                              | func
++ public | ghstore_union            | ghstore          | internal, internal                                      | func
++ public | gin_consistent_hstore    | boolean          | internal, smallint, hstore, integer, internal, internal | func
++ public | gin_extract_hstore       | internal         | hstore, internal                                        | func
++ public | gin_extract_hstore_query | internal         | hstore, internal, smallint, internal, internal          | func
++ public | hs_concat                | hstore           | hstore, hstore                                          | func
++ public | hs_contained             | boolean          | hstore, hstore                                          | func
++ public | hs_contains              | boolean          | hstore, hstore                                          | func
++ public | hstore                   | hstore           | record                                                  | func
++ public | hstore                   | hstore           | text[]                                                  | func
++ public | hstore                   | hstore           | text, text                                              | func
++ public | hstore                   | hstore           | text[], text[]                                          | func
++ public | hstore_cmp               | integer          | hstore, hstore                                          | func
++ public | hstore_eq                | boolean          | hstore, hstore                                          | func
++ public | hstore_ge                | boolean          | hstore, hstore                                          | func
++ public | hstore_gt                | boolean          | hstore, hstore                                          | func
++ public | hstore_hash              | integer          | hstore                                                  | func
++ public | hstore_hash_extended     | bigint           | hstore, bigint                                          | func
++ public | hstore_in                | hstore           | cstring                                                 | func
++ public | hstore_le                | boolean          | hstore, hstore                                          | func
++ public | hstore_lt                | boolean          | hstore, hstore                                          | func
++ public | hstore_ne                | boolean          | hstore, hstore                                          | func
++ public | hstore_out               | cstring          | hstore                                                  | func
++ public | hstore_recv              | hstore           | internal                                                | func
++ public | hstore_send              | bytea            | hstore                                                  | func
++ public | hstore_subscript_handler | internal         | internal                                                | func
++ public | hstore_to_array          | text[]           | hstore                                                  | func
++ public | hstore_to_json           | json             | hstore                                                  | func
++ public | hstore_to_json_loose     | json             | hstore                                                  | func
++ public | hstore_to_jsonb          | jsonb            | hstore                                                  | func
++ public | hstore_to_jsonb_loose    | jsonb            | hstore                                                  | func
++ public | hstore_to_matrix         | text[]           | hstore                                                  | func
++ public | hstore_version_diag      | integer          | hstore                                                  | func
++ public | isdefined                | boolean          | hstore, text                                            | func
++ public | isexists                 | boolean          | hstore, text                                            | func
++ public | populate_record          | anyelement       | anyelement, hstore                                      | func
++ public | skeys                    | SETOF text       | hstore                                                  | func
++ public | slice                    | hstore           | hstore, text[]                                          | func
++ public | slice_array              | text[]           | hstore, text[]                                          | func
++ public | svals                    | SETOF text       | hstore                                                  | func
++ public | tconvert                 | hstore           | text, text                                              | func
++(60 rows)
+ 
+ \do public.*
+                              List of operators
+  Schema | Name | Left arg type | Right arg type | Result type | Description 
+ --------+------+---------------+----------------+-------------+-------------
+-(0 rows)
++ public | #<#  | hstore        | hstore         | boolean     | 
++ public | #<=# | hstore        | hstore         | boolean     | 
++ public | #=   | anyelement    | hstore         | anyelement  | 
++ public | #>#  | hstore        | hstore         | boolean     | 
++ public | #>=# | hstore        | hstore         | boolean     | 
++ public | %#   |               | hstore         | text[]      | 
++ public | %%   |               | hstore         | text[]      | 
++ public | -    | hstore        | hstore         | hstore      | 
++ public | -    | hstore        | text           | hstore      | 
++ public | -    | hstore        | text[]         | hstore      | 
++ public | ->   | hstore        | text           | text        | 
++ public | ->   | hstore        | text[]         | text[]      | 
++ public | <>   | hstore        | hstore         | boolean     | 
++ public | <@   | hstore        | hstore         | boolean     | 
++ public | =    | hstore        | hstore         | boolean     | 
++ public | ?    | hstore        | text           | boolean     | 
++ public | ?&   | hstore        | text[]         | boolean     | 
++ public | ?|   | hstore        | text[]         | boolean     | 
++ public | @>   | hstore        | hstore         | boolean     | 
++ public | ||   | hstore        | hstore         | hstore      | 
++(20 rows)
+ 
+ \dT c.*
+      List of data types

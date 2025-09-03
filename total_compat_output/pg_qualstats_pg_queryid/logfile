@@ -1,0 +1,416 @@
+2023-07-26 04:52:45.882 UTC [952905] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 04:52:45.882 UTC [952905] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 04:52:45.897 UTC [952905] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 04:52:45.916 UTC [952908] LOG:  database system was shut down at 2023-07-26 04:52:45 UTC
+2023-07-26 04:52:45.924 UTC [952905] LOG:  database system is ready to accept connections
+2023-07-26 04:52:46.159 UTC [952929] ERROR:  cache lookup failed for type 19
+2023-07-26 04:52:46.159 UTC [952929] CONTEXT:  SQL statement "WITH pgqs AS (
+	          SELECT dbid, amname, qualid, qualnodeid,
+	            (coalesce(lrelid, rrelid), coalesce(lattnum, rattnum),
+	            opno, eval_type)::"PGQS".qual AS qual, queryid,
+	            round(avg(execution_count)) AS execution_count,
+	            sum(occurences) AS occurences,
+	            round(sum(nbfiltered)::numeric / sum(occurences)) AS avg_filter,
+	            CASE WHEN sum(execution_count) = 0
+	              THEN 0
+	              ELSE round(sum(nbfiltered::numeric) / sum(execution_count) * 100)
+	            END AS avg_selectivity
+	          FROM "PGQS".pg_qualstats() q
+	          JOIN pg_catalog.pg_database d ON q.dbid = d.oid
+	          JOIN pg_catalog.pg_operator op ON op.oid = q.opno
+	          JOIN pg_catalog.pg_amop amop ON amop.amopopr = op.oid
+	          JOIN pg_catalog.pg_am am ON am.oid = amop.amopmethod
+	          WHERE d.datname = current_database()
+	          AND eval_type = 'f'
+	          AND amname != ALL (forbidden_am)
+	          AND coalesce(lrelid, rrelid) != 0
+	          AND qualnodeid != ALL(v_processed)
+	          GROUP BY dbid, amname, qualid, qualnodeid, lrelid, rrelid,
+	            lattnum, rattnum, opno, eval_type, queryid
+	        ),
+	        -- apply cardinality and selectivity restrictions
+	        filtered AS (
+	          SELECT (qual).relid, amname, coalesce(qualid, qualnodeid) AS parent,
+	            count(*) AS weight,
+	            (array_agg(qualnodeid),
+	             array_agg(queryid)
+	            )::"PGQS".adv_quals AS quals
+	          FROM pgqs
+	          WHERE avg_filter >= min_filter
+	          AND avg_selectivity >= min_selectivity
+	          GROUP BY (qual).relid, amname, parent
+	        ),
+	        -- for each possibly AND-ed qual, build the list of included qualnodeid
+	        nodes AS (
+	          SELECT p.relid, p.amname, p.parent, p.quals,
+	            c.quals AS children
+	          FROM filtered p
+	          LEFT JOIN filtered c ON (p.quals).qualnodeids @> (c.quals).qualnodeids
+	            AND p.amname = c.amname
+	            AND p.parent != c.parent
+	            AND (p.quals).qualnodeids != (c.quals).qualnodeids
+	        ),
+	        -- build the "paths", which is the list of AND-ed quals that entirely
+	        -- contains another possibly AND-ed quals, and give a score for each
+	        -- path.  The scoring method used here is simply the number of
+	        -- columns in the quals.
+	        paths AS (
+	          SELECT DISTINCT *,
+	            coalesce(pg_catalog.array_length((children).qualnodeids, 1),
+	                     0) AS weight
+	          FROM nodes
+	          UNION
+	          SELECT DISTINCT p.relid, p.amname, p.parent, p.quals, c.children,
+	            coalesce(pg_catalog.array_length((c.children).qualnodeids, 1),
+	                     0) AS weight
+	          FROM nodes p
+	          JOIN nodes c ON (p.children).qualnodeids @> (c.quals).qualnodeids
+	            AND (c.quals).qualnodeids IS NOT NULL
+	            AND (c.quals).qualnodeids != (p.quals).qualnodeids
+	            AND p.amname = c.amname
+	        ),
+	        -- compute the final paths.
+	        -- The scoring method used here is simply the sum of total
+	        -- number of columns in each possibly AND-ed quals, so that we can
+	        -- later chose to create indexes that optimize as many queries as
+	        -- possible with as few indexes as possible.
+	        -- We also compute here an access method weight, so that we can later
+	        -- choose a btree index rather than another access method if btree is
+	        -- available.
+	        computed AS (
+	          SELECT relid, amname, parent, quals,
+	            array_agg(to_json(children) ORDER BY weight)
+	              FILTER (WHERE children IS NOT NULL) AS included,
+	            pg_catalog.array_length((quals).qualnodeids, 1)
+	                + sum(weight) AS path_weight,
+	          CASE amname WHEN 'btree' THEN 1 ELSE 2 END AS amweight
+	          FROM paths
+	          GROUP BY relid, amname, parent, quals
+	        ),
+	        -- compute a rank for each final paths, per relation.
+	        final AS (
+	          SELECT relid, amname, parent, quals, included, path_weight, amweight,
+	          row_number() OVER (
+	            PARTITION BY relid
+	            ORDER BY path_weight DESC, amweight) AS rownum
+	          FROM computed
+	        )
+	        -- and finally choose the higher rank final path for each relation.
+	        SELECT relid, amname, parent,
+	            (quals).qualnodeids as quals, (quals).queryids as queryids,
+	            included, path_weight
+	        FROM final
+	        WHERE rownum = 1"
+	PL/pgSQL function "PGQS".pg_qualstats_index_advisor(integer,integer,text[]) line 70 at FOR over SELECT rows
+2023-07-26 04:52:46.159 UTC [952929] STATEMENT:  SELECT * FROM "PGQS".pg_qualstats_index_advisor(50);
+2023-07-26 04:52:46.199 UTC [952929] ERROR:  cache lookup failed for type 19
+2023-07-26 04:52:46.199 UTC [952929] CONTEXT:  SQL statement "WITH pgqs AS (
+	          SELECT dbid, amname, qualid, qualnodeid,
+	            (coalesce(lrelid, rrelid), coalesce(lattnum, rattnum),
+	            opno, eval_type)::"PGQS".qual AS qual, queryid,
+	            round(avg(execution_count)) AS execution_count,
+	            sum(occurences) AS occurences,
+	            round(sum(nbfiltered)::numeric / sum(occurences)) AS avg_filter,
+	            CASE WHEN sum(execution_count) = 0
+	              THEN 0
+	              ELSE round(sum(nbfiltered::numeric) / sum(execution_count) * 100)
+	            END AS avg_selectivity
+	          FROM "PGQS".pg_qualstats() q
+	          JOIN pg_catalog.pg_database d ON q.dbid = d.oid
+	          JOIN pg_catalog.pg_operator op ON op.oid = q.opno
+	          JOIN pg_catalog.pg_amop amop ON amop.amopopr = op.oid
+	          JOIN pg_catalog.pg_am am ON am.oid = amop.amopmethod
+	          WHERE d.datname = current_database()
+	          AND eval_type = 'f'
+	          AND amname != ALL (forbidden_am)
+	          AND coalesce(lrelid, rrelid) != 0
+	          AND qualnodeid != ALL(v_processed)
+	          GROUP BY dbid, amname, qualid, qualnodeid, lrelid, rrelid,
+	            lattnum, rattnum, opno, eval_type, queryid
+	        ),
+	        -- apply cardinality and selectivity restrictions
+	        filtered AS (
+	          SELECT (qual).relid, amname, coalesce(qualid, qualnodeid) AS parent,
+	            count(*) AS weight,
+	            (array_agg(qualnodeid),
+	             array_agg(queryid)
+	            )::"PGQS".adv_quals AS quals
+	          FROM pgqs
+	          WHERE avg_filter >= min_filter
+	          AND avg_selectivity >= min_selectivity
+	          GROUP BY (qual).relid, amname, parent
+	        ),
+	        -- for each possibly AND-ed qual, build the list of included qualnodeid
+	        nodes AS (
+	          SELECT p.relid, p.amname, p.parent, p.quals,
+	            c.quals AS children
+	          FROM filtered p
+	          LEFT JOIN filtered c ON (p.quals).qualnodeids @> (c.quals).qualnodeids
+	            AND p.amname = c.amname
+	            AND p.parent != c.parent
+	            AND (p.quals).qualnodeids != (c.quals).qualnodeids
+	        ),
+	        -- build the "paths", which is the list of AND-ed quals that entirely
+	        -- contains another possibly AND-ed quals, and give a score for each
+	        -- path.  The scoring method used here is simply the number of
+	        -- columns in the quals.
+	        paths AS (
+	          SELECT DISTINCT *,
+	            coalesce(pg_catalog.array_length((children).qualnodeids, 1),
+	                     0) AS weight
+	          FROM nodes
+	          UNION
+	          SELECT DISTINCT p.relid, p.amname, p.parent, p.quals, c.children,
+	            coalesce(pg_catalog.array_length((c.children).qualnodeids, 1),
+	                     0) AS weight
+	          FROM nodes p
+	          JOIN nodes c ON (p.children).qualnodeids @> (c.quals).qualnodeids
+	            AND (c.quals).qualnodeids IS NOT NULL
+	            AND (c.quals).qualnodeids != (p.quals).qualnodeids
+	            AND p.amname = c.amname
+	        ),
+	        -- compute the final paths.
+	        -- The scoring method used here is simply the sum of total
+	        -- number of columns in each possibly AND-ed quals, so that we can
+	        -- later chose to create indexes that optimize as many queries as
+	        -- possible with as few indexes as possible.
+	        -- We also compute here an access method weight, so that we can later
+	        -- choose a btree index rather than another access method if btree is
+	        -- available.
+	        computed AS (
+	          SELECT relid, amname, parent, quals,
+	            array_agg(to_json(children) ORDER BY weight)
+	              FILTER (WHERE children IS NOT NULL) AS included,
+	            pg_catalog.array_length((quals).qualnodeids, 1)
+	                + sum(weight) AS path_weight,
+	          CASE amname WHEN 'btree' THEN 1 ELSE 2 END AS amweight
+	          FROM paths
+	          GROUP BY relid, amname, parent, quals
+	        ),
+	        -- compute a rank for each final paths, per relation.
+	        final AS (
+	          SELECT relid, amname, parent, quals, included, path_weight, amweight,
+	          row_number() OVER (
+	            PARTITION BY relid
+	            ORDER BY path_weight DESC, amweight) AS rownum
+	          FROM computed
+	        )
+	        -- and finally choose the higher rank final path for each relation.
+	        SELECT relid, amname, parent,
+	            (quals).qualnodeids as quals, (quals).queryids as queryids,
+	            included, path_weight
+	        FROM final
+	        WHERE rownum = 1"
+	PL/pgSQL function "PGQS".pg_qualstats_index_advisor(integer,integer,text[]) line 70 at FOR over SELECT rows
+2023-07-26 04:52:46.199 UTC [952929] STATEMENT:  SELECT v->'ddl' AS v
+	  FROM json_array_elements(
+	    "PGQS".pg_qualstats_index_advisor(50)->'indexes') v
+	  ORDER BY v::text COLLATE "C";
+2023-07-26 04:52:46.203 UTC [952929] ERROR:  cache lookup failed for type 19
+2023-07-26 04:52:46.203 UTC [952929] CONTEXT:  SQL statement "WITH pgqs AS (
+	          SELECT dbid, amname, qualid, qualnodeid,
+	            (coalesce(lrelid, rrelid), coalesce(lattnum, rattnum),
+	            opno, eval_type)::"PGQS".qual AS qual, queryid,
+	            round(avg(execution_count)) AS execution_count,
+	            sum(occurences) AS occurences,
+	            round(sum(nbfiltered)::numeric / sum(occurences)) AS avg_filter,
+	            CASE WHEN sum(execution_count) = 0
+	              THEN 0
+	              ELSE round(sum(nbfiltered::numeric) / sum(execution_count) * 100)
+	            END AS avg_selectivity
+	          FROM "PGQS".pg_qualstats() q
+	          JOIN pg_catalog.pg_database d ON q.dbid = d.oid
+	          JOIN pg_catalog.pg_operator op ON op.oid = q.opno
+	          JOIN pg_catalog.pg_amop amop ON amop.amopopr = op.oid
+	          JOIN pg_catalog.pg_am am ON am.oid = amop.amopmethod
+	          WHERE d.datname = current_database()
+	          AND eval_type = 'f'
+	          AND amname != ALL (forbidden_am)
+	          AND coalesce(lrelid, rrelid) != 0
+	          AND qualnodeid != ALL(v_processed)
+	          GROUP BY dbid, amname, qualid, qualnodeid, lrelid, rrelid,
+	            lattnum, rattnum, opno, eval_type, queryid
+	        ),
+	        -- apply cardinality and selectivity restrictions
+	        filtered AS (
+	          SELECT (qual).relid, amname, coalesce(qualid, qualnodeid) AS parent,
+	            count(*) AS weight,
+	            (array_agg(qualnodeid),
+	             array_agg(queryid)
+	            )::"PGQS".adv_quals AS quals
+	          FROM pgqs
+	          WHERE avg_filter >= min_filter
+	          AND avg_selectivity >= min_selectivity
+	          GROUP BY (qual).relid, amname, parent
+	        ),
+	        -- for each possibly AND-ed qual, build the list of included qualnodeid
+	        nodes AS (
+	          SELECT p.relid, p.amname, p.parent, p.quals,
+	            c.quals AS children
+	          FROM filtered p
+	          LEFT JOIN filtered c ON (p.quals).qualnodeids @> (c.quals).qualnodeids
+	            AND p.amname = c.amname
+	            AND p.parent != c.parent
+	            AND (p.quals).qualnodeids != (c.quals).qualnodeids
+	        ),
+	        -- build the "paths", which is the list of AND-ed quals that entirely
+	        -- contains another possibly AND-ed quals, and give a score for each
+	        -- path.  The scoring method used here is simply the number of
+	        -- columns in the quals.
+	        paths AS (
+	          SELECT DISTINCT *,
+	            coalesce(pg_catalog.array_length((children).qualnodeids, 1),
+	                     0) AS weight
+	          FROM nodes
+	          UNION
+	          SELECT DISTINCT p.relid, p.amname, p.parent, p.quals, c.children,
+	            coalesce(pg_catalog.array_length((c.children).qualnodeids, 1),
+	                     0) AS weight
+	          FROM nodes p
+	          JOIN nodes c ON (p.children).qualnodeids @> (c.quals).qualnodeids
+	            AND (c.quals).qualnodeids IS NOT NULL
+	            AND (c.quals).qualnodeids != (p.quals).qualnodeids
+	            AND p.amname = c.amname
+	        ),
+	        -- compute the final paths.
+	        -- The scoring method used here is simply the sum of total
+	        -- number of columns in each possibly AND-ed quals, so that we can
+	        -- later chose to create indexes that optimize as many queries as
+	        -- possible with as few indexes as possible.
+	        -- We also compute here an access method weight, so that we can later
+	        -- choose a btree index rather than another access method if btree is
+	        -- available.
+	        computed AS (
+	          SELECT relid, amname, parent, quals,
+	            array_agg(to_json(children) ORDER BY weight)
+	              FILTER (WHERE children IS NOT NULL) AS included,
+	            pg_catalog.array_length((quals).qualnodeids, 1)
+	                + sum(weight) AS path_weight,
+	          CASE amname WHEN 'btree' THEN 1 ELSE 2 END AS amweight
+	          FROM paths
+	          GROUP BY relid, amname, parent, quals
+	        ),
+	        -- compute a rank for each final paths, per relation.
+	        final AS (
+	          SELECT relid, amname, parent, quals, included, path_weight, amweight,
+	          row_number() OVER (
+	            PARTITION BY relid
+	            ORDER BY path_weight DESC, amweight) AS rownum
+	          FROM computed
+	        )
+	        -- and finally choose the higher rank final path for each relation.
+	        SELECT relid, amname, parent,
+	            (quals).qualnodeids as quals, (quals).queryids as queryids,
+	            included, path_weight
+	        FROM final
+	        WHERE rownum = 1"
+	PL/pgSQL function "PGQS".pg_qualstats_index_advisor(integer,integer,text[]) line 70 at FOR over SELECT rows
+2023-07-26 04:52:46.203 UTC [952929] STATEMENT:  SELECT v->'qual' AS v
+	  FROM json_array_elements(
+	    "PGQS".pg_qualstats_index_advisor(50)->'unoptimised') v
+	  ORDER BY v::text COLLATE "C";
+2023-07-26 04:52:46.211 UTC [952929] ERROR:  cache lookup failed for type 19
+2023-07-26 04:52:46.211 UTC [952929] CONTEXT:  SQL statement "WITH pgqs AS (
+	          SELECT dbid, amname, qualid, qualnodeid,
+	            (coalesce(lrelid, rrelid), coalesce(lattnum, rattnum),
+	            opno, eval_type)::"PGQS".qual AS qual, queryid,
+	            round(avg(execution_count)) AS execution_count,
+	            sum(occurences) AS occurences,
+	            round(sum(nbfiltered)::numeric / sum(occurences)) AS avg_filter,
+	            CASE WHEN sum(execution_count) = 0
+	              THEN 0
+	              ELSE round(sum(nbfiltered::numeric) / sum(execution_count) * 100)
+	            END AS avg_selectivity
+	          FROM "PGQS".pg_qualstats() q
+	          JOIN pg_catalog.pg_database d ON q.dbid = d.oid
+	          JOIN pg_catalog.pg_operator op ON op.oid = q.opno
+	          JOIN pg_catalog.pg_amop amop ON amop.amopopr = op.oid
+	          JOIN pg_catalog.pg_am am ON am.oid = amop.amopmethod
+	          WHERE d.datname = current_database()
+	          AND eval_type = 'f'
+	          AND amname != ALL (forbidden_am)
+	          AND coalesce(lrelid, rrelid) != 0
+	          AND qualnodeid != ALL(v_processed)
+	          GROUP BY dbid, amname, qualid, qualnodeid, lrelid, rrelid,
+	            lattnum, rattnum, opno, eval_type, queryid
+	        ),
+	        -- apply cardinality and selectivity restrictions
+	        filtered AS (
+	          SELECT (qual).relid, amname, coalesce(qualid, qualnodeid) AS parent,
+	            count(*) AS weight,
+	            (array_agg(qualnodeid),
+	             array_agg(queryid)
+	            )::"PGQS".adv_quals AS quals
+	          FROM pgqs
+	          WHERE avg_filter >= min_filter
+	          AND avg_selectivity >= min_selectivity
+	          GROUP BY (qual).relid, amname, parent
+	        ),
+	        -- for each possibly AND-ed qual, build the list of included qualnodeid
+	        nodes AS (
+	          SELECT p.relid, p.amname, p.parent, p.quals,
+	            c.quals AS children
+	          FROM filtered p
+	          LEFT JOIN filtered c ON (p.quals).qualnodeids @> (c.quals).qualnodeids
+	            AND p.amname = c.amname
+	            AND p.parent != c.parent
+	            AND (p.quals).qualnodeids != (c.quals).qualnodeids
+	        ),
+	        -- build the "paths", which is the list of AND-ed quals that entirely
+	        -- contains another possibly AND-ed quals, and give a score for each
+	        -- path.  The scoring method used here is simply the number of
+	        -- columns in the quals.
+	        paths AS (
+	          SELECT DISTINCT *,
+	            coalesce(pg_catalog.array_length((children).qualnodeids, 1),
+	                     0) AS weight
+	          FROM nodes
+	          UNION
+	          SELECT DISTINCT p.relid, p.amname, p.parent, p.quals, c.children,
+	            coalesce(pg_catalog.array_length((c.children).qualnodeids, 1),
+	                     0) AS weight
+	          FROM nodes p
+	          JOIN nodes c ON (p.children).qualnodeids @> (c.quals).qualnodeids
+	            AND (c.quals).qualnodeids IS NOT NULL
+	            AND (c.quals).qualnodeids != (p.quals).qualnodeids
+	            AND p.amname = c.amname
+	        ),
+	        -- compute the final paths.
+	        -- The scoring method used here is simply the sum of total
+	        -- number of columns in each possibly AND-ed quals, so that we can
+	        -- later chose to create indexes that optimize as many queries as
+	        -- possible with as few indexes as possible.
+	        -- We also compute here an access method weight, so that we can later
+	        -- choose a btree index rather than another access method if btree is
+	        -- available.
+	        computed AS (
+	          SELECT relid, amname, parent, quals,
+	            array_agg(to_json(children) ORDER BY weight)
+	              FILTER (WHERE children IS NOT NULL) AS included,
+	            pg_catalog.array_length((quals).qualnodeids, 1)
+	                + sum(weight) AS path_weight,
+	          CASE amname WHEN 'btree' THEN 1 ELSE 2 END AS amweight
+	          FROM paths
+	          GROUP BY relid, amname, parent, quals
+	        ),
+	        -- compute a rank for each final paths, per relation.
+	        final AS (
+	          SELECT relid, amname, parent, quals, included, path_weight, amweight,
+	          row_number() OVER (
+	            PARTITION BY relid
+	            ORDER BY path_weight DESC, amweight) AS rownum
+	          FROM computed
+	        )
+	        -- and finally choose the higher rank final path for each relation.
+	        SELECT relid, amname, parent,
+	            (quals).qualnodeids as quals, (quals).queryids as queryids,
+	            included, path_weight
+	        FROM final
+	        WHERE rownum = 1"
+	PL/pgSQL function "PGQS".pg_qualstats_index_advisor(integer,integer,text[]) line 70 at FOR over SELECT rows
+2023-07-26 04:52:46.211 UTC [952929] STATEMENT:  SELECT v->'ddl' AS v
+	  FROM json_array_elements(
+	    "PGQS".pg_qualstats_index_advisor(50)->'indexes') v
+	  ORDER BY v::text COLLATE "C";
+2023-07-26 04:52:46.232 UTC [952906] LOG:  checkpoint starting: immediate force wait
+2023-07-26 04:52:46.294 UTC [952906] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.020 s, sync=0.012 s, total=0.062 s; sync files=7, longest=0.006 s, average=0.002 s; distance=4295 kB, estimate=4295 kB

@@ -1,0 +1,121 @@
+2023-07-25 22:02:46.705 UTC [1944571] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 22:02:46.705 UTC [1944571] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 22:02:46.720 UTC [1944571] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 22:02:46.736 UTC [1944574] LOG:  database system was shut down at 2023-07-25 22:02:46 UTC
+2023-07-25 22:02:46.746 UTC [1944571] LOG:  database system is ready to accept connections
+2023-07-25 22:02:46.973 UTC [1944587] ERROR:  invalid attribute number 4
+2023-07-25 22:02:46.973 UTC [1944587] STATEMENT:  SELECT dblink_build_sql_insert('foo','1 2 3 4',4,'{"0", "a", "{a0,b0,c0}"}','{"99", "xyz", "{za0,zb0,zc0}"}');
+2023-07-25 22:02:46.975 UTC [1944587] ERROR:  invalid attribute number 4
+2023-07-25 22:02:46.975 UTC [1944587] STATEMENT:  SELECT dblink_build_sql_update('foo','1 2 3 4',4,'{"0", "a", "{a0,b0,c0}"}','{"99", "xyz", "{za0,zb0,zc0}"}');
+2023-07-25 22:02:46.976 UTC [1944587] ERROR:  invalid attribute number 4
+2023-07-25 22:02:46.976 UTC [1944587] STATEMENT:  SELECT dblink_build_sql_delete('foo','1 2 3 4',4,'{"0", "a", "{a0,b0,c0}"}');
+2023-07-25 22:02:47.040 UTC [1944587] ERROR:  invalid attribute number 4
+2023-07-25 22:02:47.040 UTC [1944587] STATEMENT:  SELECT dblink_build_sql_insert('foo_1','1 2 3 4',4,'{"0", "a", "{a0,b0,c0}"}','{"99", "xyz", "{za0,zb0,zc0}"}');
+2023-07-25 22:02:47.041 UTC [1944587] ERROR:  invalid attribute number 4
+2023-07-25 22:02:47.041 UTC [1944587] STATEMENT:  SELECT dblink_build_sql_update('foo_1','1 2 3 4',4,'{"0", "a", "{a0,b0,c0}"}','{"99", "xyz", "{za0,zb0,zc0}"}');
+2023-07-25 22:02:47.042 UTC [1944587] ERROR:  invalid attribute number 4
+2023-07-25 22:02:47.042 UTC [1944587] STATEMENT:  SELECT dblink_build_sql_delete('foo_1','1 2 3 4',4,'{"0", "a", "{a0,b0,c0}"}');
+2023-07-25 22:02:47.098 UTC [1944587] ERROR:  connection not available
+2023-07-25 22:02:47.098 UTC [1944587] STATEMENT:  SELECT *
+	FROM dblink('SELECT * FROM foo') AS t(a int, b text, c text[])
+	WHERE t.a > 7;
+2023-07-25 22:02:47.112 UTC [1944589] ERROR:  could not establish connection
+2023-07-25 22:02:47.112 UTC [1944589] DETAIL:  syntax error in service file "/home/abigalek/pgext-cli-python/postgresql-15.3/contrib/dblink/pg_service.conf", line 7
+2023-07-25 22:02:47.112 UTC [1944589] STATEMENT:  
+			SELECT pg_backend_pid() FROM dblink(
+				'service=test_ldap '||connection_parameters(),
+				-- This string concatenation is a hack to shoehorn a
+				-- set_pgservicefile call into the SQL statement.
+				'SELECT 1' || set_pgservicefile('pg_service.conf')
+			) t(c int)
+		
+2023-07-25 22:02:47.121 UTC [1944590] ERROR:  relation "foobar" does not exist at character 49
+2023-07-25 22:02:47.121 UTC [1944590] STATEMENT:  DECLARE rmt_foo_cursor CURSOR FOR SELECT * FROM foobar
+2023-07-25 22:02:47.123 UTC [1944590] ERROR:  cursor "rmt_foobar_cursor" does not exist
+2023-07-25 22:02:47.123 UTC [1944590] STATEMENT:  FETCH 4 FROM rmt_foobar_cursor
+2023-07-25 22:02:47.123 UTC [1944590] ERROR:  cursor "rmt_foobar_cursor" does not exist
+2023-07-25 22:02:47.123 UTC [1944590] STATEMENT:  CLOSE rmt_foobar_cursor
+2023-07-25 22:02:47.124 UTC [1944590] ERROR:  cursor "rmt_foo_cursor" does not exist
+2023-07-25 22:02:47.124 UTC [1944590] STATEMENT:  FETCH 4 FROM rmt_foo_cursor
+2023-07-25 22:02:47.124 UTC [1944587] ERROR:  cursor "rmt_foo_cursor" does not exist
+2023-07-25 22:02:47.124 UTC [1944587] CONTEXT:  while fetching from cursor "rmt_foo_cursor" on unnamed dblink connection
+2023-07-25 22:02:47.124 UTC [1944587] STATEMENT:  SELECT *
+	FROM dblink_fetch('rmt_foo_cursor',4) AS t(a int, b text, c text[]);
+2023-07-25 22:02:47.124 UTC [1944590] ERROR:  cursor "rmt_foo_cursor" does not exist
+2023-07-25 22:02:47.124 UTC [1944590] STATEMENT:  FETCH 4 FROM rmt_foo_cursor
+2023-07-25 22:02:47.124 UTC [1944587] ERROR:  connection not available
+2023-07-25 22:02:47.124 UTC [1944587] STATEMENT:  SELECT *
+	FROM dblink('SELECT * FROM foo') AS t(a int, b text, c text[])
+	WHERE t.a > 7;
+2023-07-25 22:02:47.137 UTC [1944592] ERROR:  relation "foobar" does not exist at character 15
+2023-07-25 22:02:47.137 UTC [1944592] STATEMENT:  SELECT * FROM foobar
+2023-07-25 22:02:47.141 UTC [1944592] ERROR:  relation "foobar" does not exist at character 8
+2023-07-25 22:02:47.141 UTC [1944592] STATEMENT:  UPDATE foobar SET f3[2] = 'b99' WHERE f1 = 11
+2023-07-25 22:02:47.145 UTC [1944587] ERROR:  could not establish connection
+2023-07-25 22:02:47.145 UTC [1944587] DETAIL:  missing "=" after "myconn" in connection info string
+2023-07-25 22:02:47.145 UTC [1944587] STATEMENT:  SELECT *
+	FROM dblink('myconn','SELECT * FROM foo') AS t(a int, b text, c text[])
+	WHERE t.a > 7;
+2023-07-25 22:02:47.149 UTC [1944593] ERROR:  relation "foobar" does not exist at character 15
+2023-07-25 22:02:47.149 UTC [1944593] STATEMENT:  SELECT * FROM foobar
+2023-07-25 22:02:47.152 UTC [1944587] ERROR:  duplicate connection name
+2023-07-25 22:02:47.152 UTC [1944587] STATEMENT:  SELECT dblink_connect('myconn',connection_parameters());
+2023-07-25 22:02:47.157 UTC [1944593] ERROR:  relation "foobar" does not exist at character 49
+2023-07-25 22:02:47.157 UTC [1944593] STATEMENT:  DECLARE rmt_foo_cursor CURSOR FOR SELECT * FROM foobar
+2023-07-25 22:02:47.162 UTC [1944593] ERROR:  DECLARE CURSOR can only be used in transaction blocks
+2023-07-25 22:02:47.162 UTC [1944593] STATEMENT:  DECLARE xact_test CURSOR FOR SELECT * FROM foo
+2023-07-25 22:02:47.162 UTC [1944587] ERROR:  DECLARE CURSOR can only be used in transaction blocks
+2023-07-25 22:02:47.162 UTC [1944587] CONTEXT:  while executing command on dblink connection named "myconn"
+2023-07-25 22:02:47.162 UTC [1944587] STATEMENT:  SELECT dblink_exec('myconn','DECLARE xact_test CURSOR FOR SELECT * FROM foo');
+2023-07-25 22:02:47.163 UTC [1944593] WARNING:  there is no transaction in progress
+WARNING:  there is no transaction in progress
+2023-07-25 22:02:47.165 UTC [1944593] ERROR:  cursor "rmt_foobar_cursor" does not exist
+2023-07-25 22:02:47.165 UTC [1944593] STATEMENT:  FETCH 4 FROM rmt_foobar_cursor
+2023-07-25 22:02:47.167 UTC [1944593] ERROR:  cursor "rmt_foo_cursor" does not exist
+2023-07-25 22:02:47.167 UTC [1944593] STATEMENT:  FETCH 4 FROM rmt_foo_cursor
+2023-07-25 22:02:47.167 UTC [1944587] ERROR:  cursor "rmt_foo_cursor" does not exist
+2023-07-25 22:02:47.167 UTC [1944587] CONTEXT:  while fetching from cursor "rmt_foo_cursor" on dblink connection named "myconn"
+2023-07-25 22:02:47.167 UTC [1944587] STATEMENT:  SELECT *
+	FROM dblink_fetch('myconn','rmt_foo_cursor',4) AS t(a int, b text, c text[]);
+2023-07-25 22:02:47.167 UTC [1944587] ERROR:  could not establish connection
+2023-07-25 22:02:47.167 UTC [1944587] DETAIL:  missing "=" after "myconn" in connection info string
+2023-07-25 22:02:47.167 UTC [1944587] STATEMENT:  SELECT *
+	FROM dblink('myconn','SELECT * FROM foo') AS t(a int, b text, c text[])
+	WHERE t.a > 7;
+2023-07-25 22:02:47.193 UTC [1944587] ERROR:  connection "myconn" not available
+2023-07-25 22:02:47.193 UTC [1944587] STATEMENT:  SELECT dblink_disconnect('myconn');
+2023-07-25 22:02:47.257 UTC [1944587] ERROR:  invalid option "server"
+2023-07-25 22:02:47.257 UTC [1944587] HINT:  Valid options in this context are: user, password, sslpassword
+2023-07-25 22:02:47.257 UTC [1944587] STATEMENT:  CREATE USER MAPPING FOR public SERVER fdtest
+	  OPTIONS (server 'localhost');
+2023-07-25 22:02:47.271 UTC [1944587] ERROR:  password is required
+2023-07-25 22:02:47.271 UTC [1944587] DETAIL:  Non-superusers must provide a password in the connection string.
+2023-07-25 22:02:47.271 UTC [1944587] STATEMENT:  SELECT dblink_connect('myconn', 'fdtest');
+2023-07-25 22:02:47.315 UTC [1944603] ERROR:  invalid option "nonexistent"
+2023-07-25 22:02:47.315 UTC [1944603] HINT:  There are no valid options in this context.
+2023-07-25 22:02:47.315 UTC [1944603] STATEMENT:  ALTER FOREIGN DATA WRAPPER dblink_fdw OPTIONS (nonexistent 'fdw');
+2023-07-25 22:02:47.405 UTC [1944603] ERROR:  invalid input syntax for type integer: "not an int"
+2023-07-25 22:02:47.405 UTC [1944603] STATEMENT:  SELECT *
+	FROM dblink_fetch('myconn','error_cursor', 1) AS t(i int);
+2023-07-25 22:02:47.603 UTC [1944571] LOG:  received SIGHUP, reloading configuration files
+2023-07-25 22:02:47.605 UTC [1944571] LOG:  parameter "session_preload_libraries" changed to "pgextwlist"
+2023-07-25 22:02:47.605 UTC [1944571] LOG:  parameter "extwlist.extensions" changed to "citext,earthdistance,pg_trgm,pg_stat_statements,refint"
+2023-07-25 22:02:47.605 UTC [1944571] LOG:  parameter "extwlist.custom_path" changed to "/home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/test-scripts"
+2023-07-25 22:02:47.712 UTC [1944631] ERROR:  extension "plpgsql" already exists
+2023-07-25 22:02:47.712 UTC [1944631] STATEMENT:  CREATE EXTENSION plpgsql;
+2023-07-25 22:02:47.712 UTC [1944631] ERROR:  extension "hstore" does not exist
+2023-07-25 22:02:47.712 UTC [1944631] STATEMENT:  COMMENT ON EXTENSION hstore IS 'plpgsql comment';
+2023-07-25 22:02:47.713 UTC [1944631] ERROR:  permission denied to create extension "hstore"
+2023-07-25 22:02:47.713 UTC [1944631] HINT:  Must have CREATE privilege on current database to create this extension.
+2023-07-25 22:02:47.713 UTC [1944631] STATEMENT:  CREATE EXTENSION hstore;
+2023-07-25 22:02:47.713 UTC [1944631] ERROR:  extension "hstore" does not exist
+2023-07-25 22:02:47.713 UTC [1944631] STATEMENT:  COMMENT ON EXTENSION hstore IS 'hstore comment';
+2023-07-25 22:02:47.713 UTC [1944631] ERROR:  required extension "cube" is not installed
+2023-07-25 22:02:47.713 UTC [1944631] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-25 22:02:47.713 UTC [1944631] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-25 22:02:47.714 UTC [1944631] ERROR:  must be owner of extension plpgsql
+2023-07-25 22:02:47.714 UTC [1944631] STATEMENT:  DROP EXTENSION plpgsql;
+2023-07-25 22:02:47.751 UTC [1944639] ERROR:  cannot drop extension citext because other objects depend on it
+2023-07-25 22:02:47.751 UTC [1944639] DETAIL:  column t of table mere_table depends on type citext
+2023-07-25 22:02:47.751 UTC [1944639] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 22:02:47.751 UTC [1944639] STATEMENT:  DROP EXTENSION citext;

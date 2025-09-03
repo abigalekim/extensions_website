@@ -1,0 +1,105 @@
+2023-07-26 03:10:27.080 UTC [1987177] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 03:10:27.080 UTC [1987177] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 03:10:27.086 UTC [1987177] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 03:10:27.096 UTC [1987180] LOG:  database system was shut down at 2023-07-26 03:10:26 UTC
+2023-07-26 03:10:27.104 UTC [1987177] LOG:  database system is ready to accept connections
+2023-07-26 03:10:27.270 UTC [1987199] ERROR:  required extension "cube" is not installed
+2023-07-26 03:10:27.270 UTC [1987199] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-26 03:10:27.270 UTC [1987199] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-26 03:10:27.322 UTC [1987199] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-26 03:10:27.322 UTC [1987199] DETAIL:  extension earthdistance depends on extension cube
+2023-07-26 03:10:27.322 UTC [1987199] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 03:10:27.322 UTC [1987199] STATEMENT:  drop extension cube;
+2023-07-26 03:10:27.324 UTC [1987199] ERROR:  cannot drop type cube because extension cube requires it
+2023-07-26 03:10:27.324 UTC [1987199] HINT:  You can drop extension cube instead.
+2023-07-26 03:10:27.324 UTC [1987199] STATEMENT:  drop type cube;
+2023-07-26 03:10:27.327 UTC [1987199] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-26 03:10:27.327 UTC [1987199] DETAIL:  column f1 of table foo depends on type cube
+2023-07-26 03:10:27.327 UTC [1987199] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 03:10:27.327 UTC [1987199] STATEMENT:  drop extension cube;
+2023-07-26 03:10:27.332 UTC [1987199] ERROR:  cache lookup failed for type 18
+2023-07-26 03:10:27.332 UTC [1987199] STATEMENT:  SELECT n.nspname as "Schema",
+	  p.proname as "Name",
+	  pg_catalog.pg_get_function_result(p.oid) as "Result data type",
+	  pg_catalog.pg_get_function_arguments(p.oid) as "Argument data types",
+	 CASE p.prokind
+	  WHEN 'a' THEN 'agg'
+	  WHEN 'w' THEN 'window'
+	  WHEN 'p' THEN 'proc'
+	  ELSE 'func'
+	 END as "Type"
+	FROM pg_catalog.pg_proc p
+	     LEFT JOIN pg_catalog.pg_namespace n ON n.oid = p.pronamespace
+	WHERE pg_catalog.pg_function_is_visible(p.oid)
+	      AND n.nspname <> 'pg_catalog'
+	      AND n.nspname <> 'information_schema'
+	ORDER BY 1, 2, 4;
+2023-07-26 03:10:27.349 UTC [1987199] ERROR:  cache lookup failed for type 18
+2023-07-26 03:10:27.349 UTC [1987199] STATEMENT:  SELECT n.nspname as "Schema",
+	  p.proname as "Name",
+	  pg_catalog.pg_get_function_result(p.oid) as "Result data type",
+	  pg_catalog.pg_get_function_arguments(p.oid) as "Argument data types",
+	 CASE p.prokind
+	  WHEN 'a' THEN 'agg'
+	  WHEN 'w' THEN 'window'
+	  WHEN 'p' THEN 'proc'
+	  ELSE 'func'
+	 END as "Type"
+	FROM pg_catalog.pg_proc p
+	     LEFT JOIN pg_catalog.pg_namespace n ON n.oid = p.pronamespace
+	WHERE n.nspname OPERATOR(pg_catalog.~) '^(public)$' COLLATE pg_catalog.default
+	ORDER BY 1, 2, 4;
+2023-07-26 03:10:27.355 UTC [1987199] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-26 03:10:27.355 UTC [1987199] DETAIL:  column f1 of table foo depends on type c.cube
+2023-07-26 03:10:27.355 UTC [1987199] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 03:10:27.355 UTC [1987199] STATEMENT:  drop extension cube;
+2023-07-26 03:10:27.357 UTC [1987199] ERROR:  cannot drop schema c because other objects depend on it
+2023-07-26 03:10:27.357 UTC [1987199] DETAIL:  extension cube depends on schema c
+	column f1 of table foo depends on type c.cube
+2023-07-26 03:10:27.357 UTC [1987199] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 03:10:27.357 UTC [1987199] STATEMENT:  drop schema c;
+2023-07-26 03:10:27.364 UTC [1987199] ERROR:  cache lookup failed for type 18
+2023-07-26 03:10:27.364 UTC [1987199] STATEMENT:  SELECT pol.polname, pol.polpermissive,
+	  CASE WHEN pol.polroles = '{0}' THEN NULL ELSE pg_catalog.array_to_string(array(select rolname from pg_catalog.pg_roles where oid = any (pol.polroles) order by 1),',') END,
+	  pg_catalog.pg_get_expr(pol.polqual, pol.polrelid),
+	  pg_catalog.pg_get_expr(pol.polwithcheck, pol.polrelid),
+	  CASE pol.polcmd
+	    WHEN 'r' THEN 'SELECT'
+	    WHEN 'a' THEN 'INSERT'
+	    WHEN 'w' THEN 'UPDATE'
+	    WHEN 'd' THEN 'DELETE'
+	    END AS cmd
+	FROM pg_catalog.pg_policy pol
+	WHERE pol.polrelid = '16616' ORDER BY 1;
+2023-07-26 03:10:27.365 UTC [1987199] ERROR:  cache lookup failed for type 18
+2023-07-26 03:10:27.365 UTC [1987199] STATEMENT:  SELECT n.nspname as "Schema",
+	  p.proname as "Name",
+	  pg_catalog.pg_get_function_result(p.oid) as "Result data type",
+	  pg_catalog.pg_get_function_arguments(p.oid) as "Argument data types",
+	 CASE p.prokind
+	  WHEN 'a' THEN 'agg'
+	  WHEN 'w' THEN 'window'
+	  WHEN 'p' THEN 'proc'
+	  ELSE 'func'
+	 END as "Type"
+	FROM pg_catalog.pg_proc p
+	     LEFT JOIN pg_catalog.pg_namespace n ON n.oid = p.pronamespace
+	WHERE n.nspname OPERATOR(pg_catalog.~) '^(public)$' COLLATE pg_catalog.default
+	ORDER BY 1, 2, 4;
+2023-07-26 03:10:27.366 UTC [1987199] ERROR:  cache lookup failed for type 18
+2023-07-26 03:10:27.366 UTC [1987199] STATEMENT:  SELECT n.nspname as "Schema",
+	  p.proname as "Name",
+	  pg_catalog.pg_get_function_result(p.oid) as "Result data type",
+	  pg_catalog.pg_get_function_arguments(p.oid) as "Argument data types",
+	 CASE p.prokind
+	  WHEN 'a' THEN 'agg'
+	  WHEN 'w' THEN 'window'
+	  WHEN 'p' THEN 'proc'
+	  ELSE 'func'
+	 END as "Type"
+	FROM pg_catalog.pg_proc p
+	     LEFT JOIN pg_catalog.pg_namespace n ON n.oid = p.pronamespace
+	WHERE n.nspname OPERATOR(pg_catalog.~) '^(c)$' COLLATE pg_catalog.default
+	ORDER BY 1, 2, 4;
+2023-07-26 03:10:27.382 UTC [1987178] LOG:  checkpoint starting: immediate force wait
+2023-07-26 03:10:27.419 UTC [1987178] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.007 s, sync=0.009 s, total=0.037 s; sync files=7, longest=0.007 s, average=0.002 s; distance=4408 kB, estimate=4408 kB

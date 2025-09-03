@@ -1,0 +1,28 @@
+diff -U3 /home/abigalek/pgext-cli/postgresql-15.3/contrib/test_decoding/expected/twophase.out /home/abigalek/pgext-cli/postgresql-15.3/contrib/test_decoding/results/twophase.out
+--- /home/abigalek/pgext-cli/postgresql-15.3/contrib/test_decoding/expected/twophase.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli/postgresql-15.3/contrib/test_decoding/results/twophase.out	2023-11-25 13:33:33.914209335 +0000
+@@ -69,9 +69,10 @@
+   AND relation = 'test_prepared1'::regclass;
+     relation     | locktype |        mode         
+ -----------------+----------+---------------------
++ test_prepared_1 | relation | AccessShareLock
+  test_prepared_1 | relation | RowExclusiveLock
+  test_prepared_1 | relation | AccessExclusiveLock
+-(2 rows)
++(3 rows)
+ 
+ -- The insert should show the newly altered column but not the DDL.
+ SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+@@ -131,10 +132,11 @@
+   AND relation = 'test_prepared1'::regclass;
+     relation    | locktype |        mode         
+ ----------------+----------+---------------------
++ test_prepared1 | relation | AccessShareLock
+  test_prepared1 | relation | RowExclusiveLock
+  test_prepared1 | relation | ShareLock
+  test_prepared1 | relation | AccessExclusiveLock
+-(3 rows)
++(4 rows)
+ 
+ -- The above CLUSTER command shouldn't cause a timeout on 2pc decoding.
+ \set env_timeout ''

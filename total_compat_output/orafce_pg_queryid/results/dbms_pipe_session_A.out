@@ -1,0 +1,117 @@
+\set ECHO none
+ERROR:  schema "dbms_pipe" does not exist
+LINE 1: SELECT dbms_pipe.pack_message(1);
+               ^
+ERROR:  schema "dbms_pipe" does not exist
+LINE 1: SELECT dbms_pipe.send_message('pipe_test_owner_created_notif...
+               ^
+SELECT createImplicitPipe();
+ERROR:  schema "dbms_pipe" does not exist
+LINE 1: SELECT dbms_pipe.pack_message('Message From Session A'::text...
+               ^
+QUERY:  SELECT dbms_pipe.pack_message('Message From Session A'::text)
+CONTEXT:  PL/pgSQL function createimplicitpipe() line 5 at PERFORM
+-- Bulk send messages
+SELECT bulkSend();
+ERROR:  schema "dbms_pipe" does not exist
+LINE 1: SELECT dbms_pipe.pack_message('Message From Session A'::text...
+               ^
+QUERY:  SELECT dbms_pipe.pack_message('Message From Session A'::text)
+CONTEXT:  PL/pgSQL function bulksend() line 5 at PERFORM
+-- An explicit private pipe
+SELECT notify('recv_private1_notifier');
+ERROR:  schema "dbms_pipe" does not exist
+LINE 1: SELECT dbms_pipe.pack_message(1)
+               ^
+QUERY:  SELECT dbms_pipe.pack_message(1)
+CONTEXT:  PL/pgSQL function notify(text) line 3 at PERFORM
+SELECT createExplicitPipe('private_pipe_1',3);
+ERROR:  schema "dbms_pipe" does not exist
+LINE 1: SELECT dbms_pipe.create_pipe(name,4,true)
+               ^
+QUERY:  SELECT dbms_pipe.create_pipe(name,4,true)
+CONTEXT:  PL/pgSQL function createpipe(text,integer) line 4 at PERFORM
+SQL statement "SELECT createPipe(pipename,create_version)"
+PL/pgSQL function createexplicitpipe(text,integer) line 6 at PERFORM
+-- An explicit private pipe
+SELECT notify('recv_private2_notifier');
+ERROR:  schema "dbms_pipe" does not exist
+LINE 1: SELECT dbms_pipe.pack_message(1)
+               ^
+QUERY:  SELECT dbms_pipe.pack_message(1)
+CONTEXT:  PL/pgSQL function notify(text) line 3 at PERFORM
+SELECT createExplicitPipe('private_pipe_2',3);
+ERROR:  schema "dbms_pipe" does not exist
+LINE 1: SELECT dbms_pipe.create_pipe(name,4,true)
+               ^
+QUERY:  SELECT dbms_pipe.create_pipe(name,4,true)
+CONTEXT:  PL/pgSQL function createpipe(text,integer) line 4 at PERFORM
+SQL statement "SELECT createPipe(pipename,create_version)"
+PL/pgSQL function createexplicitpipe(text,integer) line 6 at PERFORM
+-- An explicit public pipe (uses two-argument create_pipe)
+SELECT notify('recv_public1_notifier');
+ERROR:  schema "dbms_pipe" does not exist
+LINE 1: SELECT dbms_pipe.pack_message(1)
+               ^
+QUERY:  SELECT dbms_pipe.pack_message(1)
+CONTEXT:  PL/pgSQL function notify(text) line 3 at PERFORM
+SELECT createExplicitPipe('public_pipe_3',2);
+ERROR:  schema "dbms_pipe" does not exist
+LINE 1: SELECT dbms_pipe.create_pipe(name,4)
+               ^
+QUERY:  SELECT dbms_pipe.create_pipe(name,4)
+CONTEXT:  PL/pgSQL function createpipe(text,integer) line 6 at PERFORM
+SQL statement "SELECT createPipe(pipename,create_version)"
+PL/pgSQL function createexplicitpipe(text,integer) line 6 at PERFORM
+-- An explicit public pipe (uses one-argument create_pipe)
+SELECT notify('recv_public2_notifier');
+ERROR:  schema "dbms_pipe" does not exist
+LINE 1: SELECT dbms_pipe.pack_message(1)
+               ^
+QUERY:  SELECT dbms_pipe.pack_message(1)
+CONTEXT:  PL/pgSQL function notify(text) line 3 at PERFORM
+SELECT createExplicitPipe('public_pipe_4',1);
+ERROR:  schema "dbms_pipe" does not exist
+LINE 1: SELECT dbms_pipe.create_pipe(name)
+               ^
+QUERY:  SELECT dbms_pipe.create_pipe(name)
+CONTEXT:  PL/pgSQL function createpipe(text,integer) line 8 at PERFORM
+SQL statement "SELECT createPipe(pipename,create_version)"
+PL/pgSQL function createexplicitpipe(text,integer) line 6 at PERFORM
+-- tests send_message(text)
+SELECT checkSend1();
+ERROR:  schema "dbms_pipe" does not exist
+LINE 1: SELECT dbms_pipe.pack_message('checking one-argument send_me...
+               ^
+QUERY:  SELECT dbms_pipe.pack_message('checking one-argument send_message()')
+CONTEXT:  PL/pgSQL function checksend1() line 3 at PERFORM
+-- tests send_message(text,integer)
+SELECT checkSend2();
+ERROR:  schema "dbms_pipe" does not exist
+LINE 1: SELECT dbms_pipe.pack_message('checking two-argument send_me...
+               ^
+QUERY:  SELECT dbms_pipe.pack_message('checking two-argument send_message()')
+CONTEXT:  PL/pgSQL function checksend2() line 3 at PERFORM
+SELECT notifyDropTemp();
+ERROR:  schema "dbms_pipe" does not exist
+LINE 1: SELECT dbms_pipe.pack_message(1)
+               ^
+QUERY:  SELECT dbms_pipe.pack_message(1)
+CONTEXT:  PL/pgSQL function notifydroptemp() line 3 at PERFORM
+-- tests unique_session_name()
+SELECT checkUniqueSessionNameA();
+ERROR:  schema "dbms_pipe" does not exist
+LINE 1: SELECT dbms_pipe.pack_message(dbms_pipe.unique_session_name(...
+                                      ^
+QUERY:  SELECT dbms_pipe.pack_message(dbms_pipe.unique_session_name())
+CONTEXT:  PL/pgSQL function checkuniquesessionnamea() line 3 at PERFORM
+DROP FUNCTION createImplicitPipe();
+DROP FUNCTION createExplicitPipe(text,integer);
+DROP FUNCTION createPipe(text,integer);
+DROP FUNCTION checkSend1();
+DROP FUNCTION checkSend2();
+DROP FUNCTION checkUniqueSessionNameA();
+DROP FUNCTION bulkSend();
+DROP FUNCTION notifyDropTemp();
+DROP FUNCTION notify(text);
+DROP FUNCTION send(text);

@@ -1,0 +1,71 @@
+2023-07-25 07:18:50.221 UTC [1818004] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 07:18:50.222 UTC [1818004] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 07:18:50.232 UTC [1818004] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 07:18:50.249 UTC [1818007] LOG:  database system was shut down at 2023-07-25 07:18:49 UTC
+2023-07-25 07:18:50.262 UTC [1818004] LOG:  database system is ready to accept connections
+2023-07-25 07:18:51.177 UTC [1818024] ERROR:  permission denied for function bt_index_check
+2023-07-25 07:18:51.177 UTC [1818024] STATEMENT:  SELECT bt_index_check('bttest_a_idx'::regclass);
+2023-07-25 07:18:51.177 UTC [1818024] ERROR:  permission denied for function bt_index_parent_check
+2023-07-25 07:18:51.177 UTC [1818024] STATEMENT:  SELECT bt_index_parent_check('bttest_a_idx'::regclass);
+2023-07-25 07:18:51.241 UTC [1818024] ERROR:  "bttest_a" is not an index
+2023-07-25 07:18:51.241 UTC [1818024] STATEMENT:  SELECT bt_index_check('bttest_a');
+2023-07-25 07:18:51.241 UTC [1818024] ERROR:  "bttest_a" is not an index
+2023-07-25 07:18:51.241 UTC [1818024] STATEMENT:  SELECT bt_index_parent_check('bttest_a');
+2023-07-25 07:18:51.241 UTC [1818024] ERROR:  could not open relation with OID 17
+2023-07-25 07:18:51.241 UTC [1818024] STATEMENT:  SELECT bt_index_check(17);
+2023-07-25 07:18:51.241 UTC [1818024] ERROR:  could not open relation with OID 17
+2023-07-25 07:18:51.241 UTC [1818024] STATEMENT:  SELECT bt_index_parent_check(17);
+2023-07-25 07:18:51.255 UTC [1818024] ERROR:  only B-Tree indexes are supported as targets for verification
+2023-07-25 07:18:51.255 UTC [1818024] DETAIL:  Relation "bttest_a_brin_idx" is not a B-Tree index.
+2023-07-25 07:18:51.255 UTC [1818024] STATEMENT:  SELECT bt_index_parent_check('bttest_a_brin_idx');
+2023-07-25 07:18:52.339 UTC [1818028] ERROR:  invalid skip option
+2023-07-25 07:18:52.339 UTC [1818028] HINT:  Valid skip options are "all-visible", "all-frozen", and "none".
+2023-07-25 07:18:52.339 UTC [1818028] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest', skip := 'rope');
+2023-07-25 07:18:52.353 UTC [1818028] ERROR:  permission denied for function verify_heapam
+2023-07-25 07:18:52.353 UTC [1818028] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest');
+2023-07-25 07:18:52.358 UTC [1818028] ERROR:  ending block number must be between 0 and 0
+2023-07-25 07:18:52.358 UTC [1818028] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest', startblock := 0, endblock := 10000);
+2023-07-25 07:18:52.358 UTC [1818028] ERROR:  starting block number must be between 0 and 0
+2023-07-25 07:18:52.358 UTC [1818028] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest', startblock := 10000, endblock := 11000);
+2023-07-25 07:18:52.366 UTC [1818028] ERROR:  cannot check relation "test_partitioned"
+2023-07-25 07:18:52.366 UTC [1818028] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-25 07:18:52.366 UTC [1818028] STATEMENT:  SELECT * FROM verify_heapam('test_partitioned',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-25 07:18:52.528 UTC [1818028] ERROR:  cannot check relation "test_index"
+2023-07-25 07:18:52.528 UTC [1818028] DETAIL:  This operation is not supported for indexes.
+2023-07-25 07:18:52.528 UTC [1818028] STATEMENT:  SELECT * FROM verify_heapam('test_index',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-25 07:18:52.533 UTC [1818028] ERROR:  cannot check relation "test_view"
+2023-07-25 07:18:52.533 UTC [1818028] DETAIL:  This operation is not supported for views.
+2023-07-25 07:18:52.533 UTC [1818028] STATEMENT:  SELECT * FROM verify_heapam('test_view',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-25 07:18:52.550 UTC [1818028] ERROR:  cannot check relation "test_foreign_table"
+2023-07-25 07:18:52.550 UTC [1818028] DETAIL:  This operation is not supported for foreign tables.
+2023-07-25 07:18:52.550 UTC [1818028] STATEMENT:  SELECT * FROM verify_heapam('test_foreign_table',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-25 07:18:52.726 UTC [1818004] LOG:  received SIGHUP, reloading configuration files
+2023-07-25 07:18:52.727 UTC [1818004] LOG:  parameter "session_preload_libraries" changed to "pgextwlist"
+2023-07-25 07:18:52.727 UTC [1818004] LOG:  parameter "extwlist.extensions" changed to "citext,earthdistance,pg_trgm,pg_stat_statements,refint"
+2023-07-25 07:18:52.727 UTC [1818004] LOG:  parameter "extwlist.custom_path" changed to "/home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/test-scripts"
+2023-07-25 07:18:52.831 UTC [1818054] ERROR:  extension "plpgsql" already exists
+2023-07-25 07:18:52.831 UTC [1818054] STATEMENT:  CREATE EXTENSION plpgsql;
+2023-07-25 07:18:52.831 UTC [1818054] ERROR:  extension "hstore" does not exist
+2023-07-25 07:18:52.831 UTC [1818054] STATEMENT:  COMMENT ON EXTENSION hstore IS 'plpgsql comment';
+2023-07-25 07:18:52.832 UTC [1818054] ERROR:  permission denied to create extension "hstore"
+2023-07-25 07:18:52.832 UTC [1818054] HINT:  Must have CREATE privilege on current database to create this extension.
+2023-07-25 07:18:52.832 UTC [1818054] STATEMENT:  CREATE EXTENSION hstore;
+2023-07-25 07:18:52.832 UTC [1818054] ERROR:  extension "hstore" does not exist
+2023-07-25 07:18:52.832 UTC [1818054] STATEMENT:  COMMENT ON EXTENSION hstore IS 'hstore comment';
+2023-07-25 07:18:52.833 UTC [1818054] ERROR:  required extension "cube" is not installed
+2023-07-25 07:18:52.833 UTC [1818054] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-25 07:18:52.833 UTC [1818054] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-25 07:18:52.833 UTC [1818054] ERROR:  must be owner of extension plpgsql
+2023-07-25 07:18:52.833 UTC [1818054] STATEMENT:  DROP EXTENSION plpgsql;
+2023-07-25 07:18:52.860 UTC [1818062] ERROR:  cannot drop extension citext because other objects depend on it
+2023-07-25 07:18:52.860 UTC [1818062] DETAIL:  column t of table mere_table depends on type citext
+2023-07-25 07:18:52.860 UTC [1818062] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 07:18:52.860 UTC [1818062] STATEMENT:  DROP EXTENSION citext;

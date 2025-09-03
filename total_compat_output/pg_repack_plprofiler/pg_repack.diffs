@@ -1,0 +1,28 @@
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/regress/expected/repack-run_1.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/results/repack-run.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/regress/expected/repack-run_1.out	2023-07-25 04:55:56.160786782 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/results/repack-run.out	2023-07-26 08:20:02.501748706 +0000
+@@ -7,6 +7,10 @@
+ INFO: repacking table "public.tbl_badindex"
+ WARNING: skipping invalid index: CREATE UNIQUE INDEX idx_badindex_n ON public.tbl_badindex USING btree (n)
+ \! pg_repack --dbname=contrib_regression
++INFO: repacking table "public.pl_profiler_saved"
++INFO: repacking table "public.pl_profiler_saved_callgraph"
++INFO: repacking table "public.pl_profiler_saved_functions"
++INFO: repacking table "public.pl_profiler_saved_linestats"
+ INFO: repacking table "public.tbl_badindex"
+ WARNING: skipping invalid index: CREATE UNIQUE INDEX idx_badindex_n ON public.tbl_badindex USING btree (n)
+ INFO: repacking table "public.tbl_cluster"
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/regress/expected/error-on-invalid-idx.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/results/error-on-invalid-idx.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/regress/expected/error-on-invalid-idx.out	2023-07-25 04:55:56.160786782 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_repack/results/error-on-invalid-idx.out	2023-07-26 08:20:03.517746270 +0000
+@@ -7,6 +7,10 @@
+ INFO: repacking table "public.tbl_badindex"
+ WARNING: Invalid index: CREATE UNIQUE INDEX idx_badindex_n ON public.tbl_badindex USING btree (n)
+ \! pg_repack --dbname=contrib_regression --error-on-invalid-index
++INFO: repacking table "public.pl_profiler_saved"
++INFO: repacking table "public.pl_profiler_saved_callgraph"
++INFO: repacking table "public.pl_profiler_saved_functions"
++INFO: repacking table "public.pl_profiler_saved_linestats"
+ INFO: repacking table "public.tbl_badindex"
+ WARNING: Invalid index: CREATE UNIQUE INDEX idx_badindex_n ON public.tbl_badindex USING btree (n)
+ INFO: repacking table "public.tbl_cluster"

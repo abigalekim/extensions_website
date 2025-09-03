@@ -1,0 +1,35 @@
+                                                   QUERY PLAN                                                   
+----------------------------------------------------------------------------------------------------------------
+ Append
+   ->  Result
+         ->  Append
+               ->  Sample Scan on p1_c1_c1 s1
+                     Sampling: system ('10'::real)
+               ->  Foreign Scan on ft1
+                     Foreign File: /home/abigalek/pgext-cli/pgextworkdir/pg_hint_plan-REL15_1_5_0/data/data.csv
+               ->  Gather
+                     Workers Planned: 5
+                     ->  Parallel Append
+                           ->  Seq Scan on p1 p1_1
+                                 Filter: ((id % 2) = 0)
+                           ->  Seq Scan on p1_c1 p1_2
+                                 Filter: ((id % 2) = 0)
+                           ->  Seq Scan on p1_c3 p1_4
+                                 Filter: ((id % 2) = 0)
+                           ->  Parallel Seq Scan on p1_c2 p1_3
+                                 Filter: ((id % 2) = 0)
+                           ->  Parallel Seq Scan on p1_c4 p1_5
+                                 Filter: ((id % 2) = 0)
+                           ->  Parallel Seq Scan on p1_c1_c1 p1_6
+                                 Filter: ((id % 2) = 0)
+                           ->  Parallel Seq Scan on p1_c1_c2 p1_7
+                                 Filter: ((id % 2) = 0)
+                           ->  Parallel Seq Scan on p1_c3_c1 p1_8
+                                 Filter: ((id % 2) = 0)
+                           ->  Parallel Seq Scan on p1_c3_c2 p1_9
+                                 Filter: ((id % 2) = 0)
+   ->  Function Scan on pg_stat_statements
+   ->  Subquery Scan on "*SELECT* 5"
+         ->  Values Scan on "*VALUES*"
+(31 rows)
+

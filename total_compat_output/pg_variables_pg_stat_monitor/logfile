@@ -1,0 +1,618 @@
+2023-07-26 16:45:01.501 UTC [1121266] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 16:45:01.501 UTC [1121266] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 16:45:01.516 UTC [1121266] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 16:45:01.531 UTC [1121272] LOG:  database system was shut down at 2023-07-26 16:45:01 UTC
+2023-07-26 16:45:01.540 UTC [1121266] LOG:  database system is ready to accept connections
+2023-07-26 16:45:01.755 UTC [1121288] ERROR:  package name can not be NULL
+2023-07-26 16:45:01.755 UTC [1121288] STATEMENT:  SELECT pgv_exists(NULL);
+2023-07-26 16:45:01.756 UTC [1121288] ERROR:  package name can not be NULL
+2023-07-26 16:45:01.756 UTC [1121288] STATEMENT:  SELECT pgv_remove(NULL);
+2023-07-26 16:45:01.756 UTC [1121288] ERROR:  unrecognized package "vars"
+2023-07-26 16:45:01.756 UTC [1121288] STATEMENT:  SELECT pgv_remove('vars');
+2023-07-26 16:45:01.757 UTC [1121288] ERROR:  name "vars111111111111111111111111111111111111111111111111111111111111" is too long
+2023-07-26 16:45:01.757 UTC [1121288] STATEMENT:  SELECT pgv_exists('vars111111111111111111111111111111111111111111111111111111111111');
+2023-07-26 16:45:01.758 UTC [1121288] ERROR:  unrecognized package "vars"
+2023-07-26 16:45:01.758 UTC [1121288] STATEMENT:  SELECT pgv_get_int('vars', 'int1');
+2023-07-26 16:45:01.762 UTC [1121288] ERROR:  unrecognized variable "int3"
+2023-07-26 16:45:01.762 UTC [1121288] STATEMENT:  SELECT pgv_get_int('vars', 'int3');
+2023-07-26 16:45:01.767 UTC [1121288] ERROR:  variable "int1" requires "integer" value
+2023-07-26 16:45:01.767 UTC [1121288] STATEMENT:  SELECT pgv_set_text('vars', 'int1', 's101');
+2023-07-26 16:45:01.767 UTC [1121288] ERROR:  variable "str1" requires "text" value
+2023-07-26 16:45:01.767 UTC [1121288] STATEMENT:  SELECT pgv_set_int('vars', 'str1', 101);
+2023-07-26 16:45:01.770 UTC [1121288] ERROR:  unrecognized variable "str3"
+2023-07-26 16:45:01.770 UTC [1121288] STATEMENT:  SELECT pgv_get_text('vars', 'str3');
+2023-07-26 16:45:01.771 UTC [1121288] ERROR:  variable "int1" requires "integer" value
+2023-07-26 16:45:01.771 UTC [1121288] STATEMENT:  SELECT pgv_get_text('vars', 'int1');
+2023-07-26 16:45:01.772 UTC [1121288] ERROR:  variable "str1" requires "text" value
+2023-07-26 16:45:01.772 UTC [1121288] STATEMENT:  SELECT pgv_get_int('vars', 'str1');
+2023-07-26 16:45:01.775 UTC [1121288] ERROR:  variable "str1" requires "text" value
+2023-07-26 16:45:01.775 UTC [1121288] STATEMENT:  SELECT pgv_set_numeric('vars', 'str1', 1.01);
+2023-07-26 16:45:01.777 UTC [1121288] ERROR:  unrecognized variable "num3"
+2023-07-26 16:45:01.777 UTC [1121288] STATEMENT:  SELECT pgv_get_numeric('vars', 'num3');
+2023-07-26 16:45:01.779 UTC [1121288] ERROR:  variable "str1" requires "text" value
+2023-07-26 16:45:01.779 UTC [1121288] STATEMENT:  SELECT pgv_get_numeric('vars', 'str1');
+2023-07-26 16:45:01.782 UTC [1121288] ERROR:  variable "num1" requires "numeric" value
+2023-07-26 16:45:01.782 UTC [1121288] STATEMENT:  SELECT pgv_set_timestamp('vars', 'num1', '2016-03-30 12:00:00');
+2023-07-26 16:45:01.784 UTC [1121288] ERROR:  unrecognized variable "ts3"
+2023-07-26 16:45:01.784 UTC [1121288] STATEMENT:  SELECT pgv_get_timestamp('vars', 'ts3');
+2023-07-26 16:45:01.786 UTC [1121288] ERROR:  variable "num1" requires "numeric" value
+2023-07-26 16:45:01.786 UTC [1121288] STATEMENT:  SELECT pgv_get_timestamp('vars', 'num1');
+2023-07-26 16:45:01.789 UTC [1121288] ERROR:  variable "ts1" requires "timestamp without time zone" value
+2023-07-26 16:45:01.789 UTC [1121288] STATEMENT:  SELECT pgv_set_timestamptz('vars', 'ts1', '2016-03-30 12:00:00 GMT+03');
+2023-07-26 16:45:01.791 UTC [1121288] ERROR:  unrecognized variable "tstz3"
+2023-07-26 16:45:01.791 UTC [1121288] STATEMENT:  SELECT pgv_get_timestamptz('vars', 'tstz3');
+2023-07-26 16:45:01.793 UTC [1121288] ERROR:  variable "ts1" requires "timestamp without time zone" value
+2023-07-26 16:45:01.793 UTC [1121288] STATEMENT:  SELECT pgv_get_timestamptz('vars', 'ts1');
+2023-07-26 16:45:01.795 UTC [1121288] ERROR:  variable "tstz1" requires "timestamp with time zone" value
+2023-07-26 16:45:01.795 UTC [1121288] STATEMENT:  SELECT pgv_set_date('vars', 'tstz1', '2016-04-01');
+2023-07-26 16:45:01.798 UTC [1121288] ERROR:  unrecognized variable "d3"
+2023-07-26 16:45:01.798 UTC [1121288] STATEMENT:  SELECT pgv_get_date('vars', 'd3');
+2023-07-26 16:45:01.799 UTC [1121288] ERROR:  variable "tstz1" requires "timestamp with time zone" value
+2023-07-26 16:45:01.799 UTC [1121288] STATEMENT:  SELECT pgv_get_date('vars', 'tstz1');
+2023-07-26 16:45:01.802 UTC [1121288] ERROR:  variable "d1" requires "date" value
+2023-07-26 16:45:01.802 UTC [1121288] STATEMENT:  SELECT pgv_set_jsonb('vars', 'd1', '[1, 2, "foo", null]');
+2023-07-26 16:45:01.804 UTC [1121288] ERROR:  unrecognized variable "j3"
+2023-07-26 16:45:01.804 UTC [1121288] STATEMENT:  SELECT pgv_get_jsonb('vars2', 'j3');
+2023-07-26 16:45:01.806 UTC [1121288] ERROR:  variable "d1" requires "date" value
+2023-07-26 16:45:01.806 UTC [1121288] STATEMENT:  SELECT pgv_get_jsonb('vars', 'd1');
+2023-07-26 16:45:01.827 UTC [1121288] ERROR:  variable "j1" requires "jsonb" value
+2023-07-26 16:45:01.827 UTC [1121288] STATEMENT:  SELECT pgv_insert('vars2', 'j1', tab) FROM tab;
+2023-07-26 16:45:01.827 UTC [1121288] ERROR:  there is a record in the variable "r1" with same key
+2023-07-26 16:45:01.827 UTC [1121288] STATEMENT:  SELECT pgv_insert('vars3', 'r1', tab) FROM tab;
+2023-07-26 16:45:01.828 UTC [1121288] ERROR:  new record structure have 3 attributes, but variable "r1" structure have 2.
+2023-07-26 16:45:01.828 UTC [1121288] STATEMENT:  SELECT pgv_insert('vars3', 'r1', row(1, 'str1', 'str2'));
+2023-07-26 16:45:01.828 UTC [1121288] ERROR:  new record attribute type for attribute number 2 differs from variable "r1" structure.
+2023-07-26 16:45:01.828 UTC [1121288] HINT:  You may need explicit type casts.
+2023-07-26 16:45:01.828 UTC [1121288] STATEMENT:  SELECT pgv_insert('vars3', 'r1', row(1, 1));
+2023-07-26 16:45:01.828 UTC [1121288] ERROR:  new record attribute type for attribute number 1 differs from variable "r1" structure.
+2023-07-26 16:45:01.828 UTC [1121288] HINT:  You may need explicit type casts.
+2023-07-26 16:45:01.828 UTC [1121288] STATEMENT:  SELECT pgv_insert('vars3', 'r1', row('str1', 'str1'));
+2023-07-26 16:45:01.829 UTC [1121288] ERROR:  searching for elements in multidimensional arrays is not supported
+2023-07-26 16:45:01.829 UTC [1121288] STATEMENT:  SELECT pgv_select('vars3', 'r1', ARRAY[[1,2]]);
+2023-07-26 16:45:01.830 UTC [1121288] ERROR:  unrecognized package "vars4"
+2023-07-26 16:45:01.830 UTC [1121288] STATEMENT:  SELECT pgv_update('vars4', 'r1', row(3, 'str22'::varchar));
+2023-07-26 16:45:01.830 UTC [1121288] ERROR:  unrecognized package "vars4"
+2023-07-26 16:45:01.830 UTC [1121288] STATEMENT:  select pgv_delete('vars4', 'r2', NULL::int);
+2023-07-26 16:45:01.831 UTC [1121288] ERROR:  record argument can not be NULL
+2023-07-26 16:45:01.831 UTC [1121288] STATEMENT:  SELECT pgv_insert('vars3', 'r2', NULL);
+2023-07-26 16:45:01.831 UTC [1121288] ERROR:  record argument can not be NULL
+2023-07-26 16:45:01.831 UTC [1121288] STATEMENT:  SELECT pgv_update('vars3', 'r2', NULL);
+2023-07-26 16:45:01.831 UTC [1121288] ERROR:  array argument can not be NULL
+2023-07-26 16:45:01.831 UTC [1121288] STATEMENT:  SELECT pgv_select('vars3', 'r1', NULL::int[]);
+2023-07-26 16:45:01.832 UTC [1121288] ERROR:  requested value type differs from variable "r1" key type
+2023-07-26 16:45:01.832 UTC [1121288] STATEMENT:  SELECT pgv_select('vars3', 'r1', 1::float);
+2023-07-26 16:45:01.839 UTC [1121288] ERROR:  unrecognized variable "r3"
+2023-07-26 16:45:01.839 UTC [1121288] STATEMENT:  SELECT pgv_select('vars3', 'r3');
+2023-07-26 16:45:01.840 UTC [1121288] ERROR:  variable "j1" requires "jsonb" value
+2023-07-26 16:45:01.840 UTC [1121288] STATEMENT:  SELECT pgv_select('vars2', 'j1');
+2023-07-26 16:45:01.848 UTC [1121288] ERROR:  unrecognized variable "r3"
+2023-07-26 16:45:01.848 UTC [1121288] CONTEXT:  SQL statement "SELECT pgv_select('vars3', 'r3')"
+	PL/pgSQL function inline_code_block line 3 at PERFORM
+2023-07-26 16:45:01.848 UTC [1121288] STATEMENT:  DO
+	$$BEGIN
+	    PERFORM pgv_select('vars3', 'r1') LIMIT 2 OFFSET 2;
+	    PERFORM pgv_select('vars3', 'r3');
+	END$$;
+2023-07-26 16:45:01.851 UTC [1121288] ERROR:  could not identify a hash function for type record
+2023-07-26 16:45:01.851 UTC [1121288] STATEMENT:  SELECT pgv_insert('vars4', 'r1', row (('str1'::text, 'str1'::text)));
+2023-07-26 16:45:01.854 UTC [1121288] ERROR:  variable "r1" already created as NOT TRANSACTIONAL
+2023-07-26 16:45:01.854 UTC [1121288] STATEMENT:  SELECT pgv_set('vars5', 'r1', row(1, 'str11'), true);
+2023-07-26 16:45:01.854 UTC [1121288] ERROR:  "r1" isn't a record variable
+2023-07-26 16:45:01.854 UTC [1121288] STATEMENT:  SELECT pgv_insert('vars5', 'r1', row(1, 'str11'));
+2023-07-26 16:45:01.855 UTC [1121288] ERROR:  "r1" isn't a record variable
+2023-07-26 16:45:01.855 UTC [1121288] STATEMENT:  SELECT pgv_select('vars5', 'r1');
+2023-07-26 16:45:01.855 UTC [1121288] ERROR:  "r1" isn't a scalar variable
+2023-07-26 16:45:01.855 UTC [1121288] STATEMENT:  SELECT pgv_get('vars3', 'r1', NULL::record);
+2023-07-26 16:45:01.856 UTC [1121288] ERROR:  unrecognized variable "int3"
+2023-07-26 16:45:01.856 UTC [1121288] STATEMENT:  SELECT pgv_remove('vars', 'int3');
+2023-07-26 16:45:01.857 UTC [1121288] ERROR:  unrecognized variable "int1"
+2023-07-26 16:45:01.857 UTC [1121288] STATEMENT:  SELECT pgv_get_int('vars', 'int1');
+2023-07-26 16:45:01.858 UTC [1121288] ERROR:  unrecognized package "vars2"
+2023-07-26 16:45:01.858 UTC [1121288] STATEMENT:  SELECT pgv_get_jsonb('vars2', 'j1');
+2023-07-26 16:45:01.866 UTC [1121288] ERROR:  new record structure have 2 attributes, but variable "r1" structure have 3.
+2023-07-26 16:45:01.866 UTC [1121288] STATEMENT:  SELECT pgv_insert('vars', 'r1', foo) FROM foo;
+2023-07-26 16:45:01.871 UTC [1121288] ERROR:  new record attribute type for attribute number 2 differs from variable "r4" structure.
+2023-07-26 16:45:01.871 UTC [1121288] HINT:  You may need explicit type casts.
+2023-07-26 16:45:01.871 UTC [1121288] STATEMENT:  SELECT pgv_insert('vars', 'r4', row(0, 'str1'));
+2023-07-26 16:45:01.891 UTC [1121292] ERROR:  unrecognized package "vars"
+2023-07-26 16:45:01.891 UTC [1121292] STATEMENT:  SELECT pgv_get('vars', 'int1', NULL::int);
+2023-07-26 16:45:01.893 UTC [1121292] ERROR:  unrecognized variable "int3"
+2023-07-26 16:45:01.893 UTC [1121292] STATEMENT:  SELECT pgv_get('vars', 'int3', NULL::int);
+2023-07-26 16:45:01.893 UTC [1121292] ERROR:  variable "int1" requires "integer" value
+2023-07-26 16:45:01.893 UTC [1121292] STATEMENT:  SELECT pgv_set('vars', 'int1', 's101'::text);
+2023-07-26 16:45:01.894 UTC [1121292] ERROR:  variable "str1" requires "text" value
+2023-07-26 16:45:01.894 UTC [1121292] STATEMENT:  SELECT pgv_set('vars', 'str1', 101);
+2023-07-26 16:45:01.894 UTC [1121292] ERROR:  unrecognized variable "str3"
+2023-07-26 16:45:01.894 UTC [1121292] STATEMENT:  SELECT pgv_get('vars', 'str3', NULL::text);
+2023-07-26 16:45:01.894 UTC [1121292] ERROR:  variable "int1" requires "integer" value
+2023-07-26 16:45:01.894 UTC [1121292] STATEMENT:  SELECT pgv_get('vars', 'int1', NULL::text);
+2023-07-26 16:45:01.894 UTC [1121292] ERROR:  variable "str1" requires "text" value
+2023-07-26 16:45:01.894 UTC [1121292] STATEMENT:  SELECT pgv_get('vars', 'str1', NULL::int);
+2023-07-26 16:45:01.895 UTC [1121292] ERROR:  variable "str1" requires "text" value
+2023-07-26 16:45:01.895 UTC [1121292] STATEMENT:  SELECT pgv_set('vars', 'str1', 1.01::numeric);
+2023-07-26 16:45:01.895 UTC [1121292] ERROR:  unrecognized variable "num3"
+2023-07-26 16:45:01.895 UTC [1121292] STATEMENT:  SELECT pgv_get('vars', 'num3', NULL::numeric);
+2023-07-26 16:45:01.895 UTC [1121292] ERROR:  variable "str1" requires "text" value
+2023-07-26 16:45:01.895 UTC [1121292] STATEMENT:  SELECT pgv_get('vars', 'str1', NULL::numeric);
+2023-07-26 16:45:01.896 UTC [1121292] ERROR:  variable "num1" requires "numeric" value
+2023-07-26 16:45:01.896 UTC [1121292] STATEMENT:  SELECT pgv_set('vars', 'num1', '2016-03-30 12:00:00'::timestamp);
+2023-07-26 16:45:01.896 UTC [1121292] ERROR:  unrecognized variable "ts3"
+2023-07-26 16:45:01.896 UTC [1121292] STATEMENT:  SELECT pgv_get('vars', 'ts3', NULL::timestamp);
+2023-07-26 16:45:01.896 UTC [1121292] ERROR:  variable "num1" requires "numeric" value
+2023-07-26 16:45:01.896 UTC [1121292] STATEMENT:  SELECT pgv_get('vars', 'num1', NULL::timestamp);
+2023-07-26 16:45:01.897 UTC [1121292] ERROR:  variable "ts1" requires "timestamp without time zone" value
+2023-07-26 16:45:01.897 UTC [1121292] STATEMENT:  SELECT pgv_set('vars', 'ts1', '2016-03-30 12:00:00 GMT+03'::timestamptz);
+2023-07-26 16:45:01.897 UTC [1121292] ERROR:  unrecognized variable "tstz3"
+2023-07-26 16:45:01.897 UTC [1121292] STATEMENT:  SELECT pgv_get('vars', 'tstz3', NULL::timestamptz);
+2023-07-26 16:45:01.897 UTC [1121292] ERROR:  variable "ts1" requires "timestamp without time zone" value
+2023-07-26 16:45:01.897 UTC [1121292] STATEMENT:  SELECT pgv_get('vars', 'ts1', NULL::timestamptz);
+2023-07-26 16:45:01.898 UTC [1121292] ERROR:  variable "tstz1" requires "timestamp with time zone" value
+2023-07-26 16:45:01.898 UTC [1121292] STATEMENT:  SELECT pgv_set('vars', 'tstz1', '2016-04-01'::date);
+2023-07-26 16:45:01.898 UTC [1121292] ERROR:  unrecognized variable "d3"
+2023-07-26 16:45:01.898 UTC [1121292] STATEMENT:  SELECT pgv_get('vars', 'd3', NULL::date);
+2023-07-26 16:45:01.898 UTC [1121292] ERROR:  variable "tstz1" requires "timestamp with time zone" value
+2023-07-26 16:45:01.898 UTC [1121292] STATEMENT:  SELECT pgv_get('vars', 'tstz1', NULL::date);
+2023-07-26 16:45:01.899 UTC [1121292] ERROR:  variable "d1" requires "date" value
+2023-07-26 16:45:01.899 UTC [1121292] STATEMENT:  SELECT pgv_set('vars', 'd1', '[1, 2, "foo", null]'::jsonb);
+2023-07-26 16:45:01.899 UTC [1121292] ERROR:  unrecognized variable "j3"
+2023-07-26 16:45:01.899 UTC [1121292] STATEMENT:  SELECT pgv_get('vars2', 'j3', NULL::jsonb);
+2023-07-26 16:45:01.899 UTC [1121292] ERROR:  variable "d1" requires "date" value
+2023-07-26 16:45:01.899 UTC [1121292] STATEMENT:  SELECT pgv_get('vars', 'd1', NULL::jsonb);
+2023-07-26 16:45:01.899 UTC [1121292] ERROR:  variable "j1" requires "jsonb" value
+2023-07-26 16:45:01.899 UTC [1121292] STATEMENT:  SELECT pgv_set('vars2', 'j1', '{1, 2, null}'::int[]);
+2023-07-26 16:45:01.900 UTC [1121292] ERROR:  variable "arr2" requires "text[]" value
+2023-07-26 16:45:01.900 UTC [1121292] STATEMENT:  SELECT pgv_get('vars', 'arr2', NULL::int[]);
+2023-07-26 16:45:01.900 UTC [1121292] ERROR:  variable "arr1" requires "integer[]" value
+2023-07-26 16:45:01.900 UTC [1121292] STATEMENT:  SELECT pgv_set('vars', 'arr1', '{"bar", "balance", "active"}'::text[]);
+2023-07-26 16:45:01.900 UTC [1121292] ERROR:  unrecognized variable "arr3"
+2023-07-26 16:45:01.900 UTC [1121292] STATEMENT:  SELECT pgv_get('vars', 'arr3', NULL::int[]);
+2023-07-26 16:45:01.900 UTC [1121292] ERROR:  variable "j1" requires "jsonb" value
+2023-07-26 16:45:01.900 UTC [1121292] STATEMENT:  SELECT pgv_get('vars2', 'j1', NULL::int[]);
+2023-07-26 16:45:01.901 UTC [1121292] ERROR:  unrecognized variable "int3"
+2023-07-26 16:45:01.901 UTC [1121292] STATEMENT:  SELECT pgv_remove('vars', 'int3');
+2023-07-26 16:45:01.901 UTC [1121292] ERROR:  unrecognized variable "int1"
+2023-07-26 16:45:01.901 UTC [1121292] STATEMENT:  SELECT pgv_get('vars', 'int1', NULL::int);
+2023-07-26 16:45:01.901 UTC [1121292] ERROR:  unrecognized package "vars2"
+2023-07-26 16:45:01.901 UTC [1121292] STATEMENT:  SELECT pgv_get('vars2', 'j1', NULL::jsonb);
+2023-07-26 16:45:01.932 UTC [1121296] ERROR:  variable "any1" already created as TRANSACTIONAL
+2023-07-26 16:45:01.932 UTC [1121296] STATEMENT:  SELECT pgv_set('vars', 'any1', 'value'::text);
+2023-07-26 16:45:01.932 UTC [1121296] ERROR:  variable "any2" already created as NOT TRANSACTIONAL
+2023-07-26 16:45:01.932 UTC [1121296] STATEMENT:  SELECT pgv_set('vars', 'any2', 'value'::text, true);
+2023-07-26 16:45:01.932 UTC [1121296] ERROR:  variable "int1" already created as TRANSACTIONAL
+2023-07-26 16:45:01.932 UTC [1121296] STATEMENT:  SELECT pgv_set_int('vars', 'int1', 301);
+2023-07-26 16:45:01.932 UTC [1121296] ERROR:  variable "int2" already created as NOT TRANSACTIONAL
+2023-07-26 16:45:01.932 UTC [1121296] STATEMENT:  SELECT pgv_set_int('vars', 'int2', 302, true);
+2023-07-26 16:45:01.932 UTC [1121296] ERROR:  variable "str1" already created as TRANSACTIONAL
+2023-07-26 16:45:01.932 UTC [1121296] STATEMENT:  SELECT pgv_set_text('vars', 'str1', 's301');
+2023-07-26 16:45:01.932 UTC [1121296] ERROR:  variable "str2" already created as NOT TRANSACTIONAL
+2023-07-26 16:45:01.932 UTC [1121296] STATEMENT:  SELECT pgv_set_text('vars', 'str2', 's302', true);
+2023-07-26 16:45:01.933 UTC [1121296] ERROR:  variable "num1" already created as TRANSACTIONAL
+2023-07-26 16:45:01.933 UTC [1121296] STATEMENT:  SELECT pgv_set_numeric('vars', 'num1', 3.01);
+2023-07-26 16:45:01.933 UTC [1121296] ERROR:  variable "num2" already created as NOT TRANSACTIONAL
+2023-07-26 16:45:01.933 UTC [1121296] STATEMENT:  SELECT pgv_set_numeric('vars', 'num2', 3.02, true);
+2023-07-26 16:45:01.933 UTC [1121296] ERROR:  variable "ts1" already created as TRANSACTIONAL
+2023-07-26 16:45:01.933 UTC [1121296] STATEMENT:  SELECT pgv_set_timestamp('vars', 'ts1', '2016-03-30 20:00:00');
+2023-07-26 16:45:01.933 UTC [1121296] ERROR:  variable "ts2" already created as NOT TRANSACTIONAL
+2023-07-26 16:45:01.933 UTC [1121296] STATEMENT:  SELECT pgv_set_timestamp('vars', 'ts2', '2016-03-30 21:00:00', true);
+2023-07-26 16:45:01.933 UTC [1121296] ERROR:  variable "tstz1" already created as TRANSACTIONAL
+2023-07-26 16:45:01.933 UTC [1121296] STATEMENT:  SELECT pgv_set_timestamptz('vars', 'tstz1', '2016-03-30 20:00:00 GMT+01');
+2023-07-26 16:45:01.933 UTC [1121296] ERROR:  variable "tstz2" already created as NOT TRANSACTIONAL
+2023-07-26 16:45:01.933 UTC [1121296] STATEMENT:  SELECT pgv_set_timestamptz('vars', 'tstz2', '2016-03-30 21:00:00 GMT+02', true);
+2023-07-26 16:45:01.933 UTC [1121296] ERROR:  variable "d1" already created as TRANSACTIONAL
+2023-07-26 16:45:01.933 UTC [1121296] STATEMENT:  SELECT pgv_set_date('vars', 'd1', '2016-04-29');
+2023-07-26 16:45:01.933 UTC [1121296] ERROR:  variable "d2" already created as NOT TRANSACTIONAL
+2023-07-26 16:45:01.933 UTC [1121296] STATEMENT:  SELECT pgv_set_date('vars', 'd2', '2016-04-30', true);
+2023-07-26 16:45:01.933 UTC [1121296] ERROR:  variable "j1" already created as TRANSACTIONAL
+2023-07-26 16:45:01.933 UTC [1121296] STATEMENT:  SELECT pgv_set_jsonb('vars2', 'j1', '[1, 2, "foo2", null]');
+2023-07-26 16:45:01.933 UTC [1121296] ERROR:  variable "j2" already created as NOT TRANSACTIONAL
+2023-07-26 16:45:01.933 UTC [1121296] STATEMENT:  SELECT pgv_set_jsonb('vars2', 'j2', '{"bar": "baz2", "balance": 7.77, "active": true}', true);
+2023-07-26 16:45:01.933 UTC [1121296] ERROR:  variable "r1" already created as TRANSACTIONAL
+2023-07-26 16:45:01.933 UTC [1121296] STATEMENT:  SELECT pgv_insert('vars3', 'r1', row(6 :: integer, 'str66' :: varchar));
+2023-07-26 16:45:01.933 UTC [1121296] ERROR:  variable "r2" already created as NOT TRANSACTIONAL
+2023-07-26 16:45:01.933 UTC [1121296] STATEMENT:  SELECT pgv_insert('vars3', 'r2', row(6 :: integer, 'str66' :: varchar),true);
+2023-07-26 16:45:01.934 UTC [1121296] ERROR:  unrecognized variable "any1"
+2023-07-26 16:45:01.934 UTC [1121296] STATEMENT:  SELECT pgv_get('vars', 'any1',NULL::text);
+2023-07-26 16:45:01.934 UTC [1121296] ERROR:  unrecognized variable "r1"
+2023-07-26 16:45:01.934 UTC [1121296] STATEMENT:  SELECT pgv_select('vars3', 'r1');
+2023-07-26 16:45:01.935 UTC [1121296] ERROR:  unrecognized package "vars2"
+2023-07-26 16:45:01.935 UTC [1121296] STATEMENT:  SELECT pgv_get('vars2', 'any1',NULL::text);
+2023-07-26 16:45:01.938 UTC [1121296] ERROR:  unrecognized variable "any1"
+2023-07-26 16:45:01.938 UTC [1121296] STATEMENT:  SELECT pgv_get('vars', 'any1',NULL::text);
+2023-07-26 16:45:01.938 UTC [1121296] ERROR:  unrecognized variable "r1"
+2023-07-26 16:45:01.938 UTC [1121296] STATEMENT:  SELECT pgv_select('vars', 'r1');
+2023-07-26 16:45:01.939 UTC [1121296] ERROR:  unrecognized package "vars2"
+2023-07-26 16:45:01.939 UTC [1121296] STATEMENT:  SELECT pgv_get('vars2', 'any1',NULL::text);
+2023-07-26 16:45:01.941 UTC [1121296] ERROR:  variable "any1" requires "text" value
+2023-07-26 16:45:01.941 UTC [1121296] STATEMENT:  SELECT pgv_set('vars', 'any1', 'wrong type'::varchar, true);
+2023-07-26 16:45:01.942 UTC [1121296] ERROR:  unrecognized package "vars"
+2023-07-26 16:45:01.942 UTC [1121296] STATEMENT:  SELECT pgv_get('vars', 'any1',NULL::text);
+2023-07-26 16:45:01.945 UTC [1121296] ERROR:  division by zero
+2023-07-26 16:45:01.945 UTC [1121296] STATEMENT:  SELECT pgv_insert('package', 'errs',row(n), true)
+	FROM generate_series(1,5) AS gs(n) WHERE 1.0/(n-3)<>0;
+2023-07-26 16:45:01.945 UTC [1121296] ERROR:  could not identify a hash function for type record
+2023-07-26 16:45:01.945 UTC [1121296] STATEMENT:  SELECT pgv_insert('vars4', 'r1', row (('str1'::text, 'str1'::text)));
+2023-07-26 16:45:01.945 UTC [1121296] ERROR:  unrecognized package "vars4"
+2023-07-26 16:45:01.945 UTC [1121296] STATEMENT:  SELECT pgv_select('vars4', 'r1', 0);
+2023-07-26 16:45:01.945 UTC [1121296] ERROR:  unrecognized package "vars"
+2023-07-26 16:45:01.945 UTC [1121296] STATEMENT:  SELECT pgv_get('vars', 'any1',NULL::text);
+2023-07-26 16:45:01.946 UTC [1121296] ERROR:  syntax error at or near "ERROR" at character 1
+2023-07-26 16:45:01.946 UTC [1121296] STATEMENT:  ERROR;
+2023-07-26 16:45:01.952 UTC [1121296] ERROR:  unrecognized variable "y"
+2023-07-26 16:45:01.952 UTC [1121296] STATEMENT:  SELECT pgv_select('test', 'y');
+2023-07-26 16:45:01.952 UTC [1121296] ERROR:  unrecognized variable "y"
+2023-07-26 16:45:01.952 UTC [1121296] STATEMENT:  SELECT pgv_select('test', 'y');
+2023-07-26 16:45:01.953 UTC [1121296] ERROR:  unrecognized variable "y"
+2023-07-26 16:45:01.953 UTC [1121296] STATEMENT:  SELECT pgv_select('test', 'y');
+2023-07-26 16:45:01.953 UTC [1121296] ERROR:  unrecognized package "test"
+2023-07-26 16:45:01.953 UTC [1121296] STATEMENT:  FETCH 1 in r1_cur;
+2023-07-26 16:45:01.953 UTC [1121296] ERROR:  unrecognized variable "y"
+2023-07-26 16:45:01.953 UTC [1121296] STATEMENT:  FETCH 1 in r1_cur;
+2023-07-26 16:45:01.953 UTC [1121296] ERROR:  unrecognized variable "y"
+2023-07-26 16:45:01.953 UTC [1121296] STATEMENT:  SELECT pgv_select('test', 'y');
+2023-07-26 16:45:01.954 UTC [1121296] ERROR:  unrecognized package "test"
+2023-07-26 16:45:01.954 UTC [1121296] STATEMENT:  FETCH 1 in r1_cur;
+2023-07-26 16:45:01.954 UTC [1121296] ERROR:  unrecognized package "test"
+2023-07-26 16:45:01.954 UTC [1121296] STATEMENT:  FETCH 1 in r1_cur;
+2023-07-26 16:45:01.954 UTC [1121296] ERROR:  function pgv_select(unknown) does not exist at character 8
+2023-07-26 16:45:01.954 UTC [1121296] HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+2023-07-26 16:45:01.954 UTC [1121296] STATEMENT:  SELECT pgv_select('test');
+2023-07-26 16:45:01.954 UTC [1121296] ERROR:  unrecognized package "test"
+2023-07-26 16:45:01.954 UTC [1121296] STATEMENT:  FETCH 1 in r1_cur;
+2023-07-26 16:45:01.955 UTC [1121296] ERROR:  unrecognized package "test"
+2023-07-26 16:45:01.955 UTC [1121296] STATEMENT:  FETCH 1 in r1_cur;
+2023-07-26 16:45:01.955 UTC [1121296] ERROR:  function pgv_select(unknown) does not exist at character 8
+2023-07-26 16:45:01.955 UTC [1121296] HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+2023-07-26 16:45:01.955 UTC [1121296] STATEMENT:  SELECT pgv_select('test');
+2023-07-26 16:45:01.955 UTC [1121296] ERROR:  unrecognized package "test"
+2023-07-26 16:45:01.955 UTC [1121296] STATEMENT:  FETCH 1 in r1_cur;
+2023-07-26 16:45:01.955 UTC [1121296] ERROR:  unrecognized package "test"
+2023-07-26 16:45:01.955 UTC [1121296] STATEMENT:  SELECT pgv_select('test', 'x');
+2023-07-26 16:45:01.955 UTC [1121296] ERROR:  unrecognized package "test"
+2023-07-26 16:45:01.955 UTC [1121296] STATEMENT:  FETCH 1 in r1_cur;
+2023-07-26 16:45:01.956 UTC [1121296] ERROR:  unrecognized package "test"
+2023-07-26 16:45:01.956 UTC [1121296] STATEMENT:  SELECT pgv_select('test', 'x');
+2023-07-26 16:45:01.956 UTC [1121296] ERROR:  unrecognized package "test"
+2023-07-26 16:45:01.956 UTC [1121296] STATEMENT:  FETCH 1 in r1_cur;
+2023-07-26 16:45:01.956 UTC [1121296] ERROR:  unrecognized package "test"
+2023-07-26 16:45:01.956 UTC [1121296] STATEMENT:  SELECT pgv_select('test', 'x');
+2023-07-26 16:45:01.956 UTC [1121296] ERROR:  unrecognized package "test"
+2023-07-26 16:45:01.956 UTC [1121296] STATEMENT:  FETCH 1 in r1_cur;
+2023-07-26 16:45:01.956 UTC [1121296] ERROR:  unrecognized package "test"
+2023-07-26 16:45:01.956 UTC [1121296] STATEMENT:  FETCH 1 in r1_cur;
+2023-07-26 16:45:01.957 UTC [1121296] ERROR:  unrecognized package "test"
+2023-07-26 16:45:01.957 UTC [1121296] STATEMENT:  FETCH 1 in r1_cur;
+2023-07-26 16:45:01.957 UTC [1121296] ERROR:  unrecognized package "test"
+2023-07-26 16:45:01.957 UTC [1121296] STATEMENT:  SELECT pgv_select('test', 'x');
+2023-07-26 16:45:01.958 UTC [1121296] ERROR:  unrecognized package "test"
+2023-07-26 16:45:01.958 UTC [1121296] STATEMENT:  SELECT pgv_select('test', 'x');
+2023-07-26 16:45:01.958 UTC [1121296] ERROR:  unrecognized package "test"
+2023-07-26 16:45:01.958 UTC [1121296] STATEMENT:  SELECT pgv_select('test', 'x');
+2023-07-26 16:45:01.958 UTC [1121296] ERROR:  unrecognized package "test"
+2023-07-26 16:45:01.958 UTC [1121296] STATEMENT:  FETCH 1 in r1_cur;
+2023-07-26 16:45:01.959 UTC [1121296] ERROR:  unrecognized package "test"
+2023-07-26 16:45:01.959 UTC [1121296] STATEMENT:  FETCH 1 in r1_cur;
+2023-07-26 16:45:01.959 UTC [1121296] ERROR:  unrecognized package "test"
+2023-07-26 16:45:01.959 UTC [1121296] STATEMENT:  FETCH 1 in r1_cur;
+2023-07-26 16:45:01.964 UTC [1121296] ERROR:  unrecognized variable "z1"
+2023-07-26 16:45:01.964 UTC [1121296] STATEMENT:  FETCH 1 in r1_cur;
+2023-07-26 16:45:01.964 UTC [1121296] ERROR:  cursor "r1_cur" does not exist
+2023-07-26 16:45:01.964 UTC [1121296] STATEMENT:  FETCH 1 in r1_cur;
+2023-07-26 16:45:01.964 UTC [1121296] ERROR:  unrecognized variable "z2"
+2023-07-26 16:45:01.964 UTC [1121296] STATEMENT:  SELECT pgv_select('test', 'z2');
+2023-07-26 16:45:01.965 UTC [1121296] ERROR:  cursor "r1_cur" does not exist
+2023-07-26 16:45:01.965 UTC [1121296] STATEMENT:  FETCH 1 in r1_cur;
+2023-07-26 16:45:01.970 UTC [1121296] ERROR:  there is a record in the variable "y" with same key
+2023-07-26 16:45:01.970 UTC [1121296] STATEMENT:  SELECT pgv_insert('test1', 'y', ROW (2::float, 1::float), TRUE);
+2023-07-26 16:45:01.970 UTC [1121296] ERROR:  variable "y" already created as TRANSACTIONAL
+2023-07-26 16:45:01.970 UTC [1121296] STATEMENT:  SELECT pgv_insert('test1', 'y', ROW (2::float, 1::float), FALSE);
+2023-07-26 16:45:01.971 UTC [1121296] ERROR:  variable "y" already created as TRANSACTIONAL
+2023-07-26 16:45:01.971 UTC [1121296] STATEMENT:  SELECT pgv_insert('test1', 'y', ROW (2::float, 1::float), FALSE);
+2023-07-26 16:45:01.971 UTC [1121296] ERROR:  variable "x" already created as TRANSACTIONAL
+2023-07-26 16:45:01.971 UTC [1121296] STATEMENT:  SELECT pgv_insert('test1', 'x', ROW (2::float, 1::float), FALSE);
+2023-07-26 16:45:01.971 UTC [1121296] ERROR:  variable "y" already created as TRANSACTIONAL
+2023-07-26 16:45:01.971 UTC [1121296] STATEMENT:  SELECT pgv_insert('test1', 'y', ROW (2::float, 1::float), FALSE);
+2023-07-26 16:45:01.971 UTC [1121296] ERROR:  variable "y" already created as TRANSACTIONAL
+2023-07-26 16:45:01.971 UTC [1121296] STATEMENT:  SELECT pgv_insert('test1', 'y', ROW (2::float, 1::float), FALSE);
+2023-07-26 16:45:01.989 UTC [1121296] ERROR:  new record structure have 2 attributes, but variable "r1" structure have 3.
+2023-07-26 16:45:01.989 UTC [1121296] STATEMENT:  SELECT pgv_insert('vars', 'r1', tab) FROM tab;
+2023-07-26 16:45:01.992 UTC [1121296] ERROR:  could not identify a hash function for type record
+2023-07-26 16:45:01.992 UTC [1121296] STATEMENT:  SELECT pgv_insert('test', 'x5', ROW ((2::int, 1::int)), TRUE);
+2023-07-26 16:45:02.021 UTC [1121300] ERROR:  syntax error at or near "autonomous" at character 7
+2023-07-26 16:45:02.021 UTC [1121300] STATEMENT:  begin autonomous;
+2023-07-26 16:45:02.022 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.022 UTC [1121300] STATEMENT:  select pgv_set('vars', 'int3', 103);
+2023-07-26 16:45:02.022 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.022 UTC [1121300] STATEMENT:  select pgv_get('vars', 'int1', null::int), pgv_get('vars', 'int2', null::int), pgv_get('vars', 'int3', null::int);
+2023-07-26 16:45:02.023 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.023 UTC [1121300] STATEMENT:  select pgv_set('vars', 'int1', 1001);
+2023-07-26 16:45:02.023 UTC [1121300] ERROR:  syntax error at or near "autonomous" at character 7
+2023-07-26 16:45:02.023 UTC [1121300] STATEMENT:  begin autonomous;
+2023-07-26 16:45:02.024 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.024 UTC [1121300] STATEMENT:  select pgv_get('vars', 'int1', null::int), pgv_get('vars', 'int2', null::int), pgv_get('vars', 'int3', null::int);
+2023-07-26 16:45:02.024 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.024 UTC [1121300] STATEMENT:  select pgv_set('vars', 'int2', 1002);
+2023-07-26 16:45:02.024 UTC [1121300] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.025 UTC [1121300] ERROR:  unrecognized variable "int3"
+2023-07-26 16:45:02.025 UTC [1121300] STATEMENT:  select pgv_get('vars', 'int1', null::int), pgv_get('vars', 'int2', null::int), pgv_get('vars', 'int3', null::int);
+2023-07-26 16:45:02.026 UTC [1121300] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.031 UTC [1121300] ERROR:  syntax error at or near "autonomous" at character 7
+2023-07-26 16:45:02.031 UTC [1121300] STATEMENT:  begin autonomous;
+2023-07-26 16:45:02.031 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.031 UTC [1121300] STATEMENT:  select pgv_set('vars', 'int3', 103, true);
+2023-07-26 16:45:02.031 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.031 UTC [1121300] STATEMENT:  select pgv_get('vars', 'int3', null::int);
+2023-07-26 16:45:02.031 UTC [1121300] ERROR:  syntax error at or near "autonomous" at character 7
+2023-07-26 16:45:02.031 UTC [1121300] STATEMENT:  begin autonomous;
+2023-07-26 16:45:02.032 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.032 UTC [1121300] STATEMENT:  select pgv_set('vars', 'int2', 1002, true);
+2023-07-26 16:45:02.032 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.032 UTC [1121300] STATEMENT:  select pgv_get('vars', 'int2', null::int);
+2023-07-26 16:45:02.033 UTC [1121300] ERROR:  unrecognized variable "int3"
+2023-07-26 16:45:02.033 UTC [1121300] STATEMENT:  select pgv_get('vars', 'int3', null::int);
+2023-07-26 16:45:02.033 UTC [1121300] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.034 UTC [1121300] ERROR:  unrecognized variable "int2"
+2023-07-26 16:45:02.034 UTC [1121300] STATEMENT:  select pgv_get('vars', 'int2', null::int);
+2023-07-26 16:45:02.035 UTC [1121300] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.041 UTC [1121300] ERROR:  syntax error at or near "autonomous" at character 7
+2023-07-26 16:45:02.041 UTC [1121300] STATEMENT:  begin autonomous;
+2023-07-26 16:45:02.042 UTC [1121300] ERROR:  syntax error at or near "autonomous" at character 7
+2023-07-26 16:45:02.042 UTC [1121300] STATEMENT:  begin autonomous;
+2023-07-26 16:45:02.042 UTC [1121300] ERROR:  syntax error at or near "autonomous" at character 7
+2023-07-26 16:45:02.042 UTC [1121300] STATEMENT:  begin autonomous;
+2023-07-26 16:45:02.042 UTC [1121300] ERROR:  syntax error at or near "autonomous" at character 7
+2023-07-26 16:45:02.042 UTC [1121300] STATEMENT:  begin autonomous;
+2023-07-26 16:45:02.042 UTC [1121300] ERROR:  syntax error at or near "autonomous" at character 7
+2023-07-26 16:45:02.042 UTC [1121300] STATEMENT:  begin autonomous;
+2023-07-26 16:45:02.043 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.043 UTC [1121300] STATEMENT:  select pgv_insert('test', 'z', row (11::int, 22::int), false);
+2023-07-26 16:45:02.043 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.043 UTC [1121300] STATEMENT:  select pgv_insert('test', 'z', row (22::int, 33::int), false);
+2023-07-26 16:45:02.043 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.043 UTC [1121300] STATEMENT:  select pgv_insert('test', 'z', row (33::int, 44::int), false);
+2023-07-26 16:45:02.043 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.043 UTC [1121300] STATEMENT:  declare r11_cur cursor for select pgv_select('test', 'x');
+2023-07-26 16:45:02.044 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.044 UTC [1121300] STATEMENT:  fetch 2 in r11_cur;
+2023-07-26 16:45:02.044 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.044 UTC [1121300] STATEMENT:  declare r2_cur cursor for select pgv_select('test', 'y');
+2023-07-26 16:45:02.044 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.044 UTC [1121300] STATEMENT:  fetch 2 in r2_cur;
+2023-07-26 16:45:02.045 UTC [1121300] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.045 UTC [1121300] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.045 UTC [1121300] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.046 UTC [1121300] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.046 UTC [1121300] ERROR:  DECLARE CURSOR can only be used in transaction blocks
+2023-07-26 16:45:02.046 UTC [1121300] STATEMENT:  declare r2_cur cursor for select pgv_select('test', 'y');
+2023-07-26 16:45:02.047 UTC [1121300] ERROR:  DECLARE CURSOR can only be used in transaction blocks
+2023-07-26 16:45:02.047 UTC [1121300] STATEMENT:  declare r3_cur cursor for select pgv_select('test', 'z');
+2023-07-26 16:45:02.047 UTC [1121300] ERROR:  cursor "r1_cur" does not exist
+2023-07-26 16:45:02.047 UTC [1121300] STATEMENT:  fetch 2 in r1_cur;
+2023-07-26 16:45:02.047 UTC [1121300] ERROR:  cursor "r2_cur" does not exist
+2023-07-26 16:45:02.047 UTC [1121300] STATEMENT:  fetch 2 in r2_cur;
+2023-07-26 16:45:02.048 UTC [1121300] ERROR:  cursor "r3_cur" does not exist
+2023-07-26 16:45:02.048 UTC [1121300] STATEMENT:  fetch 2 in r3_cur;
+2023-07-26 16:45:02.048 UTC [1121300] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.052 UTC [1121300] ERROR:  syntax error at or near "autonomous" at character 7
+2023-07-26 16:45:02.052 UTC [1121300] STATEMENT:  begin autonomous;
+2023-07-26 16:45:02.052 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.052 UTC [1121300] STATEMENT:  select pgv_set('vars', 'trans_int', 103, true);
+2023-07-26 16:45:02.053 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.053 UTC [1121300] STATEMENT:  select pgv_get('vars', 'trans_int', null::int);
+2023-07-26 16:45:02.054 UTC [1121300] ERROR:  unrecognized package "vars"
+2023-07-26 16:45:02.054 UTC [1121300] STATEMENT:  select pgv_get('vars', 'trans_int', null::int);
+2023-07-26 16:45:02.054 UTC [1121300] ERROR:  ROLLBACK TO SAVEPOINT can only be used in transaction blocks
+2023-07-26 16:45:02.054 UTC [1121300] STATEMENT:  rollback to sp1;
+2023-07-26 16:45:02.054 UTC [1121300] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.055 UTC [1121300] ERROR:  unrecognized package "vars"
+2023-07-26 16:45:02.055 UTC [1121300] STATEMENT:  select pgv_get('vars', 'trans_int', null::int);
+2023-07-26 16:45:02.057 UTC [1121300] ERROR:  syntax error at or near "autonomous" at character 7
+2023-07-26 16:45:02.057 UTC [1121300] STATEMENT:  begin autonomous;
+2023-07-26 16:45:02.057 UTC [1121300] ERROR:  syntax error at or near "autonomous" at character 7
+2023-07-26 16:45:02.057 UTC [1121300] STATEMENT:  begin autonomous;
+2023-07-26 16:45:02.058 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.058 UTC [1121300] STATEMENT:  select pgv_set('vars1', 'int1', 2);
+2023-07-26 16:45:02.058 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.058 UTC [1121300] STATEMENT:  select pgv_set('vars1', 'trans_int1', 3, true);
+2023-07-26 16:45:02.058 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.058 UTC [1121300] STATEMENT:  savepoint sp2;
+2023-07-26 16:45:02.059 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.059 UTC [1121300] STATEMENT:  select pgv_set('vars1', 'trans_int1', 4, true);
+2023-07-26 16:45:02.059 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.059 UTC [1121300] STATEMENT:  select pgv_get('vars1', 'int1', null::int);
+2023-07-26 16:45:02.059 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.059 UTC [1121300] STATEMENT:  select pgv_get('vars1', 'trans_int1', null::int);
+2023-07-26 16:45:02.060 UTC [1121300] ERROR:  savepoint "sp2" does not exist
+2023-07-26 16:45:02.060 UTC [1121300] STATEMENT:  rollback to sp2;
+2023-07-26 16:45:02.060 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.060 UTC [1121300] STATEMENT:  select pgv_get('vars1', 'trans_int1', null::int);
+2023-07-26 16:45:02.060 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.060 UTC [1121300] STATEMENT:  select * from pgv_list() order by package, name;
+2023-07-26 16:45:02.061 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.061 UTC [1121300] STATEMENT:  select pgv_set('vars1', 'trans_int2', 4, true);
+2023-07-26 16:45:02.061 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.061 UTC [1121300] STATEMENT:  select pgv_set('vars1', 'trans_int3', 5, true);
+2023-07-26 16:45:02.062 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.062 UTC [1121300] STATEMENT:  select pgv_set('vars1', 'int2', 3);
+2023-07-26 16:45:02.062 UTC [1121300] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.063 UTC [1121300] ERROR:  ROLLBACK TO SAVEPOINT can only be used in transaction blocks
+2023-07-26 16:45:02.063 UTC [1121300] STATEMENT:  rollback to sp1;
+2023-07-26 16:45:02.063 UTC [1121300] ERROR:  unrecognized package "vars"
+2023-07-26 16:45:02.063 UTC [1121300] STATEMENT:  select pgv_get('vars', 'trans_int', null::int);
+2023-07-26 16:45:02.064 UTC [1121300] ERROR:  unrecognized package "vars1"
+2023-07-26 16:45:02.064 UTC [1121300] STATEMENT:  select pgv_get('vars1', 'int1', null::int);
+2023-07-26 16:45:02.064 UTC [1121300] ERROR:  unrecognized package "vars1"
+2023-07-26 16:45:02.064 UTC [1121300] STATEMENT:  select pgv_get('vars1', 'int2', null::int);
+2023-07-26 16:45:02.065 UTC [1121300] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.067 UTC [1121300] ERROR:  syntax error at or near "autonomous" at character 7
+2023-07-26 16:45:02.067 UTC [1121300] STATEMENT:  begin autonomous;
+2023-07-26 16:45:02.067 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.067 UTC [1121300] STATEMENT:  select pgv_set('vars1', 'int1', 1);
+2023-07-26 16:45:02.068 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.068 UTC [1121300] STATEMENT:  select pgv_set('vars1', 'trans_int1', 2, true);
+2023-07-26 16:45:02.068 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.068 UTC [1121300] STATEMENT:  savepoint sp2;
+2023-07-26 16:45:02.068 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.068 UTC [1121300] STATEMENT:  select pgv_set('vars1', 'trans_int1', 3, true);
+2023-07-26 16:45:02.069 UTC [1121300] ERROR:  savepoint "sp2" does not exist
+2023-07-26 16:45:02.069 UTC [1121300] STATEMENT:  rollback to sp2;
+2023-07-26 16:45:02.069 UTC [1121300] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.069 UTC [1121300] STATEMENT:  select pgv_get('vars1', 'trans_int1', null::int);
+2023-07-26 16:45:02.069 UTC [1121300] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.099 UTC [1121306] ERROR:  syntax error at or near "AUTONOMOUS" at character 7
+2023-07-26 16:45:02.099 UTC [1121306] STATEMENT:  BEGIN AUTONOMOUS;
+2023-07-26 16:45:02.100 UTC [1121306] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.100 UTC [1121306] STATEMENT:  SELECT pgv_get('vars', 'int1', null::int);
+2023-07-26 16:45:02.100 UTC [1121306] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.100 UTC [1121306] STATEMENT:  SELECT pgv_free();
+2023-07-26 16:45:02.101 UTC [1121306] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.101 UTC [1121306] STATEMENT:  SELECT pgv_get('vars', 'int1', null::int);
+2023-07-26 16:45:02.102 UTC [1121306] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.104 UTC [1121306] ERROR:  syntax error at or near "AUTONOMOUS" at character 7
+2023-07-26 16:45:02.104 UTC [1121306] STATEMENT:  BEGIN AUTONOMOUS;
+2023-07-26 16:45:02.104 UTC [1121306] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.104 UTC [1121306] STATEMENT:  SELECT pgv_free();
+2023-07-26 16:45:02.105 UTC [1121306] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.106 UTC [1121306] ERROR:  syntax error at or near "AUTONOMOUS" at character 7
+2023-07-26 16:45:02.106 UTC [1121306] STATEMENT:  BEGIN AUTONOMOUS;
+2023-07-26 16:45:02.107 UTC [1121306] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.107 UTC [1121306] STATEMENT:  SELECT pgv_free();
+2023-07-26 16:45:02.108 UTC [1121306] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.108 UTC [1121306] ERROR:  variable "int1" already created as NOT TRANSACTIONAL
+2023-07-26 16:45:02.108 UTC [1121306] STATEMENT:  SELECT pgv_set('vars', 'int1', 1, true);
+2023-07-26 16:45:02.109 UTC [1121306] ERROR:  syntax error at or near "AUTONOMOUS" at character 7
+2023-07-26 16:45:02.109 UTC [1121306] STATEMENT:  BEGIN AUTONOMOUS;
+2023-07-26 16:45:02.109 UTC [1121306] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.109 UTC [1121306] STATEMENT:  SELECT pgv_free();
+2023-07-26 16:45:02.110 UTC [1121306] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.111 UTC [1121306] ERROR:  variable "int1" already created as NOT TRANSACTIONAL
+2023-07-26 16:45:02.111 UTC [1121306] STATEMENT:  SELECT pgv_set('vars', 'int1', 1, true);
+2023-07-26 16:45:02.111 UTC [1121306] ERROR:  syntax error at or near "AUTONOMOUS" at character 7
+2023-07-26 16:45:02.111 UTC [1121306] STATEMENT:  BEGIN AUTONOMOUS;
+2023-07-26 16:45:02.111 UTC [1121306] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.111 UTC [1121306] STATEMENT:  SELECT pgv_free();
+2023-07-26 16:45:02.112 UTC [1121306] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.113 UTC [1121306] ERROR:  syntax error at or near "AUTONOMOUS" at character 7
+2023-07-26 16:45:02.113 UTC [1121306] STATEMENT:  BEGIN AUTONOMOUS;
+2023-07-26 16:45:02.113 UTC [1121306] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.113 UTC [1121306] STATEMENT:  SELECT pgv_set('vars', 'int1', 1);
+2023-07-26 16:45:02.114 UTC [1121306] ERROR:  syntax error at or near "AUTONOMOUS" at character 7
+2023-07-26 16:45:02.114 UTC [1121306] STATEMENT:  BEGIN AUTONOMOUS;
+2023-07-26 16:45:02.114 UTC [1121306] ERROR:  syntax error at or near "AUTONOMOUS" at character 7
+2023-07-26 16:45:02.114 UTC [1121306] STATEMENT:  BEGIN AUTONOMOUS;
+2023-07-26 16:45:02.114 UTC [1121306] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.114 UTC [1121306] STATEMENT:  SELECT pgv_free();
+2023-07-26 16:45:02.115 UTC [1121306] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.115 UTC [1121306] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.115 UTC [1121306] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.116 UTC [1121306] ERROR:  syntax error at or near "AUTONOMOUS" at character 7
+2023-07-26 16:45:02.116 UTC [1121306] STATEMENT:  BEGIN AUTONOMOUS;
+2023-07-26 16:45:02.116 UTC [1121306] ERROR:  syntax error at or near "AUTONOMOUS" at character 7
+2023-07-26 16:45:02.116 UTC [1121306] STATEMENT:  BEGIN AUTONOMOUS;
+2023-07-26 16:45:02.117 UTC [1121306] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.117 UTC [1121306] STATEMENT:  SELECT pgv_get('vars', 'int1', null::int);
+2023-07-26 16:45:02.117 UTC [1121306] ERROR:  syntax error at or near "AUTONOMOUS" at character 7
+2023-07-26 16:45:02.117 UTC [1121306] STATEMENT:  BEGIN AUTONOMOUS;
+2023-07-26 16:45:02.117 UTC [1121306] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.117 UTC [1121306] STATEMENT:  SELECT pgv_free();
+2023-07-26 16:45:02.118 UTC [1121306] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.118 UTC [1121306] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.118 UTC [1121306] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.119 UTC [1121306] ERROR:  syntax error at or near "AUTONOMOUS" at character 7
+2023-07-26 16:45:02.119 UTC [1121306] STATEMENT:  BEGIN AUTONOMOUS;
+2023-07-26 16:45:02.119 UTC [1121306] ERROR:  syntax error at or near "AUTONOMOUS" at character 7
+2023-07-26 16:45:02.119 UTC [1121306] STATEMENT:  BEGIN AUTONOMOUS;
+2023-07-26 16:45:02.119 UTC [1121306] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.119 UTC [1121306] STATEMENT:  SELECT pgv_get('vars', 'int1', null::int);
+2023-07-26 16:45:02.120 UTC [1121306] ERROR:  syntax error at or near "AUTONOMOUS" at character 7
+2023-07-26 16:45:02.120 UTC [1121306] STATEMENT:  BEGIN AUTONOMOUS;
+2023-07-26 16:45:02.120 UTC [1121306] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.120 UTC [1121306] STATEMENT:  SELECT pgv_free();
+2023-07-26 16:45:02.120 UTC [1121306] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.121 UTC [1121306] ERROR:  variable "int1" already created as NOT TRANSACTIONAL
+2023-07-26 16:45:02.121 UTC [1121306] STATEMENT:  SELECT pgv_set('vars', 'int1', 2, true);
+2023-07-26 16:45:02.121 UTC [1121306] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.122 UTC [1121306] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.125 UTC [1121306] ERROR:  syntax error at or near "AUTONOMOUS" at character 7
+2023-07-26 16:45:02.125 UTC [1121306] STATEMENT:  BEGIN AUTONOMOUS;
+2023-07-26 16:45:02.125 UTC [1121306] ERROR:  cursor "r1_cur" does not exist
+2023-07-26 16:45:02.125 UTC [1121306] STATEMENT:  FETCH 1 IN r1_cur;
+2023-07-26 16:45:02.127 UTC [1121306] ERROR:  cursor "r1_cur" does not exist
+2023-07-26 16:45:02.127 UTC [1121306] STATEMENT:  FETCH 1 IN r1_cur;
+2023-07-26 16:45:02.127 UTC [1121306] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.129 UTC [1121306] ERROR:  syntax error at or near "AUTONOMOUS" at character 7
+2023-07-26 16:45:02.129 UTC [1121306] STATEMENT:  BEGIN AUTONOMOUS;
+2023-07-26 16:45:02.129 UTC [1121306] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.129 UTC [1121306] STATEMENT:  SELECT pgv_free();
+2023-07-26 16:45:02.130 UTC [1121306] ERROR:  cursor "r1_cur" does not exist
+2023-07-26 16:45:02.130 UTC [1121306] STATEMENT:  FETCH 1 IN r1_cur;
+2023-07-26 16:45:02.130 UTC [1121306] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.131 UTC [1121306] ERROR:  syntax error at or near "AUTONOMOUS" at character 7
+2023-07-26 16:45:02.131 UTC [1121306] STATEMENT:  BEGIN AUTONOMOUS;
+2023-07-26 16:45:02.131 UTC [1121306] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.131 UTC [1121306] STATEMENT:  SELECT pgv_set('vars', 'int1', 1);
+2023-07-26 16:45:02.132 UTC [1121306] ERROR:  syntax error at or near "AUTONOMOUS" at character 7
+2023-07-26 16:45:02.132 UTC [1121306] STATEMENT:  BEGIN AUTONOMOUS;
+2023-07-26 16:45:02.133 UTC [1121306] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.133 UTC [1121306] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.135 UTC [1121306] ERROR:  syntax error at or near "AUTONOMOUS" at character 7
+2023-07-26 16:45:02.135 UTC [1121306] STATEMENT:  BEGIN AUTONOMOUS;
+2023-07-26 16:45:02.135 UTC [1121306] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.135 UTC [1121306] STATEMENT:  SELECT pgv_set('vars', 'int1', 2);
+2023-07-26 16:45:02.136 UTC [1121306] ERROR:  syntax error at or near "AUTONOMOUS" at character 7
+2023-07-26 16:45:02.136 UTC [1121306] STATEMENT:  BEGIN AUTONOMOUS;
+2023-07-26 16:45:02.137 UTC [1121306] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.137 UTC [1121306] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.138 UTC [1121306] ERROR:  syntax error at or near "AUTONOMOUS" at character 7
+2023-07-26 16:45:02.138 UTC [1121306] STATEMENT:  BEGIN AUTONOMOUS;
+2023-07-26 16:45:02.139 UTC [1121306] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.139 UTC [1121306] STATEMENT:  SAVEPOINT sp1;
+2023-07-26 16:45:02.139 UTC [1121306] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.139 UTC [1121306] STATEMENT:  SELECT pgv_set('vars1', 'int1', 0);
+2023-07-26 16:45:02.139 UTC [1121306] ERROR:  savepoint "sp1" does not exist
+2023-07-26 16:45:02.139 UTC [1121306] STATEMENT:  ROLLBACK TO sp1;
+2023-07-26 16:45:02.140 UTC [1121306] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.140 UTC [1121306] ERROR:  unrecognized package "vars1"
+2023-07-26 16:45:02.140 UTC [1121306] STATEMENT:  SELECT pgv_remove('vars1', 'int1');
+2023-07-26 16:45:02.141 UTC [1121306] ERROR:  syntax error at or near "AUTONOMOUS" at character 7
+2023-07-26 16:45:02.141 UTC [1121306] STATEMENT:  BEGIN AUTONOMOUS;
+2023-07-26 16:45:02.142 UTC [1121306] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.142 UTC [1121306] STATEMENT:  SAVEPOINT sp1;
+2023-07-26 16:45:02.142 UTC [1121306] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.142 UTC [1121306] STATEMENT:  SELECT pgv_set('vars2', 'any1', 'variable exists'::text, true);
+2023-07-26 16:45:02.143 UTC [1121306] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.143 UTC [1121306] STATEMENT:  SELECT pgv_free();
+2023-07-26 16:45:02.143 UTC [1121306] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2023-07-26 16:45:02.143 UTC [1121306] STATEMENT:  RELEASE sp1;
+2023-07-26 16:45:02.144 UTC [1121306] ERROR:  syntax error at or near "AUTONOMOUS" at character 7
+2023-07-26 16:45:02.144 UTC [1121306] STATEMENT:  BEGIN AUTONOMOUS;
+2023-07-26 16:45:02.144 UTC [1121306] ERROR:  SAVEPOINT can only be used in transaction blocks
+2023-07-26 16:45:02.144 UTC [1121306] STATEMENT:  SAVEPOINT sp2;
+2023-07-26 16:45:02.144 UTC [1121306] ERROR:  SAVEPOINT can only be used in transaction blocks
+2023-07-26 16:45:02.144 UTC [1121306] STATEMENT:  SAVEPOINT sp3;
+2023-07-26 16:45:02.145 UTC [1121306] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.146 UTC [1121306] WARNING:  there is no transaction in progress
+2023-07-26 16:45:02.766 UTC [1121270] LOG:  checkpoint starting: immediate force wait
+2023-07-26 16:45:02.980 UTC [1121270] LOG:  checkpoint complete: wrote 2690 buffers (16.4%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.077 s, sync=0.099 s, total=0.214 s; sync files=744, longest=0.028 s, average=0.001 s; distance=16527 kB, estimate=16527 kB
+2023-07-26 16:45:03.007 UTC [1121270] LOG:  checkpoint starting: immediate force wait
+2023-07-26 16:45:03.064 UTC [1121270] LOG:  checkpoint complete: wrote 2 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.012 s, sync=0.011 s, total=0.058 s; sync files=2, longest=0.008 s, average=0.006 s; distance=1 kB, estimate=14875 kB
+2023-07-26 16:45:03.159 UTC [1121348] ERROR:  current user cannot be dropped
+2023-07-26 16:45:03.159 UTC [1121348] STATEMENT:  DROP USER su;
+2023-07-26 16:45:03.655 UTC [1121270] LOG:  checkpoint starting: immediate force wait
+2023-07-26 16:45:03.772 UTC [1121270] LOG:  checkpoint complete: wrote 1040 buffers (6.3%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.049 s, sync=0.039 s, total=0.118 s; sync files=298, longest=0.009 s, average=0.001 s; distance=8864 kB, estimate=14274 kB
+2023-07-26 16:45:03.827 UTC [1121270] LOG:  checkpoint starting: immediate force wait
+2023-07-26 16:45:03.881 UTC [1121270] LOG:  checkpoint complete: wrote 8 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.012 s, sync=0.011 s, total=0.055 s; sync files=7, longest=0.008 s, average=0.002 s; distance=34 kB, estimate=12850 kB
+2023-07-26 16:45:03.996 UTC [1121376] ERROR:  duplicate key value violates unique constraint "company_pkey"
+2023-07-26 16:45:03.996 UTC [1121376] DETAIL:  Key (id)=(1) already exists.
+2023-07-26 16:45:03.996 UTC [1121376] STATEMENT:  INSERT  INTO Company(ID, Name) VALUES (1, 'Percona');
+2023-07-26 16:45:04.197 UTC [1121396] ERROR:  division by zero
+2023-07-26 16:45:04.197 UTC [1121396] STATEMENT:  SELECT 1/0;
+2023-07-26 16:45:04.198 UTC [1121396] ERROR:  relation "unknown" does not exist at character 15
+2023-07-26 16:45:04.198 UTC [1121396] STATEMENT:  SELECT * FROM unknown;
+2023-07-26 16:45:04.198 UTC [1121396] ERROR:  syntax error at or near "ELECET" at character 1
+2023-07-26 16:45:04.198 UTC [1121396] STATEMENT:  ELECET * FROM unknown;
+2023-07-26 16:45:04.198 UTC [1121396] WARNING:  warning message
+2023-07-26 16:45:04.198 UTC [1121396] CONTEXT:  PL/pgSQL function inline_code_block line 3 at RAISE
+2023-07-26 16:45:04.379 UTC [1121410] ERROR:  role "su" already exists
+2023-07-26 16:45:04.379 UTC [1121410] STATEMENT:  CREATE USER su WITH SUPERUSER;
+2023-07-26 16:45:04.416 UTC [1121410] ERROR:  permission denied for function pg_stat_monitor_reset
+2023-07-26 16:45:04.416 UTC [1121410] STATEMENT:  SELECT pg_stat_monitor_reset();

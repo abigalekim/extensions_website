@@ -1,0 +1,99 @@
+2023-07-25 07:21:37.906 UTC [705446] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 07:21:37.906 UTC [705446] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 07:21:37.919 UTC [705446] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 07:21:37.936 UTC [705449] LOG:  database system was shut down at 2023-07-25 07:21:37 UTC
+2023-07-25 07:21:37.946 UTC [705446] LOG:  database system is ready to accept connections
+2023-07-25 07:21:38.133 UTC [705462] ERROR:  ltree syntax error at character 1 at character 8
+2023-07-25 07:21:38.133 UTC [705462] STATEMENT:  SELECT '.2.3'::ltree;
+2023-07-25 07:21:38.134 UTC [705462] ERROR:  ltree syntax error at character 3 at character 8
+2023-07-25 07:21:38.134 UTC [705462] STATEMENT:  SELECT '1..3'::ltree;
+2023-07-25 07:21:38.134 UTC [705462] ERROR:  ltree syntax error at character 8
+2023-07-25 07:21:38.134 UTC [705462] DETAIL:  Unexpected end of input.
+2023-07-25 07:21:38.134 UTC [705462] STATEMENT:  SELECT '1.2.'::ltree;
+2023-07-25 07:21:38.135 UTC [705462] ERROR:  label string is too long
+2023-07-25 07:21:38.135 UTC [705462] DETAIL:  Label length is 256, must be at most 255, at character 257.
+2023-07-25 07:21:38.135 UTC [705462] STATEMENT:  SELECT repeat('x', 256)::ltree;
+2023-07-25 07:21:38.166 UTC [705462] ERROR:  lquery syntax error at character 1 at character 8
+2023-07-25 07:21:38.166 UTC [705462] STATEMENT:  SELECT '.2.3'::lquery;
+2023-07-25 07:21:38.166 UTC [705462] ERROR:  lquery syntax error at character 3 at character 8
+2023-07-25 07:21:38.166 UTC [705462] STATEMENT:  SELECT '1..3'::lquery;
+2023-07-25 07:21:38.167 UTC [705462] ERROR:  lquery syntax error at character 8
+2023-07-25 07:21:38.167 UTC [705462] DETAIL:  Unexpected end of input.
+2023-07-25 07:21:38.167 UTC [705462] STATEMENT:  SELECT '1.2.'::lquery;
+2023-07-25 07:21:38.167 UTC [705462] ERROR:  lquery syntax error at character 1 at character 8
+2023-07-25 07:21:38.167 UTC [705462] STATEMENT:  SELECT '@.2.3'::lquery;
+2023-07-25 07:21:38.167 UTC [705462] ERROR:  lquery syntax error at character 3 at character 8
+2023-07-25 07:21:38.167 UTC [705462] STATEMENT:  SELECT '1.@.3'::lquery;
+2023-07-25 07:21:38.168 UTC [705462] ERROR:  lquery syntax error at character 5 at character 8
+2023-07-25 07:21:38.168 UTC [705462] STATEMENT:  SELECT '1.2.@'::lquery;
+2023-07-25 07:21:38.168 UTC [705462] ERROR:  lquery syntax error at character 2 at character 8
+2023-07-25 07:21:38.168 UTC [705462] DETAIL:  Empty labels are not allowed.
+2023-07-25 07:21:38.168 UTC [705462] STATEMENT:  SELECT '!.2.3'::lquery;
+2023-07-25 07:21:38.168 UTC [705462] ERROR:  lquery syntax error at character 4 at character 8
+2023-07-25 07:21:38.168 UTC [705462] DETAIL:  Empty labels are not allowed.
+2023-07-25 07:21:38.168 UTC [705462] STATEMENT:  SELECT '1.!.3'::lquery;
+2023-07-25 07:21:38.169 UTC [705462] ERROR:  lquery syntax error at character 6 at character 8
+2023-07-25 07:21:38.169 UTC [705462] DETAIL:  Empty labels are not allowed.
+2023-07-25 07:21:38.169 UTC [705462] STATEMENT:  SELECT '1.2.!'::lquery;
+2023-07-25 07:21:38.169 UTC [705462] ERROR:  lquery syntax error at character 7 at character 8
+2023-07-25 07:21:38.169 UTC [705462] STATEMENT:  SELECT '1.2.3|@.4'::lquery;
+2023-07-25 07:21:38.170 UTC [705462] ERROR:  label string is too long
+2023-07-25 07:21:38.170 UTC [705462] DETAIL:  Label length is 256, must be at most 255, at character 257.
+2023-07-25 07:21:38.170 UTC [705462] STATEMENT:  SELECT (repeat('x', 256) || '*@@*')::lquery;
+2023-07-25 07:21:38.171 UTC [705462] ERROR:  label string is too long
+2023-07-25 07:21:38.171 UTC [705462] DETAIL:  Label length is 256, must be at most 255, at character 258.
+2023-07-25 07:21:38.171 UTC [705462] STATEMENT:  SELECT ('!' || repeat('x', 256))::lquery;
+2023-07-25 07:21:38.188 UTC [705462] ERROR:  number of ltree labels (65536) exceeds the maximum allowed (65535)
+2023-07-25 07:21:38.188 UTC [705462] STATEMENT:  SELECT nlevel(('1' || repeat('.1', 65535))::ltree);
+2023-07-25 07:21:38.194 UTC [705462] ERROR:  number of ltree levels (65536) exceeds the maximum allowed (65535)
+2023-07-25 07:21:38.194 UTC [705462] STATEMENT:  SELECT nlevel(('1' || repeat('.1', 65534))::ltree || '1');
+2023-07-25 07:21:38.205 UTC [705462] ERROR:  number of lquery items (65536) exceeds the maximum allowed (65535)
+2023-07-25 07:21:38.205 UTC [705462] STATEMENT:  SELECT ('1' || repeat('.1', 65535))::lquery IS NULL;
+2023-07-25 07:21:38.206 UTC [705462] ERROR:  lquery syntax error at character 8
+2023-07-25 07:21:38.206 UTC [705462] DETAIL:  Low limit (65536) exceeds the maximum allowed (65535), at character 3.
+2023-07-25 07:21:38.206 UTC [705462] STATEMENT:  SELECT '*{65536}'::lquery;
+2023-07-25 07:21:38.206 UTC [705462] ERROR:  lquery syntax error at character 8
+2023-07-25 07:21:38.206 UTC [705462] DETAIL:  High limit (65536) exceeds the maximum allowed (65535), at character 4.
+2023-07-25 07:21:38.206 UTC [705462] STATEMENT:  SELECT '*{,65536}'::lquery;
+2023-07-25 07:21:38.206 UTC [705462] ERROR:  lquery syntax error at character 8
+2023-07-25 07:21:38.206 UTC [705462] DETAIL:  Low limit (4) is greater than high limit (3), at character 5.
+2023-07-25 07:21:38.206 UTC [705462] STATEMENT:  SELECT '*{4,3}'::lquery;
+2023-07-25 07:21:38.339 UTC [705462] ERROR:  value 0 out of bounds for option "siglen"
+2023-07-25 07:21:38.339 UTC [705462] DETAIL:  Valid values are between "4" and "2024".
+2023-07-25 07:21:38.339 UTC [705462] STATEMENT:  create index tstidx on ltreetest using gist (t gist_ltree_ops(siglen=0));
+2023-07-25 07:21:38.340 UTC [705462] ERROR:  value 2025 out of bounds for option "siglen"
+2023-07-25 07:21:38.340 UTC [705462] DETAIL:  Valid values are between "4" and "2024".
+2023-07-25 07:21:38.340 UTC [705462] STATEMENT:  create index tstidx on ltreetest using gist (t gist_ltree_ops(siglen=2025));
+2023-07-25 07:21:38.341 UTC [705462] ERROR:  value 2028 out of bounds for option "siglen"
+2023-07-25 07:21:38.341 UTC [705462] DETAIL:  Valid values are between "4" and "2024".
+2023-07-25 07:21:38.341 UTC [705462] STATEMENT:  create index tstidx on ltreetest using gist (t gist_ltree_ops(siglen=2028));
+2023-07-25 07:21:38.342 UTC [705462] ERROR:  siglen value must be a multiple of 4
+2023-07-25 07:21:38.342 UTC [705462] STATEMENT:  create index tstidx on ltreetest using gist (t gist_ltree_ops(siglen=2019));
+2023-07-25 07:21:38.428 UTC [705462] ERROR:  value 0 out of bounds for option "siglen"
+2023-07-25 07:21:38.428 UTC [705462] DETAIL:  Valid values are between "1" and "2024".
+2023-07-25 07:21:38.428 UTC [705462] STATEMENT:  create index _tstidx on _ltreetest using gist (t gist__ltree_ops(siglen=0));
+2023-07-25 07:21:38.428 UTC [705462] ERROR:  value 2025 out of bounds for option "siglen"
+2023-07-25 07:21:38.428 UTC [705462] DETAIL:  Valid values are between "1" and "2024".
+2023-07-25 07:21:38.428 UTC [705462] STATEMENT:  create index _tstidx on _ltreetest using gist (t gist__ltree_ops(siglen=2025));
+2023-07-25 07:21:38.839 UTC [705446] LOG:  received SIGHUP, reloading configuration files
+2023-07-25 07:21:38.840 UTC [705446] LOG:  parameter "session_preload_libraries" changed to "pgextwlist"
+2023-07-25 07:21:38.840 UTC [705446] LOG:  parameter "extwlist.extensions" changed to "citext,earthdistance,pg_trgm,pg_stat_statements,refint"
+2023-07-25 07:21:38.840 UTC [705446] LOG:  parameter "extwlist.custom_path" changed to "/home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/test-scripts"
+2023-07-25 07:21:38.940 UTC [705488] ERROR:  extension "plpgsql" already exists
+2023-07-25 07:21:38.940 UTC [705488] STATEMENT:  CREATE EXTENSION plpgsql;
+2023-07-25 07:21:38.940 UTC [705488] ERROR:  extension "hstore" does not exist
+2023-07-25 07:21:38.940 UTC [705488] STATEMENT:  COMMENT ON EXTENSION hstore IS 'plpgsql comment';
+2023-07-25 07:21:38.941 UTC [705488] ERROR:  permission denied to create extension "hstore"
+2023-07-25 07:21:38.941 UTC [705488] HINT:  Must have CREATE privilege on current database to create this extension.
+2023-07-25 07:21:38.941 UTC [705488] STATEMENT:  CREATE EXTENSION hstore;
+2023-07-25 07:21:38.941 UTC [705488] ERROR:  extension "hstore" does not exist
+2023-07-25 07:21:38.941 UTC [705488] STATEMENT:  COMMENT ON EXTENSION hstore IS 'hstore comment';
+2023-07-25 07:21:38.941 UTC [705488] ERROR:  required extension "cube" is not installed
+2023-07-25 07:21:38.941 UTC [705488] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-25 07:21:38.941 UTC [705488] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-25 07:21:38.942 UTC [705488] ERROR:  must be owner of extension plpgsql
+2023-07-25 07:21:38.942 UTC [705488] STATEMENT:  DROP EXTENSION plpgsql;
+2023-07-25 07:21:38.977 UTC [705496] ERROR:  cannot drop extension citext because other objects depend on it
+2023-07-25 07:21:38.977 UTC [705496] DETAIL:  column t of table mere_table depends on type citext
+2023-07-25 07:21:38.977 UTC [705496] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 07:21:38.977 UTC [705496] STATEMENT:  DROP EXTENSION citext;

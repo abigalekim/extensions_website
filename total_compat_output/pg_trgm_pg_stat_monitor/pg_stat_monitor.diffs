@@ -1,0 +1,126 @@
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/functions_1.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/functions.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/functions_1.out	2023-07-25 04:55:55.016790254 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/functions.out	2023-07-26 15:20:14.770008013 +0000
+@@ -11,32 +11,100 @@
+ (1 row)
+ 
+ SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+- routine_schema |       routine_name       | routine_type | data_type 
+-----------------+--------------------------+--------------+-----------
+- public         | decode_error_level       | FUNCTION     | text
+- public         | get_cmd_type             | FUNCTION     | text
+- public         | get_histogram_timings    | FUNCTION     | text
+- public         | histogram                | FUNCTION     | record
+- public         | pg_stat_monitor_internal | FUNCTION     | record
+- public         | pg_stat_monitor_reset    | FUNCTION     | void
+- public         | pg_stat_monitor_version  | FUNCTION     | text
+- public         | pgsm_create_11_view      | FUNCTION     | integer
+- public         | pgsm_create_13_view      | FUNCTION     | integer
+- public         | pgsm_create_14_view      | FUNCTION     | integer
+- public         | pgsm_create_15_view      | FUNCTION     | integer
+- public         | pgsm_create_view         | FUNCTION     | integer
+- public         | range                    | FUNCTION     | ARRAY
+-(13 rows)
++ routine_schema |               routine_name                | routine_type |    data_type     
++----------------+-------------------------------------------+--------------+------------------
++ public         | decode_error_level                        | FUNCTION     | text
++ public         | get_cmd_type                              | FUNCTION     | text
++ public         | get_histogram_timings                     | FUNCTION     | text
++ public         | gin_extract_query_trgm                    | FUNCTION     | internal
++ public         | gin_extract_value_trgm                    | FUNCTION     | internal
++ public         | gin_trgm_consistent                       | FUNCTION     | boolean
++ public         | gin_trgm_triconsistent                    | FUNCTION     | "char"
++ public         | gtrgm_compress                            | FUNCTION     | internal
++ public         | gtrgm_consistent                          | FUNCTION     | boolean
++ public         | gtrgm_decompress                          | FUNCTION     | internal
++ public         | gtrgm_distance                            | FUNCTION     | double precision
++ public         | gtrgm_in                                  | FUNCTION     | USER-DEFINED
++ public         | gtrgm_options                             | FUNCTION     | void
++ public         | gtrgm_out                                 | FUNCTION     | cstring
++ public         | gtrgm_penalty                             | FUNCTION     | internal
++ public         | gtrgm_picksplit                           | FUNCTION     | internal
++ public         | gtrgm_same                                | FUNCTION     | internal
++ public         | gtrgm_union                               | FUNCTION     | USER-DEFINED
++ public         | histogram                                 | FUNCTION     | record
++ public         | pg_stat_monitor_internal                  | FUNCTION     | record
++ public         | pg_stat_monitor_reset                     | FUNCTION     | void
++ public         | pg_stat_monitor_version                   | FUNCTION     | text
++ public         | pgsm_create_11_view                       | FUNCTION     | integer
++ public         | pgsm_create_13_view                       | FUNCTION     | integer
++ public         | pgsm_create_14_view                       | FUNCTION     | integer
++ public         | pgsm_create_15_view                       | FUNCTION     | integer
++ public         | pgsm_create_view                          | FUNCTION     | integer
++ public         | range                                     | FUNCTION     | ARRAY
++ public         | set_limit                                 | FUNCTION     | real
++ public         | show_limit                                | FUNCTION     | real
++ public         | show_trgm                                 | FUNCTION     | ARRAY
++ public         | similarity                                | FUNCTION     | real
++ public         | similarity_dist                           | FUNCTION     | real
++ public         | similarity_op                             | FUNCTION     | boolean
++ public         | strict_word_similarity                    | FUNCTION     | real
++ public         | strict_word_similarity_commutator_op      | FUNCTION     | boolean
++ public         | strict_word_similarity_dist_commutator_op | FUNCTION     | real
++ public         | strict_word_similarity_dist_op            | FUNCTION     | real
++ public         | strict_word_similarity_op                 | FUNCTION     | boolean
++ public         | word_similarity                           | FUNCTION     | real
++ public         | word_similarity_commutator_op             | FUNCTION     | boolean
++ public         | word_similarity_dist_commutator_op        | FUNCTION     | real
++ public         | word_similarity_dist_op                   | FUNCTION     | real
++ public         | word_similarity_op                        | FUNCTION     | boolean
++(44 rows)
+ 
+ SET ROLE u1;
+ SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+- routine_schema |      routine_name       | routine_type | data_type 
+-----------------+-------------------------+--------------+-----------
+- public         | histogram               | FUNCTION     | record
+- public         | pg_stat_monitor_reset   | FUNCTION     | void
+- public         | pg_stat_monitor_version | FUNCTION     | text
+-(3 rows)
++ routine_schema |               routine_name                | routine_type |    data_type     
++----------------+-------------------------------------------+--------------+------------------
++ public         | decode_error_level                        | FUNCTION     | text
++ public         | get_cmd_type                              | FUNCTION     | text
++ public         | get_histogram_timings                     | FUNCTION     | text
++ public         | gin_extract_query_trgm                    | FUNCTION     | internal
++ public         | gin_extract_value_trgm                    | FUNCTION     | internal
++ public         | gin_trgm_consistent                       | FUNCTION     | boolean
++ public         | gin_trgm_triconsistent                    | FUNCTION     | "char"
++ public         | gtrgm_compress                            | FUNCTION     | internal
++ public         | gtrgm_consistent                          | FUNCTION     | boolean
++ public         | gtrgm_decompress                          | FUNCTION     | internal
++ public         | gtrgm_distance                            | FUNCTION     | double precision
++ public         | gtrgm_in                                  | FUNCTION     | USER-DEFINED
++ public         | gtrgm_options                             | FUNCTION     | void
++ public         | gtrgm_out                                 | FUNCTION     | cstring
++ public         | gtrgm_penalty                             | FUNCTION     | internal
++ public         | gtrgm_picksplit                           | FUNCTION     | internal
++ public         | gtrgm_same                                | FUNCTION     | internal
++ public         | gtrgm_union                               | FUNCTION     | USER-DEFINED
++ public         | histogram                                 | FUNCTION     | record
++ public         | pg_stat_monitor_internal                  | FUNCTION     | record
++ public         | pg_stat_monitor_version                   | FUNCTION     | text
++ public         | range                                     | FUNCTION     | ARRAY
++ public         | set_limit                                 | FUNCTION     | real
++ public         | show_limit                                | FUNCTION     | real
++ public         | show_trgm                                 | FUNCTION     | ARRAY
++ public         | similarity                                | FUNCTION     | real
++ public         | similarity_dist                           | FUNCTION     | real
++ public         | similarity_op                             | FUNCTION     | boolean
++ public         | strict_word_similarity                    | FUNCTION     | real
++ public         | strict_word_similarity_commutator_op      | FUNCTION     | boolean
++ public         | strict_word_similarity_dist_commutator_op | FUNCTION     | real
++ public         | strict_word_similarity_dist_op            | FUNCTION     | real
++ public         | strict_word_similarity_op                 | FUNCTION     | boolean
++ public         | word_similarity                           | FUNCTION     | real
++ public         | word_similarity_commutator_op             | FUNCTION     | boolean
++ public         | word_similarity_dist_commutator_op        | FUNCTION     | real
++ public         | word_similarity_dist_op                   | FUNCTION     | real
++ public         | word_similarity_op                        | FUNCTION     | boolean
++(38 rows)
+ 
+ SET ROLE su;
+ DROP USER u1;
+ DROP EXTENSION pg_stat_monitor;
++DROP USER su;
++ERROR:  current user cannot be dropped

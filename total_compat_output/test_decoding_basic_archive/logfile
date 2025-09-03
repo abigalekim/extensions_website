@@ -1,0 +1,534 @@
+2023-07-26 12:52:32.284 UTC [3493044] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 12:52:32.284 UTC [3493044] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 12:52:32.299 UTC [3493044] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 12:52:32.316 UTC [3493047] LOG:  database system was shut down at 2023-07-26 12:52:31 UTC
+2023-07-26 12:52:32.338 UTC [3493044] LOG:  database system is ready to accept connections
+2023-07-26 12:52:32.548 UTC [3493061] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:32.548 UTC [3493061] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-07-26 12:52:32.548 UTC [3493061] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:32.548 UTC [3493061] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-07-26 12:52:32.548 UTC [3493061] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:32.548 UTC [3493061] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('Invalid Name', 'test_decoding');
+2023-07-26 12:52:32.548 UTC [3493061] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:32.548 UTC [3493061] STATEMENT:  SELECT 'init' FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', 'frakbar');
+2023-07-26 12:52:32.548 UTC [3493061] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:32.548 UTC [3493061] STATEMENT:  SELECT 'init' FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'nonexistent-option', 'frakbar');
+2023-07-26 12:52:32.549 UTC [3493061] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:32.549 UTC [3493061] STATEMENT:  SELECT 'init' FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', 'frakbar');
+2023-07-26 12:52:32.549 UTC [3493061] ERROR:  replication slot "regression_slot" does not exist
+2023-07-26 12:52:32.549 UTC [3493061] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot');
+2023-07-26 12:52:32.549 UTC [3493061] ERROR:  replication slot "regression_slot" does not exist
+2023-07-26 12:52:32.549 UTC [3493061] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot');
+2023-07-26 12:52:32.579 UTC [3493061] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:32.579 UTC [3493061] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('repl', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:32.587 UTC [3493061] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:32.587 UTC [3493061] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-07-26 12:52:32.652 UTC [3493061] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:32.652 UTC [3493061] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:32.668 UTC [3493061] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:32.668 UTC [3493061] STATEMENT:  SELECT count(data) FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:32.680 UTC [3493061] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:32.680 UTC [3493061] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:32.687 UTC [3493061] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:32.687 UTC [3493061] STATEMENT:  /* display results */
+	SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:32.693 UTC [3493061] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:32.693 UTC [3493061] STATEMENT:  /* display results */
+	SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:32.743 UTC [3493061] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:32.743 UTC [3493061] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1', 'include-rewrites', '1');
+2023-07-26 12:52:32.752 UTC [3493061] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:32.752 UTC [3493061] STATEMENT:  /* display results */
+	SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:32.865 UTC [3493061] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:32.865 UTC [3493061] STATEMENT:  /* display results, but hide most of the output */
+	SELECT count(*), min(data), max(data)
+	FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1')
+	GROUP BY substring(data, 1, 24)
+	ORDER BY 1,2;
+2023-07-26 12:52:32.890 UTC [3493061] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:32.890 UTC [3493061] STATEMENT:  SELECT data
+	FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1')
+	WHERE data ~ 'UPDATE';
+2023-07-26 12:52:32.920 UTC [3493061] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:32.920 UTC [3493061] STATEMENT:  SELECT substring(data, 1, 29), count(*)
+	FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1') WITH ORDINALITY
+	GROUP BY 1
+	ORDER BY min(ordinality);
+2023-07-26 12:52:32.944 UTC [3493061] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:32.944 UTC [3493061] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:32.949 UTC [3493061] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:32.949 UTC [3493061] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:32.953 UTC [3493061] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:32.953 UTC [3493061] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:32.963 UTC [3493061] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:32.963 UTC [3493061] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:32.998 UTC [3493061] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:32.998 UTC [3493061] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:33.089 UTC [3493061] ERROR:  cannot rewrite table "replication_metadata" used as a catalog table
+2023-07-26 12:52:33.089 UTC [3493061] STATEMENT:  ALTER TABLE replication_metadata ALTER COLUMN rewritemeornot TYPE text;
+2023-07-26 12:52:33.105 UTC [3493061] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:33.105 UTC [3493061] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:33.480 UTC [3493061] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:33.480 UTC [3493061] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:33.505 UTC [3493061] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:33.505 UTC [3493061] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:33.505 UTC [3493061] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:33.505 UTC [3493061] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:33.506 UTC [3493061] ERROR:  replication slot "regression_slot" does not exist
+2023-07-26 12:52:33.506 UTC [3493061] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot');
+2023-07-26 12:52:33.526 UTC [3493067] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:33.526 UTC [3493067] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-07-26 12:52:33.547 UTC [3493067] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:33.547 UTC [3493067] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:33.552 UTC [3493067] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:33.552 UTC [3493067] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:33.559 UTC [3493067] ERROR:  replication slot "regression_slot" does not exist
+2023-07-26 12:52:33.559 UTC [3493067] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot');
+2023-07-26 12:52:33.625 UTC [3493073] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:33.625 UTC [3493073] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-07-26 12:52:33.640 UTC [3493073] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:33.640 UTC [3493073] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:34.455 UTC [3493045] LOG:  checkpoint starting: immediate force wait
+2023-07-26 12:52:34.675 UTC [3493045] LOG:  checkpoint complete: wrote 867 buffers (5.3%); 1 WAL file(s) added, 0 removed, 0 recycled; write=0.034 s, sync=0.053 s, total=0.221 s; sync files=278, longest=0.017 s, average=0.001 s; distance=11312 kB, estimate=11312 kB
+2023-07-26 12:52:34.678 UTC [3493073] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:34.678 UTC [3493073] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:35.161 UTC [3493073] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:35.161 UTC [3493073] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:35.162 UTC [3493073] ERROR:  replication slot "regression_slot" does not exist
+2023-07-26 12:52:35.162 UTC [3493073] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot');
+2023-07-26 12:52:35.206 UTC [3493079] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:35.206 UTC [3493079] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-07-26 12:52:35.346 UTC [3493079] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:35.346 UTC [3493079] STATEMENT:  SELECT substr(data, 1, 200) FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:35.415 UTC [3493079] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:35.415 UTC [3493079] STATEMENT:  SELECT regexp_replace(data, '^(.{100}).*(.{100})$', '\1..\2') FROM pg_logical_slot_peek_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:35.427 UTC [3493079] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:35.427 UTC [3493079] STATEMENT:  SELECT regexp_replace(data, '^(.{100}).*(.{100})$', '\1..\2') FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:35.514 UTC [3493079] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:35.514 UTC [3493079] STATEMENT:  SELECT regexp_replace(data, '^(.{100}).*(.{100})$', '\1..\2') FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1')
+	WHERE data NOT LIKE '%INSERT: %';
+2023-07-26 12:52:35.566 UTC [3493079] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:35.566 UTC [3493079] STATEMENT:  SELECT substr(data, 1, 200) FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:35.566 UTC [3493079] ERROR:  replication slot "regression_slot" does not exist
+2023-07-26 12:52:35.566 UTC [3493079] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot');
+2023-07-26 12:52:35.621 UTC [3493085] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:35.621 UTC [3493085] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-07-26 12:52:35.626 UTC [3493085] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:35.626 UTC [3493085] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:35.626 UTC [3493085] ERROR:  replication slot "regression_slot" does not exist
+2023-07-26 12:52:35.626 UTC [3493085] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot');
+2023-07-26 12:52:35.627 UTC [3493085] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:35.627 UTC [3493085] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-07-26 12:52:35.628 UTC [3493085] ERROR:  permission denied for table lr_test
+2023-07-26 12:52:35.628 UTC [3493085] STATEMENT:  INSERT INTO lr_test VALUES('lr_superuser_init');
+2023-07-26 12:52:35.628 UTC [3493085] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:35.628 UTC [3493085] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:35.629 UTC [3493085] ERROR:  replication slot "regression_slot" does not exist
+2023-07-26 12:52:35.629 UTC [3493085] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot');
+2023-07-26 12:52:35.630 UTC [3493085] ERROR:  must be superuser or replication role to use replication slots
+2023-07-26 12:52:35.630 UTC [3493085] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-07-26 12:52:35.630 UTC [3493085] ERROR:  permission denied for table lr_test
+2023-07-26 12:52:35.630 UTC [3493085] STATEMENT:  INSERT INTO lr_test VALUES('lr_superuser_init');
+2023-07-26 12:52:35.630 UTC [3493085] ERROR:  must be superuser or replication role to use replication slots
+2023-07-26 12:52:35.630 UTC [3493085] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:35.631 UTC [3493085] ERROR:  must be superuser or replication role to use replication slots
+2023-07-26 12:52:35.631 UTC [3493085] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot');
+2023-07-26 12:52:35.632 UTC [3493085] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:35.632 UTC [3493085] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-07-26 12:52:35.632 UTC [3493085] ERROR:  replication slot "regression_slot" does not exist
+2023-07-26 12:52:35.632 UTC [3493085] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot');
+2023-07-26 12:52:35.633 UTC [3493085] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:35.633 UTC [3493085] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-07-26 12:52:35.634 UTC [3493085] ERROR:  must be superuser or replication role to use replication slots
+2023-07-26 12:52:35.634 UTC [3493085] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot');
+2023-07-26 12:52:35.641 UTC [3493085] ERROR:  replication slot "regression_slot" does not exist
+2023-07-26 12:52:35.641 UTC [3493085] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot');
+2023-07-26 12:52:35.687 UTC [3493091] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:35.687 UTC [3493091] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-07-26 12:52:35.687 UTC [3493091] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:35.687 UTC [3493091] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-07-26 12:52:35.687 UTC [3493091] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:35.687 UTC [3493091] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-07-26 12:52:35.688 UTC [3493091] ERROR:  replication slot "regression_slot" does not exist
+2023-07-26 12:52:35.688 UTC [3493091] STATEMENT:  SELECT 'stop' FROM pg_drop_replication_slot('regression_slot');
+2023-07-26 12:52:35.688 UTC [3493091] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:35.688 UTC [3493091] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-07-26 12:52:35.713 UTC [3493091] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:35.713 UTC [3493091] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:35.716 UTC [3493091] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:35.716 UTC [3493091] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:35.717 UTC [3493091] ERROR:  replication slot "regression_slot" does not exist
+2023-07-26 12:52:35.717 UTC [3493091] STATEMENT:  SELECT 'stop' FROM pg_drop_replication_slot('regression_slot');
+2023-07-26 12:52:35.735 UTC [3493097] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:35.735 UTC [3493097] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-07-26 12:52:35.736 UTC [3493097] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:35.736 UTC [3493097] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:35.769 UTC [3493097] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:35.769 UTC [3493097] STATEMENT:  CREATE TABLE changeresult AS
+	    SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:35.771 UTC [3493097] ERROR:  relation "changeresult" does not exist at character 15
+2023-07-26 12:52:35.771 UTC [3493097] STATEMENT:  SELECT * FROM changeresult;
+2023-07-26 12:52:35.772 UTC [3493097] ERROR:  relation "changeresult" does not exist at character 13
+2023-07-26 12:52:35.772 UTC [3493097] STATEMENT:  INSERT INTO changeresult
+	    SELECT data FROM pg_logical_slot_peek_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:35.772 UTC [3493097] ERROR:  relation "changeresult" does not exist at character 13
+2023-07-26 12:52:35.772 UTC [3493097] STATEMENT:  INSERT INTO changeresult
+	    SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:35.772 UTC [3493097] ERROR:  relation "changeresult" does not exist at character 15
+2023-07-26 12:52:35.772 UTC [3493097] STATEMENT:  SELECT * FROM changeresult;
+2023-07-26 12:52:35.773 UTC [3493097] ERROR:  table "changeresult" does not exist
+2023-07-26 12:52:35.773 UTC [3493097] STATEMENT:  DROP TABLE changeresult;
+2023-07-26 12:52:35.787 UTC [3493097] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:35.787 UTC [3493097] CONTEXT:  SQL statement "SELECT data FROM pg_logical_slot_peek_changes(slot_name, NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1')"
+	PL/pgSQL function slot_changes_wrapper(name) line 3 at RETURN QUERY
+2023-07-26 12:52:35.787 UTC [3493097] STATEMENT:  SELECT * FROM slot_changes_wrapper('regression_slot');
+2023-07-26 12:52:35.788 UTC [3493097] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:35.788 UTC [3493097] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:35.788 UTC [3493097] ERROR:  replication slot "regression_slot" does not exist
+2023-07-26 12:52:35.788 UTC [3493097] STATEMENT:  SELECT 'stop' FROM pg_drop_replication_slot('regression_slot');
+2023-07-26 12:52:35.818 UTC [3493103] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:35.818 UTC [3493103] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-07-26 12:52:35.818 UTC [3493103] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:35.818 UTC [3493103] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'force-binary', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:35.819 UTC [3493103] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:35.819 UTC [3493103] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'force-binary', '1', 'skip-empty-xacts', '1');
+2023-07-26 12:52:35.820 UTC [3493103] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:35.820 UTC [3493103] STATEMENT:  SELECT data FROM pg_logical_slot_get_binary_changes('regression_slot', NULL, NULL, 'force-binary', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:35.820 UTC [3493103] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:35.820 UTC [3493103] STATEMENT:  SELECT data FROM pg_logical_slot_get_binary_changes('regression_slot', NULL, NULL, 'force-binary', '1', 'skip-empty-xacts', '1');
+2023-07-26 12:52:35.821 UTC [3493103] ERROR:  replication slot "regression_slot" does not exist
+2023-07-26 12:52:35.821 UTC [3493103] STATEMENT:  SELECT 'init' FROM pg_drop_replication_slot('regression_slot');
+2023-07-26 12:52:35.849 UTC [3493109] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:35.849 UTC [3493109] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-07-26 12:52:35.929 UTC [3493109] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:35.929 UTC [3493109] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:35.929 UTC [3493109] ERROR:  replication slot "regression_slot" does not exist
+2023-07-26 12:52:35.929 UTC [3493109] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot');
+2023-07-26 12:52:35.967 UTC [3493115] ERROR:  permission denied for function pg_replication_origin_advance
+2023-07-26 12:52:35.967 UTC [3493115] STATEMENT:  SELECT pg_replication_origin_advance('regress_test_decoding: perm', '0/1');
+2023-07-26 12:52:35.968 UTC [3493115] ERROR:  permission denied for function pg_replication_origin_create
+2023-07-26 12:52:35.968 UTC [3493115] STATEMENT:  SELECT pg_replication_origin_create('regress_test_decoding: perm');
+2023-07-26 12:52:35.968 UTC [3493115] ERROR:  permission denied for function pg_replication_origin_drop
+2023-07-26 12:52:35.968 UTC [3493115] STATEMENT:  SELECT pg_replication_origin_drop('regress_test_decoding: perm');
+2023-07-26 12:52:35.969 UTC [3493115] ERROR:  permission denied for function pg_replication_origin_oid
+2023-07-26 12:52:35.969 UTC [3493115] STATEMENT:  SELECT pg_replication_origin_oid('regress_test_decoding: perm');
+2023-07-26 12:52:35.969 UTC [3493115] ERROR:  permission denied for function pg_replication_origin_progress
+2023-07-26 12:52:35.969 UTC [3493115] STATEMENT:  SELECT pg_replication_origin_progress('regress_test_decoding: perm', false);
+2023-07-26 12:52:35.970 UTC [3493115] ERROR:  permission denied for function pg_replication_origin_session_is_setup
+2023-07-26 12:52:35.970 UTC [3493115] STATEMENT:  SELECT pg_replication_origin_session_is_setup();
+2023-07-26 12:52:35.970 UTC [3493115] ERROR:  permission denied for function pg_replication_origin_session_progress
+2023-07-26 12:52:35.970 UTC [3493115] STATEMENT:  SELECT pg_replication_origin_session_progress(false);
+2023-07-26 12:52:35.971 UTC [3493115] ERROR:  permission denied for function pg_replication_origin_session_reset
+2023-07-26 12:52:35.971 UTC [3493115] STATEMENT:  SELECT pg_replication_origin_session_reset();
+2023-07-26 12:52:35.971 UTC [3493115] ERROR:  permission denied for function pg_replication_origin_session_setup
+2023-07-26 12:52:35.971 UTC [3493115] STATEMENT:  SELECT pg_replication_origin_session_setup('regress_test_decoding: perm');
+2023-07-26 12:52:35.972 UTC [3493115] ERROR:  permission denied for function pg_replication_origin_xact_reset
+2023-07-26 12:52:35.972 UTC [3493115] STATEMENT:  SELECT pg_replication_origin_xact_reset();
+2023-07-26 12:52:35.973 UTC [3493115] ERROR:  permission denied for function pg_replication_origin_xact_setup
+2023-07-26 12:52:35.973 UTC [3493115] STATEMENT:  SELECT pg_replication_origin_xact_setup('0/1', '2013-01-01 00:00');
+2023-07-26 12:52:35.973 UTC [3493115] ERROR:  permission denied for function pg_show_replication_origin_status
+2023-07-26 12:52:35.973 UTC [3493115] STATEMENT:  SELECT pg_show_replication_origin_status();
+2023-07-26 12:52:36.035 UTC [3493115] ERROR:  duplicate key value violates unique constraint "pg_replication_origin_roname_index"
+2023-07-26 12:52:36.035 UTC [3493115] DETAIL:  Key (roname)=(regress_test_decoding: regression_slot) already exists.
+2023-07-26 12:52:36.035 UTC [3493115] STATEMENT:  SELECT pg_replication_origin_create('regress_test_decoding: regression_slot');
+2023-07-26 12:52:36.043 UTC [3493115] ERROR:  replication origin "regress_test_decoding: temp" does not exist
+2023-07-26 12:52:36.043 UTC [3493115] STATEMENT:  SELECT pg_replication_origin_drop('regress_test_decoding: temp');
+2023-07-26 12:52:36.044 UTC [3493115] ERROR:  replication origin "regress_test_decoding: temp" does not exist
+2023-07-26 12:52:36.044 UTC [3493115] STATEMENT:  select pg_replication_origin_advance('regress_test_decoding: temp', '0/1');
+2023-07-26 12:52:36.045 UTC [3493115] ERROR:  replication origin "regress_test_decoding: temp" does not exist
+2023-07-26 12:52:36.045 UTC [3493115] STATEMENT:  select pg_replication_origin_session_setup('regress_test_decoding: temp');
+2023-07-26 12:52:36.045 UTC [3493115] ERROR:  replication origin "regress_test_decoding: temp" does not exist
+2023-07-26 12:52:36.045 UTC [3493115] STATEMENT:  select pg_replication_origin_progress('regress_test_decoding: temp', true);
+2023-07-26 12:52:36.046 UTC [3493115] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.046 UTC [3493115] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-07-26 12:52:36.051 UTC [3493115] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.051 UTC [3493115] STATEMENT:  INSERT INTO target_tbl(data)
+	SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:36.052 UTC [3493115] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.052 UTC [3493115] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:36.057 UTC [3493115] ERROR:  cannot setup replication origin when one is already setup
+2023-07-26 12:52:36.057 UTC [3493115] STATEMENT:  SELECT pg_replication_origin_session_setup('regress_test_decoding: regression_slot');
+2023-07-26 12:52:36.059 UTC [3493115] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.059 UTC [3493115] STATEMENT:  INSERT INTO target_tbl(data)
+	SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1', 'only-local', '1');
+2023-07-26 12:52:36.063 UTC [3493115] ERROR:  no replication origin is configured
+2023-07-26 12:52:36.063 UTC [3493115] STATEMENT:  SELECT pg_replication_origin_session_reset();
+2023-07-26 12:52:36.064 UTC [3493115] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.064 UTC [3493115] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1', 'only-local', '1');
+2023-07-26 12:52:36.068 UTC [3493115] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.068 UTC [3493115] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1',  'only-local', '1');
+2023-07-26 12:52:36.069 UTC [3493115] ERROR:  replication slot "regression_slot" does not exist
+2023-07-26 12:52:36.069 UTC [3493115] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot');
+2023-07-26 12:52:36.073 UTC [3493115] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.073 UTC [3493115] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot_no_lsn', 'test_decoding');
+2023-07-26 12:52:36.102 UTC [3493115] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.102 UTC [3493115] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot_no_lsn', NULL, NULL, 'skip-empty-xacts', '1', 'include-xids', '0');
+2023-07-26 12:52:36.103 UTC [3493115] ERROR:  replication slot "regression_slot_no_lsn" does not exist
+2023-07-26 12:52:36.103 UTC [3493115] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot_no_lsn');
+2023-07-26 12:52:36.154 UTC [3493121] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.154 UTC [3493121] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-07-26 12:52:36.160 UTC [3493121] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.160 UTC [3493121] STATEMENT:  SELECT set_config('test.time_after', regexp_replace(data, '^COMMIT \(at (.*)\)$', '\1'), false) IS NOT NULL
+	FROM pg_logical_slot_peek_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1', 'include-timestamp', '1')
+	WHERE data ~ 'COMMIT' LIMIT 1;
+2023-07-26 12:52:36.161 UTC [3493121] ERROR:  unrecognized configuration parameter "test.time_after"
+2023-07-26 12:52:36.161 UTC [3493121] STATEMENT:  SELECT (time_after - time_before) <= '10 minutes'::interval, time_after >= time_before
+	FROM (SELECT current_setting('test.time_after')::timestamptz AS time_after, (SELECT current_setting('test.time_before')::timestamptz) AS time_before) AS d;
+2023-07-26 12:52:36.162 UTC [3493121] ERROR:  replication slot "regression_slot" does not exist
+2023-07-26 12:52:36.162 UTC [3493121] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot');
+2023-07-26 12:52:36.191 UTC [3493127] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.191 UTC [3493127] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-07-26 12:52:36.207 UTC [3493127] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.207 UTC [3493127] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'force-binary', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:36.238 UTC [3493129] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.238 UTC [3493129] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'force-binary', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:36.238 UTC [3493129] ERROR:  replication slot "regression_slot" does not exist
+2023-07-26 12:52:36.238 UTC [3493129] STATEMENT:  SELECT 'cleanup' FROM pg_drop_replication_slot('regression_slot');
+2023-07-26 12:52:36.268 UTC [3493135] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.268 UTC [3493135] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-07-26 12:52:36.286 UTC [3493135] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.286 UTC [3493135] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:36.312 UTC [3493135] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.312 UTC [3493135] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4], COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-07-26 12:52:36.327 UTC [3493135] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.327 UTC [3493135] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4], COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-07-26 12:52:36.348 UTC [3493135] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.348 UTC [3493135] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4], COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-07-26 12:52:36.357 UTC [3493135] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.357 UTC [3493135] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4], COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-07-26 12:52:36.373 UTC [3493135] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.373 UTC [3493135] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4], COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-07-26 12:52:36.388 UTC [3493135] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.388 UTC [3493135] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4], COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-07-26 12:52:36.398 UTC [3493135] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.398 UTC [3493135] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4], COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-07-26 12:52:36.413 UTC [3493135] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.413 UTC [3493135] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4], COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-07-26 12:52:36.422 UTC [3493135] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.422 UTC [3493135] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4], COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-07-26 12:52:36.431 UTC [3493135] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.431 UTC [3493135] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4] COLLATE "C", COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-07-26 12:52:36.447 UTC [3493135] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.447 UTC [3493135] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4] COLLATE "C", COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-07-26 12:52:36.457 UTC [3493135] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.457 UTC [3493135] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4] COLLATE "C", COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-07-26 12:52:36.466 UTC [3493135] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.466 UTC [3493135] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4] COLLATE "C", COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-07-26 12:52:36.489 UTC [3493135] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.489 UTC [3493135] STATEMENT:  SELECT (regexp_split_to_array(data, ':'))[4] COLLATE "C", COUNT(*), (array_agg(data))[1], (array_agg(data))[count(*)]
+	FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL) WHERE data ~ 'INSERT'
+	GROUP BY 1 ORDER BY 1;
+2023-07-26 12:52:36.495 UTC [3493135] ERROR:  replication slot "regression_slot" does not exist
+2023-07-26 12:52:36.495 UTC [3493135] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot');
+2023-07-26 12:52:36.503 UTC [3493141] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.503 UTC [3493141] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot_p', 'test_decoding');
+2023-07-26 12:52:36.503 UTC [3493141] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.503 UTC [3493141] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot_t', 'test_decoding', true);
+2023-07-26 12:52:36.503 UTC [3493141] ERROR:  replication slot "regression_slot_p" does not exist
+2023-07-26 12:52:36.503 UTC [3493141] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot_p');
+2023-07-26 12:52:36.503 UTC [3493141] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.503 UTC [3493141] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot_p', 'test_decoding', false);
+2023-07-26 12:52:36.504 UTC [3493141] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.504 UTC [3493141] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot_t2', 'test_decoding', true);
+2023-07-26 12:52:36.504 UTC [3493141] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.504 UTC [3493141] STATEMENT:  SELECT pg_create_logical_replication_slot('foo', 'nonexistent');
+2023-07-26 12:52:36.508 UTC [3493142] LOG:  slot test looped 0 times
+2023-07-26 12:52:36.508 UTC [3493142] CONTEXT:  PL/pgSQL function inline_code_block line 4 at RAISE
+2023-07-26 12:52:36.508 UTC [3493142] STATEMENT:  do 'declare c int = 0;
+	begin
+	  while (select count(*) from pg_replication_slots where active_pid = '
+	    '3493141'
+	  ') > 0 loop c := c + 1; perform pg_sleep(0.01); end loop;
+	  raise log ''slot test looped % times'', c;
+	end';
+2023-07-26 12:52:36.508 UTC [3493142] ERROR:  replication slot "regression_slot_t" does not exist
+2023-07-26 12:52:36.508 UTC [3493142] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot_t');
+2023-07-26 12:52:36.508 UTC [3493142] ERROR:  replication slot "regression_slot_t2" does not exist
+2023-07-26 12:52:36.508 UTC [3493142] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot_t2');
+2023-07-26 12:52:36.509 UTC [3493142] ERROR:  replication slot "regression_slot_p" does not exist
+2023-07-26 12:52:36.509 UTC [3493142] STATEMENT:  SELECT count(*) >= 0 AS ok FROM pg_ls_replslotdir('regression_slot_p');
+2023-07-26 12:52:36.509 UTC [3493142] ERROR:  replication slot "not_existing_slot" does not exist
+2023-07-26 12:52:36.509 UTC [3493142] STATEMENT:  SELECT count(*) >= 0 AS ok FROM pg_ls_replslotdir('not_existing_slot');
+2023-07-26 12:52:36.509 UTC [3493142] ERROR:  replication slot "regression_slot_p" does not exist
+2023-07-26 12:52:36.509 UTC [3493142] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot_p');
+2023-07-26 12:52:36.509 UTC [3493142] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.509 UTC [3493142] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot1', 'test_decoding', true);
+2023-07-26 12:52:36.525 UTC [3493142] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.525 UTC [3493142] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot2', 'test_decoding', true);
+2023-07-26 12:52:36.529 UTC [3493142] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.529 UTC [3493142] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot1', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:36.529 UTC [3493142] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.529 UTC [3493142] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot2', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:36.541 UTC [3493142] ERROR:  replication slot "regression_slot1" does not exist
+2023-07-26 12:52:36.541 UTC [3493142] STATEMENT:  SELECT end_lsn FROM pg_replication_slot_advance('regression_slot1', '0/2F42850') 
+2023-07-26 12:52:36.541 UTC [3493142] ERROR:  replication slot "regression_slot2" does not exist
+2023-07-26 12:52:36.541 UTC [3493142] STATEMENT:  SELECT slot_name FROM pg_replication_slot_advance('regression_slot2', pg_current_wal_lsn());
+2023-07-26 12:52:36.542 UTC [3493142] ERROR:  syntax error at or near ":" at character 22
+2023-07-26 12:52:36.542 UTC [3493142] STATEMENT:  SELECT '0/2F42850' = :'end_lsn';
+2023-07-26 12:52:36.542 UTC [3493142] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.542 UTC [3493142] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot1', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:36.543 UTC [3493142] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.543 UTC [3493142] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot2', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:36.550 UTC [3493142] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.550 UTC [3493142] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot1', 'test_decoding', true);
+2023-07-26 12:52:36.550 UTC [3493142] ERROR:  replication slot "regression_slot1" does not exist
+2023-07-26 12:52:36.550 UTC [3493142] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot1');
+2023-07-26 12:52:36.551 UTC [3493142] ERROR:  replication slot "regression_slot2" does not exist
+2023-07-26 12:52:36.551 UTC [3493142] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot2');
+2023-07-26 12:52:36.583 UTC [3493142] ERROR:  invalid target WAL LSN
+2023-07-26 12:52:36.583 UTC [3493142] STATEMENT:  SELECT pg_replication_slot_advance('regression_slot3', '0/0');
+2023-07-26 12:52:36.583 UTC [3493142] ERROR:  replication slot "regression_slot3" cannot be advanced
+2023-07-26 12:52:36.583 UTC [3493142] DETAIL:  This slot has never previously reserved WAL, or it has been invalidated.
+2023-07-26 12:52:36.583 UTC [3493142] STATEMENT:  SELECT pg_replication_slot_advance('regression_slot3', '0/1');
+2023-07-26 12:52:36.592 UTC [3493142] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.592 UTC [3493142] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('orig_slot1', 'test_decoding', false);
+2023-07-26 12:52:36.593 UTC [3493142] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.593 UTC [3493142] STATEMENT:  SELECT 'copy' FROM pg_copy_logical_replication_slot('orig_slot1', 'copied_slot1_no_change');
+2023-07-26 12:52:36.593 UTC [3493142] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.593 UTC [3493142] STATEMENT:  SELECT 'copy' FROM pg_copy_logical_replication_slot('orig_slot1', 'copied_slot1_change_plugin', false, 'pgoutput');
+2023-07-26 12:52:36.594 UTC [3493142] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.594 UTC [3493142] STATEMENT:  SELECT 'copy' FROM pg_copy_logical_replication_slot('orig_slot1', 'copied_slot1_change_plugin_temp', true, 'pgoutput');
+2023-07-26 12:52:36.598 UTC [3493142] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.598 UTC [3493142] STATEMENT:  SELECT 'copy' FROM pg_copy_logical_replication_slot('orig_slot1', 'failed');
+2023-07-26 12:52:36.598 UTC [3493142] ERROR:  replication slot "orig_slot1" does not exist
+2023-07-26 12:52:36.598 UTC [3493142] STATEMENT:  SELECT pg_drop_replication_slot('orig_slot1');
+2023-07-26 12:52:36.599 UTC [3493142] ERROR:  replication slot "copied_slot1_no_change" does not exist
+2023-07-26 12:52:36.599 UTC [3493142] STATEMENT:  SELECT pg_drop_replication_slot('copied_slot1_no_change');
+2023-07-26 12:52:36.599 UTC [3493142] ERROR:  replication slot "copied_slot1_change_plugin" does not exist
+2023-07-26 12:52:36.599 UTC [3493142] STATEMENT:  SELECT pg_drop_replication_slot('copied_slot1_change_plugin');
+2023-07-26 12:52:36.600 UTC [3493142] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.600 UTC [3493142] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('orig_slot2', 'test_decoding', true);
+2023-07-26 12:52:36.600 UTC [3493142] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.600 UTC [3493142] STATEMENT:  SELECT 'copy' FROM pg_copy_logical_replication_slot('orig_slot2', 'copied_slot2_no_change');
+2023-07-26 12:52:36.601 UTC [3493142] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.601 UTC [3493142] STATEMENT:  SELECT 'copy' FROM pg_copy_logical_replication_slot('orig_slot2', 'copied_slot2_change_plugin', true, 'pgoutput');
+2023-07-26 12:52:36.601 UTC [3493142] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.601 UTC [3493142] STATEMENT:  SELECT 'copy' FROM pg_copy_logical_replication_slot('orig_slot2', 'copied_slot2_change_plugin_temp', false, 'pgoutput');
+2023-07-26 12:52:36.603 UTC [3493142] ERROR:  replication slot "orig_slot2" does not exist
+2023-07-26 12:52:36.603 UTC [3493142] STATEMENT:  SELECT 'copy' FROM pg_copy_physical_replication_slot('orig_slot2', 'failed');
+2023-07-26 12:52:36.604 UTC [3493142] ERROR:  replication slot "copied_slot2_change_plugin_temp" does not exist
+2023-07-26 12:52:36.604 UTC [3493142] STATEMENT:  SELECT pg_drop_replication_slot('copied_slot2_change_plugin_temp');
+2023-07-26 12:52:36.809 UTC [3493142] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:36.809 UTC [3493142] STATEMENT:  SELECT 'copy' FROM pg_copy_logical_replication_slot('orig_slot1', 'failed');
+2023-07-26 12:52:36.818 UTC [3493142] ERROR:  cannot copy a replication slot that doesn't reserve WAL
+2023-07-26 12:52:36.818 UTC [3493142] STATEMENT:  SELECT 'copy' FROM pg_copy_physical_replication_slot('orig_slot2', 'failed');
+2023-07-26 12:52:37.070 UTC [3493148] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.070 UTC [3493148] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-07-26 12:52:37.145 UTC [3493148] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.145 UTC [3493148] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:37.146 UTC [3493148] ERROR:  replication slot "regression_slot" does not exist
+2023-07-26 12:52:37.146 UTC [3493148] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot');
+2023-07-26 12:52:37.175 UTC [3493154] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.175 UTC [3493154] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding');
+2023-07-26 12:52:37.194 UTC [3493154] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.194 UTC [3493154] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:37.214 UTC [3493154] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.214 UTC [3493154] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL, 'include-xids', '0', 'skip-empty-xacts', '1', 'stream-changes', '1');
+2023-07-26 12:52:37.219 UTC [3493154] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.219 UTC [3493154] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:37.225 UTC [3493154] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.225 UTC [3493154] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL, 'include-xids', '0', 'skip-empty-xacts', '1', 'stream-changes', '1');
+2023-07-26 12:52:37.233 UTC [3493154] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.233 UTC [3493154] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL, 'include-xids', '0', 'skip-empty-xacts', '1', 'stream-changes', '1');
+2023-07-26 12:52:37.240 UTC [3493154] ERROR:  replication slot "regression_slot" does not exist
+2023-07-26 12:52:37.240 UTC [3493154] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot');
+2023-07-26 12:52:37.270 UTC [3493160] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.270 UTC [3493160] STATEMENT:  SELECT 'init' FROM
+	    pg_create_logical_replication_slot('regression_slot_stats1', 'test_decoding') s1,
+	    pg_create_logical_replication_slot('regression_slot_stats2', 'test_decoding') s2,
+	    pg_create_logical_replication_slot('regression_slot_stats3', 'test_decoding') s3;
+2023-07-26 12:52:37.291 UTC [3493160] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.291 UTC [3493160] STATEMENT:  SELECT count(*) FROM pg_logical_slot_get_changes('regression_slot_stats1', NULL, NULL, 'skip-empty-xacts', '1');
+2023-07-26 12:52:37.292 UTC [3493160] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.292 UTC [3493160] STATEMENT:  SELECT count(*) FROM pg_logical_slot_get_changes('regression_slot_stats2', NULL, NULL, 'skip-empty-xacts', '1');
+2023-07-26 12:52:37.292 UTC [3493160] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.292 UTC [3493160] STATEMENT:  SELECT count(*) FROM pg_logical_slot_get_changes('regression_slot_stats3', NULL, NULL, 'skip-empty-xacts', '1');
+2023-07-26 12:52:37.299 UTC [3493160] ERROR:  replication slot "regression_slot_stats1" does not exist
+2023-07-26 12:52:37.299 UTC [3493160] STATEMENT:  SELECT pg_stat_reset_replication_slot('regression_slot_stats1');
+2023-07-26 12:52:37.302 UTC [3493160] ERROR:  replication slot "do-not-exist" does not exist
+2023-07-26 12:52:37.302 UTC [3493160] STATEMENT:  SELECT pg_stat_reset_replication_slot('do-not-exist');
+2023-07-26 12:52:37.328 UTC [3493160] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.328 UTC [3493160] STATEMENT:  SELECT count(*) FROM pg_logical_slot_peek_changes('regression_slot_stats1', NULL, NULL, 'skip-empty-xacts', '1');
+2023-07-26 12:52:37.336 UTC [3493160] ERROR:  replication slot "regression_slot_stats1" does not exist
+2023-07-26 12:52:37.336 UTC [3493160] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot_stats1'),
+	    pg_drop_replication_slot('regression_slot_stats2'),
+	    pg_drop_replication_slot('regression_slot_stats3');
+2023-07-26 12:52:37.350 UTC [3493166] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.350 UTC [3493166] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding', false, true);
+2023-07-26 12:52:37.374 UTC [3493166] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.374 UTC [3493166] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:37.375 UTC [3493166] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.375 UTC [3493166] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:37.375 UTC [3493166] ERROR:  prepared transaction with identifier "test_prepared#1" does not exist
+2023-07-26 12:52:37.375 UTC [3493166] STATEMENT:  COMMIT PREPARED 'test_prepared#1';
+2023-07-26 12:52:37.376 UTC [3493166] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.376 UTC [3493166] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:37.380 UTC [3493166] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.380 UTC [3493166] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:37.384 UTC [3493166] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.384 UTC [3493166] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:37.402 UTC [3493166] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.402 UTC [3493166] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:37.407 UTC [3493166] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.407 UTC [3493166] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:37.411 UTC [3493166] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.411 UTC [3493166] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:37.420 UTC [3493166] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.420 UTC [3493166] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:37.462 UTC [3493166] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.462 UTC [3493166] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:37.467 UTC [3493166] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.467 UTC [3493166] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:37.475 UTC [3493166] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.475 UTC [3493166] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:37.479 UTC [3493166] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.479 UTC [3493166] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:37.485 UTC [3493166] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.485 UTC [3493166] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:37.489 UTC [3493166] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.489 UTC [3493166] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:37.500 UTC [3493166] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.500 UTC [3493166] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:37.501 UTC [3493166] ERROR:  replication slot "regression_slot" does not exist
+2023-07-26 12:52:37.501 UTC [3493166] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot');
+2023-07-26 12:52:37.530 UTC [3493172] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.530 UTC [3493172] STATEMENT:  SELECT 'init' FROM pg_create_logical_replication_slot('regression_slot', 'test_decoding', false, true);
+2023-07-26 12:52:37.546 UTC [3493172] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.546 UTC [3493172] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL, NULL, 'include-xids', '0', 'skip-empty-xacts', '1');
+2023-07-26 12:52:37.708 UTC [3493172] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.708 UTC [3493172] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL, 'include-xids', '0', 'skip-empty-xacts', '1', 'stream-changes', '1');
+2023-07-26 12:52:37.718 UTC [3493172] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.718 UTC [3493172] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL, 'include-xids', '0', 'skip-empty-xacts', '1', 'stream-changes', '1');
+2023-07-26 12:52:37.739 UTC [3493172] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.739 UTC [3493172] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL, 'include-xids', '0', 'skip-empty-xacts', '1', 'stream-changes', '1');
+2023-07-26 12:52:37.743 UTC [3493172] ERROR:  logical decoding requires wal_level >= logical
+2023-07-26 12:52:37.743 UTC [3493172] STATEMENT:  SELECT data FROM pg_logical_slot_get_changes('regression_slot', NULL,NULL, 'include-xids', '0', 'skip-empty-xacts', '1', 'stream-changes', '1');
+2023-07-26 12:52:37.750 UTC [3493172] ERROR:  replication slot "regression_slot" does not exist
+2023-07-26 12:52:37.750 UTC [3493172] STATEMENT:  SELECT pg_drop_replication_slot('regression_slot');

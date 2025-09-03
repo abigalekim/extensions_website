@@ -1,0 +1,72 @@
+2023-07-25 06:32:14.733 UTC [1797554] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 06:32:14.734 UTC [1797554] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 06:32:14.749 UTC [1797554] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 06:32:14.765 UTC [1797557] LOG:  database system was shut down at 2023-07-25 06:32:14 UTC
+2023-07-25 06:32:14.775 UTC [1797554] LOG:  database system is ready to accept connections
+2023-07-25 06:32:15.776 UTC [1797580] ERROR:  permission denied for function bt_index_check
+2023-07-25 06:32:15.776 UTC [1797580] STATEMENT:  SELECT bt_index_check('bttest_a_idx'::regclass);
+2023-07-25 06:32:15.776 UTC [1797580] ERROR:  permission denied for function bt_index_parent_check
+2023-07-25 06:32:15.776 UTC [1797580] STATEMENT:  SELECT bt_index_parent_check('bttest_a_idx'::regclass);
+2023-07-25 06:32:15.840 UTC [1797580] ERROR:  "bttest_a" is not an index
+2023-07-25 06:32:15.840 UTC [1797580] STATEMENT:  SELECT bt_index_check('bttest_a');
+2023-07-25 06:32:15.840 UTC [1797580] ERROR:  "bttest_a" is not an index
+2023-07-25 06:32:15.840 UTC [1797580] STATEMENT:  SELECT bt_index_parent_check('bttest_a');
+2023-07-25 06:32:15.840 UTC [1797580] ERROR:  could not open relation with OID 17
+2023-07-25 06:32:15.840 UTC [1797580] STATEMENT:  SELECT bt_index_check(17);
+2023-07-25 06:32:15.840 UTC [1797580] ERROR:  could not open relation with OID 17
+2023-07-25 06:32:15.840 UTC [1797580] STATEMENT:  SELECT bt_index_parent_check(17);
+2023-07-25 06:32:15.855 UTC [1797580] ERROR:  only B-Tree indexes are supported as targets for verification
+2023-07-25 06:32:15.855 UTC [1797580] DETAIL:  Relation "bttest_a_brin_idx" is not a B-Tree index.
+2023-07-25 06:32:15.855 UTC [1797580] STATEMENT:  SELECT bt_index_parent_check('bttest_a_brin_idx');
+2023-07-25 06:32:17.023 UTC [1797584] ERROR:  invalid skip option
+2023-07-25 06:32:17.023 UTC [1797584] HINT:  Valid skip options are "all-visible", "all-frozen", and "none".
+2023-07-25 06:32:17.023 UTC [1797584] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest', skip := 'rope');
+2023-07-25 06:32:17.033 UTC [1797584] ERROR:  permission denied for function verify_heapam
+2023-07-25 06:32:17.033 UTC [1797584] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest');
+2023-07-25 06:32:17.037 UTC [1797584] ERROR:  ending block number must be between 0 and 0
+2023-07-25 06:32:17.037 UTC [1797584] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest', startblock := 0, endblock := 10000);
+2023-07-25 06:32:17.037 UTC [1797584] ERROR:  starting block number must be between 0 and 0
+2023-07-25 06:32:17.037 UTC [1797584] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest', startblock := 10000, endblock := 11000);
+2023-07-25 06:32:17.044 UTC [1797584] ERROR:  cannot check relation "test_partitioned"
+2023-07-25 06:32:17.044 UTC [1797584] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-25 06:32:17.044 UTC [1797584] STATEMENT:  SELECT * FROM verify_heapam('test_partitioned',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-25 06:32:17.132 UTC [1797584] ERROR:  cannot check relation "test_index"
+2023-07-25 06:32:17.132 UTC [1797584] DETAIL:  This operation is not supported for indexes.
+2023-07-25 06:32:17.132 UTC [1797584] STATEMENT:  SELECT * FROM verify_heapam('test_index',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-25 06:32:17.136 UTC [1797584] ERROR:  cannot check relation "test_view"
+2023-07-25 06:32:17.136 UTC [1797584] DETAIL:  This operation is not supported for views.
+2023-07-25 06:32:17.136 UTC [1797584] STATEMENT:  SELECT * FROM verify_heapam('test_view',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-25 06:32:17.154 UTC [1797584] ERROR:  cannot check relation "test_foreign_table"
+2023-07-25 06:32:17.154 UTC [1797584] DETAIL:  This operation is not supported for foreign tables.
+2023-07-25 06:32:17.154 UTC [1797584] STATEMENT:  SELECT * FROM verify_heapam('test_foreign_table',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-25 06:32:17.291 UTC [1797599] ERROR:  required extension "cube" is not installed
+2023-07-25 06:32:17.291 UTC [1797599] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-25 06:32:17.291 UTC [1797599] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-25 06:32:17.375 UTC [1797599] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-25 06:32:17.375 UTC [1797599] DETAIL:  extension earthdistance depends on extension cube
+2023-07-25 06:32:17.375 UTC [1797599] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 06:32:17.375 UTC [1797599] STATEMENT:  drop extension cube;
+2023-07-25 06:32:17.379 UTC [1797599] ERROR:  cannot drop type cube because extension cube requires it
+2023-07-25 06:32:17.379 UTC [1797599] HINT:  You can drop extension cube instead.
+2023-07-25 06:32:17.379 UTC [1797599] STATEMENT:  drop type cube;
+2023-07-25 06:32:17.384 UTC [1797599] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-25 06:32:17.384 UTC [1797599] DETAIL:  column f1 of table foo depends on type cube
+2023-07-25 06:32:17.384 UTC [1797599] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 06:32:17.384 UTC [1797599] STATEMENT:  drop extension cube;
+2023-07-25 06:32:17.480 UTC [1797599] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-25 06:32:17.480 UTC [1797599] DETAIL:  column f1 of table foo depends on type c.cube
+2023-07-25 06:32:17.480 UTC [1797599] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 06:32:17.480 UTC [1797599] STATEMENT:  drop extension cube;
+2023-07-25 06:32:17.481 UTC [1797599] ERROR:  cannot drop schema c because other objects depend on it
+2023-07-25 06:32:17.481 UTC [1797599] DETAIL:  extension cube depends on schema c
+	column f1 of table foo depends on type c.cube
+2023-07-25 06:32:17.481 UTC [1797599] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 06:32:17.481 UTC [1797599] STATEMENT:  drop schema c;

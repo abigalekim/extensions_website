@@ -1,0 +1,51 @@
+The files belonging to this database system will be owned by user "abigalek".
+This user must also own the server process.
+
+The database cluster will be initialized with locale "en_US.UTF-8".
+The default database encoding has accordingly been set to "UTF8".
+The default text search configuration will be set to "english".
+
+Data page checksums are disabled.
+
+creating directory pg-15-data ... ok
+creating subdirectories ... ok
+selecting dynamic shared memory implementation ... posix
+selecting default max_connections ... 100
+selecting default shared_buffers ... 128MB
+selecting default time zone ... Etc/UTC
+creating configuration files ... ok
+running bootstrap script ... ok
+performing post-bootstrap initialization ... ok
+syncing data to disk ... ok
+
+initdb: warning: enabling "trust" authentication for local connections
+initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+
+Success. You can now start the database server using:
+
+    pg-15-dist/bin/pg_ctl -D pg-15-data -l logfile start
+
+waiting for server to start.... done
+server started
+(using postmaster on Unix socket, default port)
+============== dropping database "regression"         ==============
+SET
+DROP DATABASE
+============== creating database "regression"         ==============
+CREATE DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+============== installing pgcrypto                    ==============
+CREATE EXTENSION
+============== installing pgjwt                       ==============
+CREATE EXTENSION
+============== running regression test queries        ==============
+test test                         ... sh: 0: getcwd() failed: No such file or directory
+sh: 1: cannot create /home/abigalek/pgext-cli-python/pgextworkdir/lsm3/results/test.out.diff: Directory nonexistent
+diff command failed with status 512: diff  "/home/abigalek/pgext-cli-python/pgextworkdir/lsm3/expected/test.out" "/home/abigalek/pgext-cli-python/pgextworkdir/lsm3/results/test.out" > "/home/abigalek/pgext-cli-python/pgextworkdir/lsm3/results/test.out.diff"
+cp: cannot stat 'logfile': No such file or directory
+/bin/sh: 1: ./pg-15-dist/bin/pg_ctl: not found

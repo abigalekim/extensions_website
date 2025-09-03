@@ -1,0 +1,13 @@
+2023-07-26 06:17:02.861 UTC [3418815] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 06:17:02.861 UTC [3418815] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 06:17:02.876 UTC [3418815] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 06:17:02.891 UTC [3418819] LOG:  database system was shut down at 2023-07-26 06:17:02 UTC
+2023-07-26 06:17:02.901 UTC [3418815] LOG:  database system is ready to accept connections
+2023-07-26 06:17:03.136 UTC [3418835] ERROR:  value 0 out of bounds for option "siglen"
+2023-07-26 06:17:03.136 UTC [3418835] DETAIL:  Valid values are between "1" and "2024".
+2023-07-26 06:17:03.136 UTC [3418835] STATEMENT:  create index trgm_idx on test_trgm using gist (t gist_trgm_ops(siglen=0));
+2023-07-26 06:17:03.137 UTC [3418835] ERROR:  value 2025 out of bounds for option "siglen"
+2023-07-26 06:17:03.137 UTC [3418835] DETAIL:  Valid values are between "1" and "2024".
+2023-07-26 06:17:03.137 UTC [3418835] STATEMENT:  create index trgm_idx on test_trgm using gist (t gist_trgm_ops(siglen=2025));
+2023-07-26 06:17:03.583 UTC [3418845] ERROR:  relation "test_trgm3" does not exist
+2023-07-26 06:17:03.583 UTC [3418845] STATEMENT:  COPY  test_trgm3 FROM STDIN 

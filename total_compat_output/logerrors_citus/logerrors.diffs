@@ -1,0 +1,45 @@
+diff -U3 /home/abigalek/pgext-cli/pgextworkdir/logerrors/expected/logerrors.out /home/abigalek/pgext-cli/pgextworkdir/logerrors/results/logerrors.out
+--- /home/abigalek/pgext-cli/pgextworkdir/logerrors/expected/logerrors.out	2023-11-25 09:27:46.907585035 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/logerrors/results/logerrors.out	2023-11-25 09:28:18.835438882 +0000
+@@ -17,13 +17,12 @@
+ (1 row)
+ 
+ SELECT * FROM pg_log_errors_stats();
+- time_interval |  type   |          message           | count | username |      database      | sqlstate 
+----------------+---------+----------------------------+-------+----------+--------------------+----------
+-               | WARNING | TOTAL                      |     0 |          |                    | 
+-               | ERROR   | TOTAL                      |     1 |          |                    | 
+-               | FATAL   | TOTAL                      |     0 |          |                    | 
+-           600 | ERROR   | ERRCODE_UNDEFINED_FUNCTION |     1 | postgres | contrib_regression | 42883
+-(4 rows)
++ time_interval |  type   | message | count | username | database | sqlstate 
++---------------+---------+---------+-------+----------+----------+----------
++               | WARNING | TOTAL   |     0 |          |          | 
++               | ERROR   | TOTAL   |     0 |          |          | 
++               | FATAL   | TOTAL   |     0 |          |          | 
++(3 rows)
+ 
+ DO LANGUAGE plpgsql $$
+ BEGIN
+@@ -46,15 +45,10 @@
+ (1 row)
+ 
+ SELECT * FROM pg_log_errors_stats();
+- time_interval |  type   |          message           | count | username |      database      | sqlstate 
+----------------+---------+----------------------------+-------+----------+--------------------+----------
+-               | WARNING | TOTAL                      |     0 |          |                    | 
+-               | ERROR   | TOTAL                      |     3 |          |                    | 
+-               | FATAL   | TOTAL                      |     0 |          |                    | 
+-             5 | ERROR   | NOT_KNOWN_ERROR            |     1 | postgres | contrib_regression | XXXXX
+-             5 | ERROR   | NOT_KNOWN_ERROR            |     1 | postgres | contrib_regression | XXXXY
+-           600 | ERROR   | ERRCODE_UNDEFINED_FUNCTION |     1 | postgres | contrib_regression | 42883
+-           600 | ERROR   | NOT_KNOWN_ERROR            |     1 | postgres | contrib_regression | XXXXX
+-           600 | ERROR   | NOT_KNOWN_ERROR            |     1 | postgres | contrib_regression | XXXXY
+-(8 rows)
++ time_interval |  type   | message | count | username | database | sqlstate 
++---------------+---------+---------+-------+----------+----------+----------
++               | WARNING | TOTAL   |     0 |          |          | 
++               | ERROR   | TOTAL   |     0 |          |          | 
++               | FATAL   | TOTAL   |     0 |          |          | 
++(3 rows)
+ 

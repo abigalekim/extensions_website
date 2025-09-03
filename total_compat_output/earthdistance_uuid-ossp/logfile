@@ -1,0 +1,831 @@
+2023-07-22 03:24:54.021 UTC [537570] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:24:54.022 UTC [537570] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:24:54.027 UTC [537570] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:24:54.034 UTC [537573] LOG:  database system was shut down at 2023-07-22 03:24:53 UTC
+2023-07-22 03:24:54.039 UTC [537570] LOG:  database system is ready to accept connections
+2023-07-22 03:24:54.221 UTC [537589] ERROR:  file "test_file1" exists
+2023-07-22 03:24:54.221 UTC [537589] STATEMENT:  SELECT pg_file_write('test_file1', 'test1', false);
+2023-07-22 03:24:54.225 UTC [537589] ERROR:  path must be in or below the current directory
+2023-07-22 03:24:54.225 UTC [537589] STATEMENT:  SELECT pg_file_write('../test_file0', 'test0', false);
+2023-07-22 03:24:54.225 UTC [537589] ERROR:  absolute path not allowed
+2023-07-22 03:24:54.225 UTC [537589] STATEMENT:  SELECT pg_file_write('/tmp/test_file0', 'test0', false);
+2023-07-22 03:24:54.225 UTC [537589] ERROR:  absolute path not allowed
+2023-07-22 03:24:54.225 UTC [537589] STATEMENT:  SELECT pg_file_write(current_setting('data_directory') || '/../test_file4', 'test4', false);
+2023-07-22 03:24:54.235 UTC [537589] ERROR:  could not stat file "test_file2": No such file or directory
+2023-07-22 03:24:54.235 UTC [537589] STATEMENT:  SELECT pg_file_sync('test_file2');
+2023-07-22 03:24:54.235 UTC [537589] ERROR:  could not open file "test_file1" for reading: No such file or directory
+2023-07-22 03:24:54.235 UTC [537589] STATEMENT:  SELECT pg_read_file('test_file1');
+2023-07-22 03:24:54.236 UTC [537589] WARNING:  file "test_file1" is not accessible: No such file or directory
+2023-07-22 03:24:54.236 UTC [537589] CONTEXT:  SQL function "pg_file_rename" statement 1
+2023-07-22 03:24:54.236 UTC [537589] ERROR:  could not open file "test_file2" for reading: No such file or directory
+2023-07-22 03:24:54.236 UTC [537589] STATEMENT:  SELECT pg_read_file('test_file2');
+2023-07-22 03:24:54.238 UTC [537589] ERROR:  permission denied for function pg_file_write
+2023-07-22 03:24:54.238 UTC [537589] STATEMENT:  SELECT pg_file_write('test_file0', 'test0', false);
+2023-07-22 03:24:54.238 UTC [537589] ERROR:  permission denied for function pg_file_sync
+2023-07-22 03:24:54.238 UTC [537589] STATEMENT:  SELECT pg_file_sync('test_file0');
+2023-07-22 03:24:54.238 UTC [537589] ERROR:  permission denied for function pg_file_rename
+2023-07-22 03:24:54.238 UTC [537589] CONTEXT:  SQL function "pg_file_rename" statement 1
+2023-07-22 03:24:54.238 UTC [537589] STATEMENT:  SELECT pg_file_rename('test_file0', 'test_file0');
+2023-07-22 03:24:54.238 UTC [537589] ERROR:  permission denied for function pg_file_unlink
+2023-07-22 03:24:54.238 UTC [537589] STATEMENT:  SELECT pg_file_unlink('test_file0');
+2023-07-22 03:24:54.238 UTC [537589] ERROR:  permission denied for function pg_logdir_ls
+2023-07-22 03:24:54.238 UTC [537589] STATEMENT:  SELECT pg_logdir_ls();
+2023-07-22 03:24:54.436 UTC [537615] ERROR:  syntax error at or near "-" at character 22
+2023-07-22 03:24:54.436 UTC [537615] STATEMENT:  CREATE EXTENSION uuid-ossp;
+2023-07-22 03:25:25.788 UTC [537571] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:25:25.977 UTC [537571] LOG:  checkpoint complete: wrote 1128 buffers (6.9%); 0 WAL file(s) added, 0 removed, 9 recycled; write=0.053 s, sync=0.093 s, total=0.189 s; sync files=508, longest=0.007 s, average=0.001 s; distance=144755 kB, estimate=144755 kB
+2023-07-22 03:25:26.085 UTC [537637] ERROR:  syntax error at or near "-" at character 22
+2023-07-22 03:25:26.085 UTC [537637] STATEMENT:  CREATE EXTENSION uuid-ossp;
+2023-07-22 03:25:57.288 UTC [537571] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:25:57.336 UTC [537571] LOG:  checkpoint complete: wrote 12 buffers (0.1%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.007 s, sync=0.004 s, total=0.048 s; sync files=4, longest=0.003 s, average=0.001 s; distance=137129 kB, estimate=143992 kB
+2023-07-22 03:25:57.401 UTC [537570] LOG:  received fast shutdown request
+2023-07-22 03:25:57.404 UTC [537570] LOG:  aborting any active transactions
+2023-07-22 03:25:57.405 UTC [537570] LOG:  background worker "logical replication launcher" (PID 537576) exited with exit code 1
+2023-07-22 03:25:57.405 UTC [537571] LOG:  shutting down
+2023-07-22 03:25:57.408 UTC [537571] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:25:57.424 UTC [537571] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.003 s, sync=0.001 s, total=0.019 s; sync files=1, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=129593 kB
+2023-07-22 03:25:57.443 UTC [537570] LOG:  database system is shut down
+2023-07-22 03:25:58.075 UTC [537679] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:25:58.075 UTC [537679] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:25:58.081 UTC [537679] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:25:58.088 UTC [537682] LOG:  database system was shut down at 2023-07-22 03:25:57 UTC
+2023-07-22 03:25:58.093 UTC [537679] LOG:  database system is ready to accept connections
+2023-07-22 03:25:58.724 UTC [537702] ERROR:  permission denied for function bt_index_check
+2023-07-22 03:25:58.724 UTC [537702] STATEMENT:  SELECT bt_index_check('bttest_a_idx'::regclass);
+2023-07-22 03:25:58.725 UTC [537702] ERROR:  permission denied for function bt_index_parent_check
+2023-07-22 03:25:58.725 UTC [537702] STATEMENT:  SELECT bt_index_parent_check('bttest_a_idx'::regclass);
+2023-07-22 03:25:58.748 UTC [537702] ERROR:  "bttest_a" is not an index
+2023-07-22 03:25:58.748 UTC [537702] STATEMENT:  SELECT bt_index_check('bttest_a');
+2023-07-22 03:25:58.748 UTC [537702] ERROR:  "bttest_a" is not an index
+2023-07-22 03:25:58.748 UTC [537702] STATEMENT:  SELECT bt_index_parent_check('bttest_a');
+2023-07-22 03:25:58.748 UTC [537702] ERROR:  could not open relation with OID 17
+2023-07-22 03:25:58.748 UTC [537702] STATEMENT:  SELECT bt_index_check(17);
+2023-07-22 03:25:58.748 UTC [537702] ERROR:  could not open relation with OID 17
+2023-07-22 03:25:58.748 UTC [537702] STATEMENT:  SELECT bt_index_parent_check(17);
+2023-07-22 03:25:58.760 UTC [537702] ERROR:  only B-Tree indexes are supported as targets for verification
+2023-07-22 03:25:58.760 UTC [537702] DETAIL:  Relation "bttest_a_brin_idx" is not a B-Tree index.
+2023-07-22 03:25:58.760 UTC [537702] STATEMENT:  SELECT bt_index_parent_check('bttest_a_brin_idx');
+2023-07-22 03:25:59.500 UTC [537706] ERROR:  invalid skip option
+2023-07-22 03:25:59.500 UTC [537706] HINT:  Valid skip options are "all-visible", "all-frozen", and "none".
+2023-07-22 03:25:59.500 UTC [537706] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest', skip := 'rope');
+2023-07-22 03:25:59.505 UTC [537706] ERROR:  permission denied for function verify_heapam
+2023-07-22 03:25:59.505 UTC [537706] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest');
+2023-07-22 03:25:59.507 UTC [537706] ERROR:  ending block number must be between 0 and 0
+2023-07-22 03:25:59.507 UTC [537706] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest', startblock := 0, endblock := 10000);
+2023-07-22 03:25:59.507 UTC [537706] ERROR:  starting block number must be between 0 and 0
+2023-07-22 03:25:59.507 UTC [537706] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest', startblock := 10000, endblock := 11000);
+2023-07-22 03:25:59.509 UTC [537706] ERROR:  cannot check relation "test_partitioned"
+2023-07-22 03:25:59.509 UTC [537706] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-22 03:25:59.509 UTC [537706] STATEMENT:  SELECT * FROM verify_heapam('test_partitioned',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-22 03:25:59.582 UTC [537706] ERROR:  cannot check relation "test_index"
+2023-07-22 03:25:59.582 UTC [537706] DETAIL:  This operation is not supported for indexes.
+2023-07-22 03:25:59.582 UTC [537706] STATEMENT:  SELECT * FROM verify_heapam('test_index',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-22 03:25:59.584 UTC [537706] ERROR:  cannot check relation "test_view"
+2023-07-22 03:25:59.584 UTC [537706] DETAIL:  This operation is not supported for views.
+2023-07-22 03:25:59.584 UTC [537706] STATEMENT:  SELECT * FROM verify_heapam('test_view',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-22 03:25:59.588 UTC [537706] ERROR:  cannot check relation "test_foreign_table"
+2023-07-22 03:25:59.588 UTC [537706] DETAIL:  This operation is not supported for foreign tables.
+2023-07-22 03:25:59.588 UTC [537706] STATEMENT:  SELECT * FROM verify_heapam('test_foreign_table',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-22 03:25:59.624 UTC [537680] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:25:59.666 UTC [537680] LOG:  checkpoint complete: wrote 18 buffers (0.1%); 0 WAL file(s) added, 0 removed, 4 recycled; write=0.010 s, sync=0.006 s, total=0.043 s; sync files=14, longest=0.003 s, average=0.001 s; distance=60967 kB, estimate=60967 kB
+2023-07-22 03:25:59.837 UTC [537732] ERROR:  syntax error at or near "-" at character 22
+2023-07-22 03:25:59.837 UTC [537732] STATEMENT:  CREATE EXTENSION uuid-ossp;
+2023-07-22 03:26:31.198 UTC [537680] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:26:31.276 UTC [537680] LOG:  checkpoint complete: wrote 574 buffers (3.5%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.020 s, sync=0.021 s, total=0.079 s; sync files=251, longest=0.004 s, average=0.001 s; distance=141000 kB, estimate=141000 kB
+2023-07-22 03:26:31.383 UTC [537752] ERROR:  syntax error at or near "-" at character 22
+2023-07-22 03:26:31.383 UTC [537752] STATEMENT:  CREATE EXTENSION uuid-ossp;
+2023-07-22 03:27:02.569 UTC [537680] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:27:02.617 UTC [537680] LOG:  checkpoint complete: wrote 11 buffers (0.1%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.007 s, sync=0.004 s, total=0.048 s; sync files=4, longest=0.003 s, average=0.001 s; distance=137221 kB, estimate=140622 kB
+2023-07-22 03:27:02.654 UTC [537679] LOG:  received fast shutdown request
+2023-07-22 03:27:02.657 UTC [537679] LOG:  aborting any active transactions
+2023-07-22 03:27:02.658 UTC [537679] LOG:  background worker "logical replication launcher" (PID 537685) exited with exit code 1
+2023-07-22 03:27:02.658 UTC [537680] LOG:  shutting down
+2023-07-22 03:27:02.661 UTC [537680] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:27:02.678 UTC [537680] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.004 s, sync=0.001 s, total=0.021 s; sync files=1, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=126560 kB
+2023-07-22 03:27:02.729 UTC [537679] LOG:  database system is shut down
+2023-07-22 03:27:03.317 UTC [537794] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:27:03.317 UTC [537794] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:27:03.323 UTC [537794] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:27:03.330 UTC [537797] LOG:  database system was shut down at 2023-07-22 03:27:03 UTC
+2023-07-22 03:27:03.335 UTC [537794] LOG:  database system is ready to accept connections
+2023-07-22 03:27:03.513 UTC [537811] ERROR:  extension "auth_delay" is not available
+2023-07-22 03:27:03.513 UTC [537811] DETAIL:  Could not open extension control file "/home/abigalek/pgext-cli-python/pg-15-dist/share/postgresql/extension/auth_delay.control": No such file or directory.
+2023-07-22 03:27:03.513 UTC [537811] HINT:  The extension must first be installed on the system where PostgreSQL is running.
+2023-07-22 03:27:03.513 UTC [537811] STATEMENT:  CREATE EXTENSION IF NOT EXISTS "auth_delay"
+2023-07-22 03:27:03.516 UTC [537794] LOG:  received fast shutdown request
+2023-07-22 03:27:03.519 UTC [537794] LOG:  aborting any active transactions
+2023-07-22 03:27:03.520 UTC [537794] LOG:  background worker "logical replication launcher" (PID 537800) exited with exit code 1
+2023-07-22 03:27:03.520 UTC [537795] LOG:  shutting down
+2023-07-22 03:27:03.522 UTC [537795] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:27:03.608 UTC [537795] LOG:  checkpoint complete: wrote 892 buffers (5.4%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.044 s, sync=0.026 s, total=0.089 s; sync files=252, longest=0.003 s, average=0.001 s; distance=3996 kB, estimate=3996 kB
+2023-07-22 03:27:03.628 UTC [537794] LOG:  database system is shut down
+2023-07-22 03:27:04.306 UTC [537840] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:27:04.307 UTC [537840] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:27:04.313 UTC [537840] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:27:04.320 UTC [537843] LOG:  database system was shut down at 2023-07-22 03:27:04 UTC
+2023-07-22 03:27:04.325 UTC [537840] LOG:  database system is ready to accept connections
+2023-07-22 03:27:04.488 UTC [537857] ERROR:  extension "auto_explain" is not available
+2023-07-22 03:27:04.488 UTC [537857] DETAIL:  Could not open extension control file "/home/abigalek/pgext-cli-python/pg-15-dist/share/postgresql/extension/auto_explain.control": No such file or directory.
+2023-07-22 03:27:04.488 UTC [537857] HINT:  The extension must first be installed on the system where PostgreSQL is running.
+2023-07-22 03:27:04.488 UTC [537857] STATEMENT:  CREATE EXTENSION IF NOT EXISTS "auto_explain"
+2023-07-22 03:27:04.493 UTC [537840] LOG:  received fast shutdown request
+2023-07-22 03:27:04.496 UTC [537840] LOG:  aborting any active transactions
+2023-07-22 03:27:04.497 UTC [537840] LOG:  background worker "logical replication launcher" (PID 537846) exited with exit code 1
+2023-07-22 03:27:04.497 UTC [537841] LOG:  shutting down
+2023-07-22 03:27:04.500 UTC [537841] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:27:04.552 UTC [537841] LOG:  checkpoint complete: wrote 892 buffers (5.4%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.019 s, sync=0.021 s, total=0.056 s; sync files=252, longest=0.003 s, average=0.001 s; distance=3996 kB, estimate=3996 kB
+2023-07-22 03:27:04.559 UTC [537840] LOG:  database system is shut down
+2023-07-22 03:27:05.185 UTC [537886] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:27:05.185 UTC [537886] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:27:05.192 UTC [537886] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:27:05.200 UTC [537889] LOG:  database system was shut down at 2023-07-22 03:27:05 UTC
+2023-07-22 03:27:05.205 UTC [537886] LOG:  database system is ready to accept connections
+2023-07-22 03:27:05.334 UTC [537903] ERROR:  extension "basebackup_to_shell" is not available
+2023-07-22 03:27:05.334 UTC [537903] DETAIL:  Could not open extension control file "/home/abigalek/pgext-cli-python/pg-15-dist/share/postgresql/extension/basebackup_to_shell.control": No such file or directory.
+2023-07-22 03:27:05.334 UTC [537903] HINT:  The extension must first be installed on the system where PostgreSQL is running.
+2023-07-22 03:27:05.334 UTC [537903] STATEMENT:  CREATE EXTENSION IF NOT EXISTS "basebackup_to_shell"
+2023-07-22 03:27:05.337 UTC [537886] LOG:  received fast shutdown request
+2023-07-22 03:27:05.340 UTC [537886] LOG:  aborting any active transactions
+2023-07-22 03:27:05.341 UTC [537886] LOG:  background worker "logical replication launcher" (PID 537892) exited with exit code 1
+2023-07-22 03:27:05.341 UTC [537887] LOG:  shutting down
+2023-07-22 03:27:05.344 UTC [537887] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:27:05.426 UTC [537887] LOG:  checkpoint complete: wrote 892 buffers (5.4%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.042 s, sync=0.029 s, total=0.085 s; sync files=252, longest=0.006 s, average=0.001 s; distance=3996 kB, estimate=3996 kB
+2023-07-22 03:27:05.436 UTC [537886] LOG:  database system is shut down
+2023-07-22 03:27:06.006 UTC [537932] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:27:06.006 UTC [537932] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:27:06.013 UTC [537932] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:27:06.022 UTC [537935] LOG:  database system was shut down at 2023-07-22 03:27:05 UTC
+2023-07-22 03:27:06.029 UTC [537932] LOG:  database system is ready to accept connections
+2023-07-22 03:27:06.371 UTC [537933] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:27:06.402 UTC [537933] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.009 s, sync=0.006 s, total=0.032 s; sync files=7, longest=0.004 s, average=0.001 s; distance=11698 kB, estimate=11698 kB
+2023-07-22 03:27:06.587 UTC [537972] ERROR:  syntax error at or near "-" at character 22
+2023-07-22 03:27:06.587 UTC [537972] STATEMENT:  CREATE EXTENSION uuid-ossp;
+2023-07-22 03:27:38.183 UTC [537933] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:27:38.297 UTC [537933] LOG:  checkpoint complete: wrote 632 buffers (3.9%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.017 s, sync=0.043 s, total=0.114 s; sync files=251, longest=0.012 s, average=0.001 s; distance=140676 kB, estimate=140676 kB
+2023-07-22 03:27:38.416 UTC [537990] ERROR:  syntax error at or near "-" at character 22
+2023-07-22 03:27:38.416 UTC [537990] STATEMENT:  CREATE EXTENSION uuid-ossp;
+2023-07-22 03:28:10.183 UTC [537933] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:28:10.287 UTC [537933] LOG:  checkpoint complete: wrote 7 buffers (0.0%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.016 s, sync=0.009 s, total=0.104 s; sync files=4, longest=0.007 s, average=0.003 s; distance=132612 kB, estimate=139869 kB
+2023-07-22 03:28:10.354 UTC [537932] LOG:  received fast shutdown request
+2023-07-22 03:28:10.359 UTC [537932] LOG:  aborting any active transactions
+2023-07-22 03:28:10.360 UTC [537932] LOG:  background worker "logical replication launcher" (PID 537939) exited with exit code 1
+2023-07-22 03:28:10.360 UTC [537933] LOG:  shutting down
+2023-07-22 03:28:10.388 UTC [537933] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:28:10.491 UTC [537933] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.013 s, sync=0.002 s, total=0.111 s; sync files=1, longest=0.002 s, average=0.002 s; distance=5238 kB, estimate=126406 kB
+2023-07-22 03:28:10.540 UTC [537932] LOG:  database system is shut down
+2023-07-22 03:28:11.301 UTC [538029] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:28:11.301 UTC [538029] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:28:11.316 UTC [538029] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:28:11.330 UTC [538032] LOG:  database system was shut down at 2023-07-22 03:28:11 UTC
+2023-07-22 03:28:11.340 UTC [538029] LOG:  database system is ready to accept connections
+2023-07-22 03:28:11.667 UTC [538048] ERROR:  value 0 out of bounds for option "length"
+2023-07-22 03:28:11.667 UTC [538048] DETAIL:  Valid values are between "1" and "4096".
+2023-07-22 03:28:11.667 UTC [538048] STATEMENT:  CREATE INDEX bloomidx2 ON tst USING bloom (i, t) WITH (length=0);
+2023-07-22 03:28:11.668 UTC [538048] ERROR:  value 0 out of bounds for option "col1"
+2023-07-22 03:28:11.668 UTC [538048] DETAIL:  Valid values are between "1" and "4095".
+2023-07-22 03:28:11.668 UTC [538048] STATEMENT:  CREATE INDEX bloomidx2 ON tst USING bloom (i, t) WITH (col1=0);
+2023-07-22 03:28:11.695 UTC [538030] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:28:11.756 UTC [538030] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.018 s, sync=0.012 s, total=0.061 s; sync files=7, longest=0.006 s, average=0.002 s; distance=5191 kB, estimate=5191 kB
+2023-07-22 03:28:12.199 UTC [538074] ERROR:  syntax error at or near "-" at character 22
+2023-07-22 03:28:12.199 UTC [538074] STATEMENT:  CREATE EXTENSION uuid-ossp;
+2023-07-22 03:28:44.595 UTC [538030] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:28:44.754 UTC [538030] LOG:  checkpoint complete: wrote 892 buffers (5.4%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.029 s, sync=0.046 s, total=0.159 s; sync files=251, longest=0.017 s, average=0.001 s; distance=136532 kB, estimate=136532 kB
+2023-07-22 03:28:44.881 UTC [538092] ERROR:  syntax error at or near "-" at character 22
+2023-07-22 03:28:44.881 UTC [538092] STATEMENT:  CREATE EXTENSION uuid-ossp;
+2023-07-22 03:29:16.519 UTC [538030] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:29:16.644 UTC [538030] LOG:  checkpoint complete: wrote 7 buffers (0.0%); 0 WAL file(s) added, 0 removed, 9 recycled; write=0.019 s, sync=0.011 s, total=0.126 s; sync files=4, longest=0.008 s, average=0.003 s; distance=132529 kB, estimate=136132 kB
+2023-07-22 03:29:16.713 UTC [538029] LOG:  received fast shutdown request
+2023-07-22 03:29:16.724 UTC [538029] LOG:  aborting any active transactions
+2023-07-22 03:29:16.725 UTC [538029] LOG:  background worker "logical replication launcher" (PID 538035) exited with exit code 1
+2023-07-22 03:29:16.725 UTC [538030] LOG:  shutting down
+2023-07-22 03:29:16.731 UTC [538030] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:29:16.771 UTC [538030] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.008 s, sync=0.003 s, total=0.046 s; sync files=1, longest=0.003 s, average=0.003 s; distance=0 kB, estimate=122518 kB
+2023-07-22 03:29:16.794 UTC [538029] LOG:  database system is shut down
+2023-07-22 03:29:17.575 UTC [538135] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:29:17.576 UTC [538135] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:29:17.588 UTC [538135] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:29:17.605 UTC [538138] LOG:  database system was shut down at 2023-07-22 03:29:17 UTC
+2023-07-22 03:29:17.615 UTC [538135] LOG:  database system is ready to accept connections
+2023-07-22 03:29:19.178 UTC [538136] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:29:19.356 UTC [538136] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 1 WAL file(s) added, 0 removed, 0 recycled; write=0.019 s, sync=0.015 s, total=0.179 s; sync files=7, longest=0.008 s, average=0.003 s; distance=10997 kB, estimate=10997 kB
+2023-07-22 03:29:19.688 UTC [538296] ERROR:  syntax error at or near "-" at character 22
+2023-07-22 03:29:19.688 UTC [538296] STATEMENT:  CREATE EXTENSION uuid-ossp;
+2023-07-22 03:29:52.192 UTC [538136] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:29:52.355 UTC [538136] LOG:  checkpoint complete: wrote 917 buffers (5.6%); 0 WAL file(s) added, 0 removed, 9 recycled; write=0.028 s, sync=0.043 s, total=0.164 s; sync files=251, longest=0.024 s, average=0.001 s; distance=137220 kB, estimate=137220 kB
+2023-07-22 03:29:52.491 UTC [538313] ERROR:  syntax error at or near "-" at character 22
+2023-07-22 03:29:52.491 UTC [538313] STATEMENT:  CREATE EXTENSION uuid-ossp;
+2023-07-22 03:30:24.200 UTC [538136] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:30:24.326 UTC [538136] LOG:  checkpoint complete: wrote 7 buffers (0.0%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.019 s, sync=0.013 s, total=0.127 s; sync files=4, longest=0.010 s, average=0.004 s; distance=132854 kB, estimate=136783 kB
+2023-07-22 03:30:24.393 UTC [538135] LOG:  received fast shutdown request
+2023-07-22 03:30:24.400 UTC [538135] LOG:  aborting any active transactions
+2023-07-22 03:30:24.401 UTC [538135] LOG:  background worker "logical replication launcher" (PID 538141) exited with exit code 1
+2023-07-22 03:30:24.401 UTC [538136] LOG:  shutting down
+2023-07-22 03:30:24.408 UTC [538136] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:30:24.449 UTC [538136] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.008 s, sync=0.003 s, total=0.049 s; sync files=1, longest=0.003 s, average=0.003 s; distance=0 kB, estimate=123105 kB
+2023-07-22 03:30:24.468 UTC [538135] LOG:  database system is shut down
+2023-07-22 03:30:25.210 UTC [538356] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:30:25.210 UTC [538356] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:30:25.225 UTC [538356] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:30:25.242 UTC [538359] LOG:  database system was shut down at 2023-07-22 03:30:24 UTC
+2023-07-22 03:30:25.252 UTC [538356] LOG:  database system is ready to accept connections
+2023-07-22 03:30:26.775 UTC [538479] ERROR:  conflicting key value violates exclusion constraint "zoo_cage_animal_excl"
+2023-07-22 03:30:26.775 UTC [538479] DETAIL:  Key (cage, animal)=(123, lion) conflicts with existing key (cage, animal)=(123, zebra).
+2023-07-22 03:30:26.775 UTC [538479] STATEMENT:  INSERT INTO zoo VALUES(123, 'lion');
+2023-07-22 03:30:26.907 UTC [538357] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:30:26.975 UTC [538357] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.021 s, sync=0.015 s, total=0.068 s; sync files=7, longest=0.008 s, average=0.003 s; distance=6316 kB, estimate=6316 kB
+2023-07-22 03:30:27.411 UTC [538513] ERROR:  syntax error at or near "-" at character 22
+2023-07-22 03:30:27.411 UTC [538513] STATEMENT:  CREATE EXTENSION uuid-ossp;
+2023-07-22 03:30:59.897 UTC [538357] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:31:00.080 UTC [538357] LOG:  checkpoint complete: wrote 938 buffers (5.7%); 0 WAL file(s) added, 0 removed, 9 recycled; write=0.044 s, sync=0.040 s, total=0.183 s; sync files=251, longest=0.011 s, average=0.001 s; distance=137880 kB, estimate=137880 kB
+2023-07-22 03:31:00.210 UTC [538530] ERROR:  syntax error at or near "-" at character 22
+2023-07-22 03:31:00.210 UTC [538530] STATEMENT:  CREATE EXTENSION uuid-ossp;
+2023-07-22 03:31:31.932 UTC [538357] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:31:32.054 UTC [538357] LOG:  checkpoint complete: wrote 7 buffers (0.0%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.018 s, sync=0.011 s, total=0.123 s; sync files=4, longest=0.008 s, average=0.003 s; distance=133212 kB, estimate=137414 kB
+2023-07-22 03:31:32.123 UTC [538356] LOG:  received fast shutdown request
+2023-07-22 03:31:32.130 UTC [538356] LOG:  aborting any active transactions
+2023-07-22 03:31:32.131 UTC [538356] LOG:  background worker "logical replication launcher" (PID 538362) exited with exit code 1
+2023-07-22 03:31:32.131 UTC [538357] LOG:  shutting down
+2023-07-22 03:31:32.138 UTC [538357] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:31:32.180 UTC [538357] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.008 s, sync=0.004 s, total=0.050 s; sync files=1, longest=0.004 s, average=0.004 s; distance=0 kB, estimate=123672 kB
+2023-07-22 03:31:32.200 UTC [538356] LOG:  database system is shut down
+2023-07-22 03:31:32.936 UTC [538573] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:31:32.936 UTC [538573] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:31:32.951 UTC [538573] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:31:32.969 UTC [538576] LOG:  database system was shut down at 2023-07-22 03:31:32 UTC
+2023-07-22 03:31:32.982 UTC [538573] LOG:  database system is ready to accept connections
+2023-07-22 03:31:33.196 UTC [538592] ERROR:  collation "coll" for encoding "UTF8" does not exist
+2023-07-22 03:31:33.196 UTC [538592] STATEMENT:  ALTER TABLE s.x ADD CONSTRAINT underqualified EXCLUDE USING btree
+	  ((s.index_this_expr(y, s.const())) COLLATE coll WITH s.=)
+	  USING INDEX TABLESPACE regress_create_idx_tblspace
+	  WHERE (s.index_row_if(y));
+2023-07-22 03:31:33.199 UTC [538574] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:31:33.319 UTC [538574] LOG:  checkpoint complete: wrote 914 buffers (5.6%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.056 s, sync=0.033 s, total=0.121 s; sync files=266, longest=0.009 s, average=0.001 s; distance=4178 kB, estimate=4178 kB
+2023-07-22 03:31:33.392 UTC [538596] ERROR:  duplicate key value violates unique constraint "try_pkey"
+2023-07-22 03:31:33.392 UTC [538596] DETAIL:  Key (name)=(a) already exists.
+2023-07-22 03:31:33.392 UTC [538596] STATEMENT:  INSERT INTO try (name) VALUES ('a');
+2023-07-22 03:31:33.392 UTC [538596] ERROR:  duplicate key value violates unique constraint "try_pkey"
+2023-07-22 03:31:33.392 UTC [538596] DETAIL:  Key (name)=(A) already exists.
+2023-07-22 03:31:33.392 UTC [538596] STATEMENT:  INSERT INTO try (name) VALUES ('A');
+2023-07-22 03:31:33.392 UTC [538596] ERROR:  duplicate key value violates unique constraint "try_pkey"
+2023-07-22 03:31:33.392 UTC [538596] DETAIL:  Key (name)=(aB) already exists.
+2023-07-22 03:31:33.392 UTC [538596] STATEMENT:  INSERT INTO try (name) VALUES ('aB');
+2023-07-22 03:31:33.489 UTC [538596] ERROR:  column "chr" is of type "char" but expression is of type citext at character 44
+2023-07-22 03:31:33.489 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.489 UTC [538596] STATEMENT:  INSERT INTO caster (chr)           VALUES ('f'::citext);
+2023-07-22 03:31:33.513 UTC [538596] ERROR:  column "bytea" is of type bytea but expression is of type text at character 44
+2023-07-22 03:31:33.513 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.513 UTC [538596] STATEMENT:  INSERT INTO caster (bytea)         VALUES ('foo'::text);
+2023-07-22 03:31:33.517 UTC [538596] ERROR:  column "bytea" is of type bytea but expression is of type citext at character 44
+2023-07-22 03:31:33.517 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.517 UTC [538596] STATEMENT:  INSERT INTO caster (bytea)         VALUES ('foo'::citext);
+2023-07-22 03:31:33.521 UTC [538596] ERROR:  column "boolean" is of type boolean but expression is of type text at character 44
+2023-07-22 03:31:33.521 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.521 UTC [538596] STATEMENT:  INSERT INTO caster (boolean)       VALUES ('t'::text);
+2023-07-22 03:31:33.526 UTC [538596] ERROR:  column "boolean" is of type boolean but expression is of type citext at character 44
+2023-07-22 03:31:33.526 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.526 UTC [538596] STATEMENT:  INSERT INTO caster (boolean)       VALUES ('t'::citext);
+2023-07-22 03:31:33.530 UTC [538596] ERROR:  column "float8" is of type double precision but expression is of type text at character 44
+2023-07-22 03:31:33.530 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.530 UTC [538596] STATEMENT:  INSERT INTO caster (float8)        VALUES ('12.42'::text);
+2023-07-22 03:31:33.535 UTC [538596] ERROR:  column "float8" is of type double precision but expression is of type citext at character 44
+2023-07-22 03:31:33.535 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.535 UTC [538596] STATEMENT:  INSERT INTO caster (float8)        VALUES ('12.42'::citext);
+2023-07-22 03:31:33.539 UTC [538596] ERROR:  column "float4" is of type real but expression is of type text at character 44
+2023-07-22 03:31:33.539 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.539 UTC [538596] STATEMENT:  INSERT INTO caster (float4)        VALUES ('12.42'::text);
+2023-07-22 03:31:33.544 UTC [538596] ERROR:  column "float4" is of type real but expression is of type citext at character 44
+2023-07-22 03:31:33.544 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.544 UTC [538596] STATEMENT:  INSERT INTO caster (float4)        VALUES ('12.42'::citext);
+2023-07-22 03:31:33.548 UTC [538596] ERROR:  column "numeric" is of type numeric but expression is of type text at character 44
+2023-07-22 03:31:33.548 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.548 UTC [538596] STATEMENT:  INSERT INTO caster (numeric)       VALUES ('12.42'::text);
+2023-07-22 03:31:33.552 UTC [538596] ERROR:  column "numeric" is of type numeric but expression is of type citext at character 44
+2023-07-22 03:31:33.552 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.552 UTC [538596] STATEMENT:  INSERT INTO caster (numeric)       VALUES ('12.42'::citext);
+2023-07-22 03:31:33.556 UTC [538596] ERROR:  column "int8" is of type bigint but expression is of type text at character 44
+2023-07-22 03:31:33.556 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.556 UTC [538596] STATEMENT:  INSERT INTO caster (int8)          VALUES ('12'::text);
+2023-07-22 03:31:33.561 UTC [538596] ERROR:  column "int8" is of type bigint but expression is of type citext at character 44
+2023-07-22 03:31:33.561 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.561 UTC [538596] STATEMENT:  INSERT INTO caster (int8)          VALUES ('12'::citext);
+2023-07-22 03:31:33.565 UTC [538596] ERROR:  column "int4" is of type integer but expression is of type text at character 44
+2023-07-22 03:31:33.565 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.565 UTC [538596] STATEMENT:  INSERT INTO caster (int4)          VALUES ('12'::text);
+2023-07-22 03:31:33.569 UTC [538596] ERROR:  column "int4" is of type integer but expression is of type citext at character 44
+2023-07-22 03:31:33.569 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.569 UTC [538596] STATEMENT:  INSERT INTO caster (int4)          VALUES ('12'::citext);
+2023-07-22 03:31:33.574 UTC [538596] ERROR:  column "int2" is of type smallint but expression is of type text at character 44
+2023-07-22 03:31:33.574 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.574 UTC [538596] STATEMENT:  INSERT INTO caster (int2)          VALUES ('12'::text);
+2023-07-22 03:31:33.578 UTC [538596] ERROR:  column "int2" is of type smallint but expression is of type citext at character 44
+2023-07-22 03:31:33.578 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.578 UTC [538596] STATEMENT:  INSERT INTO caster (int2)          VALUES ('12'::citext);
+2023-07-22 03:31:33.583 UTC [538596] ERROR:  column "cidr" is of type cidr but expression is of type text at character 44
+2023-07-22 03:31:33.583 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.583 UTC [538596] STATEMENT:  INSERT INTO caster (cidr)          VALUES ('192.168.100.128/25'::text);
+2023-07-22 03:31:33.587 UTC [538596] ERROR:  column "cidr" is of type cidr but expression is of type citext at character 44
+2023-07-22 03:31:33.587 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.587 UTC [538596] STATEMENT:  INSERT INTO caster (cidr)          VALUES ('192.168.100.128/25'::citext);
+2023-07-22 03:31:33.591 UTC [538596] ERROR:  column "inet" is of type inet but expression is of type text at character 44
+2023-07-22 03:31:33.591 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.591 UTC [538596] STATEMENT:  INSERT INTO caster (inet)          VALUES ('192.168.100.128'::text);
+2023-07-22 03:31:33.596 UTC [538596] ERROR:  column "inet" is of type inet but expression is of type citext at character 44
+2023-07-22 03:31:33.596 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.596 UTC [538596] STATEMENT:  INSERT INTO caster (inet)          VALUES ('192.168.100.128'::citext);
+2023-07-22 03:31:33.600 UTC [538596] ERROR:  column "macaddr" is of type macaddr but expression is of type text at character 44
+2023-07-22 03:31:33.600 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.600 UTC [538596] STATEMENT:  INSERT INTO caster (macaddr)       VALUES ('08:00:2b:01:02:03'::text);
+2023-07-22 03:31:33.605 UTC [538596] ERROR:  column "macaddr" is of type macaddr but expression is of type citext at character 44
+2023-07-22 03:31:33.605 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.605 UTC [538596] STATEMENT:  INSERT INTO caster (macaddr)       VALUES ('08:00:2b:01:02:03'::citext);
+2023-07-22 03:31:33.609 UTC [538596] ERROR:  column "money" is of type money but expression is of type text at character 44
+2023-07-22 03:31:33.609 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.609 UTC [538596] STATEMENT:  INSERT INTO caster (money)         VALUES ('12'::text);
+2023-07-22 03:31:33.613 UTC [538596] ERROR:  column "money" is of type money but expression is of type citext at character 44
+2023-07-22 03:31:33.613 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.613 UTC [538596] STATEMENT:  INSERT INTO caster (money)         VALUES ('12'::citext);
+2023-07-22 03:31:33.618 UTC [538596] ERROR:  column "timestamp" is of type timestamp without time zone but expression is of type text at character 44
+2023-07-22 03:31:33.618 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.618 UTC [538596] STATEMENT:  INSERT INTO caster (timestamp)     VALUES ('1999-01-08 04:05:06'::text);
+2023-07-22 03:31:33.622 UTC [538596] ERROR:  column "timestamp" is of type timestamp without time zone but expression is of type citext at character 44
+2023-07-22 03:31:33.622 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.622 UTC [538596] STATEMENT:  INSERT INTO caster (timestamp)     VALUES ('1999-01-08 04:05:06'::citext);
+2023-07-22 03:31:33.627 UTC [538596] ERROR:  column "timestamptz" is of type timestamp with time zone but expression is of type text at character 44
+2023-07-22 03:31:33.627 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.627 UTC [538596] STATEMENT:  INSERT INTO caster (timestamptz)   VALUES ('1999-01-08 04:05:06'::text);
+2023-07-22 03:31:33.631 UTC [538596] ERROR:  column "timestamptz" is of type timestamp with time zone but expression is of type citext at character 44
+2023-07-22 03:31:33.631 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.631 UTC [538596] STATEMENT:  INSERT INTO caster (timestamptz)   VALUES ('1999-01-08 04:05:06'::citext);
+2023-07-22 03:31:33.635 UTC [538596] ERROR:  column "interval" is of type interval but expression is of type text at character 44
+2023-07-22 03:31:33.635 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.635 UTC [538596] STATEMENT:  INSERT INTO caster (interval)      VALUES ('1 hour'::text);
+2023-07-22 03:31:33.640 UTC [538596] ERROR:  column "interval" is of type interval but expression is of type citext at character 44
+2023-07-22 03:31:33.640 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.640 UTC [538596] STATEMENT:  INSERT INTO caster (interval)      VALUES ('1 hour'::citext);
+2023-07-22 03:31:33.644 UTC [538596] ERROR:  column "date" is of type date but expression is of type text at character 44
+2023-07-22 03:31:33.644 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.644 UTC [538596] STATEMENT:  INSERT INTO caster (date)          VALUES ('1999-01-08'::text);
+2023-07-22 03:31:33.648 UTC [538596] ERROR:  column "date" is of type date but expression is of type citext at character 44
+2023-07-22 03:31:33.648 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.648 UTC [538596] STATEMENT:  INSERT INTO caster (date)          VALUES ('1999-01-08'::citext);
+2023-07-22 03:31:33.652 UTC [538596] ERROR:  column "time" is of type time without time zone but expression is of type text at character 44
+2023-07-22 03:31:33.652 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.652 UTC [538596] STATEMENT:  INSERT INTO caster (time)          VALUES ('04:05:06'::text);
+2023-07-22 03:31:33.657 UTC [538596] ERROR:  column "time" is of type time without time zone but expression is of type citext at character 44
+2023-07-22 03:31:33.657 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.657 UTC [538596] STATEMENT:  INSERT INTO caster (time)          VALUES ('04:05:06'::citext);
+2023-07-22 03:31:33.661 UTC [538596] ERROR:  column "timetz" is of type time with time zone but expression is of type text at character 44
+2023-07-22 03:31:33.661 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.661 UTC [538596] STATEMENT:  INSERT INTO caster (timetz)        VALUES ('04:05:06'::text);
+2023-07-22 03:31:33.666 UTC [538596] ERROR:  column "timetz" is of type time with time zone but expression is of type citext at character 44
+2023-07-22 03:31:33.666 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.666 UTC [538596] STATEMENT:  INSERT INTO caster (timetz)        VALUES ('04:05:06'::citext);
+2023-07-22 03:31:33.670 UTC [538596] ERROR:  column "point" is of type point but expression is of type text at character 44
+2023-07-22 03:31:33.670 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.670 UTC [538596] STATEMENT:  INSERT INTO caster (point)         VALUES ('( 1 , 1)'::text);
+2023-07-22 03:31:33.674 UTC [538596] ERROR:  column "point" is of type point but expression is of type citext at character 44
+2023-07-22 03:31:33.674 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.674 UTC [538596] STATEMENT:  INSERT INTO caster (point)         VALUES ('( 1 , 1)'::citext);
+2023-07-22 03:31:33.679 UTC [538596] ERROR:  column "lseg" is of type lseg but expression is of type text at character 44
+2023-07-22 03:31:33.679 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.679 UTC [538596] STATEMENT:  INSERT INTO caster (lseg)          VALUES ('( 1 , 1 ) , ( 2 , 2 )'::text);
+2023-07-22 03:31:33.683 UTC [538596] ERROR:  column "lseg" is of type lseg but expression is of type citext at character 44
+2023-07-22 03:31:33.683 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.683 UTC [538596] STATEMENT:  INSERT INTO caster (lseg)          VALUES ('( 1 , 1 ) , ( 2 , 2 )'::citext);
+2023-07-22 03:31:33.688 UTC [538596] ERROR:  column "box" is of type box but expression is of type text at character 44
+2023-07-22 03:31:33.688 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.688 UTC [538596] STATEMENT:  INSERT INTO caster (box)           VALUES ('(0,0),(1,1)'::text);
+2023-07-22 03:31:33.692 UTC [538596] ERROR:  column "box" is of type box but expression is of type citext at character 44
+2023-07-22 03:31:33.692 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.692 UTC [538596] STATEMENT:  INSERT INTO caster (box)           VALUES ('(0,0),(1,1)'::citext);
+2023-07-22 03:31:33.696 UTC [538596] ERROR:  column "path" is of type path but expression is of type text at character 44
+2023-07-22 03:31:33.696 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.696 UTC [538596] STATEMENT:  INSERT INTO caster (path)          VALUES ('((0,0),(1,1),(2,0))'::text);
+2023-07-22 03:31:33.700 UTC [538596] ERROR:  column "path" is of type path but expression is of type citext at character 44
+2023-07-22 03:31:33.700 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.700 UTC [538596] STATEMENT:  INSERT INTO caster (path)          VALUES ('((0,0),(1,1),(2,0))'::citext);
+2023-07-22 03:31:33.705 UTC [538596] ERROR:  column "polygon" is of type polygon but expression is of type text at character 44
+2023-07-22 03:31:33.705 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.705 UTC [538596] STATEMENT:  INSERT INTO caster (polygon)       VALUES ('((0,0),(1,1))'::text);
+2023-07-22 03:31:33.709 UTC [538596] ERROR:  column "polygon" is of type polygon but expression is of type citext at character 44
+2023-07-22 03:31:33.709 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.709 UTC [538596] STATEMENT:  INSERT INTO caster (polygon)       VALUES ('((0,0),(1,1))'::citext);
+2023-07-22 03:31:33.713 UTC [538596] ERROR:  column "circle" is of type circle but expression is of type text at character 44
+2023-07-22 03:31:33.713 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.713 UTC [538596] STATEMENT:  INSERT INTO caster (circle)        VALUES ('((0,0),2)'::text);
+2023-07-22 03:31:33.718 UTC [538596] ERROR:  column "circle" is of type circle but expression is of type citext at character 44
+2023-07-22 03:31:33.718 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.718 UTC [538596] STATEMENT:  INSERT INTO caster (circle)        VALUES ('((0,0),2)'::citext);
+2023-07-22 03:31:33.722 UTC [538596] ERROR:  column "bit" is of type bit but expression is of type text at character 44
+2023-07-22 03:31:33.722 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.722 UTC [538596] STATEMENT:  INSERT INTO caster (bit)           VALUES ('101'::text);
+2023-07-22 03:31:33.726 UTC [538596] ERROR:  column "bit" is of type bit but expression is of type citext at character 44
+2023-07-22 03:31:33.726 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.726 UTC [538596] STATEMENT:  INSERT INTO caster (bit)           VALUES ('101'::citext);
+2023-07-22 03:31:33.734 UTC [538596] ERROR:  column "bitv" is of type bit varying but expression is of type text at character 44
+2023-07-22 03:31:33.734 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.734 UTC [538596] STATEMENT:  INSERT INTO caster (bitv)          VALUES ('101'::text);
+2023-07-22 03:31:33.739 UTC [538596] ERROR:  column "bitv" is of type bit varying but expression is of type citext at character 44
+2023-07-22 03:31:33.739 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.739 UTC [538596] STATEMENT:  INSERT INTO caster (bitv)          VALUES ('101'::citext);
+2023-07-22 03:31:33.743 UTC [538596] ERROR:  column "tsvector" is of type tsvector but expression is of type text at character 44
+2023-07-22 03:31:33.743 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.743 UTC [538596] STATEMENT:  INSERT INTO caster (tsvector)      VALUES ('the fat cat'::text);
+2023-07-22 03:31:33.748 UTC [538596] ERROR:  column "tsvector" is of type tsvector but expression is of type citext at character 44
+2023-07-22 03:31:33.748 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.748 UTC [538596] STATEMENT:  INSERT INTO caster (tsvector)      VALUES ('the fat cat'::citext);
+2023-07-22 03:31:33.752 UTC [538596] ERROR:  column "tsquery" is of type tsquery but expression is of type text at character 44
+2023-07-22 03:31:33.752 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.752 UTC [538596] STATEMENT:  INSERT INTO caster (tsquery)       VALUES ('fat & rat'::text);
+2023-07-22 03:31:33.756 UTC [538596] ERROR:  column "tsquery" is of type tsquery but expression is of type citext at character 44
+2023-07-22 03:31:33.756 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.756 UTC [538596] STATEMENT:  INSERT INTO caster (tsquery)       VALUES ('fat & rat'::citext);
+2023-07-22 03:31:33.760 UTC [538596] ERROR:  column "uuid" is of type uuid but expression is of type text at character 44
+2023-07-22 03:31:33.760 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.760 UTC [538596] STATEMENT:  INSERT INTO caster (uuid)          VALUES ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'::text);
+2023-07-22 03:31:33.765 UTC [538596] ERROR:  column "uuid" is of type uuid but expression is of type citext at character 44
+2023-07-22 03:31:33.765 UTC [538596] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:31:33.765 UTC [538596] STATEMENT:  INSERT INTO caster (uuid)          VALUES ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'::citext);
+2023-07-22 03:31:33.800 UTC [538596] ERROR:  regexp_match() does not support the "global" option
+2023-07-22 03:31:33.800 UTC [538596] HINT:  Use the regexp_matches function instead.
+2023-07-22 03:31:33.800 UTC [538596] CONTEXT:  SQL function "regexp_match" statement 1
+2023-07-22 03:31:33.800 UTC [538596] STATEMENT:  SELECT regexp_match('foobarbequebazmorebarbequetoo'::citext, '(BAR)(BEQUE)'::citext, 'g') AS "error";
+2023-07-22 03:31:34.006 UTC [538574] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:31:34.063 UTC [538574] LOG:  checkpoint complete: wrote 5 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.012 s, sync=0.011 s, total=0.058 s; sync files=5, longest=0.008 s, average=0.003 s; distance=802 kB, estimate=3840 kB
+2023-07-22 03:31:34.458 UTC [538628] ERROR:  syntax error at or near "-" at character 22
+2023-07-22 03:31:34.458 UTC [538628] STATEMENT:  CREATE EXTENSION uuid-ossp;
+2023-07-22 03:32:06.925 UTC [538574] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:32:07.109 UTC [538574] LOG:  checkpoint complete: wrote 901 buffers (5.5%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.053 s, sync=0.036 s, total=0.185 s; sync files=252, longest=0.011 s, average=0.001 s; distance=136890 kB, estimate=136890 kB
+2023-07-22 03:32:07.259 UTC [538645] ERROR:  syntax error at or near "-" at character 22
+2023-07-22 03:32:07.259 UTC [538645] STATEMENT:  CREATE EXTENSION uuid-ossp;
+2023-07-22 03:32:39.061 UTC [538574] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:32:39.743 UTC [538574] LOG:  checkpoint complete: wrote 7 buffers (0.0%); 0 WAL file(s) added, 0 removed, 9 recycled; write=0.020 s, sync=0.012 s, total=0.683 s; sync files=4, longest=0.008 s, average=0.003 s; distance=132649 kB, estimate=136466 kB
+2023-07-22 03:32:39.785 UTC [538573] LOG:  received fast shutdown request
+2023-07-22 03:32:39.793 UTC [538573] LOG:  aborting any active transactions
+2023-07-22 03:32:39.793 UTC [538573] LOG:  background worker "logical replication launcher" (PID 538579) exited with exit code 1
+2023-07-22 03:32:39.793 UTC [538574] LOG:  shutting down
+2023-07-22 03:32:39.800 UTC [538574] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:32:39.842 UTC [538574] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.008 s, sync=0.003 s, total=0.049 s; sync files=1, longest=0.003 s, average=0.003 s; distance=0 kB, estimate=122819 kB
+2023-07-22 03:32:39.864 UTC [538573] LOG:  database system is shut down
+2023-07-22 03:32:40.645 UTC [538688] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:32:40.646 UTC [538688] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:32:40.660 UTC [538688] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:32:40.676 UTC [538691] LOG:  database system was shut down at 2023-07-22 03:32:40 UTC
+2023-07-22 03:32:40.686 UTC [538688] LOG:  database system is ready to accept connections
+2023-07-22 03:32:40.857 UTC [538707] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:32:40.857 UTC [538707] DETAIL:  syntax error at end of input
+2023-07-22 03:32:40.857 UTC [538707] STATEMENT:  SELECT ''::cube AS cube;
+2023-07-22 03:32:40.857 UTC [538707] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:32:40.857 UTC [538707] DETAIL:  syntax error at or near "A"
+2023-07-22 03:32:40.857 UTC [538707] STATEMENT:  SELECT 'ABC'::cube AS cube;
+2023-07-22 03:32:40.857 UTC [538707] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:32:40.857 UTC [538707] DETAIL:  syntax error at or near "]"
+2023-07-22 03:32:40.857 UTC [538707] STATEMENT:  SELECT '[]'::cube AS cube;
+2023-07-22 03:32:40.857 UTC [538707] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:32:40.857 UTC [538707] DETAIL:  syntax error at or near "]"
+2023-07-22 03:32:40.857 UTC [538707] STATEMENT:  SELECT '[()]'::cube AS cube;
+2023-07-22 03:32:40.857 UTC [538707] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:32:40.857 UTC [538707] DETAIL:  syntax error at or near "]"
+2023-07-22 03:32:40.857 UTC [538707] STATEMENT:  SELECT '[(1)]'::cube AS cube;
+2023-07-22 03:32:40.857 UTC [538707] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:32:40.857 UTC [538707] DETAIL:  syntax error at or near "]"
+2023-07-22 03:32:40.857 UTC [538707] STATEMENT:  SELECT '[(1),]'::cube AS cube;
+2023-07-22 03:32:40.857 UTC [538707] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:32:40.857 UTC [538707] DETAIL:  syntax error at or near "2"
+2023-07-22 03:32:40.857 UTC [538707] STATEMENT:  SELECT '[(1),2]'::cube AS cube;
+2023-07-22 03:32:40.857 UTC [538707] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:32:40.857 UTC [538707] DETAIL:  syntax error at or near ","
+2023-07-22 03:32:40.857 UTC [538707] STATEMENT:  SELECT '[(1),(2),(3)]'::cube AS cube;
+2023-07-22 03:32:40.857 UTC [538707] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:32:40.857 UTC [538707] DETAIL:  syntax error at end of input
+2023-07-22 03:32:40.857 UTC [538707] STATEMENT:  SELECT '1,'::cube AS cube;
+2023-07-22 03:32:40.857 UTC [538707] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:32:40.857 UTC [538707] DETAIL:  syntax error at end of input
+2023-07-22 03:32:40.857 UTC [538707] STATEMENT:  SELECT '1,2,'::cube AS cube;
+2023-07-22 03:32:40.857 UTC [538707] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:32:40.857 UTC [538707] DETAIL:  syntax error at or near ","
+2023-07-22 03:32:40.857 UTC [538707] STATEMENT:  SELECT '1,,2'::cube AS cube;
+2023-07-22 03:32:40.857 UTC [538707] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:32:40.857 UTC [538707] DETAIL:  syntax error at or near ")"
+2023-07-22 03:32:40.857 UTC [538707] STATEMENT:  SELECT '(1,)'::cube AS cube;
+2023-07-22 03:32:40.858 UTC [538707] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:32:40.858 UTC [538707] DETAIL:  syntax error at or near ")"
+2023-07-22 03:32:40.858 UTC [538707] STATEMENT:  SELECT '(1,2,)'::cube AS cube;
+2023-07-22 03:32:40.858 UTC [538707] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:32:40.858 UTC [538707] DETAIL:  syntax error at or near ","
+2023-07-22 03:32:40.858 UTC [538707] STATEMENT:  SELECT '(1,,2)'::cube AS cube;
+2023-07-22 03:32:40.858 UTC [538707] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:32:40.858 UTC [538707] DETAIL:  syntax error at or near ","
+2023-07-22 03:32:40.858 UTC [538707] STATEMENT:  SELECT '[(1),(2)],'::cube AS cube;
+2023-07-22 03:32:40.858 UTC [538707] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:32:40.858 UTC [538707] DETAIL:  Different point dimensions in (1,2,3) and (2,3).
+2023-07-22 03:32:40.858 UTC [538707] STATEMENT:  SELECT '[(1,2,3),(2,3)]'::cube AS cube;
+2023-07-22 03:32:40.858 UTC [538707] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:32:40.858 UTC [538707] DETAIL:  Different point dimensions in (1,2) and (1,2,3).
+2023-07-22 03:32:40.858 UTC [538707] STATEMENT:  SELECT '[(1,2),(1,2,3)]'::cube AS cube;
+2023-07-22 03:32:40.858 UTC [538707] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:32:40.858 UTC [538707] DETAIL:  syntax error at or near ","
+2023-07-22 03:32:40.858 UTC [538707] STATEMENT:  SELECT '(1),(2),'::cube AS cube;
+2023-07-22 03:32:40.858 UTC [538707] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:32:40.858 UTC [538707] DETAIL:  Different point dimensions in (1,2,3) and (2,3).
+2023-07-22 03:32:40.858 UTC [538707] STATEMENT:  SELECT '(1,2,3),(2,3)'::cube AS cube;
+2023-07-22 03:32:40.858 UTC [538707] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:32:40.858 UTC [538707] DETAIL:  Different point dimensions in (1,2) and (1,2,3).
+2023-07-22 03:32:40.858 UTC [538707] STATEMENT:  SELECT '(1,2),(1,2,3)'::cube AS cube;
+2023-07-22 03:32:40.858 UTC [538707] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:32:40.858 UTC [538707] DETAIL:  syntax error at or near "a"
+2023-07-22 03:32:40.858 UTC [538707] STATEMENT:  SELECT '(1,2,3)ab'::cube AS cube;
+2023-07-22 03:32:40.858 UTC [538707] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:32:40.858 UTC [538707] DETAIL:  syntax error at or near "a"
+2023-07-22 03:32:40.858 UTC [538707] STATEMENT:  SELECT '(1,2,3)a'::cube AS cube;
+2023-07-22 03:32:40.858 UTC [538707] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:32:40.858 UTC [538707] DETAIL:  syntax error at or near "("
+2023-07-22 03:32:40.858 UTC [538707] STATEMENT:  SELECT '(1,2)('::cube AS cube;
+2023-07-22 03:32:40.858 UTC [538707] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:32:40.858 UTC [538707] DETAIL:  syntax error at or near "a"
+2023-07-22 03:32:40.858 UTC [538707] STATEMENT:  SELECT '1,2ab'::cube AS cube;
+2023-07-22 03:32:40.858 UTC [538707] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:32:40.858 UTC [538707] DETAIL:  syntax error at or near "e"
+2023-07-22 03:32:40.858 UTC [538707] STATEMENT:  SELECT '1 e7'::cube AS cube;
+2023-07-22 03:32:40.858 UTC [538707] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:32:40.858 UTC [538707] DETAIL:  syntax error at or near "a"
+2023-07-22 03:32:40.858 UTC [538707] STATEMENT:  SELECT '1,2a'::cube AS cube;
+2023-07-22 03:32:40.858 UTC [538707] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:32:40.858 UTC [538707] DETAIL:  syntax error at or near ".2"
+2023-07-22 03:32:40.858 UTC [538707] STATEMENT:  SELECT '1..2'::cube AS cube;
+2023-07-22 03:32:40.858 UTC [538707] ERROR:  "-1e-700" is out of range for type double precision at character 8
+2023-07-22 03:32:40.858 UTC [538707] STATEMENT:  SELECT '-1e-700'::cube AS cube;
+2023-07-22 03:32:40.859 UTC [538707] ERROR:  UR and LL arrays must be of same length
+2023-07-22 03:32:40.859 UTC [538707] STATEMENT:  SELECT cube('{0,1,2}'::float[], '{3}'::float[]);
+2023-07-22 03:32:40.859 UTC [538707] ERROR:  Index out of bounds
+2023-07-22 03:32:40.859 UTC [538707] STATEMENT:  SELECT cube_subset(cube('(1,3,5),(6,7,8)'), ARRAY[4,0]);
+2023-07-22 03:32:40.859 UTC [538707] ERROR:  Index out of bounds
+2023-07-22 03:32:40.859 UTC [538707] STATEMENT:  SELECT cube_subset(cube('(6,7,8),(6,7,8)'), ARRAY[4,0]);
+2023-07-22 03:32:40.860 UTC [538707] ERROR:  array is too long
+2023-07-22 03:32:40.860 UTC [538707] DETAIL:  A cube cannot have more than 100 dimensions.
+2023-07-22 03:32:40.860 UTC [538707] STATEMENT:  SELECT cube_subset(cube('(6,7,8),(6,7,8)'), array(SELECT 1 as a FROM generate_series(1,101)));
+2023-07-22 03:32:40.861 UTC [538707] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:32:40.861 UTC [538707] DETAIL:  A cube cannot have more than 100 dimensions.
+2023-07-22 03:32:40.861 UTC [538707] STATEMENT:  select '(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)'::cube;
+2023-07-22 03:32:40.861 UTC [538707] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:32:40.861 UTC [538707] DETAIL:  A cube cannot have more than 100 dimensions.
+2023-07-22 03:32:40.861 UTC [538707] STATEMENT:  select '(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)'::cube;
+2023-07-22 03:32:40.861 UTC [538707] ERROR:  array is too long
+2023-07-22 03:32:40.861 UTC [538707] DETAIL:  A cube cannot have more than 100 dimensions.
+2023-07-22 03:32:40.861 UTC [538707] STATEMENT:  select cube(array(SELECT 0 as a FROM generate_series(1,101)));
+2023-07-22 03:32:40.861 UTC [538707] ERROR:  can't extend cube
+2023-07-22 03:32:40.861 UTC [538707] DETAIL:  A cube cannot have more than 100 dimensions.
+2023-07-22 03:32:40.861 UTC [538707] STATEMENT:  select cube(array(SELECT 0 as a FROM generate_series(1,101)),array(SELECT 0 as a FROM generate_series(1,101)));
+2023-07-22 03:32:40.862 UTC [538707] ERROR:  can't extend cube
+2023-07-22 03:32:40.862 UTC [538707] DETAIL:  A cube cannot have more than 100 dimensions.
+2023-07-22 03:32:40.862 UTC [538707] STATEMENT:  select cube(cube(array(SELECT 0 as a FROM generate_series(1,100))), 0);
+2023-07-22 03:32:40.862 UTC [538707] ERROR:  can't extend cube
+2023-07-22 03:32:40.862 UTC [538707] DETAIL:  A cube cannot have more than 100 dimensions.
+2023-07-22 03:32:40.862 UTC [538707] STATEMENT:  select cube(cube(array(SELECT 0 as a FROM generate_series(1,100)),array(SELECT 0 as a FROM generate_series(1,100))), 0, 0);
+2023-07-22 03:32:40.871 UTC [538707] ERROR:  cube index 0 is out of bounds
+2023-07-22 03:32:40.871 UTC [538707] STATEMENT:  SELECT cube(array[10,20,30], array[40,50,60])->0;
+2023-07-22 03:32:40.871 UTC [538707] ERROR:  cube index 7 is out of bounds
+2023-07-22 03:32:40.871 UTC [538707] STATEMENT:  SELECT cube(array[10,20,30], array[40,50,60])->7;
+2023-07-22 03:32:40.871 UTC [538707] ERROR:  cube index -1 is out of bounds
+2023-07-22 03:32:40.871 UTC [538707] STATEMENT:  SELECT cube(array[10,20,30], array[40,50,60])->-1;
+2023-07-22 03:32:40.871 UTC [538707] ERROR:  cube index -6 is out of bounds
+2023-07-22 03:32:40.871 UTC [538707] STATEMENT:  SELECT cube(array[10,20,30], array[40,50,60])->-6;
+2023-07-22 03:32:40.872 UTC [538707] ERROR:  cube index -6 is out of bounds
+2023-07-22 03:32:40.872 UTC [538707] STATEMENT:  SELECT cube(array[10,20,30])->-6;
+2023-07-22 03:32:40.872 UTC [538707] ERROR:  zero cube index is not defined
+2023-07-22 03:32:40.872 UTC [538707] STATEMENT:  SELECT cube(array[40,50,60], array[10,20,30])~>0;
+2023-07-22 03:32:40.964 UTC [538689] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:32:41.033 UTC [538689] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.021 s, sync=0.016 s, total=0.070 s; sync files=7, longest=0.009 s, average=0.003 s; distance=4436 kB, estimate=4436 kB
+2023-07-22 03:32:41.483 UTC [538737] ERROR:  syntax error at or near "-" at character 22
+2023-07-22 03:32:41.483 UTC [538737] STATEMENT:  CREATE EXTENSION uuid-ossp;
+2023-07-22 03:33:14.061 UTC [538689] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:33:14.239 UTC [538689] LOG:  checkpoint complete: wrote 899 buffers (5.5%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.053 s, sync=0.034 s, total=0.179 s; sync files=251, longest=0.015 s, average=0.001 s; distance=136770 kB, estimate=136770 kB
+2023-07-22 03:33:14.372 UTC [538755] ERROR:  syntax error at or near "-" at character 22
+2023-07-22 03:33:14.372 UTC [538755] STATEMENT:  CREATE EXTENSION uuid-ossp;
+2023-07-22 03:33:46.251 UTC [538689] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:33:46.367 UTC [538689] LOG:  checkpoint complete: wrote 7 buffers (0.0%); 0 WAL file(s) added, 0 removed, 9 recycled; write=0.017 s, sync=0.009 s, total=0.117 s; sync files=4, longest=0.006 s, average=0.003 s; distance=132677 kB, estimate=136361 kB
+2023-07-22 03:33:46.431 UTC [538688] LOG:  received fast shutdown request
+2023-07-22 03:33:46.436 UTC [538688] LOG:  aborting any active transactions
+2023-07-22 03:33:46.437 UTC [538688] LOG:  background worker "logical replication launcher" (PID 538694) exited with exit code 1
+2023-07-22 03:33:46.437 UTC [538689] LOG:  shutting down
+2023-07-22 03:33:46.442 UTC [538689] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:33:46.486 UTC [538689] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.012 s, sync=0.003 s, total=0.049 s; sync files=1, longest=0.003 s, average=0.003 s; distance=0 kB, estimate=122724 kB
+2023-07-22 03:33:46.508 UTC [538688] LOG:  database system is shut down
+2023-07-22 03:33:47.316 UTC [538797] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:33:47.316 UTC [538797] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:33:47.329 UTC [538797] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:33:47.343 UTC [538800] LOG:  database system was shut down at 2023-07-22 03:33:46 UTC
+2023-07-22 03:33:47.349 UTC [538797] LOG:  database system is ready to accept connections
+2023-07-22 03:33:47.586 UTC [538816] ERROR:  invalid attribute number 4
+2023-07-22 03:33:47.586 UTC [538816] STATEMENT:  SELECT dblink_build_sql_insert('foo','1 2 3 4',4,'{"0", "a", "{a0,b0,c0}"}','{"99", "xyz", "{za0,zb0,zc0}"}');
+2023-07-22 03:33:47.588 UTC [538816] ERROR:  invalid attribute number 4
+2023-07-22 03:33:47.588 UTC [538816] STATEMENT:  SELECT dblink_build_sql_update('foo','1 2 3 4',4,'{"0", "a", "{a0,b0,c0}"}','{"99", "xyz", "{za0,zb0,zc0}"}');
+2023-07-22 03:33:47.589 UTC [538816] ERROR:  invalid attribute number 4
+2023-07-22 03:33:47.589 UTC [538816] STATEMENT:  SELECT dblink_build_sql_delete('foo','1 2 3 4',4,'{"0", "a", "{a0,b0,c0}"}');
+2023-07-22 03:33:47.660 UTC [538816] ERROR:  invalid attribute number 4
+2023-07-22 03:33:47.660 UTC [538816] STATEMENT:  SELECT dblink_build_sql_insert('foo_1','1 2 3 4',4,'{"0", "a", "{a0,b0,c0}"}','{"99", "xyz", "{za0,zb0,zc0}"}');
+2023-07-22 03:33:47.661 UTC [538816] ERROR:  invalid attribute number 4
+2023-07-22 03:33:47.661 UTC [538816] STATEMENT:  SELECT dblink_build_sql_update('foo_1','1 2 3 4',4,'{"0", "a", "{a0,b0,c0}"}','{"99", "xyz", "{za0,zb0,zc0}"}');
+2023-07-22 03:33:47.662 UTC [538816] ERROR:  invalid attribute number 4
+2023-07-22 03:33:47.662 UTC [538816] STATEMENT:  SELECT dblink_build_sql_delete('foo_1','1 2 3 4',4,'{"0", "a", "{a0,b0,c0}"}');
+2023-07-22 03:33:47.712 UTC [538816] ERROR:  connection not available
+2023-07-22 03:33:47.712 UTC [538816] STATEMENT:  SELECT *
+	FROM dblink('SELECT * FROM foo') AS t(a int, b text, c text[])
+	WHERE t.a > 7;
+2023-07-22 03:33:47.717 UTC [538818] ERROR:  could not establish connection
+2023-07-22 03:33:47.717 UTC [538818] DETAIL:  syntax error in service file "/home/abigalek/pgext-cli-python/postgresql-15.3/contrib/dblink/pg_service.conf", line 7
+2023-07-22 03:33:47.717 UTC [538818] STATEMENT:  
+			SELECT pg_backend_pid() FROM dblink(
+				'service=test_ldap '||connection_parameters(),
+				-- This string concatenation is a hack to shoehorn a
+				-- set_pgservicefile call into the SQL statement.
+				'SELECT 1' || set_pgservicefile('pg_service.conf')
+			) t(c int)
+		
+2023-07-22 03:33:47.722 UTC [538819] ERROR:  relation "foobar" does not exist at character 49
+2023-07-22 03:33:47.722 UTC [538819] STATEMENT:  DECLARE rmt_foo_cursor CURSOR FOR SELECT * FROM foobar
+2023-07-22 03:33:47.725 UTC [538819] ERROR:  cursor "rmt_foobar_cursor" does not exist
+2023-07-22 03:33:47.725 UTC [538819] STATEMENT:  FETCH 4 FROM rmt_foobar_cursor
+2023-07-22 03:33:47.726 UTC [538819] ERROR:  cursor "rmt_foobar_cursor" does not exist
+2023-07-22 03:33:47.726 UTC [538819] STATEMENT:  CLOSE rmt_foobar_cursor
+2023-07-22 03:33:47.727 UTC [538819] ERROR:  cursor "rmt_foo_cursor" does not exist
+2023-07-22 03:33:47.727 UTC [538819] STATEMENT:  FETCH 4 FROM rmt_foo_cursor
+2023-07-22 03:33:47.727 UTC [538816] ERROR:  cursor "rmt_foo_cursor" does not exist
+2023-07-22 03:33:47.727 UTC [538816] CONTEXT:  while fetching from cursor "rmt_foo_cursor" on unnamed dblink connection
+2023-07-22 03:33:47.727 UTC [538816] STATEMENT:  SELECT *
+	FROM dblink_fetch('rmt_foo_cursor',4) AS t(a int, b text, c text[]);
+2023-07-22 03:33:47.727 UTC [538819] ERROR:  cursor "rmt_foo_cursor" does not exist
+2023-07-22 03:33:47.727 UTC [538819] STATEMENT:  FETCH 4 FROM rmt_foo_cursor
+2023-07-22 03:33:47.728 UTC [538816] ERROR:  connection not available
+2023-07-22 03:33:47.728 UTC [538816] STATEMENT:  SELECT *
+	FROM dblink('SELECT * FROM foo') AS t(a int, b text, c text[])
+	WHERE t.a > 7;
+2023-07-22 03:33:47.752 UTC [538821] ERROR:  relation "foobar" does not exist at character 15
+2023-07-22 03:33:47.752 UTC [538821] STATEMENT:  SELECT * FROM foobar
+2023-07-22 03:33:47.758 UTC [538821] ERROR:  relation "foobar" does not exist at character 8
+2023-07-22 03:33:47.758 UTC [538821] STATEMENT:  UPDATE foobar SET f3[2] = 'b99' WHERE f1 = 11
+2023-07-22 03:33:47.765 UTC [538816] ERROR:  could not establish connection
+2023-07-22 03:33:47.765 UTC [538816] DETAIL:  missing "=" after "myconn" in connection info string
+2023-07-22 03:33:47.765 UTC [538816] STATEMENT:  SELECT *
+	FROM dblink('myconn','SELECT * FROM foo') AS t(a int, b text, c text[])
+	WHERE t.a > 7;
+2023-07-22 03:33:47.776 UTC [538822] ERROR:  relation "foobar" does not exist at character 15
+2023-07-22 03:33:47.776 UTC [538822] STATEMENT:  SELECT * FROM foobar
+2023-07-22 03:33:47.784 UTC [538816] ERROR:  duplicate connection name
+2023-07-22 03:33:47.784 UTC [538816] STATEMENT:  SELECT dblink_connect('myconn',connection_parameters());
+2023-07-22 03:33:47.795 UTC [538822] ERROR:  relation "foobar" does not exist at character 49
+2023-07-22 03:33:47.795 UTC [538822] STATEMENT:  DECLARE rmt_foo_cursor CURSOR FOR SELECT * FROM foobar
+2023-07-22 03:33:47.805 UTC [538822] ERROR:  DECLARE CURSOR can only be used in transaction blocks
+2023-07-22 03:33:47.805 UTC [538822] STATEMENT:  DECLARE xact_test CURSOR FOR SELECT * FROM foo
+2023-07-22 03:33:47.805 UTC [538816] ERROR:  DECLARE CURSOR can only be used in transaction blocks
+2023-07-22 03:33:47.805 UTC [538816] CONTEXT:  while executing command on dblink connection named "myconn"
+2023-07-22 03:33:47.805 UTC [538816] STATEMENT:  SELECT dblink_exec('myconn','DECLARE xact_test CURSOR FOR SELECT * FROM foo');
+2023-07-22 03:33:47.806 UTC [538822] WARNING:  there is no transaction in progress
+WARNING:  there is no transaction in progress
+2023-07-22 03:33:47.811 UTC [538822] ERROR:  cursor "rmt_foobar_cursor" does not exist
+2023-07-22 03:33:47.811 UTC [538822] STATEMENT:  FETCH 4 FROM rmt_foobar_cursor
+2023-07-22 03:33:47.812 UTC [538822] ERROR:  cursor "rmt_foo_cursor" does not exist
+2023-07-22 03:33:47.812 UTC [538822] STATEMENT:  FETCH 4 FROM rmt_foo_cursor
+2023-07-22 03:33:47.812 UTC [538816] ERROR:  cursor "rmt_foo_cursor" does not exist
+2023-07-22 03:33:47.812 UTC [538816] CONTEXT:  while fetching from cursor "rmt_foo_cursor" on dblink connection named "myconn"
+2023-07-22 03:33:47.812 UTC [538816] STATEMENT:  SELECT *
+	FROM dblink_fetch('myconn','rmt_foo_cursor',4) AS t(a int, b text, c text[]);
+2023-07-22 03:33:47.813 UTC [538816] ERROR:  could not establish connection
+2023-07-22 03:33:47.813 UTC [538816] DETAIL:  missing "=" after "myconn" in connection info string
+2023-07-22 03:33:47.813 UTC [538816] STATEMENT:  SELECT *
+	FROM dblink('myconn','SELECT * FROM foo') AS t(a int, b text, c text[])
+	WHERE t.a > 7;
+2023-07-22 03:33:47.841 UTC [538816] ERROR:  connection "myconn" not available
+2023-07-22 03:33:47.841 UTC [538816] STATEMENT:  SELECT dblink_disconnect('myconn');
+2023-07-22 03:33:47.892 UTC [538829] ERROR:  canceling statement due to user request
+2023-07-22 03:33:47.892 UTC [538829] STATEMENT:  select * from foo where f1 < 3
+2023-07-22 03:33:47.904 UTC [538816] ERROR:  invalid option "server"
+2023-07-22 03:33:47.904 UTC [538816] HINT:  Valid options in this context are: user, password, sslpassword
+2023-07-22 03:33:47.904 UTC [538816] STATEMENT:  CREATE USER MAPPING FOR public SERVER fdtest
+	  OPTIONS (server 'localhost');
+2023-07-22 03:33:47.917 UTC [538816] ERROR:  password is required
+2023-07-22 03:33:47.917 UTC [538816] DETAIL:  Non-superusers must provide a password in the connection string.
+2023-07-22 03:33:47.917 UTC [538816] STATEMENT:  SELECT dblink_connect('myconn', 'fdtest');
+2023-07-22 03:33:47.959 UTC [538832] ERROR:  invalid option "nonexistent"
+2023-07-22 03:33:47.959 UTC [538832] HINT:  There are no valid options in this context.
+2023-07-22 03:33:47.959 UTC [538832] STATEMENT:  ALTER FOREIGN DATA WRAPPER dblink_fdw OPTIONS (nonexistent 'fdw');
+2023-07-22 03:33:48.044 UTC [538832] ERROR:  invalid input syntax for type integer: "not an int"
+2023-07-22 03:33:48.044 UTC [538832] STATEMENT:  SELECT *
+	FROM dblink_fetch('myconn','error_cursor', 1) AS t(i int);
+2023-07-22 03:33:48.074 UTC [538798] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:33:48.133 UTC [538798] LOG:  checkpoint complete: wrote 18 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.018 s, sync=0.014 s, total=0.060 s; sync files=14, longest=0.007 s, average=0.001 s; distance=4182 kB, estimate=4182 kB
+2023-07-22 03:33:48.518 UTC [538860] ERROR:  syntax error at or near "-" at character 22
+2023-07-22 03:33:48.518 UTC [538860] STATEMENT:  CREATE EXTENSION uuid-ossp;
+2023-07-22 03:34:21.202 UTC [538798] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:34:21.346 UTC [538798] LOG:  checkpoint complete: wrote 899 buffers (5.5%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.043 s, sync=0.030 s, total=0.144 s; sync files=252, longest=0.011 s, average=0.001 s; distance=137211 kB, estimate=137211 kB
+2023-07-22 03:34:21.467 UTC [538878] ERROR:  syntax error at or near "-" at character 22
+2023-07-22 03:34:21.467 UTC [538878] STATEMENT:  CREATE EXTENSION uuid-ossp;
+2023-07-22 03:34:53.114 UTC [538798] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:34:53.202 UTC [538798] LOG:  checkpoint complete: wrote 7 buffers (0.0%); 0 WAL file(s) added, 0 removed, 9 recycled; write=0.009 s, sync=0.005 s, total=0.088 s; sync files=4, longest=0.004 s, average=0.002 s; distance=133137 kB, estimate=136804 kB
+2023-07-22 03:34:53.267 UTC [538797] LOG:  received fast shutdown request
+2023-07-22 03:34:53.275 UTC [538797] LOG:  aborting any active transactions
+2023-07-22 03:34:53.275 UTC [538797] LOG:  background worker "logical replication launcher" (PID 538803) exited with exit code 1
+2023-07-22 03:34:53.276 UTC [538798] LOG:  shutting down
+2023-07-22 03:34:53.283 UTC [538798] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:34:53.307 UTC [538798] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.006 s, sync=0.002 s, total=0.032 s; sync files=1, longest=0.002 s, average=0.002 s; distance=0 kB, estimate=123123 kB
+2023-07-22 03:34:53.331 UTC [538797] LOG:  database system is shut down
+2023-07-22 03:34:54.099 UTC [538921] FATAL:  could not access file "decoderbufs": No such file or directory
+2023-07-22 03:34:54.099 UTC [538921] LOG:  database system is shut down
+2023-07-22 03:34:54.974 UTC [538954] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:34:54.974 UTC [538954] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:34:54.987 UTC [538954] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:34:54.998 UTC [538957] LOG:  database system was shut down at 2023-07-22 03:34:54 UTC
+2023-07-22 03:34:55.008 UTC [538954] LOG:  database system is ready to accept connections
+2023-07-22 03:34:55.186 UTC [538973] ERROR:  maxlen value has to be >= 1
+2023-07-22 03:34:55.186 UTC [538973] STATEMENT:  ALTER TEXT SEARCH DICTIONARY intdict (MAXLEN = -214783648);
+2023-07-22 03:34:55.635 UTC [538999] ERROR:  syntax error at or near "-" at character 22
+2023-07-22 03:34:55.635 UTC [538999] STATEMENT:  CREATE EXTENSION uuid-ossp;
+2023-07-22 03:35:28.443 UTC [538955] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:35:28.812 UTC [538955] LOG:  checkpoint complete: wrote 1778 buffers (10.9%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.048 s, sync=0.085 s, total=0.370 s; sync files=497, longest=0.028 s, average=0.001 s; distance=140614 kB, estimate=140614 kB
+2023-07-22 03:35:28.974 UTC [539021] ERROR:  syntax error at or near "-" at character 22
+2023-07-22 03:35:28.974 UTC [539021] STATEMENT:  CREATE EXTENSION uuid-ossp;
+2023-07-22 03:36:00.711 UTC [538955] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:36:00.831 UTC [538955] LOG:  checkpoint complete: wrote 7 buffers (0.0%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.018 s, sync=0.011 s, total=0.120 s; sync files=4, longest=0.008 s, average=0.003 s; distance=132497 kB, estimate=139802 kB
+2023-07-22 03:36:00.903 UTC [538954] LOG:  received fast shutdown request
+2023-07-22 03:36:00.911 UTC [538954] LOG:  aborting any active transactions
+2023-07-22 03:36:00.913 UTC [538954] LOG:  background worker "logical replication launcher" (PID 538960) exited with exit code 1
+2023-07-22 03:36:00.913 UTC [538955] LOG:  shutting down
+2023-07-22 03:36:00.920 UTC [538955] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:36:00.963 UTC [538955] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.009 s, sync=0.004 s, total=0.050 s; sync files=1, longest=0.004 s, average=0.004 s; distance=0 kB, estimate=125822 kB
+2023-07-22 03:36:01.011 UTC [538954] LOG:  database system is shut down
+2023-07-22 03:36:01.846 UTC [539063] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:36:01.846 UTC [539063] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:36:01.861 UTC [539063] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:36:01.879 UTC [539066] LOG:  database system was shut down at 2023-07-22 03:36:01 UTC
+2023-07-22 03:36:01.890 UTC [539063] LOG:  database system is ready to accept connections
+2023-07-22 03:36:02.490 UTC [539108] ERROR:  syntax error at or near "-" at character 22
+2023-07-22 03:36:02.490 UTC [539108] STATEMENT:  CREATE EXTENSION uuid-ossp;
+2023-07-22 03:36:35.072 UTC [539064] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:36:35.292 UTC [539064] LOG:  checkpoint complete: wrote 1778 buffers (10.9%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.074 s, sync=0.051 s, total=0.221 s; sync files=497, longest=0.016 s, average=0.001 s; distance=140473 kB, estimate=140473 kB
+2023-07-22 03:36:35.428 UTC [539126] ERROR:  syntax error at or near "-" at character 22
+2023-07-22 03:36:35.428 UTC [539126] STATEMENT:  CREATE EXTENSION uuid-ossp;
+2023-07-22 03:37:07.125 UTC [539064] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:37:07.251 UTC [539064] LOG:  checkpoint complete: wrote 7 buffers (0.0%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.018 s, sync=0.011 s, total=0.126 s; sync files=4, longest=0.008 s, average=0.003 s; distance=132535 kB, estimate=139679 kB
+2023-07-22 03:37:07.321 UTC [539063] LOG:  received fast shutdown request
+2023-07-22 03:37:07.329 UTC [539063] LOG:  aborting any active transactions
+2023-07-22 03:37:07.329 UTC [539063] LOG:  background worker "logical replication launcher" (PID 539069) exited with exit code 1
+2023-07-22 03:37:07.329 UTC [539064] LOG:  shutting down
+2023-07-22 03:37:07.335 UTC [539064] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:37:07.378 UTC [539064] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.008 s, sync=0.004 s, total=0.049 s; sync files=1, longest=0.004 s, average=0.004 s; distance=0 kB, estimate=125711 kB
+2023-07-22 03:37:07.398 UTC [539063] LOG:  database system is shut down
+2023-07-22 03:37:08.179 UTC [539168] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:37:08.179 UTC [539168] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:37:08.194 UTC [539168] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:37:08.211 UTC [539171] LOG:  database system was shut down at 2023-07-22 03:37:07 UTC
+2023-07-22 03:37:08.221 UTC [539168] LOG:  database system is ready to accept connections
+2023-07-22 03:37:08.484 UTC [539198] ERROR:  syntax error at or near "-" at character 22
+2023-07-22 03:37:08.484 UTC [539198] STATEMENT:  CREATE EXTENSION uuid-ossp;
+2023-07-22 03:37:41.077 UTC [539169] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:37:41.775 UTC [539169] LOG:  checkpoint complete: wrote 895 buffers (5.5%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.032 s, sync=0.572 s, total=0.698 s; sync files=252, longest=0.265 s, average=0.003 s; distance=136483 kB, estimate=136483 kB
+2023-07-22 03:37:41.888 UTC [539216] ERROR:  syntax error at or near "-" at character 22
+2023-07-22 03:37:41.888 UTC [539216] STATEMENT:  CREATE EXTENSION uuid-ossp;
+2023-07-22 03:38:13.589 UTC [539169] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:38:13.710 UTC [539169] LOG:  checkpoint complete: wrote 7 buffers (0.0%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.018 s, sync=0.011 s, total=0.121 s; sync files=4, longest=0.008 s, average=0.003 s; distance=132469 kB, estimate=136082 kB
+2023-07-22 03:38:13.777 UTC [539168] LOG:  received fast shutdown request
+2023-07-22 03:38:13.785 UTC [539168] LOG:  aborting any active transactions
+2023-07-22 03:38:13.785 UTC [539168] LOG:  background worker "logical replication launcher" (PID 539174) exited with exit code 1
+2023-07-22 03:38:13.785 UTC [539169] LOG:  shutting down
+2023-07-22 03:38:13.793 UTC [539169] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:38:13.835 UTC [539169] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.008 s, sync=0.004 s, total=0.050 s; sync files=1, longest=0.004 s, average=0.004 s; distance=0 kB, estimate=122474 kB
+2023-07-22 03:38:13.879 UTC [539168] LOG:  database system is shut down
+2023-07-22 03:38:14.719 UTC [539259] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:38:14.719 UTC [539259] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:38:14.734 UTC [539259] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:38:14.752 UTC [539262] LOG:  database system was shut down at 2023-07-22 03:38:14 UTC
+2023-07-22 03:38:14.764 UTC [539259] LOG:  database system is ready to accept connections
+2023-07-22 03:38:14.958 UTC [539278] ERROR:  required extension "cube" is not installed
+2023-07-22 03:38:14.958 UTC [539278] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-22 03:38:14.958 UTC [539278] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-22 03:38:15.025 UTC [539278] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-22 03:38:15.025 UTC [539278] DETAIL:  extension earthdistance depends on extension cube
+2023-07-22 03:38:15.025 UTC [539278] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-22 03:38:15.025 UTC [539278] STATEMENT:  drop extension cube;
+2023-07-22 03:38:15.029 UTC [539278] ERROR:  cannot drop type cube because extension cube requires it
+2023-07-22 03:38:15.029 UTC [539278] HINT:  You can drop extension cube instead.
+2023-07-22 03:38:15.029 UTC [539278] STATEMENT:  drop type cube;
+2023-07-22 03:38:15.034 UTC [539278] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-22 03:38:15.034 UTC [539278] DETAIL:  column f1 of table foo depends on type cube
+2023-07-22 03:38:15.034 UTC [539278] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-22 03:38:15.034 UTC [539278] STATEMENT:  drop extension cube;
+2023-07-22 03:38:15.124 UTC [539278] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-22 03:38:15.124 UTC [539278] DETAIL:  column f1 of table foo depends on type c.cube
+2023-07-22 03:38:15.124 UTC [539278] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-22 03:38:15.124 UTC [539278] STATEMENT:  drop extension cube;
+2023-07-22 03:38:15.125 UTC [539278] ERROR:  cannot drop schema c because other objects depend on it
+2023-07-22 03:38:15.125 UTC [539278] DETAIL:  extension cube depends on schema c
+	column f1 of table foo depends on type c.cube
+2023-07-22 03:38:15.125 UTC [539278] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-22 03:38:15.125 UTC [539278] STATEMENT:  drop schema c;

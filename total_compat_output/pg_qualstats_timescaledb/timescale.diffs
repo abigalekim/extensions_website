@@ -1,0 +1,88 @@
+diff -u /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/drop_extension.out /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/drop_extension.out
+--- /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/drop_extension.out	2023-06-28 16:40:59.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/drop_extension.out	2023-11-26 02:35:23.304059941 +0000
+@@ -72,7 +72,7 @@
+ --test drops thru cascades of other objects
+ \c :TEST_DBNAME :ROLE_SUPERUSER
+ drop schema public cascade;
+-NOTICE:  drop cascades to 3 other objects
++NOTICE:  drop cascades to 4 other objects
+ \dn
+   List of schemas
+  Name |   Owner    
+diff -u /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/drop_hypertable.out /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/drop_hypertable.out
+--- /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/drop_hypertable.out	2023-06-28 16:40:59.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/drop_hypertable.out	2023-11-26 02:35:22.596061639 +0000
+@@ -38,10 +38,14 @@
+ DROP TABLE hyper_with_dependencies CASCADE;
+ NOTICE:  drop cascades to view dependent_view
+ \dv
+-      List of relations
+- Schema | Name | Type | Owner 
+---------+------+------+-------
+-(0 rows)
++                List of relations
++ Schema |         Name          | Type |  Owner   
++--------+-----------------------+------+----------
++ public | pg_qualstats          | view | abigalek
++ public | pg_qualstats_all      | view | abigalek
++ public | pg_qualstats_by_query | view | abigalek
++ public | pg_qualstats_pretty   | view | abigalek
++(4 rows)
+ 
+ CREATE TABLE chunk_with_dependencies (time timestamp, temp float8);
+ SELECT create_hypertable('chunk_with_dependencies', 'time');
+@@ -61,10 +65,14 @@
+ DROP TABLE chunk_with_dependencies CASCADE;
+ NOTICE:  drop cascades to view dependent_view_chunk
+ \dv
+-      List of relations
+- Schema | Name | Type | Owner 
+---------+------+------+-------
+-(0 rows)
++                List of relations
++ Schema |         Name          | Type |  Owner   
++--------+-----------------------+------+----------
++ public | pg_qualstats          | view | abigalek
++ public | pg_qualstats_all      | view | abigalek
++ public | pg_qualstats_by_query | view | abigalek
++ public | pg_qualstats_pretty   | view | abigalek
++(4 rows)
+ 
+ -- Calling create hypertable again will increment hypertable ID
+ -- although no new hypertable is created. Make sure we can handle this.
+diff -u /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/plain.out /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/plain.out
+--- /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/plain.out	2023-06-28 16:40:59.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/plain.out	2023-11-26 02:35:37.180026283 +0000
+@@ -29,17 +29,20 @@
+ CREATE TYPE rainbow AS ENUM ('red', 'orange', 'yellow', 'green', 'blue', 'purple');
+ ALTER TYPE rainbow RENAME TO colors;
+ \dT+
+-                                           List of data types
+- Schema |  Name  | Internal name | Size | Elements |       Owner       | Access privileges | Description 
+---------+--------+---------------+------+----------+-------------------+-------------------+-------------
+- public | colors | colors        | 4    | red     +| default_perm_user |                   | 
+-        |        |               |      | orange  +|                   |                   | 
+-        |        |               |      | yellow  +|                   |                   | 
+-        |        |               |      | green   +|                   |                   | 
+-        |        |               |      | blue    +|                   |                   | 
+-        |        |               |      | purple   |                   |                   | 
+- public | rxid   | rxid          | 16   |          | super_user        |                   | 
+-(2 rows)
++                                             List of data types
++ Schema |   Name    | Internal name | Size  | Elements |       Owner       | Access privileges | Description 
++--------+-----------+---------------+-------+----------+-------------------+-------------------+-------------
++ public | adv_quals | adv_quals     | tuple |          | abigalek          |                   | 
++ public | colors    | colors        | 4     | red     +| default_perm_user |                   | 
++        |           |               |       | orange  +|                   |                   | 
++        |           |               |       | yellow  +|                   |                   | 
++        |           |               |       | green   +|                   |                   | 
++        |           |               |       | blue    +|                   |                   | 
++        |           |               |       | purple   |                   |                   | 
++ public | qual      | qual          | tuple |          | abigalek          |                   | 
++ public | qualname  | qualname      | tuple |          | abigalek          |                   | 
++ public | rxid      | rxid          | 16    |          | super_user        |                   | 
++(5 rows)
+ 
+ REINDEX TABLE regular_table;
+ \c :TEST_DBNAME :ROLE_SUPERUSER

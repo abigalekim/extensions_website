@@ -1,0 +1,46 @@
+2023-07-26 21:55:52.001 UTC [1179029] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 21:55:52.001 UTC [1179029] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 21:55:52.014 UTC [1179029] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 21:55:52.030 UTC [1179032] LOG:  database system was shut down at 2023-07-26 21:55:51 UTC
+2023-07-26 21:55:52.042 UTC [1179029] LOG:  database system is ready to accept connections
+2023-07-26 21:55:52.266 UTC [1179045] ERROR:  cannot transform non-hash Perl value to hstore
+2023-07-26 21:55:52.266 UTC [1179045] CONTEXT:  PL/Perl function "test2"
+2023-07-26 21:55:52.266 UTC [1179045] STATEMENT:  SELECT test2();
+2023-07-26 21:55:52.270 UTC [1179045] ERROR:  cannot transform non-hash Perl value to hstore
+2023-07-26 21:55:52.270 UTC [1179045] CONTEXT:  PL/Perl function "test2"
+2023-07-26 21:55:52.270 UTC [1179045] STATEMENT:  SELECT test2();
+2023-07-26 21:55:52.527 UTC [1179053] ERROR:  type "foo" does not exist
+2023-07-26 21:55:52.527 UTC [1179053] STATEMENT:  CREATE TRANSFORM FOR foo LANGUAGE plperl (FROM SQL WITH FUNCTION hstore_to_plperl(internal), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-26 21:55:52.527 UTC [1179053] ERROR:  language "foo" does not exist
+2023-07-26 21:55:52.527 UTC [1179053] STATEMENT:  CREATE TRANSFORM FOR hstore LANGUAGE foo (FROM SQL WITH FUNCTION hstore_to_plperl(internal), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-26 21:55:52.527 UTC [1179053] ERROR:  return data type of FROM SQL function must be internal
+2023-07-26 21:55:52.527 UTC [1179053] STATEMENT:  CREATE TRANSFORM FOR hstore LANGUAGE plperl (FROM SQL WITH FUNCTION hstore_out(hstore), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-26 21:55:52.527 UTC [1179053] ERROR:  first argument of transform function must be type internal
+2023-07-26 21:55:52.527 UTC [1179053] STATEMENT:  CREATE TRANSFORM FOR hstore LANGUAGE plperl (FROM SQL WITH FUNCTION internal_in(cstring), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-26 21:55:52.531 UTC [1179053] ERROR:  transform for type hstore language "plperl" already exists
+2023-07-26 21:55:52.531 UTC [1179053] STATEMENT:  CREATE TRANSFORM FOR hstore LANGUAGE plperl (FROM SQL WITH FUNCTION hstore_to_plperl(internal), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-26 21:55:52.547 UTC [1179053] ERROR:  type "foo" does not exist
+2023-07-26 21:55:52.547 UTC [1179053] STATEMENT:  DROP TRANSFORM FOR foo LANGUAGE plperl;
+2023-07-26 21:55:52.547 UTC [1179053] ERROR:  language "foo" does not exist
+2023-07-26 21:55:52.547 UTC [1179053] STATEMENT:  DROP TRANSFORM FOR hstore LANGUAGE foo;
+2023-07-26 21:55:52.831 UTC [1179029] LOG:  received SIGHUP, reloading configuration files
+2023-07-26 21:55:52.834 UTC [1179029] LOG:  parameter "session_preload_libraries" changed to "pgextwlist"
+2023-07-26 21:55:52.834 UTC [1179029] LOG:  parameter "extwlist.extensions" changed to "citext,earthdistance,pg_trgm,pg_stat_statements,refint"
+2023-07-26 21:55:52.834 UTC [1179029] LOG:  parameter "extwlist.custom_path" changed to "/home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/test-scripts"
+2023-07-26 21:55:52.939 UTC [1179085] ERROR:  extension "plpgsql" already exists
+2023-07-26 21:55:52.939 UTC [1179085] STATEMENT:  CREATE EXTENSION plpgsql;
+2023-07-26 21:55:52.939 UTC [1179085] ERROR:  must be owner of extension hstore
+2023-07-26 21:55:52.939 UTC [1179085] STATEMENT:  COMMENT ON EXTENSION hstore IS 'plpgsql comment';
+2023-07-26 21:55:52.939 UTC [1179085] ERROR:  extension "hstore" already exists
+2023-07-26 21:55:52.939 UTC [1179085] STATEMENT:  CREATE EXTENSION hstore;
+2023-07-26 21:55:52.939 UTC [1179085] ERROR:  must be owner of extension hstore
+2023-07-26 21:55:52.939 UTC [1179085] STATEMENT:  COMMENT ON EXTENSION hstore IS 'hstore comment';
+2023-07-26 21:55:52.939 UTC [1179085] ERROR:  required extension "cube" is not installed
+2023-07-26 21:55:52.939 UTC [1179085] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-26 21:55:52.939 UTC [1179085] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-26 21:55:52.940 UTC [1179085] ERROR:  must be owner of extension plpgsql
+2023-07-26 21:55:52.940 UTC [1179085] STATEMENT:  DROP EXTENSION plpgsql;
+2023-07-26 21:55:52.976 UTC [1179093] ERROR:  cannot drop extension citext because other objects depend on it
+2023-07-26 21:55:52.976 UTC [1179093] DETAIL:  column t of table mere_table depends on type citext
+2023-07-26 21:55:52.976 UTC [1179093] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 21:55:52.976 UTC [1179093] STATEMENT:  DROP EXTENSION citext;

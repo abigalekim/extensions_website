@@ -1,0 +1,147 @@
+diff -u /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/alternate_users.out /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/alternate_users.out
+--- /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/alternate_users.out	2023-06-28 16:40:59.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/alternate_users.out	2023-11-26 02:28:36.640634138 +0000
+@@ -60,11 +60,14 @@
+ --test creating and using schema as non-superuser
+ \c :TEST_DBNAME :ROLE_DEFAULT_PERM_USER_2
+ \dt
+-                 List of relations
+- Schema |     Name      | Type  |       Owner       
+---------+---------------+-------+-------------------
+- public | one_Partition | table | default_perm_user
+-(1 row)
++                      List of relations
++ Schema |          Name          | Type  |       Owner       
++--------+------------------------+-------+-------------------
++ public | custom_time_partitions | table | abigalek
++ public | one_Partition          | table | default_perm_user
++ public | part_config            | table | abigalek
++ public | part_config_sub        | table | abigalek
++(4 rows)
+ 
+ \set ON_ERROR_STOP 0
+ SELECT * FROM "one_Partition";
+diff -u /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/drop_extension.out /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/drop_extension.out
+--- /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/drop_extension.out	2023-06-28 16:40:59.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/drop_extension.out	2023-11-26 02:28:42.392633284 +0000
+@@ -72,7 +72,7 @@
+ --test drops thru cascades of other objects
+ \c :TEST_DBNAME :ROLE_SUPERUSER
+ drop schema public cascade;
+-NOTICE:  drop cascades to 3 other objects
++NOTICE:  drop cascades to 4 other objects
+ \dn
+   List of schemas
+  Name |   Owner    
+diff -u /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/drop_hypertable.out /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/drop_hypertable.out
+--- /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/drop_hypertable.out	2023-06-28 16:40:59.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/drop_hypertable.out	2023-11-26 02:28:41.824633380 +0000
+@@ -38,10 +38,11 @@
+ DROP TABLE hyper_with_dependencies CASCADE;
+ NOTICE:  drop cascades to view dependent_view
+ \dv
+-      List of relations
+- Schema | Name | Type | Owner 
+---------+------+------+-------
+-(0 rows)
++           List of relations
++ Schema |    Name     | Type |  Owner   
++--------+-------------+------+----------
++ public | table_privs | view | abigalek
++(1 row)
+ 
+ CREATE TABLE chunk_with_dependencies (time timestamp, temp float8);
+ SELECT create_hypertable('chunk_with_dependencies', 'time');
+@@ -61,10 +62,11 @@
+ DROP TABLE chunk_with_dependencies CASCADE;
+ NOTICE:  drop cascades to view dependent_view_chunk
+ \dv
+-      List of relations
+- Schema | Name | Type | Owner 
+---------+------+------+-------
+-(0 rows)
++           List of relations
++ Schema |    Name     | Type |  Owner   
++--------+-------------+------+----------
++ public | table_privs | view | abigalek
++(1 row)
+ 
+ -- Calling create hypertable again will increment hypertable ID
+ -- although no new hypertable is created. Make sure we can handle this.
+diff -u /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/drop_rename_hypertable.out /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/drop_rename_hypertable.out
+--- /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/drop_rename_hypertable.out	2023-06-28 16:40:59.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/drop_rename_hypertable.out	2023-11-26 02:28:48.572632071 +0000
+@@ -185,10 +185,13 @@
+ (0 rows)
+ 
+ \dt  "public".*
+-      List of relations
+- Schema | Name | Type | Owner 
+---------+------+------+-------
+-(0 rows)
++                 List of relations
++ Schema |          Name          | Type  |  Owner   
++--------+------------------------+-------+----------
++ public | custom_time_partitions | table | abigalek
++ public | part_config            | table | abigalek
++ public | part_config_sub        | table | abigalek
++(3 rows)
+ 
+ \dt  "_timescaledb_catalog".*
+                                       List of relations
+diff -u /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/dump_meta.out /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/dump_meta.out
+--- /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/dump_meta.out	2023-06-28 16:40:59.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/dump_meta.out	2023-11-26 02:28:48.396632109 +0000
+@@ -57,11 +57,14 @@
+ \echo 'List of tables'
+ List of tables
+ \dt
+-                  List of relations
+- Schema |      Name      | Type  |       Owner       
+---------+----------------+-------+-------------------
+- public | two_Partitions | table | default_perm_user
+-(1 row)
++                      List of relations
++ Schema |          Name          | Type  |       Owner       
++--------+------------------------+-------+-------------------
++ public | custom_time_partitions | table | abigalek
++ public | part_config            | table | abigalek
++ public | part_config_sub        | table | abigalek
++ public | two_Partitions         | table | default_perm_user
++(4 rows)
+ 
+ \echo 'List of hypertables'
+ List of hypertables
+diff -u /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/plain.out /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/plain.out
+--- /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/plain.out	2023-06-28 16:40:59.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/plain.out	2023-11-26 02:28:55.492630353 +0000
+@@ -29,17 +29,18 @@
+ CREATE TYPE rainbow AS ENUM ('red', 'orange', 'yellow', 'green', 'blue', 'purple');
+ ALTER TYPE rainbow RENAME TO colors;
+ \dT+
+-                                           List of data types
+- Schema |  Name  | Internal name | Size | Elements |       Owner       | Access privileges | Description 
+---------+--------+---------------+------+----------+-------------------+-------------------+-------------
+- public | colors | colors        | 4    | red     +| default_perm_user |                   | 
+-        |        |               |      | orange  +|                   |                   | 
+-        |        |               |      | yellow  +|                   |                   | 
+-        |        |               |      | green   +|                   |                   | 
+-        |        |               |      | blue    +|                   |                   | 
+-        |        |               |      | purple   |                   |                   | 
+- public | rxid   | rxid          | 16   |          | super_user        |                   | 
+-(2 rows)
++                                                     List of data types
++ Schema |        Name         |    Internal name    | Size  | Elements |       Owner       | Access privileges | Description 
++--------+---------------------+---------------------+-------+----------+-------------------+-------------------+-------------
++ public | check_default_table | check_default_table | tuple |          | abigalek          |                   | 
++ public | colors              | colors              | 4     | red     +| default_perm_user |                   | 
++        |                     |                     |       | orange  +|                   |                   | 
++        |                     |                     |       | yellow  +|                   |                   | 
++        |                     |                     |       | green   +|                   |                   | 
++        |                     |                     |       | blue    +|                   |                   | 
++        |                     |                     |       | purple   |                   |                   | 
++ public | rxid                | rxid                | 16    |          | super_user        |                   | 
++(3 rows)
+ 
+ REINDEX TABLE regular_table;
+ \c :TEST_DBNAME :ROLE_SUPERUSER

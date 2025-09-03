@@ -1,0 +1,22 @@
+2023-07-26 09:38:41.159 UTC [1047830] LOG:  Auto detecting pg_stat_kcache.linux_hz parameter...
+2023-07-26 09:38:41.160 UTC [1047830] LOG:  pg_stat_kcache.linux_hz is set to 500000
+2023-07-26 09:38:41.200 UTC [1047830] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 09:38:41.200 UTC [1047830] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 09:38:41.215 UTC [1047830] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 09:38:41.231 UTC [1047833] LOG:  database system was shut down at 2023-07-26 09:38:40 UTC
+2023-07-26 09:38:41.240 UTC [1047830] LOG:  database system is ready to accept connections
+2023-07-26 09:38:41.241 UTC [1047836] LOG:  starting bgworker pgsentinel
+2023-07-26 09:38:41.241 UTC [1047836] FATAL:  database "contrib_regression" does not exist
+2023-07-26 09:38:41.247 UTC [1047830] LOG:  background worker "pgsentinel" (PID 1047836) exited with exit code 1
+2023-07-26 09:38:41.388 UTC [1047855] ERROR:  extension "pg_stat_statements" already exists
+2023-07-26 09:38:41.388 UTC [1047855] STATEMENT:  CREATE EXTENSION pg_stat_statements;
+2023-07-26 09:38:41.551 UTC [1047879] ERROR:  extension "pg_stat_statements" already exists
+2023-07-26 09:38:41.551 UTC [1047879] STATEMENT:  CREATE EXTENSION pg_stat_statements;
+2023-07-26 09:38:43.251 UTC [1047880] LOG:  starting bgworker pgsentinel
+2023-07-26 09:38:47.588 UTC [1047830] LOG:  received SIGHUP, reloading configuration files
+2023-07-26 09:38:47.590 UTC [1047830] LOG:  parameter "pgsentinel_ash.track_idle_trans" changed to "true"
+2023-07-26 09:38:47.592 UTC [1047880] LOG:  bgworker pgsentinel signal: processed SIGHUP
+2023-07-26 09:38:50.608 UTC [1047879] ERROR:  cannot drop extension pg_stat_statements because other objects depend on it
+2023-07-26 09:38:50.608 UTC [1047879] DETAIL:  extension pg_stat_kcache depends on extension pg_stat_statements
+2023-07-26 09:38:50.608 UTC [1047879] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 09:38:50.608 UTC [1047879] STATEMENT:  DROP EXTENSION pg_stat_statements;

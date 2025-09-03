@@ -1,0 +1,35 @@
+2023-07-25 05:04:49.048 UTC [687054] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 05:04:49.049 UTC [687054] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 05:04:49.054 UTC [687054] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 05:04:49.061 UTC [687057] LOG:  database system was shut down at 2023-07-25 05:04:48 UTC
+2023-07-25 05:04:49.065 UTC [687054] LOG:  database system is ready to accept connections
+2023-07-25 05:04:49.276 UTC [687073] LOG:  lsm3_build lsm3_index
+2023-07-25 05:04:49.276 UTC [687073] STATEMENT:  create index lsm3_index on t using lsm3(k);
+2023-07-25 05:04:50.376 UTC [687074] LOG:  Lsm3: merge top index lsm3_index_top0 with size 2 blocks
+2023-07-25 05:04:50.377 UTC [687074] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:04:51.353 UTC [687074] LOG:  Lsm3: merge top index lsm3_index_top1 with size 2 blocks
+2023-07-25 05:04:51.354 UTC [687074] LOG:  Lsm3: truncate index lsm3_index_top1
+2023-07-25 05:04:52.360 UTC [687074] LOG:  Lsm3: merge top index lsm3_index_top0 with size 2 blocks
+2023-07-25 05:04:52.361 UTC [687074] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:04:53.371 UTC [687074] LOG:  Lsm3: merge top index lsm3_index_top1 with size 2 blocks
+2023-07-25 05:04:53.371 UTC [687074] LOG:  Lsm3: truncate index lsm3_index_top1
+2023-07-25 05:04:54.381 UTC [687074] LOG:  Lsm3: merge top index lsm3_index_top0 with size 2 blocks
+2023-07-25 05:04:54.382 UTC [687074] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:04:55.516 UTC [687074] LOG:  Lsm3: merge top index lsm3_index_top1 with size 181 blocks
+2023-07-25 05:04:55.632 UTC [687074] LOG:  Lsm3: truncate index lsm3_index_top1
+2023-07-25 05:04:55.706 UTC [687074] LOG:  Lsm3: merge top index lsm3_index_top0 with size 250 blocks
+2023-07-25 05:04:55.805 UTC [687074] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:04:55.866 UTC [687074] LOG:  Lsm3: merge top index lsm3_index_top1 with size 181 blocks
+2023-07-25 05:04:55.945 UTC [687073] LOG:  lsm3_build lsm3_index
+2023-07-25 05:04:55.945 UTC [687073] STATEMENT:  truncate table t;
+2023-07-25 05:04:56.945 UTC [687074] ERROR:  deadlock detected
+2023-07-25 05:04:56.945 UTC [687074] DETAIL:  Process 687074 waits for AccessShareLock on relation 17466 of database 16384; blocked by process 687073.
+	Process 687073 waits for AccessExclusiveLock on relation 17471 of database 16384; blocked by process 687074.
+	Process 687074: truncate
+	Process 687073: truncate table t;
+2023-07-25 05:04:56.945 UTC [687074] HINT:  See server log for query details.
+2023-07-25 05:04:56.948 UTC [687054] LOG:  background worker "lsm3-merger-17469" (PID 687074) exited with exit code 1
+2023-07-25 05:04:58.955 UTC [687073] LOG:  lsm3_build lsm3_index
+2023-07-25 05:04:58.955 UTC [687073] STATEMENT:  reindex table t;
+2023-07-25 05:05:00.057 UTC [687073] LOG:  lsm3_build lsm_k_idx
+2023-07-25 05:05:00.057 UTC [687073] STATEMENT:  create index concurrently on lsm using lsm3(k);

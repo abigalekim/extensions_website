@@ -1,0 +1,27 @@
+2023-07-25 14:16:25.267 UTC [3231904] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 14:16:25.267 UTC [3231904] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 14:16:25.274 UTC [3231904] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 14:16:25.283 UTC [3231907] LOG:  database system was shut down at 2023-07-25 14:16:25 UTC
+2023-07-25 14:16:25.289 UTC [3231904] LOG:  database system is ready to accept connections
+2023-07-25 14:16:25.487 UTC [3231904] LOG:  received SIGHUP, reloading configuration files
+2023-07-25 14:16:25.488 UTC [3231904] LOG:  parameter "session_preload_libraries" changed to "pgextwlist"
+2023-07-25 14:16:25.488 UTC [3231904] LOG:  parameter "extwlist.extensions" changed to "citext,earthdistance,pg_trgm,pg_stat_statements,refint"
+2023-07-25 14:16:25.488 UTC [3231904] LOG:  parameter "extwlist.custom_path" changed to "/home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/test-scripts"
+2023-07-25 14:16:25.578 UTC [3231934] ERROR:  extension "plpgsql" already exists
+2023-07-25 14:16:25.578 UTC [3231934] STATEMENT:  CREATE EXTENSION plpgsql;
+2023-07-25 14:16:25.578 UTC [3231934] ERROR:  extension "hstore" does not exist
+2023-07-25 14:16:25.578 UTC [3231934] STATEMENT:  COMMENT ON EXTENSION hstore IS 'plpgsql comment';
+2023-07-25 14:16:25.579 UTC [3231934] ERROR:  permission denied to create extension "hstore"
+2023-07-25 14:16:25.579 UTC [3231934] HINT:  Must have CREATE privilege on current database to create this extension.
+2023-07-25 14:16:25.579 UTC [3231934] STATEMENT:  CREATE EXTENSION hstore;
+2023-07-25 14:16:25.579 UTC [3231934] ERROR:  extension "hstore" does not exist
+2023-07-25 14:16:25.579 UTC [3231934] STATEMENT:  COMMENT ON EXTENSION hstore IS 'hstore comment';
+2023-07-25 14:16:25.579 UTC [3231934] ERROR:  required extension "cube" is not installed
+2023-07-25 14:16:25.579 UTC [3231934] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-25 14:16:25.579 UTC [3231934] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-25 14:16:25.580 UTC [3231934] ERROR:  must be owner of extension plpgsql
+2023-07-25 14:16:25.580 UTC [3231934] STATEMENT:  DROP EXTENSION plpgsql;
+2023-07-25 14:16:25.606 UTC [3231942] ERROR:  cannot drop extension citext because other objects depend on it
+2023-07-25 14:16:25.606 UTC [3231942] DETAIL:  column t of table mere_table depends on type citext
+2023-07-25 14:16:25.606 UTC [3231942] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 14:16:25.606 UTC [3231942] STATEMENT:  DROP EXTENSION citext;

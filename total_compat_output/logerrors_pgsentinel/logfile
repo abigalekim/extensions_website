@@ -1,0 +1,29 @@
+2023-07-26 20:38:00.803 UTC [2156148] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 20:38:00.804 UTC [2156148] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 20:38:00.809 UTC [2156148] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 20:38:00.816 UTC [2156151] LOG:  database system was shut down at 2023-07-26 20:38:00 UTC
+2023-07-26 20:38:00.821 UTC [2156148] LOG:  database system is ready to accept connections
+2023-07-26 20:38:00.821 UTC [2156155] LOG:  starting bgworker pgsentinel
+2023-07-26 20:38:00.822 UTC [2156155] FATAL:  database "contrib_regression" does not exist
+2023-07-26 20:38:00.824 UTC [2156148] LOG:  background worker "pgsentinel" (PID 2156155) exited with exit code 1
+2023-07-26 20:38:00.999 UTC [2156181] ERROR:  function blah() does not exist at character 8
+2023-07-26 20:38:00.999 UTC [2156181] HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+2023-07-26 20:38:00.999 UTC [2156181] STATEMENT:  SELECT blah();
+2023-07-26 20:38:02.828 UTC [2156182] LOG:  starting bgworker pgsentinel
+2023-07-26 20:38:11.006 UTC [2156181] ERROR:  XXXXX
+2023-07-26 20:38:11.006 UTC [2156181] CONTEXT:  PL/pgSQL function inline_code_block line 3 at RAISE
+2023-07-26 20:38:11.006 UTC [2156181] STATEMENT:  DO LANGUAGE plpgsql $$
+	BEGIN
+	    RAISE SQLSTATE 'XXXXX';
+	END;
+	$$;
+2023-07-26 20:38:11.006 UTC [2156181] ERROR:  XXXXY
+2023-07-26 20:38:11.006 UTC [2156181] CONTEXT:  PL/pgSQL function inline_code_block line 3 at RAISE
+2023-07-26 20:38:11.006 UTC [2156181] STATEMENT:  DO LANGUAGE plpgsql $$
+	BEGIN
+	    RAISE SQLSTATE 'XXXXY';
+	END;
+	$$;
+2023-07-26 20:38:21.066 UTC [2156189] ERROR:  database "contrib_regression" is being accessed by other users
+2023-07-26 20:38:21.066 UTC [2156189] DETAIL:  There is 1 other session using the database.
+2023-07-26 20:38:21.066 UTC [2156189] STATEMENT:  DROP DATABASE IF EXISTS "contrib_regression"

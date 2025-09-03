@@ -1,0 +1,27 @@
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_tle-1.0.4/test/expected/pg_tle_management.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_tle-1.0.4/results/pg_tle_management.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_tle-1.0.4/test/expected/pg_tle_management.out	2023-04-22 00:38:38.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_tle-1.0.4/results/pg_tle_management.out	2023-07-26 08:06:42.060428389 +0000
+@@ -856,3 +856,5 @@
+ DROP EXTENSION pg_tle;
+ DROP SCHEMA pgtle;
+ DROP ROLE pgtle_admin;
++ERROR:  role "pgtle_admin" cannot be dropped because some objects depend on it
++DETAIL:  15 objects in database contrib_regression
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_tle-1.0.4/test/expected/pg_tle_injection.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_tle-1.0.4/results/pg_tle_injection.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_tle-1.0.4/test/expected/pg_tle_injection.out	2023-04-22 00:38:38.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_tle-1.0.4/results/pg_tle_injection.out	2023-07-26 08:06:42.160427895 +0000
+@@ -226,3 +226,5 @@
+ DROP SCHEMA pgtle;
+ DROP ROLE bad_actor;
+ DROP ROLE pgtle_admin;
++ERROR:  role "pgtle_admin" cannot be dropped because some objects depend on it
++DETAIL:  15 objects in database contrib_regression
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_tle-1.0.4/test/expected/pg_tle_perms.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_tle-1.0.4/results/pg_tle_perms.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_tle-1.0.4/test/expected/pg_tle_perms.out	2023-04-22 00:38:38.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_tle-1.0.4/results/pg_tle_perms.out	2023-07-26 08:06:42.408426672 +0000
+@@ -276,3 +276,5 @@
+ DROP SCHEMA pgtle;
+ DROP ROLE tle_person;
+ DROP ROLE pgtle_admin;
++ERROR:  role "pgtle_admin" cannot be dropped because some objects depend on it
++DETAIL:  15 objects in database contrib_regression

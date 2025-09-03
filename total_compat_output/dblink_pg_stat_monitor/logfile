@@ -1,0 +1,128 @@
+2023-07-25 21:53:38.247 UTC [1943229] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 21:53:38.247 UTC [1943229] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 21:53:38.261 UTC [1943229] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 21:53:38.280 UTC [1943232] LOG:  database system was shut down at 2023-07-25 21:53:37 UTC
+2023-07-25 21:53:38.292 UTC [1943229] LOG:  database system is ready to accept connections
+2023-07-25 21:53:38.562 UTC [1943248] ERROR:  invalid attribute number 4
+2023-07-25 21:53:38.562 UTC [1943248] STATEMENT:  SELECT dblink_build_sql_insert('foo','1 2 3 4',4,'{"0", "a", "{a0,b0,c0}"}','{"99", "xyz", "{za0,zb0,zc0}"}');
+2023-07-25 21:53:38.564 UTC [1943248] ERROR:  invalid attribute number 4
+2023-07-25 21:53:38.564 UTC [1943248] STATEMENT:  SELECT dblink_build_sql_update('foo','1 2 3 4',4,'{"0", "a", "{a0,b0,c0}"}','{"99", "xyz", "{za0,zb0,zc0}"}');
+2023-07-25 21:53:38.565 UTC [1943248] ERROR:  invalid attribute number 4
+2023-07-25 21:53:38.565 UTC [1943248] STATEMENT:  SELECT dblink_build_sql_delete('foo','1 2 3 4',4,'{"0", "a", "{a0,b0,c0}"}');
+2023-07-25 21:53:38.628 UTC [1943248] ERROR:  invalid attribute number 4
+2023-07-25 21:53:38.628 UTC [1943248] STATEMENT:  SELECT dblink_build_sql_insert('foo_1','1 2 3 4',4,'{"0", "a", "{a0,b0,c0}"}','{"99", "xyz", "{za0,zb0,zc0}"}');
+2023-07-25 21:53:38.630 UTC [1943248] ERROR:  invalid attribute number 4
+2023-07-25 21:53:38.630 UTC [1943248] STATEMENT:  SELECT dblink_build_sql_update('foo_1','1 2 3 4',4,'{"0", "a", "{a0,b0,c0}"}','{"99", "xyz", "{za0,zb0,zc0}"}');
+2023-07-25 21:53:38.631 UTC [1943248] ERROR:  invalid attribute number 4
+2023-07-25 21:53:38.631 UTC [1943248] STATEMENT:  SELECT dblink_build_sql_delete('foo_1','1 2 3 4',4,'{"0", "a", "{a0,b0,c0}"}');
+2023-07-25 21:53:38.685 UTC [1943248] ERROR:  connection not available
+2023-07-25 21:53:38.685 UTC [1943248] STATEMENT:  SELECT *
+	FROM dblink('SELECT * FROM foo') AS t(a int, b text, c text[])
+	WHERE t.a > 7;
+2023-07-25 21:53:38.689 UTC [1943250] ERROR:  could not establish connection
+2023-07-25 21:53:38.689 UTC [1943250] DETAIL:  syntax error in service file "/home/abigalek/pgext-cli-python/postgresql-15.3/contrib/dblink/pg_service.conf", line 7
+2023-07-25 21:53:38.689 UTC [1943250] STATEMENT:  
+			SELECT pg_backend_pid() FROM dblink(
+				'service=test_ldap '||connection_parameters(),
+				-- This string concatenation is a hack to shoehorn a
+				-- set_pgservicefile call into the SQL statement.
+				'SELECT 1' || set_pgservicefile('pg_service.conf')
+			) t(c int)
+		
+2023-07-25 21:53:38.694 UTC [1943251] ERROR:  relation "foobar" does not exist at character 49
+2023-07-25 21:53:38.694 UTC [1943251] STATEMENT:  DECLARE rmt_foo_cursor CURSOR FOR SELECT * FROM foobar
+2023-07-25 21:53:38.697 UTC [1943251] ERROR:  cursor "rmt_foobar_cursor" does not exist
+2023-07-25 21:53:38.697 UTC [1943251] STATEMENT:  FETCH 4 FROM rmt_foobar_cursor
+2023-07-25 21:53:38.698 UTC [1943251] ERROR:  cursor "rmt_foobar_cursor" does not exist
+2023-07-25 21:53:38.698 UTC [1943251] STATEMENT:  CLOSE rmt_foobar_cursor
+2023-07-25 21:53:38.698 UTC [1943251] ERROR:  cursor "rmt_foo_cursor" does not exist
+2023-07-25 21:53:38.698 UTC [1943251] STATEMENT:  FETCH 4 FROM rmt_foo_cursor
+2023-07-25 21:53:38.698 UTC [1943248] ERROR:  cursor "rmt_foo_cursor" does not exist
+2023-07-25 21:53:38.698 UTC [1943248] CONTEXT:  while fetching from cursor "rmt_foo_cursor" on unnamed dblink connection
+2023-07-25 21:53:38.698 UTC [1943248] STATEMENT:  SELECT *
+	FROM dblink_fetch('rmt_foo_cursor',4) AS t(a int, b text, c text[]);
+2023-07-25 21:53:38.698 UTC [1943251] ERROR:  cursor "rmt_foo_cursor" does not exist
+2023-07-25 21:53:38.698 UTC [1943251] STATEMENT:  FETCH 4 FROM rmt_foo_cursor
+2023-07-25 21:53:38.699 UTC [1943248] ERROR:  connection not available
+2023-07-25 21:53:38.699 UTC [1943248] STATEMENT:  SELECT *
+	FROM dblink('SELECT * FROM foo') AS t(a int, b text, c text[])
+	WHERE t.a > 7;
+2023-07-25 21:53:38.719 UTC [1943253] ERROR:  relation "foobar" does not exist at character 15
+2023-07-25 21:53:38.719 UTC [1943253] STATEMENT:  SELECT * FROM foobar
+2023-07-25 21:53:38.727 UTC [1943253] ERROR:  relation "foobar" does not exist at character 8
+2023-07-25 21:53:38.727 UTC [1943253] STATEMENT:  UPDATE foobar SET f3[2] = 'b99' WHERE f1 = 11
+2023-07-25 21:53:38.734 UTC [1943248] ERROR:  could not establish connection
+2023-07-25 21:53:38.734 UTC [1943248] DETAIL:  missing "=" after "myconn" in connection info string
+2023-07-25 21:53:38.734 UTC [1943248] STATEMENT:  SELECT *
+	FROM dblink('myconn','SELECT * FROM foo') AS t(a int, b text, c text[])
+	WHERE t.a > 7;
+2023-07-25 21:53:38.746 UTC [1943254] ERROR:  relation "foobar" does not exist at character 15
+2023-07-25 21:53:38.746 UTC [1943254] STATEMENT:  SELECT * FROM foobar
+2023-07-25 21:53:38.754 UTC [1943248] ERROR:  duplicate connection name
+2023-07-25 21:53:38.754 UTC [1943248] STATEMENT:  SELECT dblink_connect('myconn',connection_parameters());
+2023-07-25 21:53:38.766 UTC [1943254] ERROR:  relation "foobar" does not exist at character 49
+2023-07-25 21:53:38.766 UTC [1943254] STATEMENT:  DECLARE rmt_foo_cursor CURSOR FOR SELECT * FROM foobar
+2023-07-25 21:53:38.777 UTC [1943254] ERROR:  DECLARE CURSOR can only be used in transaction blocks
+2023-07-25 21:53:38.777 UTC [1943254] STATEMENT:  DECLARE xact_test CURSOR FOR SELECT * FROM foo
+2023-07-25 21:53:38.777 UTC [1943248] ERROR:  DECLARE CURSOR can only be used in transaction blocks
+2023-07-25 21:53:38.777 UTC [1943248] CONTEXT:  while executing command on dblink connection named "myconn"
+2023-07-25 21:53:38.777 UTC [1943248] STATEMENT:  SELECT dblink_exec('myconn','DECLARE xact_test CURSOR FOR SELECT * FROM foo');
+2023-07-25 21:53:38.778 UTC [1943254] WARNING:  there is no transaction in progress
+WARNING:  there is no transaction in progress
+2023-07-25 21:53:38.783 UTC [1943254] ERROR:  cursor "rmt_foobar_cursor" does not exist
+2023-07-25 21:53:38.783 UTC [1943254] STATEMENT:  FETCH 4 FROM rmt_foobar_cursor
+2023-07-25 21:53:38.784 UTC [1943254] ERROR:  cursor "rmt_foo_cursor" does not exist
+2023-07-25 21:53:38.784 UTC [1943254] STATEMENT:  FETCH 4 FROM rmt_foo_cursor
+2023-07-25 21:53:38.784 UTC [1943248] ERROR:  cursor "rmt_foo_cursor" does not exist
+2023-07-25 21:53:38.784 UTC [1943248] CONTEXT:  while fetching from cursor "rmt_foo_cursor" on dblink connection named "myconn"
+2023-07-25 21:53:38.784 UTC [1943248] STATEMENT:  SELECT *
+	FROM dblink_fetch('myconn','rmt_foo_cursor',4) AS t(a int, b text, c text[]);
+2023-07-25 21:53:38.786 UTC [1943248] ERROR:  could not establish connection
+2023-07-25 21:53:38.786 UTC [1943248] DETAIL:  missing "=" after "myconn" in connection info string
+2023-07-25 21:53:38.786 UTC [1943248] STATEMENT:  SELECT *
+	FROM dblink('myconn','SELECT * FROM foo') AS t(a int, b text, c text[])
+	WHERE t.a > 7;
+2023-07-25 21:53:38.813 UTC [1943248] ERROR:  connection "myconn" not available
+2023-07-25 21:53:38.813 UTC [1943248] STATEMENT:  SELECT dblink_disconnect('myconn');
+2023-07-25 21:53:38.867 UTC [1943261] ERROR:  canceling statement due to user request
+2023-07-25 21:53:38.867 UTC [1943261] STATEMENT:  select * from foo where f1 < 3
+2023-07-25 21:53:38.879 UTC [1943248] ERROR:  invalid option "server"
+2023-07-25 21:53:38.879 UTC [1943248] HINT:  Valid options in this context are: user, password, sslpassword
+2023-07-25 21:53:38.879 UTC [1943248] STATEMENT:  CREATE USER MAPPING FOR public SERVER fdtest
+	  OPTIONS (server 'localhost');
+2023-07-25 21:53:38.892 UTC [1943248] ERROR:  password is required
+2023-07-25 21:53:38.892 UTC [1943248] DETAIL:  Non-superusers must provide a password in the connection string.
+2023-07-25 21:53:38.892 UTC [1943248] STATEMENT:  SELECT dblink_connect('myconn', 'fdtest');
+2023-07-25 21:53:38.937 UTC [1943264] ERROR:  invalid option "nonexistent"
+2023-07-25 21:53:38.937 UTC [1943264] HINT:  There are no valid options in this context.
+2023-07-25 21:53:38.937 UTC [1943264] STATEMENT:  ALTER FOREIGN DATA WRAPPER dblink_fdw OPTIONS (nonexistent 'fdw');
+2023-07-25 21:53:39.032 UTC [1943264] ERROR:  invalid input syntax for type integer: "not an int"
+2023-07-25 21:53:39.032 UTC [1943264] STATEMENT:  SELECT *
+	FROM dblink_fetch('myconn','error_cursor', 1) AS t(i int);
+2023-07-25 21:53:39.062 UTC [1943230] LOG:  checkpoint starting: immediate force wait
+2023-07-25 21:53:39.142 UTC [1943230] LOG:  checkpoint complete: wrote 18 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.021 s, sync=0.022 s, total=0.080 s; sync files=14, longest=0.008 s, average=0.002 s; distance=4235 kB, estimate=4235 kB
+2023-07-25 21:53:39.697 UTC [1943230] LOG:  checkpoint starting: immediate force wait
+2023-07-25 21:53:39.872 UTC [1943230] LOG:  checkpoint complete: wrote 1795 buffers (11.0%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.063 s, sync=0.071 s, total=0.176 s; sync files=497, longest=0.024 s, average=0.001 s; distance=12347 kB, estimate=12347 kB
+2023-07-25 21:53:39.888 UTC [1943230] LOG:  checkpoint starting: immediate force wait
+2023-07-25 21:53:39.943 UTC [1943230] LOG:  checkpoint complete: wrote 2 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.012 s, sync=0.011 s, total=0.055 s; sync files=2, longest=0.008 s, average=0.006 s; distance=1 kB, estimate=11113 kB
+2023-07-25 21:53:40.074 UTC [1943306] ERROR:  current user cannot be dropped
+2023-07-25 21:53:40.074 UTC [1943306] STATEMENT:  DROP USER su;
+2023-07-25 21:53:40.565 UTC [1943230] LOG:  checkpoint starting: immediate force wait
+2023-07-25 21:53:40.693 UTC [1943230] LOG:  checkpoint complete: wrote 1028 buffers (6.3%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.049 s, sync=0.045 s, total=0.129 s; sync files=295, longest=0.013 s, average=0.001 s; distance=8815 kB, estimate=10883 kB
+2023-07-25 21:53:40.752 UTC [1943230] LOG:  checkpoint starting: immediate force wait
+2023-07-25 21:53:40.809 UTC [1943230] LOG:  checkpoint complete: wrote 8 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.012 s, sync=0.011 s, total=0.057 s; sync files=7, longest=0.008 s, average=0.002 s; distance=34 kB, estimate=9798 kB
+2023-07-25 21:53:40.928 UTC [1943334] ERROR:  duplicate key value violates unique constraint "company_pkey"
+2023-07-25 21:53:40.928 UTC [1943334] DETAIL:  Key (id)=(1) already exists.
+2023-07-25 21:53:40.928 UTC [1943334] STATEMENT:  INSERT  INTO Company(ID, Name) VALUES (1, 'Percona');
+2023-07-25 21:53:41.226 UTC [1943354] ERROR:  division by zero
+2023-07-25 21:53:41.226 UTC [1943354] STATEMENT:  SELECT 1/0;
+2023-07-25 21:53:41.226 UTC [1943354] ERROR:  relation "unknown" does not exist at character 15
+2023-07-25 21:53:41.226 UTC [1943354] STATEMENT:  SELECT * FROM unknown;
+2023-07-25 21:53:41.226 UTC [1943354] ERROR:  syntax error at or near "ELECET" at character 1
+2023-07-25 21:53:41.226 UTC [1943354] STATEMENT:  ELECET * FROM unknown;
+2023-07-25 21:53:41.226 UTC [1943354] WARNING:  warning message
+2023-07-25 21:53:41.226 UTC [1943354] CONTEXT:  PL/pgSQL function inline_code_block line 3 at RAISE
+2023-07-25 21:53:41.329 UTC [1943368] ERROR:  role "su" already exists
+2023-07-25 21:53:41.329 UTC [1943368] STATEMENT:  CREATE USER su WITH SUPERUSER;
+2023-07-25 21:53:41.360 UTC [1943368] ERROR:  permission denied for function pg_stat_monitor_reset
+2023-07-25 21:53:41.360 UTC [1943368] STATEMENT:  SELECT pg_stat_monitor_reset();

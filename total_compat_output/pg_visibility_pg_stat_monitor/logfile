@@ -1,0 +1,111 @@
+2023-07-25 09:16:33.000 UTC [3166545] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 09:16:33.000 UTC [3166545] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 09:16:33.007 UTC [3166545] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 09:16:33.017 UTC [3166548] LOG:  database system was shut down at 2023-07-25 09:16:32 UTC
+2023-07-25 09:16:33.022 UTC [3166545] LOG:  database system is ready to accept connections
+2023-07-25 09:16:33.224 UTC [3166564] ERROR:  could not open relation with OID 16413
+2023-07-25 09:16:33.224 UTC [3166564] STATEMENT:  SELECT * FROM pg_visibility_map(16413);
+2023-07-25 09:16:33.224 UTC [3166564] ERROR:  could not open relation with OID 16413
+2023-07-25 09:16:33.224 UTC [3166564] STATEMENT:  SELECT * FROM pg_visibility_map(16413);
+2023-07-25 09:16:33.230 UTC [3166564] ERROR:  relation "test_partitioned" is of wrong relation kind
+2023-07-25 09:16:33.230 UTC [3166564] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-25 09:16:33.230 UTC [3166564] STATEMENT:  select pg_visibility('test_partitioned', 0);
+2023-07-25 09:16:33.231 UTC [3166564] ERROR:  relation "test_partitioned" is of wrong relation kind
+2023-07-25 09:16:33.231 UTC [3166564] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-25 09:16:33.231 UTC [3166564] STATEMENT:  select pg_visibility_map('test_partitioned');
+2023-07-25 09:16:33.231 UTC [3166564] ERROR:  relation "test_partitioned" is of wrong relation kind
+2023-07-25 09:16:33.231 UTC [3166564] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-25 09:16:33.231 UTC [3166564] STATEMENT:  select pg_visibility_map_summary('test_partitioned');
+2023-07-25 09:16:33.232 UTC [3166564] ERROR:  relation "test_partitioned" is of wrong relation kind
+2023-07-25 09:16:33.232 UTC [3166564] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-25 09:16:33.232 UTC [3166564] STATEMENT:  select pg_check_frozen('test_partitioned');
+2023-07-25 09:16:33.233 UTC [3166564] ERROR:  relation "test_partitioned" is of wrong relation kind
+2023-07-25 09:16:33.233 UTC [3166564] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-25 09:16:33.233 UTC [3166564] STATEMENT:  select pg_truncate_visibility_map('test_partitioned');
+2023-07-25 09:16:33.250 UTC [3166564] ERROR:  relation "test_index" is of wrong relation kind
+2023-07-25 09:16:33.250 UTC [3166564] DETAIL:  This operation is not supported for indexes.
+2023-07-25 09:16:33.250 UTC [3166564] STATEMENT:  select pg_visibility('test_index', 0);
+2023-07-25 09:16:33.250 UTC [3166564] ERROR:  relation "test_index" is of wrong relation kind
+2023-07-25 09:16:33.250 UTC [3166564] DETAIL:  This operation is not supported for indexes.
+2023-07-25 09:16:33.250 UTC [3166564] STATEMENT:  select pg_visibility_map('test_index');
+2023-07-25 09:16:33.251 UTC [3166564] ERROR:  relation "test_index" is of wrong relation kind
+2023-07-25 09:16:33.251 UTC [3166564] DETAIL:  This operation is not supported for indexes.
+2023-07-25 09:16:33.251 UTC [3166564] STATEMENT:  select pg_visibility_map_summary('test_index');
+2023-07-25 09:16:33.251 UTC [3166564] ERROR:  relation "test_index" is of wrong relation kind
+2023-07-25 09:16:33.251 UTC [3166564] DETAIL:  This operation is not supported for indexes.
+2023-07-25 09:16:33.251 UTC [3166564] STATEMENT:  select pg_check_frozen('test_index');
+2023-07-25 09:16:33.252 UTC [3166564] ERROR:  relation "test_index" is of wrong relation kind
+2023-07-25 09:16:33.252 UTC [3166564] DETAIL:  This operation is not supported for indexes.
+2023-07-25 09:16:33.252 UTC [3166564] STATEMENT:  select pg_truncate_visibility_map('test_index');
+2023-07-25 09:16:33.257 UTC [3166564] ERROR:  relation "test_view" is of wrong relation kind
+2023-07-25 09:16:33.257 UTC [3166564] DETAIL:  This operation is not supported for views.
+2023-07-25 09:16:33.257 UTC [3166564] STATEMENT:  select pg_visibility('test_view', 0);
+2023-07-25 09:16:33.258 UTC [3166564] ERROR:  relation "test_view" is of wrong relation kind
+2023-07-25 09:16:33.258 UTC [3166564] DETAIL:  This operation is not supported for views.
+2023-07-25 09:16:33.258 UTC [3166564] STATEMENT:  select pg_visibility_map('test_view');
+2023-07-25 09:16:33.258 UTC [3166564] ERROR:  relation "test_view" is of wrong relation kind
+2023-07-25 09:16:33.258 UTC [3166564] DETAIL:  This operation is not supported for views.
+2023-07-25 09:16:33.258 UTC [3166564] STATEMENT:  select pg_visibility_map_summary('test_view');
+2023-07-25 09:16:33.259 UTC [3166564] ERROR:  relation "test_view" is of wrong relation kind
+2023-07-25 09:16:33.259 UTC [3166564] DETAIL:  This operation is not supported for views.
+2023-07-25 09:16:33.259 UTC [3166564] STATEMENT:  select pg_check_frozen('test_view');
+2023-07-25 09:16:33.259 UTC [3166564] ERROR:  relation "test_view" is of wrong relation kind
+2023-07-25 09:16:33.259 UTC [3166564] DETAIL:  This operation is not supported for views.
+2023-07-25 09:16:33.259 UTC [3166564] STATEMENT:  select pg_truncate_visibility_map('test_view');
+2023-07-25 09:16:33.262 UTC [3166564] ERROR:  relation "test_sequence" is of wrong relation kind
+2023-07-25 09:16:33.262 UTC [3166564] DETAIL:  This operation is not supported for sequences.
+2023-07-25 09:16:33.262 UTC [3166564] STATEMENT:  select pg_visibility('test_sequence', 0);
+2023-07-25 09:16:33.263 UTC [3166564] ERROR:  relation "test_sequence" is of wrong relation kind
+2023-07-25 09:16:33.263 UTC [3166564] DETAIL:  This operation is not supported for sequences.
+2023-07-25 09:16:33.263 UTC [3166564] STATEMENT:  select pg_visibility_map('test_sequence');
+2023-07-25 09:16:33.264 UTC [3166564] ERROR:  relation "test_sequence" is of wrong relation kind
+2023-07-25 09:16:33.264 UTC [3166564] DETAIL:  This operation is not supported for sequences.
+2023-07-25 09:16:33.264 UTC [3166564] STATEMENT:  select pg_visibility_map_summary('test_sequence');
+2023-07-25 09:16:33.264 UTC [3166564] ERROR:  relation "test_sequence" is of wrong relation kind
+2023-07-25 09:16:33.264 UTC [3166564] DETAIL:  This operation is not supported for sequences.
+2023-07-25 09:16:33.264 UTC [3166564] STATEMENT:  select pg_check_frozen('test_sequence');
+2023-07-25 09:16:33.264 UTC [3166564] ERROR:  relation "test_sequence" is of wrong relation kind
+2023-07-25 09:16:33.264 UTC [3166564] DETAIL:  This operation is not supported for sequences.
+2023-07-25 09:16:33.264 UTC [3166564] STATEMENT:  select pg_truncate_visibility_map('test_sequence');
+2023-07-25 09:16:33.271 UTC [3166564] ERROR:  relation "test_foreign_table" is of wrong relation kind
+2023-07-25 09:16:33.271 UTC [3166564] DETAIL:  This operation is not supported for foreign tables.
+2023-07-25 09:16:33.271 UTC [3166564] STATEMENT:  select pg_visibility('test_foreign_table', 0);
+2023-07-25 09:16:33.272 UTC [3166564] ERROR:  relation "test_foreign_table" is of wrong relation kind
+2023-07-25 09:16:33.272 UTC [3166564] DETAIL:  This operation is not supported for foreign tables.
+2023-07-25 09:16:33.272 UTC [3166564] STATEMENT:  select pg_visibility_map('test_foreign_table');
+2023-07-25 09:16:33.272 UTC [3166564] ERROR:  relation "test_foreign_table" is of wrong relation kind
+2023-07-25 09:16:33.272 UTC [3166564] DETAIL:  This operation is not supported for foreign tables.
+2023-07-25 09:16:33.272 UTC [3166564] STATEMENT:  select pg_visibility_map_summary('test_foreign_table');
+2023-07-25 09:16:33.273 UTC [3166564] ERROR:  relation "test_foreign_table" is of wrong relation kind
+2023-07-25 09:16:33.273 UTC [3166564] DETAIL:  This operation is not supported for foreign tables.
+2023-07-25 09:16:33.273 UTC [3166564] STATEMENT:  select pg_check_frozen('test_foreign_table');
+2023-07-25 09:16:33.273 UTC [3166564] ERROR:  relation "test_foreign_table" is of wrong relation kind
+2023-07-25 09:16:33.273 UTC [3166564] DETAIL:  This operation is not supported for foreign tables.
+2023-07-25 09:16:33.273 UTC [3166564] STATEMENT:  select pg_truncate_visibility_map('test_foreign_table');
+2023-07-25 09:16:33.439 UTC [3166546] LOG:  checkpoint starting: immediate force wait
+2023-07-25 09:16:33.480 UTC [3166546] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.011 s, sync=0.010 s, total=0.041 s; sync files=7, longest=0.008 s, average=0.002 s; distance=4442 kB, estimate=4442 kB
+2023-07-25 09:16:33.903 UTC [3166546] LOG:  checkpoint starting: immediate force wait
+2023-07-25 09:16:34.029 UTC [3166546] LOG:  checkpoint complete: wrote 1827 buffers (11.2%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.052 s, sync=0.048 s, total=0.126 s; sync files=496, longest=0.016 s, average=0.001 s; distance=12717 kB, estimate=12717 kB
+2023-07-25 09:16:34.039 UTC [3166546] LOG:  checkpoint starting: immediate force wait
+2023-07-25 09:16:34.067 UTC [3166546] LOG:  checkpoint complete: wrote 2 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.007 s, sync=0.004 s, total=0.028 s; sync files=2, longest=0.003 s, average=0.002 s; distance=1 kB, estimate=11445 kB
+2023-07-25 09:16:34.145 UTC [3166648] ERROR:  current user cannot be dropped
+2023-07-25 09:16:34.145 UTC [3166648] STATEMENT:  DROP USER su;
+2023-07-25 09:16:34.506 UTC [3166546] LOG:  checkpoint starting: immediate force wait
+2023-07-25 09:16:34.602 UTC [3166546] LOG:  checkpoint complete: wrote 1037 buffers (6.3%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.047 s, sync=0.031 s, total=0.096 s; sync files=296, longest=0.006 s, average=0.001 s; distance=9113 kB, estimate=11212 kB
+2023-07-25 09:16:34.645 UTC [3166546] LOG:  checkpoint starting: immediate force wait
+2023-07-25 09:16:34.678 UTC [3166546] LOG:  checkpoint complete: wrote 8 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.007 s, sync=0.004 s, total=0.033 s; sync files=7, longest=0.003 s, average=0.001 s; distance=34 kB, estimate=10094 kB
+2023-07-25 09:16:34.764 UTC [3166676] ERROR:  duplicate key value violates unique constraint "company_pkey"
+2023-07-25 09:16:34.764 UTC [3166676] DETAIL:  Key (id)=(1) already exists.
+2023-07-25 09:16:34.764 UTC [3166676] STATEMENT:  INSERT  INTO Company(ID, Name) VALUES (1, 'Percona');
+2023-07-25 09:16:34.893 UTC [3166696] ERROR:  division by zero
+2023-07-25 09:16:34.893 UTC [3166696] STATEMENT:  SELECT 1/0;
+2023-07-25 09:16:34.893 UTC [3166696] ERROR:  relation "unknown" does not exist at character 15
+2023-07-25 09:16:34.893 UTC [3166696] STATEMENT:  SELECT * FROM unknown;
+2023-07-25 09:16:34.893 UTC [3166696] ERROR:  syntax error at or near "ELECET" at character 1
+2023-07-25 09:16:34.893 UTC [3166696] STATEMENT:  ELECET * FROM unknown;
+2023-07-25 09:16:34.894 UTC [3166696] WARNING:  warning message
+2023-07-25 09:16:34.894 UTC [3166696] CONTEXT:  PL/pgSQL function inline_code_block line 3 at RAISE
+2023-07-25 09:16:35.014 UTC [3166710] ERROR:  role "su" already exists
+2023-07-25 09:16:35.014 UTC [3166710] STATEMENT:  CREATE USER su WITH SUPERUSER;
+2023-07-25 09:16:35.028 UTC [3166710] ERROR:  permission denied for function pg_stat_monitor_reset
+2023-07-25 09:16:35.028 UTC [3166710] STATEMENT:  SELECT pg_stat_monitor_reset();

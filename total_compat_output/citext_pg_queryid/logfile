@@ -1,0 +1,202 @@
+2023-07-25 19:00:47.418 UTC [1918643] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 19:00:47.419 UTC [1918643] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 19:00:47.434 UTC [1918643] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 19:00:47.452 UTC [1918646] LOG:  database system was shut down at 2023-07-25 19:00:47 UTC
+2023-07-25 19:00:47.463 UTC [1918643] LOG:  database system is ready to accept connections
+2023-07-25 19:00:47.744 UTC [1918665] ERROR:  collation "coll" for encoding "UTF8" does not exist
+2023-07-25 19:00:47.744 UTC [1918665] STATEMENT:  ALTER TABLE s.x ADD CONSTRAINT underqualified EXCLUDE USING btree
+	  ((s.index_this_expr(y, s.const())) COLLATE coll WITH s.=)
+	  USING INDEX TABLESPACE regress_create_idx_tblspace
+	  WHERE (s.index_row_if(y));
+2023-07-25 19:00:47.747 UTC [1918644] LOG:  checkpoint starting: immediate force wait
+2023-07-25 19:00:47.879 UTC [1918644] LOG:  checkpoint complete: wrote 920 buffers (5.6%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.057 s, sync=0.042 s, total=0.133 s; sync files=266, longest=0.008 s, average=0.001 s; distance=4269 kB, estimate=4269 kB
+2023-07-25 19:00:47.933 UTC [1918669] ERROR:  duplicate key value violates unique constraint "try_pkey"
+2023-07-25 19:00:47.933 UTC [1918669] DETAIL:  Key (name)=(a) already exists.
+2023-07-25 19:00:47.933 UTC [1918669] STATEMENT:  INSERT INTO try (name) VALUES ('a');
+2023-07-25 19:00:47.933 UTC [1918669] ERROR:  duplicate key value violates unique constraint "try_pkey"
+2023-07-25 19:00:47.933 UTC [1918669] DETAIL:  Key (name)=(A) already exists.
+2023-07-25 19:00:47.933 UTC [1918669] STATEMENT:  INSERT INTO try (name) VALUES ('A');
+2023-07-25 19:00:47.933 UTC [1918669] ERROR:  duplicate key value violates unique constraint "try_pkey"
+2023-07-25 19:00:47.933 UTC [1918669] DETAIL:  Key (name)=(aB) already exists.
+2023-07-25 19:00:47.933 UTC [1918669] STATEMENT:  INSERT INTO try (name) VALUES ('aB');
+2023-07-25 19:00:48.038 UTC [1918669] ERROR:  column "chr" is of type "char" but expression is of type citext at character 44
+2023-07-25 19:00:48.038 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.038 UTC [1918669] STATEMENT:  INSERT INTO caster (chr)           VALUES ('f'::citext);
+2023-07-25 19:00:48.063 UTC [1918669] ERROR:  column "bytea" is of type bytea but expression is of type text at character 44
+2023-07-25 19:00:48.063 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.063 UTC [1918669] STATEMENT:  INSERT INTO caster (bytea)         VALUES ('foo'::text);
+2023-07-25 19:00:48.067 UTC [1918669] ERROR:  column "bytea" is of type bytea but expression is of type citext at character 44
+2023-07-25 19:00:48.067 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.067 UTC [1918669] STATEMENT:  INSERT INTO caster (bytea)         VALUES ('foo'::citext);
+2023-07-25 19:00:48.072 UTC [1918669] ERROR:  column "boolean" is of type boolean but expression is of type text at character 44
+2023-07-25 19:00:48.072 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.072 UTC [1918669] STATEMENT:  INSERT INTO caster (boolean)       VALUES ('t'::text);
+2023-07-25 19:00:48.077 UTC [1918669] ERROR:  column "boolean" is of type boolean but expression is of type citext at character 44
+2023-07-25 19:00:48.077 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.077 UTC [1918669] STATEMENT:  INSERT INTO caster (boolean)       VALUES ('t'::citext);
+2023-07-25 19:00:48.081 UTC [1918669] ERROR:  column "float8" is of type double precision but expression is of type text at character 44
+2023-07-25 19:00:48.081 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.081 UTC [1918669] STATEMENT:  INSERT INTO caster (float8)        VALUES ('12.42'::text);
+2023-07-25 19:00:48.086 UTC [1918669] ERROR:  column "float8" is of type double precision but expression is of type citext at character 44
+2023-07-25 19:00:48.086 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.086 UTC [1918669] STATEMENT:  INSERT INTO caster (float8)        VALUES ('12.42'::citext);
+2023-07-25 19:00:48.091 UTC [1918669] ERROR:  column "float4" is of type real but expression is of type text at character 44
+2023-07-25 19:00:48.091 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.091 UTC [1918669] STATEMENT:  INSERT INTO caster (float4)        VALUES ('12.42'::text);
+2023-07-25 19:00:48.095 UTC [1918669] ERROR:  column "float4" is of type real but expression is of type citext at character 44
+2023-07-25 19:00:48.095 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.095 UTC [1918669] STATEMENT:  INSERT INTO caster (float4)        VALUES ('12.42'::citext);
+2023-07-25 19:00:48.100 UTC [1918669] ERROR:  column "numeric" is of type numeric but expression is of type text at character 44
+2023-07-25 19:00:48.100 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.100 UTC [1918669] STATEMENT:  INSERT INTO caster (numeric)       VALUES ('12.42'::text);
+2023-07-25 19:00:48.104 UTC [1918669] ERROR:  column "numeric" is of type numeric but expression is of type citext at character 44
+2023-07-25 19:00:48.104 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.104 UTC [1918669] STATEMENT:  INSERT INTO caster (numeric)       VALUES ('12.42'::citext);
+2023-07-25 19:00:48.109 UTC [1918669] ERROR:  column "int8" is of type bigint but expression is of type text at character 44
+2023-07-25 19:00:48.109 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.109 UTC [1918669] STATEMENT:  INSERT INTO caster (int8)          VALUES ('12'::text);
+2023-07-25 19:00:48.113 UTC [1918669] ERROR:  column "int8" is of type bigint but expression is of type citext at character 44
+2023-07-25 19:00:48.113 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.113 UTC [1918669] STATEMENT:  INSERT INTO caster (int8)          VALUES ('12'::citext);
+2023-07-25 19:00:48.118 UTC [1918669] ERROR:  column "int4" is of type integer but expression is of type text at character 44
+2023-07-25 19:00:48.118 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.118 UTC [1918669] STATEMENT:  INSERT INTO caster (int4)          VALUES ('12'::text);
+2023-07-25 19:00:48.122 UTC [1918669] ERROR:  column "int4" is of type integer but expression is of type citext at character 44
+2023-07-25 19:00:48.122 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.122 UTC [1918669] STATEMENT:  INSERT INTO caster (int4)          VALUES ('12'::citext);
+2023-07-25 19:00:48.126 UTC [1918669] ERROR:  column "int2" is of type smallint but expression is of type text at character 44
+2023-07-25 19:00:48.126 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.126 UTC [1918669] STATEMENT:  INSERT INTO caster (int2)          VALUES ('12'::text);
+2023-07-25 19:00:48.131 UTC [1918669] ERROR:  column "int2" is of type smallint but expression is of type citext at character 44
+2023-07-25 19:00:48.131 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.131 UTC [1918669] STATEMENT:  INSERT INTO caster (int2)          VALUES ('12'::citext);
+2023-07-25 19:00:48.135 UTC [1918669] ERROR:  column "cidr" is of type cidr but expression is of type text at character 44
+2023-07-25 19:00:48.135 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.135 UTC [1918669] STATEMENT:  INSERT INTO caster (cidr)          VALUES ('192.168.100.128/25'::text);
+2023-07-25 19:00:48.139 UTC [1918669] ERROR:  column "cidr" is of type cidr but expression is of type citext at character 44
+2023-07-25 19:00:48.139 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.139 UTC [1918669] STATEMENT:  INSERT INTO caster (cidr)          VALUES ('192.168.100.128/25'::citext);
+2023-07-25 19:00:48.144 UTC [1918669] ERROR:  column "inet" is of type inet but expression is of type text at character 44
+2023-07-25 19:00:48.144 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.144 UTC [1918669] STATEMENT:  INSERT INTO caster (inet)          VALUES ('192.168.100.128'::text);
+2023-07-25 19:00:48.148 UTC [1918669] ERROR:  column "inet" is of type inet but expression is of type citext at character 44
+2023-07-25 19:00:48.148 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.148 UTC [1918669] STATEMENT:  INSERT INTO caster (inet)          VALUES ('192.168.100.128'::citext);
+2023-07-25 19:00:48.153 UTC [1918669] ERROR:  column "macaddr" is of type macaddr but expression is of type text at character 44
+2023-07-25 19:00:48.153 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.153 UTC [1918669] STATEMENT:  INSERT INTO caster (macaddr)       VALUES ('08:00:2b:01:02:03'::text);
+2023-07-25 19:00:48.157 UTC [1918669] ERROR:  column "macaddr" is of type macaddr but expression is of type citext at character 44
+2023-07-25 19:00:48.157 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.157 UTC [1918669] STATEMENT:  INSERT INTO caster (macaddr)       VALUES ('08:00:2b:01:02:03'::citext);
+2023-07-25 19:00:48.162 UTC [1918669] ERROR:  column "money" is of type money but expression is of type text at character 44
+2023-07-25 19:00:48.162 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.162 UTC [1918669] STATEMENT:  INSERT INTO caster (money)         VALUES ('12'::text);
+2023-07-25 19:00:48.167 UTC [1918669] ERROR:  column "money" is of type money but expression is of type citext at character 44
+2023-07-25 19:00:48.167 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.167 UTC [1918669] STATEMENT:  INSERT INTO caster (money)         VALUES ('12'::citext);
+2023-07-25 19:00:48.171 UTC [1918669] ERROR:  column "timestamp" is of type timestamp without time zone but expression is of type text at character 44
+2023-07-25 19:00:48.171 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.171 UTC [1918669] STATEMENT:  INSERT INTO caster (timestamp)     VALUES ('1999-01-08 04:05:06'::text);
+2023-07-25 19:00:48.175 UTC [1918669] ERROR:  column "timestamp" is of type timestamp without time zone but expression is of type citext at character 44
+2023-07-25 19:00:48.175 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.175 UTC [1918669] STATEMENT:  INSERT INTO caster (timestamp)     VALUES ('1999-01-08 04:05:06'::citext);
+2023-07-25 19:00:48.180 UTC [1918669] ERROR:  column "timestamptz" is of type timestamp with time zone but expression is of type text at character 44
+2023-07-25 19:00:48.180 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.180 UTC [1918669] STATEMENT:  INSERT INTO caster (timestamptz)   VALUES ('1999-01-08 04:05:06'::text);
+2023-07-25 19:00:48.185 UTC [1918669] ERROR:  column "timestamptz" is of type timestamp with time zone but expression is of type citext at character 44
+2023-07-25 19:00:48.185 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.185 UTC [1918669] STATEMENT:  INSERT INTO caster (timestamptz)   VALUES ('1999-01-08 04:05:06'::citext);
+2023-07-25 19:00:48.190 UTC [1918669] ERROR:  column "interval" is of type interval but expression is of type text at character 44
+2023-07-25 19:00:48.190 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.190 UTC [1918669] STATEMENT:  INSERT INTO caster (interval)      VALUES ('1 hour'::text);
+2023-07-25 19:00:48.194 UTC [1918669] ERROR:  column "interval" is of type interval but expression is of type citext at character 44
+2023-07-25 19:00:48.194 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.194 UTC [1918669] STATEMENT:  INSERT INTO caster (interval)      VALUES ('1 hour'::citext);
+2023-07-25 19:00:48.199 UTC [1918669] ERROR:  column "date" is of type date but expression is of type text at character 44
+2023-07-25 19:00:48.199 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.199 UTC [1918669] STATEMENT:  INSERT INTO caster (date)          VALUES ('1999-01-08'::text);
+2023-07-25 19:00:48.203 UTC [1918669] ERROR:  column "date" is of type date but expression is of type citext at character 44
+2023-07-25 19:00:48.203 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.203 UTC [1918669] STATEMENT:  INSERT INTO caster (date)          VALUES ('1999-01-08'::citext);
+2023-07-25 19:00:48.207 UTC [1918669] ERROR:  column "time" is of type time without time zone but expression is of type text at character 44
+2023-07-25 19:00:48.207 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.207 UTC [1918669] STATEMENT:  INSERT INTO caster (time)          VALUES ('04:05:06'::text);
+2023-07-25 19:00:48.212 UTC [1918669] ERROR:  column "time" is of type time without time zone but expression is of type citext at character 44
+2023-07-25 19:00:48.212 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.212 UTC [1918669] STATEMENT:  INSERT INTO caster (time)          VALUES ('04:05:06'::citext);
+2023-07-25 19:00:48.216 UTC [1918669] ERROR:  column "timetz" is of type time with time zone but expression is of type text at character 44
+2023-07-25 19:00:48.216 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.216 UTC [1918669] STATEMENT:  INSERT INTO caster (timetz)        VALUES ('04:05:06'::text);
+2023-07-25 19:00:48.221 UTC [1918669] ERROR:  column "timetz" is of type time with time zone but expression is of type citext at character 44
+2023-07-25 19:00:48.221 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.221 UTC [1918669] STATEMENT:  INSERT INTO caster (timetz)        VALUES ('04:05:06'::citext);
+2023-07-25 19:00:48.225 UTC [1918669] ERROR:  column "point" is of type point but expression is of type text at character 44
+2023-07-25 19:00:48.225 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.225 UTC [1918669] STATEMENT:  INSERT INTO caster (point)         VALUES ('( 1 , 1)'::text);
+2023-07-25 19:00:48.229 UTC [1918669] ERROR:  column "point" is of type point but expression is of type citext at character 44
+2023-07-25 19:00:48.229 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.229 UTC [1918669] STATEMENT:  INSERT INTO caster (point)         VALUES ('( 1 , 1)'::citext);
+2023-07-25 19:00:48.234 UTC [1918669] ERROR:  column "lseg" is of type lseg but expression is of type text at character 44
+2023-07-25 19:00:48.234 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.234 UTC [1918669] STATEMENT:  INSERT INTO caster (lseg)          VALUES ('( 1 , 1 ) , ( 2 , 2 )'::text);
+2023-07-25 19:00:48.239 UTC [1918669] ERROR:  column "lseg" is of type lseg but expression is of type citext at character 44
+2023-07-25 19:00:48.239 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.239 UTC [1918669] STATEMENT:  INSERT INTO caster (lseg)          VALUES ('( 1 , 1 ) , ( 2 , 2 )'::citext);
+2023-07-25 19:00:48.243 UTC [1918669] ERROR:  column "box" is of type box but expression is of type text at character 44
+2023-07-25 19:00:48.243 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.243 UTC [1918669] STATEMENT:  INSERT INTO caster (box)           VALUES ('(0,0),(1,1)'::text);
+2023-07-25 19:00:48.248 UTC [1918669] ERROR:  column "box" is of type box but expression is of type citext at character 44
+2023-07-25 19:00:48.248 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.248 UTC [1918669] STATEMENT:  INSERT INTO caster (box)           VALUES ('(0,0),(1,1)'::citext);
+2023-07-25 19:00:48.253 UTC [1918669] ERROR:  column "path" is of type path but expression is of type text at character 44
+2023-07-25 19:00:48.253 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.253 UTC [1918669] STATEMENT:  INSERT INTO caster (path)          VALUES ('((0,0),(1,1),(2,0))'::text);
+2023-07-25 19:00:48.257 UTC [1918669] ERROR:  column "path" is of type path but expression is of type citext at character 44
+2023-07-25 19:00:48.257 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.257 UTC [1918669] STATEMENT:  INSERT INTO caster (path)          VALUES ('((0,0),(1,1),(2,0))'::citext);
+2023-07-25 19:00:48.262 UTC [1918669] ERROR:  column "polygon" is of type polygon but expression is of type text at character 44
+2023-07-25 19:00:48.262 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.262 UTC [1918669] STATEMENT:  INSERT INTO caster (polygon)       VALUES ('((0,0),(1,1))'::text);
+2023-07-25 19:00:48.267 UTC [1918669] ERROR:  column "polygon" is of type polygon but expression is of type citext at character 44
+2023-07-25 19:00:48.267 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.267 UTC [1918669] STATEMENT:  INSERT INTO caster (polygon)       VALUES ('((0,0),(1,1))'::citext);
+2023-07-25 19:00:48.271 UTC [1918669] ERROR:  column "circle" is of type circle but expression is of type text at character 44
+2023-07-25 19:00:48.271 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.271 UTC [1918669] STATEMENT:  INSERT INTO caster (circle)        VALUES ('((0,0),2)'::text);
+2023-07-25 19:00:48.276 UTC [1918669] ERROR:  column "circle" is of type circle but expression is of type citext at character 44
+2023-07-25 19:00:48.276 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.276 UTC [1918669] STATEMENT:  INSERT INTO caster (circle)        VALUES ('((0,0),2)'::citext);
+2023-07-25 19:00:48.281 UTC [1918669] ERROR:  column "bit" is of type bit but expression is of type text at character 44
+2023-07-25 19:00:48.281 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.281 UTC [1918669] STATEMENT:  INSERT INTO caster (bit)           VALUES ('101'::text);
+2023-07-25 19:00:48.285 UTC [1918669] ERROR:  column "bit" is of type bit but expression is of type citext at character 44
+2023-07-25 19:00:48.285 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.285 UTC [1918669] STATEMENT:  INSERT INTO caster (bit)           VALUES ('101'::citext);
+2023-07-25 19:00:48.290 UTC [1918669] ERROR:  column "bitv" is of type bit varying but expression is of type text at character 44
+2023-07-25 19:00:48.290 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.290 UTC [1918669] STATEMENT:  INSERT INTO caster (bitv)          VALUES ('101'::text);
+2023-07-25 19:00:48.295 UTC [1918669] ERROR:  column "bitv" is of type bit varying but expression is of type citext at character 44
+2023-07-25 19:00:48.295 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.295 UTC [1918669] STATEMENT:  INSERT INTO caster (bitv)          VALUES ('101'::citext);
+2023-07-25 19:00:48.299 UTC [1918669] ERROR:  column "tsvector" is of type tsvector but expression is of type text at character 44
+2023-07-25 19:00:48.299 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.299 UTC [1918669] STATEMENT:  INSERT INTO caster (tsvector)      VALUES ('the fat cat'::text);
+2023-07-25 19:00:48.304 UTC [1918669] ERROR:  column "tsvector" is of type tsvector but expression is of type citext at character 44
+2023-07-25 19:00:48.304 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.304 UTC [1918669] STATEMENT:  INSERT INTO caster (tsvector)      VALUES ('the fat cat'::citext);
+2023-07-25 19:00:48.309 UTC [1918669] ERROR:  column "tsquery" is of type tsquery but expression is of type text at character 44
+2023-07-25 19:00:48.309 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.309 UTC [1918669] STATEMENT:  INSERT INTO caster (tsquery)       VALUES ('fat & rat'::text);
+2023-07-25 19:00:48.314 UTC [1918669] ERROR:  column "tsquery" is of type tsquery but expression is of type citext at character 44
+2023-07-25 19:00:48.314 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.314 UTC [1918669] STATEMENT:  INSERT INTO caster (tsquery)       VALUES ('fat & rat'::citext);
+2023-07-25 19:00:48.318 UTC [1918669] ERROR:  column "uuid" is of type uuid but expression is of type text at character 44
+2023-07-25 19:00:48.318 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.318 UTC [1918669] STATEMENT:  INSERT INTO caster (uuid)          VALUES ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'::text);
+2023-07-25 19:00:48.323 UTC [1918669] ERROR:  column "uuid" is of type uuid but expression is of type citext at character 44
+2023-07-25 19:00:48.323 UTC [1918669] HINT:  You will need to rewrite or cast the expression.
+2023-07-25 19:00:48.323 UTC [1918669] STATEMENT:  INSERT INTO caster (uuid)          VALUES ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'::citext);
+2023-07-25 19:00:48.363 UTC [1918669] ERROR:  regexp_match() does not support the "global" option
+2023-07-25 19:00:48.363 UTC [1918669] HINT:  Use the regexp_matches function instead.
+2023-07-25 19:00:48.363 UTC [1918669] CONTEXT:  SQL function "regexp_match" statement 1
+2023-07-25 19:00:48.363 UTC [1918669] STATEMENT:  SELECT regexp_match('foobarbequebazmorebarbequetoo'::citext, '(BAR)(BEQUE)'::citext, 'g') AS "error";

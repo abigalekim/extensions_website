@@ -1,0 +1,18 @@
+diff -U3 /home/abigalek/pgext-cli/postgresql-15.3/contrib/pg_trgm/expected/pg_trgm.out /home/abigalek/pgext-cli/postgresql-15.3/contrib/pg_trgm/results/pg_trgm.out
+--- /home/abigalek/pgext-cli/postgresql-15.3/contrib/pg_trgm/expected/pg_trgm.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli/postgresql-15.3/contrib/pg_trgm/results/pg_trgm.out	2023-11-26 02:57:25.003834441 +0000
+@@ -5370,11 +5370,9 @@
+ -------------------------------------------------------------------
+  HashAggregate
+    Group Key: city, similarity(city, 'Warsaw'::text), show_limit()
+-   ->  Bitmap Heap Scan on restaurants
+-         Recheck Cond: (city % 'Warsaw'::text)
+-         ->  Bitmap Index Scan on restaurants_city_idx
+-               Index Cond: (city % 'Warsaw'::text)
+-(6 rows)
++   ->  Index Scan using restaurants_city_idx on restaurants
++         Index Cond: (city % 'Warsaw'::text)
++(4 rows)
+ 
+ SELECT set_limit(0.3);
+  set_limit 

@@ -1,0 +1,52 @@
+2023-07-26 10:34:05.624 UTC [3467378] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 10:34:05.624 UTC [3467378] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 10:34:05.636 UTC [3467378] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 10:34:05.652 UTC [3467381] LOG:  database system was shut down at 2023-07-26 10:34:05 UTC
+2023-07-26 10:34:05.662 UTC [3467378] LOG:  database system is ready to accept connections
+2023-07-26 10:34:05.834 UTC [3467394] ERROR:  number of rows cannot be negative
+2023-07-26 10:34:05.834 UTC [3467394] STATEMENT:  SELECT avg(normal_rand)::int, count(*) FROM normal_rand(-1, 250, 0.2);
+2023-07-26 10:34:05.920 UTC [3467394] ERROR:  provided "categories" SQL must return 1 column of at least one row
+2023-07-26 10:34:05.920 UTC [3467394] STATEMENT:  SELECT * FROM crosstab(
+	  'SELECT rowid, rowdt, attribute, val FROM cth ORDER BY 1',
+	  'SELECT DISTINCT attribute FROM cth WHERE attribute = ''a'' ORDER BY 1')
+	AS c(rowid text, rowdt timestamp, temperature int4, test_result text, test_startdate timestamp, volts float8);
+2023-07-26 10:34:05.922 UTC [3467394] ERROR:  provided "categories" SQL must return 1 column of at least one row
+2023-07-26 10:34:05.922 UTC [3467394] STATEMENT:  SELECT * FROM crosstab(
+	  'SELECT rowid, rowdt, attribute, val FROM cth ORDER BY 1',
+	  'SELECT DISTINCT rowdt, attribute FROM cth ORDER BY 2')
+	AS c(rowid text, rowdt timestamp, temperature int4, test_result text, test_startdate timestamp, volts float8);
+2023-07-26 10:34:05.987 UTC [3467394] ERROR:  infinite recursion detected
+2023-07-26 10:34:05.987 UTC [3467394] STATEMENT:  SELECT * FROM connectby('connectby_int', 'keyid', 'parent_keyid', '2', 0, '~') AS t(keyid int, parent_keyid int, level int, branch text);
+2023-07-26 10:34:05.989 UTC [3467394] ERROR:  invalid return type
+2023-07-26 10:34:05.989 UTC [3467394] DETAIL:  First two columns must be the same type.
+2023-07-26 10:34:05.989 UTC [3467394] STATEMENT:  SELECT * FROM connectby('connectby_int', 'keyid', 'parent_keyid', '2', 0, '~') AS t(keyid text, parent_keyid int, level int, branch text);
+2023-07-26 10:34:05.990 UTC [3467394] ERROR:  invalid return type
+2023-07-26 10:34:05.990 UTC [3467394] DETAIL:  SQL key field type double precision does not match return key field type integer.
+2023-07-26 10:34:05.990 UTC [3467394] STATEMENT:  SELECT * FROM connectby('connectby_int', 'keyid', 'parent_keyid', '2', 0, '~') AS t(keyid float8, parent_keyid float8, level int, branch text);
+2023-07-26 10:34:05.991 UTC [3467394] ERROR:  invalid return type
+2023-07-26 10:34:05.991 UTC [3467394] DETAIL:  Query must return at least two columns.
+2023-07-26 10:34:05.991 UTC [3467394] STATEMENT:  SELECT * FROM connectby('connectby_int', '1; --', 'parent_keyid', '2', 0) AS t(keyid int, parent_keyid int, level int);
+2023-07-26 10:34:05.992 UTC [3467394] ERROR:  infinite recursion detected
+2023-07-26 10:34:05.992 UTC [3467394] STATEMENT:  SELECT * FROM connectby('connectby_int', '1::int, NULL::int; --', 'parent_keyid', '2', 0) AS t(keyid int, parent_keyid int, level int);
+2023-07-26 10:34:06.213 UTC [3467378] LOG:  received SIGHUP, reloading configuration files
+2023-07-26 10:34:06.216 UTC [3467378] LOG:  parameter "session_preload_libraries" changed to "pgextwlist"
+2023-07-26 10:34:06.216 UTC [3467378] LOG:  parameter "extwlist.extensions" changed to "citext,earthdistance,pg_trgm,pg_stat_statements,refint"
+2023-07-26 10:34:06.216 UTC [3467378] LOG:  parameter "extwlist.custom_path" changed to "/home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/test-scripts"
+2023-07-26 10:34:06.321 UTC [3467420] ERROR:  extension "plpgsql" already exists
+2023-07-26 10:34:06.321 UTC [3467420] STATEMENT:  CREATE EXTENSION plpgsql;
+2023-07-26 10:34:06.321 UTC [3467420] ERROR:  extension "hstore" does not exist
+2023-07-26 10:34:06.321 UTC [3467420] STATEMENT:  COMMENT ON EXTENSION hstore IS 'plpgsql comment';
+2023-07-26 10:34:06.322 UTC [3467420] ERROR:  permission denied to create extension "hstore"
+2023-07-26 10:34:06.322 UTC [3467420] HINT:  Must have CREATE privilege on current database to create this extension.
+2023-07-26 10:34:06.322 UTC [3467420] STATEMENT:  CREATE EXTENSION hstore;
+2023-07-26 10:34:06.322 UTC [3467420] ERROR:  extension "hstore" does not exist
+2023-07-26 10:34:06.322 UTC [3467420] STATEMENT:  COMMENT ON EXTENSION hstore IS 'hstore comment';
+2023-07-26 10:34:06.323 UTC [3467420] ERROR:  required extension "cube" is not installed
+2023-07-26 10:34:06.323 UTC [3467420] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-26 10:34:06.323 UTC [3467420] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-26 10:34:06.323 UTC [3467420] ERROR:  must be owner of extension plpgsql
+2023-07-26 10:34:06.323 UTC [3467420] STATEMENT:  DROP EXTENSION plpgsql;
+2023-07-26 10:34:06.354 UTC [3467428] ERROR:  cannot drop extension citext because other objects depend on it
+2023-07-26 10:34:06.354 UTC [3467428] DETAIL:  column t of table mere_table depends on type citext
+2023-07-26 10:34:06.354 UTC [3467428] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 10:34:06.354 UTC [3467428] STATEMENT:  DROP EXTENSION citext;

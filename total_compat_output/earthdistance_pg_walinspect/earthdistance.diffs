@@ -1,0 +1,63 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out	2023-07-26 03:12:58.181535468 +0000
+@@ -1001,10 +1001,15 @@
+ (0 rows)
+ 
+ \df
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                                                                                                                                                                                       List of functions
++ Schema |                  Name                   | Result data type |                                                                                                                                                                                Argument data types                                                                                                                                                                                | Type 
++--------+-----------------------------------------+------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------
++ public | pg_get_wal_record_info                  | record           | in_lsn pg_lsn, OUT start_lsn pg_lsn, OUT end_lsn pg_lsn, OUT prev_lsn pg_lsn, OUT xid xid, OUT resource_manager text, OUT record_type text, OUT record_length integer, OUT main_data_length integer, OUT fpi_length integer, OUT description text, OUT block_ref text                                                                                                             | func
++ public | pg_get_wal_records_info                 | SETOF record     | start_lsn pg_lsn, end_lsn pg_lsn, OUT start_lsn pg_lsn, OUT end_lsn pg_lsn, OUT prev_lsn pg_lsn, OUT xid xid, OUT resource_manager text, OUT record_type text, OUT record_length integer, OUT main_data_length integer, OUT fpi_length integer, OUT description text, OUT block_ref text                                                                                          | func
++ public | pg_get_wal_records_info_till_end_of_wal | SETOF record     | start_lsn pg_lsn, OUT start_lsn pg_lsn, OUT end_lsn pg_lsn, OUT prev_lsn pg_lsn, OUT xid xid, OUT resource_manager text, OUT record_type text, OUT record_length integer, OUT main_data_length integer, OUT fpi_length integer, OUT description text, OUT block_ref text                                                                                                          | func
++ public | pg_get_wal_stats                        | SETOF record     | start_lsn pg_lsn, end_lsn pg_lsn, per_record boolean DEFAULT false, OUT "resource_manager/record_type" text, OUT count bigint, OUT count_percentage double precision, OUT record_size bigint, OUT record_size_percentage double precision, OUT fpi_size bigint, OUT fpi_size_percentage double precision, OUT combined_size bigint, OUT combined_size_percentage double precision | func
++ public | pg_get_wal_stats_till_end_of_wal        | SETOF record     | start_lsn pg_lsn, per_record boolean DEFAULT false, OUT "resource_manager/record_type" text, OUT count bigint, OUT count_percentage double precision, OUT record_size bigint, OUT record_size_percentage double precision, OUT fpi_size bigint, OUT fpi_size_percentage double precision, OUT combined_size bigint, OUT combined_size_percentage double precision                 | func
++(5 rows)
+ 
+ \do
+                              List of operators
+@@ -1022,10 +1027,15 @@
+ (0 rows)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                                                                                                                                                                                       List of functions
++ Schema |                  Name                   | Result data type |                                                                                                                                                                                Argument data types                                                                                                                                                                                | Type 
++--------+-----------------------------------------+------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------
++ public | pg_get_wal_record_info                  | record           | in_lsn pg_lsn, OUT start_lsn pg_lsn, OUT end_lsn pg_lsn, OUT prev_lsn pg_lsn, OUT xid xid, OUT resource_manager text, OUT record_type text, OUT record_length integer, OUT main_data_length integer, OUT fpi_length integer, OUT description text, OUT block_ref text                                                                                                             | func
++ public | pg_get_wal_records_info                 | SETOF record     | start_lsn pg_lsn, end_lsn pg_lsn, OUT start_lsn pg_lsn, OUT end_lsn pg_lsn, OUT prev_lsn pg_lsn, OUT xid xid, OUT resource_manager text, OUT record_type text, OUT record_length integer, OUT main_data_length integer, OUT fpi_length integer, OUT description text, OUT block_ref text                                                                                          | func
++ public | pg_get_wal_records_info_till_end_of_wal | SETOF record     | start_lsn pg_lsn, OUT start_lsn pg_lsn, OUT end_lsn pg_lsn, OUT prev_lsn pg_lsn, OUT xid xid, OUT resource_manager text, OUT record_type text, OUT record_length integer, OUT main_data_length integer, OUT fpi_length integer, OUT description text, OUT block_ref text                                                                                                          | func
++ public | pg_get_wal_stats                        | SETOF record     | start_lsn pg_lsn, end_lsn pg_lsn, per_record boolean DEFAULT false, OUT "resource_manager/record_type" text, OUT count bigint, OUT count_percentage double precision, OUT record_size bigint, OUT record_size_percentage double precision, OUT fpi_size bigint, OUT fpi_size_percentage double precision, OUT combined_size bigint, OUT combined_size_percentage double precision | func
++ public | pg_get_wal_stats_till_end_of_wal        | SETOF record     | start_lsn pg_lsn, per_record boolean DEFAULT false, OUT "resource_manager/record_type" text, OUT count bigint, OUT count_percentage double precision, OUT record_size bigint, OUT record_size_percentage double precision, OUT fpi_size bigint, OUT fpi_size_percentage double precision, OUT combined_size bigint, OUT combined_size_percentage double precision                 | func
++(5 rows)
+ 
+ \do public.*
+                              List of operators
+@@ -1066,10 +1076,15 @@
+ (0 rows)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                                                                                                                                                                                       List of functions
++ Schema |                  Name                   | Result data type |                                                                                                                                                                                Argument data types                                                                                                                                                                                | Type 
++--------+-----------------------------------------+------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------
++ public | pg_get_wal_record_info                  | record           | in_lsn pg_lsn, OUT start_lsn pg_lsn, OUT end_lsn pg_lsn, OUT prev_lsn pg_lsn, OUT xid xid, OUT resource_manager text, OUT record_type text, OUT record_length integer, OUT main_data_length integer, OUT fpi_length integer, OUT description text, OUT block_ref text                                                                                                             | func
++ public | pg_get_wal_records_info                 | SETOF record     | start_lsn pg_lsn, end_lsn pg_lsn, OUT start_lsn pg_lsn, OUT end_lsn pg_lsn, OUT prev_lsn pg_lsn, OUT xid xid, OUT resource_manager text, OUT record_type text, OUT record_length integer, OUT main_data_length integer, OUT fpi_length integer, OUT description text, OUT block_ref text                                                                                          | func
++ public | pg_get_wal_records_info_till_end_of_wal | SETOF record     | start_lsn pg_lsn, OUT start_lsn pg_lsn, OUT end_lsn pg_lsn, OUT prev_lsn pg_lsn, OUT xid xid, OUT resource_manager text, OUT record_type text, OUT record_length integer, OUT main_data_length integer, OUT fpi_length integer, OUT description text, OUT block_ref text                                                                                                          | func
++ public | pg_get_wal_stats                        | SETOF record     | start_lsn pg_lsn, end_lsn pg_lsn, per_record boolean DEFAULT false, OUT "resource_manager/record_type" text, OUT count bigint, OUT count_percentage double precision, OUT record_size bigint, OUT record_size_percentage double precision, OUT fpi_size bigint, OUT fpi_size_percentage double precision, OUT combined_size bigint, OUT combined_size_percentage double precision | func
++ public | pg_get_wal_stats_till_end_of_wal        | SETOF record     | start_lsn pg_lsn, per_record boolean DEFAULT false, OUT "resource_manager/record_type" text, OUT count bigint, OUT count_percentage double precision, OUT record_size bigint, OUT record_size_percentage double precision, OUT fpi_size bigint, OUT fpi_size_percentage double precision, OUT combined_size bigint, OUT combined_size_percentage double precision                 | func
++(5 rows)
+ 
+ \do public.*
+                              List of operators

@@ -1,0 +1,16 @@
+2023-07-25 14:48:14.326 UTC [765652] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 14:48:14.326 UTC [765652] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 14:48:14.338 UTC [765652] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 14:48:14.351 UTC [765655] LOG:  database system was shut down at 2023-07-25 14:48:14 UTC
+2023-07-25 14:48:14.358 UTC [765652] LOG:  database system is ready to accept connections
+2023-07-25 14:48:14.532 UTC [765671] ERROR:  parameter "pg_bigm.last_update" cannot be changed
+2023-07-25 14:48:14.532 UTC [765671] STATEMENT:  SET pg_bigm.last_update = '2013.09.18';
+2023-07-25 14:48:14.570 UTC [765671] ERROR:  relation "test_bigm" is not a GIN index
+2023-07-25 14:48:14.570 UTC [765671] STATEMENT:  SELECT * FROM pg_gin_pending_stats('test_bigm');
+2023-07-25 14:48:14.580 UTC [765671] ERROR:  relation "test_bigm_btree" is not a GIN index
+2023-07-25 14:48:14.580 UTC [765671] STATEMENT:  SELECT * FROM pg_gin_pending_stats('test_bigm_btree');
+2023-07-25 14:48:14.619 UTC [765671] ERROR:  function likequery(unknown) does not exist at character 8
+2023-07-25 14:48:14.619 UTC [765671] HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+2023-07-25 14:48:14.619 UTC [765671] STATEMENT:  SELECT likequery('test');
+2023-07-25 14:48:14.671 UTC [765653] LOG:  checkpoint starting: immediate force wait
+2023-07-25 14:48:14.726 UTC [765653] LOG:  checkpoint complete: wrote 22 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.014 s, sync=0.014 s, total=0.055 s; sync files=14, longest=0.008 s, average=0.001 s; distance=4779 kB, estimate=4779 kB

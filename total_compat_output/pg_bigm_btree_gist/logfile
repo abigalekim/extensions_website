@@ -1,0 +1,17 @@
+2023-07-25 14:18:11.132 UTC [760627] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 14:18:11.132 UTC [760627] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 14:18:11.146 UTC [760627] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 14:18:11.164 UTC [760630] LOG:  database system was shut down at 2023-07-25 14:18:10 UTC
+2023-07-25 14:18:11.176 UTC [760627] LOG:  database system is ready to accept connections
+2023-07-25 14:18:11.398 UTC [760646] ERROR:  parameter "pg_bigm.last_update" cannot be changed
+2023-07-25 14:18:11.398 UTC [760646] STATEMENT:  SET pg_bigm.last_update = '2013.09.18';
+2023-07-25 14:18:11.446 UTC [760646] ERROR:  relation "test_bigm" is not a GIN index
+2023-07-25 14:18:11.446 UTC [760646] STATEMENT:  SELECT * FROM pg_gin_pending_stats('test_bigm');
+2023-07-25 14:18:11.461 UTC [760646] ERROR:  relation "test_bigm_btree" is not a GIN index
+2023-07-25 14:18:11.461 UTC [760646] STATEMENT:  SELECT * FROM pg_gin_pending_stats('test_bigm_btree');
+2023-07-25 14:18:11.551 UTC [760646] ERROR:  function likequery(unknown) does not exist at character 8
+2023-07-25 14:18:11.551 UTC [760646] HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+2023-07-25 14:18:11.551 UTC [760646] STATEMENT:  SELECT likequery('test');
+2023-07-25 14:18:13.135 UTC [760771] ERROR:  conflicting key value violates exclusion constraint "zoo_cage_animal_excl"
+2023-07-25 14:18:13.135 UTC [760771] DETAIL:  Key (cage, animal)=(123, lion) conflicts with existing key (cage, animal)=(123, zebra).
+2023-07-25 14:18:13.135 UTC [760771] STATEMENT:  INSERT INTO zoo VALUES(123, 'lion');

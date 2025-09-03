@@ -1,0 +1,488 @@
+diff -u /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/index.out /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/index.out
+--- /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/index.out	2023-06-28 16:40:59.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/index.out	2023-10-28 03:36:31.262218273 +0000
+@@ -444,7 +444,8 @@
+  Index Scan using index_expr_test_expr_idx on public.index_expr_test
+    Output: "time", temp, meta
+    Index Cond: ((index_expr_test.meta ->> 'field'::text) = 'value1'::text)
+-(3 rows)
++ Query Identifier: 7384503760055258258
++(4 rows)
+ 
+ SELECT * FROM index_expr_test WHERE meta ->> 'field' = 'value1';
+              time             | temp |        meta         
+diff -u /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/drop_extension.out /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/drop_extension.out
+--- /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/drop_extension.out	2023-06-28 16:40:59.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/drop_extension.out	2023-10-28 03:36:39.546144251 +0000
+@@ -72,7 +72,7 @@
+ --test drops thru cascades of other objects
+ \c :TEST_DBNAME :ROLE_SUPERUSER
+ drop schema public cascade;
+-NOTICE:  drop cascades to 3 other objects
++NOTICE:  drop cascades to 4 other objects
+ \dn
+   List of schemas
+  Name |   Owner    
+diff -u /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/drop_hypertable.out /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/drop_hypertable.out
+--- /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/drop_hypertable.out	2023-06-28 16:40:59.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/drop_hypertable.out	2023-10-28 03:36:37.850159345 +0000
+@@ -38,10 +38,11 @@
+ DROP TABLE hyper_with_dependencies CASCADE;
+ NOTICE:  drop cascades to view dependent_view
+ \dv
+-      List of relations
+- Schema | Name | Type | Owner 
+---------+------+------+-------
+-(0 rows)
++             List of relations
++ Schema |      Name       | Type |  Owner   
++--------+-----------------+------+----------
++ public | pg_stat_monitor | view | abigalek
++(1 row)
+ 
+ CREATE TABLE chunk_with_dependencies (time timestamp, temp float8);
+ SELECT create_hypertable('chunk_with_dependencies', 'time');
+@@ -61,10 +62,11 @@
+ DROP TABLE chunk_with_dependencies CASCADE;
+ NOTICE:  drop cascades to view dependent_view_chunk
+ \dv
+-      List of relations
+- Schema | Name | Type | Owner 
+---------+------+------+-------
+-(0 rows)
++             List of relations
++ Schema |      Name       | Type |  Owner   
++--------+-----------------+------+----------
++ public | pg_stat_monitor | view | abigalek
++(1 row)
+ 
+ -- Calling create hypertable again will increment hypertable ID
+ -- although no new hypertable is created. Make sure we can handle this.
+diff -u /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/insert_many.out /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/insert_many.out
+--- /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/insert_many.out	2023-06-28 16:40:59.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/insert_many.out	2023-10-28 03:37:03.905930841 +0000
+@@ -412,7 +412,8 @@
+                                        Output: _hyper_1_177_chunk."time", _hyper_1_177_chunk.temp, _hyper_1_177_chunk.device
+                                  ->  Seq Scan on _timescaledb_internal._hyper_1_178_chunk
+                                        Output: _hyper_1_178_chunk."time", _hyper_1_178_chunk.temp, _hyper_1_178_chunk.device
+-(366 rows)
++ Query Identifier: -7942466057704154038
++(367 rows)
+ 
+ INSERT INTO many_partitions_test_1m(time, temp, device)
+ SELECT time_bucket('1 minute', time) AS period, avg(temp), device
+diff -u /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/partition.out /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/partition.out
+--- /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/partition.out	2023-06-28 16:40:59.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/partition.out	2023-10-28 03:36:50.338048932 +0000
+@@ -42,7 +42,8 @@
+  Seq Scan on _timescaledb_internal._hyper_1_1_chunk
+    Output: _hyper_1_1_chunk."time", _hyper_1_1_chunk.temp, _hyper_1_1_chunk.device
+    Filter: (_hyper_1_1_chunk.device = 1)
+-(3 rows)
++ Query Identifier: 1489735840281300592
++(4 rows)
+ 
+ COMMIT;
+ CREATE TABLE part_new(time timestamptz, temp float, device int);
+@@ -87,7 +88,8 @@
+  Seq Scan on _timescaledb_internal._hyper_2_3_chunk
+    Output: _hyper_2_3_chunk."time", _hyper_2_3_chunk.temp, _hyper_2_3_chunk.device
+    Filter: (_hyper_2_3_chunk.device = 1)
+-(3 rows)
++ Query Identifier: -5616300091221252729
++(4 rows)
+ 
+ COMMIT;
+ CREATE TABLE part_new_convert1(time timestamptz, temp float8, device int);
+@@ -466,7 +468,8 @@
+          Output: _hyper_16_11_chunk."time", _hyper_16_11_chunk.temp, _hyper_16_11_chunk.device
+    ->  Seq Scan on _timescaledb_internal._hyper_16_12_chunk
+          Output: _hyper_16_12_chunk."time", _hyper_16_12_chunk.temp, _hyper_16_12_chunk.device
+-(5 rows)
++ Query Identifier: -7778809595606233378
++(6 rows)
+ 
+ -- Exclude using the function on time
+ EXPLAIN (verbose, costs off)
+@@ -476,7 +479,8 @@
+  Index Scan using _hyper_16_11_chunk_part_time_func_expr_idx on _timescaledb_internal._hyper_16_11_chunk
+    Output: _hyper_16_11_chunk."time", _hyper_16_11_chunk.temp, _hyper_16_11_chunk.device
+    Index Cond: (time_partfunc(_hyper_16_11_chunk."time") < 'Sun Jul 01 00:00:00 2018 PDT'::timestamp with time zone)
+-(3 rows)
++ Query Identifier: 8353621066875527395
++(4 rows)
+ 
+ -- Exclude using the same date but as a UNIX timestamp. Won't do an
+ -- index scan since the index is on the time function expression
+@@ -488,7 +492,8 @@
+  Seq Scan on _timescaledb_internal._hyper_16_11_chunk
+    Output: _hyper_16_11_chunk."time", _hyper_16_11_chunk.temp, _hyper_16_11_chunk.device
+    Filter: (_hyper_16_11_chunk."time" < '1530403200'::double precision)
+-(3 rows)
++ Query Identifier: -7544785757452258376
++(4 rows)
+ 
+ -- Check that inserts will fail if we use a time partitioning function
+ -- that returns NULL
+diff -u /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/partitionwise-15.out /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/partitionwise-15.out
+--- /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/partitionwise-15.out	2023-06-28 16:40:59.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/partitionwise-15.out	2023-10-28 03:37:07.461900208 +0000
+@@ -93,7 +93,8 @@
+                      Output: pg1dim_1.device, pg1dim_1.temp
+                ->  Seq Scan on public.pg1dim_h2 pg1dim_2
+                      Output: pg1dim_2.device, pg1dim_2.temp
+-(11 rows)
++ Query Identifier: 514194443898221306
++(12 rows)
+ 
+ SET enable_partitionwise_aggregate = 'on';
+ :PREFIX
+@@ -117,7 +118,8 @@
+                Group Key: pg1dim_1.device
+                ->  Seq Scan on public.pg1dim_h2 pg1dim_1
+                      Output: pg1dim_1.device, pg1dim_1.temp
+-(14 rows)
++ Query Identifier: 514194443898221306
++(15 rows)
+ 
+ -- All partition keys not covered by GROUP BY (partial partitionwise)
+ SET enable_partitionwise_aggregate = 'off';
+@@ -143,7 +145,8 @@
+                      Output: pg2dim_3.device, pg2dim_3.temp
+                ->  Seq Scan on public.pg2dim_h2_t2 pg2dim_4
+                      Output: pg2dim_4.device, pg2dim_4.temp
+-(15 rows)
++ Query Identifier: 2167020903439234024
++(16 rows)
+ 
+ SET enable_partitionwise_aggregate = 'on';
+ :PREFIX
+@@ -180,7 +183,8 @@
+                      Group Key: pg2dim_3.device
+                      ->  Seq Scan on public.pg2dim_h2_t2 pg2dim_3
+                            Output: pg2dim_3.device, pg2dim_3.temp
+-(27 rows)
++ Query Identifier: 2167020903439234024
++(28 rows)
+ 
+ -- All partition keys covered by GROUP BY (full partitionwise)
+ SET enable_partitionwise_aggregate = 'off';
+@@ -206,7 +210,8 @@
+                      Output: pg2dim_3."time", pg2dim_3.device, pg2dim_3.temp
+                ->  Seq Scan on public.pg2dim_h2_t2 pg2dim_4
+                      Output: pg2dim_4."time", pg2dim_4.device, pg2dim_4.temp
+-(15 rows)
++ Query Identifier: -605383358086608333
++(16 rows)
+ 
+ SET enable_partitionwise_aggregate = 'on';
+ :PREFIX
+@@ -240,7 +245,8 @@
+                Group Key: pg2dim_3."time", pg2dim_3.device
+                ->  Seq Scan on public.pg2dim_h2_t2 pg2dim_3
+                      Output: pg2dim_3."time", pg2dim_3.device, pg2dim_3.temp
+-(24 rows)
++ Query Identifier: -605383358086608333
++(25 rows)
+ 
+ -- All partition keys not covered by GROUP BY because of date_trunc
+ -- expression on time (partial partitionwise)
+@@ -267,7 +273,8 @@
+                      Output: date_trunc('month'::text, pg2dim_3."time"), pg2dim_3.device, pg2dim_3.temp
+                ->  Seq Scan on public.pg2dim_h2_t2 pg2dim_4
+                      Output: date_trunc('month'::text, pg2dim_4."time"), pg2dim_4.device, pg2dim_4.temp
+-(15 rows)
++ Query Identifier: 385532625466643877
++(16 rows)
+ 
+ SET enable_partitionwise_aggregate = 'on';
+ :PREFIX
+@@ -304,7 +311,8 @@
+                      Group Key: date_trunc('month'::text, pg2dim_3."time"), pg2dim_3.device
+                      ->  Seq Scan on public.pg2dim_h2_t2 pg2dim_3
+                            Output: date_trunc('month'::text, pg2dim_3."time"), pg2dim_3.device, pg2dim_3.temp
+-(27 rows)
++ Query Identifier: 385532625466643877
++(28 rows)
+ 
+ -- Now run on hypertable
+ -- All partition keys not covered by GROUP BY (partial partitionwise)
+@@ -331,7 +339,8 @@
+                      Output: _hyper_1_3_chunk.device, _hyper_1_3_chunk.temp
+                ->  Seq Scan on _timescaledb_internal._hyper_1_4_chunk
+                      Output: _hyper_1_4_chunk.device, _hyper_1_4_chunk.temp
+-(15 rows)
++ Query Identifier: 1480474396436519663
++(16 rows)
+ 
+ SET enable_partitionwise_aggregate = 'on';
+ :PREFIX
+@@ -368,7 +377,8 @@
+                      Group Key: _hyper_1_4_chunk.device
+                      ->  Seq Scan on _timescaledb_internal._hyper_1_4_chunk
+                            Output: _hyper_1_4_chunk.device, _hyper_1_4_chunk.temp
+-(27 rows)
++ Query Identifier: 1480474396436519663
++(28 rows)
+ 
+ -- All partition keys covered (full partitionwise)
+ SET enable_partitionwise_aggregate = 'off';
+@@ -394,7 +404,8 @@
+                      Output: _hyper_1_3_chunk."time", _hyper_1_3_chunk.device, _hyper_1_3_chunk.temp
+                ->  Seq Scan on _timescaledb_internal._hyper_1_4_chunk
+                      Output: _hyper_1_4_chunk."time", _hyper_1_4_chunk.device, _hyper_1_4_chunk.temp
+-(15 rows)
++ Query Identifier: -8167566108957371575
++(16 rows)
+ 
+ SET enable_partitionwise_aggregate = 'on';
+ :PREFIX
+@@ -428,7 +439,8 @@
+                Group Key: _hyper_1_4_chunk."time", _hyper_1_4_chunk.device
+                ->  Seq Scan on _timescaledb_internal._hyper_1_4_chunk
+                      Output: _hyper_1_4_chunk."time", _hyper_1_4_chunk.device, _hyper_1_4_chunk.temp
+-(24 rows)
++ Query Identifier: -8167566108957371575
++(25 rows)
+ 
+ -- Partial aggregation since date_trunc(time) is not a partition key
+ SET enable_partitionwise_aggregate = 'off';
+@@ -456,7 +468,8 @@
+                            Output: _hyper_1_3_chunk."time", _hyper_1_3_chunk.device, _hyper_1_3_chunk.temp
+                      ->  Seq Scan on _timescaledb_internal._hyper_1_4_chunk
+                            Output: _hyper_1_4_chunk."time", _hyper_1_4_chunk.device, _hyper_1_4_chunk.temp
+-(17 rows)
++ Query Identifier: 2177267034550950927
++(18 rows)
+ 
+ SET enable_partitionwise_aggregate = 'on';
+ :PREFIX
+@@ -493,7 +506,8 @@
+                      Group Key: date_trunc('month'::text, _hyper_1_4_chunk."time"), _hyper_1_4_chunk.device
+                      ->  Seq Scan on _timescaledb_internal._hyper_1_4_chunk
+                            Output: date_trunc('month'::text, _hyper_1_4_chunk."time"), _hyper_1_4_chunk.device, _hyper_1_4_chunk.temp
+-(27 rows)
++ Query Identifier: 2177267034550950927
++(28 rows)
+ 
+ -- Also test time_bucket
+ SET enable_partitionwise_aggregate = 'off';
+@@ -521,7 +535,8 @@
+                            Output: _hyper_1_3_chunk."time", _hyper_1_3_chunk.device, _hyper_1_3_chunk.temp
+                      ->  Seq Scan on _timescaledb_internal._hyper_1_4_chunk
+                            Output: _hyper_1_4_chunk."time", _hyper_1_4_chunk.device, _hyper_1_4_chunk.temp
+-(17 rows)
++ Query Identifier: -7247249470272806397
++(18 rows)
+ 
+ SET enable_partitionwise_aggregate = 'on';
+ :PREFIX
+@@ -558,7 +573,8 @@
+                      Group Key: time_bucket('@ 1 mon'::interval, _hyper_1_4_chunk."time"), _hyper_1_4_chunk.device
+                      ->  Seq Scan on _timescaledb_internal._hyper_1_4_chunk
+                            Output: time_bucket('@ 1 mon'::interval, _hyper_1_4_chunk."time"), _hyper_1_4_chunk.device, _hyper_1_4_chunk.temp
+-(27 rows)
++ Query Identifier: -7247249470272806397
++(28 rows)
+ 
+ -- Test partitionwise joins, mostly to see that we do not break
+ -- anything
+@@ -601,7 +617,8 @@
+                      Output: h_3."time", h_3.device, h_3.temp
+                ->  Index Scan using _hyper_1_4_chunk_hyper_device_time_idx on _timescaledb_internal._hyper_1_4_chunk h_4
+                      Output: h_4."time", h_4.device, h_4.temp
+-(21 rows)
++ Query Identifier: -6575520720771377379
++(22 rows)
+ 
+ :PREFIX
+ SELECT pg2.time, pg2.device, pg2.temp, pg1.temp
+@@ -632,7 +649,8 @@
+                      Output: pg2_3."time", pg2_3.device, pg2_3.temp
+                ->  Seq Scan on public.pg2dim_h2_t2 pg2_4
+                      Output: pg2_4."time", pg2_4.device, pg2_4.temp
+-(23 rows)
++ Query Identifier: 2303404576055134424
++(24 rows)
+ 
+ SET enable_partitionwise_join = 'on';
+ :PREFIX
+@@ -662,7 +680,8 @@
+                      Output: h_3."time", h_3.device, h_3.temp
+                ->  Index Scan using _hyper_1_4_chunk_hyper_device_time_idx on _timescaledb_internal._hyper_1_4_chunk h_4
+                      Output: h_4."time", h_4.device, h_4.temp
+-(21 rows)
++ Query Identifier: -6575520720771377379
++(22 rows)
+ 
+ :PREFIX
+ SELECT pg2.time, pg2.device, pg2.temp, pg1.temp
+@@ -703,7 +722,8 @@
+                            Output: pg2_5."time", pg2_5.device, pg2_5.temp
+                      ->  Seq Scan on public.pg2dim_h2_t2 pg2_6
+                            Output: pg2_6."time", pg2_6.device, pg2_6.temp
+-(33 rows)
++ Query Identifier: 2303404576055134424
++(34 rows)
+ 
+ -- Test hypertable with time partitioning function
+ CREATE OR REPLACE FUNCTION time_func(unixtime float8)
+@@ -758,7 +778,8 @@
+                            Output: _hyper_3_7_chunk."time", _hyper_3_7_chunk.device, _hyper_3_7_chunk.temp
+                      ->  Seq Scan on _timescaledb_internal._hyper_3_8_chunk
+                            Output: _hyper_3_8_chunk."time", _hyper_3_8_chunk.device, _hyper_3_8_chunk.temp
+-(13 rows)
++ Query Identifier: -393633589470406391
++(14 rows)
+ 
+ :PREFIX
+ SELECT time_func(time), device, avg(temp)
+@@ -785,7 +806,8 @@
+                                  Output: _hyper_3_7_chunk."time", _hyper_3_7_chunk.device, _hyper_3_7_chunk.temp, time_func(_hyper_3_7_chunk."time")
+                            ->  Index Scan Backward using _hyper_3_8_chunk_hyper_timepart_expr_idx on _timescaledb_internal._hyper_3_8_chunk
+                                  Output: _hyper_3_8_chunk."time", _hyper_3_8_chunk.device, _hyper_3_8_chunk.temp, time_func(_hyper_3_8_chunk."time")
+-(17 rows)
++ Query Identifier: 5245901551519091321
++(18 rows)
+ 
+ -- Grouping on original time column should be pushed-down
+ SET enable_partitionwise_aggregate = 'on';
+@@ -813,7 +835,8 @@
+                      Group Key: _hyper_3_8_chunk."time", _hyper_3_8_chunk.device
+                      ->  Seq Scan on _timescaledb_internal._hyper_3_8_chunk
+                            Output: _hyper_3_8_chunk."time", _hyper_3_8_chunk.device, _hyper_3_8_chunk.temp
+-(16 rows)
++ Query Identifier: -393633589470406391
++(17 rows)
+ 
+ -- Applying the time partitioning function should also allow push-down
+ -- on open dimensions
+@@ -847,7 +870,8 @@
+                      Presorted Key: (time_func(_hyper_3_8_chunk."time"))
+                      ->  Index Scan Backward using _hyper_3_8_chunk_hyper_timepart_expr_idx on _timescaledb_internal._hyper_3_8_chunk
+                            Output: time_func(_hyper_3_8_chunk."time"), _hyper_3_8_chunk.device, _hyper_3_8_chunk.temp
+-(22 rows)
++ Query Identifier: 5245901551519091321
++(23 rows)
+ 
+ -- Should also work to use partitioning function on closed dimensions
+ :PREFIX
+@@ -880,5 +904,6 @@
+                      Presorted Key: (time_func(_hyper_3_8_chunk."time"))
+                      ->  Index Scan Backward using _hyper_3_8_chunk_hyper_timepart_expr_idx on _timescaledb_internal._hyper_3_8_chunk
+                            Output: time_func(_hyper_3_8_chunk."time"), _timescaledb_internal.get_partition_hash(_hyper_3_8_chunk.device), _hyper_3_8_chunk.temp
+-(22 rows)
++ Query Identifier: 5394787543064690985
++(23 rows)
+ 
+diff -u /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/sql_query.out /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/sql_query.out
+--- /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/sql_query.out	2023-06-28 16:40:59.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/sql_query.out	2023-10-28 03:37:08.053895120 +0000
+@@ -63,7 +63,8 @@
+          Output: _hyper_1_3_chunk."timeCustom", _hyper_1_3_chunk.device_id, _hyper_1_3_chunk.series_0, _hyper_1_3_chunk.series_1, _hyper_1_3_chunk.series_2, _hyper_1_3_chunk.series_bool
+    ->  Seq Scan on _timescaledb_internal._hyper_1_4_chunk
+          Output: _hyper_1_4_chunk."timeCustom", _hyper_1_4_chunk.device_id, _hyper_1_4_chunk.series_0, _hyper_1_4_chunk.series_1, _hyper_1_4_chunk.series_2, _hyper_1_4_chunk.series_bool
+-(9 rows)
++ Query Identifier: -1863538115654632118
++(10 rows)
+ 
+ \echo "The following queries should NOT scan two_Partitions._hyper_1_1_chunk"
+ "The following queries should NOT scan two_Partitions._hyper_1_1_chunk"
+@@ -73,7 +74,8 @@
+  Index Scan using "_hyper_1_4_chunk_two_Partitions_device_id_timeCustom_idx" on _timescaledb_internal._hyper_1_4_chunk
+    Output: _hyper_1_4_chunk."timeCustom", _hyper_1_4_chunk.device_id, _hyper_1_4_chunk.series_0, _hyper_1_4_chunk.series_1, _hyper_1_4_chunk.series_2, _hyper_1_4_chunk.series_bool
+    Index Cond: (_hyper_1_4_chunk.device_id = 'dev2'::text)
+-(3 rows)
++ Query Identifier: 2106582488774024476
++(4 rows)
+ 
+ EXPLAIN (verbose ON, costs off) SELECT * FROM PUBLIC."two_Partitions" WHERE device_id = 'dev'||'2';
+                                                                                      QUERY PLAN                                                                                     
+@@ -81,7 +83,8 @@
+  Index Scan using "_hyper_1_4_chunk_two_Partitions_device_id_timeCustom_idx" on _timescaledb_internal._hyper_1_4_chunk
+    Output: _hyper_1_4_chunk."timeCustom", _hyper_1_4_chunk.device_id, _hyper_1_4_chunk.series_0, _hyper_1_4_chunk.series_1, _hyper_1_4_chunk.series_2, _hyper_1_4_chunk.series_bool
+    Index Cond: (_hyper_1_4_chunk.device_id = 'dev2'::text)
+-(3 rows)
++ Query Identifier: 8564868638272918001
++(4 rows)
+ 
+ EXPLAIN (verbose ON, costs off) SELECT * FROM PUBLIC."two_Partitions" WHERE 'dev'||'2' = device_id;
+                                                                                      QUERY PLAN                                                                                     
+@@ -89,7 +92,8 @@
+  Index Scan using "_hyper_1_4_chunk_two_Partitions_device_id_timeCustom_idx" on _timescaledb_internal._hyper_1_4_chunk
+    Output: _hyper_1_4_chunk."timeCustom", _hyper_1_4_chunk.device_id, _hyper_1_4_chunk.series_0, _hyper_1_4_chunk.series_1, _hyper_1_4_chunk.series_2, _hyper_1_4_chunk.series_bool
+    Index Cond: (_hyper_1_4_chunk.device_id = 'dev2'::text)
+-(3 rows)
++ Query Identifier: -7165222039116509468
++(4 rows)
+ 
+ --test integer partition key
+ CREATE TABLE "int_part"(time timestamp, object_id int, temp float);
+@@ -140,7 +144,8 @@
+  Index Scan using _hyper_2_5_chunk_int_part_object_id_time_idx on _timescaledb_internal._hyper_2_5_chunk
+    Output: _hyper_2_5_chunk."time", _hyper_2_5_chunk.object_id, _hyper_2_5_chunk.temp
+    Index Cond: (_hyper_2_5_chunk.object_id = 1)
+-(3 rows)
++ Query Identifier: -1630397592854171444
++(4 rows)
+ 
+ --Need to verify space partitions are currently pruned in this query
+ --EXPLAIN (verbose ON, costs off) SELECT * FROM "two_Partitions" WHERE device_id IN ('dev2', 'dev21');
+@@ -166,7 +171,8 @@
+                      Output: _hyper_1_4_chunk."timeCustom", _hyper_1_4_chunk.device_id, _hyper_1_4_chunk.series_0, _hyper_1_4_chunk.series_1, _hyper_1_4_chunk.series_2, _hyper_1_4_chunk.series_bool
+                ->  Index Scan using "_hyper_1_1_chunk_two_Partitions_timeCustom_device_id_idx" on _timescaledb_internal._hyper_1_1_chunk
+                      Output: _hyper_1_1_chunk."timeCustom", _hyper_1_1_chunk.device_id, _hyper_1_1_chunk.series_0, _hyper_1_1_chunk.series_1, _hyper_1_1_chunk.series_2, _hyper_1_1_chunk.series_bool
+-(17 rows)
++ Query Identifier: -6529980414312390228
++(18 rows)
+ 
+ --shows that more specific indexes are used if the WHERE clauses "match", uses the series_1 index here.
+ EXPLAIN (verbose ON, costs off)SELECT * FROM PUBLIC."two_Partitions" WHERE series_1 IS NOT NULL ORDER BY "timeCustom" DESC NULLS LAST limit 2;
+@@ -189,7 +195,8 @@
+                      Output: _hyper_1_4_chunk."timeCustom", _hyper_1_4_chunk.device_id, _hyper_1_4_chunk.series_0, _hyper_1_4_chunk.series_1, _hyper_1_4_chunk.series_2, _hyper_1_4_chunk.series_bool
+                ->  Index Scan using "_hyper_1_1_chunk_two_Partitions_timeCustom_series_1_idx" on _timescaledb_internal._hyper_1_1_chunk
+                      Output: _hyper_1_1_chunk."timeCustom", _hyper_1_1_chunk.device_id, _hyper_1_1_chunk.series_0, _hyper_1_1_chunk.series_1, _hyper_1_1_chunk.series_2, _hyper_1_1_chunk.series_bool
+-(17 rows)
++ Query Identifier: 7682194314073125493
++(18 rows)
+ 
+ --here the "match" is implication series_1 > 1 => series_1 IS NOT NULL
+ EXPLAIN (verbose ON, costs off)SELECT * FROM PUBLIC."two_Partitions" WHERE series_1 > 1 ORDER BY "timeCustom" DESC NULLS LAST limit 2;
+@@ -216,7 +223,8 @@
+                ->  Index Scan using "_hyper_1_1_chunk_two_Partitions_timeCustom_series_1_idx" on _timescaledb_internal._hyper_1_1_chunk
+                      Output: _hyper_1_1_chunk."timeCustom", _hyper_1_1_chunk.device_id, _hyper_1_1_chunk.series_0, _hyper_1_1_chunk.series_1, _hyper_1_1_chunk.series_2, _hyper_1_1_chunk.series_bool
+                      Index Cond: (_hyper_1_1_chunk.series_1 > '1'::double precision)
+-(21 rows)
++ Query Identifier: 8780430794848137783
++(22 rows)
+ 
+ --note that without time transform things work too
+ EXPLAIN (verbose ON, costs off)SELECT "timeCustom" t, min(series_0) FROM PUBLIC."two_Partitions" GROUP BY t ORDER BY t DESC NULLS LAST limit 2;
+@@ -242,7 +250,8 @@
+                            Output: _hyper_1_4_chunk."timeCustom", _hyper_1_4_chunk.series_0
+                      ->  Index Scan using "_hyper_1_1_chunk_two_Partitions_timeCustom_device_id_idx" on _timescaledb_internal._hyper_1_1_chunk
+                            Output: _hyper_1_1_chunk."timeCustom", _hyper_1_1_chunk.series_0
+-(20 rows)
++ Query Identifier: -7771776519266721055
++(21 rows)
+ 
+ --The query should still use the index on timeCustom, even though the GROUP BY/ORDER BY is on the transformed time 't'.
+ --However, current query plans show that it does not.
+@@ -268,7 +277,8 @@
+                                  Output: _hyper_1_3_chunk."timeCustom", _hyper_1_3_chunk.series_0
+                            ->  Seq Scan on _timescaledb_internal._hyper_1_4_chunk
+                                  Output: _hyper_1_4_chunk."timeCustom", _hyper_1_4_chunk.series_0
+-(19 rows)
++ Query Identifier: 536057535786094824
++(20 rows)
+ 
+ EXPLAIN (verbose ON, costs off)SELECT "timeCustom"%10 t, min(series_0) FROM PUBLIC."two_Partitions" GROUP BY t ORDER BY t DESC NULLS LAST limit 2;
+                                                QUERY PLAN                                               
+@@ -292,5 +302,6 @@
+                                  Output: _hyper_1_3_chunk."timeCustom", _hyper_1_3_chunk.series_0
+                            ->  Seq Scan on _timescaledb_internal._hyper_1_4_chunk
+                                  Output: _hyper_1_4_chunk."timeCustom", _hyper_1_4_chunk.series_0
+-(19 rows)
++ Query Identifier: 6197863178533855267
++(20 rows)
+ 

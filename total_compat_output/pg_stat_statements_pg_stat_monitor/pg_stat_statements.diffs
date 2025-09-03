@@ -1,0 +1,229 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/pg_stat_statements/expected/pg_stat_statements.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/pg_stat_statements/results/pg_stat_statements.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/pg_stat_statements/expected/pg_stat_statements.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/pg_stat_statements/results/pg_stat_statements.out	2023-07-26 11:10:15.659091107 +0000
+@@ -303,7 +303,6 @@
+                            query                           | calls | rows | wal_bytes_generated | wal_records_generated | wal_records_as_rows 
+ -----------------------------------------------------------+-------+------+---------------------+-----------------------+---------------------
+  DELETE FROM pgss_test WHERE a > $1                        |     1 |    1 | t                   | t                     | t
+- DROP TABLE pgss_test                                      |     1 |    0 | t                   | t                     | f
+  INSERT INTO pgss_test VALUES(generate_series($1, $2), $3) |     1 |   10 | t                   | t                     | t
+  SELECT pg_stat_statements_reset()                         |     1 |    1 | f                   | f                     | f
+  SELECT query, calls, rows,                               +|     0 |    0 | f                   | f                     | t
+@@ -311,9 +310,8 @@
+  wal_records > $2 as wal_records_generated,               +|       |      |                     |                       | 
+  wal_records = rows as wal_records_as_rows                +|       |      |                     |                       | 
+  FROM pg_stat_statements ORDER BY query COLLATE "C"        |       |      |                     |                       | 
+- SET pg_stat_statements.track_utility = FALSE              |     1 |    0 | f                   | f                     | t
+  UPDATE pgss_test SET b = $1 WHERE a > $2                  |     1 |    3 | t                   | t                     | t
+-(7 rows)
++(5 rows)
+ 
+ --
+ -- pg_stat_statements.track = none
+@@ -581,16 +579,10 @@
+ SELECT query, calls, rows FROM pg_stat_statements ORDER BY query COLLATE "C";
+                                     query                                     | calls | rows 
+ ------------------------------------------------------------------------------+-------+------
+- CREATE INDEX test_b ON test(b)                                               |     1 |    0
+- DROP FUNCTION IF EXISTS PLUS_ONE(INTEGER)                                    |     1 |    0
+- DROP FUNCTION PLUS_ONE(INTEGER)                                              |     1 |    0
+- DROP FUNCTION PLUS_TWO(INTEGER)                                              |     1 |    0
+- DROP TABLE IF EXISTS test                                                    |     3 |    0
+- DROP TABLE test                                                              |     1 |    0
+  SELECT $1                                                                    |     1 |    1
+  SELECT pg_stat_statements_reset()                                            |     1 |    1
+  SELECT query, calls, rows FROM pg_stat_statements ORDER BY query COLLATE "C" |     0 |    0
+-(9 rows)
++(3 rows)
+ 
+ --
+ -- Track the total number of rows retrieved or affected by the utility
+@@ -642,20 +634,9 @@
+ SELECT query, plans, calls, rows FROM pg_stat_statements ORDER BY query COLLATE "C";
+                                         query                                        | plans | calls | rows 
+ -------------------------------------------------------------------------------------+-------+-------+------
+- BEGIN                                                                               |     0 |     1 |    0
+- COMMIT                                                                              |     0 |     1 |    0
+- COPY pgss_ctas (a, b) FROM STDIN                                                    |     0 |     1 |    3
+- CREATE MATERIALIZED VIEW pgss_matv AS SELECT * FROM pgss_ctas                       |     0 |     1 |   13
+- CREATE TABLE pgss_ctas AS SELECT a, 'ctas' b FROM generate_series(1, 10) a          |     0 |     1 |   10
+- DECLARE pgss_cursor CURSOR FOR SELECT * FROM pgss_matv                              |     0 |     1 |    0
+- FETCH FORWARD 5 pgss_cursor                                                         |     0 |     1 |    5
+- FETCH FORWARD ALL pgss_cursor                                                       |     0 |     1 |    7
+- FETCH NEXT pgss_cursor                                                              |     0 |     1 |    1
+- REFRESH MATERIALIZED VIEW pgss_matv                                                 |     0 |     1 |   13
+- SELECT generate_series(1, 10) c INTO pgss_select_into                               |     0 |     1 |   10
+  SELECT pg_stat_statements_reset()                                                   |     0 |     1 |    1
+  SELECT query, plans, calls, rows FROM pg_stat_statements ORDER BY query COLLATE "C" |     1 |     0 |    0
+-(13 rows)
++(2 rows)
+ 
+ --
+ -- Track user activity and reset them
+@@ -699,18 +680,13 @@
+ SELECT query, calls, rows FROM pg_stat_statements ORDER BY query COLLATE "C";
+                                     query                                     | calls | rows 
+ ------------------------------------------------------------------------------+-------+------
+- CREATE ROLE regress_stats_user1                                              |     1 |    0
+- CREATE ROLE regress_stats_user2                                              |     1 |    0
+- RESET ROLE                                                                   |     2 |    0
+  SELECT $1 AS "ONE"                                                           |     1 |    1
+  SELECT $1 AS "ONE"                                                           |     1 |    1
+  SELECT $1+$2 AS "TWO"                                                        |     1 |    1
+  SELECT $1+$2 AS "TWO"                                                        |     1 |    1
+  SELECT pg_stat_statements_reset()                                            |     1 |    1
+  SELECT query, calls, rows FROM pg_stat_statements ORDER BY query COLLATE "C" |     0 |    0
+- SET ROLE regress_stats_user1                                                 |     1 |    0
+- SET ROLE regress_stats_user2                                                 |     1 |    0
+-(11 rows)
++(6 rows)
+ 
+ --
+ -- Don't reset anything if any of the parameter is NULL
+@@ -724,19 +700,14 @@
+ SELECT query, calls, rows FROM pg_stat_statements ORDER BY query COLLATE "C";
+                                     query                                     | calls | rows 
+ ------------------------------------------------------------------------------+-------+------
+- CREATE ROLE regress_stats_user1                                              |     1 |    0
+- CREATE ROLE regress_stats_user2                                              |     1 |    0
+- RESET ROLE                                                                   |     2 |    0
+  SELECT $1 AS "ONE"                                                           |     1 |    1
+  SELECT $1 AS "ONE"                                                           |     1 |    1
+  SELECT $1+$2 AS "TWO"                                                        |     1 |    1
+  SELECT $1+$2 AS "TWO"                                                        |     1 |    1
+  SELECT pg_stat_statements_reset($1)                                          |     1 |    1
+  SELECT pg_stat_statements_reset()                                            |     1 |    1
+- SELECT query, calls, rows FROM pg_stat_statements ORDER BY query COLLATE "C" |     1 |   11
+- SET ROLE regress_stats_user1                                                 |     1 |    0
+- SET ROLE regress_stats_user2                                                 |     1 |    0
+-(12 rows)
++ SELECT query, calls, rows FROM pg_stat_statements ORDER BY query COLLATE "C" |     1 |    6
++(7 rows)
+ 
+ --
+ -- remove query ('SELECT $1+$2 AS "TWO"') executed by regress_stats_user2
+@@ -755,9 +726,6 @@
+ SELECT query, calls, rows FROM pg_stat_statements ORDER BY query COLLATE "C";
+                                       query                                       | calls | rows 
+ ----------------------------------------------------------------------------------+-------+------
+- CREATE ROLE regress_stats_user1                                                  |     1 |    0
+- CREATE ROLE regress_stats_user2                                                  |     1 |    0
+- RESET ROLE                                                                       |     2 |    0
+  SELECT $1 AS "ONE"                                                               |     1 |    1
+  SELECT $1 AS "ONE"                                                               |     1 |    1
+  SELECT $1+$2 AS "TWO"                                                            |     1 |    1
+@@ -768,10 +736,8 @@
+                                  WHERE s.query = $2 LIMIT $3))                    |       | 
+  SELECT pg_stat_statements_reset($1)                                              |     1 |    1
+  SELECT pg_stat_statements_reset()                                                |     1 |    1
+- SELECT query, calls, rows FROM pg_stat_statements ORDER BY query COLLATE "C"     |     2 |   23
+- SET ROLE regress_stats_user1                                                     |     1 |    0
+- SET ROLE regress_stats_user2                                                     |     1 |    0
+-(12 rows)
++ SELECT query, calls, rows FROM pg_stat_statements ORDER BY query COLLATE "C"     |     2 |   13
++(7 rows)
+ 
+ --
+ -- remove query ('SELECT $1 AS "ONE"') executed by two users
+@@ -787,9 +753,6 @@
+ SELECT query, calls, rows FROM pg_stat_statements ORDER BY query COLLATE "C";
+                                       query                                       | calls | rows 
+ ----------------------------------------------------------------------------------+-------+------
+- CREATE ROLE regress_stats_user1                                                  |     1 |    0
+- CREATE ROLE regress_stats_user2                                                  |     1 |    0
+- RESET ROLE                                                                       |     2 |    0
+  SELECT $1+$2 AS "TWO"                                                            |     1 |    1
+  SELECT pg_stat_statements_reset(                                                +|     1 |    1
+          (SELECT r.oid FROM pg_roles AS r WHERE r.rolname = $1),                 +|       | 
+@@ -800,10 +763,8 @@
+  SELECT pg_stat_statements_reset($1,$2,s.queryid)                                +|     1 |    2
+          FROM pg_stat_statements AS s WHERE s.query = $3                          |       | 
+  SELECT pg_stat_statements_reset()                                                |     1 |    1
+- SELECT query, calls, rows FROM pg_stat_statements ORDER BY query COLLATE "C"     |     3 |   35
+- SET ROLE regress_stats_user1                                                     |     1 |    0
+- SET ROLE regress_stats_user2                                                     |     1 |    0
+-(11 rows)
++ SELECT query, calls, rows FROM pg_stat_statements ORDER BY query COLLATE "C"     |     3 |   20
++(6 rows)
+ 
+ --
+ -- remove query of a user (regress_stats_user1)
+@@ -818,9 +779,6 @@
+ SELECT query, calls, rows FROM pg_stat_statements ORDER BY query COLLATE "C";
+                                       query                                       | calls | rows 
+ ----------------------------------------------------------------------------------+-------+------
+- CREATE ROLE regress_stats_user1                                                  |     1 |    0
+- CREATE ROLE regress_stats_user2                                                  |     1 |    0
+- RESET ROLE                                                                       |     2 |    0
+  SELECT pg_stat_statements_reset(                                                +|     1 |    1
+          (SELECT r.oid FROM pg_roles AS r WHERE r.rolname = $1),                 +|       | 
+          (SELECT d.oid FROM pg_database As d where datname = current_database()),+|       | 
+@@ -832,9 +790,8 @@
+  SELECT pg_stat_statements_reset()                                                |     1 |    1
+  SELECT pg_stat_statements_reset(r.oid)                                          +|     1 |    1
+                  FROM pg_roles AS r WHERE r.rolname = $1                          |       | 
+- SELECT query, calls, rows FROM pg_stat_statements ORDER BY query COLLATE "C"     |     4 |   46
+- SET ROLE regress_stats_user2                                                     |     1 |    0
+-(10 rows)
++ SELECT query, calls, rows FROM pg_stat_statements ORDER BY query COLLATE "C"     |     4 |   26
++(6 rows)
+ 
+ --
+ -- reset all
+@@ -918,13 +875,11 @@
+   WHERE query NOT LIKE 'PREPARE%' ORDER BY query COLLATE "C";
+                           query                           | plans | calls | rows 
+ ----------------------------------------------------------+-------+-------+------
+- ALTER TABLE test ADD COLUMN x int                        |     0 |     1 |    0
+- CREATE TABLE test ()                                     |     0 |     1 |    0
+  SELECT $1                                                |     3 |     3 |    3
+  SELECT pg_stat_statements_reset()                        |     0 |     1 |    1
+  SELECT query, plans, calls, rows FROM pg_stat_statements+|     1 |     0 |    0
+    WHERE query NOT LIKE $1 ORDER BY query COLLATE "C"     |       |       | 
+-(5 rows)
++(3 rows)
+ 
+ -- for the prepared statement we expect at least one replan, but cache
+ -- invalidations could force more
+@@ -961,15 +916,10 @@
+ END;
+ $$ LANGUAGE plpgsql;
+ SELECT query, toplevel, plans, calls FROM pg_stat_statements WHERE query LIKE '%DELETE%' ORDER BY query COLLATE "C", toplevel;
+-         query         | toplevel | plans | calls 
+------------------------+----------+-------+-------
+- DELETE FROM test      | t        |     1 |     1
+- DO $$                +| t        |     0 |     1
+- BEGIN                +|          |       | 
+-     DELETE FROM test;+|          |       | 
+- END;                 +|          |       | 
+- $$ LANGUAGE plpgsql   |          |       | 
+-(2 rows)
++      query       | toplevel | plans | calls 
++------------------+----------+-------+-------
++ DELETE FROM test | t        |     1 |     1
++(1 row)
+ 
+ SET pg_stat_statements.track = 'all';
+ DELETE FROM test;
+@@ -979,16 +929,11 @@
+ END;
+ $$ LANGUAGE plpgsql;
+ SELECT query, toplevel, plans, calls FROM pg_stat_statements WHERE query LIKE '%DELETE%' ORDER BY query COLLATE "C", toplevel;
+-         query         | toplevel | plans | calls 
+------------------------+----------+-------+-------
+- DELETE FROM test      | f        |     1 |     1
+- DELETE FROM test      | t        |     2 |     2
+- DO $$                +| t        |     0 |     2
+- BEGIN                +|          |       | 
+-     DELETE FROM test;+|          |       | 
+- END;                 +|          |       | 
+- $$ LANGUAGE plpgsql   |          |       | 
+-(3 rows)
++      query       | toplevel | plans | calls 
++------------------+----------+-------+-------
++ DELETE FROM test | f        |     1 |     1
++ DELETE FROM test | t        |     2 |     2
++(2 rows)
+ 
+ -- FROM [ONLY]
+ CREATE TABLE tbl_inh(id integer);

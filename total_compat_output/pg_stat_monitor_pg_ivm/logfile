@@ -1,0 +1,42 @@
+2023-07-26 10:11:51.372 UTC [1058573] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 10:11:51.372 UTC [1058573] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 10:11:51.379 UTC [1058573] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 10:11:51.386 UTC [1058576] LOG:  database system was shut down at 2023-07-26 10:11:51 UTC
+2023-07-26 10:11:51.390 UTC [1058573] LOG:  database system is ready to accept connections
+2023-07-26 10:11:51.836 UTC [1058611] ERROR:  could not open relation with OID 0
+2023-07-26 10:11:51.836 UTC [1058611] STATEMENT:  DROP TABLE t1;
+2023-07-26 10:11:51.837 UTC [1058611] ERROR:  could not open relation with OID 0
+2023-07-26 10:11:51.837 UTC [1058611] STATEMENT:  DROP TABLE t2;
+2023-07-26 10:11:51.848 UTC [1058612] ERROR:  could not open relation with OID 0
+2023-07-26 10:11:51.848 UTC [1058612] STATEMENT:  DROP TABLE t1;
+2023-07-26 10:11:51.849 UTC [1058612] ERROR:  could not open relation with OID 0
+2023-07-26 10:11:51.849 UTC [1058612] STATEMENT:  DROP TABLE t3;
+2023-07-26 10:11:51.861 UTC [1058574] LOG:  checkpoint starting: immediate force wait
+2023-07-26 10:11:51.970 UTC [1058574] LOG:  checkpoint complete: wrote 1799 buffers (11.0%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.059 s, sync=0.032 s, total=0.109 s; sync files=498, longest=0.003 s, average=0.001 s; distance=12335 kB, estimate=12335 kB
+2023-07-26 10:11:51.993 UTC [1058574] LOG:  checkpoint starting: immediate force wait
+2023-07-26 10:11:52.020 UTC [1058574] LOG:  checkpoint complete: wrote 2 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.005 s, sync=0.004 s, total=0.028 s; sync files=2, longest=0.004 s, average=0.002 s; distance=1 kB, estimate=11101 kB
+2023-07-26 10:11:52.132 UTC [1058619] ERROR:  current user cannot be dropped
+2023-07-26 10:11:52.132 UTC [1058619] STATEMENT:  DROP USER su;
+2023-07-26 10:11:52.401 UTC [1058574] LOG:  checkpoint starting: immediate force wait
+2023-07-26 10:11:52.450 UTC [1058574] LOG:  checkpoint complete: wrote 1012 buffers (6.2%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.016 s, sync=0.021 s, total=0.050 s; sync files=296, longest=0.003 s, average=0.001 s; distance=8784 kB, estimate=10870 kB
+2023-07-26 10:11:52.472 UTC [1058638] ERROR:  could not open relation with OID 0
+2023-07-26 10:11:52.472 UTC [1058638] STATEMENT:  DROP TABLE t1;
+2023-07-26 10:11:52.472 UTC [1058638] ERROR:  could not open relation with OID 0
+2023-07-26 10:11:52.472 UTC [1058638] STATEMENT:  DROP TABLE t2;
+2023-07-26 10:11:52.478 UTC [1058574] LOG:  checkpoint starting: immediate force wait
+2023-07-26 10:11:52.503 UTC [1058574] LOG:  checkpoint complete: wrote 11 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.006 s, sync=0.005 s, total=0.025 s; sync files=7, longest=0.003 s, average=0.001 s; distance=24 kB, estimate=9785 kB
+2023-07-26 10:11:52.591 UTC [1058645] ERROR:  duplicate key value violates unique constraint "company_pkey"
+2023-07-26 10:11:52.591 UTC [1058645] DETAIL:  Key (id)=(1) already exists.
+2023-07-26 10:11:52.591 UTC [1058645] STATEMENT:  INSERT  INTO Company(ID, Name) VALUES (1, 'Percona');
+2023-07-26 10:11:52.822 UTC [1058665] ERROR:  division by zero
+2023-07-26 10:11:52.822 UTC [1058665] STATEMENT:  SELECT 1/0;
+2023-07-26 10:11:52.822 UTC [1058665] ERROR:  relation "unknown" does not exist at character 15
+2023-07-26 10:11:52.822 UTC [1058665] STATEMENT:  SELECT * FROM unknown;
+2023-07-26 10:11:52.822 UTC [1058665] ERROR:  syntax error at or near "ELECET" at character 1
+2023-07-26 10:11:52.822 UTC [1058665] STATEMENT:  ELECET * FROM unknown;
+2023-07-26 10:11:52.823 UTC [1058665] WARNING:  warning message
+2023-07-26 10:11:52.823 UTC [1058665] CONTEXT:  PL/pgSQL function inline_code_block line 3 at RAISE
+2023-07-26 10:11:52.911 UTC [1058679] ERROR:  role "su" already exists
+2023-07-26 10:11:52.911 UTC [1058679] STATEMENT:  CREATE USER su WITH SUPERUSER;
+2023-07-26 10:11:52.925 UTC [1058679] ERROR:  permission denied for function pg_stat_monitor_reset
+2023-07-26 10:11:52.925 UTC [1058679] STATEMENT:  SELECT pg_stat_monitor_reset();

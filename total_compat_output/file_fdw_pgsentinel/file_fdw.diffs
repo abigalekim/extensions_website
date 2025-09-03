@@ -1,0 +1,35 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/file_fdw/expected/file_fdw.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/file_fdw/results/file_fdw.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/file_fdw/expected/file_fdw.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/file_fdw/results/file_fdw.out	2023-07-26 04:20:27.026597892 +0000
+@@ -214,6 +214,7 @@
+  Foreign Scan on public.agg_csv
+    Output: a, b
+    Foreign File: .../agg.csv
++ Query Identifier: -5610257853104684750
+ 
+ \t off
+ PREPARE st(int) AS SELECT * FROM agg_csv WHERE a = $1;
+@@ -265,6 +266,7 @@
+    Output: a, b
+    Filter: (agg_csv.a < 0)
+    Foreign File: .../agg.csv
++ Query Identifier: -7848825875094170185
+ 
+ \t off
+ SELECT * FROM agg_csv WHERE a < 0;
+@@ -278,6 +280,7 @@
+  Result
+    Output: a, b
+    One-Time Filter: false
++ Query Identifier: -7848825875094170185
+ 
+ \t off
+ SELECT * FROM agg_csv WHERE a < 0;
+@@ -455,6 +458,7 @@
+    Output: a, b
+    Filter: (agg_text.a > 0)
+    Foreign File: .../agg.data
++ Query Identifier: 8444833004338367581
+ 
+ \t off
+ -- file FDW allows foreign tables to be accessed without user mapping

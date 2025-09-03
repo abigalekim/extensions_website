@@ -1,0 +1,53 @@
+2023-07-26 03:11:41.765 UTC [1987825] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 03:11:41.765 UTC [1987825] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 03:11:41.774 UTC [1987825] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 03:11:41.784 UTC [1987828] LOG:  database system was shut down at 2023-07-26 03:11:41 UTC
+2023-07-26 03:11:41.791 UTC [1987825] LOG:  database system is ready to accept connections
+2023-07-26 03:11:41.969 UTC [1987844] ERROR:  required extension "cube" is not installed
+2023-07-26 03:11:41.969 UTC [1987844] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-26 03:11:41.969 UTC [1987844] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-26 03:11:42.022 UTC [1987844] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-26 03:11:42.022 UTC [1987844] DETAIL:  extension earthdistance depends on extension cube
+2023-07-26 03:11:42.022 UTC [1987844] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 03:11:42.022 UTC [1987844] STATEMENT:  drop extension cube;
+2023-07-26 03:11:42.023 UTC [1987844] ERROR:  cannot drop type cube because extension cube requires it
+2023-07-26 03:11:42.023 UTC [1987844] HINT:  You can drop extension cube instead.
+2023-07-26 03:11:42.023 UTC [1987844] STATEMENT:  drop type cube;
+2023-07-26 03:11:42.026 UTC [1987844] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-26 03:11:42.026 UTC [1987844] DETAIL:  column f1 of table foo depends on type cube
+2023-07-26 03:11:42.026 UTC [1987844] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 03:11:42.026 UTC [1987844] STATEMENT:  drop extension cube;
+2023-07-26 03:11:42.102 UTC [1987844] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-26 03:11:42.102 UTC [1987844] DETAIL:  column f1 of table foo depends on type c.cube
+2023-07-26 03:11:42.102 UTC [1987844] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 03:11:42.102 UTC [1987844] STATEMENT:  drop extension cube;
+2023-07-26 03:11:42.103 UTC [1987844] ERROR:  cannot drop schema c because other objects depend on it
+2023-07-26 03:11:42.103 UTC [1987844] DETAIL:  extension cube depends on schema c
+	column f1 of table foo depends on type c.cube
+2023-07-26 03:11:42.103 UTC [1987844] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 03:11:42.103 UTC [1987844] STATEMENT:  drop schema c;
+2023-07-26 03:11:42.475 UTC [1987826] LOG:  checkpoint starting: immediate force wait
+2023-07-26 03:11:42.605 UTC [1987826] LOG:  checkpoint complete: wrote 2705 buffers (16.5%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.066 s, sync=0.049 s, total=0.131 s; sync files=742, longest=0.003 s, average=0.001 s; distance=16810 kB, estimate=16810 kB
+2023-07-26 03:11:42.614 UTC [1987826] LOG:  checkpoint starting: immediate force wait
+2023-07-26 03:11:42.635 UTC [1987826] LOG:  checkpoint complete: wrote 2 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.005 s, sync=0.004 s, total=0.022 s; sync files=2, longest=0.003 s, average=0.002 s; distance=1 kB, estimate=15129 kB
+2023-07-26 03:11:42.737 UTC [1987893] ERROR:  current user cannot be dropped
+2023-07-26 03:11:42.737 UTC [1987893] STATEMENT:  DROP USER su;
+2023-07-26 03:11:43.043 UTC [1987826] LOG:  checkpoint starting: immediate force wait
+2023-07-26 03:11:43.118 UTC [1987826] LOG:  checkpoint complete: wrote 1038 buffers (6.3%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.038 s, sync=0.025 s, total=0.076 s; sync files=297, longest=0.005 s, average=0.001 s; distance=8803 kB, estimate=14497 kB
+2023-07-26 03:11:43.136 UTC [1987826] LOG:  checkpoint starting: immediate force wait
+2023-07-26 03:11:43.159 UTC [1987826] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.006 s, sync=0.005 s, total=0.023 s; sync files=7, longest=0.003 s, average=0.001 s; distance=38 kB, estimate=13051 kB
+2023-07-26 03:11:43.228 UTC [1987921] ERROR:  duplicate key value violates unique constraint "company_pkey"
+2023-07-26 03:11:43.228 UTC [1987921] DETAIL:  Key (id)=(1) already exists.
+2023-07-26 03:11:43.228 UTC [1987921] STATEMENT:  INSERT  INTO Company(ID, Name) VALUES (1, 'Percona');
+2023-07-26 03:11:43.379 UTC [1987941] ERROR:  division by zero
+2023-07-26 03:11:43.379 UTC [1987941] STATEMENT:  SELECT 1/0;
+2023-07-26 03:11:43.379 UTC [1987941] ERROR:  relation "unknown" does not exist at character 15
+2023-07-26 03:11:43.379 UTC [1987941] STATEMENT:  SELECT * FROM unknown;
+2023-07-26 03:11:43.379 UTC [1987941] ERROR:  syntax error at or near "ELECET" at character 1
+2023-07-26 03:11:43.379 UTC [1987941] STATEMENT:  ELECET * FROM unknown;
+2023-07-26 03:11:43.380 UTC [1987941] WARNING:  warning message
+2023-07-26 03:11:43.380 UTC [1987941] CONTEXT:  PL/pgSQL function inline_code_block line 3 at RAISE
+2023-07-26 03:11:43.437 UTC [1987955] ERROR:  role "su" already exists
+2023-07-26 03:11:43.437 UTC [1987955] STATEMENT:  CREATE USER su WITH SUPERUSER;
+2023-07-26 03:11:43.449 UTC [1987955] ERROR:  permission denied for function pg_stat_monitor_reset
+2023-07-26 03:11:43.449 UTC [1987955] STATEMENT:  SELECT pg_stat_monitor_reset();

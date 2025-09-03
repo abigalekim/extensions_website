@@ -1,0 +1,534 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out	2023-07-26 03:05:13.287386039 +0000
+@@ -963,12 +963,16 @@
+ --
+ -- list what's installed
+ \dT
+-                                              List of data types
+- Schema | Name  |                                         Description                                         
+---------+-------+---------------------------------------------------------------------------------------------
+- public | cube  | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
+- public | earth | 
+-(2 rows)
++                                                List of data types
++ Schema |    Name    |                                         Description                                         
++--------+------------+---------------------------------------------------------------------------------------------
++ public | cube       | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
++ public | earth      | 
++ public | lquery     | 
++ public | ltree      | 
++ public | ltree_gist | 
++ public | ltxtquery  | 
++(6 rows)
+ 
+ drop extension cube;  -- fail, earthdistance requires it
+ ERROR:  cannot drop extension cube because other objects depend on it
+@@ -980,11 +984,15 @@
+ HINT:  You can drop extension cube instead.
+ -- list what's installed
+ \dT
+-                                             List of data types
+- Schema | Name |                                         Description                                         
+---------+------+---------------------------------------------------------------------------------------------
+- public | cube | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
+-(1 row)
++                                                List of data types
++ Schema |    Name    |                                         Description                                         
++--------+------------+---------------------------------------------------------------------------------------------
++ public | cube       | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
++ public | lquery     | 
++ public | ltree      | 
++ public | ltree_gist | 
++ public | ltxtquery  | 
++(5 rows)
+ 
+ create table foo (f1 cube, f2 int);
+ drop extension cube;  -- fail, foo.f1 requires it
+@@ -995,43 +1003,305 @@
+ drop extension cube;
+ -- list what's installed
+ \dT
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++        List of data types
++ Schema |    Name    | Description 
++--------+------------+-------------
++ public | lquery     | 
++ public | ltree      | 
++ public | ltree_gist | 
++ public | ltxtquery  | 
++(4 rows)
+ 
+ \df
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                  List of functions
++ Schema |           Name           | Result data type |                  Argument data types                   | Type 
++--------+--------------------------+------------------+--------------------------------------------------------+------
++ public | _lt_q_regex              | boolean          | ltree[], lquery[]                                      | func
++ public | _lt_q_rregex             | boolean          | lquery[], ltree[]                                      | func
++ public | _ltq_extract_regex       | ltree            | ltree[], lquery                                        | func
++ public | _ltq_regex               | boolean          | ltree[], lquery                                        | func
++ public | _ltq_rregex              | boolean          | lquery, ltree[]                                        | func
++ public | _ltree_compress          | internal         | internal                                               | func
++ public | _ltree_consistent        | boolean          | internal, ltree[], smallint, oid, internal             | func
++ public | _ltree_extract_isparent  | ltree            | ltree[], ltree                                         | func
++ public | _ltree_extract_risparent | ltree            | ltree[], ltree                                         | func
++ public | _ltree_gist_options      | void             | internal                                               | func
++ public | _ltree_isparent          | boolean          | ltree[], ltree                                         | func
++ public | _ltree_penalty           | internal         | internal, internal, internal                           | func
++ public | _ltree_picksplit         | internal         | internal, internal                                     | func
++ public | _ltree_r_isparent        | boolean          | ltree, ltree[]                                         | func
++ public | _ltree_r_risparent       | boolean          | ltree, ltree[]                                         | func
++ public | _ltree_risparent         | boolean          | ltree[], ltree                                         | func
++ public | _ltree_same              | internal         | ltree_gist, ltree_gist, internal                       | func
++ public | _ltree_union             | ltree_gist       | internal, internal                                     | func
++ public | _ltxtq_exec              | boolean          | ltree[], ltxtquery                                     | func
++ public | _ltxtq_extract_exec      | ltree            | ltree[], ltxtquery                                     | func
++ public | _ltxtq_rexec             | boolean          | ltxtquery, ltree[]                                     | func
++ public | index                    | integer          | ltree, ltree                                           | func
++ public | index                    | integer          | ltree, ltree, integer                                  | func
++ public | lca                      | ltree            | ltree[]                                                | func
++ public | lca                      | ltree            | ltree, ltree                                           | func
++ public | lca                      | ltree            | ltree, ltree, ltree                                    | func
++ public | lca                      | ltree            | ltree, ltree, ltree, ltree                             | func
++ public | lca                      | ltree            | ltree, ltree, ltree, ltree, ltree                      | func
++ public | lca                      | ltree            | ltree, ltree, ltree, ltree, ltree, ltree               | func
++ public | lca                      | ltree            | ltree, ltree, ltree, ltree, ltree, ltree, ltree        | func
++ public | lca                      | ltree            | ltree, ltree, ltree, ltree, ltree, ltree, ltree, ltree | func
++ public | lquery_in                | lquery           | cstring                                                | func
++ public | lquery_out               | cstring          | lquery                                                 | func
++ public | lquery_recv              | lquery           | internal                                               | func
++ public | lquery_send              | bytea            | lquery                                                 | func
++ public | lt_q_regex               | boolean          | ltree, lquery[]                                        | func
++ public | lt_q_rregex              | boolean          | lquery[], ltree                                        | func
++ public | ltq_regex                | boolean          | ltree, lquery                                          | func
++ public | ltq_rregex               | boolean          | lquery, ltree                                          | func
++ public | ltree2text               | text             | ltree                                                  | func
++ public | ltree_addltree           | ltree            | ltree, ltree                                           | func
++ public | ltree_addtext            | ltree            | ltree, text                                            | func
++ public | ltree_cmp                | integer          | ltree, ltree                                           | func
++ public | ltree_compress           | internal         | internal                                               | func
++ public | ltree_consistent         | boolean          | internal, ltree, smallint, oid, internal               | func
++ public | ltree_decompress         | internal         | internal                                               | func
++ public | ltree_eq                 | boolean          | ltree, ltree                                           | func
++ public | ltree_ge                 | boolean          | ltree, ltree                                           | func
++ public | ltree_gist_in            | ltree_gist       | cstring                                                | func
++ public | ltree_gist_options       | void             | internal                                               | func
++ public | ltree_gist_out           | cstring          | ltree_gist                                             | func
++ public | ltree_gt                 | boolean          | ltree, ltree                                           | func
++ public | ltree_in                 | ltree            | cstring                                                | func
++ public | ltree_isparent           | boolean          | ltree, ltree                                           | func
++ public | ltree_le                 | boolean          | ltree, ltree                                           | func
++ public | ltree_lt                 | boolean          | ltree, ltree                                           | func
++ public | ltree_ne                 | boolean          | ltree, ltree                                           | func
++ public | ltree_out                | cstring          | ltree                                                  | func
++ public | ltree_penalty            | internal         | internal, internal, internal                           | func
++ public | ltree_picksplit          | internal         | internal, internal                                     | func
++ public | ltree_recv               | ltree            | internal                                               | func
++ public | ltree_risparent          | boolean          | ltree, ltree                                           | func
++ public | ltree_same               | internal         | ltree_gist, ltree_gist, internal                       | func
++ public | ltree_send               | bytea            | ltree                                                  | func
++ public | ltree_textadd            | ltree            | text, ltree                                            | func
++ public | ltree_union              | ltree_gist       | internal, internal                                     | func
++ public | ltreeparentsel           | double precision | internal, oid, internal, integer                       | func
++ public | ltxtq_exec               | boolean          | ltree, ltxtquery                                       | func
++ public | ltxtq_in                 | ltxtquery        | cstring                                                | func
++ public | ltxtq_out                | cstring          | ltxtquery                                              | func
++ public | ltxtq_recv               | ltxtquery        | internal                                               | func
++ public | ltxtq_rexec              | boolean          | ltxtquery, ltree                                       | func
++ public | ltxtq_send               | bytea            | ltxtquery                                              | func
++ public | nlevel                   | integer          | ltree                                                  | func
++ public | subltree                 | ltree            | ltree, integer, integer                                | func
++ public | subpath                  | ltree            | ltree, integer                                         | func
++ public | subpath                  | ltree            | ltree, integer, integer                                | func
++ public | text2ltree               | ltree            | text                                                   | func
++(78 rows)
+ 
+ \do
+                              List of operators
+  Schema | Name | Left arg type | Right arg type | Result type | Description 
+ --------+------+---------------+----------------+-------------+-------------
+-(0 rows)
++ public | <    | ltree         | ltree          | boolean     | 
++ public | <=   | ltree         | ltree          | boolean     | 
++ public | <>   | ltree         | ltree          | boolean     | 
++ public | <@   | ltree         | ltree          | boolean     | 
++ public | <@   | ltree         | ltree[]        | boolean     | 
++ public | <@   | ltree[]       | ltree          | boolean     | 
++ public | =    | ltree         | ltree          | boolean     | 
++ public | >    | ltree         | ltree          | boolean     | 
++ public | >=   | ltree         | ltree          | boolean     | 
++ public | ?    | lquery[]      | ltree          | boolean     | 
++ public | ?    | lquery[]      | ltree[]        | boolean     | 
++ public | ?    | ltree         | lquery[]       | boolean     | 
++ public | ?    | ltree[]       | lquery[]       | boolean     | 
++ public | ?<@  | ltree[]       | ltree          | ltree       | 
++ public | ?@   | ltree[]       | ltxtquery      | ltree       | 
++ public | ?@>  | ltree[]       | ltree          | ltree       | 
++ public | ?~   | ltree[]       | lquery         | ltree       | 
++ public | @    | ltree         | ltxtquery      | boolean     | 
++ public | @    | ltree[]       | ltxtquery      | boolean     | 
++ public | @    | ltxtquery     | ltree          | boolean     | 
++ public | @    | ltxtquery     | ltree[]        | boolean     | 
++ public | @>   | ltree         | ltree          | boolean     | 
++ public | @>   | ltree         | ltree[]        | boolean     | 
++ public | @>   | ltree[]       | ltree          | boolean     | 
++ public | ^<@  | ltree         | ltree          | boolean     | 
++ public | ^<@  | ltree         | ltree[]        | boolean     | 
++ public | ^<@  | ltree[]       | ltree          | boolean     | 
++ public | ^?   | lquery[]      | ltree          | boolean     | 
++ public | ^?   | lquery[]      | ltree[]        | boolean     | 
++ public | ^?   | ltree         | lquery[]       | boolean     | 
++ public | ^?   | ltree[]       | lquery[]       | boolean     | 
++ public | ^@   | ltree         | ltxtquery      | boolean     | 
++ public | ^@   | ltree[]       | ltxtquery      | boolean     | 
++ public | ^@   | ltxtquery     | ltree          | boolean     | 
++ public | ^@   | ltxtquery     | ltree[]        | boolean     | 
++ public | ^@>  | ltree         | ltree          | boolean     | 
++ public | ^@>  | ltree         | ltree[]        | boolean     | 
++ public | ^@>  | ltree[]       | ltree          | boolean     | 
++ public | ^~   | lquery        | ltree          | boolean     | 
++ public | ^~   | lquery        | ltree[]        | boolean     | 
++ public | ^~   | ltree         | lquery         | boolean     | 
++ public | ^~   | ltree[]       | lquery         | boolean     | 
++ public | ||   | ltree         | ltree          | ltree       | 
++ public | ||   | ltree         | text           | ltree       | 
++ public | ||   | text          | ltree          | ltree       | 
++ public | ~    | lquery        | ltree          | boolean     | 
++ public | ~    | lquery        | ltree[]        | boolean     | 
++ public | ~    | ltree         | lquery         | boolean     | 
++ public | ~    | ltree[]       | lquery         | boolean     | 
++(49 rows)
+ 
+ create schema c;
+ create extension cube with schema c;
+ -- list what's installed
+ \dT public.*
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++        List of data types
++ Schema |    Name    | Description 
++--------+------------+-------------
++ public | lquery     | 
++ public | ltree      | 
++ public | ltree_gist | 
++ public | ltxtquery  | 
++(4 rows)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                  List of functions
++ Schema |           Name           | Result data type |                  Argument data types                   | Type 
++--------+--------------------------+------------------+--------------------------------------------------------+------
++ public | _lt_q_regex              | boolean          | ltree[], lquery[]                                      | func
++ public | _lt_q_rregex             | boolean          | lquery[], ltree[]                                      | func
++ public | _ltq_extract_regex       | ltree            | ltree[], lquery                                        | func
++ public | _ltq_regex               | boolean          | ltree[], lquery                                        | func
++ public | _ltq_rregex              | boolean          | lquery, ltree[]                                        | func
++ public | _ltree_compress          | internal         | internal                                               | func
++ public | _ltree_consistent        | boolean          | internal, ltree[], smallint, oid, internal             | func
++ public | _ltree_extract_isparent  | ltree            | ltree[], ltree                                         | func
++ public | _ltree_extract_risparent | ltree            | ltree[], ltree                                         | func
++ public | _ltree_gist_options      | void             | internal                                               | func
++ public | _ltree_isparent          | boolean          | ltree[], ltree                                         | func
++ public | _ltree_penalty           | internal         | internal, internal, internal                           | func
++ public | _ltree_picksplit         | internal         | internal, internal                                     | func
++ public | _ltree_r_isparent        | boolean          | ltree, ltree[]                                         | func
++ public | _ltree_r_risparent       | boolean          | ltree, ltree[]                                         | func
++ public | _ltree_risparent         | boolean          | ltree[], ltree                                         | func
++ public | _ltree_same              | internal         | ltree_gist, ltree_gist, internal                       | func
++ public | _ltree_union             | ltree_gist       | internal, internal                                     | func
++ public | _ltxtq_exec              | boolean          | ltree[], ltxtquery                                     | func
++ public | _ltxtq_extract_exec      | ltree            | ltree[], ltxtquery                                     | func
++ public | _ltxtq_rexec             | boolean          | ltxtquery, ltree[]                                     | func
++ public | index                    | integer          | ltree, ltree                                           | func
++ public | index                    | integer          | ltree, ltree, integer                                  | func
++ public | lca                      | ltree            | ltree[]                                                | func
++ public | lca                      | ltree            | ltree, ltree                                           | func
++ public | lca                      | ltree            | ltree, ltree, ltree                                    | func
++ public | lca                      | ltree            | ltree, ltree, ltree, ltree                             | func
++ public | lca                      | ltree            | ltree, ltree, ltree, ltree, ltree                      | func
++ public | lca                      | ltree            | ltree, ltree, ltree, ltree, ltree, ltree               | func
++ public | lca                      | ltree            | ltree, ltree, ltree, ltree, ltree, ltree, ltree        | func
++ public | lca                      | ltree            | ltree, ltree, ltree, ltree, ltree, ltree, ltree, ltree | func
++ public | lquery_in                | lquery           | cstring                                                | func
++ public | lquery_out               | cstring          | lquery                                                 | func
++ public | lquery_recv              | lquery           | internal                                               | func
++ public | lquery_send              | bytea            | lquery                                                 | func
++ public | lt_q_regex               | boolean          | ltree, lquery[]                                        | func
++ public | lt_q_rregex              | boolean          | lquery[], ltree                                        | func
++ public | ltq_regex                | boolean          | ltree, lquery                                          | func
++ public | ltq_rregex               | boolean          | lquery, ltree                                          | func
++ public | ltree2text               | text             | ltree                                                  | func
++ public | ltree_addltree           | ltree            | ltree, ltree                                           | func
++ public | ltree_addtext            | ltree            | ltree, text                                            | func
++ public | ltree_cmp                | integer          | ltree, ltree                                           | func
++ public | ltree_compress           | internal         | internal                                               | func
++ public | ltree_consistent         | boolean          | internal, ltree, smallint, oid, internal               | func
++ public | ltree_decompress         | internal         | internal                                               | func
++ public | ltree_eq                 | boolean          | ltree, ltree                                           | func
++ public | ltree_ge                 | boolean          | ltree, ltree                                           | func
++ public | ltree_gist_in            | ltree_gist       | cstring                                                | func
++ public | ltree_gist_options       | void             | internal                                               | func
++ public | ltree_gist_out           | cstring          | ltree_gist                                             | func
++ public | ltree_gt                 | boolean          | ltree, ltree                                           | func
++ public | ltree_in                 | ltree            | cstring                                                | func
++ public | ltree_isparent           | boolean          | ltree, ltree                                           | func
++ public | ltree_le                 | boolean          | ltree, ltree                                           | func
++ public | ltree_lt                 | boolean          | ltree, ltree                                           | func
++ public | ltree_ne                 | boolean          | ltree, ltree                                           | func
++ public | ltree_out                | cstring          | ltree                                                  | func
++ public | ltree_penalty            | internal         | internal, internal, internal                           | func
++ public | ltree_picksplit          | internal         | internal, internal                                     | func
++ public | ltree_recv               | ltree            | internal                                               | func
++ public | ltree_risparent          | boolean          | ltree, ltree                                           | func
++ public | ltree_same               | internal         | ltree_gist, ltree_gist, internal                       | func
++ public | ltree_send               | bytea            | ltree                                                  | func
++ public | ltree_textadd            | ltree            | text, ltree                                            | func
++ public | ltree_union              | ltree_gist       | internal, internal                                     | func
++ public | ltreeparentsel           | double precision | internal, oid, internal, integer                       | func
++ public | ltxtq_exec               | boolean          | ltree, ltxtquery                                       | func
++ public | ltxtq_in                 | ltxtquery        | cstring                                                | func
++ public | ltxtq_out                | cstring          | ltxtquery                                              | func
++ public | ltxtq_recv               | ltxtquery        | internal                                               | func
++ public | ltxtq_rexec              | boolean          | ltxtquery, ltree                                       | func
++ public | ltxtq_send               | bytea            | ltxtquery                                              | func
++ public | nlevel                   | integer          | ltree                                                  | func
++ public | subltree                 | ltree            | ltree, integer, integer                                | func
++ public | subpath                  | ltree            | ltree, integer                                         | func
++ public | subpath                  | ltree            | ltree, integer, integer                                | func
++ public | text2ltree               | ltree            | text                                                   | func
++(78 rows)
+ 
+ \do public.*
+                              List of operators
+  Schema | Name | Left arg type | Right arg type | Result type | Description 
+ --------+------+---------------+----------------+-------------+-------------
+-(0 rows)
++ public | <    | ltree         | ltree          | boolean     | 
++ public | <=   | ltree         | ltree          | boolean     | 
++ public | <>   | ltree         | ltree          | boolean     | 
++ public | <@   | ltree         | ltree          | boolean     | 
++ public | <@   | ltree         | ltree[]        | boolean     | 
++ public | <@   | ltree[]       | ltree          | boolean     | 
++ public | =    | ltree         | ltree          | boolean     | 
++ public | >    | ltree         | ltree          | boolean     | 
++ public | >=   | ltree         | ltree          | boolean     | 
++ public | ?    | lquery[]      | ltree          | boolean     | 
++ public | ?    | lquery[]      | ltree[]        | boolean     | 
++ public | ?    | ltree         | lquery[]       | boolean     | 
++ public | ?    | ltree[]       | lquery[]       | boolean     | 
++ public | ?<@  | ltree[]       | ltree          | ltree       | 
++ public | ?@   | ltree[]       | ltxtquery      | ltree       | 
++ public | ?@>  | ltree[]       | ltree          | ltree       | 
++ public | ?~   | ltree[]       | lquery         | ltree       | 
++ public | @    | ltree         | ltxtquery      | boolean     | 
++ public | @    | ltree[]       | ltxtquery      | boolean     | 
++ public | @    | ltxtquery     | ltree          | boolean     | 
++ public | @    | ltxtquery     | ltree[]        | boolean     | 
++ public | @>   | ltree         | ltree          | boolean     | 
++ public | @>   | ltree         | ltree[]        | boolean     | 
++ public | @>   | ltree[]       | ltree          | boolean     | 
++ public | ^<@  | ltree         | ltree          | boolean     | 
++ public | ^<@  | ltree         | ltree[]        | boolean     | 
++ public | ^<@  | ltree[]       | ltree          | boolean     | 
++ public | ^?   | lquery[]      | ltree          | boolean     | 
++ public | ^?   | lquery[]      | ltree[]        | boolean     | 
++ public | ^?   | ltree         | lquery[]       | boolean     | 
++ public | ^?   | ltree[]       | lquery[]       | boolean     | 
++ public | ^@   | ltree         | ltxtquery      | boolean     | 
++ public | ^@   | ltree[]       | ltxtquery      | boolean     | 
++ public | ^@   | ltxtquery     | ltree          | boolean     | 
++ public | ^@   | ltxtquery     | ltree[]        | boolean     | 
++ public | ^@>  | ltree         | ltree          | boolean     | 
++ public | ^@>  | ltree         | ltree[]        | boolean     | 
++ public | ^@>  | ltree[]       | ltree          | boolean     | 
++ public | ^~   | lquery        | ltree          | boolean     | 
++ public | ^~   | lquery        | ltree[]        | boolean     | 
++ public | ^~   | ltree         | lquery         | boolean     | 
++ public | ^~   | ltree[]       | lquery         | boolean     | 
++ public | ||   | ltree         | ltree          | ltree       | 
++ public | ||   | ltree         | text           | ltree       | 
++ public | ||   | text          | ltree          | ltree       | 
++ public | ~    | lquery        | ltree          | boolean     | 
++ public | ~    | lquery        | ltree[]        | boolean     | 
++ public | ~    | ltree         | lquery         | boolean     | 
++ public | ~    | ltree[]       | lquery         | boolean     | 
++(49 rows)
+ 
+ \dT c.*
+                                               List of data types
+@@ -1060,22 +1330,153 @@
+ 
+ -- list what's installed
+ \dT public.*
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++        List of data types
++ Schema |    Name    | Description 
++--------+------------+-------------
++ public | lquery     | 
++ public | ltree      | 
++ public | ltree_gist | 
++ public | ltxtquery  | 
++(4 rows)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                  List of functions
++ Schema |           Name           | Result data type |                  Argument data types                   | Type 
++--------+--------------------------+------------------+--------------------------------------------------------+------
++ public | _lt_q_regex              | boolean          | ltree[], lquery[]                                      | func
++ public | _lt_q_rregex             | boolean          | lquery[], ltree[]                                      | func
++ public | _ltq_extract_regex       | ltree            | ltree[], lquery                                        | func
++ public | _ltq_regex               | boolean          | ltree[], lquery                                        | func
++ public | _ltq_rregex              | boolean          | lquery, ltree[]                                        | func
++ public | _ltree_compress          | internal         | internal                                               | func
++ public | _ltree_consistent        | boolean          | internal, ltree[], smallint, oid, internal             | func
++ public | _ltree_extract_isparent  | ltree            | ltree[], ltree                                         | func
++ public | _ltree_extract_risparent | ltree            | ltree[], ltree                                         | func
++ public | _ltree_gist_options      | void             | internal                                               | func
++ public | _ltree_isparent          | boolean          | ltree[], ltree                                         | func
++ public | _ltree_penalty           | internal         | internal, internal, internal                           | func
++ public | _ltree_picksplit         | internal         | internal, internal                                     | func
++ public | _ltree_r_isparent        | boolean          | ltree, ltree[]                                         | func
++ public | _ltree_r_risparent       | boolean          | ltree, ltree[]                                         | func
++ public | _ltree_risparent         | boolean          | ltree[], ltree                                         | func
++ public | _ltree_same              | internal         | ltree_gist, ltree_gist, internal                       | func
++ public | _ltree_union             | ltree_gist       | internal, internal                                     | func
++ public | _ltxtq_exec              | boolean          | ltree[], ltxtquery                                     | func
++ public | _ltxtq_extract_exec      | ltree            | ltree[], ltxtquery                                     | func
++ public | _ltxtq_rexec             | boolean          | ltxtquery, ltree[]                                     | func
++ public | index                    | integer          | ltree, ltree                                           | func
++ public | index                    | integer          | ltree, ltree, integer                                  | func
++ public | lca                      | ltree            | ltree[]                                                | func
++ public | lca                      | ltree            | ltree, ltree                                           | func
++ public | lca                      | ltree            | ltree, ltree, ltree                                    | func
++ public | lca                      | ltree            | ltree, ltree, ltree, ltree                             | func
++ public | lca                      | ltree            | ltree, ltree, ltree, ltree, ltree                      | func
++ public | lca                      | ltree            | ltree, ltree, ltree, ltree, ltree, ltree               | func
++ public | lca                      | ltree            | ltree, ltree, ltree, ltree, ltree, ltree, ltree        | func
++ public | lca                      | ltree            | ltree, ltree, ltree, ltree, ltree, ltree, ltree, ltree | func
++ public | lquery_in                | lquery           | cstring                                                | func
++ public | lquery_out               | cstring          | lquery                                                 | func
++ public | lquery_recv              | lquery           | internal                                               | func
++ public | lquery_send              | bytea            | lquery                                                 | func
++ public | lt_q_regex               | boolean          | ltree, lquery[]                                        | func
++ public | lt_q_rregex              | boolean          | lquery[], ltree                                        | func
++ public | ltq_regex                | boolean          | ltree, lquery                                          | func
++ public | ltq_rregex               | boolean          | lquery, ltree                                          | func
++ public | ltree2text               | text             | ltree                                                  | func
++ public | ltree_addltree           | ltree            | ltree, ltree                                           | func
++ public | ltree_addtext            | ltree            | ltree, text                                            | func
++ public | ltree_cmp                | integer          | ltree, ltree                                           | func
++ public | ltree_compress           | internal         | internal                                               | func
++ public | ltree_consistent         | boolean          | internal, ltree, smallint, oid, internal               | func
++ public | ltree_decompress         | internal         | internal                                               | func
++ public | ltree_eq                 | boolean          | ltree, ltree                                           | func
++ public | ltree_ge                 | boolean          | ltree, ltree                                           | func
++ public | ltree_gist_in            | ltree_gist       | cstring                                                | func
++ public | ltree_gist_options       | void             | internal                                               | func
++ public | ltree_gist_out           | cstring          | ltree_gist                                             | func
++ public | ltree_gt                 | boolean          | ltree, ltree                                           | func
++ public | ltree_in                 | ltree            | cstring                                                | func
++ public | ltree_isparent           | boolean          | ltree, ltree                                           | func
++ public | ltree_le                 | boolean          | ltree, ltree                                           | func
++ public | ltree_lt                 | boolean          | ltree, ltree                                           | func
++ public | ltree_ne                 | boolean          | ltree, ltree                                           | func
++ public | ltree_out                | cstring          | ltree                                                  | func
++ public | ltree_penalty            | internal         | internal, internal, internal                           | func
++ public | ltree_picksplit          | internal         | internal, internal                                     | func
++ public | ltree_recv               | ltree            | internal                                               | func
++ public | ltree_risparent          | boolean          | ltree, ltree                                           | func
++ public | ltree_same               | internal         | ltree_gist, ltree_gist, internal                       | func
++ public | ltree_send               | bytea            | ltree                                                  | func
++ public | ltree_textadd            | ltree            | text, ltree                                            | func
++ public | ltree_union              | ltree_gist       | internal, internal                                     | func
++ public | ltreeparentsel           | double precision | internal, oid, internal, integer                       | func
++ public | ltxtq_exec               | boolean          | ltree, ltxtquery                                       | func
++ public | ltxtq_in                 | ltxtquery        | cstring                                                | func
++ public | ltxtq_out                | cstring          | ltxtquery                                              | func
++ public | ltxtq_recv               | ltxtquery        | internal                                               | func
++ public | ltxtq_rexec              | boolean          | ltxtquery, ltree                                       | func
++ public | ltxtq_send               | bytea            | ltxtquery                                              | func
++ public | nlevel                   | integer          | ltree                                                  | func
++ public | subltree                 | ltree            | ltree, integer, integer                                | func
++ public | subpath                  | ltree            | ltree, integer                                         | func
++ public | subpath                  | ltree            | ltree, integer, integer                                | func
++ public | text2ltree               | ltree            | text                                                   | func
++(78 rows)
+ 
+ \do public.*
+                              List of operators
+  Schema | Name | Left arg type | Right arg type | Result type | Description 
+ --------+------+---------------+----------------+-------------+-------------
+-(0 rows)
++ public | <    | ltree         | ltree          | boolean     | 
++ public | <=   | ltree         | ltree          | boolean     | 
++ public | <>   | ltree         | ltree          | boolean     | 
++ public | <@   | ltree         | ltree          | boolean     | 
++ public | <@   | ltree         | ltree[]        | boolean     | 
++ public | <@   | ltree[]       | ltree          | boolean     | 
++ public | =    | ltree         | ltree          | boolean     | 
++ public | >    | ltree         | ltree          | boolean     | 
++ public | >=   | ltree         | ltree          | boolean     | 
++ public | ?    | lquery[]      | ltree          | boolean     | 
++ public | ?    | lquery[]      | ltree[]        | boolean     | 
++ public | ?    | ltree         | lquery[]       | boolean     | 
++ public | ?    | ltree[]       | lquery[]       | boolean     | 
++ public | ?<@  | ltree[]       | ltree          | ltree       | 
++ public | ?@   | ltree[]       | ltxtquery      | ltree       | 
++ public | ?@>  | ltree[]       | ltree          | ltree       | 
++ public | ?~   | ltree[]       | lquery         | ltree       | 
++ public | @    | ltree         | ltxtquery      | boolean     | 
++ public | @    | ltree[]       | ltxtquery      | boolean     | 
++ public | @    | ltxtquery     | ltree          | boolean     | 
++ public | @    | ltxtquery     | ltree[]        | boolean     | 
++ public | @>   | ltree         | ltree          | boolean     | 
++ public | @>   | ltree         | ltree[]        | boolean     | 
++ public | @>   | ltree[]       | ltree          | boolean     | 
++ public | ^<@  | ltree         | ltree          | boolean     | 
++ public | ^<@  | ltree         | ltree[]        | boolean     | 
++ public | ^<@  | ltree[]       | ltree          | boolean     | 
++ public | ^?   | lquery[]      | ltree          | boolean     | 
++ public | ^?   | lquery[]      | ltree[]        | boolean     | 
++ public | ^?   | ltree         | lquery[]       | boolean     | 
++ public | ^?   | ltree[]       | lquery[]       | boolean     | 
++ public | ^@   | ltree         | ltxtquery      | boolean     | 
++ public | ^@   | ltree[]       | ltxtquery      | boolean     | 
++ public | ^@   | ltxtquery     | ltree          | boolean     | 
++ public | ^@   | ltxtquery     | ltree[]        | boolean     | 
++ public | ^@>  | ltree         | ltree          | boolean     | 
++ public | ^@>  | ltree         | ltree[]        | boolean     | 
++ public | ^@>  | ltree[]       | ltree          | boolean     | 
++ public | ^~   | lquery        | ltree          | boolean     | 
++ public | ^~   | lquery        | ltree[]        | boolean     | 
++ public | ^~   | ltree         | lquery         | boolean     | 
++ public | ^~   | ltree[]       | lquery         | boolean     | 
++ public | ||   | ltree         | ltree          | ltree       | 
++ public | ||   | ltree         | text           | ltree       | 
++ public | ||   | text          | ltree          | ltree       | 
++ public | ~    | lquery        | ltree          | boolean     | 
++ public | ~    | lquery        | ltree[]        | boolean     | 
++ public | ~    | ltree         | lquery         | boolean     | 
++ public | ~    | ltree[]       | lquery         | boolean     | 
++(49 rows)
+ 
+ \dT c.*
+      List of data types

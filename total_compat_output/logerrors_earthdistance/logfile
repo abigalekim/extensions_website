@@ -1,0 +1,45 @@
+2023-07-26 19:40:55.398 UTC [2148879] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 19:40:55.398 UTC [2148879] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 19:40:55.405 UTC [2148879] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 19:40:55.413 UTC [2148882] LOG:  database system was shut down at 2023-07-26 19:40:55 UTC
+2023-07-26 19:40:55.420 UTC [2148879] LOG:  database system is ready to accept connections
+2023-07-26 19:40:55.632 UTC [2148911] ERROR:  function blah() does not exist at character 8
+2023-07-26 19:40:55.632 UTC [2148911] HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+2023-07-26 19:40:55.632 UTC [2148911] STATEMENT:  SELECT blah();
+2023-07-26 19:41:05.637 UTC [2148911] ERROR:  XXXXX
+2023-07-26 19:41:05.637 UTC [2148911] CONTEXT:  PL/pgSQL function inline_code_block line 3 at RAISE
+2023-07-26 19:41:05.637 UTC [2148911] STATEMENT:  DO LANGUAGE plpgsql $$
+	BEGIN
+	    RAISE SQLSTATE 'XXXXX';
+	END;
+	$$;
+2023-07-26 19:41:05.638 UTC [2148911] ERROR:  XXXXY
+2023-07-26 19:41:05.638 UTC [2148911] CONTEXT:  PL/pgSQL function inline_code_block line 3 at RAISE
+2023-07-26 19:41:05.638 UTC [2148911] STATEMENT:  DO LANGUAGE plpgsql $$
+	BEGIN
+	    RAISE SQLSTATE 'XXXXY';
+	END;
+	$$;
+2023-07-26 19:41:10.723 UTC [2148926] ERROR:  required extension "cube" is not installed
+2023-07-26 19:41:10.723 UTC [2148926] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-26 19:41:10.723 UTC [2148926] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-26 19:41:10.770 UTC [2148926] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-26 19:41:10.770 UTC [2148926] DETAIL:  extension earthdistance depends on extension cube
+2023-07-26 19:41:10.770 UTC [2148926] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 19:41:10.770 UTC [2148926] STATEMENT:  drop extension cube;
+2023-07-26 19:41:10.771 UTC [2148926] ERROR:  cannot drop type cube because extension cube requires it
+2023-07-26 19:41:10.771 UTC [2148926] HINT:  You can drop extension cube instead.
+2023-07-26 19:41:10.771 UTC [2148926] STATEMENT:  drop type cube;
+2023-07-26 19:41:10.774 UTC [2148926] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-26 19:41:10.774 UTC [2148926] DETAIL:  column f1 of table foo depends on type cube
+2023-07-26 19:41:10.774 UTC [2148926] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 19:41:10.774 UTC [2148926] STATEMENT:  drop extension cube;
+2023-07-26 19:41:10.846 UTC [2148926] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-26 19:41:10.846 UTC [2148926] DETAIL:  column f1 of table foo depends on type c.cube
+2023-07-26 19:41:10.846 UTC [2148926] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 19:41:10.846 UTC [2148926] STATEMENT:  drop extension cube;
+2023-07-26 19:41:10.846 UTC [2148926] ERROR:  cannot drop schema c because other objects depend on it
+2023-07-26 19:41:10.846 UTC [2148926] DETAIL:  extension cube depends on schema c
+	column f1 of table foo depends on type c.cube
+2023-07-26 19:41:10.846 UTC [2148926] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 19:41:10.846 UTC [2148926] STATEMENT:  drop schema c;

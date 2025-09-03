@@ -1,0 +1,93 @@
+2023-07-25 19:18:27.816 UTC [3286844] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 19:18:27.816 UTC [3286844] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 19:18:27.829 UTC [3286844] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 19:18:27.845 UTC [3286847] LOG:  database system was shut down at 2023-07-25 19:18:27 UTC
+2023-07-25 19:18:27.853 UTC [3286844] LOG:  database system is ready to accept connections
+2023-07-25 19:18:28.026 UTC [3286860] ERROR:  relation "test_pkey" is not a GIN index
+2023-07-25 19:18:28.026 UTC [3286860] STATEMENT:  select pgstatginindex('test_pkey');
+2023-07-25 19:18:28.026 UTC [3286860] ERROR:  relation "test_pkey" is not a hash index
+2023-07-25 19:18:28.026 UTC [3286860] STATEMENT:  select pgstathashindex('test_pkey');
+2023-07-25 19:18:28.027 UTC [3286860] ERROR:  relation "test_ginidx" is not a btree index
+2023-07-25 19:18:28.027 UTC [3286860] STATEMENT:  select pgstatindex('test_ginidx');
+2023-07-25 19:18:28.027 UTC [3286860] ERROR:  relation "test_ginidx" is not a hash index
+2023-07-25 19:18:28.027 UTC [3286860] STATEMENT:  select pgstathashindex('test_ginidx');
+2023-07-25 19:18:28.027 UTC [3286860] ERROR:  relation "test_hashidx" is not a btree index
+2023-07-25 19:18:28.027 UTC [3286860] STATEMENT:  select pgstatindex('test_hashidx');
+2023-07-25 19:18:28.027 UTC [3286860] ERROR:  relation "test_hashidx" is not a GIN index
+2023-07-25 19:18:28.027 UTC [3286860] STATEMENT:  select pgstatginindex('test_hashidx');
+2023-07-25 19:18:28.035 UTC [3286860] ERROR:  cannot get tuple-level statistics for relation "test_partitioned"
+2023-07-25 19:18:28.035 UTC [3286860] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-25 19:18:28.035 UTC [3286860] STATEMENT:  select pgstattuple('test_partitioned');
+2023-07-25 19:18:28.035 UTC [3286860] ERROR:  cannot get tuple-level statistics for relation "test_partitioned_index"
+2023-07-25 19:18:28.035 UTC [3286860] DETAIL:  This operation is not supported for partitioned indexes.
+2023-07-25 19:18:28.035 UTC [3286860] STATEMENT:  select pgstattuple('test_partitioned_index');
+2023-07-25 19:18:28.036 UTC [3286860] ERROR:  relation "test_partitioned" is of wrong relation kind
+2023-07-25 19:18:28.036 UTC [3286860] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-25 19:18:28.036 UTC [3286860] STATEMENT:  select pgstattuple_approx('test_partitioned');
+2023-07-25 19:18:28.036 UTC [3286860] ERROR:  cannot get page count of relation "test_partitioned"
+2023-07-25 19:18:28.036 UTC [3286860] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-25 19:18:28.036 UTC [3286860] STATEMENT:  select pg_relpages('test_partitioned');
+2023-07-25 19:18:28.037 UTC [3286860] ERROR:  relation "test_partitioned" is not a btree index
+2023-07-25 19:18:28.037 UTC [3286860] STATEMENT:  select pgstatindex('test_partitioned');
+2023-07-25 19:18:28.037 UTC [3286860] ERROR:  relation "test_partitioned" is not a GIN index
+2023-07-25 19:18:28.037 UTC [3286860] STATEMENT:  select pgstatginindex('test_partitioned');
+2023-07-25 19:18:28.038 UTC [3286860] ERROR:  "test_partitioned" is not an index
+2023-07-25 19:18:28.038 UTC [3286860] STATEMENT:  select pgstathashindex('test_partitioned');
+2023-07-25 19:18:28.043 UTC [3286860] ERROR:  cannot get tuple-level statistics for relation "test_view"
+2023-07-25 19:18:28.043 UTC [3286860] DETAIL:  This operation is not supported for views.
+2023-07-25 19:18:28.043 UTC [3286860] STATEMENT:  select pgstattuple('test_view');
+2023-07-25 19:18:28.043 UTC [3286860] ERROR:  relation "test_view" is of wrong relation kind
+2023-07-25 19:18:28.043 UTC [3286860] DETAIL:  This operation is not supported for views.
+2023-07-25 19:18:28.043 UTC [3286860] STATEMENT:  select pgstattuple_approx('test_view');
+2023-07-25 19:18:28.044 UTC [3286860] ERROR:  cannot get page count of relation "test_view"
+2023-07-25 19:18:28.044 UTC [3286860] DETAIL:  This operation is not supported for views.
+2023-07-25 19:18:28.044 UTC [3286860] STATEMENT:  select pg_relpages('test_view');
+2023-07-25 19:18:28.044 UTC [3286860] ERROR:  relation "test_view" is not a btree index
+2023-07-25 19:18:28.044 UTC [3286860] STATEMENT:  select pgstatindex('test_view');
+2023-07-25 19:18:28.044 UTC [3286860] ERROR:  relation "test_view" is not a GIN index
+2023-07-25 19:18:28.044 UTC [3286860] STATEMENT:  select pgstatginindex('test_view');
+2023-07-25 19:18:28.045 UTC [3286860] ERROR:  "test_view" is not an index
+2023-07-25 19:18:28.045 UTC [3286860] STATEMENT:  select pgstathashindex('test_view');
+2023-07-25 19:18:28.058 UTC [3286860] ERROR:  cannot get tuple-level statistics for relation "test_foreign_table"
+2023-07-25 19:18:28.058 UTC [3286860] DETAIL:  This operation is not supported for foreign tables.
+2023-07-25 19:18:28.058 UTC [3286860] STATEMENT:  select pgstattuple('test_foreign_table');
+2023-07-25 19:18:28.058 UTC [3286860] ERROR:  relation "test_foreign_table" is of wrong relation kind
+2023-07-25 19:18:28.058 UTC [3286860] DETAIL:  This operation is not supported for foreign tables.
+2023-07-25 19:18:28.058 UTC [3286860] STATEMENT:  select pgstattuple_approx('test_foreign_table');
+2023-07-25 19:18:28.058 UTC [3286860] ERROR:  cannot get page count of relation "test_foreign_table"
+2023-07-25 19:18:28.058 UTC [3286860] DETAIL:  This operation is not supported for foreign tables.
+2023-07-25 19:18:28.058 UTC [3286860] STATEMENT:  select pg_relpages('test_foreign_table');
+2023-07-25 19:18:28.059 UTC [3286860] ERROR:  relation "test_foreign_table" is not a btree index
+2023-07-25 19:18:28.059 UTC [3286860] STATEMENT:  select pgstatindex('test_foreign_table');
+2023-07-25 19:18:28.059 UTC [3286860] ERROR:  relation "test_foreign_table" is not a GIN index
+2023-07-25 19:18:28.059 UTC [3286860] STATEMENT:  select pgstatginindex('test_foreign_table');
+2023-07-25 19:18:28.060 UTC [3286860] ERROR:  "test_foreign_table" is not an index
+2023-07-25 19:18:28.060 UTC [3286860] STATEMENT:  select pgstathashindex('test_foreign_table');
+2023-07-25 19:18:28.077 UTC [3286860] ERROR:  relation "test_partition" is not a btree index
+2023-07-25 19:18:28.077 UTC [3286860] STATEMENT:  select pgstatindex('test_partition');
+2023-07-25 19:18:28.077 UTC [3286860] ERROR:  relation "test_partition" is not a GIN index
+2023-07-25 19:18:28.077 UTC [3286860] STATEMENT:  select pgstatginindex('test_partition');
+2023-07-25 19:18:28.078 UTC [3286860] ERROR:  "test_partition" is not an index
+2023-07-25 19:18:28.078 UTC [3286860] STATEMENT:  select pgstathashindex('test_partition');
+2023-07-25 19:18:28.297 UTC [3286844] LOG:  received SIGHUP, reloading configuration files
+2023-07-25 19:18:28.299 UTC [3286844] LOG:  parameter "session_preload_libraries" changed to "pgextwlist"
+2023-07-25 19:18:28.299 UTC [3286844] LOG:  parameter "extwlist.extensions" changed to "citext,earthdistance,pg_trgm,pg_stat_statements,refint"
+2023-07-25 19:18:28.299 UTC [3286844] LOG:  parameter "extwlist.custom_path" changed to "/home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/test-scripts"
+2023-07-25 19:18:28.422 UTC [3286886] ERROR:  extension "plpgsql" already exists
+2023-07-25 19:18:28.422 UTC [3286886] STATEMENT:  CREATE EXTENSION plpgsql;
+2023-07-25 19:18:28.423 UTC [3286886] ERROR:  extension "hstore" does not exist
+2023-07-25 19:18:28.423 UTC [3286886] STATEMENT:  COMMENT ON EXTENSION hstore IS 'plpgsql comment';
+2023-07-25 19:18:28.426 UTC [3286886] ERROR:  permission denied to create extension "hstore"
+2023-07-25 19:18:28.426 UTC [3286886] HINT:  Must have CREATE privilege on current database to create this extension.
+2023-07-25 19:18:28.426 UTC [3286886] STATEMENT:  CREATE EXTENSION hstore;
+2023-07-25 19:18:28.427 UTC [3286886] ERROR:  extension "hstore" does not exist
+2023-07-25 19:18:28.427 UTC [3286886] STATEMENT:  COMMENT ON EXTENSION hstore IS 'hstore comment';
+2023-07-25 19:18:28.428 UTC [3286886] ERROR:  required extension "cube" is not installed
+2023-07-25 19:18:28.428 UTC [3286886] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-25 19:18:28.428 UTC [3286886] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-25 19:18:28.429 UTC [3286886] ERROR:  must be owner of extension plpgsql
+2023-07-25 19:18:28.429 UTC [3286886] STATEMENT:  DROP EXTENSION plpgsql;
+2023-07-25 19:18:28.476 UTC [3286894] ERROR:  cannot drop extension citext because other objects depend on it
+2023-07-25 19:18:28.476 UTC [3286894] DETAIL:  column t of table mere_table depends on type citext
+2023-07-25 19:18:28.476 UTC [3286894] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 19:18:28.476 UTC [3286894] STATEMENT:  DROP EXTENSION citext;

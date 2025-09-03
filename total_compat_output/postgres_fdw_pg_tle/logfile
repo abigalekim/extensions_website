@@ -1,0 +1,567 @@
+2023-07-26 04:53:41.863 UTC [3402532] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 04:53:41.863 UTC [3402532] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 04:53:41.874 UTC [3402532] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 04:53:41.889 UTC [3402535] LOG:  database system was shut down at 2023-07-26 04:53:41 UTC
+2023-07-26 04:53:41.897 UTC [3402532] LOG:  database system is ready to accept connections
+2023-07-26 04:53:42.340 UTC [3402551] ERROR:  parameter "extensions" must be a list of extension names
+2023-07-26 04:53:42.340 UTC [3402551] STATEMENT:  ALTER SERVER testserver1 OPTIONS (ADD extensions 'foo; bar');
+2023-07-26 04:53:42.341 UTC [3402551] WARNING:  extension "foo" is not installed
+2023-07-26 04:53:42.341 UTC [3402551] WARNING:  extension "bar" is not installed
+2023-07-26 04:53:42.351 UTC [3402551] ERROR:  invalid option "sslmode"
+2023-07-26 04:53:42.351 UTC [3402551] HINT:  Valid options in this context are: user, password, sslpassword, password_required, sslcert, sslkey
+2023-07-26 04:53:42.351 UTC [3402551] STATEMENT:  ALTER USER MAPPING FOR public SERVER testserver1
+		OPTIONS (ADD sslmode 'require');
+2023-07-26 04:53:42.398 UTC [3402553] FATAL:  database "no such database" does not exist
+2023-07-26 04:53:42.398 UTC [3402551] ERROR:  could not connect to server "loopback"
+2023-07-26 04:53:42.398 UTC [3402551] DETAIL:  connection to server on socket "/tmp/.s.PGSQL.5432" failed: FATAL:  database "no such database" does not exist
+2023-07-26 04:53:42.398 UTC [3402551] STATEMENT:  SELECT c3, c4 FROM ft1 ORDER BY c3, c1 LIMIT 1;
+2023-07-26 04:53:42.414 UTC [3402555] FATAL:  role "no such user" does not exist
+2023-07-26 04:53:42.414 UTC [3402551] ERROR:  could not connect to server "loopback"
+2023-07-26 04:53:42.414 UTC [3402551] DETAIL:  connection to server on socket "/tmp/.s.PGSQL.5432" failed: FATAL:  role "no such user" does not exist
+2023-07-26 04:53:42.414 UTC [3402551] STATEMENT:  SELECT c3, c4 FROM ft1 ORDER BY c3, c1 LIMIT 1;
+2023-07-26 04:53:42.458 UTC [3402551] ERROR:  cannot add relation "ft1" to publication
+2023-07-26 04:53:42.458 UTC [3402551] DETAIL:  This operation is not supported for foreign tables.
+2023-07-26 04:53:42.458 UTC [3402551] STATEMENT:  CREATE PUBLICATION testpub_ftbl FOR TABLE ft1;
+2023-07-26 04:53:44.113 UTC [3402551] ERROR:  "reindex_foreign" is not a table or materialized view
+2023-07-26 04:53:44.113 UTC [3402551] STATEMENT:  REINDEX TABLE reindex_foreign;
+2023-07-26 04:53:44.114 UTC [3402551] ERROR:  "reindex_foreign" is not a table or materialized view
+2023-07-26 04:53:44.114 UTC [3402551] STATEMENT:  REINDEX TABLE CONCURRENTLY reindex_foreign;
+2023-07-26 04:53:44.143 UTC [3402551] ERROR:  invalid input syntax for type integer: "foo"
+2023-07-26 04:53:44.143 UTC [3402551] CONTEXT:  column "x8" of foreign table "ftx"
+2023-07-26 04:53:44.143 UTC [3402551] STATEMENT:  SELECT * FROM ft1 ftx(x1,x2,x3,x4,x5,x6,x7,x8) WHERE x1 = 1;
+2023-07-26 04:53:44.147 UTC [3402551] ERROR:  invalid input syntax for type integer: "foo"
+2023-07-26 04:53:44.147 UTC [3402551] CONTEXT:  column "x8" of foreign table "ftx"
+2023-07-26 04:53:44.147 UTC [3402551] STATEMENT:  SELECT ftx.x1, ft2.c2, ftx.x8 FROM ft1 ftx(x1,x2,x3,x4,x5,x6,x7,x8), ft2
+	  WHERE ftx.x1 = ft2.c1 AND ftx.x1 = 1;
+2023-07-26 04:53:44.152 UTC [3402551] ERROR:  invalid input syntax for type integer: "foo"
+2023-07-26 04:53:44.152 UTC [3402551] CONTEXT:  whole-row reference to foreign table "ftx"
+2023-07-26 04:53:44.152 UTC [3402551] STATEMENT:  SELECT ftx.x1, ft2.c2, ftx FROM ft1 ftx(x1,x2,x3,x4,x5,x6,x7,x8), ft2
+	  WHERE ftx.x1 = ft2.c1 AND ftx.x1 = 1;
+2023-07-26 04:53:44.157 UTC [3402551] ERROR:  invalid input syntax for type integer: "foo"
+2023-07-26 04:53:44.157 UTC [3402551] CONTEXT:  processing expression at position 2 in select list
+2023-07-26 04:53:44.157 UTC [3402551] STATEMENT:  SELECT sum(c2), array_agg(c8) FROM ft1 GROUP BY c8;
+2023-07-26 04:53:44.160 UTC [3402551] ERROR:  invalid input syntax for type integer: "foo"
+2023-07-26 04:53:44.160 UTC [3402551] CONTEXT:  column "c8" of foreign table "ft1"
+2023-07-26 04:53:44.160 UTC [3402551] STATEMENT:  ANALYZE ft1;
+2023-07-26 04:53:44.176 UTC [3402571] ERROR:  operator does not exist: public.user_enum ~~ unknown at character 92
+2023-07-26 04:53:44.176 UTC [3402571] HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+2023-07-26 04:53:44.176 UTC [3402571] STATEMENT:  DECLARE c1 CURSOR FOR
+	SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE ((c8 ~~ 'foo')) LIMIT 1::bigint
+2023-07-26 04:53:44.177 UTC [3402551] ERROR:  operator does not exist: public.user_enum ~~ unknown
+2023-07-26 04:53:44.177 UTC [3402551] HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+2023-07-26 04:53:44.177 UTC [3402551] CONTEXT:  remote SQL command: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE ((c8 ~~ 'foo')) LIMIT 1::bigint
+2023-07-26 04:53:44.177 UTC [3402551] STATEMENT:  SELECT * FROM ft1 WHERE c8 LIKE 'foo' LIMIT 1;
+2023-07-26 04:53:44.178 UTC [3402571] ERROR:  operator does not exist: public.user_enum ~~ unknown at character 92
+2023-07-26 04:53:44.178 UTC [3402571] HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+2023-07-26 04:53:44.178 UTC [3402571] STATEMENT:  DECLARE c1 CURSOR FOR
+	SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE ((c8 ~~ 'foo')) LIMIT 1::bigint
+2023-07-26 04:53:44.178 UTC [3402551] ERROR:  operator does not exist: public.user_enum ~~ unknown
+2023-07-26 04:53:44.178 UTC [3402551] HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+2023-07-26 04:53:44.178 UTC [3402551] CONTEXT:  remote SQL command: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE ((c8 ~~ 'foo')) LIMIT 1::bigint
+2023-07-26 04:53:44.178 UTC [3402551] STATEMENT:  SELECT * FROM ft1 WHERE c8::text LIKE 'foo' LIMIT 1;
+2023-07-26 04:53:44.187 UTC [3402551] ERROR:  syntax error at or near "ERROR" at character 1
+2023-07-26 04:53:44.187 UTC [3402551] STATEMENT:  ERROR OUT;
+2023-07-26 04:53:44.191 UTC [3402571] ERROR:  division by zero
+2023-07-26 04:53:44.191 UTC [3402571] STATEMENT:  FETCH 100 FROM c2
+2023-07-26 04:53:44.191 UTC [3402551] ERROR:  division by zero
+2023-07-26 04:53:44.191 UTC [3402551] CONTEXT:  remote SQL command: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE (((1 / ("C 1" - 1)) > 0))
+2023-07-26 04:53:44.191 UTC [3402551] STATEMENT:  SELECT * FROM ft1 WHERE 1 / (c1 - 1) > 0;
+2023-07-26 04:53:44.674 UTC [3402573] ERROR:  duplicate key value violates unique constraint "t1_pkey"
+2023-07-26 04:53:44.674 UTC [3402573] DETAIL:  Key ("C 1")=(11) already exists.
+2023-07-26 04:53:44.674 UTC [3402573] STATEMENT:  INSERT INTO "S 1"."T 1"("C 1", c2, c3, c4, c5, c6, c7, c8) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+2023-07-26 04:53:44.674 UTC [3402551] ERROR:  duplicate key value violates unique constraint "t1_pkey"
+2023-07-26 04:53:44.674 UTC [3402551] DETAIL:  Key ("C 1")=(11) already exists.
+2023-07-26 04:53:44.674 UTC [3402551] CONTEXT:  remote SQL command: INSERT INTO "S 1"."T 1"("C 1", c2, c3, c4, c5, c6, c7, c8) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+2023-07-26 04:53:44.674 UTC [3402551] STATEMENT:  INSERT INTO ft1(c1, c2) VALUES(11, 12);
+2023-07-26 04:53:44.676 UTC [3402551] ERROR:  there is no unique or exclusion constraint matching the ON CONFLICT specification
+2023-07-26 04:53:44.676 UTC [3402551] STATEMENT:  INSERT INTO ft1(c1, c2) VALUES(11, 12) ON CONFLICT (c1, c2) DO NOTHING;
+2023-07-26 04:53:44.676 UTC [3402551] ERROR:  there is no unique or exclusion constraint matching the ON CONFLICT specification
+2023-07-26 04:53:44.676 UTC [3402551] STATEMENT:  INSERT INTO ft1(c1, c2) VALUES(11, 12) ON CONFLICT (c1, c2) DO UPDATE SET c3 = 'ffg';
+2023-07-26 04:53:44.677 UTC [3402573] ERROR:  new row for relation "T 1" violates check constraint "c2positive"
+2023-07-26 04:53:44.677 UTC [3402573] DETAIL:  Failing row contains (1111, -2, null, null, null, null, ft1       , null).
+2023-07-26 04:53:44.677 UTC [3402573] STATEMENT:  INSERT INTO "S 1"."T 1"("C 1", c2, c3, c4, c5, c6, c7, c8) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+2023-07-26 04:53:44.677 UTC [3402551] ERROR:  new row for relation "T 1" violates check constraint "c2positive"
+2023-07-26 04:53:44.677 UTC [3402551] DETAIL:  Failing row contains (1111, -2, null, null, null, null, ft1       , null).
+2023-07-26 04:53:44.677 UTC [3402551] CONTEXT:  remote SQL command: INSERT INTO "S 1"."T 1"("C 1", c2, c3, c4, c5, c6, c7, c8) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+2023-07-26 04:53:44.677 UTC [3402551] STATEMENT:  INSERT INTO ft1(c1, c2) VALUES(1111, -2);
+2023-07-26 04:53:44.678 UTC [3402573] ERROR:  new row for relation "T 1" violates check constraint "c2positive"
+2023-07-26 04:53:44.678 UTC [3402573] DETAIL:  Failing row contains (1, -1, 00001_trig_update, 1970-01-02 08:00:00+00, 1970-01-02 00:00:00, 1, 1         , foo).
+2023-07-26 04:53:44.678 UTC [3402573] STATEMENT:  UPDATE "S 1"."T 1" SET c2 = (- c2) WHERE (("C 1" = 1))
+2023-07-26 04:53:44.678 UTC [3402551] ERROR:  new row for relation "T 1" violates check constraint "c2positive"
+2023-07-26 04:53:44.678 UTC [3402551] DETAIL:  Failing row contains (1, -1, 00001_trig_update, 1970-01-02 08:00:00+00, 1970-01-02 00:00:00, 1, 1         , foo).
+2023-07-26 04:53:44.678 UTC [3402551] CONTEXT:  remote SQL command: UPDATE "S 1"."T 1" SET c2 = (- c2) WHERE (("C 1" = 1))
+2023-07-26 04:53:44.678 UTC [3402551] STATEMENT:  UPDATE ft1 SET c2 = -c2 WHERE c1 = 1;
+2023-07-26 04:53:44.721 UTC [3402573] ERROR:  new row for relation "T 1" violates check constraint "c2positive"
+2023-07-26 04:53:44.721 UTC [3402573] DETAIL:  Failing row contains (10, -2, 00010_trig_update_trig_update, 1970-01-11 08:00:00+00, 1970-01-11 00:00:00, 0, 0         , foo).
+2023-07-26 04:53:44.721 UTC [3402573] STATEMENT:  UPDATE "S 1"."T 1" SET c2 = (-2) WHERE ((c2 = 42)) AND (("C 1" = 10))
+2023-07-26 04:53:44.721 UTC [3402551] ERROR:  new row for relation "T 1" violates check constraint "c2positive"
+2023-07-26 04:53:44.721 UTC [3402551] DETAIL:  Failing row contains (10, -2, 00010_trig_update_trig_update, 1970-01-11 08:00:00+00, 1970-01-11 00:00:00, 0, 0         , foo).
+2023-07-26 04:53:44.721 UTC [3402551] CONTEXT:  remote SQL command: UPDATE "S 1"."T 1" SET c2 = (-2) WHERE ((c2 = 42)) AND (("C 1" = 10))
+2023-07-26 04:53:44.721 UTC [3402551] STATEMENT:  update ft2 set c2 = -2 where c2 = 42 and c1 = 10;
+2023-07-26 04:53:44.783 UTC [3402573] ERROR:  new row for relation "T 1" violates check constraint "c2positive"
+2023-07-26 04:53:44.783 UTC [3402573] DETAIL:  Failing row contains (1111, -2, null, null, null, null, ft1       , null).
+2023-07-26 04:53:44.783 UTC [3402573] STATEMENT:  INSERT INTO "S 1"."T 1"("C 1", c2, c3, c4, c5, c6, c7, c8) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+2023-07-26 04:53:44.783 UTC [3402551] ERROR:  new row for relation "T 1" violates check constraint "c2positive"
+2023-07-26 04:53:44.783 UTC [3402551] DETAIL:  Failing row contains (1111, -2, null, null, null, null, ft1       , null).
+2023-07-26 04:53:44.783 UTC [3402551] CONTEXT:  remote SQL command: INSERT INTO "S 1"."T 1"("C 1", c2, c3, c4, c5, c6, c7, c8) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+2023-07-26 04:53:44.783 UTC [3402551] STATEMENT:  INSERT INTO ft1(c1, c2) VALUES(1111, -2);
+2023-07-26 04:53:44.784 UTC [3402573] ERROR:  new row for relation "T 1" violates check constraint "c2positive"
+2023-07-26 04:53:44.784 UTC [3402573] DETAIL:  Failing row contains (1, -1, 00001_trig_update, 1970-01-02 08:00:00+00, 1970-01-02 00:00:00, 1, 1         , foo).
+2023-07-26 04:53:44.784 UTC [3402573] STATEMENT:  UPDATE "S 1"."T 1" SET c2 = (- c2) WHERE (("C 1" = 1))
+2023-07-26 04:53:44.785 UTC [3402551] ERROR:  new row for relation "T 1" violates check constraint "c2positive"
+2023-07-26 04:53:44.785 UTC [3402551] DETAIL:  Failing row contains (1, -1, 00001_trig_update, 1970-01-02 08:00:00+00, 1970-01-02 00:00:00, 1, 1         , foo).
+2023-07-26 04:53:44.785 UTC [3402551] CONTEXT:  remote SQL command: UPDATE "S 1"."T 1" SET c2 = (- c2) WHERE (("C 1" = 1))
+2023-07-26 04:53:44.785 UTC [3402551] STATEMENT:  UPDATE ft1 SET c2 = -c2 WHERE c1 = 1;
+2023-07-26 04:53:44.848 UTC [3402551] ERROR:  new row violates check option for view "rw_view"
+2023-07-26 04:53:44.848 UTC [3402551] DETAIL:  Failing row contains (10, 5).
+2023-07-26 04:53:44.848 UTC [3402551] STATEMENT:  INSERT INTO rw_view VALUES (0, 5);
+2023-07-26 04:53:44.862 UTC [3402551] ERROR:  new row violates check option for view "rw_view"
+2023-07-26 04:53:44.862 UTC [3402551] DETAIL:  Failing row contains (20, 20).
+2023-07-26 04:53:44.862 UTC [3402551] STATEMENT:  UPDATE rw_view SET b = b + 5;
+2023-07-26 04:53:44.891 UTC [3402551] ERROR:  new row violates check option for view "rw_view"
+2023-07-26 04:53:44.891 UTC [3402551] DETAIL:  Failing row contains (10, 5).
+2023-07-26 04:53:44.891 UTC [3402551] STATEMENT:  INSERT INTO rw_view VALUES (0, 15), (0, 5);
+2023-07-26 04:53:44.977 UTC [3402551] ERROR:  new row violates check option for view "rw_view"
+2023-07-26 04:53:44.977 UTC [3402551] DETAIL:  Failing row contains (10, 5).
+2023-07-26 04:53:44.977 UTC [3402551] STATEMENT:  INSERT INTO rw_view VALUES (0, 5);
+2023-07-26 04:53:44.991 UTC [3402551] ERROR:  new row violates check option for view "rw_view"
+2023-07-26 04:53:44.991 UTC [3402551] DETAIL:  Failing row contains (20, 20).
+2023-07-26 04:53:44.991 UTC [3402551] STATEMENT:  UPDATE rw_view SET b = b + 5;
+2023-07-26 04:53:45.023 UTC [3402551] ERROR:  new row violates check option for view "rw_view"
+2023-07-26 04:53:45.023 UTC [3402551] DETAIL:  Failing row contains (10, 5).
+2023-07-26 04:53:45.023 UTC [3402551] STATEMENT:  INSERT INTO rw_view VALUES (0, 15), (0, 5);
+2023-07-26 04:53:46.143 UTC [3402551] ERROR:  WHERE CURRENT OF is not supported for this table type
+2023-07-26 04:53:46.143 UTC [3402551] STATEMENT:  update bar set f2 = null where current of c;
+2023-07-26 04:53:46.441 UTC [3402551] ERROR:  cannot execute MERGE on relation "remp1"
+2023-07-26 04:53:46.441 UTC [3402551] DETAIL:  This operation is not supported for foreign tables.
+2023-07-26 04:53:46.441 UTC [3402551] STATEMENT:  merge into itrtest using (select 1, 'foo') as source on (true)
+	  when matched then do nothing;
+2023-07-26 04:53:46.460 UTC [3402551] ERROR:  there is no unique or exclusion constraint matching the ON CONFLICT specification
+2023-07-26 04:53:46.460 UTC [3402551] STATEMENT:  insert into itrtest values (1, 'bar') on conflict (a) do nothing;
+2023-07-26 04:53:46.461 UTC [3402551] ERROR:  there is no unique or exclusion constraint matching the ON CONFLICT specification
+2023-07-26 04:53:46.461 UTC [3402551] STATEMENT:  insert into itrtest values (1, 'bar') on conflict (a) do update set b = excluded.b;
+2023-07-26 04:53:46.598 UTC [3402579] ERROR:  new row for relation "loct" violates check constraint "loct_a_check"
+2023-07-26 04:53:46.598 UTC [3402579] DETAIL:  Failing row contains (2, foo).
+2023-07-26 04:53:46.598 UTC [3402579] STATEMENT:  UPDATE public.loct SET a = 2 WHERE ((b = 'foo')) RETURNING a, b
+2023-07-26 04:53:46.599 UTC [3402551] ERROR:  new row for relation "loct" violates check constraint "loct_a_check"
+2023-07-26 04:53:46.599 UTC [3402551] DETAIL:  Failing row contains (2, foo).
+2023-07-26 04:53:46.599 UTC [3402551] CONTEXT:  remote SQL command: UPDATE public.loct SET a = 2 WHERE ((b = 'foo')) RETURNING a, b
+2023-07-26 04:53:46.599 UTC [3402551] STATEMENT:  update utrtest set a = 2 where b = 'foo' returning *;
+2023-07-26 04:53:46.601 UTC [3402551] ERROR:  cannot route tuples into foreign table to be updated "remp"
+2023-07-26 04:53:46.601 UTC [3402551] STATEMENT:  update utrtest set a = 1 where b = 'qux' returning *;
+2023-07-26 04:53:46.631 UTC [3402551] ERROR:  cannot route tuples into foreign table to be updated "remp"
+2023-07-26 04:53:46.631 UTC [3402551] STATEMENT:  update utrtest set a = 1 where a = 1 or a = 2 returning *;
+2023-07-26 04:53:46.672 UTC [3402551] ERROR:  cannot route tuples into foreign table to be updated "remp"
+2023-07-26 04:53:46.672 UTC [3402551] STATEMENT:  update utrtest set a = 1 returning *;
+2023-07-26 04:53:46.691 UTC [3402551] ERROR:  cannot route tuples into foreign table to be updated "remp"
+2023-07-26 04:53:46.691 UTC [3402551] STATEMENT:  update utrtest set a = 1 from (values (1), (2)) s(x) where a = s.x returning *;
+2023-07-26 04:53:46.732 UTC [3402551] ERROR:  cannot route tuples into foreign table to be updated "remp"
+2023-07-26 04:53:46.732 UTC [3402551] STATEMENT:  update utrtest set a = 3 returning *;
+2023-07-26 04:53:46.735 UTC [3402551] ERROR:  cannot route tuples into foreign table to be updated "remp"
+2023-07-26 04:53:46.735 UTC [3402551] STATEMENT:  update utrtest set a = 3 from (values (2), (3)) s(x) where a = s.x returning *;
+2023-07-26 04:53:46.888 UTC [3402579] ERROR:  new row for relation "loc2" violates check constraint "loc2_f1positive"
+2023-07-26 04:53:46.888 UTC [3402579] DETAIL:  Failing row contains (-1, xyzzy).
+2023-07-26 04:53:46.888 UTC [3402579] STATEMENT:  INSERT INTO public.loc2(f1, f2) VALUES ($1, $2)
+2023-07-26 04:53:46.889 UTC [3402551] ERROR:  new row for relation "loc2" violates check constraint "loc2_f1positive"
+2023-07-26 04:53:46.889 UTC [3402551] DETAIL:  Failing row contains (-1, xyzzy).
+2023-07-26 04:53:46.889 UTC [3402551] CONTEXT:  remote SQL command: INSERT INTO public.loc2(f1, f2) VALUES ($1, $2)
+	COPY rem2, line 1: "-1	xyzzy"
+2023-07-26 04:53:46.889 UTC [3402551] STATEMENT:  copy rem2 from stdin;
+2023-07-26 04:53:47.234 UTC [3402551] ERROR:  foreign table "tru_ftable" does not allow truncates
+2023-07-26 04:53:47.234 UTC [3402551] STATEMENT:  TRUNCATE tru_ftable;
+2023-07-26 04:53:47.264 UTC [3402551] ERROR:  foreign table "tru_ftable" does not allow truncates
+2023-07-26 04:53:47.264 UTC [3402551] STATEMENT:  TRUNCATE tru_ftable;
+2023-07-26 04:53:47.273 UTC [3402551] ERROR:  foreign table "tru_ftable" does not allow truncates
+2023-07-26 04:53:47.273 UTC [3402551] STATEMENT:  TRUNCATE tru_ftable;
+2023-07-26 04:53:47.334 UTC [3402581] ERROR:  cannot truncate a table referenced in a foreign key constraint
+2023-07-26 04:53:47.334 UTC [3402581] DETAIL:  Table "tru_fk_table" references "tru_pk_table".
+2023-07-26 04:53:47.334 UTC [3402581] HINT:  Truncate table "tru_fk_table" at the same time, or use TRUNCATE ... CASCADE.
+2023-07-26 04:53:47.334 UTC [3402581] STATEMENT:  TRUNCATE public.tru_pk_table CONTINUE IDENTITY RESTRICT
+2023-07-26 04:53:47.334 UTC [3402551] ERROR:  cannot truncate a table referenced in a foreign key constraint
+2023-07-26 04:53:47.334 UTC [3402551] DETAIL:  Table "tru_fk_table" references "tru_pk_table".
+2023-07-26 04:53:47.334 UTC [3402551] HINT:  Truncate table "tru_fk_table" at the same time, or use TRUNCATE ... CASCADE.
+2023-07-26 04:53:47.334 UTC [3402551] CONTEXT:  remote SQL command: TRUNCATE public.tru_pk_table CONTINUE IDENTITY RESTRICT
+2023-07-26 04:53:47.334 UTC [3402551] STATEMENT:  TRUNCATE tru_pk_ftable;
+NOTICE:  truncate cascades to table "tru_fk_table"
+NOTICE:  truncate cascades to table "tru_fk_table"
+2023-07-26 04:53:47.751 UTC [3402551] ERROR:  relation "t1" already exists
+2023-07-26 04:53:47.751 UTC [3402551] CONTEXT:  importing foreign table "t1"
+2023-07-26 04:53:47.751 UTC [3402551] STATEMENT:  IMPORT FOREIGN SCHEMA import_source FROM SERVER loopback INTO import_dest4;
+2023-07-26 04:53:47.752 UTC [3402551] ERROR:  schema "nonesuch" is not present on foreign server "loopback"
+2023-07-26 04:53:47.752 UTC [3402551] STATEMENT:  IMPORT FOREIGN SCHEMA nonesuch FROM SERVER loopback INTO import_dest4;
+2023-07-26 04:53:47.752 UTC [3402551] ERROR:  schema "notthere" does not exist
+2023-07-26 04:53:47.752 UTC [3402551] STATEMENT:  IMPORT FOREIGN SCHEMA nonesuch FROM SERVER loopback INTO notthere;
+2023-07-26 04:53:47.752 UTC [3402551] ERROR:  server "nowhere" does not exist
+2023-07-26 04:53:47.752 UTC [3402551] STATEMENT:  IMPORT FOREIGN SCHEMA nonesuch FROM SERVER nowhere INTO notthere;
+2023-07-26 04:53:47.766 UTC [3402551] ERROR:  type "public.Colors" does not exist at character 137
+2023-07-26 04:53:47.766 UTC [3402551] QUERY:  CREATE FOREIGN TABLE t5 (
+	  c1 integer OPTIONS (column_name 'c1'),
+	  c2 text OPTIONS (column_name 'c2') COLLATE pg_catalog."C",
+	  "Col" public."Colors" OPTIONS (column_name 'Col')
+	) SERVER loopback
+	OPTIONS (schema_name 'import_source', table_name 't5');
+2023-07-26 04:53:47.766 UTC [3402551] CONTEXT:  importing foreign table "t5"
+2023-07-26 04:53:47.766 UTC [3402551] STATEMENT:  IMPORT FOREIGN SCHEMA import_source LIMIT TO (t5)
+	  FROM SERVER loopback INTO import_dest5;
+2023-07-26 04:53:48.340 UTC [3402551] ERROR:  password is required
+2023-07-26 04:53:48.340 UTC [3402551] DETAIL:  Non-superusers must provide a password in the user mapping.
+2023-07-26 04:53:48.340 UTC [3402551] STATEMENT:  SELECT 1 FROM ft1_nopw LIMIT 1;
+2023-07-26 04:53:48.341 UTC [3402551] ERROR:  invalid option "password"
+2023-07-26 04:53:48.341 UTC [3402551] HINT:  Valid options in this context are: service, passfile, channel_binding, connect_timeout, dbname, host, hostaddr, port, options, application_name, keepalives, keepalives_idle, keepalives_interval, keepalives_count, tcp_user_timeout, sslmode, sslcompression, sslcert, sslkey, sslrootcert, sslcrl, sslcrldir, sslsni, requirepeer, ssl_min_protocol_version, ssl_max_protocol_version, gssencmode, krbsrvname, gsslib, target_session_attrs, use_remote_estimate, fdw_startup_cost, fdw_tuple_cost, extensions, updatable, truncatable, fetch_size, batch_size, async_capable, parallel_commit, keep_connections
+2023-07-26 04:53:48.341 UTC [3402551] CONTEXT:  SQL statement "ALTER SERVER loopback_nopw OPTIONS (ADD password 'dummypw')"
+	PL/pgSQL function inline_code_block line 3 at EXECUTE
+2023-07-26 04:53:48.341 UTC [3402551] STATEMENT:  DO $d$
+	    BEGIN
+	        EXECUTE $$ALTER SERVER loopback_nopw OPTIONS (ADD password 'dummypw')$$;
+	    END;
+	$d$;
+2023-07-26 04:53:48.352 UTC [3402551] ERROR:  password is required
+2023-07-26 04:53:48.352 UTC [3402551] DETAIL:  Non-superuser cannot connect if the server does not request a password.
+2023-07-26 04:53:48.352 UTC [3402551] HINT:  Target server's authentication method must be changed or password_required=false set in the user mapping attributes.
+2023-07-26 04:53:48.352 UTC [3402551] STATEMENT:  SELECT 1 FROM ft1_nopw LIMIT 1;
+2023-07-26 04:53:48.353 UTC [3402551] ERROR:  password_required=false is superuser-only
+2023-07-26 04:53:48.353 UTC [3402551] HINT:  User mappings with the password_required option set to false may only be created or modified by the superuser.
+2023-07-26 04:53:48.353 UTC [3402551] STATEMENT:  ALTER USER MAPPING FOR CURRENT_USER SERVER loopback_nopw OPTIONS (ADD password_required 'false');
+2023-07-26 04:53:48.355 UTC [3402551] ERROR:  password is required
+2023-07-26 04:53:48.355 UTC [3402551] DETAIL:  Non-superuser cannot connect if the server does not request a password.
+2023-07-26 04:53:48.355 UTC [3402551] HINT:  Target server's authentication method must be changed or password_required=false set in the user mapping attributes.
+2023-07-26 04:53:48.355 UTC [3402551] STATEMENT:  SELECT 1 FROM ft1_nopw LIMIT 1;
+2023-07-26 04:53:48.370 UTC [3402551] ERROR:  sslcert and sslkey are superuser-only
+2023-07-26 04:53:48.370 UTC [3402551] HINT:  User mappings with the sslcert or sslkey options set may only be created or modified by the superuser.
+2023-07-26 04:53:48.370 UTC [3402551] STATEMENT:  ALTER USER MAPPING FOR CURRENT_USER SERVER loopback_nopw OPTIONS (ADD sslcert 'foo.crt');
+2023-07-26 04:53:48.370 UTC [3402551] ERROR:  sslcert and sslkey are superuser-only
+2023-07-26 04:53:48.370 UTC [3402551] HINT:  User mappings with the sslcert or sslkey options set may only be created or modified by the superuser.
+2023-07-26 04:53:48.370 UTC [3402551] STATEMENT:  ALTER USER MAPPING FOR CURRENT_USER SERVER loopback_nopw OPTIONS (ADD sslkey 'foo.key');
+2023-07-26 04:53:48.372 UTC [3402551] ERROR:  password is required
+2023-07-26 04:53:48.372 UTC [3402551] DETAIL:  Non-superusers must provide a password in the user mapping.
+2023-07-26 04:53:48.372 UTC [3402551] STATEMENT:  SELECT 1 FROM ft1_nopw LIMIT 1;
+2023-07-26 04:53:48.397 UTC [3402551] ERROR:  cannot PREPARE a transaction that has operated on postgres_fdw foreign tables
+2023-07-26 04:53:48.397 UTC [3402551] STATEMENT:  PREPARE TRANSACTION 'fdw_tpc';
+2023-07-26 04:53:48.398 UTC [3402551] WARNING:  there is no transaction in progress
+2023-07-26 04:53:48.416 UTC [3402588] FATAL:  terminating connection due to administrator command
+2023-07-26 04:53:48.533 UTC [3402589] FATAL:  terminating connection due to administrator command
+2023-07-26 04:53:48.634 UTC [3402551] ERROR:  FATAL:  terminating connection due to administrator command
+	server closed the connection unexpectedly
+		This probably means the server terminated abnormally
+		before or while processing the request.
+2023-07-26 04:53:48.634 UTC [3402551] CONTEXT:  remote SQL command: SAVEPOINT s2
+2023-07-26 04:53:48.634 UTC [3402551] STATEMENT:  SELECT 1 FROM ft1 LIMIT 1;
+2023-07-26 04:53:48.697 UTC [3402551] WARNING:  cannot close connection for server "loopback" because it is still in use
+2023-07-26 04:53:48.698 UTC [3402551] WARNING:  cannot close connection for server "loopback2" because it is still in use
+2023-07-26 04:53:48.699 UTC [3402551] WARNING:  cannot close connection for server "loopback" because it is still in use
+2023-07-26 04:53:48.702 UTC [3402551] ERROR:  server "unknownserver" does not exist
+2023-07-26 04:53:48.702 UTC [3402551] STATEMENT:  SELECT postgres_fdw_disconnect('unknownserver');
+2023-07-26 04:53:49.232 UTC [3402551] ERROR:  cannot route tuples into foreign table to be updated "batch_cp_upd_test1_f"
+2023-07-26 04:53:49.232 UTC [3402551] STATEMENT:  UPDATE batch_cp_upd_test t SET a = 1 FROM (VALUES (1), (2)) s(a) WHERE t.a = s.a;
+2023-07-26 04:53:50.591 UTC [3402551] ERROR:  invalid value for floating point option "fdw_startup_cost": 100$%$#$#
+2023-07-26 04:53:50.591 UTC [3402551] STATEMENT:  CREATE SERVER inv_scst FOREIGN DATA WRAPPER postgres_fdw
+		OPTIONS(fdw_startup_cost '100$%$#$#');
+2023-07-26 04:53:50.592 UTC [3402551] ERROR:  invalid value for floating point option "fdw_tuple_cost": 100$%$#$#
+2023-07-26 04:53:50.592 UTC [3402551] STATEMENT:  CREATE SERVER inv_scst FOREIGN DATA WRAPPER postgres_fdw
+		OPTIONS(fdw_tuple_cost '100$%$#$#');
+2023-07-26 04:53:50.593 UTC [3402551] ERROR:  invalid value for integer option "fetch_size": 100$%$#$#
+2023-07-26 04:53:50.593 UTC [3402551] STATEMENT:  CREATE FOREIGN TABLE inv_fsz (c1 int )
+		SERVER loopback OPTIONS (fetch_size '100$%$#$#');
+2023-07-26 04:53:50.594 UTC [3402551] ERROR:  invalid value for integer option "batch_size": 100$%$#$#
+2023-07-26 04:53:50.594 UTC [3402551] STATEMENT:  CREATE FOREIGN TABLE inv_bsz (c1 int )
+		SERVER loopback OPTIONS (batch_size '100$%$#$#');
+2023-07-26 04:53:50.595 UTC [3402551] ERROR:  invalid option "nonexistent"
+2023-07-26 04:53:50.595 UTC [3402551] HINT:  There are no valid options in this context.
+2023-07-26 04:53:50.595 UTC [3402551] STATEMENT:  ALTER FOREIGN DATA WRAPPER postgres_fdw OPTIONS (nonexistent 'fdw');
+2023-07-26 04:53:50.974 UTC [3402532] LOG:  received SIGHUP, reloading configuration files
+2023-07-26 04:53:51.010 UTC [3402532] LOG:  received SIGHUP, reloading configuration files
+2023-07-26 04:53:51.012 UTC [3402532] LOG:  parameter "pgtle.enable_password_check" changed to "on"
+2023-07-26 04:53:51.100 UTC [3402532] LOG:  received SIGHUP, reloading configuration files
+2023-07-26 04:53:51.100 UTC [3402532] LOG:  parameter "pgtle.enable_password_check" changed to "require"
+2023-07-26 04:53:51.105 UTC [3402625] ERROR:  "pgtle.enable_password_check" feature is set to require, however no entries exist in "pgtle.feature_info" with the feature "passcheck"
+2023-07-26 04:53:51.113 UTC [3402625] ERROR:  Passwords needs to be longer than 8
+2023-07-26 04:53:51.128 UTC [3402625] ERROR:  Passwords needs to be longer than 8
+2023-07-26 04:53:51.132 UTC [3402625] ERROR:  permission denied for table feature_info
+2023-07-26 04:53:51.132 UTC [3402625] STATEMENT:  INSERT INTO pgtle.feature_info VALUES ('passcheck', 'testuser_2', 'unpriv_function_passcheck', 'public.unpriv_function_passcheck(pg_catalog.text,pg_catalog.text,pgtle.password_types,timestamp with time zone,boolean)');
+2023-07-26 04:53:51.132 UTC [3402625] ERROR:  permission denied for function register_feature
+2023-07-26 04:53:51.132 UTC [3402625] STATEMENT:  SELECT pgtle.register_feature('testuser_2.unpriv_function_passcheck', 'passcheck');
+2023-07-26 04:53:51.132 UTC [3402625] ERROR:  permission denied for function unregister_feature
+2023-07-26 04:53:51.132 UTC [3402625] STATEMENT:  SELECT pgtle.unregister_feature('password_check_length_greater_than_8', 'passcheck');
+2023-07-26 04:53:51.132 UTC [3402625] ERROR:  permission denied for table feature_info
+2023-07-26 04:53:51.132 UTC [3402625] STATEMENT:  DELETE FROM pgtle.feature_info where feature = 'passcheck';
+2023-07-26 04:53:51.141 UTC [3402625] ERROR:  Passwords can only have numbers
+2023-07-26 04:53:51.174 UTC [3402625] ERROR:  table, schema, and proname must be present in "pgtle.feature_info"
+2023-07-26 04:53:51.175 UTC [3402625] ERROR:  duplicate key value violates unique constraint "feature_info_pkey"
+2023-07-26 04:53:51.175 UTC [3402625] DETAIL:  Key (feature, schema_name, proname)=(passcheck, public, password_check_length_greater_than_8) already exists.
+2023-07-26 04:53:51.175 UTC [3402625] CONTEXT:  SQL statement "INSERT INTO pgtle.feature_info VALUES (feature, proc_schema_name, proname, ident)"
+	PL/pgSQL function pgtle.register_feature(regproc,pgtle.pg_tle_features) line 24 at SQL statement
+2023-07-26 04:53:51.175 UTC [3402625] STATEMENT:  SELECT pgtle.register_feature('password_check_length_greater_than_8', 'passcheck');
+2023-07-26 04:53:51.184 UTC [3402625] ERROR:  Could not unregister "password_check_length_greater_than_8": does not exist.
+2023-07-26 04:53:51.184 UTC [3402625] CONTEXT:  PL/pgSQL function pgtle.unregister_feature(regproc,pgtle.pg_tle_features) line 44 at RAISE
+2023-07-26 04:53:51.184 UTC [3402625] STATEMENT:  SELECT pgtle.unregister_feature('password_check_length_greater_than_8', 'passcheck');
+2023-07-26 04:53:51.221 UTC [3402625] ERROR:  "passcheck" feature does not support calling out to functions/schemas that contain ";"
+2023-07-26 04:53:51.221 UTC [3402625] HINT:  Check the "pgtle.feature_info" table does not contain ';'.
+2023-07-26 04:53:51.250 UTC [3402532] LOG:  received SIGHUP, reloading configuration files
+2023-07-26 04:53:51.252 UTC [3402532] LOG:  parameter "pgtle.enable_password_check" removed from configuration file, reset to default
+2023-07-26 04:53:51.276 UTC [3402625] ERROR:  Function is referenced in pgtle.feature_info
+2023-07-26 04:53:51.276 UTC [3402625] CONTEXT:  PL/pgSQL function pgtle.pg_tle_feature_info_sql_drop() line 27 at RAISE
+2023-07-26 04:53:51.276 UTC [3402625] STATEMENT:  DROP SCHEMA pass CASCADE;
+2023-07-26 04:53:51.446 UTC [3402629] ERROR:  permission denied for function superuser_only
+2023-07-26 04:53:51.446 UTC [3402629] STATEMENT:  CREATE EXTENSION test_no_switch_to_superuser_when_trusted;
+2023-07-26 04:53:51.447 UTC [3402629] ERROR:  must be owner of extension test123
+2023-07-26 04:53:51.447 UTC [3402629] STATEMENT:  DROP EXTENSION test123;
+2023-07-26 04:53:51.448 UTC [3402629] ERROR:  must be owner of function test123_func
+2023-07-26 04:53:51.448 UTC [3402629] STATEMENT:  DROP FUNCTION test123_func();
+2023-07-26 04:53:51.449 UTC [3402629] ERROR:  must be owner of extension test123
+2023-07-26 04:53:51.449 UTC [3402629] STATEMENT:  DROP EXTENSION test123;
+2023-07-26 04:53:51.450 UTC [3402629] ERROR:  must be owner of function test123_func
+2023-07-26 04:53:51.450 UTC [3402629] STATEMENT:  DROP FUNCTION test123_func();
+2023-07-26 04:53:51.451 UTC [3402629] ERROR:  extension "test123" already installed
+2023-07-26 04:53:51.451 UTC [3402629] STATEMENT:  SELECT pgtle.install_extension
+	(
+	 'test123',
+	 '1.1',
+	 'Test TLE Functions',
+	$_pgtle_$
+	  CREATE OR REPLACE FUNCTION test123_func()
+	  RETURNS INT AS $$
+	  (
+	    SELECT 42
+	  )$$ LANGUAGE sql;
+	  CREATE OR REPLACE FUNCTION test123_func_2()
+	  RETURNS INT AS $$
+	  (
+	    SELECT 424242
+	  )$$ LANGUAGE sql;
+	$_pgtle_$
+	);
+2023-07-26 04:53:51.474 UTC [3402629] ERROR:  permission denied for schema pgtle
+2023-07-26 04:53:51.474 UTC [3402629] STATEMENT:  CREATE OR REPLACE FUNCTION pgtle.foo()
+	RETURNS TEXT AS $$
+	SELECT 'ok'
+	$$ LANGUAGE sql;
+2023-07-26 04:53:51.479 UTC [3402629] ERROR:  pgtle schema reserved for pg_tle functions
+2023-07-26 04:53:51.479 UTC [3402629] STATEMENT:  ALTER FUNCTION public.pg_tlefoo() SET SCHEMA pgtle;
+2023-07-26 04:53:51.485 UTC [3402629] ERROR:  control file already exists for the plpgsql extension
+2023-07-26 04:53:51.485 UTC [3402629] STATEMENT:  SELECT pgtle.install_extension
+	(
+	 'plpgsql',
+	 '1.0',
+	 'Test TLE Functions',
+	$_pgtle_$
+	  CREATE OR REPLACE FUNCTION test123_func()
+	  RETURNS INT AS $$
+	  (
+	    SELECT 42
+	  )$$ LANGUAGE sql;
+	$_pgtle_$
+	);
+2023-07-26 04:53:51.485 UTC [3402629] ERROR:  altering pg_tle functions in pgtle schema not allowed
+2023-07-26 04:53:51.485 UTC [3402629] STATEMENT:  ALTER FUNCTION pgtle.install_extension
+	(
+	  name text,
+	  version text,
+	  description text,
+	  ext text,
+	  requires text[]
+	)
+	SET search_path TO 'public';
+2023-07-26 04:53:51.532 UTC [3402629] ERROR:  extension "new_ext" update path "1.0-1.1" already installed
+2023-07-26 04:53:51.532 UTC [3402629] HINT:  To update this specific install path, first use "pgtle.uninstall_update_path".
+2023-07-26 04:53:51.532 UTC [3402629] STATEMENT:  SELECT pgtle.install_update_path
+	(
+	 'new_ext',
+	 '1.0',
+	 '1.1',
+	$_pgtle_$
+	  CREATE OR REPLACE FUNCTION fun()
+	  RETURNS INT AS $$ SELECT 2; $$ LANGUAGE SQL;
+	$_pgtle_$
+	);
+2023-07-26 04:53:51.547 UTC [3402629] ERROR:  Extension new_ext does not exist
+2023-07-26 04:53:51.547 UTC [3402629] CONTEXT:  PL/pgSQL function uninstall_update_path(text,text,text) line 16 at RAISE
+2023-07-26 04:53:51.547 UTC [3402629] STATEMENT:  SELECT pgtle.uninstall_update_path('new_ext', '1.1', '1.0');
+2023-07-26 04:53:51.588 UTC [3402629] ERROR:  extension and version do not exist
+2023-07-26 04:53:51.588 UTC [3402629] HINT:  Try installing the extension with "pgtle.install_extension".
+2023-07-26 04:53:51.588 UTC [3402629] STATEMENT:  SELECT pgtle.set_default_version('new_ext', '1.2');
+2023-07-26 04:53:51.592 UTC [3402629] ERROR:  extension and version do not exist
+2023-07-26 04:53:51.592 UTC [3402629] HINT:  Try installing the extension with "pgtle.install_extension".
+2023-07-26 04:53:51.592 UTC [3402629] STATEMENT:  SELECT pgtle.set_default_version('bogus', '1.2');
+2023-07-26 04:53:51.612 UTC [3402629] ERROR:  syntax error in extension control function for "broken_ext"
+2023-07-26 04:53:51.612 UTC [3402629] DETAIL:  Could not parse extension control function "pgtle"."broken_ext.control".
+2023-07-26 04:53:51.612 UTC [3402629] HINT:  You may need to reinstall the extension to correct this error.
+2023-07-26 04:53:51.612 UTC [3402629] STATEMENT:  SELECT * FROM pgtle.available_extensions();
+2023-07-26 04:53:51.619 UTC [3402629] ERROR:  Extension bogus does not exist
+2023-07-26 04:53:51.619 UTC [3402629] CONTEXT:  PL/pgSQL function uninstall_extension(text) line 18 at RAISE
+2023-07-26 04:53:51.619 UTC [3402629] STATEMENT:  SELECT pgtle.uninstall_extension('bogus');
+2023-07-26 04:53:51.656 UTC [3402629] ERROR:  version "2.0" of extension "test42" already installed
+2023-07-26 04:53:51.656 UTC [3402629] STATEMENT:  SELECT pgtle.install_extension_version_sql
+	(
+	 'test42',
+	 '2.0',
+	$_pgtle_$
+	  CREATE OR REPLACE FUNCTION test42_func()
+	  RETURNS INT AS $$
+	  (
+	    SELECT 4242
+	  )$$ LANGUAGE sql;
+	$_pgtle_$
+	);
+2023-07-26 04:53:51.662 UTC [3402629] ERROR:  Can not uninstall default version of extension test42, use set_default_version to update the default to another available version and retry
+2023-07-26 04:53:51.662 UTC [3402629] CONTEXT:  PL/pgSQL function uninstall_extension(text,text) line 28 at RAISE
+2023-07-26 04:53:51.662 UTC [3402629] STATEMENT:  SELECT pgtle.uninstall_extension('test42', '1.0');
+2023-07-26 04:53:51.675 UTC [3402629] ERROR:  Version test42 of extension 3.0 is not installed and therefore can not be uninstalled
+2023-07-26 04:53:51.675 UTC [3402629] CONTEXT:  PL/pgSQL function uninstall_extension(text,text) line 50 at RAISE
+2023-07-26 04:53:51.675 UTC [3402629] STATEMENT:  SELECT pgtle.uninstall_extension('test42', '3.0');
+2023-07-26 04:53:51.732 UTC [3402629] ERROR:  role "pgtle_admin" cannot be dropped because some objects depend on it
+2023-07-26 04:53:51.732 UTC [3402629] DETAIL:  15 objects in database contrib_regression
+2023-07-26 04:53:51.732 UTC [3402629] STATEMENT:  DROP ROLE pgtle_admin;
+2023-07-26 04:53:51.785 UTC [3402635] ERROR:  invalid character in extension definition
+2023-07-26 04:53:51.785 UTC [3402635] DETAIL:  Use of string delimiters "$_pgtle_o_$" and "$_pgtle_i_$" are forbidden in extension definitions.
+2023-07-26 04:53:51.785 UTC [3402635] HINT:  This may be an attempt at a SQL injection attack. Please verify your installation file.
+2023-07-26 04:53:51.785 UTC [3402635] STATEMENT:  SELECT pgtle.install_extension
+	(
+	 'test_hax',
+	 '1.0',
+	 $$hax$_pgtle_i_$ $_pgtle_o_$ LANGUAGE SQL; ALTER ROLE bad_actor SUPERUSER; CREATE OR REPLACE FUNCTION haha() RETURNS TEXT AS $_pgtle_o_$ SELECT $_pgtle_i_$ $$,
+	$_pgtle_$
+	  CREATE OR REPLACE FUNCTION basic_func()
+	  RETURNS INT AS $$
+	    SELECT 1;
+	  $$ LANGUAGE SQL;
+	$_pgtle_$
+	);
+2023-07-26 04:53:51.786 UTC [3402635] ERROR:  invalid character in extension definition
+2023-07-26 04:53:51.786 UTC [3402635] DETAIL:  Use of string delimiters "$_pgtle_o_$" and "$_pgtle_i_$" are forbidden in extension definitions.
+2023-07-26 04:53:51.786 UTC [3402635] HINT:  This may be an attempt at a SQL injection attack. Please verify your installation file.
+2023-07-26 04:53:51.786 UTC [3402635] STATEMENT:  SELECT pgtle.install_extension
+	(
+	 'test_hax',
+	 '1.0',
+	 'hax',
+	$_pgtle_$ $_pgtle_i_$ $_pgtle_o_$ ALTER ROLE bad_actor SUPERUSER; $_pgtle_o_$ $_pgtle_i_$
+	  CREATE OR REPLACE FUNCTION basic_func()
+	  RETURNS INT AS $$
+	    SELECT 1;
+	  $$ LANGUAGE SQL;
+	$_pgtle_$
+	);
+2023-07-26 04:53:51.790 UTC [3402635] ERROR:  invalid character in extension update definition
+2023-07-26 04:53:51.790 UTC [3402635] DETAIL:  Use of string delimiters "$_pgtle_o_$" and "$_pgtle_i_$" are forbidden in extension definitions.
+2023-07-26 04:53:51.790 UTC [3402635] HINT:  This may be an attempt at a SQL injection attack. Please verify your installation file.
+2023-07-26 04:53:51.790 UTC [3402635] STATEMENT:  SELECT pgtle.install_update_path
+	(
+	 'legit_100',
+	 '1.0',
+	 '1.1',
+	$_pgtle_$ $_pgtle_i_$ ; $_pgtle_o_$ LANGUAGE SQL; ALTER ROLE bad_actor SUPERUSER; CREATE FUNCTiON hax() RETURNS text AS $_pgtle_o_$ SELECT $_pgtle_i_$
+	 CREATE OR REPLACE FUNCTION basic_func()
+	 RETURNS INT AS $$
+	   SELECT 2;
+	 $$ LANGUAGE SQL;
+	$_pgtle_$
+	);
+2023-07-26 04:53:51.803 UTC [3402635] ERROR:  invalid character in extension definition
+2023-07-26 04:53:51.803 UTC [3402635] DETAIL:  Use of string delimiters "$_pgtle_o_$" and "$_pgtle_i_$" are forbidden in extension definitions.
+2023-07-26 04:53:51.803 UTC [3402635] HINT:  This may be an attempt at a SQL injection attack. Please verify your installation file.
+2023-07-26 04:53:51.803 UTC [3402635] STATEMENT:  SELECT pgtle.install_extension
+	(
+	 'test_hax',
+	 '1.0',
+	 $$hax$_pgtle_i_$ $_pgtle_o_$ LANGUAGE SQL; ALTER ROLE bad_actor SUPERUSER; CREATE OR REPLACE FUNCTION haha() RETURNS TEXT AS $_pgtle_o_$ SELECT $_pgtle_i_$ $$,
+	$_pgtle_$
+	  CREATE OR REPLACE FUNCTION basic_func()
+	  RETURNS INT AS $$
+	    SELECT 1;
+	  $$ LANGUAGE SQL;
+	$_pgtle_$
+	);
+2023-07-26 04:53:51.804 UTC [3402635] ERROR:  invalid character in extension definition
+2023-07-26 04:53:51.804 UTC [3402635] DETAIL:  Use of string delimiters "$_pgtle_o_$" and "$_pgtle_i_$" are forbidden in extension definitions.
+2023-07-26 04:53:51.804 UTC [3402635] HINT:  This may be an attempt at a SQL injection attack. Please verify your installation file.
+2023-07-26 04:53:51.804 UTC [3402635] STATEMENT:  SELECT pgtle.install_extension
+	(
+	 'test_hax',
+	 '1.0',
+	 'hax',
+	$_pgtle_$ $_pgtle_i_$ $_pgtle_o_$ ALTER ROLE bad_actor SUPERUSER; $_pgtle_o_$ $_pgtle_i_$
+	  CREATE OR REPLACE FUNCTION basic_func()
+	  RETURNS INT AS $$
+	    SELECT 1;
+	  $$ LANGUAGE SQL;
+	$_pgtle_$
+	);
+2023-07-26 04:53:51.810 UTC [3402635] ERROR:  invalid character in extension update definition
+2023-07-26 04:53:51.810 UTC [3402635] DETAIL:  Use of string delimiters "$_pgtle_o_$" and "$_pgtle_i_$" are forbidden in extension definitions.
+2023-07-26 04:53:51.810 UTC [3402635] HINT:  This may be an attempt at a SQL injection attack. Please verify your installation file.
+2023-07-26 04:53:51.810 UTC [3402635] STATEMENT:  SELECT pgtle.install_update_path
+	(
+	 'legit_100',
+	 '1.0',
+	 '1.1',
+	$_pgtle_$ $_pgtle_i_$ ; $_pgtle_o_$ LANGUAGE SQL; ALTER ROLE bad_actor SUPERUSER; CREATE FUNCTiON hax() RETURNS text AS $_pgtle_o_$ SELECT $_pgtle_i_$
+	 CREATE OR REPLACE FUNCTION basic_func()
+	 RETURNS INT AS $$
+	   SELECT 2;
+	 $$ LANGUAGE SQL;
+	$_pgtle_$
+	);
+2023-07-26 04:53:51.815 UTC [3402635] ERROR:  invalid extension name: "test9.control"(),pg_sleep(10),pgtle."test9"
+2023-07-26 04:53:51.815 UTC [3402635] DETAIL:  Extension names must only contain alphanumeric characters or valid separators.
+2023-07-26 04:53:51.815 UTC [3402635] STATEMENT:  SELECT pgtle.install_extension
+	(
+	 'test9.control"(),pg_sleep(10),pgtle."test9',
+	 '0.1',
+	 'comment',
+	$_pg_tle_$
+	    CREATE FUNCTION dist(x1 numeric, y1 numeric, x2 numeric, y2 numeric, l numeric)
+	    RETURNS numeric
+	    AS $$
+	      SELECT ((x2 ^ l - x1 ^ l) ^ (1 / l)) + ((y2 ^ l - y1 ^ l) ^ (1 / l));
+	    $$ LANGUAGE SQL;
+	$_pg_tle_$
+	);
+2023-07-26 04:53:51.828 UTC [3402635] ERROR:  role "pgtle_admin" cannot be dropped because some objects depend on it
+2023-07-26 04:53:51.828 UTC [3402635] DETAIL:  15 objects in database contrib_regression
+2023-07-26 04:53:51.828 UTC [3402635] STATEMENT:  DROP ROLE pgtle_admin;
+2023-07-26 04:53:51.904 UTC [3402641] ERROR:  permission denied for schema public
+2023-07-26 04:53:51.904 UTC [3402641] STATEMENT:  CREATE EXTENSION no_features;
+2023-07-26 04:53:51.938 UTC [3402641] ERROR:  must be owner of extension no_features
+2023-07-26 04:53:51.938 UTC [3402641] STATEMENT:  DROP EXTENSION no_features;
+2023-07-26 04:53:51.949 UTC [3402641] ERROR:  permission denied for function register_feature
+2023-07-26 04:53:51.949 UTC [3402641] STATEMENT:  CREATE EXTENSION yes_features;
+2023-07-26 04:53:51.954 UTC [3402641] ERROR:  permission denied for table feature_info
+2023-07-26 04:53:51.954 UTC [3402641] STATEMENT:  INSERT INTO pgtle.feature_info VALUES ('passcheck', 'public', 'other_passcheck_hook', '');
+2023-07-26 04:53:51.954 UTC [3402641] ERROR:  must have admin option on role "pgtle_admin"
+2023-07-26 04:53:51.954 UTC [3402641] STATEMENT:  GRANT pgtle_admin to tle_person;
+2023-07-26 04:53:51.974 UTC [3402641] ERROR:  permission denied for function unregister_feature
+2023-07-26 04:53:51.974 UTC [3402641] STATEMENT:  SELECT pgtle.unregister_feature('passcheck_hook', 'passcheck');
+2023-07-26 04:53:51.974 UTC [3402641] ERROR:  permission denied for function unregister_feature
+2023-07-26 04:53:51.974 UTC [3402641] STATEMENT:  SELECT pgtle.unregister_feature('other_passcheck_hook', 'passcheck');
+2023-07-26 04:53:51.975 UTC [3402641] ERROR:  permission denied for table feature_info
+2023-07-26 04:53:51.975 UTC [3402641] STATEMENT:  DELETE FROM pgtle.feature_info WHERE proname = 'passcheck_hook';
+2023-07-26 04:53:51.975 UTC [3402641] ERROR:  permission denied for table feature_info
+2023-07-26 04:53:51.975 UTC [3402641] STATEMENT:  DELETE FROM pgtle.feature_info WHERE proname = 'other_passcheck_hook';
+2023-07-26 04:53:52.009 UTC [3402641] ERROR:  permission denied for schema public
+2023-07-26 04:53:52.009 UTC [3402641] STATEMENT:  CREATE EXTENSION no_features;
+2023-07-26 04:53:52.015 UTC [3402641] ERROR:  permission denied for schema public
+2023-07-26 04:53:52.015 UTC [3402641] STATEMENT:  CREATE EXTENSION no_features;
+2023-07-26 04:53:52.022 UTC [3402641] ERROR:  permission denied for schema public
+2023-07-26 04:53:52.022 UTC [3402641] STATEMENT:  CREATE EXTENSION yes_features;
+2023-07-26 04:53:52.023 UTC [3402641] ERROR:  permission denied for schema public
+2023-07-26 04:53:52.023 UTC [3402641] STATEMENT:  CREATE EXTENSION no_features;
+2023-07-26 04:53:52.060 UTC [3402641] ERROR:  role "pgtle_admin" cannot be dropped because some objects depend on it
+2023-07-26 04:53:52.060 UTC [3402641] DETAIL:  15 objects in database contrib_regression
+2023-07-26 04:53:52.060 UTC [3402641] STATEMENT:  DROP ROLE pgtle_admin;
+2023-07-26 04:53:52.147 UTC [3402649] ERROR:  "requires" limited to 1024 entries for "pg_tle" extensions
+2023-07-26 04:53:52.147 UTC [3402649] STATEMENT:  SELECT pgtle.install_extension
+	(
+	 't',
+	 '1',
+	 '1',
+	$_pg_tle_$
+	CREATE FUNCTION pgtle."test12--0.1FOOBAR.control"()
+	RETURNS void
+	AS $$
+	    BEGIN
+	    RAISE NOTICE 'called';
+	    END
+	$$ LANGUAGE SQL;
+	$_pg_tle_$,
+	'{a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a}'
+	);

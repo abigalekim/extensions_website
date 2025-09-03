@@ -1,0 +1,21 @@
+diff -U3 /home/abigalek/pgext-cli/postgresql-15.3/contrib/hstore_plperl/expected/create_transform.out /home/abigalek/pgext-cli/postgresql-15.3/contrib/hstore_plperl/results/create_transform.out
+--- /home/abigalek/pgext-cli/postgresql-15.3/contrib/hstore_plperl/expected/create_transform.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli/postgresql-15.3/contrib/hstore_plperl/results/create_transform.out	2023-11-25 08:44:53.085670617 +0000
+@@ -52,6 +52,8 @@
+ (3 rows)
+ 
+ ALTER EXTENSION hstore_plperl DROP TRANSFORM FOR hstore LANGUAGE plperl;
++NOTICE:  Citus does not propagate adding/dropping member objects
++HINT:  You can add/drop the member objects on the workers as well.
+ \dx+ hstore_plperl
+ Objects in extension "hstore_plperl"
+          Object description          
+@@ -61,6 +63,8 @@
+ (2 rows)
+ 
+ ALTER EXTENSION hstore_plperl ADD TRANSFORM FOR hstore LANGUAGE plperl;
++NOTICE:  Citus does not propagate adding/dropping member objects
++HINT:  You can add/drop the member objects on the workers as well.
+ \dx+ hstore_plperl
+  Objects in extension "hstore_plperl"
+           Object description          

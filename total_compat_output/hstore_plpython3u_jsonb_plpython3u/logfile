@@ -1,0 +1,19 @@
+2023-07-26 23:43:09.727 UTC [2193122] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 23:43:09.727 UTC [2193122] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 23:43:09.738 UTC [2193122] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 23:43:09.752 UTC [2193125] LOG:  database system was shut down at 2023-07-26 23:43:09 UTC
+2023-07-26 23:43:09.762 UTC [2193122] LOG:  database system is ready to accept connections
+2023-07-26 23:43:09.955 UTC [2193147] ERROR:  not a Python mapping
+2023-07-26 23:43:09.955 UTC [2193147] CONTEXT:  while creating return value
+	PL/Python function "test1bad"
+2023-07-26 23:43:09.955 UTC [2193147] STATEMENT:  SELECT test1bad();
+2023-07-26 23:43:09.980 UTC [2193147] ERROR:  value for domain hstore_foo violates check constraint "hstore_foo_check"
+2023-07-26 23:43:09.980 UTC [2193147] CONTEXT:  while creating return value
+	PL/Python function "test2dom"
+2023-07-26 23:43:09.980 UTC [2193147] STATEMENT:  SELECT test2dom('bar');
+2023-07-26 23:43:10.062 UTC [2193123] LOG:  checkpoint starting: immediate force wait
+2023-07-26 23:43:10.116 UTC [2193123] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.015 s, sync=0.011 s, total=0.054 s; sync files=7, longest=0.006 s, average=0.002 s; distance=4197 kB, estimate=4197 kB
+2023-07-26 23:43:10.327 UTC [2193174] ERROR:  could not convert value "(1+2j)" to jsonb
+2023-07-26 23:43:10.327 UTC [2193174] CONTEXT:  while creating return value
+	PL/Python function "testcomplexnumbers"
+2023-07-26 23:43:10.327 UTC [2193174] STATEMENT:  SELECT testComplexNumbers();

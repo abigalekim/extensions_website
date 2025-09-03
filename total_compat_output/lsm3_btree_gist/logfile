@@ -1,0 +1,38 @@
+2023-07-25 05:05:02.515 UTC [687245] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 05:05:02.515 UTC [687245] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 05:05:02.521 UTC [687245] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 05:05:02.529 UTC [687248] LOG:  database system was shut down at 2023-07-25 05:05:02 UTC
+2023-07-25 05:05:02.533 UTC [687245] LOG:  database system is ready to accept connections
+2023-07-25 05:05:02.733 UTC [687264] LOG:  lsm3_build lsm3_index
+2023-07-25 05:05:02.733 UTC [687264] STATEMENT:  create index lsm3_index on t using lsm3(k);
+2023-07-25 05:05:04.279 UTC [687265] LOG:  Lsm3: merge top index lsm3_index_top0 with size 2 blocks
+2023-07-25 05:05:04.280 UTC [687265] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:05:04.813 UTC [687265] LOG:  Lsm3: merge top index lsm3_index_top1 with size 2 blocks
+2023-07-25 05:05:04.813 UTC [687265] LOG:  Lsm3: truncate index lsm3_index_top1
+2023-07-25 05:05:05.823 UTC [687265] LOG:  Lsm3: merge top index lsm3_index_top0 with size 2 blocks
+2023-07-25 05:05:05.823 UTC [687265] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:05:06.833 UTC [687265] LOG:  Lsm3: merge top index lsm3_index_top1 with size 2 blocks
+2023-07-25 05:05:06.834 UTC [687265] LOG:  Lsm3: truncate index lsm3_index_top1
+2023-07-25 05:05:07.844 UTC [687265] LOG:  Lsm3: merge top index lsm3_index_top0 with size 2 blocks
+2023-07-25 05:05:07.844 UTC [687265] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:05:08.990 UTC [687265] LOG:  Lsm3: merge top index lsm3_index_top1 with size 181 blocks
+2023-07-25 05:05:09.080 UTC [687265] LOG:  Lsm3: truncate index lsm3_index_top1
+2023-07-25 05:05:09.173 UTC [687265] LOG:  Lsm3: merge top index lsm3_index_top0 with size 250 blocks
+2023-07-25 05:05:09.273 UTC [687265] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:05:09.340 UTC [687265] LOG:  Lsm3: merge top index lsm3_index_top1 with size 181 blocks
+2023-07-25 05:05:09.415 UTC [687264] LOG:  lsm3_build lsm3_index
+2023-07-25 05:05:09.415 UTC [687264] STATEMENT:  truncate table t;
+2023-07-25 05:05:10.416 UTC [687265] ERROR:  deadlock detected
+2023-07-25 05:05:10.416 UTC [687265] DETAIL:  Process 687265 waits for AccessShareLock on relation 17680 of database 16384; blocked by process 687264.
+	Process 687264 waits for AccessExclusiveLock on relation 17685 of database 16384; blocked by process 687265.
+	Process 687265: truncate
+	Process 687264: truncate table t;
+2023-07-25 05:05:10.416 UTC [687265] HINT:  See server log for query details.
+2023-07-25 05:05:10.420 UTC [687245] LOG:  background worker "lsm3-merger-17683" (PID 687265) exited with exit code 1
+2023-07-25 05:05:12.517 UTC [687264] LOG:  lsm3_build lsm3_index
+2023-07-25 05:05:12.517 UTC [687264] STATEMENT:  reindex table t;
+2023-07-25 05:05:13.622 UTC [687264] LOG:  lsm3_build lsm_k_idx
+2023-07-25 05:05:13.622 UTC [687264] STATEMENT:  create index concurrently on lsm using lsm3(k);
+2023-07-25 05:05:15.022 UTC [687386] ERROR:  conflicting key value violates exclusion constraint "zoo_cage_animal_excl"
+2023-07-25 05:05:15.022 UTC [687386] DETAIL:  Key (cage, animal)=(123, lion) conflicts with existing key (cage, animal)=(123, zebra).
+2023-07-25 05:05:15.022 UTC [687386] STATEMENT:  INSERT INTO zoo VALUES(123, 'lion');

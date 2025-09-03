@@ -1,0 +1,45 @@
+diff -U3 /home/abigalek/pgext-cli/pgextworkdir/pg_stat_monitor/regression/expected/top_query.out /home/abigalek/pgext-cli/pgextworkdir/pg_stat_monitor/results/top_query.out
+--- /home/abigalek/pgext-cli/pgextworkdir/pg_stat_monitor/regression/expected/top_query.out	2023-11-25 02:46:09.201657712 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/pg_stat_monitor/results/top_query.out	2023-11-25 02:48:04.413244934 +0000
+@@ -24,23 +24,24 @@
+ (1 row)
+ 
+ SELECT query, top_query FROM pg_stat_monitor ORDER BY query COLLATE "C";
+-                            query                             |     top_query     
+---------------------------------------------------------------+-------------------
+- (select $1 + $2)                                             | SELECT add2(1,2);
+- CREATE OR REPLACE FUNCTION add(int, int) RETURNS INTEGER AS +| 
+- $$                                                          +| 
+- BEGIN                                                       +| 
+-         return (select $1 + $2);                            +| 
+- END; $$ language plpgsql                                     | 
+- CREATE OR REPLACE FUNCTION add2(int, int) RETURNS INTEGER AS+| 
+- $$                                                          +| 
+- BEGIN                                                       +| 
+-         return add($1,$2);                                  +| 
+- END;                                                        +| 
+- $$ language plpgsql                                          | 
+- SELECT add2(1,2)                                             | 
+- SELECT pg_stat_monitor_reset()                               | 
+-(5 rows)
++                                                    query                                                    |     top_query     
++-------------------------------------------------------------------------------------------------------------+-------------------
++ (select $1 + $2)                                                                                            | SELECT add2(1,2);
++ CREATE OR REPLACE FUNCTION add(int, int) RETURNS INTEGER AS                                                +| 
++ $$                                                                                                         +| 
++ BEGIN                                                                                                      +| 
++         return (select $1 + $2);                                                                           +| 
++ END; $$ language plpgsql                                                                                    | 
++ CREATE OR REPLACE FUNCTION add2(int, int) RETURNS INTEGER AS                                               +| 
++ $$                                                                                                         +| 
++ BEGIN                                                                                                      +| 
++         return add($1,$2);                                                                                 +| 
++ END;                                                                                                       +| 
++ $$ language plpgsql                                                                                         | 
++ INSERT INTO pg_catalog.pg_dist_object (classid, objid, objsubid) VALUES ($1, $2, $3) ON CONFLICT DO NOTHING | 
++ SELECT add2(1,2)                                                                                            | 
++ SELECT pg_stat_monitor_reset()                                                                              | 
++(6 rows)
+ 
+ SELECT pg_stat_monitor_reset();
+  pg_stat_monitor_reset 

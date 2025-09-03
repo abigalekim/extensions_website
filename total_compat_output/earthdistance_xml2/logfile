@@ -1,0 +1,1969 @@
+2023-07-22 03:40:29.381 UTC [1612227] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:40:29.382 UTC [1612227] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:40:29.387 UTC [1612227] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:40:29.395 UTC [1612230] LOG:  database system was shut down at 2023-07-22 03:40:29 UTC
+2023-07-22 03:40:29.404 UTC [1612227] LOG:  database system is ready to accept connections
+2023-07-22 03:40:29.597 UTC [1612246] ERROR:  file "test_file1" exists
+2023-07-22 03:40:29.597 UTC [1612246] STATEMENT:  SELECT pg_file_write('test_file1', 'test1', false);
+2023-07-22 03:40:29.601 UTC [1612246] ERROR:  path must be in or below the current directory
+2023-07-22 03:40:29.601 UTC [1612246] STATEMENT:  SELECT pg_file_write('../test_file0', 'test0', false);
+2023-07-22 03:40:29.601 UTC [1612246] ERROR:  absolute path not allowed
+2023-07-22 03:40:29.601 UTC [1612246] STATEMENT:  SELECT pg_file_write('/tmp/test_file0', 'test0', false);
+2023-07-22 03:40:29.601 UTC [1612246] ERROR:  absolute path not allowed
+2023-07-22 03:40:29.601 UTC [1612246] STATEMENT:  SELECT pg_file_write(current_setting('data_directory') || '/../test_file4', 'test4', false);
+2023-07-22 03:40:29.610 UTC [1612246] ERROR:  could not stat file "test_file2": No such file or directory
+2023-07-22 03:40:29.610 UTC [1612246] STATEMENT:  SELECT pg_file_sync('test_file2');
+2023-07-22 03:40:29.612 UTC [1612246] ERROR:  could not open file "test_file1" for reading: No such file or directory
+2023-07-22 03:40:29.612 UTC [1612246] STATEMENT:  SELECT pg_read_file('test_file1');
+2023-07-22 03:40:29.613 UTC [1612246] WARNING:  file "test_file1" is not accessible: No such file or directory
+2023-07-22 03:40:29.613 UTC [1612246] CONTEXT:  SQL function "pg_file_rename" statement 1
+2023-07-22 03:40:29.615 UTC [1612246] ERROR:  could not open file "test_file2" for reading: No such file or directory
+2023-07-22 03:40:29.615 UTC [1612246] STATEMENT:  SELECT pg_read_file('test_file2');
+2023-07-22 03:40:29.619 UTC [1612246] ERROR:  permission denied for function pg_file_write
+2023-07-22 03:40:29.619 UTC [1612246] STATEMENT:  SELECT pg_file_write('test_file0', 'test0', false);
+2023-07-22 03:40:29.619 UTC [1612246] ERROR:  permission denied for function pg_file_sync
+2023-07-22 03:40:29.619 UTC [1612246] STATEMENT:  SELECT pg_file_sync('test_file0');
+2023-07-22 03:40:29.620 UTC [1612246] ERROR:  permission denied for function pg_file_rename
+2023-07-22 03:40:29.620 UTC [1612246] CONTEXT:  SQL function "pg_file_rename" statement 1
+2023-07-22 03:40:29.620 UTC [1612246] STATEMENT:  SELECT pg_file_rename('test_file0', 'test_file0');
+2023-07-22 03:40:29.620 UTC [1612246] ERROR:  permission denied for function pg_file_unlink
+2023-07-22 03:40:29.620 UTC [1612246] STATEMENT:  SELECT pg_file_unlink('test_file0');
+2023-07-22 03:40:29.621 UTC [1612246] ERROR:  permission denied for function pg_logdir_ls
+2023-07-22 03:40:29.621 UTC [1612246] STATEMENT:  SELECT pg_logdir_ls();
+2023-07-22 03:40:29.735 UTC [1612261] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:40:29.735 UTC [1612261] STATEMENT:  select xslt_process( query_to_xml('select x from generate_series(1,5) as
+	x',true,false,'')::text,
+	$$<xsl:stylesheet version="1.0"
+	               xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:output method="xml" indent="yes" />
+	<xsl:template match="*">
+	  <xsl:copy>
+	     <xsl:copy-of select="@*" />
+	     <xsl:apply-templates />
+	  </xsl:copy>
+	</xsl:template>
+	<xsl:template match="comment()|processing-instruction()">
+	  <xsl:copy />
+	</xsl:template>
+	</xsl:stylesheet>
+	$$::text);
+2023-07-22 03:40:29.765 UTC [1612261] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:40:29.765 UTC [1612261] STATEMENT:  select xslt_process('<aaa/>',$$<xsl:stylesheet version="1.0"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:template match="@*|node()">
+	      <xsl:copy>
+	         <xsl:apply-templates select="@*|node()"/>
+	      </xsl:copy>
+	   </xsl:template>
+	</xsl:stylesheet>$$)::xml;
+2023-07-22 03:40:29.765 UTC [1612261] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:40:29.765 UTC [1612261] STATEMENT:  select xslt_process('<aaa/>',$$<xsl:stylesheet version="1.0"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:template match="@*|node()">
+	      <xsl:copy>
+	         <xsl:apply-templates select="@*|node()"/>
+	      </xsl:copy>
+	   </xsl:template>
+	</xsl:stylesheet>$$)::xml;
+2023-07-22 03:40:29.783 UTC [1612261] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:40:29.783 UTC [1612261] STATEMENT:  SELECT xslt_process('<employee><name>cim</name><age>30</age><pay>400</pay></employee>'::text, $$<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+	  <xsl:output method="xml" omit-xml-declaration="yes" indent="yes"/>
+	  <xsl:strip-space elements="*"/>
+	  <xsl:param name="n1"/>
+	  <xsl:param name="n2"/>
+	  <xsl:param name="n3"/>
+	  <xsl:param name="n4"/>
+	  <xsl:param name="n5" select="'me'"/>
+	  <xsl:template match="*">
+	    <xsl:element name="samples">
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n1"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n2"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n3"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n4"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n5"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n6"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n7"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n8"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n9"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n10"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n11"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n12"/>
+	      </xsl:element>
+	    </xsl:element>
+	  </xsl:template>
+	</xsl:stylesheet>$$::text, 'n1="v1",n2="v2",n3="v3",n4="v4",n5="v5",n6="v6",n7="v7",n8="v8",n9="v9",n10="v10",n11="v11",n12="v12"'::text);
+2023-07-22 03:40:29.784 UTC [1612261] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:40:29.784 UTC [1612261] STATEMENT:  SELECT xslt_process('<xml><foo>Hello from XML</foo></xml>',
+	$$<xsl:stylesheet version="1.0"
+	      xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+	      xmlns:sax="http://icl.com/saxon"
+	      extension-element-prefixes="sax">
+	
+	  <xsl:template match="//foo">
+	    <sax:output href="0wn3d.txt" method="text">
+	      <xsl:value-of select="'0wn3d via xml2 extension and libxslt'"/>
+	      <xsl:apply-templates/>
+	    </sax:output>
+	  </xsl:template>
+	</xsl:stylesheet>$$);
+2023-07-22 03:41:01.695 UTC [1612228] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:41:02.129 UTC [1612228] LOG:  checkpoint complete: wrote 848 buffers (5.2%); 0 WAL file(s) added, 0 removed, 9 recycled; write=0.035 s, sync=0.061 s, total=0.434 s; sync files=512, longest=0.003 s, average=0.001 s; distance=145142 kB, estimate=145142 kB
+2023-07-22 03:41:33.766 UTC [1612228] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:41:33.813 UTC [1612228] LOG:  checkpoint complete: wrote 10 buffers (0.1%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.007 s, sync=0.004 s, total=0.047 s; sync files=4, longest=0.003 s, average=0.001 s; distance=136710 kB, estimate=144299 kB
+2023-07-22 03:41:33.849 UTC [1612227] LOG:  received fast shutdown request
+2023-07-22 03:41:33.852 UTC [1612227] LOG:  aborting any active transactions
+2023-07-22 03:41:33.853 UTC [1612227] LOG:  background worker "logical replication launcher" (PID 1612233) exited with exit code 1
+2023-07-22 03:41:33.853 UTC [1612228] LOG:  shutting down
+2023-07-22 03:41:33.856 UTC [1612228] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:41:33.873 UTC [1612228] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.004 s, sync=0.001 s, total=0.020 s; sync files=1, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=129869 kB
+2023-07-22 03:41:33.911 UTC [1612227] LOG:  database system is shut down
+2023-07-22 03:41:34.576 UTC [1612335] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:41:34.576 UTC [1612335] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:41:34.582 UTC [1612335] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:41:34.593 UTC [1612338] LOG:  database system was shut down at 2023-07-22 03:41:34 UTC
+2023-07-22 03:41:34.602 UTC [1612335] LOG:  database system is ready to accept connections
+2023-07-22 03:41:35.205 UTC [1612358] ERROR:  permission denied for function bt_index_check
+2023-07-22 03:41:35.205 UTC [1612358] STATEMENT:  SELECT bt_index_check('bttest_a_idx'::regclass);
+2023-07-22 03:41:35.206 UTC [1612358] ERROR:  permission denied for function bt_index_parent_check
+2023-07-22 03:41:35.206 UTC [1612358] STATEMENT:  SELECT bt_index_parent_check('bttest_a_idx'::regclass);
+2023-07-22 03:41:35.237 UTC [1612358] ERROR:  "bttest_a" is not an index
+2023-07-22 03:41:35.237 UTC [1612358] STATEMENT:  SELECT bt_index_check('bttest_a');
+2023-07-22 03:41:35.237 UTC [1612358] ERROR:  "bttest_a" is not an index
+2023-07-22 03:41:35.237 UTC [1612358] STATEMENT:  SELECT bt_index_parent_check('bttest_a');
+2023-07-22 03:41:35.238 UTC [1612358] ERROR:  could not open relation with OID 17
+2023-07-22 03:41:35.238 UTC [1612358] STATEMENT:  SELECT bt_index_check(17);
+2023-07-22 03:41:35.238 UTC [1612358] ERROR:  could not open relation with OID 17
+2023-07-22 03:41:35.238 UTC [1612358] STATEMENT:  SELECT bt_index_parent_check(17);
+2023-07-22 03:41:35.255 UTC [1612358] ERROR:  only B-Tree indexes are supported as targets for verification
+2023-07-22 03:41:35.255 UTC [1612358] DETAIL:  Relation "bttest_a_brin_idx" is not a B-Tree index.
+2023-07-22 03:41:35.255 UTC [1612358] STATEMENT:  SELECT bt_index_parent_check('bttest_a_brin_idx');
+2023-07-22 03:41:35.993 UTC [1612362] ERROR:  invalid skip option
+2023-07-22 03:41:35.993 UTC [1612362] HINT:  Valid skip options are "all-visible", "all-frozen", and "none".
+2023-07-22 03:41:35.993 UTC [1612362] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest', skip := 'rope');
+2023-07-22 03:41:36.007 UTC [1612362] ERROR:  permission denied for function verify_heapam
+2023-07-22 03:41:36.007 UTC [1612362] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest');
+2023-07-22 03:41:36.012 UTC [1612362] ERROR:  ending block number must be between 0 and 0
+2023-07-22 03:41:36.012 UTC [1612362] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest', startblock := 0, endblock := 10000);
+2023-07-22 03:41:36.012 UTC [1612362] ERROR:  starting block number must be between 0 and 0
+2023-07-22 03:41:36.012 UTC [1612362] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest', startblock := 10000, endblock := 11000);
+2023-07-22 03:41:36.021 UTC [1612362] ERROR:  cannot check relation "test_partitioned"
+2023-07-22 03:41:36.021 UTC [1612362] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-22 03:41:36.021 UTC [1612362] STATEMENT:  SELECT * FROM verify_heapam('test_partitioned',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-22 03:41:36.117 UTC [1612362] ERROR:  cannot check relation "test_index"
+2023-07-22 03:41:36.117 UTC [1612362] DETAIL:  This operation is not supported for indexes.
+2023-07-22 03:41:36.117 UTC [1612362] STATEMENT:  SELECT * FROM verify_heapam('test_index',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-22 03:41:36.119 UTC [1612362] ERROR:  cannot check relation "test_view"
+2023-07-22 03:41:36.119 UTC [1612362] DETAIL:  This operation is not supported for views.
+2023-07-22 03:41:36.119 UTC [1612362] STATEMENT:  SELECT * FROM verify_heapam('test_view',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-22 03:41:36.124 UTC [1612362] ERROR:  cannot check relation "test_foreign_table"
+2023-07-22 03:41:36.124 UTC [1612362] DETAIL:  This operation is not supported for foreign tables.
+2023-07-22 03:41:36.124 UTC [1612362] STATEMENT:  SELECT * FROM verify_heapam('test_foreign_table',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-22 03:41:36.142 UTC [1612336] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:41:36.186 UTC [1612336] LOG:  checkpoint complete: wrote 18 buffers (0.1%); 0 WAL file(s) added, 0 removed, 4 recycled; write=0.015 s, sync=0.005 s, total=0.044 s; sync files=14, longest=0.003 s, average=0.001 s; distance=60969 kB, estimate=60969 kB
+2023-07-22 03:41:36.292 UTC [1612377] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:41:36.292 UTC [1612377] STATEMENT:  select xslt_process( query_to_xml('select x from generate_series(1,5) as
+	x',true,false,'')::text,
+	$$<xsl:stylesheet version="1.0"
+	               xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:output method="xml" indent="yes" />
+	<xsl:template match="*">
+	  <xsl:copy>
+	     <xsl:copy-of select="@*" />
+	     <xsl:apply-templates />
+	  </xsl:copy>
+	</xsl:template>
+	<xsl:template match="comment()|processing-instruction()">
+	  <xsl:copy />
+	</xsl:template>
+	</xsl:stylesheet>
+	$$::text);
+2023-07-22 03:41:36.313 UTC [1612377] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:41:36.313 UTC [1612377] STATEMENT:  select xslt_process('<aaa/>',$$<xsl:stylesheet version="1.0"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:template match="@*|node()">
+	      <xsl:copy>
+	         <xsl:apply-templates select="@*|node()"/>
+	      </xsl:copy>
+	   </xsl:template>
+	</xsl:stylesheet>$$)::xml;
+2023-07-22 03:41:36.314 UTC [1612377] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:41:36.314 UTC [1612377] STATEMENT:  select xslt_process('<aaa/>',$$<xsl:stylesheet version="1.0"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:template match="@*|node()">
+	      <xsl:copy>
+	         <xsl:apply-templates select="@*|node()"/>
+	      </xsl:copy>
+	   </xsl:template>
+	</xsl:stylesheet>$$)::xml;
+2023-07-22 03:41:36.334 UTC [1612377] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:41:36.334 UTC [1612377] STATEMENT:  SELECT xslt_process('<employee><name>cim</name><age>30</age><pay>400</pay></employee>'::text, $$<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+	  <xsl:output method="xml" omit-xml-declaration="yes" indent="yes"/>
+	  <xsl:strip-space elements="*"/>
+	  <xsl:param name="n1"/>
+	  <xsl:param name="n2"/>
+	  <xsl:param name="n3"/>
+	  <xsl:param name="n4"/>
+	  <xsl:param name="n5" select="'me'"/>
+	  <xsl:template match="*">
+	    <xsl:element name="samples">
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n1"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n2"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n3"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n4"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n5"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n6"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n7"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n8"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n9"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n10"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n11"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n12"/>
+	      </xsl:element>
+	    </xsl:element>
+	  </xsl:template>
+	</xsl:stylesheet>$$::text, 'n1="v1",n2="v2",n3="v3",n4="v4",n5="v5",n6="v6",n7="v7",n8="v8",n9="v9",n10="v10",n11="v11",n12="v12"'::text);
+2023-07-22 03:41:36.334 UTC [1612377] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:41:36.334 UTC [1612377] STATEMENT:  SELECT xslt_process('<xml><foo>Hello from XML</foo></xml>',
+	$$<xsl:stylesheet version="1.0"
+	      xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+	      xmlns:sax="http://icl.com/saxon"
+	      extension-element-prefixes="sax">
+	
+	  <xsl:template match="//foo">
+	    <sax:output href="0wn3d.txt" method="text">
+	      <xsl:value-of select="'0wn3d via xml2 extension and libxslt'"/>
+	      <xsl:apply-templates/>
+	    </sax:output>
+	  </xsl:template>
+	</xsl:stylesheet>$$);
+2023-07-22 03:42:07.859 UTC [1612336] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:42:07.992 UTC [1612336] LOG:  checkpoint complete: wrote 494 buffers (3.0%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.030 s, sync=0.060 s, total=0.134 s; sync files=255, longest=0.004 s, average=0.001 s; distance=141132 kB, estimate=141132 kB
+2023-07-22 03:42:39.395 UTC [1612336] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:42:39.452 UTC [1612336] LOG:  checkpoint complete: wrote 11 buffers (0.1%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.009 s, sync=0.004 s, total=0.058 s; sync files=4, longest=0.003 s, average=0.001 s; distance=136991 kB, estimate=140718 kB
+2023-07-22 03:42:39.506 UTC [1612335] LOG:  received fast shutdown request
+2023-07-22 03:42:39.510 UTC [1612335] LOG:  aborting any active transactions
+2023-07-22 03:42:39.511 UTC [1612335] LOG:  background worker "logical replication launcher" (PID 1612341) exited with exit code 1
+2023-07-22 03:42:39.511 UTC [1612336] LOG:  shutting down
+2023-07-22 03:42:39.515 UTC [1612336] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:42:39.531 UTC [1612336] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.004 s, sync=0.001 s, total=0.021 s; sync files=1, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=126646 kB
+2023-07-22 03:42:39.550 UTC [1612335] LOG:  database system is shut down
+2023-07-22 03:42:40.387 UTC [1612449] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:42:40.388 UTC [1612449] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:42:40.396 UTC [1612449] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:42:40.404 UTC [1612452] LOG:  database system was shut down at 2023-07-22 03:42:40 UTC
+2023-07-22 03:42:40.413 UTC [1612449] LOG:  database system is ready to accept connections
+2023-07-22 03:42:40.582 UTC [1612466] ERROR:  extension "auth_delay" is not available
+2023-07-22 03:42:40.582 UTC [1612466] DETAIL:  Could not open extension control file "/home/abigalek/pgext-cli-python/pg-15-dist/share/postgresql/extension/auth_delay.control": No such file or directory.
+2023-07-22 03:42:40.582 UTC [1612466] HINT:  The extension must first be installed on the system where PostgreSQL is running.
+2023-07-22 03:42:40.582 UTC [1612466] STATEMENT:  CREATE EXTENSION IF NOT EXISTS "auth_delay"
+2023-07-22 03:42:40.585 UTC [1612449] LOG:  received fast shutdown request
+2023-07-22 03:42:40.590 UTC [1612449] LOG:  aborting any active transactions
+2023-07-22 03:42:40.591 UTC [1612449] LOG:  background worker "logical replication launcher" (PID 1612455) exited with exit code 1
+2023-07-22 03:42:40.591 UTC [1612450] LOG:  shutting down
+2023-07-22 03:42:40.596 UTC [1612450] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:42:40.686 UTC [1612450] LOG:  checkpoint complete: wrote 892 buffers (5.4%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.051 s, sync=0.026 s, total=0.095 s; sync files=252, longest=0.007 s, average=0.001 s; distance=3996 kB, estimate=3996 kB
+2023-07-22 03:42:40.706 UTC [1612449] LOG:  database system is shut down
+2023-07-22 03:42:41.515 UTC [1612495] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:42:41.515 UTC [1612495] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:42:41.523 UTC [1612495] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:42:41.529 UTC [1612498] LOG:  database system was shut down at 2023-07-22 03:42:41 UTC
+2023-07-22 03:42:41.538 UTC [1612495] LOG:  database system is ready to accept connections
+2023-07-22 03:42:41.704 UTC [1612512] ERROR:  extension "auto_explain" is not available
+2023-07-22 03:42:41.704 UTC [1612512] DETAIL:  Could not open extension control file "/home/abigalek/pgext-cli-python/pg-15-dist/share/postgresql/extension/auto_explain.control": No such file or directory.
+2023-07-22 03:42:41.704 UTC [1612512] HINT:  The extension must first be installed on the system where PostgreSQL is running.
+2023-07-22 03:42:41.704 UTC [1612512] STATEMENT:  CREATE EXTENSION IF NOT EXISTS "auto_explain"
+2023-07-22 03:42:41.716 UTC [1612495] LOG:  received fast shutdown request
+2023-07-22 03:42:41.722 UTC [1612495] LOG:  aborting any active transactions
+2023-07-22 03:42:41.725 UTC [1612495] LOG:  background worker "logical replication launcher" (PID 1612501) exited with exit code 1
+2023-07-22 03:42:41.725 UTC [1612496] LOG:  shutting down
+2023-07-22 03:42:41.730 UTC [1612496] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:42:41.812 UTC [1612496] LOG:  checkpoint complete: wrote 892 buffers (5.4%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.040 s, sync=0.028 s, total=0.087 s; sync files=252, longest=0.007 s, average=0.001 s; distance=3996 kB, estimate=3996 kB
+2023-07-22 03:42:41.832 UTC [1612495] LOG:  database system is shut down
+2023-07-22 03:42:42.660 UTC [1612541] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:42:42.661 UTC [1612541] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:42:42.668 UTC [1612541] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:42:42.676 UTC [1612544] LOG:  database system was shut down at 2023-07-22 03:42:42 UTC
+2023-07-22 03:42:42.681 UTC [1612541] LOG:  database system is ready to accept connections
+2023-07-22 03:42:42.852 UTC [1612558] ERROR:  extension "basebackup_to_shell" is not available
+2023-07-22 03:42:42.852 UTC [1612558] DETAIL:  Could not open extension control file "/home/abigalek/pgext-cli-python/pg-15-dist/share/postgresql/extension/basebackup_to_shell.control": No such file or directory.
+2023-07-22 03:42:42.852 UTC [1612558] HINT:  The extension must first be installed on the system where PostgreSQL is running.
+2023-07-22 03:42:42.852 UTC [1612558] STATEMENT:  CREATE EXTENSION IF NOT EXISTS "basebackup_to_shell"
+2023-07-22 03:42:42.855 UTC [1612541] LOG:  received fast shutdown request
+2023-07-22 03:42:42.861 UTC [1612541] LOG:  aborting any active transactions
+2023-07-22 03:42:42.863 UTC [1612541] LOG:  background worker "logical replication launcher" (PID 1612547) exited with exit code 1
+2023-07-22 03:42:42.863 UTC [1612542] LOG:  shutting down
+2023-07-22 03:42:42.869 UTC [1612542] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:42:42.958 UTC [1612542] LOG:  checkpoint complete: wrote 892 buffers (5.4%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.045 s, sync=0.026 s, total=0.095 s; sync files=252, longest=0.007 s, average=0.001 s; distance=3996 kB, estimate=3996 kB
+2023-07-22 03:42:42.963 UTC [1612541] LOG:  database system is shut down
+2023-07-22 03:42:43.784 UTC [1612587] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:42:43.784 UTC [1612587] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:42:43.790 UTC [1612587] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:42:43.800 UTC [1612590] LOG:  database system was shut down at 2023-07-22 03:42:43 UTC
+2023-07-22 03:42:43.810 UTC [1612587] LOG:  database system is ready to accept connections
+2023-07-22 03:42:44.262 UTC [1612588] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:42:44.304 UTC [1612588] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.010 s, sync=0.008 s, total=0.042 s; sync files=7, longest=0.006 s, average=0.002 s; distance=11698 kB, estimate=11698 kB
+2023-07-22 03:42:44.395 UTC [1612619] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:42:44.395 UTC [1612619] STATEMENT:  select xslt_process( query_to_xml('select x from generate_series(1,5) as
+	x',true,false,'')::text,
+	$$<xsl:stylesheet version="1.0"
+	               xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:output method="xml" indent="yes" />
+	<xsl:template match="*">
+	  <xsl:copy>
+	     <xsl:copy-of select="@*" />
+	     <xsl:apply-templates />
+	  </xsl:copy>
+	</xsl:template>
+	<xsl:template match="comment()|processing-instruction()">
+	  <xsl:copy />
+	</xsl:template>
+	</xsl:stylesheet>
+	$$::text);
+2023-07-22 03:42:44.427 UTC [1612619] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:42:44.427 UTC [1612619] STATEMENT:  select xslt_process('<aaa/>',$$<xsl:stylesheet version="1.0"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:template match="@*|node()">
+	      <xsl:copy>
+	         <xsl:apply-templates select="@*|node()"/>
+	      </xsl:copy>
+	   </xsl:template>
+	</xsl:stylesheet>$$)::xml;
+2023-07-22 03:42:44.427 UTC [1612619] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:42:44.427 UTC [1612619] STATEMENT:  select xslt_process('<aaa/>',$$<xsl:stylesheet version="1.0"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:template match="@*|node()">
+	      <xsl:copy>
+	         <xsl:apply-templates select="@*|node()"/>
+	      </xsl:copy>
+	   </xsl:template>
+	</xsl:stylesheet>$$)::xml;
+2023-07-22 03:42:44.445 UTC [1612619] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:42:44.445 UTC [1612619] STATEMENT:  SELECT xslt_process('<employee><name>cim</name><age>30</age><pay>400</pay></employee>'::text, $$<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+	  <xsl:output method="xml" omit-xml-declaration="yes" indent="yes"/>
+	  <xsl:strip-space elements="*"/>
+	  <xsl:param name="n1"/>
+	  <xsl:param name="n2"/>
+	  <xsl:param name="n3"/>
+	  <xsl:param name="n4"/>
+	  <xsl:param name="n5" select="'me'"/>
+	  <xsl:template match="*">
+	    <xsl:element name="samples">
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n1"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n2"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n3"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n4"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n5"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n6"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n7"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n8"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n9"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n10"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n11"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n12"/>
+	      </xsl:element>
+	    </xsl:element>
+	  </xsl:template>
+	</xsl:stylesheet>$$::text, 'n1="v1",n2="v2",n3="v3",n4="v4",n5="v5",n6="v6",n7="v7",n8="v8",n9="v9",n10="v10",n11="v11",n12="v12"'::text);
+2023-07-22 03:42:44.446 UTC [1612619] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:42:44.446 UTC [1612619] STATEMENT:  SELECT xslt_process('<xml><foo>Hello from XML</foo></xml>',
+	$$<xsl:stylesheet version="1.0"
+	      xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+	      xmlns:sax="http://icl.com/saxon"
+	      extension-element-prefixes="sax">
+	
+	  <xsl:template match="//foo">
+	    <sax:output href="0wn3d.txt" method="text">
+	      <xsl:value-of select="'0wn3d via xml2 extension and libxslt'"/>
+	      <xsl:apply-templates/>
+	    </sax:output>
+	  </xsl:template>
+	</xsl:stylesheet>$$);
+2023-07-22 03:43:16.809 UTC [1612588] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:43:16.897 UTC [1612588] LOG:  checkpoint complete: wrote 645 buffers (3.9%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.020 s, sync=0.031 s, total=0.089 s; sync files=255, longest=0.004 s, average=0.001 s; distance=140847 kB, estimate=140847 kB
+2023-07-22 03:43:48.496 UTC [1612588] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:43:48.573 UTC [1612588] LOG:  checkpoint complete: wrote 8 buffers (0.0%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.011 s, sync=0.007 s, total=0.078 s; sync files=4, longest=0.004 s, average=0.002 s; distance=134636 kB, estimate=140226 kB
+2023-07-22 03:43:48.618 UTC [1612587] LOG:  received fast shutdown request
+2023-07-22 03:43:48.624 UTC [1612587] LOG:  aborting any active transactions
+2023-07-22 03:43:48.624 UTC [1612587] LOG:  background worker "logical replication launcher" (PID 1612594) exited with exit code 1
+2023-07-22 03:43:48.625 UTC [1612588] LOG:  shutting down
+2023-07-22 03:43:48.642 UTC [1612588] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:43:48.734 UTC [1612588] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.027 s, sync=0.005 s, total=0.095 s; sync files=1, longest=0.005 s, average=0.005 s; distance=3042 kB, estimate=126508 kB
+2023-07-22 03:43:48.785 UTC [1612587] LOG:  database system is shut down
+2023-07-22 03:43:49.562 UTC [1612685] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:43:49.562 UTC [1612685] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:43:49.571 UTC [1612685] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:43:49.583 UTC [1612688] LOG:  database system was shut down at 2023-07-22 03:43:49 UTC
+2023-07-22 03:43:49.594 UTC [1612685] LOG:  database system is ready to accept connections
+2023-07-22 03:43:49.923 UTC [1612704] ERROR:  value 0 out of bounds for option "length"
+2023-07-22 03:43:49.923 UTC [1612704] DETAIL:  Valid values are between "1" and "4096".
+2023-07-22 03:43:49.923 UTC [1612704] STATEMENT:  CREATE INDEX bloomidx2 ON tst USING bloom (i, t) WITH (length=0);
+2023-07-22 03:43:49.924 UTC [1612704] ERROR:  value 0 out of bounds for option "col1"
+2023-07-22 03:43:49.924 UTC [1612704] DETAIL:  Valid values are between "1" and "4095".
+2023-07-22 03:43:49.924 UTC [1612704] STATEMENT:  CREATE INDEX bloomidx2 ON tst USING bloom (i, t) WITH (col1=0);
+2023-07-22 03:43:49.952 UTC [1612686] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:43:49.991 UTC [1612686] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.012 s, sync=0.009 s, total=0.039 s; sync files=7, longest=0.005 s, average=0.002 s; distance=5194 kB, estimate=5194 kB
+2023-07-22 03:43:50.066 UTC [1612719] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:43:50.066 UTC [1612719] STATEMENT:  select xslt_process( query_to_xml('select x from generate_series(1,5) as
+	x',true,false,'')::text,
+	$$<xsl:stylesheet version="1.0"
+	               xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:output method="xml" indent="yes" />
+	<xsl:template match="*">
+	  <xsl:copy>
+	     <xsl:copy-of select="@*" />
+	     <xsl:apply-templates />
+	  </xsl:copy>
+	</xsl:template>
+	<xsl:template match="comment()|processing-instruction()">
+	  <xsl:copy />
+	</xsl:template>
+	</xsl:stylesheet>
+	$$::text);
+2023-07-22 03:43:50.096 UTC [1612719] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:43:50.096 UTC [1612719] STATEMENT:  select xslt_process('<aaa/>',$$<xsl:stylesheet version="1.0"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:template match="@*|node()">
+	      <xsl:copy>
+	         <xsl:apply-templates select="@*|node()"/>
+	      </xsl:copy>
+	   </xsl:template>
+	</xsl:stylesheet>$$)::xml;
+2023-07-22 03:43:50.096 UTC [1612719] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:43:50.096 UTC [1612719] STATEMENT:  select xslt_process('<aaa/>',$$<xsl:stylesheet version="1.0"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:template match="@*|node()">
+	      <xsl:copy>
+	         <xsl:apply-templates select="@*|node()"/>
+	      </xsl:copy>
+	   </xsl:template>
+	</xsl:stylesheet>$$)::xml;
+2023-07-22 03:43:50.115 UTC [1612719] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:43:50.115 UTC [1612719] STATEMENT:  SELECT xslt_process('<employee><name>cim</name><age>30</age><pay>400</pay></employee>'::text, $$<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+	  <xsl:output method="xml" omit-xml-declaration="yes" indent="yes"/>
+	  <xsl:strip-space elements="*"/>
+	  <xsl:param name="n1"/>
+	  <xsl:param name="n2"/>
+	  <xsl:param name="n3"/>
+	  <xsl:param name="n4"/>
+	  <xsl:param name="n5" select="'me'"/>
+	  <xsl:template match="*">
+	    <xsl:element name="samples">
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n1"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n2"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n3"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n4"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n5"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n6"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n7"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n8"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n9"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n10"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n11"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n12"/>
+	      </xsl:element>
+	    </xsl:element>
+	  </xsl:template>
+	</xsl:stylesheet>$$::text, 'n1="v1",n2="v2",n3="v3",n4="v4",n5="v5",n6="v6",n7="v7",n8="v8",n9="v9",n10="v10",n11="v11",n12="v12"'::text);
+2023-07-22 03:43:50.115 UTC [1612719] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:43:50.115 UTC [1612719] STATEMENT:  SELECT xslt_process('<xml><foo>Hello from XML</foo></xml>',
+	$$<xsl:stylesheet version="1.0"
+	      xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+	      xmlns:sax="http://icl.com/saxon"
+	      extension-element-prefixes="sax">
+	
+	  <xsl:template match="//foo">
+	    <sax:output href="0wn3d.txt" method="text">
+	      <xsl:value-of select="'0wn3d via xml2 extension and libxslt'"/>
+	      <xsl:apply-templates/>
+	    </sax:output>
+	  </xsl:template>
+	</xsl:stylesheet>$$);
+2023-07-22 03:44:22.933 UTC [1612686] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:44:23.076 UTC [1612686] LOG:  checkpoint complete: wrote 899 buffers (5.5%); 0 WAL file(s) added, 0 removed, 9 recycled; write=0.028 s, sync=0.038 s, total=0.144 s; sync files=255, longest=0.014 s, average=0.001 s; distance=137884 kB, estimate=137884 kB
+2023-07-22 03:44:55.062 UTC [1612686] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:44:55.145 UTC [1612686] LOG:  checkpoint complete: wrote 7 buffers (0.0%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.011 s, sync=0.006 s, total=0.083 s; sync files=4, longest=0.005 s, average=0.002 s; distance=133637 kB, estimate=137459 kB
+2023-07-22 03:44:55.194 UTC [1612685] LOG:  received fast shutdown request
+2023-07-22 03:44:55.199 UTC [1612685] LOG:  aborting any active transactions
+2023-07-22 03:44:55.200 UTC [1612685] LOG:  background worker "logical replication launcher" (PID 1612691) exited with exit code 1
+2023-07-22 03:44:55.200 UTC [1612686] LOG:  shutting down
+2023-07-22 03:44:55.203 UTC [1612686] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:44:55.231 UTC [1612686] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.004 s, sync=0.001 s, total=0.031 s; sync files=1, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=123713 kB
+2023-07-22 03:44:55.272 UTC [1612685] LOG:  database system is shut down
+2023-07-22 03:44:56.054 UTC [1612791] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:44:56.055 UTC [1612791] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:44:56.065 UTC [1612791] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:44:56.081 UTC [1612794] LOG:  database system was shut down at 2023-07-22 03:44:55 UTC
+2023-07-22 03:44:56.092 UTC [1612791] LOG:  database system is ready to accept connections
+2023-07-22 03:44:57.597 UTC [1612792] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:44:57.742 UTC [1612792] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 1 WAL file(s) added, 0 removed, 0 recycled; write=0.010 s, sync=0.010 s, total=0.146 s; sync files=7, longest=0.006 s, average=0.002 s; distance=11000 kB, estimate=11000 kB
+2023-07-22 03:44:57.898 UTC [1612941] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:44:57.898 UTC [1612941] STATEMENT:  select xslt_process( query_to_xml('select x from generate_series(1,5) as
+	x',true,false,'')::text,
+	$$<xsl:stylesheet version="1.0"
+	               xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:output method="xml" indent="yes" />
+	<xsl:template match="*">
+	  <xsl:copy>
+	     <xsl:copy-of select="@*" />
+	     <xsl:apply-templates />
+	  </xsl:copy>
+	</xsl:template>
+	<xsl:template match="comment()|processing-instruction()">
+	  <xsl:copy />
+	</xsl:template>
+	</xsl:stylesheet>
+	$$::text);
+2023-07-22 03:44:57.943 UTC [1612941] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:44:57.943 UTC [1612941] STATEMENT:  select xslt_process('<aaa/>',$$<xsl:stylesheet version="1.0"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:template match="@*|node()">
+	      <xsl:copy>
+	         <xsl:apply-templates select="@*|node()"/>
+	      </xsl:copy>
+	   </xsl:template>
+	</xsl:stylesheet>$$)::xml;
+2023-07-22 03:44:57.944 UTC [1612941] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:44:57.944 UTC [1612941] STATEMENT:  select xslt_process('<aaa/>',$$<xsl:stylesheet version="1.0"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:template match="@*|node()">
+	      <xsl:copy>
+	         <xsl:apply-templates select="@*|node()"/>
+	      </xsl:copy>
+	   </xsl:template>
+	</xsl:stylesheet>$$)::xml;
+2023-07-22 03:44:57.974 UTC [1612941] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:44:57.974 UTC [1612941] STATEMENT:  SELECT xslt_process('<employee><name>cim</name><age>30</age><pay>400</pay></employee>'::text, $$<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+	  <xsl:output method="xml" omit-xml-declaration="yes" indent="yes"/>
+	  <xsl:strip-space elements="*"/>
+	  <xsl:param name="n1"/>
+	  <xsl:param name="n2"/>
+	  <xsl:param name="n3"/>
+	  <xsl:param name="n4"/>
+	  <xsl:param name="n5" select="'me'"/>
+	  <xsl:template match="*">
+	    <xsl:element name="samples">
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n1"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n2"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n3"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n4"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n5"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n6"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n7"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n8"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n9"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n10"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n11"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n12"/>
+	      </xsl:element>
+	    </xsl:element>
+	  </xsl:template>
+	</xsl:stylesheet>$$::text, 'n1="v1",n2="v2",n3="v3",n4="v4",n5="v5",n6="v6",n7="v7",n8="v8",n9="v9",n10="v10",n11="v11",n12="v12"'::text);
+2023-07-22 03:44:57.975 UTC [1612941] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:44:57.975 UTC [1612941] STATEMENT:  SELECT xslt_process('<xml><foo>Hello from XML</foo></xml>',
+	$$<xsl:stylesheet version="1.0"
+	      xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+	      xmlns:sax="http://icl.com/saxon"
+	      extension-element-prefixes="sax">
+	
+	  <xsl:template match="//foo">
+	    <sax:output href="0wn3d.txt" method="text">
+	      <xsl:value-of select="'0wn3d via xml2 extension and libxslt'"/>
+	      <xsl:apply-templates/>
+	    </sax:output>
+	  </xsl:template>
+	</xsl:stylesheet>$$);
+2023-07-22 03:45:30.987 UTC [1612792] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:45:31.150 UTC [1612792] LOG:  checkpoint complete: wrote 922 buffers (5.6%); 0 WAL file(s) added, 0 removed, 9 recycled; write=0.055 s, sync=0.026 s, total=0.164 s; sync files=255, longest=0.008 s, average=0.001 s; distance=138116 kB, estimate=138116 kB
+2023-07-22 03:46:03.318 UTC [1612792] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:46:03.398 UTC [1612792] LOG:  checkpoint complete: wrote 7 buffers (0.0%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.010 s, sync=0.008 s, total=0.080 s; sync files=4, longest=0.005 s, average=0.002 s; distance=133785 kB, estimate=137683 kB
+2023-07-22 03:46:03.443 UTC [1612791] LOG:  received fast shutdown request
+2023-07-22 03:46:03.450 UTC [1612791] LOG:  aborting any active transactions
+2023-07-22 03:46:03.451 UTC [1612791] LOG:  background worker "logical replication launcher" (PID 1612797) exited with exit code 1
+2023-07-22 03:46:03.451 UTC [1612792] LOG:  shutting down
+2023-07-22 03:46:03.456 UTC [1612792] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:46:03.480 UTC [1612792] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.006 s, sync=0.002 s, total=0.029 s; sync files=1, longest=0.002 s, average=0.002 s; distance=0 kB, estimate=123915 kB
+2023-07-22 03:46:03.501 UTC [1612791] LOG:  database system is shut down
+2023-07-22 03:46:04.330 UTC [1613016] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:46:04.330 UTC [1613016] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:46:04.339 UTC [1613016] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:46:04.356 UTC [1613019] LOG:  database system was shut down at 2023-07-22 03:46:03 UTC
+2023-07-22 03:46:04.368 UTC [1613016] LOG:  database system is ready to accept connections
+2023-07-22 03:46:05.744 UTC [1613139] ERROR:  conflicting key value violates exclusion constraint "zoo_cage_animal_excl"
+2023-07-22 03:46:05.744 UTC [1613139] DETAIL:  Key (cage, animal)=(123, lion) conflicts with existing key (cage, animal)=(123, zebra).
+2023-07-22 03:46:05.744 UTC [1613139] STATEMENT:  INSERT INTO zoo VALUES(123, 'lion');
+2023-07-22 03:46:05.844 UTC [1613017] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:46:05.893 UTC [1613017] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.014 s, sync=0.011 s, total=0.050 s; sync files=7, longest=0.006 s, average=0.002 s; distance=6319 kB, estimate=6319 kB
+2023-07-22 03:46:06.091 UTC [1613162] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:46:06.091 UTC [1613162] STATEMENT:  select xslt_process( query_to_xml('select x from generate_series(1,5) as
+	x',true,false,'')::text,
+	$$<xsl:stylesheet version="1.0"
+	               xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:output method="xml" indent="yes" />
+	<xsl:template match="*">
+	  <xsl:copy>
+	     <xsl:copy-of select="@*" />
+	     <xsl:apply-templates />
+	  </xsl:copy>
+	</xsl:template>
+	<xsl:template match="comment()|processing-instruction()">
+	  <xsl:copy />
+	</xsl:template>
+	</xsl:stylesheet>
+	$$::text);
+2023-07-22 03:46:06.135 UTC [1613162] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:46:06.135 UTC [1613162] STATEMENT:  select xslt_process('<aaa/>',$$<xsl:stylesheet version="1.0"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:template match="@*|node()">
+	      <xsl:copy>
+	         <xsl:apply-templates select="@*|node()"/>
+	      </xsl:copy>
+	   </xsl:template>
+	</xsl:stylesheet>$$)::xml;
+2023-07-22 03:46:06.135 UTC [1613162] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:46:06.135 UTC [1613162] STATEMENT:  select xslt_process('<aaa/>',$$<xsl:stylesheet version="1.0"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:template match="@*|node()">
+	      <xsl:copy>
+	         <xsl:apply-templates select="@*|node()"/>
+	      </xsl:copy>
+	   </xsl:template>
+	</xsl:stylesheet>$$)::xml;
+2023-07-22 03:46:06.159 UTC [1613162] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:46:06.159 UTC [1613162] STATEMENT:  SELECT xslt_process('<employee><name>cim</name><age>30</age><pay>400</pay></employee>'::text, $$<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+	  <xsl:output method="xml" omit-xml-declaration="yes" indent="yes"/>
+	  <xsl:strip-space elements="*"/>
+	  <xsl:param name="n1"/>
+	  <xsl:param name="n2"/>
+	  <xsl:param name="n3"/>
+	  <xsl:param name="n4"/>
+	  <xsl:param name="n5" select="'me'"/>
+	  <xsl:template match="*">
+	    <xsl:element name="samples">
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n1"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n2"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n3"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n4"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n5"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n6"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n7"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n8"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n9"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n10"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n11"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n12"/>
+	      </xsl:element>
+	    </xsl:element>
+	  </xsl:template>
+	</xsl:stylesheet>$$::text, 'n1="v1",n2="v2",n3="v3",n4="v4",n5="v5",n6="v6",n7="v7",n8="v8",n9="v9",n10="v10",n11="v11",n12="v12"'::text);
+2023-07-22 03:46:06.160 UTC [1613162] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:46:06.160 UTC [1613162] STATEMENT:  SELECT xslt_process('<xml><foo>Hello from XML</foo></xml>',
+	$$<xsl:stylesheet version="1.0"
+	      xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+	      xmlns:sax="http://icl.com/saxon"
+	      extension-element-prefixes="sax">
+	
+	  <xsl:template match="//foo">
+	    <sax:output href="0wn3d.txt" method="text">
+	      <xsl:value-of select="'0wn3d via xml2 extension and libxslt'"/>
+	      <xsl:apply-templates/>
+	    </sax:output>
+	  </xsl:template>
+	</xsl:stylesheet>$$);
+2023-07-22 03:46:39.036 UTC [1613017] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:46:39.195 UTC [1613017] LOG:  checkpoint complete: wrote 944 buffers (5.8%); 0 WAL file(s) added, 0 removed, 9 recycled; write=0.052 s, sync=0.026 s, total=0.159 s; sync files=255, longest=0.006 s, average=0.001 s; distance=138753 kB, estimate=138753 kB
+2023-07-22 03:47:11.149 UTC [1613017] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:47:11.251 UTC [1613017] LOG:  checkpoint complete: wrote 7 buffers (0.0%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.016 s, sync=0.007 s, total=0.103 s; sync files=4, longest=0.006 s, average=0.002 s; distance=133930 kB, estimate=138271 kB
+2023-07-22 03:47:11.297 UTC [1613016] LOG:  received fast shutdown request
+2023-07-22 03:47:11.304 UTC [1613016] LOG:  aborting any active transactions
+2023-07-22 03:47:11.305 UTC [1613016] LOG:  background worker "logical replication launcher" (PID 1613022) exited with exit code 1
+2023-07-22 03:47:11.305 UTC [1613017] LOG:  shutting down
+2023-07-22 03:47:11.310 UTC [1613017] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:47:11.343 UTC [1613017] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.006 s, sync=0.003 s, total=0.039 s; sync files=1, longest=0.003 s, average=0.003 s; distance=0 kB, estimate=124444 kB
+2023-07-22 03:47:11.361 UTC [1613016] LOG:  database system is shut down
+2023-07-22 03:47:12.203 UTC [1613240] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:47:12.204 UTC [1613240] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:47:12.213 UTC [1613240] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:47:12.226 UTC [1613243] LOG:  database system was shut down at 2023-07-22 03:47:11 UTC
+2023-07-22 03:47:12.237 UTC [1613240] LOG:  database system is ready to accept connections
+2023-07-22 03:47:12.467 UTC [1613259] ERROR:  collation "coll" for encoding "UTF8" does not exist
+2023-07-22 03:47:12.467 UTC [1613259] STATEMENT:  ALTER TABLE s.x ADD CONSTRAINT underqualified EXCLUDE USING btree
+	  ((s.index_this_expr(y, s.const())) COLLATE coll WITH s.=)
+	  USING INDEX TABLESPACE regress_create_idx_tblspace
+	  WHERE (s.index_row_if(y));
+2023-07-22 03:47:12.468 UTC [1613241] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:47:12.580 UTC [1613241] LOG:  checkpoint complete: wrote 914 buffers (5.6%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.048 s, sync=0.036 s, total=0.112 s; sync files=266, longest=0.009 s, average=0.001 s; distance=4180 kB, estimate=4180 kB
+2023-07-22 03:47:12.652 UTC [1613263] ERROR:  duplicate key value violates unique constraint "try_pkey"
+2023-07-22 03:47:12.652 UTC [1613263] DETAIL:  Key (name)=(a) already exists.
+2023-07-22 03:47:12.652 UTC [1613263] STATEMENT:  INSERT INTO try (name) VALUES ('a');
+2023-07-22 03:47:12.652 UTC [1613263] ERROR:  duplicate key value violates unique constraint "try_pkey"
+2023-07-22 03:47:12.652 UTC [1613263] DETAIL:  Key (name)=(A) already exists.
+2023-07-22 03:47:12.652 UTC [1613263] STATEMENT:  INSERT INTO try (name) VALUES ('A');
+2023-07-22 03:47:12.652 UTC [1613263] ERROR:  duplicate key value violates unique constraint "try_pkey"
+2023-07-22 03:47:12.652 UTC [1613263] DETAIL:  Key (name)=(aB) already exists.
+2023-07-22 03:47:12.652 UTC [1613263] STATEMENT:  INSERT INTO try (name) VALUES ('aB');
+2023-07-22 03:47:12.712 UTC [1613263] ERROR:  column "chr" is of type "char" but expression is of type citext at character 44
+2023-07-22 03:47:12.712 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.712 UTC [1613263] STATEMENT:  INSERT INTO caster (chr)           VALUES ('f'::citext);
+2023-07-22 03:47:12.724 UTC [1613263] ERROR:  column "bytea" is of type bytea but expression is of type text at character 44
+2023-07-22 03:47:12.724 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.724 UTC [1613263] STATEMENT:  INSERT INTO caster (bytea)         VALUES ('foo'::text);
+2023-07-22 03:47:12.726 UTC [1613263] ERROR:  column "bytea" is of type bytea but expression is of type citext at character 44
+2023-07-22 03:47:12.726 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.726 UTC [1613263] STATEMENT:  INSERT INTO caster (bytea)         VALUES ('foo'::citext);
+2023-07-22 03:47:12.728 UTC [1613263] ERROR:  column "boolean" is of type boolean but expression is of type text at character 44
+2023-07-22 03:47:12.728 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.728 UTC [1613263] STATEMENT:  INSERT INTO caster (boolean)       VALUES ('t'::text);
+2023-07-22 03:47:12.731 UTC [1613263] ERROR:  column "boolean" is of type boolean but expression is of type citext at character 44
+2023-07-22 03:47:12.731 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.731 UTC [1613263] STATEMENT:  INSERT INTO caster (boolean)       VALUES ('t'::citext);
+2023-07-22 03:47:12.733 UTC [1613263] ERROR:  column "float8" is of type double precision but expression is of type text at character 44
+2023-07-22 03:47:12.733 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.733 UTC [1613263] STATEMENT:  INSERT INTO caster (float8)        VALUES ('12.42'::text);
+2023-07-22 03:47:12.735 UTC [1613263] ERROR:  column "float8" is of type double precision but expression is of type citext at character 44
+2023-07-22 03:47:12.735 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.735 UTC [1613263] STATEMENT:  INSERT INTO caster (float8)        VALUES ('12.42'::citext);
+2023-07-22 03:47:12.737 UTC [1613263] ERROR:  column "float4" is of type real but expression is of type text at character 44
+2023-07-22 03:47:12.737 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.737 UTC [1613263] STATEMENT:  INSERT INTO caster (float4)        VALUES ('12.42'::text);
+2023-07-22 03:47:12.739 UTC [1613263] ERROR:  column "float4" is of type real but expression is of type citext at character 44
+2023-07-22 03:47:12.739 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.739 UTC [1613263] STATEMENT:  INSERT INTO caster (float4)        VALUES ('12.42'::citext);
+2023-07-22 03:47:12.741 UTC [1613263] ERROR:  column "numeric" is of type numeric but expression is of type text at character 44
+2023-07-22 03:47:12.741 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.741 UTC [1613263] STATEMENT:  INSERT INTO caster (numeric)       VALUES ('12.42'::text);
+2023-07-22 03:47:12.744 UTC [1613263] ERROR:  column "numeric" is of type numeric but expression is of type citext at character 44
+2023-07-22 03:47:12.744 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.744 UTC [1613263] STATEMENT:  INSERT INTO caster (numeric)       VALUES ('12.42'::citext);
+2023-07-22 03:47:12.746 UTC [1613263] ERROR:  column "int8" is of type bigint but expression is of type text at character 44
+2023-07-22 03:47:12.746 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.746 UTC [1613263] STATEMENT:  INSERT INTO caster (int8)          VALUES ('12'::text);
+2023-07-22 03:47:12.751 UTC [1613263] ERROR:  column "int8" is of type bigint but expression is of type citext at character 44
+2023-07-22 03:47:12.751 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.751 UTC [1613263] STATEMENT:  INSERT INTO caster (int8)          VALUES ('12'::citext);
+2023-07-22 03:47:12.753 UTC [1613263] ERROR:  column "int4" is of type integer but expression is of type text at character 44
+2023-07-22 03:47:12.753 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.753 UTC [1613263] STATEMENT:  INSERT INTO caster (int4)          VALUES ('12'::text);
+2023-07-22 03:47:12.754 UTC [1613263] ERROR:  column "int4" is of type integer but expression is of type citext at character 44
+2023-07-22 03:47:12.754 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.754 UTC [1613263] STATEMENT:  INSERT INTO caster (int4)          VALUES ('12'::citext);
+2023-07-22 03:47:12.757 UTC [1613263] ERROR:  column "int2" is of type smallint but expression is of type text at character 44
+2023-07-22 03:47:12.757 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.757 UTC [1613263] STATEMENT:  INSERT INTO caster (int2)          VALUES ('12'::text);
+2023-07-22 03:47:12.759 UTC [1613263] ERROR:  column "int2" is of type smallint but expression is of type citext at character 44
+2023-07-22 03:47:12.759 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.759 UTC [1613263] STATEMENT:  INSERT INTO caster (int2)          VALUES ('12'::citext);
+2023-07-22 03:47:12.761 UTC [1613263] ERROR:  column "cidr" is of type cidr but expression is of type text at character 44
+2023-07-22 03:47:12.761 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.761 UTC [1613263] STATEMENT:  INSERT INTO caster (cidr)          VALUES ('192.168.100.128/25'::text);
+2023-07-22 03:47:12.763 UTC [1613263] ERROR:  column "cidr" is of type cidr but expression is of type citext at character 44
+2023-07-22 03:47:12.763 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.763 UTC [1613263] STATEMENT:  INSERT INTO caster (cidr)          VALUES ('192.168.100.128/25'::citext);
+2023-07-22 03:47:12.765 UTC [1613263] ERROR:  column "inet" is of type inet but expression is of type text at character 44
+2023-07-22 03:47:12.765 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.765 UTC [1613263] STATEMENT:  INSERT INTO caster (inet)          VALUES ('192.168.100.128'::text);
+2023-07-22 03:47:12.767 UTC [1613263] ERROR:  column "inet" is of type inet but expression is of type citext at character 44
+2023-07-22 03:47:12.767 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.767 UTC [1613263] STATEMENT:  INSERT INTO caster (inet)          VALUES ('192.168.100.128'::citext);
+2023-07-22 03:47:12.769 UTC [1613263] ERROR:  column "macaddr" is of type macaddr but expression is of type text at character 44
+2023-07-22 03:47:12.769 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.769 UTC [1613263] STATEMENT:  INSERT INTO caster (macaddr)       VALUES ('08:00:2b:01:02:03'::text);
+2023-07-22 03:47:12.772 UTC [1613263] ERROR:  column "macaddr" is of type macaddr but expression is of type citext at character 44
+2023-07-22 03:47:12.772 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.772 UTC [1613263] STATEMENT:  INSERT INTO caster (macaddr)       VALUES ('08:00:2b:01:02:03'::citext);
+2023-07-22 03:47:12.774 UTC [1613263] ERROR:  column "money" is of type money but expression is of type text at character 44
+2023-07-22 03:47:12.774 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.774 UTC [1613263] STATEMENT:  INSERT INTO caster (money)         VALUES ('12'::text);
+2023-07-22 03:47:12.776 UTC [1613263] ERROR:  column "money" is of type money but expression is of type citext at character 44
+2023-07-22 03:47:12.776 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.776 UTC [1613263] STATEMENT:  INSERT INTO caster (money)         VALUES ('12'::citext);
+2023-07-22 03:47:12.781 UTC [1613263] ERROR:  column "timestamp" is of type timestamp without time zone but expression is of type text at character 44
+2023-07-22 03:47:12.781 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.781 UTC [1613263] STATEMENT:  INSERT INTO caster (timestamp)     VALUES ('1999-01-08 04:05:06'::text);
+2023-07-22 03:47:12.784 UTC [1613263] ERROR:  column "timestamp" is of type timestamp without time zone but expression is of type citext at character 44
+2023-07-22 03:47:12.784 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.784 UTC [1613263] STATEMENT:  INSERT INTO caster (timestamp)     VALUES ('1999-01-08 04:05:06'::citext);
+2023-07-22 03:47:12.789 UTC [1613263] ERROR:  column "timestamptz" is of type timestamp with time zone but expression is of type text at character 44
+2023-07-22 03:47:12.789 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.789 UTC [1613263] STATEMENT:  INSERT INTO caster (timestamptz)   VALUES ('1999-01-08 04:05:06'::text);
+2023-07-22 03:47:12.793 UTC [1613263] ERROR:  column "timestamptz" is of type timestamp with time zone but expression is of type citext at character 44
+2023-07-22 03:47:12.793 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.793 UTC [1613263] STATEMENT:  INSERT INTO caster (timestamptz)   VALUES ('1999-01-08 04:05:06'::citext);
+2023-07-22 03:47:12.797 UTC [1613263] ERROR:  column "interval" is of type interval but expression is of type text at character 44
+2023-07-22 03:47:12.797 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.797 UTC [1613263] STATEMENT:  INSERT INTO caster (interval)      VALUES ('1 hour'::text);
+2023-07-22 03:47:12.800 UTC [1613263] ERROR:  column "interval" is of type interval but expression is of type citext at character 44
+2023-07-22 03:47:12.800 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.800 UTC [1613263] STATEMENT:  INSERT INTO caster (interval)      VALUES ('1 hour'::citext);
+2023-07-22 03:47:12.805 UTC [1613263] ERROR:  column "date" is of type date but expression is of type text at character 44
+2023-07-22 03:47:12.805 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.805 UTC [1613263] STATEMENT:  INSERT INTO caster (date)          VALUES ('1999-01-08'::text);
+2023-07-22 03:47:12.809 UTC [1613263] ERROR:  column "date" is of type date but expression is of type citext at character 44
+2023-07-22 03:47:12.809 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.809 UTC [1613263] STATEMENT:  INSERT INTO caster (date)          VALUES ('1999-01-08'::citext);
+2023-07-22 03:47:12.813 UTC [1613263] ERROR:  column "time" is of type time without time zone but expression is of type text at character 44
+2023-07-22 03:47:12.813 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.813 UTC [1613263] STATEMENT:  INSERT INTO caster (time)          VALUES ('04:05:06'::text);
+2023-07-22 03:47:12.817 UTC [1613263] ERROR:  column "time" is of type time without time zone but expression is of type citext at character 44
+2023-07-22 03:47:12.817 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.817 UTC [1613263] STATEMENT:  INSERT INTO caster (time)          VALUES ('04:05:06'::citext);
+2023-07-22 03:47:12.822 UTC [1613263] ERROR:  column "timetz" is of type time with time zone but expression is of type text at character 44
+2023-07-22 03:47:12.822 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.822 UTC [1613263] STATEMENT:  INSERT INTO caster (timetz)        VALUES ('04:05:06'::text);
+2023-07-22 03:47:12.826 UTC [1613263] ERROR:  column "timetz" is of type time with time zone but expression is of type citext at character 44
+2023-07-22 03:47:12.826 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.826 UTC [1613263] STATEMENT:  INSERT INTO caster (timetz)        VALUES ('04:05:06'::citext);
+2023-07-22 03:47:12.830 UTC [1613263] ERROR:  column "point" is of type point but expression is of type text at character 44
+2023-07-22 03:47:12.830 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.830 UTC [1613263] STATEMENT:  INSERT INTO caster (point)         VALUES ('( 1 , 1)'::text);
+2023-07-22 03:47:12.834 UTC [1613263] ERROR:  column "point" is of type point but expression is of type citext at character 44
+2023-07-22 03:47:12.834 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.834 UTC [1613263] STATEMENT:  INSERT INTO caster (point)         VALUES ('( 1 , 1)'::citext);
+2023-07-22 03:47:12.838 UTC [1613263] ERROR:  column "lseg" is of type lseg but expression is of type text at character 44
+2023-07-22 03:47:12.838 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.838 UTC [1613263] STATEMENT:  INSERT INTO caster (lseg)          VALUES ('( 1 , 1 ) , ( 2 , 2 )'::text);
+2023-07-22 03:47:12.843 UTC [1613263] ERROR:  column "lseg" is of type lseg but expression is of type citext at character 44
+2023-07-22 03:47:12.843 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.843 UTC [1613263] STATEMENT:  INSERT INTO caster (lseg)          VALUES ('( 1 , 1 ) , ( 2 , 2 )'::citext);
+2023-07-22 03:47:12.847 UTC [1613263] ERROR:  column "box" is of type box but expression is of type text at character 44
+2023-07-22 03:47:12.847 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.847 UTC [1613263] STATEMENT:  INSERT INTO caster (box)           VALUES ('(0,0),(1,1)'::text);
+2023-07-22 03:47:12.852 UTC [1613263] ERROR:  column "box" is of type box but expression is of type citext at character 44
+2023-07-22 03:47:12.852 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.852 UTC [1613263] STATEMENT:  INSERT INTO caster (box)           VALUES ('(0,0),(1,1)'::citext);
+2023-07-22 03:47:12.856 UTC [1613263] ERROR:  column "path" is of type path but expression is of type text at character 44
+2023-07-22 03:47:12.856 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.856 UTC [1613263] STATEMENT:  INSERT INTO caster (path)          VALUES ('((0,0),(1,1),(2,0))'::text);
+2023-07-22 03:47:12.860 UTC [1613263] ERROR:  column "path" is of type path but expression is of type citext at character 44
+2023-07-22 03:47:12.860 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.860 UTC [1613263] STATEMENT:  INSERT INTO caster (path)          VALUES ('((0,0),(1,1),(2,0))'::citext);
+2023-07-22 03:47:12.865 UTC [1613263] ERROR:  column "polygon" is of type polygon but expression is of type text at character 44
+2023-07-22 03:47:12.865 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.865 UTC [1613263] STATEMENT:  INSERT INTO caster (polygon)       VALUES ('((0,0),(1,1))'::text);
+2023-07-22 03:47:12.869 UTC [1613263] ERROR:  column "polygon" is of type polygon but expression is of type citext at character 44
+2023-07-22 03:47:12.869 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.869 UTC [1613263] STATEMENT:  INSERT INTO caster (polygon)       VALUES ('((0,0),(1,1))'::citext);
+2023-07-22 03:47:12.874 UTC [1613263] ERROR:  column "circle" is of type circle but expression is of type text at character 44
+2023-07-22 03:47:12.874 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.874 UTC [1613263] STATEMENT:  INSERT INTO caster (circle)        VALUES ('((0,0),2)'::text);
+2023-07-22 03:47:12.878 UTC [1613263] ERROR:  column "circle" is of type circle but expression is of type citext at character 44
+2023-07-22 03:47:12.878 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.878 UTC [1613263] STATEMENT:  INSERT INTO caster (circle)        VALUES ('((0,0),2)'::citext);
+2023-07-22 03:47:12.882 UTC [1613263] ERROR:  column "bit" is of type bit but expression is of type text at character 44
+2023-07-22 03:47:12.882 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.882 UTC [1613263] STATEMENT:  INSERT INTO caster (bit)           VALUES ('101'::text);
+2023-07-22 03:47:12.887 UTC [1613263] ERROR:  column "bit" is of type bit but expression is of type citext at character 44
+2023-07-22 03:47:12.887 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.887 UTC [1613263] STATEMENT:  INSERT INTO caster (bit)           VALUES ('101'::citext);
+2023-07-22 03:47:12.892 UTC [1613263] ERROR:  column "bitv" is of type bit varying but expression is of type text at character 44
+2023-07-22 03:47:12.892 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.892 UTC [1613263] STATEMENT:  INSERT INTO caster (bitv)          VALUES ('101'::text);
+2023-07-22 03:47:12.896 UTC [1613263] ERROR:  column "bitv" is of type bit varying but expression is of type citext at character 44
+2023-07-22 03:47:12.896 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.896 UTC [1613263] STATEMENT:  INSERT INTO caster (bitv)          VALUES ('101'::citext);
+2023-07-22 03:47:12.901 UTC [1613263] ERROR:  column "tsvector" is of type tsvector but expression is of type text at character 44
+2023-07-22 03:47:12.901 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.901 UTC [1613263] STATEMENT:  INSERT INTO caster (tsvector)      VALUES ('the fat cat'::text);
+2023-07-22 03:47:12.906 UTC [1613263] ERROR:  column "tsvector" is of type tsvector but expression is of type citext at character 44
+2023-07-22 03:47:12.906 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.906 UTC [1613263] STATEMENT:  INSERT INTO caster (tsvector)      VALUES ('the fat cat'::citext);
+2023-07-22 03:47:12.915 UTC [1613263] ERROR:  column "tsquery" is of type tsquery but expression is of type text at character 44
+2023-07-22 03:47:12.915 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.915 UTC [1613263] STATEMENT:  INSERT INTO caster (tsquery)       VALUES ('fat & rat'::text);
+2023-07-22 03:47:12.920 UTC [1613263] ERROR:  column "tsquery" is of type tsquery but expression is of type citext at character 44
+2023-07-22 03:47:12.920 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.920 UTC [1613263] STATEMENT:  INSERT INTO caster (tsquery)       VALUES ('fat & rat'::citext);
+2023-07-22 03:47:12.924 UTC [1613263] ERROR:  column "uuid" is of type uuid but expression is of type text at character 44
+2023-07-22 03:47:12.924 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.924 UTC [1613263] STATEMENT:  INSERT INTO caster (uuid)          VALUES ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'::text);
+2023-07-22 03:47:12.929 UTC [1613263] ERROR:  column "uuid" is of type uuid but expression is of type citext at character 44
+2023-07-22 03:47:12.929 UTC [1613263] HINT:  You will need to rewrite or cast the expression.
+2023-07-22 03:47:12.929 UTC [1613263] STATEMENT:  INSERT INTO caster (uuid)          VALUES ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'::citext);
+2023-07-22 03:47:12.958 UTC [1613263] ERROR:  regexp_match() does not support the "global" option
+2023-07-22 03:47:12.958 UTC [1613263] HINT:  Use the regexp_matches function instead.
+2023-07-22 03:47:12.958 UTC [1613263] CONTEXT:  SQL function "regexp_match" statement 1
+2023-07-22 03:47:12.958 UTC [1613263] STATEMENT:  SELECT regexp_match('foobarbequebazmorebarbequetoo'::citext, '(BAR)(BEQUE)'::citext, 'g') AS "error";
+2023-07-22 03:47:13.053 UTC [1613241] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:47:13.091 UTC [1613241] LOG:  checkpoint complete: wrote 5 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.010 s, sync=0.009 s, total=0.038 s; sync files=5, longest=0.007 s, average=0.002 s; distance=803 kB, estimate=3843 kB
+2023-07-22 03:47:13.221 UTC [1613284] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:47:13.221 UTC [1613284] STATEMENT:  select xslt_process( query_to_xml('select x from generate_series(1,5) as
+	x',true,false,'')::text,
+	$$<xsl:stylesheet version="1.0"
+	               xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:output method="xml" indent="yes" />
+	<xsl:template match="*">
+	  <xsl:copy>
+	     <xsl:copy-of select="@*" />
+	     <xsl:apply-templates />
+	  </xsl:copy>
+	</xsl:template>
+	<xsl:template match="comment()|processing-instruction()">
+	  <xsl:copy />
+	</xsl:template>
+	</xsl:stylesheet>
+	$$::text);
+2023-07-22 03:47:13.264 UTC [1613284] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:47:13.264 UTC [1613284] STATEMENT:  select xslt_process('<aaa/>',$$<xsl:stylesheet version="1.0"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:template match="@*|node()">
+	      <xsl:copy>
+	         <xsl:apply-templates select="@*|node()"/>
+	      </xsl:copy>
+	   </xsl:template>
+	</xsl:stylesheet>$$)::xml;
+2023-07-22 03:47:13.265 UTC [1613284] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:47:13.265 UTC [1613284] STATEMENT:  select xslt_process('<aaa/>',$$<xsl:stylesheet version="1.0"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:template match="@*|node()">
+	      <xsl:copy>
+	         <xsl:apply-templates select="@*|node()"/>
+	      </xsl:copy>
+	   </xsl:template>
+	</xsl:stylesheet>$$)::xml;
+2023-07-22 03:47:13.292 UTC [1613284] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:47:13.292 UTC [1613284] STATEMENT:  SELECT xslt_process('<employee><name>cim</name><age>30</age><pay>400</pay></employee>'::text, $$<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+	  <xsl:output method="xml" omit-xml-declaration="yes" indent="yes"/>
+	  <xsl:strip-space elements="*"/>
+	  <xsl:param name="n1"/>
+	  <xsl:param name="n2"/>
+	  <xsl:param name="n3"/>
+	  <xsl:param name="n4"/>
+	  <xsl:param name="n5" select="'me'"/>
+	  <xsl:template match="*">
+	    <xsl:element name="samples">
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n1"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n2"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n3"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n4"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n5"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n6"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n7"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n8"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n9"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n10"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n11"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n12"/>
+	      </xsl:element>
+	    </xsl:element>
+	  </xsl:template>
+	</xsl:stylesheet>$$::text, 'n1="v1",n2="v2",n3="v3",n4="v4",n5="v5",n6="v6",n7="v7",n8="v8",n9="v9",n10="v10",n11="v11",n12="v12"'::text);
+2023-07-22 03:47:13.293 UTC [1613284] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:47:13.293 UTC [1613284] STATEMENT:  SELECT xslt_process('<xml><foo>Hello from XML</foo></xml>',
+	$$<xsl:stylesheet version="1.0"
+	      xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+	      xmlns:sax="http://icl.com/saxon"
+	      extension-element-prefixes="sax">
+	
+	  <xsl:template match="//foo">
+	    <sax:output href="0wn3d.txt" method="text">
+	      <xsl:value-of select="'0wn3d via xml2 extension and libxslt'"/>
+	      <xsl:apply-templates/>
+	    </sax:output>
+	  </xsl:template>
+	</xsl:stylesheet>$$);
+2023-07-22 03:47:46.453 UTC [1613241] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:47:47.104 UTC [1613241] LOG:  checkpoint complete: wrote 906 buffers (5.5%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.043 s, sync=0.026 s, total=0.651 s; sync files=256, longest=0.009 s, average=0.001 s; distance=137475 kB, estimate=137475 kB
+2023-07-22 03:48:19.366 UTC [1613241] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:48:19.467 UTC [1613241] LOG:  checkpoint complete: wrote 7 buffers (0.0%); 0 WAL file(s) added, 0 removed, 9 recycled; write=0.019 s, sync=0.006 s, total=0.102 s; sync files=4, longest=0.005 s, average=0.002 s; distance=133439 kB, estimate=137072 kB
+2023-07-22 03:48:19.519 UTC [1613240] LOG:  received fast shutdown request
+2023-07-22 03:48:19.527 UTC [1613240] LOG:  aborting any active transactions
+2023-07-22 03:48:19.527 UTC [1613240] LOG:  background worker "logical replication launcher" (PID 1613246) exited with exit code 1
+2023-07-22 03:48:19.527 UTC [1613241] LOG:  shutting down
+2023-07-22 03:48:19.532 UTC [1613241] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:48:19.562 UTC [1613241] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.004 s, sync=0.001 s, total=0.035 s; sync files=1, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=123364 kB
+2023-07-22 03:48:19.606 UTC [1613240] LOG:  database system is shut down
+2023-07-22 03:48:20.370 UTC [1613356] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:48:20.370 UTC [1613356] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:48:20.382 UTC [1613356] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:48:20.392 UTC [1613359] LOG:  database system was shut down at 2023-07-22 03:48:20 UTC
+2023-07-22 03:48:20.402 UTC [1613356] LOG:  database system is ready to accept connections
+2023-07-22 03:48:20.620 UTC [1613375] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:48:20.620 UTC [1613375] DETAIL:  syntax error at end of input
+2023-07-22 03:48:20.620 UTC [1613375] STATEMENT:  SELECT ''::cube AS cube;
+2023-07-22 03:48:20.620 UTC [1613375] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:48:20.620 UTC [1613375] DETAIL:  syntax error at or near "A"
+2023-07-22 03:48:20.620 UTC [1613375] STATEMENT:  SELECT 'ABC'::cube AS cube;
+2023-07-22 03:48:20.621 UTC [1613375] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:48:20.621 UTC [1613375] DETAIL:  syntax error at or near "]"
+2023-07-22 03:48:20.621 UTC [1613375] STATEMENT:  SELECT '[]'::cube AS cube;
+2023-07-22 03:48:20.621 UTC [1613375] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:48:20.621 UTC [1613375] DETAIL:  syntax error at or near "]"
+2023-07-22 03:48:20.621 UTC [1613375] STATEMENT:  SELECT '[()]'::cube AS cube;
+2023-07-22 03:48:20.621 UTC [1613375] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:48:20.621 UTC [1613375] DETAIL:  syntax error at or near "]"
+2023-07-22 03:48:20.621 UTC [1613375] STATEMENT:  SELECT '[(1)]'::cube AS cube;
+2023-07-22 03:48:20.621 UTC [1613375] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:48:20.621 UTC [1613375] DETAIL:  syntax error at or near "]"
+2023-07-22 03:48:20.621 UTC [1613375] STATEMENT:  SELECT '[(1),]'::cube AS cube;
+2023-07-22 03:48:20.621 UTC [1613375] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:48:20.621 UTC [1613375] DETAIL:  syntax error at or near "2"
+2023-07-22 03:48:20.621 UTC [1613375] STATEMENT:  SELECT '[(1),2]'::cube AS cube;
+2023-07-22 03:48:20.621 UTC [1613375] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:48:20.621 UTC [1613375] DETAIL:  syntax error at or near ","
+2023-07-22 03:48:20.621 UTC [1613375] STATEMENT:  SELECT '[(1),(2),(3)]'::cube AS cube;
+2023-07-22 03:48:20.621 UTC [1613375] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:48:20.621 UTC [1613375] DETAIL:  syntax error at end of input
+2023-07-22 03:48:20.621 UTC [1613375] STATEMENT:  SELECT '1,'::cube AS cube;
+2023-07-22 03:48:20.621 UTC [1613375] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:48:20.621 UTC [1613375] DETAIL:  syntax error at end of input
+2023-07-22 03:48:20.621 UTC [1613375] STATEMENT:  SELECT '1,2,'::cube AS cube;
+2023-07-22 03:48:20.621 UTC [1613375] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:48:20.621 UTC [1613375] DETAIL:  syntax error at or near ","
+2023-07-22 03:48:20.621 UTC [1613375] STATEMENT:  SELECT '1,,2'::cube AS cube;
+2023-07-22 03:48:20.621 UTC [1613375] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:48:20.621 UTC [1613375] DETAIL:  syntax error at or near ")"
+2023-07-22 03:48:20.621 UTC [1613375] STATEMENT:  SELECT '(1,)'::cube AS cube;
+2023-07-22 03:48:20.621 UTC [1613375] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:48:20.621 UTC [1613375] DETAIL:  syntax error at or near ")"
+2023-07-22 03:48:20.621 UTC [1613375] STATEMENT:  SELECT '(1,2,)'::cube AS cube;
+2023-07-22 03:48:20.621 UTC [1613375] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:48:20.621 UTC [1613375] DETAIL:  syntax error at or near ","
+2023-07-22 03:48:20.621 UTC [1613375] STATEMENT:  SELECT '(1,,2)'::cube AS cube;
+2023-07-22 03:48:20.622 UTC [1613375] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:48:20.622 UTC [1613375] DETAIL:  syntax error at or near ","
+2023-07-22 03:48:20.622 UTC [1613375] STATEMENT:  SELECT '[(1),(2)],'::cube AS cube;
+2023-07-22 03:48:20.622 UTC [1613375] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:48:20.622 UTC [1613375] DETAIL:  Different point dimensions in (1,2,3) and (2,3).
+2023-07-22 03:48:20.622 UTC [1613375] STATEMENT:  SELECT '[(1,2,3),(2,3)]'::cube AS cube;
+2023-07-22 03:48:20.622 UTC [1613375] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:48:20.622 UTC [1613375] DETAIL:  Different point dimensions in (1,2) and (1,2,3).
+2023-07-22 03:48:20.622 UTC [1613375] STATEMENT:  SELECT '[(1,2),(1,2,3)]'::cube AS cube;
+2023-07-22 03:48:20.622 UTC [1613375] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:48:20.622 UTC [1613375] DETAIL:  syntax error at or near ","
+2023-07-22 03:48:20.622 UTC [1613375] STATEMENT:  SELECT '(1),(2),'::cube AS cube;
+2023-07-22 03:48:20.622 UTC [1613375] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:48:20.622 UTC [1613375] DETAIL:  Different point dimensions in (1,2,3) and (2,3).
+2023-07-22 03:48:20.622 UTC [1613375] STATEMENT:  SELECT '(1,2,3),(2,3)'::cube AS cube;
+2023-07-22 03:48:20.622 UTC [1613375] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:48:20.622 UTC [1613375] DETAIL:  Different point dimensions in (1,2) and (1,2,3).
+2023-07-22 03:48:20.622 UTC [1613375] STATEMENT:  SELECT '(1,2),(1,2,3)'::cube AS cube;
+2023-07-22 03:48:20.622 UTC [1613375] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:48:20.622 UTC [1613375] DETAIL:  syntax error at or near "a"
+2023-07-22 03:48:20.622 UTC [1613375] STATEMENT:  SELECT '(1,2,3)ab'::cube AS cube;
+2023-07-22 03:48:20.622 UTC [1613375] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:48:20.622 UTC [1613375] DETAIL:  syntax error at or near "a"
+2023-07-22 03:48:20.622 UTC [1613375] STATEMENT:  SELECT '(1,2,3)a'::cube AS cube;
+2023-07-22 03:48:20.622 UTC [1613375] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:48:20.622 UTC [1613375] DETAIL:  syntax error at or near "("
+2023-07-22 03:48:20.622 UTC [1613375] STATEMENT:  SELECT '(1,2)('::cube AS cube;
+2023-07-22 03:48:20.622 UTC [1613375] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:48:20.622 UTC [1613375] DETAIL:  syntax error at or near "a"
+2023-07-22 03:48:20.622 UTC [1613375] STATEMENT:  SELECT '1,2ab'::cube AS cube;
+2023-07-22 03:48:20.622 UTC [1613375] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:48:20.622 UTC [1613375] DETAIL:  syntax error at or near "e"
+2023-07-22 03:48:20.622 UTC [1613375] STATEMENT:  SELECT '1 e7'::cube AS cube;
+2023-07-22 03:48:20.622 UTC [1613375] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:48:20.622 UTC [1613375] DETAIL:  syntax error at or near "a"
+2023-07-22 03:48:20.622 UTC [1613375] STATEMENT:  SELECT '1,2a'::cube AS cube;
+2023-07-22 03:48:20.622 UTC [1613375] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:48:20.622 UTC [1613375] DETAIL:  syntax error at or near ".2"
+2023-07-22 03:48:20.622 UTC [1613375] STATEMENT:  SELECT '1..2'::cube AS cube;
+2023-07-22 03:48:20.623 UTC [1613375] ERROR:  "-1e-700" is out of range for type double precision at character 8
+2023-07-22 03:48:20.623 UTC [1613375] STATEMENT:  SELECT '-1e-700'::cube AS cube;
+2023-07-22 03:48:20.623 UTC [1613375] ERROR:  UR and LL arrays must be of same length
+2023-07-22 03:48:20.623 UTC [1613375] STATEMENT:  SELECT cube('{0,1,2}'::float[], '{3}'::float[]);
+2023-07-22 03:48:20.624 UTC [1613375] ERROR:  Index out of bounds
+2023-07-22 03:48:20.624 UTC [1613375] STATEMENT:  SELECT cube_subset(cube('(1,3,5),(6,7,8)'), ARRAY[4,0]);
+2023-07-22 03:48:20.624 UTC [1613375] ERROR:  Index out of bounds
+2023-07-22 03:48:20.624 UTC [1613375] STATEMENT:  SELECT cube_subset(cube('(6,7,8),(6,7,8)'), ARRAY[4,0]);
+2023-07-22 03:48:20.624 UTC [1613375] ERROR:  array is too long
+2023-07-22 03:48:20.624 UTC [1613375] DETAIL:  A cube cannot have more than 100 dimensions.
+2023-07-22 03:48:20.624 UTC [1613375] STATEMENT:  SELECT cube_subset(cube('(6,7,8),(6,7,8)'), array(SELECT 1 as a FROM generate_series(1,101)));
+2023-07-22 03:48:20.625 UTC [1613375] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:48:20.625 UTC [1613375] DETAIL:  A cube cannot have more than 100 dimensions.
+2023-07-22 03:48:20.625 UTC [1613375] STATEMENT:  select '(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)'::cube;
+2023-07-22 03:48:20.625 UTC [1613375] ERROR:  invalid input syntax for cube at character 8
+2023-07-22 03:48:20.625 UTC [1613375] DETAIL:  A cube cannot have more than 100 dimensions.
+2023-07-22 03:48:20.625 UTC [1613375] STATEMENT:  select '(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)'::cube;
+2023-07-22 03:48:20.625 UTC [1613375] ERROR:  array is too long
+2023-07-22 03:48:20.625 UTC [1613375] DETAIL:  A cube cannot have more than 100 dimensions.
+2023-07-22 03:48:20.625 UTC [1613375] STATEMENT:  select cube(array(SELECT 0 as a FROM generate_series(1,101)));
+2023-07-22 03:48:20.626 UTC [1613375] ERROR:  can't extend cube
+2023-07-22 03:48:20.626 UTC [1613375] DETAIL:  A cube cannot have more than 100 dimensions.
+2023-07-22 03:48:20.626 UTC [1613375] STATEMENT:  select cube(array(SELECT 0 as a FROM generate_series(1,101)),array(SELECT 0 as a FROM generate_series(1,101)));
+2023-07-22 03:48:20.626 UTC [1613375] ERROR:  can't extend cube
+2023-07-22 03:48:20.626 UTC [1613375] DETAIL:  A cube cannot have more than 100 dimensions.
+2023-07-22 03:48:20.626 UTC [1613375] STATEMENT:  select cube(cube(array(SELECT 0 as a FROM generate_series(1,100))), 0);
+2023-07-22 03:48:20.627 UTC [1613375] ERROR:  can't extend cube
+2023-07-22 03:48:20.627 UTC [1613375] DETAIL:  A cube cannot have more than 100 dimensions.
+2023-07-22 03:48:20.627 UTC [1613375] STATEMENT:  select cube(cube(array(SELECT 0 as a FROM generate_series(1,100)),array(SELECT 0 as a FROM generate_series(1,100))), 0, 0);
+2023-07-22 03:48:20.635 UTC [1613375] ERROR:  cube index 0 is out of bounds
+2023-07-22 03:48:20.635 UTC [1613375] STATEMENT:  SELECT cube(array[10,20,30], array[40,50,60])->0;
+2023-07-22 03:48:20.635 UTC [1613375] ERROR:  cube index 7 is out of bounds
+2023-07-22 03:48:20.635 UTC [1613375] STATEMENT:  SELECT cube(array[10,20,30], array[40,50,60])->7;
+2023-07-22 03:48:20.635 UTC [1613375] ERROR:  cube index -1 is out of bounds
+2023-07-22 03:48:20.635 UTC [1613375] STATEMENT:  SELECT cube(array[10,20,30], array[40,50,60])->-1;
+2023-07-22 03:48:20.635 UTC [1613375] ERROR:  cube index -6 is out of bounds
+2023-07-22 03:48:20.635 UTC [1613375] STATEMENT:  SELECT cube(array[10,20,30], array[40,50,60])->-6;
+2023-07-22 03:48:20.636 UTC [1613375] ERROR:  cube index -6 is out of bounds
+2023-07-22 03:48:20.636 UTC [1613375] STATEMENT:  SELECT cube(array[10,20,30])->-6;
+2023-07-22 03:48:20.636 UTC [1613375] ERROR:  zero cube index is not defined
+2023-07-22 03:48:20.636 UTC [1613375] STATEMENT:  SELECT cube(array[40,50,60], array[10,20,30])~>0;
+2023-07-22 03:48:20.708 UTC [1613357] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:48:20.747 UTC [1613357] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.012 s, sync=0.008 s, total=0.039 s; sync files=7, longest=0.005 s, average=0.002 s; distance=4439 kB, estimate=4439 kB
+2023-07-22 03:48:20.844 UTC [1613394] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:48:20.844 UTC [1613394] STATEMENT:  select xslt_process( query_to_xml('select x from generate_series(1,5) as
+	x',true,false,'')::text,
+	$$<xsl:stylesheet version="1.0"
+	               xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:output method="xml" indent="yes" />
+	<xsl:template match="*">
+	  <xsl:copy>
+	     <xsl:copy-of select="@*" />
+	     <xsl:apply-templates />
+	  </xsl:copy>
+	</xsl:template>
+	<xsl:template match="comment()|processing-instruction()">
+	  <xsl:copy />
+	</xsl:template>
+	</xsl:stylesheet>
+	$$::text);
+2023-07-22 03:48:20.890 UTC [1613394] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:48:20.890 UTC [1613394] STATEMENT:  select xslt_process('<aaa/>',$$<xsl:stylesheet version="1.0"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:template match="@*|node()">
+	      <xsl:copy>
+	         <xsl:apply-templates select="@*|node()"/>
+	      </xsl:copy>
+	   </xsl:template>
+	</xsl:stylesheet>$$)::xml;
+2023-07-22 03:48:20.890 UTC [1613394] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:48:20.890 UTC [1613394] STATEMENT:  select xslt_process('<aaa/>',$$<xsl:stylesheet version="1.0"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:template match="@*|node()">
+	      <xsl:copy>
+	         <xsl:apply-templates select="@*|node()"/>
+	      </xsl:copy>
+	   </xsl:template>
+	</xsl:stylesheet>$$)::xml;
+2023-07-22 03:48:20.917 UTC [1613394] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:48:20.917 UTC [1613394] STATEMENT:  SELECT xslt_process('<employee><name>cim</name><age>30</age><pay>400</pay></employee>'::text, $$<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+	  <xsl:output method="xml" omit-xml-declaration="yes" indent="yes"/>
+	  <xsl:strip-space elements="*"/>
+	  <xsl:param name="n1"/>
+	  <xsl:param name="n2"/>
+	  <xsl:param name="n3"/>
+	  <xsl:param name="n4"/>
+	  <xsl:param name="n5" select="'me'"/>
+	  <xsl:template match="*">
+	    <xsl:element name="samples">
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n1"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n2"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n3"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n4"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n5"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n6"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n7"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n8"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n9"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n10"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n11"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n12"/>
+	      </xsl:element>
+	    </xsl:element>
+	  </xsl:template>
+	</xsl:stylesheet>$$::text, 'n1="v1",n2="v2",n3="v3",n4="v4",n5="v5",n6="v6",n7="v7",n8="v8",n9="v9",n10="v10",n11="v11",n12="v12"'::text);
+2023-07-22 03:48:20.918 UTC [1613394] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:48:20.918 UTC [1613394] STATEMENT:  SELECT xslt_process('<xml><foo>Hello from XML</foo></xml>',
+	$$<xsl:stylesheet version="1.0"
+	      xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+	      xmlns:sax="http://icl.com/saxon"
+	      extension-element-prefixes="sax">
+	
+	  <xsl:template match="//foo">
+	    <sax:output href="0wn3d.txt" method="text">
+	      <xsl:value-of select="'0wn3d via xml2 extension and libxslt'"/>
+	      <xsl:apply-templates/>
+	    </sax:output>
+	  </xsl:template>
+	</xsl:stylesheet>$$);
+2023-07-22 03:48:53.862 UTC [1613357] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:48:53.997 UTC [1613357] LOG:  checkpoint complete: wrote 904 buffers (5.5%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.028 s, sync=0.041 s, total=0.135 s; sync files=255, longest=0.015 s, average=0.001 s; distance=137642 kB, estimate=137642 kB
+2023-07-22 03:49:26.038 UTC [1613357] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:49:26.152 UTC [1613357] LOG:  checkpoint complete: wrote 7 buffers (0.0%); 0 WAL file(s) added, 0 removed, 9 recycled; write=0.015 s, sync=0.011 s, total=0.115 s; sync files=4, longest=0.008 s, average=0.003 s; distance=133290 kB, estimate=137207 kB
+2023-07-22 03:49:26.199 UTC [1613356] LOG:  received fast shutdown request
+2023-07-22 03:49:26.205 UTC [1613356] LOG:  aborting any active transactions
+2023-07-22 03:49:26.205 UTC [1613356] LOG:  background worker "logical replication launcher" (PID 1613362) exited with exit code 1
+2023-07-22 03:49:26.205 UTC [1613357] LOG:  shutting down
+2023-07-22 03:49:26.212 UTC [1613357] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:49:26.244 UTC [1613357] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.006 s, sync=0.003 s, total=0.039 s; sync files=1, longest=0.003 s, average=0.003 s; distance=0 kB, estimate=123486 kB
+2023-07-22 03:49:26.275 UTC [1613356] LOG:  database system is shut down
+2023-07-22 03:49:27.126 UTC [1613466] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:49:27.127 UTC [1613466] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:49:27.137 UTC [1613466] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:49:27.153 UTC [1613469] LOG:  database system was shut down at 2023-07-22 03:49:26 UTC
+2023-07-22 03:49:27.165 UTC [1613466] LOG:  database system is ready to accept connections
+2023-07-22 03:49:27.474 UTC [1613485] ERROR:  invalid attribute number 4
+2023-07-22 03:49:27.474 UTC [1613485] STATEMENT:  SELECT dblink_build_sql_insert('foo','1 2 3 4',4,'{"0", "a", "{a0,b0,c0}"}','{"99", "xyz", "{za0,zb0,zc0}"}');
+2023-07-22 03:49:27.476 UTC [1613485] ERROR:  invalid attribute number 4
+2023-07-22 03:49:27.476 UTC [1613485] STATEMENT:  SELECT dblink_build_sql_update('foo','1 2 3 4',4,'{"0", "a", "{a0,b0,c0}"}','{"99", "xyz", "{za0,zb0,zc0}"}');
+2023-07-22 03:49:27.477 UTC [1613485] ERROR:  invalid attribute number 4
+2023-07-22 03:49:27.477 UTC [1613485] STATEMENT:  SELECT dblink_build_sql_delete('foo','1 2 3 4',4,'{"0", "a", "{a0,b0,c0}"}');
+2023-07-22 03:49:27.513 UTC [1613485] ERROR:  invalid attribute number 4
+2023-07-22 03:49:27.513 UTC [1613485] STATEMENT:  SELECT dblink_build_sql_insert('foo_1','1 2 3 4',4,'{"0", "a", "{a0,b0,c0}"}','{"99", "xyz", "{za0,zb0,zc0}"}');
+2023-07-22 03:49:27.514 UTC [1613485] ERROR:  invalid attribute number 4
+2023-07-22 03:49:27.514 UTC [1613485] STATEMENT:  SELECT dblink_build_sql_update('foo_1','1 2 3 4',4,'{"0", "a", "{a0,b0,c0}"}','{"99", "xyz", "{za0,zb0,zc0}"}');
+2023-07-22 03:49:27.515 UTC [1613485] ERROR:  invalid attribute number 4
+2023-07-22 03:49:27.515 UTC [1613485] STATEMENT:  SELECT dblink_build_sql_delete('foo_1','1 2 3 4',4,'{"0", "a", "{a0,b0,c0}"}');
+2023-07-22 03:49:27.559 UTC [1613485] ERROR:  connection not available
+2023-07-22 03:49:27.559 UTC [1613485] STATEMENT:  SELECT *
+	FROM dblink('SELECT * FROM foo') AS t(a int, b text, c text[])
+	WHERE t.a > 7;
+2023-07-22 03:49:27.574 UTC [1613487] ERROR:  could not establish connection
+2023-07-22 03:49:27.574 UTC [1613487] DETAIL:  syntax error in service file "/home/abigalek/pgext-cli-python/postgresql-15.3/contrib/dblink/pg_service.conf", line 7
+2023-07-22 03:49:27.574 UTC [1613487] STATEMENT:  
+			SELECT pg_backend_pid() FROM dblink(
+				'service=test_ldap '||connection_parameters(),
+				-- This string concatenation is a hack to shoehorn a
+				-- set_pgservicefile call into the SQL statement.
+				'SELECT 1' || set_pgservicefile('pg_service.conf')
+			) t(c int)
+		
+2023-07-22 03:49:27.586 UTC [1613488] ERROR:  relation "foobar" does not exist at character 49
+2023-07-22 03:49:27.586 UTC [1613488] STATEMENT:  DECLARE rmt_foo_cursor CURSOR FOR SELECT * FROM foobar
+2023-07-22 03:49:27.595 UTC [1613488] ERROR:  cursor "rmt_foobar_cursor" does not exist
+2023-07-22 03:49:27.595 UTC [1613488] STATEMENT:  FETCH 4 FROM rmt_foobar_cursor
+2023-07-22 03:49:27.596 UTC [1613488] ERROR:  cursor "rmt_foobar_cursor" does not exist
+2023-07-22 03:49:27.596 UTC [1613488] STATEMENT:  CLOSE rmt_foobar_cursor
+2023-07-22 03:49:27.597 UTC [1613488] ERROR:  cursor "rmt_foo_cursor" does not exist
+2023-07-22 03:49:27.597 UTC [1613488] STATEMENT:  FETCH 4 FROM rmt_foo_cursor
+2023-07-22 03:49:27.597 UTC [1613485] ERROR:  cursor "rmt_foo_cursor" does not exist
+2023-07-22 03:49:27.597 UTC [1613485] CONTEXT:  while fetching from cursor "rmt_foo_cursor" on unnamed dblink connection
+2023-07-22 03:49:27.597 UTC [1613485] STATEMENT:  SELECT *
+	FROM dblink_fetch('rmt_foo_cursor',4) AS t(a int, b text, c text[]);
+2023-07-22 03:49:27.598 UTC [1613488] ERROR:  cursor "rmt_foo_cursor" does not exist
+2023-07-22 03:49:27.598 UTC [1613488] STATEMENT:  FETCH 4 FROM rmt_foo_cursor
+2023-07-22 03:49:27.599 UTC [1613485] ERROR:  connection not available
+2023-07-22 03:49:27.599 UTC [1613485] STATEMENT:  SELECT *
+	FROM dblink('SELECT * FROM foo') AS t(a int, b text, c text[])
+	WHERE t.a > 7;
+2023-07-22 03:49:27.623 UTC [1613490] ERROR:  relation "foobar" does not exist at character 15
+2023-07-22 03:49:27.623 UTC [1613490] STATEMENT:  SELECT * FROM foobar
+2023-07-22 03:49:27.628 UTC [1613490] ERROR:  relation "foobar" does not exist at character 8
+2023-07-22 03:49:27.628 UTC [1613490] STATEMENT:  UPDATE foobar SET f3[2] = 'b99' WHERE f1 = 11
+2023-07-22 03:49:27.632 UTC [1613485] ERROR:  could not establish connection
+2023-07-22 03:49:27.632 UTC [1613485] DETAIL:  missing "=" after "myconn" in connection info string
+2023-07-22 03:49:27.632 UTC [1613485] STATEMENT:  SELECT *
+	FROM dblink('myconn','SELECT * FROM foo') AS t(a int, b text, c text[])
+	WHERE t.a > 7;
+2023-07-22 03:49:27.643 UTC [1613491] ERROR:  relation "foobar" does not exist at character 15
+2023-07-22 03:49:27.643 UTC [1613491] STATEMENT:  SELECT * FROM foobar
+2023-07-22 03:49:27.651 UTC [1613485] ERROR:  duplicate connection name
+2023-07-22 03:49:27.651 UTC [1613485] STATEMENT:  SELECT dblink_connect('myconn',connection_parameters());
+2023-07-22 03:49:27.663 UTC [1613491] ERROR:  relation "foobar" does not exist at character 49
+2023-07-22 03:49:27.663 UTC [1613491] STATEMENT:  DECLARE rmt_foo_cursor CURSOR FOR SELECT * FROM foobar
+2023-07-22 03:49:27.673 UTC [1613491] ERROR:  DECLARE CURSOR can only be used in transaction blocks
+2023-07-22 03:49:27.673 UTC [1613491] STATEMENT:  DECLARE xact_test CURSOR FOR SELECT * FROM foo
+2023-07-22 03:49:27.673 UTC [1613485] ERROR:  DECLARE CURSOR can only be used in transaction blocks
+2023-07-22 03:49:27.673 UTC [1613485] CONTEXT:  while executing command on dblink connection named "myconn"
+2023-07-22 03:49:27.673 UTC [1613485] STATEMENT:  SELECT dblink_exec('myconn','DECLARE xact_test CURSOR FOR SELECT * FROM foo');
+2023-07-22 03:49:27.674 UTC [1613491] WARNING:  there is no transaction in progress
+WARNING:  there is no transaction in progress
+2023-07-22 03:49:27.679 UTC [1613491] ERROR:  cursor "rmt_foobar_cursor" does not exist
+2023-07-22 03:49:27.679 UTC [1613491] STATEMENT:  FETCH 4 FROM rmt_foobar_cursor
+2023-07-22 03:49:27.680 UTC [1613491] ERROR:  cursor "rmt_foo_cursor" does not exist
+2023-07-22 03:49:27.680 UTC [1613491] STATEMENT:  FETCH 4 FROM rmt_foo_cursor
+2023-07-22 03:49:27.681 UTC [1613485] ERROR:  cursor "rmt_foo_cursor" does not exist
+2023-07-22 03:49:27.681 UTC [1613485] CONTEXT:  while fetching from cursor "rmt_foo_cursor" on dblink connection named "myconn"
+2023-07-22 03:49:27.681 UTC [1613485] STATEMENT:  SELECT *
+	FROM dblink_fetch('myconn','rmt_foo_cursor',4) AS t(a int, b text, c text[]);
+2023-07-22 03:49:27.682 UTC [1613485] ERROR:  could not establish connection
+2023-07-22 03:49:27.682 UTC [1613485] DETAIL:  missing "=" after "myconn" in connection info string
+2023-07-22 03:49:27.682 UTC [1613485] STATEMENT:  SELECT *
+	FROM dblink('myconn','SELECT * FROM foo') AS t(a int, b text, c text[])
+	WHERE t.a > 7;
+2023-07-22 03:49:27.701 UTC [1613485] ERROR:  connection "myconn" not available
+2023-07-22 03:49:27.701 UTC [1613485] STATEMENT:  SELECT dblink_disconnect('myconn');
+2023-07-22 03:49:27.758 UTC [1613485] ERROR:  invalid option "server"
+2023-07-22 03:49:27.758 UTC [1613485] HINT:  Valid options in this context are: user, password, sslpassword
+2023-07-22 03:49:27.758 UTC [1613485] STATEMENT:  CREATE USER MAPPING FOR public SERVER fdtest
+	  OPTIONS (server 'localhost');
+2023-07-22 03:49:27.773 UTC [1613485] ERROR:  password is required
+2023-07-22 03:49:27.773 UTC [1613485] DETAIL:  Non-superusers must provide a password in the connection string.
+2023-07-22 03:49:27.773 UTC [1613485] STATEMENT:  SELECT dblink_connect('myconn', 'fdtest');
+2023-07-22 03:49:27.816 UTC [1613501] ERROR:  invalid option "nonexistent"
+2023-07-22 03:49:27.816 UTC [1613501] HINT:  There are no valid options in this context.
+2023-07-22 03:49:27.816 UTC [1613501] STATEMENT:  ALTER FOREIGN DATA WRAPPER dblink_fdw OPTIONS (nonexistent 'fdw');
+2023-07-22 03:49:27.902 UTC [1613501] ERROR:  invalid input syntax for type integer: "not an int"
+2023-07-22 03:49:27.902 UTC [1613501] STATEMENT:  SELECT *
+	FROM dblink_fetch('myconn','error_cursor', 1) AS t(i int);
+2023-07-22 03:49:27.933 UTC [1613467] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:49:27.996 UTC [1613467] LOG:  checkpoint complete: wrote 18 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.017 s, sync=0.018 s, total=0.063 s; sync files=14, longest=0.006 s, average=0.002 s; distance=4185 kB, estimate=4185 kB
+2023-07-22 03:49:28.134 UTC [1613518] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:49:28.134 UTC [1613518] STATEMENT:  select xslt_process( query_to_xml('select x from generate_series(1,5) as
+	x',true,false,'')::text,
+	$$<xsl:stylesheet version="1.0"
+	               xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:output method="xml" indent="yes" />
+	<xsl:template match="*">
+	  <xsl:copy>
+	     <xsl:copy-of select="@*" />
+	     <xsl:apply-templates />
+	  </xsl:copy>
+	</xsl:template>
+	<xsl:template match="comment()|processing-instruction()">
+	  <xsl:copy />
+	</xsl:template>
+	</xsl:stylesheet>
+	$$::text);
+2023-07-22 03:49:28.191 UTC [1613518] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:49:28.191 UTC [1613518] STATEMENT:  select xslt_process('<aaa/>',$$<xsl:stylesheet version="1.0"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:template match="@*|node()">
+	      <xsl:copy>
+	         <xsl:apply-templates select="@*|node()"/>
+	      </xsl:copy>
+	   </xsl:template>
+	</xsl:stylesheet>$$)::xml;
+2023-07-22 03:49:28.191 UTC [1613518] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:49:28.191 UTC [1613518] STATEMENT:  select xslt_process('<aaa/>',$$<xsl:stylesheet version="1.0"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:template match="@*|node()">
+	      <xsl:copy>
+	         <xsl:apply-templates select="@*|node()"/>
+	      </xsl:copy>
+	   </xsl:template>
+	</xsl:stylesheet>$$)::xml;
+2023-07-22 03:49:28.220 UTC [1613518] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:49:28.220 UTC [1613518] STATEMENT:  SELECT xslt_process('<employee><name>cim</name><age>30</age><pay>400</pay></employee>'::text, $$<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+	  <xsl:output method="xml" omit-xml-declaration="yes" indent="yes"/>
+	  <xsl:strip-space elements="*"/>
+	  <xsl:param name="n1"/>
+	  <xsl:param name="n2"/>
+	  <xsl:param name="n3"/>
+	  <xsl:param name="n4"/>
+	  <xsl:param name="n5" select="'me'"/>
+	  <xsl:template match="*">
+	    <xsl:element name="samples">
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n1"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n2"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n3"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n4"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n5"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n6"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n7"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n8"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n9"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n10"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n11"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n12"/>
+	      </xsl:element>
+	    </xsl:element>
+	  </xsl:template>
+	</xsl:stylesheet>$$::text, 'n1="v1",n2="v2",n3="v3",n4="v4",n5="v5",n6="v6",n7="v7",n8="v8",n9="v9",n10="v10",n11="v11",n12="v12"'::text);
+2023-07-22 03:49:28.220 UTC [1613518] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:49:28.220 UTC [1613518] STATEMENT:  SELECT xslt_process('<xml><foo>Hello from XML</foo></xml>',
+	$$<xsl:stylesheet version="1.0"
+	      xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+	      xmlns:sax="http://icl.com/saxon"
+	      extension-element-prefixes="sax">
+	
+	  <xsl:template match="//foo">
+	    <sax:output href="0wn3d.txt" method="text">
+	      <xsl:value-of select="'0wn3d via xml2 extension and libxslt'"/>
+	      <xsl:apply-templates/>
+	    </sax:output>
+	  </xsl:template>
+	</xsl:stylesheet>$$);
+2023-07-22 03:50:01.220 UTC [1613467] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:50:01.376 UTC [1613467] LOG:  checkpoint complete: wrote 903 buffers (5.5%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.040 s, sync=0.037 s, total=0.157 s; sync files=256, longest=0.011 s, average=0.001 s; distance=137153 kB, estimate=137153 kB
+2023-07-22 03:50:33.591 UTC [1613467] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:50:33.710 UTC [1613467] LOG:  checkpoint complete: wrote 7 buffers (0.0%); 0 WAL file(s) added, 0 removed, 9 recycled; write=0.015 s, sync=0.011 s, total=0.119 s; sync files=4, longest=0.008 s, average=0.003 s; distance=133471 kB, estimate=136785 kB
+2023-07-22 03:50:33.758 UTC [1613466] LOG:  received fast shutdown request
+2023-07-22 03:50:33.767 UTC [1613466] LOG:  aborting any active transactions
+2023-07-22 03:50:33.768 UTC [1613466] LOG:  background worker "logical replication launcher" (PID 1613472) exited with exit code 1
+2023-07-22 03:50:33.768 UTC [1613467] LOG:  shutting down
+2023-07-22 03:50:33.775 UTC [1613467] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:50:33.812 UTC [1613467] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.006 s, sync=0.004 s, total=0.044 s; sync files=1, longest=0.004 s, average=0.004 s; distance=0 kB, estimate=123106 kB
+2023-07-22 03:50:33.857 UTC [1613466] LOG:  database system is shut down
+2023-07-22 03:50:34.631 UTC [1613592] FATAL:  could not access file "decoderbufs": No such file or directory
+2023-07-22 03:50:34.631 UTC [1613592] LOG:  database system is shut down
+2023-07-22 03:50:35.498 UTC [1613625] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:50:35.498 UTC [1613625] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:50:35.510 UTC [1613625] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:50:35.524 UTC [1613628] LOG:  database system was shut down at 2023-07-22 03:50:35 UTC
+2023-07-22 03:50:35.532 UTC [1613625] LOG:  database system is ready to accept connections
+2023-07-22 03:50:35.721 UTC [1613644] ERROR:  maxlen value has to be >= 1
+2023-07-22 03:50:35.721 UTC [1613644] STATEMENT:  ALTER TEXT SEARCH DICTIONARY intdict (MAXLEN = -214783648);
+2023-07-22 03:50:35.891 UTC [1613659] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:50:35.891 UTC [1613659] STATEMENT:  select xslt_process( query_to_xml('select x from generate_series(1,5) as
+	x',true,false,'')::text,
+	$$<xsl:stylesheet version="1.0"
+	               xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:output method="xml" indent="yes" />
+	<xsl:template match="*">
+	  <xsl:copy>
+	     <xsl:copy-of select="@*" />
+	     <xsl:apply-templates />
+	  </xsl:copy>
+	</xsl:template>
+	<xsl:template match="comment()|processing-instruction()">
+	  <xsl:copy />
+	</xsl:template>
+	</xsl:stylesheet>
+	$$::text);
+2023-07-22 03:50:35.950 UTC [1613659] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:50:35.950 UTC [1613659] STATEMENT:  select xslt_process('<aaa/>',$$<xsl:stylesheet version="1.0"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:template match="@*|node()">
+	      <xsl:copy>
+	         <xsl:apply-templates select="@*|node()"/>
+	      </xsl:copy>
+	   </xsl:template>
+	</xsl:stylesheet>$$)::xml;
+2023-07-22 03:50:35.951 UTC [1613659] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:50:35.951 UTC [1613659] STATEMENT:  select xslt_process('<aaa/>',$$<xsl:stylesheet version="1.0"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:template match="@*|node()">
+	      <xsl:copy>
+	         <xsl:apply-templates select="@*|node()"/>
+	      </xsl:copy>
+	   </xsl:template>
+	</xsl:stylesheet>$$)::xml;
+2023-07-22 03:50:35.980 UTC [1613659] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:50:35.980 UTC [1613659] STATEMENT:  SELECT xslt_process('<employee><name>cim</name><age>30</age><pay>400</pay></employee>'::text, $$<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+	  <xsl:output method="xml" omit-xml-declaration="yes" indent="yes"/>
+	  <xsl:strip-space elements="*"/>
+	  <xsl:param name="n1"/>
+	  <xsl:param name="n2"/>
+	  <xsl:param name="n3"/>
+	  <xsl:param name="n4"/>
+	  <xsl:param name="n5" select="'me'"/>
+	  <xsl:template match="*">
+	    <xsl:element name="samples">
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n1"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n2"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n3"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n4"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n5"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n6"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n7"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n8"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n9"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n10"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n11"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n12"/>
+	      </xsl:element>
+	    </xsl:element>
+	  </xsl:template>
+	</xsl:stylesheet>$$::text, 'n1="v1",n2="v2",n3="v3",n4="v4",n5="v5",n6="v6",n7="v7",n8="v8",n9="v9",n10="v10",n11="v11",n12="v12"'::text);
+2023-07-22 03:50:35.980 UTC [1613659] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:50:35.980 UTC [1613659] STATEMENT:  SELECT xslt_process('<xml><foo>Hello from XML</foo></xml>',
+	$$<xsl:stylesheet version="1.0"
+	      xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+	      xmlns:sax="http://icl.com/saxon"
+	      extension-element-prefixes="sax">
+	
+	  <xsl:template match="//foo">
+	    <sax:output href="0wn3d.txt" method="text">
+	      <xsl:value-of select="'0wn3d via xml2 extension and libxslt'"/>
+	      <xsl:apply-templates/>
+	    </sax:output>
+	  </xsl:template>
+	</xsl:stylesheet>$$);
+2023-07-22 03:51:09.265 UTC [1613626] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:51:09.471 UTC [1613626] LOG:  checkpoint complete: wrote 1783 buffers (10.9%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.070 s, sync=0.060 s, total=0.206 s; sync files=501, longest=0.024 s, average=0.001 s; distance=141296 kB, estimate=141296 kB
+2023-07-22 03:51:41.691 UTC [1613626] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:51:41.807 UTC [1613626] LOG:  checkpoint complete: wrote 7 buffers (0.0%); 0 WAL file(s) added, 0 removed, 9 recycled; write=0.021 s, sync=0.011 s, total=0.117 s; sync files=4, longest=0.008 s, average=0.003 s; distance=133212 kB, estimate=140487 kB
+2023-07-22 03:51:41.874 UTC [1613625] LOG:  received fast shutdown request
+2023-07-22 03:51:41.882 UTC [1613625] LOG:  aborting any active transactions
+2023-07-22 03:51:41.883 UTC [1613625] LOG:  background worker "logical replication launcher" (PID 1613631) exited with exit code 1
+2023-07-22 03:51:41.883 UTC [1613626] LOG:  shutting down
+2023-07-22 03:51:41.890 UTC [1613626] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:51:41.927 UTC [1613626] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.006 s, sync=0.003 s, total=0.045 s; sync files=1, longest=0.003 s, average=0.003 s; distance=0 kB, estimate=126439 kB
+2023-07-22 03:51:41.974 UTC [1613625] LOG:  database system is shut down
+2023-07-22 03:51:42.798 UTC [1613732] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:51:42.798 UTC [1613732] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:51:42.811 UTC [1613732] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:51:42.826 UTC [1613735] LOG:  database system was shut down at 2023-07-22 03:51:42 UTC
+2023-07-22 03:51:42.840 UTC [1613732] LOG:  database system is ready to accept connections
+2023-07-22 03:51:43.198 UTC [1613766] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:51:43.198 UTC [1613766] STATEMENT:  select xslt_process( query_to_xml('select x from generate_series(1,5) as
+	x',true,false,'')::text,
+	$$<xsl:stylesheet version="1.0"
+	               xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:output method="xml" indent="yes" />
+	<xsl:template match="*">
+	  <xsl:copy>
+	     <xsl:copy-of select="@*" />
+	     <xsl:apply-templates />
+	  </xsl:copy>
+	</xsl:template>
+	<xsl:template match="comment()|processing-instruction()">
+	  <xsl:copy />
+	</xsl:template>
+	</xsl:stylesheet>
+	$$::text);
+2023-07-22 03:51:43.258 UTC [1613766] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:51:43.258 UTC [1613766] STATEMENT:  select xslt_process('<aaa/>',$$<xsl:stylesheet version="1.0"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:template match="@*|node()">
+	      <xsl:copy>
+	         <xsl:apply-templates select="@*|node()"/>
+	      </xsl:copy>
+	   </xsl:template>
+	</xsl:stylesheet>$$)::xml;
+2023-07-22 03:51:43.258 UTC [1613766] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:51:43.258 UTC [1613766] STATEMENT:  select xslt_process('<aaa/>',$$<xsl:stylesheet version="1.0"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:template match="@*|node()">
+	      <xsl:copy>
+	         <xsl:apply-templates select="@*|node()"/>
+	      </xsl:copy>
+	   </xsl:template>
+	</xsl:stylesheet>$$)::xml;
+2023-07-22 03:51:43.287 UTC [1613766] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:51:43.287 UTC [1613766] STATEMENT:  SELECT xslt_process('<employee><name>cim</name><age>30</age><pay>400</pay></employee>'::text, $$<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+	  <xsl:output method="xml" omit-xml-declaration="yes" indent="yes"/>
+	  <xsl:strip-space elements="*"/>
+	  <xsl:param name="n1"/>
+	  <xsl:param name="n2"/>
+	  <xsl:param name="n3"/>
+	  <xsl:param name="n4"/>
+	  <xsl:param name="n5" select="'me'"/>
+	  <xsl:template match="*">
+	    <xsl:element name="samples">
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n1"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n2"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n3"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n4"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n5"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n6"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n7"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n8"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n9"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n10"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n11"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n12"/>
+	      </xsl:element>
+	    </xsl:element>
+	  </xsl:template>
+	</xsl:stylesheet>$$::text, 'n1="v1",n2="v2",n3="v3",n4="v4",n5="v5",n6="v6",n7="v7",n8="v8",n9="v9",n10="v10",n11="v11",n12="v12"'::text);
+2023-07-22 03:51:43.288 UTC [1613766] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:51:43.288 UTC [1613766] STATEMENT:  SELECT xslt_process('<xml><foo>Hello from XML</foo></xml>',
+	$$<xsl:stylesheet version="1.0"
+	      xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+	      xmlns:sax="http://icl.com/saxon"
+	      extension-element-prefixes="sax">
+	
+	  <xsl:template match="//foo">
+	    <sax:output href="0wn3d.txt" method="text">
+	      <xsl:value-of select="'0wn3d via xml2 extension and libxslt'"/>
+	      <xsl:apply-templates/>
+	    </sax:output>
+	  </xsl:template>
+	</xsl:stylesheet>$$);
+2023-07-22 03:52:16.344 UTC [1613733] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:52:16.554 UTC [1613733] LOG:  checkpoint complete: wrote 1783 buffers (10.9%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.050 s, sync=0.080 s, total=0.211 s; sync files=501, longest=0.038 s, average=0.001 s; distance=141185 kB, estimate=141185 kB
+2023-07-22 03:52:48.769 UTC [1613733] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:52:49.488 UTC [1613733] LOG:  checkpoint complete: wrote 7 buffers (0.0%); 0 WAL file(s) added, 0 removed, 9 recycled; write=0.018 s, sync=0.009 s, total=0.720 s; sync files=4, longest=0.008 s, average=0.003 s; distance=133097 kB, estimate=140376 kB
+2023-07-22 03:52:49.533 UTC [1613732] LOG:  received fast shutdown request
+2023-07-22 03:52:49.541 UTC [1613732] LOG:  aborting any active transactions
+2023-07-22 03:52:49.541 UTC [1613732] LOG:  background worker "logical replication launcher" (PID 1613738) exited with exit code 1
+2023-07-22 03:52:49.542 UTC [1613733] LOG:  shutting down
+2023-07-22 03:52:49.548 UTC [1613733] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:52:49.587 UTC [1613733] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.006 s, sync=0.004 s, total=0.046 s; sync files=1, longest=0.004 s, average=0.004 s; distance=0 kB, estimate=126339 kB
+2023-07-22 03:52:49.612 UTC [1613732] LOG:  database system is shut down
+2023-07-22 03:52:50.393 UTC [1613838] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:52:50.394 UTC [1613838] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:52:50.406 UTC [1613838] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:52:50.421 UTC [1613841] LOG:  database system was shut down at 2023-07-22 03:52:50 UTC
+2023-07-22 03:52:50.431 UTC [1613838] LOG:  database system is ready to accept connections
+2023-07-22 03:52:50.647 UTC [1613857] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:52:50.647 UTC [1613857] STATEMENT:  select xslt_process( query_to_xml('select x from generate_series(1,5) as
+	x',true,false,'')::text,
+	$$<xsl:stylesheet version="1.0"
+	               xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:output method="xml" indent="yes" />
+	<xsl:template match="*">
+	  <xsl:copy>
+	     <xsl:copy-of select="@*" />
+	     <xsl:apply-templates />
+	  </xsl:copy>
+	</xsl:template>
+	<xsl:template match="comment()|processing-instruction()">
+	  <xsl:copy />
+	</xsl:template>
+	</xsl:stylesheet>
+	$$::text);
+2023-07-22 03:52:50.707 UTC [1613857] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:52:50.707 UTC [1613857] STATEMENT:  select xslt_process('<aaa/>',$$<xsl:stylesheet version="1.0"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:template match="@*|node()">
+	      <xsl:copy>
+	         <xsl:apply-templates select="@*|node()"/>
+	      </xsl:copy>
+	   </xsl:template>
+	</xsl:stylesheet>$$)::xml;
+2023-07-22 03:52:50.707 UTC [1613857] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:52:50.707 UTC [1613857] STATEMENT:  select xslt_process('<aaa/>',$$<xsl:stylesheet version="1.0"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:template match="@*|node()">
+	      <xsl:copy>
+	         <xsl:apply-templates select="@*|node()"/>
+	      </xsl:copy>
+	   </xsl:template>
+	</xsl:stylesheet>$$)::xml;
+2023-07-22 03:52:50.736 UTC [1613857] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:52:50.736 UTC [1613857] STATEMENT:  SELECT xslt_process('<employee><name>cim</name><age>30</age><pay>400</pay></employee>'::text, $$<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+	  <xsl:output method="xml" omit-xml-declaration="yes" indent="yes"/>
+	  <xsl:strip-space elements="*"/>
+	  <xsl:param name="n1"/>
+	  <xsl:param name="n2"/>
+	  <xsl:param name="n3"/>
+	  <xsl:param name="n4"/>
+	  <xsl:param name="n5" select="'me'"/>
+	  <xsl:template match="*">
+	    <xsl:element name="samples">
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n1"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n2"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n3"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n4"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n5"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n6"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n7"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n8"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n9"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n10"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n11"/>
+	      </xsl:element>
+	      <xsl:element name="sample">
+	        <xsl:value-of select="$n12"/>
+	      </xsl:element>
+	    </xsl:element>
+	  </xsl:template>
+	</xsl:stylesheet>$$::text, 'n1="v1",n2="v2",n3="v3",n4="v4",n5="v5",n6="v6",n7="v7",n8="v8",n9="v9",n10="v10",n11="v11",n12="v12"'::text);
+2023-07-22 03:52:50.737 UTC [1613857] ERROR:  xslt_process() is not available without libxslt
+2023-07-22 03:52:50.737 UTC [1613857] STATEMENT:  SELECT xslt_process('<xml><foo>Hello from XML</foo></xml>',
+	$$<xsl:stylesheet version="1.0"
+	      xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+	      xmlns:sax="http://icl.com/saxon"
+	      extension-element-prefixes="sax">
+	
+	  <xsl:template match="//foo">
+	    <sax:output href="0wn3d.txt" method="text">
+	      <xsl:value-of select="'0wn3d via xml2 extension and libxslt'"/>
+	      <xsl:apply-templates/>
+	    </sax:output>
+	  </xsl:template>
+	</xsl:stylesheet>$$);
+2023-07-22 03:53:23.725 UTC [1613839] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:53:23.890 UTC [1613839] LOG:  checkpoint complete: wrote 900 buffers (5.5%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.044 s, sync=0.036 s, total=0.165 s; sync files=256, longest=0.015 s, average=0.001 s; distance=136997 kB, estimate=136997 kB
+2023-07-22 03:53:56.016 UTC [1613839] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:53:56.136 UTC [1613839] LOG:  checkpoint complete: wrote 7 buffers (0.0%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.015 s, sync=0.009 s, total=0.121 s; sync files=4, longest=0.006 s, average=0.003 s; distance=132995 kB, estimate=136597 kB
+2023-07-22 03:53:56.204 UTC [1613838] LOG:  received fast shutdown request
+2023-07-22 03:53:56.211 UTC [1613838] LOG:  aborting any active transactions
+2023-07-22 03:53:56.212 UTC [1613838] LOG:  background worker "logical replication launcher" (PID 1613844) exited with exit code 1
+2023-07-22 03:53:56.212 UTC [1613839] LOG:  shutting down
+2023-07-22 03:53:56.219 UTC [1613839] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:53:56.252 UTC [1613839] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.006 s, sync=0.004 s, total=0.041 s; sync files=1, longest=0.004 s, average=0.004 s; distance=0 kB, estimate=122937 kB
+2023-07-22 03:53:56.285 UTC [1613838] LOG:  database system is shut down
+2023-07-22 03:53:57.148 UTC [1613929] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:53:57.148 UTC [1613929] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:53:57.163 UTC [1613929] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:53:57.174 UTC [1613932] LOG:  database system was shut down at 2023-07-22 03:53:56 UTC
+2023-07-22 03:53:57.182 UTC [1613929] LOG:  database system is ready to accept connections
+2023-07-22 03:53:57.344 UTC [1613948] ERROR:  required extension "cube" is not installed
+2023-07-22 03:53:57.344 UTC [1613948] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-22 03:53:57.344 UTC [1613948] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-22 03:53:57.401 UTC [1613948] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-22 03:53:57.401 UTC [1613948] DETAIL:  extension earthdistance depends on extension cube
+2023-07-22 03:53:57.401 UTC [1613948] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-22 03:53:57.401 UTC [1613948] STATEMENT:  drop extension cube;
+2023-07-22 03:53:57.404 UTC [1613948] ERROR:  cannot drop type cube because extension cube requires it
+2023-07-22 03:53:57.404 UTC [1613948] HINT:  You can drop extension cube instead.
+2023-07-22 03:53:57.404 UTC [1613948] STATEMENT:  drop type cube;
+2023-07-22 03:53:57.408 UTC [1613948] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-22 03:53:57.408 UTC [1613948] DETAIL:  column f1 of table foo depends on type cube
+2023-07-22 03:53:57.408 UTC [1613948] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-22 03:53:57.408 UTC [1613948] STATEMENT:  drop extension cube;
+2023-07-22 03:53:57.494 UTC [1613948] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-22 03:53:57.494 UTC [1613948] DETAIL:  column f1 of table foo depends on type c.cube
+2023-07-22 03:53:57.494 UTC [1613948] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-22 03:53:57.494 UTC [1613948] STATEMENT:  drop extension cube;
+2023-07-22 03:53:57.494 UTC [1613948] ERROR:  cannot drop schema c because other objects depend on it
+2023-07-22 03:53:57.494 UTC [1613948] DETAIL:  extension cube depends on schema c
+	column f1 of table foo depends on type c.cube
+2023-07-22 03:53:57.494 UTC [1613948] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-22 03:53:57.494 UTC [1613948] STATEMENT:  drop schema c;

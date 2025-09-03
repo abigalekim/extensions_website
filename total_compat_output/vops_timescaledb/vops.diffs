@@ -1,0 +1,30 @@
+diff -U3 /home/abigalek/pgext-cli/pgextworkdir/vops/expected/test.out /home/abigalek/pgext-cli/pgextworkdir/vops/results/test.out
+--- /home/abigalek/pgext-cli/pgextworkdir/vops/expected/test.out	2023-11-26 04:49:15.658666092 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/vops/results/test.out	2023-11-26 04:49:32.434623412 +0000
+@@ -485,19 +485,18 @@
+ GROUP BY
+ 	category
+ ORDER BY 3 DESC limit 5;
+-                             QUERY PLAN                              
+----------------------------------------------------------------------
++                             QUERY PLAN                             
++--------------------------------------------------------------------
+  Limit
+    ->  Sort
+          Sort Key: (sum(wiki_data.size)) DESC
+          ->  HashAggregate
+                Group Key: wiki_cat.category
+-               ->  Hash Join
+-                     Hash Cond: (wiki_cat.cat_id = wiki_data.cat_id)
+-                     ->  Seq Scan on wiki_cat
+-                     ->  Hash
+-                           ->  Seq Scan on wiki_data_prj wiki_data
+-(10 rows)
++               ->  Nested Loop
++                     ->  Seq Scan on wiki_data_prj wiki_data
++                     ->  Index Scan using wiki_cat_pkey on wiki_cat
++                           Index Cond: (cat_id = wiki_data.cat_id)
++(9 rows)
+ 
+ create table quote(symbol char(5), ts timestamp, ask_price real, ask_size integer, bid_price real, bid_size integer);
+ insert into quote values

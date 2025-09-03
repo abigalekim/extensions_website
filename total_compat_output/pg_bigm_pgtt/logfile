@@ -1,0 +1,41 @@
+2023-07-25 15:06:25.603 UTC [768415] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 15:06:25.604 UTC [768415] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 15:06:25.610 UTC [768415] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 15:06:25.617 UTC [768418] LOG:  database system was shut down at 2023-07-25 15:06:25 UTC
+2023-07-25 15:06:25.622 UTC [768415] LOG:  database system is ready to accept connections
+2023-07-25 15:06:25.845 UTC [768434] ERROR:  parameter "pg_bigm.last_update" cannot be changed
+2023-07-25 15:06:25.845 UTC [768434] STATEMENT:  SET pg_bigm.last_update = '2013.09.18';
+2023-07-25 15:06:25.900 UTC [768434] ERROR:  relation "test_bigm" is not a GIN index
+2023-07-25 15:06:25.900 UTC [768434] STATEMENT:  SELECT * FROM pg_gin_pending_stats('test_bigm');
+2023-07-25 15:06:25.905 UTC [768434] ERROR:  relation "test_bigm_btree" is not a GIN index
+2023-07-25 15:06:25.905 UTC [768434] STATEMENT:  SELECT * FROM pg_gin_pending_stats('test_bigm_btree');
+2023-07-25 15:06:25.948 UTC [768434] ERROR:  function likequery(unknown) does not exist at character 8
+2023-07-25 15:06:25.948 UTC [768434] HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+2023-07-25 15:06:25.948 UTC [768434] STATEMENT:  SELECT likequery('test');
+2023-07-25 15:06:25.990 UTC [768416] LOG:  checkpoint starting: immediate force wait
+2023-07-25 15:06:26.019 UTC [768416] LOG:  checkpoint complete: wrote 22 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.009 s, sync=0.008 s, total=0.030 s; sync files=14, longest=0.003 s, average=0.001 s; distance=4707 kB, estimate=4707 kB
+2023-07-25 15:06:26.194 UTC [768457] WARNING:  GLOBAL is deprecated in temporary table creation at character 8
+2023-07-25 15:06:26.233 UTC [768457] ERROR:  can not drop a GTT that is in use.
+2023-07-25 15:06:26.233 UTC [768457] STATEMENT:  DROP TABLE t_glob_temptable1;
+2023-07-25 15:06:26.249 UTC [768462] WARNING:  GLOBAL is deprecated in temporary table creation at character 8
+2023-07-25 15:06:26.317 UTC [768467] WARNING:  GLOBAL is deprecated in temporary table creation at character 8
+2023-07-25 15:06:26.458 UTC [768472] ERROR:  a temporary table has been created and is active, can not rename the GTT table in this session.
+2023-07-25 15:06:26.458 UTC [768472] STATEMENT:  ALTER TABLE t_glob_temptable2 RENAME TO t_glob_temptable1;
+2023-07-25 15:06:26.586 UTC [768479] ERROR:  a temporary table has been created and is active, can not add an index on the GTT table in this session.
+2023-07-25 15:06:26.586 UTC [768479] STATEMENT:  CREATE INDEX ON t_glob_temptable2 (lbl);
+2023-07-25 15:06:26.607 UTC [768484] WARNING:  GLOBAL is deprecated in temporary table creation at character 8
+2023-07-25 15:06:26.661 UTC [768489] WARNING:  GLOBAL is deprecated in temporary table creation at character 8
+2023-07-25 15:06:26.778 UTC [768495] ERROR:  relation "t_glob_temptable1" already exists
+2023-07-25 15:06:26.778 UTC [768495] CONTEXT:  SQL statement "CREATE UNLOGGED TABLE pgtt_schema.t_glob_temptable1 (id int, lbl text)"
+	SQL statement "CREATE /*GLOBAL*/ TEMPORARY TABLE t_glob_temptable1(id int, lbl text) ON COMMIT PRESERVE ROWS"
+	PL/pgSQL function test_temp_table() line 6 at SQL statement
+2023-07-25 15:06:26.778 UTC [768495] STATEMENT:  SELECT test_temp_table();
+2023-07-25 15:06:26.836 UTC [768502] ERROR:  relation "t_glob_temptable1" does not exist at character 15
+2023-07-25 15:06:26.836 UTC [768502] STATEMENT:  SELECT * FROM t_glob_temptable1;
+2023-07-25 15:06:26.894 UTC [768507] ERROR:  attempt to create referential integrity constraint on global temporary table
+2023-07-25 15:06:26.894 UTC [768507] STATEMENT:  CREATE /*GLOBAL*/ TEMPORARY TABLE t2 (c1 integer, FOREIGN KEY (c1) REFERENCES source (id));
+2023-07-25 15:06:26.905 UTC [768507] ERROR:  attempt to create referential integrity constraint on global temporary table
+2023-07-25 15:06:26.905 UTC [768507] STATEMENT:  ALTER TABLE t2 ADD FOREIGN KEY (c1) REFERENCES source (id);
+2023-07-25 15:06:26.933 UTC [768511] WARNING:  GLOBAL is deprecated in temporary table creation at character 8
+2023-07-25 15:06:26.960 UTC [768511] ERROR:  column "two" does not exist at character 42
+2023-07-25 15:06:26.960 UTC [768511] STATEMENT:  INSERT INTO t_glob_temptable1 VALUES (2, two);

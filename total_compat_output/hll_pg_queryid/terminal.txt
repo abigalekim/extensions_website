@@ -1,0 +1,117 @@
+The files belonging to this database system will be owned by user "abigalek".
+This user must also own the server process.
+
+The database cluster will be initialized with locale "en_US.UTF-8".
+The default database encoding has accordingly been set to "UTF8".
+The default text search configuration will be set to "english".
+
+Data page checksums are disabled.
+
+creating directory pg-15-data ... ok
+creating subdirectories ... ok
+selecting dynamic shared memory implementation ... posix
+selecting default max_connections ... 100
+selecting default shared_buffers ... 128MB
+selecting default time zone ... Etc/UTC
+creating configuration files ... ok
+running bootstrap script ... ok
+performing post-bootstrap initialization ... ok
+syncing data to disk ... ok
+
+initdb: warning: enabling "trust" authentication for local connections
+initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+
+Success. You can now start the database server using:
+
+    pg-15-dist/bin/pg_ctl -D pg-15-data -l logfile start
+
+waiting for server to start.... done
+server started
+(using postmaster on Unix socket, default port)
+============== dropping database "contrib_regression" ==============
+SET
+DROP DATABASE
+============== creating database "contrib_regression" ==============
+CREATE DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+============== installing pg_stat_statements          ==============
+CREATE EXTENSION
+============== installing pg_queryid                  ==============
+CREATE EXTENSION
+============== running regression test queries        ==============
+test setup                        ... ok           34 ms
+test add_agg                      ... ok           38 ms
+test agg_oob                      ... ok           64 ms
+test auto_sparse                  ... ok           17 ms
+test card_op                      ... ok           14 ms
+test cast_shape                   ... ok           18 ms
+test copy_binary                  ... ok           31 ms
+test cumulative_add_cardinality_correction ... ok          456 ms
+test cumulative_add_comprehensive_promotion ... ok          553 ms
+test cumulative_add_sparse_edge   ... ok           26 ms
+test cumulative_add_sparse_random ... ok           26 ms
+test cumulative_add_sparse_step   ... ok           51 ms
+test cumulative_union_comprehensive ... ok         2190 ms
+test cumulative_union_explicit_explicit ... ok           85 ms
+test cumulative_union_explicit_promotion ... ok          510 ms
+test cumulative_union_probabilistic_probabilistic ... ok         6214 ms
+test cumulative_union_sparse_full_representation ... ok           14 ms
+test cumulative_union_sparse_promotion ... ok         5471 ms
+test cumulative_union_sparse_sparse ... ok          653 ms
+test disable_hashagg              ... ok           27 ms
+test equal                        ... ok            6 ms
+test explicit_thresh              ... ok            7 ms
+test hash                         ... ok            7 ms
+test hash_any                     ... ok            6 ms
+test meta_func                    ... ok            6 ms
+test murmur_bigint                ... ok           10 ms
+test murmur_bytea                 ... ok           17 ms
+test nosparse                     ... ok            5 ms
+test notequal                     ... ok            6 ms
+test scalar_oob                   ... ok            6 ms
+test storedproc                   ... ok            6 ms
+test transaction                  ... ok            5 ms
+test typmod                       ... FAILED      117 ms
+test typmod_insert                ... ok           31 ms
+test union_op                     ... ok           18 ms
+
+=======================
+ 1 of 35 tests failed. 
+=======================
+
+The differences that caused some tests to fail can be viewed in the
+file "/home/abigalek/pgext-cli-python/pgextworkdir/postgresql-hll/regression.diffs".  A copy of the test summary that you see
+above is saved in the file "/home/abigalek/pgext-cli-python/pgextworkdir/postgresql-hll/regression.out".
+
+(using postmaster on Unix socket, default port)
+============== dropping database "regression"         ==============
+SET
+DROP DATABASE
+============== creating database "regression"         ==============
+CREATE DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+============== installing hll                         ==============
+CREATE EXTENSION
+============== running regression test queries        ==============
+test pg_queryid                   ... FAILED       31 ms
+
+======================
+ 1 of 1 tests failed. 
+======================
+
+The differences that caused some tests to fail can be viewed in the
+file "/home/abigalek/pgext-cli-python/pgextworkdir/pg_queryid/regression.diffs".  A copy of the test summary that you see
+above is saved in the file "/home/abigalek/pgext-cli-python/pgextworkdir/pg_queryid/regression.out".
+
+waiting for server to shut down.... done
+server stopped

@@ -1,0 +1,249 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out	2023-07-26 07:03:20.453110932 +0000
+@@ -968,7 +968,8 @@
+ --------+-------+---------------------------------------------------------------------------------------------
+  public | cube  | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
+  public | earth | 
+-(2 rows)
++ public | seg   | floating point interval 'FLOAT .. FLOAT', '.. FLOAT', 'FLOAT ..' or 'FLOAT'
++(3 rows)
+ 
+ drop extension cube;  -- fail, earthdistance requires it
+ ERROR:  cannot drop extension cube because other objects depend on it
+@@ -984,7 +985,8 @@
+  Schema | Name |                                         Description                                         
+ --------+------+---------------------------------------------------------------------------------------------
+  public | cube | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
+-(1 row)
++ public | seg  | floating point interval 'FLOAT .. FLOAT', '.. FLOAT', 'FLOAT ..' or 'FLOAT'
++(2 rows)
+ 
+ create table foo (f1 cube, f2 int);
+ drop extension cube;  -- fail, foo.f1 requires it
+@@ -995,43 +997,125 @@
+ drop extension cube;
+ -- list what's installed
+ \dT
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++                                     List of data types
++ Schema | Name |                                 Description                                 
++--------+------+-----------------------------------------------------------------------------
++ public | seg  | floating point interval 'FLOAT .. FLOAT', '.. FLOAT', 'FLOAT ..' or 'FLOAT'
++(1 row)
+ 
+ \df
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                      List of functions
++ Schema |      Name       | Result data type |          Argument data types           | Type 
++--------+-----------------+------------------+----------------------------------------+------
++ public | gseg_consistent | boolean          | internal, seg, smallint, oid, internal | func
++ public | gseg_penalty    | internal         | internal, internal, internal           | func
++ public | gseg_picksplit  | internal         | internal, internal                     | func
++ public | gseg_same       | internal         | seg, seg, internal                     | func
++ public | gseg_union      | seg              | internal, internal                     | func
++ public | seg_center      | real             | seg                                    | func
++ public | seg_cmp         | integer          | seg, seg                               | func
++ public | seg_contained   | boolean          | seg, seg                               | func
++ public | seg_contains    | boolean          | seg, seg                               | func
++ public | seg_different   | boolean          | seg, seg                               | func
++ public | seg_ge          | boolean          | seg, seg                               | func
++ public | seg_gt          | boolean          | seg, seg                               | func
++ public | seg_in          | seg              | cstring                                | func
++ public | seg_inter       | seg              | seg, seg                               | func
++ public | seg_le          | boolean          | seg, seg                               | func
++ public | seg_left        | boolean          | seg, seg                               | func
++ public | seg_lower       | real             | seg                                    | func
++ public | seg_lt          | boolean          | seg, seg                               | func
++ public | seg_out         | cstring          | seg                                    | func
++ public | seg_over_left   | boolean          | seg, seg                               | func
++ public | seg_over_right  | boolean          | seg, seg                               | func
++ public | seg_overlap     | boolean          | seg, seg                               | func
++ public | seg_right       | boolean          | seg, seg                               | func
++ public | seg_same        | boolean          | seg, seg                               | func
++ public | seg_size        | real             | seg                                    | func
++ public | seg_union       | seg              | seg, seg                               | func
++ public | seg_upper       | real             | seg                                    | func
++(27 rows)
+ 
+ \do
+-                             List of operators
+- Schema | Name | Left arg type | Right arg type | Result type | Description 
+---------+------+---------------+----------------+-------------+-------------
+-(0 rows)
++                                   List of operators
++ Schema | Name | Left arg type | Right arg type | Result type |       Description       
++--------+------+---------------+----------------+-------------+-------------------------
++ public | &&   | seg           | seg            | boolean     | overlaps
++ public | &<   | seg           | seg            | boolean     | overlaps or is left of
++ public | &>   | seg           | seg            | boolean     | overlaps or is right of
++ public | <    | seg           | seg            | boolean     | less than
++ public | <<   | seg           | seg            | boolean     | is left of
++ public | <=   | seg           | seg            | boolean     | less than or equal
++ public | <>   | seg           | seg            | boolean     | different
++ public | <@   | seg           | seg            | boolean     | contained in
++ public | =    | seg           | seg            | boolean     | same as
++ public | >    | seg           | seg            | boolean     | greater than
++ public | >=   | seg           | seg            | boolean     | greater than or equal
++ public | >>   | seg           | seg            | boolean     | is right of
++ public | @>   | seg           | seg            | boolean     | contains
++(13 rows)
+ 
+ create schema c;
+ create extension cube with schema c;
+ -- list what's installed
+ \dT public.*
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++                                     List of data types
++ Schema | Name |                                 Description                                 
++--------+------+-----------------------------------------------------------------------------
++ public | seg  | floating point interval 'FLOAT .. FLOAT', '.. FLOAT', 'FLOAT ..' or 'FLOAT'
++(1 row)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                      List of functions
++ Schema |      Name       | Result data type |          Argument data types           | Type 
++--------+-----------------+------------------+----------------------------------------+------
++ public | gseg_consistent | boolean          | internal, seg, smallint, oid, internal | func
++ public | gseg_penalty    | internal         | internal, internal, internal           | func
++ public | gseg_picksplit  | internal         | internal, internal                     | func
++ public | gseg_same       | internal         | seg, seg, internal                     | func
++ public | gseg_union      | seg              | internal, internal                     | func
++ public | seg_center      | real             | seg                                    | func
++ public | seg_cmp         | integer          | seg, seg                               | func
++ public | seg_contained   | boolean          | seg, seg                               | func
++ public | seg_contains    | boolean          | seg, seg                               | func
++ public | seg_different   | boolean          | seg, seg                               | func
++ public | seg_ge          | boolean          | seg, seg                               | func
++ public | seg_gt          | boolean          | seg, seg                               | func
++ public | seg_in          | seg              | cstring                                | func
++ public | seg_inter       | seg              | seg, seg                               | func
++ public | seg_le          | boolean          | seg, seg                               | func
++ public | seg_left        | boolean          | seg, seg                               | func
++ public | seg_lower       | real             | seg                                    | func
++ public | seg_lt          | boolean          | seg, seg                               | func
++ public | seg_out         | cstring          | seg                                    | func
++ public | seg_over_left   | boolean          | seg, seg                               | func
++ public | seg_over_right  | boolean          | seg, seg                               | func
++ public | seg_overlap     | boolean          | seg, seg                               | func
++ public | seg_right       | boolean          | seg, seg                               | func
++ public | seg_same        | boolean          | seg, seg                               | func
++ public | seg_size        | real             | seg                                    | func
++ public | seg_union       | seg              | seg, seg                               | func
++ public | seg_upper       | real             | seg                                    | func
++(27 rows)
+ 
+ \do public.*
+-                             List of operators
+- Schema | Name | Left arg type | Right arg type | Result type | Description 
+---------+------+---------------+----------------+-------------+-------------
+-(0 rows)
++                                   List of operators
++ Schema | Name | Left arg type | Right arg type | Result type |       Description       
++--------+------+---------------+----------------+-------------+-------------------------
++ public | &&   | seg           | seg            | boolean     | overlaps
++ public | &<   | seg           | seg            | boolean     | overlaps or is left of
++ public | &>   | seg           | seg            | boolean     | overlaps or is right of
++ public | <    | seg           | seg            | boolean     | less than
++ public | <<   | seg           | seg            | boolean     | is left of
++ public | <=   | seg           | seg            | boolean     | less than or equal
++ public | <>   | seg           | seg            | boolean     | different
++ public | <@   | seg           | seg            | boolean     | contained in
++ public | =    | seg           | seg            | boolean     | same as
++ public | >    | seg           | seg            | boolean     | greater than
++ public | >=   | seg           | seg            | boolean     | greater than or equal
++ public | >>   | seg           | seg            | boolean     | is right of
++ public | @>   | seg           | seg            | boolean     | contains
++(13 rows)
+ 
+ \dT c.*
+                                               List of data types
+@@ -1060,22 +1144,63 @@
+ 
+ -- list what's installed
+ \dT public.*
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++                                     List of data types
++ Schema | Name |                                 Description                                 
++--------+------+-----------------------------------------------------------------------------
++ public | seg  | floating point interval 'FLOAT .. FLOAT', '.. FLOAT', 'FLOAT ..' or 'FLOAT'
++(1 row)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                      List of functions
++ Schema |      Name       | Result data type |          Argument data types           | Type 
++--------+-----------------+------------------+----------------------------------------+------
++ public | gseg_consistent | boolean          | internal, seg, smallint, oid, internal | func
++ public | gseg_penalty    | internal         | internal, internal, internal           | func
++ public | gseg_picksplit  | internal         | internal, internal                     | func
++ public | gseg_same       | internal         | seg, seg, internal                     | func
++ public | gseg_union      | seg              | internal, internal                     | func
++ public | seg_center      | real             | seg                                    | func
++ public | seg_cmp         | integer          | seg, seg                               | func
++ public | seg_contained   | boolean          | seg, seg                               | func
++ public | seg_contains    | boolean          | seg, seg                               | func
++ public | seg_different   | boolean          | seg, seg                               | func
++ public | seg_ge          | boolean          | seg, seg                               | func
++ public | seg_gt          | boolean          | seg, seg                               | func
++ public | seg_in          | seg              | cstring                                | func
++ public | seg_inter       | seg              | seg, seg                               | func
++ public | seg_le          | boolean          | seg, seg                               | func
++ public | seg_left        | boolean          | seg, seg                               | func
++ public | seg_lower       | real             | seg                                    | func
++ public | seg_lt          | boolean          | seg, seg                               | func
++ public | seg_out         | cstring          | seg                                    | func
++ public | seg_over_left   | boolean          | seg, seg                               | func
++ public | seg_over_right  | boolean          | seg, seg                               | func
++ public | seg_overlap     | boolean          | seg, seg                               | func
++ public | seg_right       | boolean          | seg, seg                               | func
++ public | seg_same        | boolean          | seg, seg                               | func
++ public | seg_size        | real             | seg                                    | func
++ public | seg_union       | seg              | seg, seg                               | func
++ public | seg_upper       | real             | seg                                    | func
++(27 rows)
+ 
+ \do public.*
+-                             List of operators
+- Schema | Name | Left arg type | Right arg type | Result type | Description 
+---------+------+---------------+----------------+-------------+-------------
+-(0 rows)
++                                   List of operators
++ Schema | Name | Left arg type | Right arg type | Result type |       Description       
++--------+------+---------------+----------------+-------------+-------------------------
++ public | &&   | seg           | seg            | boolean     | overlaps
++ public | &<   | seg           | seg            | boolean     | overlaps or is left of
++ public | &>   | seg           | seg            | boolean     | overlaps or is right of
++ public | <    | seg           | seg            | boolean     | less than
++ public | <<   | seg           | seg            | boolean     | is left of
++ public | <=   | seg           | seg            | boolean     | less than or equal
++ public | <>   | seg           | seg            | boolean     | different
++ public | <@   | seg           | seg            | boolean     | contained in
++ public | =    | seg           | seg            | boolean     | same as
++ public | >    | seg           | seg            | boolean     | greater than
++ public | >=   | seg           | seg            | boolean     | greater than or equal
++ public | >>   | seg           | seg            | boolean     | is right of
++ public | @>   | seg           | seg            | boolean     | contains
++(13 rows)
+ 
+ \dT c.*
+      List of data types

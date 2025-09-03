@@ -1,0 +1,41 @@
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/functions.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/functions.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/functions.out	2023-07-25 04:55:55.016790254 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/functions.out	2023-07-26 10:13:04.920904131 +0000
+@@ -17,6 +17,11 @@
+  public         | get_cmd_type             | FUNCTION     | text
+  public         | get_histogram_timings    | FUNCTION     | text
+  public         | histogram                | FUNCTION     | record
++ public         | pg_cputime               | FUNCTION     | record
++ public         | pg_diskusage             | FUNCTION     | record
++ public         | pg_loadavg               | FUNCTION     | record
++ public         | pg_memusage              | FUNCTION     | record
++ public         | pg_proctab               | FUNCTION     | record
+  public         | pg_stat_monitor_internal | FUNCTION     | record
+  public         | pg_stat_monitor_reset    | FUNCTION     | void
+  public         | pg_stat_monitor_version  | FUNCTION     | text
+@@ -26,7 +31,7 @@
+  public         | pgsm_create_15_view      | FUNCTION     | integer
+  public         | pgsm_create_view         | FUNCTION     | integer
+  public         | range                    | FUNCTION     | ARRAY
+-(13 rows)
++(18 rows)
+ 
+ SET ROLE u1;
+ SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+@@ -36,10 +41,15 @@
+  public         | get_cmd_type             | FUNCTION     | text
+  public         | get_histogram_timings    | FUNCTION     | text
+  public         | histogram                | FUNCTION     | record
++ public         | pg_cputime               | FUNCTION     | record
++ public         | pg_diskusage             | FUNCTION     | record
++ public         | pg_loadavg               | FUNCTION     | record
++ public         | pg_memusage              | FUNCTION     | record
++ public         | pg_proctab               | FUNCTION     | record
+  public         | pg_stat_monitor_internal | FUNCTION     | record
+  public         | pg_stat_monitor_version  | FUNCTION     | text
+  public         | range                    | FUNCTION     | ARRAY
+-(7 rows)
++(12 rows)
+ 
+ SET ROLE su;
+ DROP USER u1;

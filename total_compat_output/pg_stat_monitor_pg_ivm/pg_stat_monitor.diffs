@@ -1,0 +1,32 @@
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/pgsm_query_id.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/pgsm_query_id.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/pgsm_query_id.out	2023-07-25 04:55:55.016790254 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/pgsm_query_id.out	2023-07-26 10:11:52.041956588 +0000
+@@ -105,11 +105,15 @@
+ 
+ \c db1
+ DROP TABLE t1;
++ERROR:  could not open relation with OID 0
+ DROP TABLE t2;
++ERROR:  could not open relation with OID 0
+ DROP FUNCTION ADD;
+ \c db2
+ DROP TABLE t1;
++ERROR:  could not open relation with OID 0
+ DROP TABLE t3;
++ERROR:  could not open relation with OID 0
+ DROP FUNCTION ADD;
+ \c contrib_regression
+ DROP DATABASE db1;
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/database.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/database.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/database.out	2023-07-25 04:55:55.016790254 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/database.out	2023-07-26 10:11:52.525949207 +0000
+@@ -45,7 +45,9 @@
+ 
+ \c db1
+ DROP TABLE t1;
++ERROR:  could not open relation with OID 0
+ DROP TABLE t2;
++ERROR:  could not open relation with OID 0
+ \c contrib_regression
+ DROP DATABASE db1;
+ DROP EXTENSION pg_stat_monitor;

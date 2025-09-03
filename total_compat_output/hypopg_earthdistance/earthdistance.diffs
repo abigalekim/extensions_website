@@ -1,0 +1,81 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out	2023-07-26 09:39:04.983908140 +0000
+@@ -1001,10 +1001,21 @@
+ (0 rows)
+ 
+ \df
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                                                                                                                               List of functions
++ Schema |           Name            |  Result data type  |                                                                                                                              Argument data types                                                                                                                              | Type 
++--------+---------------------------+--------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------
++ public | hypopg                    | SETOF record       | OUT indexname text, OUT indexrelid oid, OUT indrelid oid, OUT innatts integer, OUT indisunique boolean, OUT indkey int2vector, OUT indcollation oidvector, OUT indclass oidvector, OUT indoption oidvector, OUT indexprs pg_node_tree, OUT indpred pg_node_tree, OUT amid oid | func
++ public | hypopg_create_index       | SETOF record       | sql_order text, OUT indexrelid oid, OUT indexname text                                                                                                                                                                                                                        | func
++ public | hypopg_drop_index         | boolean            | indexid oid                                                                                                                                                                                                                                                                   | func
++ public | hypopg_get_indexdef       | text               | indexid oid                                                                                                                                                                                                                                                                   | func
++ public | hypopg_hidden_indexes     | TABLE(indexid oid) |                                                                                                                                                                                                                                                                               | func
++ public | hypopg_hide_index         | boolean            | indexid oid                                                                                                                                                                                                                                                                   | func
++ public | hypopg_relation_size      | bigint             | indexid oid                                                                                                                                                                                                                                                                   | func
++ public | hypopg_reset              | void               |                                                                                                                                                                                                                                                                               | func
++ public | hypopg_reset_index        | void               |                                                                                                                                                                                                                                                                               | func
++ public | hypopg_unhide_all_indexes | void               |                                                                                                                                                                                                                                                                               | func
++ public | hypopg_unhide_index       | boolean            | indexid oid                                                                                                                                                                                                                                                                   | func
++(11 rows)
+ 
+ \do
+                              List of operators
+@@ -1022,10 +1033,21 @@
+ (0 rows)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                                                                                                                               List of functions
++ Schema |           Name            |  Result data type  |                                                                                                                              Argument data types                                                                                                                              | Type 
++--------+---------------------------+--------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------
++ public | hypopg                    | SETOF record       | OUT indexname text, OUT indexrelid oid, OUT indrelid oid, OUT innatts integer, OUT indisunique boolean, OUT indkey int2vector, OUT indcollation oidvector, OUT indclass oidvector, OUT indoption oidvector, OUT indexprs pg_node_tree, OUT indpred pg_node_tree, OUT amid oid | func
++ public | hypopg_create_index       | SETOF record       | sql_order text, OUT indexrelid oid, OUT indexname text                                                                                                                                                                                                                        | func
++ public | hypopg_drop_index         | boolean            | indexid oid                                                                                                                                                                                                                                                                   | func
++ public | hypopg_get_indexdef       | text               | indexid oid                                                                                                                                                                                                                                                                   | func
++ public | hypopg_hidden_indexes     | TABLE(indexid oid) |                                                                                                                                                                                                                                                                               | func
++ public | hypopg_hide_index         | boolean            | indexid oid                                                                                                                                                                                                                                                                   | func
++ public | hypopg_relation_size      | bigint             | indexid oid                                                                                                                                                                                                                                                                   | func
++ public | hypopg_reset              | void               |                                                                                                                                                                                                                                                                               | func
++ public | hypopg_reset_index        | void               |                                                                                                                                                                                                                                                                               | func
++ public | hypopg_unhide_all_indexes | void               |                                                                                                                                                                                                                                                                               | func
++ public | hypopg_unhide_index       | boolean            | indexid oid                                                                                                                                                                                                                                                                   | func
++(11 rows)
+ 
+ \do public.*
+                              List of operators
+@@ -1066,10 +1088,21 @@
+ (0 rows)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                                                                                                                               List of functions
++ Schema |           Name            |  Result data type  |                                                                                                                              Argument data types                                                                                                                              | Type 
++--------+---------------------------+--------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------
++ public | hypopg                    | SETOF record       | OUT indexname text, OUT indexrelid oid, OUT indrelid oid, OUT innatts integer, OUT indisunique boolean, OUT indkey int2vector, OUT indcollation oidvector, OUT indclass oidvector, OUT indoption oidvector, OUT indexprs pg_node_tree, OUT indpred pg_node_tree, OUT amid oid | func
++ public | hypopg_create_index       | SETOF record       | sql_order text, OUT indexrelid oid, OUT indexname text                                                                                                                                                                                                                        | func
++ public | hypopg_drop_index         | boolean            | indexid oid                                                                                                                                                                                                                                                                   | func
++ public | hypopg_get_indexdef       | text               | indexid oid                                                                                                                                                                                                                                                                   | func
++ public | hypopg_hidden_indexes     | TABLE(indexid oid) |                                                                                                                                                                                                                                                                               | func
++ public | hypopg_hide_index         | boolean            | indexid oid                                                                                                                                                                                                                                                                   | func
++ public | hypopg_relation_size      | bigint             | indexid oid                                                                                                                                                                                                                                                                   | func
++ public | hypopg_reset              | void               |                                                                                                                                                                                                                                                                               | func
++ public | hypopg_reset_index        | void               |                                                                                                                                                                                                                                                                               | func
++ public | hypopg_unhide_all_indexes | void               |                                                                                                                                                                                                                                                                               | func
++ public | hypopg_unhide_index       | boolean            | indexid oid                                                                                                                                                                                                                                                                   | func
++(11 rows)
+ 
+ \do public.*
+                              List of operators

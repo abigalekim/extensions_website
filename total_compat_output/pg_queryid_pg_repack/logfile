@@ -1,0 +1,246 @@
+2023-07-26 06:58:58.964 UTC [998953] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 06:58:58.964 UTC [998953] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 06:58:58.976 UTC [998953] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 06:58:58.992 UTC [998956] LOG:  database system was shut down at 2023-07-26 06:58:58 UTC
+2023-07-26 06:58:58.999 UTC [998953] LOG:  database system is ready to accept connections
+2023-07-26 06:58:59.191 UTC [998972] ERROR:  cache lookup failed for type 21
+2023-07-26 06:58:59.191 UTC [998972] STATEMENT:  CREATE EXTENSION IF NOT EXISTS "pg_repack"
+2023-07-26 06:58:59.347 UTC [998994] ERROR:  cache lookup failed for type 21
+2023-07-26 06:58:59.347 UTC [998994] STATEMENT:  CREATE EXTENSION pg_repack;
+2023-07-26 06:58:59.791 UTC [999000] ERROR:  could not create unique index "idx_badindex_n"
+2023-07-26 06:58:59.791 UTC [999000] DETAIL:  Key (n)=(10) is duplicated.
+2023-07-26 06:58:59.791 UTC [999000] STATEMENT:  CREATE UNIQUE INDEX CONCURRENTLY idx_badindex_n ON tbl_badindex (n);
+2023-07-26 06:58:59.872 UTC [999007] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:58:59.872 UTC [999007] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:58:59.879 UTC [999011] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:58:59.879 UTC [999011] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:58:59.886 UTC [999015] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:58:59.886 UTC [999015] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:58:59.903 UTC [999027] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:58:59.903 UTC [999027] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:58:59.909 UTC [999031] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:58:59.909 UTC [999031] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:58:59.917 UTC [999035] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:58:59.917 UTC [999035] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:58:59.932 UTC [999044] ERROR:  cache lookup failed for type 18
+2023-07-26 06:58:59.932 UTC [999044] STATEMENT:  SELECT pol.polname, pol.polpermissive,
+	  CASE WHEN pol.polroles = '{0}' THEN NULL ELSE pg_catalog.array_to_string(array(select rolname from pg_catalog.pg_roles where oid = any (pol.polroles) order by 1),',') END,
+	  pg_catalog.pg_get_expr(pol.polqual, pol.polrelid),
+	  pg_catalog.pg_get_expr(pol.polwithcheck, pol.polrelid),
+	  CASE pol.polcmd
+	    WHEN 'r' THEN 'SELECT'
+	    WHEN 'a' THEN 'INSERT'
+	    WHEN 'w' THEN 'UPDATE'
+	    WHEN 'd' THEN 'DELETE'
+	    END AS cmd
+	FROM pg_catalog.pg_policy pol
+	WHERE pol.polrelid = '16452' ORDER BY 1;
+2023-07-26 06:58:59.934 UTC [999044] ERROR:  cache lookup failed for type 18
+2023-07-26 06:58:59.934 UTC [999044] STATEMENT:  SELECT pol.polname, pol.polpermissive,
+	  CASE WHEN pol.polroles = '{0}' THEN NULL ELSE pg_catalog.array_to_string(array(select rolname from pg_catalog.pg_roles where oid = any (pol.polroles) order by 1),',') END,
+	  pg_catalog.pg_get_expr(pol.polqual, pol.polrelid),
+	  pg_catalog.pg_get_expr(pol.polwithcheck, pol.polrelid),
+	  CASE pol.polcmd
+	    WHEN 'r' THEN 'SELECT'
+	    WHEN 'a' THEN 'INSERT'
+	    WHEN 'w' THEN 'UPDATE'
+	    WHEN 'd' THEN 'DELETE'
+	    END AS cmd
+	FROM pg_catalog.pg_policy pol
+	WHERE pol.polrelid = '16473' ORDER BY 1;
+2023-07-26 06:58:59.936 UTC [999044] ERROR:  cache lookup failed for type 18
+2023-07-26 06:58:59.936 UTC [999044] STATEMENT:  SELECT pol.polname, pol.polpermissive,
+	  CASE WHEN pol.polroles = '{0}' THEN NULL ELSE pg_catalog.array_to_string(array(select rolname from pg_catalog.pg_roles where oid = any (pol.polroles) order by 1),',') END,
+	  pg_catalog.pg_get_expr(pol.polqual, pol.polrelid),
+	  pg_catalog.pg_get_expr(pol.polwithcheck, pol.polrelid),
+	  CASE pol.polcmd
+	    WHEN 'r' THEN 'SELECT'
+	    WHEN 'a' THEN 'INSERT'
+	    WHEN 'w' THEN 'UPDATE'
+	    WHEN 'd' THEN 'DELETE'
+	    END AS cmd
+	FROM pg_catalog.pg_policy pol
+	WHERE pol.polrelid = '16467' ORDER BY 1;
+2023-07-26 06:58:59.938 UTC [999044] ERROR:  cache lookup failed for type 18
+2023-07-26 06:58:59.938 UTC [999044] STATEMENT:  SELECT pol.polname, pol.polpermissive,
+	  CASE WHEN pol.polroles = '{0}' THEN NULL ELSE pg_catalog.array_to_string(array(select rolname from pg_catalog.pg_roles where oid = any (pol.polroles) order by 1),',') END,
+	  pg_catalog.pg_get_expr(pol.polqual, pol.polrelid),
+	  pg_catalog.pg_get_expr(pol.polwithcheck, pol.polrelid),
+	  CASE pol.polcmd
+	    WHEN 'r' THEN 'SELECT'
+	    WHEN 'a' THEN 'INSERT'
+	    WHEN 'w' THEN 'UPDATE'
+	    WHEN 'd' THEN 'DELETE'
+	    END AS cmd
+	FROM pg_catalog.pg_policy pol
+	WHERE pol.polrelid = '16460' ORDER BY 1;
+2023-07-26 06:58:59.940 UTC [999044] ERROR:  cache lookup failed for type 18
+2023-07-26 06:58:59.940 UTC [999044] STATEMENT:  SELECT pol.polname, pol.polpermissive,
+	  CASE WHEN pol.polroles = '{0}' THEN NULL ELSE pg_catalog.array_to_string(array(select rolname from pg_catalog.pg_roles where oid = any (pol.polroles) order by 1),',') END,
+	  pg_catalog.pg_get_expr(pol.polqual, pol.polrelid),
+	  pg_catalog.pg_get_expr(pol.polwithcheck, pol.polrelid),
+	  CASE pol.polcmd
+	    WHEN 'r' THEN 'SELECT'
+	    WHEN 'a' THEN 'INSERT'
+	    WHEN 'w' THEN 'UPDATE'
+	    WHEN 'd' THEN 'DELETE'
+	    END AS cmd
+	FROM pg_catalog.pg_policy pol
+	WHERE pol.polrelid = '16479' ORDER BY 1;
+2023-07-26 06:58:59.942 UTC [999044] ERROR:  cache lookup failed for type 18
+2023-07-26 06:58:59.942 UTC [999044] STATEMENT:  SELECT pol.polname, pol.polpermissive,
+	  CASE WHEN pol.polroles = '{0}' THEN NULL ELSE pg_catalog.array_to_string(array(select rolname from pg_catalog.pg_roles where oid = any (pol.polroles) order by 1),',') END,
+	  pg_catalog.pg_get_expr(pol.polqual, pol.polrelid),
+	  pg_catalog.pg_get_expr(pol.polwithcheck, pol.polrelid),
+	  CASE pol.polcmd
+	    WHEN 'r' THEN 'SELECT'
+	    WHEN 'a' THEN 'INSERT'
+	    WHEN 'w' THEN 'UPDATE'
+	    WHEN 'd' THEN 'DELETE'
+	    END AS cmd
+	FROM pg_catalog.pg_policy pol
+	WHERE pol.polrelid = '16488' ORDER BY 1;
+2023-07-26 06:58:59.943 UTC [999044] ERROR:  cache lookup failed for type 18
+2023-07-26 06:58:59.943 UTC [999044] STATEMENT:  SELECT pol.polname, pol.polpermissive,
+	  CASE WHEN pol.polroles = '{0}' THEN NULL ELSE pg_catalog.array_to_string(array(select rolname from pg_catalog.pg_roles where oid = any (pol.polroles) order by 1),',') END,
+	  pg_catalog.pg_get_expr(pol.polqual, pol.polrelid),
+	  pg_catalog.pg_get_expr(pol.polwithcheck, pol.polrelid),
+	  CASE pol.polcmd
+	    WHEN 'r' THEN 'SELECT'
+	    WHEN 'a' THEN 'INSERT'
+	    WHEN 'w' THEN 'UPDATE'
+	    WHEN 'd' THEN 'DELETE'
+	    END AS cmd
+	FROM pg_catalog.pg_policy pol
+	WHERE pol.polrelid = '16500' ORDER BY 1;
+2023-07-26 06:58:59.958 UTC [999052] ERROR:  cache lookup failed for type 18
+2023-07-26 06:58:59.958 UTC [999052] STATEMENT:  SELECT CASE relkind
+	       WHEN 'r' THEN relname
+	       WHEN 't' THEN 'toast_table'
+	       END as table,
+	       reloptions
+	FROM pg_class
+	WHERE relname = 'tbl_with_toast' OR relname = 'pg_toast_' || 'tbl_with_toast'::regclass::oid
+	ORDER BY 1;
+2023-07-26 06:59:00.039 UTC [999055] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:00.039 UTC [999055] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:00.061 UTC [999059] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:00.061 UTC [999059] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:00.082 UTC [999063] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:00.082 UTC [999063] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:00.103 UTC [999067] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:00.103 UTC [999067] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:00.125 UTC [999071] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:00.125 UTC [999071] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:00.146 UTC [999075] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:00.146 UTC [999075] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:00.196 UTC [999079] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:00.196 UTC [999079] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:00.235 UTC [999083] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:00.235 UTC [999083] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:00.272 UTC [999087] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:00.272 UTC [999087] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:00.293 UTC [999091] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:00.293 UTC [999091] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:00.316 UTC [999095] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:00.316 UTC [999095] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:00.339 UTC [999099] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:00.339 UTC [999099] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:00.417 UTC [999103] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:00.417 UTC [999103] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:00.438 UTC [999107] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:00.438 UTC [999107] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:00.469 UTC [999115] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:00.469 UTC [999115] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:00.523 UTC [999125] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:00.523 UTC [999125] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:00.545 UTC [999129] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:00.545 UTC [999129] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:00.642 UTC [999133] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:00.642 UTC [999133] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:00.678 UTC [999143] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:00.678 UTC [999143] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:00.699 UTC [999147] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:00.699 UTC [999147] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:00.721 UTC [999151] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:00.721 UTC [999151] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:00.743 UTC [999155] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:00.743 UTC [999155] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:00.764 UTC [999159] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:00.764 UTC [999159] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:00.817 UTC [999169] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:00.817 UTC [999169] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:00.858 UTC [999177] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:00.858 UTC [999177] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:00.963 UTC [999186] ERROR:  schema "repack" does not exist at character 28
+2023-07-26 06:59:00.963 UTC [999186] STATEMENT:  SELECT regexp_replace(
+	    repack.repack_indexdef(indexrelid, 'testts1'::regclass, NULL, false),
+	    '_[0-9]+', '_OID', 'g')
+	FROM pg_index i join pg_class c ON c.oid = indexrelid
+	WHERE indrelid = 'testts1'::regclass ORDER BY relname;
+2023-07-26 06:59:00.964 UTC [999186] ERROR:  schema "repack" does not exist at character 28
+2023-07-26 06:59:00.964 UTC [999186] STATEMENT:  SELECT regexp_replace(
+	    repack.repack_indexdef(indexrelid, 'testts1'::regclass, 'foo', false),
+	    '_[0-9]+', '_OID', 'g')
+	FROM pg_index i join pg_class c ON c.oid = indexrelid
+	WHERE indrelid = 'testts1'::regclass ORDER BY relname;
+2023-07-26 06:59:00.964 UTC [999186] ERROR:  schema "repack" does not exist at character 28
+2023-07-26 06:59:00.964 UTC [999186] STATEMENT:  SELECT regexp_replace(
+	    repack.repack_indexdef(indexrelid, 'testts1'::regclass, NULL, true),
+	    '_[0-9]+', '_OID', 'g')
+	FROM pg_index i join pg_class c ON c.oid = indexrelid
+	WHERE indrelid = 'testts1'::regclass ORDER BY relname;
+2023-07-26 06:59:00.965 UTC [999186] ERROR:  schema "repack" does not exist at character 28
+2023-07-26 06:59:00.965 UTC [999186] STATEMENT:  SELECT regexp_replace(
+	    repack.repack_indexdef(indexrelid, 'testts1'::regclass, 'foo', true),
+	    '_[0-9]+', '_OID', 'g')
+	FROM pg_index i join pg_class c ON c.oid = indexrelid
+	WHERE indrelid = 'testts1'::regclass ORDER BY relname;
+2023-07-26 06:59:01.004 UTC [999191] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:01.004 UTC [999191] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:01.029 UTC [999195] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:01.029 UTC [999195] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:01.070 UTC [999201] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:01.070 UTC [999201] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:01.111 UTC [999207] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:01.111 UTC [999207] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:01.161 UTC [999217] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:01.161 UTC [999217] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:01.200 UTC [999223] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:01.200 UTC [999223] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:01.223 UTC [999227] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:01.223 UTC [999227] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:01.264 UTC [999233] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:01.264 UTC [999233] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:01.305 UTC [999239] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:01.305 UTC [999239] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:01.328 UTC [999243] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:01.328 UTC [999243] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:01.368 UTC [999249] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:01.368 UTC [999249] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:01.409 UTC [999255] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:01.409 UTC [999255] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:01.493 UTC [999272] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:01.493 UTC [999272] STATEMENT:  SELECT repack.get_order_by('issue3_1_idx'::regclass::oid, 'issue3_1'::regclass::oid);
+2023-07-26 06:59:01.514 UTC [999275] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:01.514 UTC [999275] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:01.538 UTC [999272] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:01.538 UTC [999272] STATEMENT:  SELECT repack.get_order_by('issue3_2_idx'::regclass::oid, 'issue3_2'::regclass::oid);
+2023-07-26 06:59:01.559 UTC [999279] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:01.559 UTC [999279] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:01.584 UTC [999272] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:01.584 UTC [999272] STATEMENT:  SELECT repack.get_order_by('issue3_3_idx'::regclass::oid, 'issue3_3'::regclass::oid);
+2023-07-26 06:59:01.605 UTC [999283] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:01.605 UTC [999283] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:01.629 UTC [999272] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:01.629 UTC [999272] STATEMENT:  SELECT repack.get_order_by('issue3_4_idx'::regclass::oid, 'issue3_4'::regclass::oid);
+2023-07-26 06:59:01.650 UTC [999287] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:01.650 UTC [999287] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:01.673 UTC [999272] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:01.673 UTC [999272] STATEMENT:  SELECT repack.get_order_by('issue3_5_idx'::regclass::oid, 'issue3_5'::regclass::oid);
+2023-07-26 06:59:01.694 UTC [999291] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:01.694 UTC [999291] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 06:59:01.716 UTC [999272] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:01.716 UTC [999272] STATEMENT:  SELECT repack.get_order_by('issue321_idx'::regclass::oid, 1);
+2023-07-26 06:59:01.716 UTC [999272] ERROR:  schema "repack" does not exist at character 8
+2023-07-26 06:59:01.716 UTC [999272] STATEMENT:  SELECT repack.get_order_by(1, 1);

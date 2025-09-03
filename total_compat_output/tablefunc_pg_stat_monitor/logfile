@@ -1,0 +1,57 @@
+2023-07-26 10:25:03.729 UTC [3465730] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 10:25:03.729 UTC [3465730] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 10:25:03.741 UTC [3465730] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 10:25:03.762 UTC [3465733] LOG:  database system was shut down at 2023-07-26 10:25:03 UTC
+2023-07-26 10:25:03.771 UTC [3465730] LOG:  database system is ready to accept connections
+2023-07-26 10:25:03.944 UTC [3465749] ERROR:  number of rows cannot be negative
+2023-07-26 10:25:03.944 UTC [3465749] STATEMENT:  SELECT avg(normal_rand)::int, count(*) FROM normal_rand(-1, 250, 0.2);
+2023-07-26 10:25:04.046 UTC [3465749] ERROR:  provided "categories" SQL must return 1 column of at least one row
+2023-07-26 10:25:04.046 UTC [3465749] STATEMENT:  SELECT * FROM crosstab(
+	  'SELECT rowid, rowdt, attribute, val FROM cth ORDER BY 1',
+	  'SELECT DISTINCT attribute FROM cth WHERE attribute = ''a'' ORDER BY 1')
+	AS c(rowid text, rowdt timestamp, temperature int4, test_result text, test_startdate timestamp, volts float8);
+2023-07-26 10:25:04.047 UTC [3465749] ERROR:  provided "categories" SQL must return 1 column of at least one row
+2023-07-26 10:25:04.047 UTC [3465749] STATEMENT:  SELECT * FROM crosstab(
+	  'SELECT rowid, rowdt, attribute, val FROM cth ORDER BY 1',
+	  'SELECT DISTINCT rowdt, attribute FROM cth ORDER BY 2')
+	AS c(rowid text, rowdt timestamp, temperature int4, test_result text, test_startdate timestamp, volts float8);
+2023-07-26 10:25:04.114 UTC [3465749] ERROR:  infinite recursion detected
+2023-07-26 10:25:04.114 UTC [3465749] STATEMENT:  SELECT * FROM connectby('connectby_int', 'keyid', 'parent_keyid', '2', 0, '~') AS t(keyid int, parent_keyid int, level int, branch text);
+2023-07-26 10:25:04.116 UTC [3465749] ERROR:  invalid return type
+2023-07-26 10:25:04.116 UTC [3465749] DETAIL:  First two columns must be the same type.
+2023-07-26 10:25:04.116 UTC [3465749] STATEMENT:  SELECT * FROM connectby('connectby_int', 'keyid', 'parent_keyid', '2', 0, '~') AS t(keyid text, parent_keyid int, level int, branch text);
+2023-07-26 10:25:04.117 UTC [3465749] ERROR:  invalid return type
+2023-07-26 10:25:04.117 UTC [3465749] DETAIL:  SQL key field type double precision does not match return key field type integer.
+2023-07-26 10:25:04.117 UTC [3465749] STATEMENT:  SELECT * FROM connectby('connectby_int', 'keyid', 'parent_keyid', '2', 0, '~') AS t(keyid float8, parent_keyid float8, level int, branch text);
+2023-07-26 10:25:04.118 UTC [3465749] ERROR:  invalid return type
+2023-07-26 10:25:04.118 UTC [3465749] DETAIL:  Query must return at least two columns.
+2023-07-26 10:25:04.118 UTC [3465749] STATEMENT:  SELECT * FROM connectby('connectby_int', '1; --', 'parent_keyid', '2', 0) AS t(keyid int, parent_keyid int, level int);
+2023-07-26 10:25:04.119 UTC [3465749] ERROR:  infinite recursion detected
+2023-07-26 10:25:04.119 UTC [3465749] STATEMENT:  SELECT * FROM connectby('connectby_int', '1::int, NULL::int; --', 'parent_keyid', '2', 0) AS t(keyid int, parent_keyid int, level int);
+2023-07-26 10:25:04.174 UTC [3465731] LOG:  checkpoint starting: immediate force wait
+2023-07-26 10:25:04.228 UTC [3465731] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.015 s, sync=0.012 s, total=0.055 s; sync files=7, longest=0.008 s, average=0.002 s; distance=4285 kB, estimate=4285 kB
+2023-07-26 10:25:04.745 UTC [3465731] LOG:  checkpoint starting: immediate force wait
+2023-07-26 10:25:04.898 UTC [3465731] LOG:  checkpoint complete: wrote 1827 buffers (11.2%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.062 s, sync=0.055 s, total=0.153 s; sync files=496, longest=0.015 s, average=0.001 s; distance=12721 kB, estimate=12721 kB
+2023-07-26 10:25:04.921 UTC [3465731] LOG:  checkpoint starting: immediate force wait
+2023-07-26 10:25:04.969 UTC [3465731] LOG:  checkpoint complete: wrote 2 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.010 s, sync=0.011 s, total=0.049 s; sync files=2, longest=0.008 s, average=0.006 s; distance=1 kB, estimate=11449 kB
+2023-07-26 10:25:05.084 UTC [3465789] ERROR:  current user cannot be dropped
+2023-07-26 10:25:05.084 UTC [3465789] STATEMENT:  DROP USER su;
+2023-07-26 10:25:05.541 UTC [3465731] LOG:  checkpoint starting: immediate force wait
+2023-07-26 10:25:05.652 UTC [3465731] LOG:  checkpoint complete: wrote 1032 buffers (6.3%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.053 s, sync=0.029 s, total=0.111 s; sync files=297, longest=0.009 s, average=0.001 s; distance=9048 kB, estimate=11209 kB
+2023-07-26 10:25:05.710 UTC [3465731] LOG:  checkpoint starting: immediate force wait
+2023-07-26 10:25:05.762 UTC [3465731] LOG:  checkpoint complete: wrote 10 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.011 s, sync=0.012 s, total=0.053 s; sync files=7, longest=0.008 s, average=0.002 s; distance=42 kB, estimate=10093 kB
+2023-07-26 10:25:05.875 UTC [3465817] ERROR:  duplicate key value violates unique constraint "company_pkey"
+2023-07-26 10:25:05.875 UTC [3465817] DETAIL:  Key (id)=(1) already exists.
+2023-07-26 10:25:05.875 UTC [3465817] STATEMENT:  INSERT  INTO Company(ID, Name) VALUES (1, 'Percona');
+2023-07-26 10:25:06.110 UTC [3465837] ERROR:  division by zero
+2023-07-26 10:25:06.110 UTC [3465837] STATEMENT:  SELECT 1/0;
+2023-07-26 10:25:06.110 UTC [3465837] ERROR:  relation "unknown" does not exist at character 15
+2023-07-26 10:25:06.110 UTC [3465837] STATEMENT:  SELECT * FROM unknown;
+2023-07-26 10:25:06.110 UTC [3465837] ERROR:  syntax error at or near "ELECET" at character 1
+2023-07-26 10:25:06.110 UTC [3465837] STATEMENT:  ELECET * FROM unknown;
+2023-07-26 10:25:06.111 UTC [3465837] WARNING:  warning message
+2023-07-26 10:25:06.111 UTC [3465837] CONTEXT:  PL/pgSQL function inline_code_block line 3 at RAISE
+2023-07-26 10:25:06.284 UTC [3465851] ERROR:  role "su" already exists
+2023-07-26 10:25:06.284 UTC [3465851] STATEMENT:  CREATE USER su WITH SUPERUSER;
+2023-07-26 10:25:06.325 UTC [3465851] ERROR:  permission denied for function pg_stat_monitor_reset
+2023-07-26 10:25:06.325 UTC [3465851] STATEMENT:  SELECT pg_stat_monitor_reset();

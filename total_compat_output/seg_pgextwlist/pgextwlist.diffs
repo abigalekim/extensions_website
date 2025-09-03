@@ -1,0 +1,94 @@
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/expected/pgextwlist.out /home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/results/pgextwlist.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/expected/pgextwlist.out	2022-09-28 10:59:06.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/results/pgextwlist.out	2023-07-26 07:43:20.699649595 +0000
+@@ -9,7 +9,8 @@
+  extname 
+ ---------
+  plpgsql
+-(1 row)
++ seg
++(2 rows)
+ 
+ -- whitelisted extensions
+ CREATE EXTENSION citext;
+@@ -21,7 +22,8 @@
+  citext
+  pg_trgm
+  plpgsql
+-(3 rows)
++ seg
++(4 rows)
+ 
+ SELECT d.description FROM pg_extension e JOIN pg_description d ON d.objoid = e.oid WHERE e.extname = 'pg_trgm';
+    description   
+@@ -36,7 +38,8 @@
+ ---------
+  citext
+  plpgsql
+-(2 rows)
++ seg
++(3 rows)
+ 
+ -- whitelisted extension with custom scripts
+ CREATE EXTENSION pg_stat_statements;
+@@ -46,7 +49,8 @@
+  citext
+  pg_stat_statements
+  plpgsql
+-(3 rows)
++ seg
++(4 rows)
+ 
+ SELECT proacl FROM pg_proc WHERE proname = 'pg_stat_statements_reset';
+                           proacl                          
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/expected/errors_1.out /home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/results/errors.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/expected/errors_1.out	2022-09-28 10:59:06.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/results/errors.out	2023-07-26 07:43:20.711649626 +0000
+@@ -14,7 +14,8 @@
+ ---------
+  citext
+  plpgsql
+-(2 rows)
++ seg
++(3 rows)
+ 
+ -- pre-existing extension
+ CREATE EXTENSION plpgsql;
+@@ -26,7 +27,8 @@
+ ---------
+  citext
+  plpgsql
+-(2 rows)
++ seg
++(3 rows)
+ 
+ -- non-whitelisted extension
+ CREATE EXTENSION hstore;
+@@ -39,7 +41,8 @@
+ ---------
+  citext
+  plpgsql
+-(2 rows)
++ seg
++(3 rows)
+ 
+ -- whitelisted extension, but dependency is missing
+ CREATE EXTENSION earthdistance;
+@@ -50,7 +53,8 @@
+ ---------
+  citext
+  plpgsql
+-(2 rows)
++ seg
++(3 rows)
+ 
+ -- drop non-whitelisted extension
+ DROP EXTENSION plpgsql;
+@@ -60,5 +64,6 @@
+ ---------
+  citext
+  plpgsql
+-(2 rows)
++ seg
++(3 rows)
+ 

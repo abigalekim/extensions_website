@@ -1,0 +1,34 @@
+diff -U3 /home/abigalek/pgext-cli/pgextworkdir/pg_query_rewrite/expected/test4.out /home/abigalek/pgext-cli/pgextworkdir/pg_query_rewrite/results/test4.out
+--- /home/abigalek/pgext-cli/pgextworkdir/pg_query_rewrite/expected/test4.out	2023-10-28 02:04:21.386508745 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/pg_query_rewrite/results/test4.out	2023-10-28 03:31:57.197177895 +0000
+@@ -16,6 +16,7 @@
+ --
+ \c db1
+ create extension pg_query_rewrite;
++ERROR:  extension "pg_query_rewrite" already exists
+ select pgqr_add_rule('select 1;','select 11;');
+  pgqr_add_rule 
+ ---------------
+@@ -46,6 +47,7 @@
+ --
+ \c db2
+ create extension pg_query_rewrite;
++ERROR:  extension "pg_query_rewrite" already exists
+ select pgqr_add_rule('select 2;','select 22;');
+  pgqr_add_rule 
+ ---------------
+diff -U3 /home/abigalek/pgext-cli/pgextworkdir/pg_query_rewrite/expected/test7.out /home/abigalek/pgext-cli/pgextworkdir/pg_query_rewrite/results/test7.out
+--- /home/abigalek/pgext-cli/pgextworkdir/pg_query_rewrite/expected/test7.out	2023-10-28 02:04:21.386508745 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/pg_query_rewrite/results/test7.out	2023-10-28 03:31:57.293176650 +0000
+@@ -33,9 +33,10 @@
+ --
+ call p7();
+ NOTICE:  r.datname postgres
+-NOTICE:  r.datname contrib_regression
+ NOTICE:  r.datname template1
+ NOTICE:  r.datname template0
++NOTICE:  r.datname single
++NOTICE:  r.datname contrib_regression
+ NOTICE:  r.datname db1
+ NOTICE:  r.datname db2
+ --

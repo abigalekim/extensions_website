@@ -1,0 +1,356 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out	2023-07-26 06:32:00.558710056 +0000
+@@ -963,12 +963,14 @@
+ --
+ -- list what's installed
+ \dT
+-                                              List of data types
+- Schema | Name  |                                         Description                                         
+---------+-------+---------------------------------------------------------------------------------------------
+- public | cube  | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
+- public | earth | 
+-(2 rows)
++                                                 List of data types
++ Schema |    Name     |                                         Description                                         
++--------+-------------+---------------------------------------------------------------------------------------------
++ public | cube        | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
++ public | earth       | 
++ public | hll         | 
++ public | hll_hashval | 
++(4 rows)
+ 
+ drop extension cube;  -- fail, earthdistance requires it
+ ERROR:  cannot drop extension cube because other objects depend on it
+@@ -980,11 +982,13 @@
+ HINT:  You can drop extension cube instead.
+ -- list what's installed
+ \dT
+-                                             List of data types
+- Schema | Name |                                         Description                                         
+---------+------+---------------------------------------------------------------------------------------------
+- public | cube | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
+-(1 row)
++                                                 List of data types
++ Schema |    Name     |                                         Description                                         
++--------+-------------+---------------------------------------------------------------------------------------------
++ public | cube        | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
++ public | hll         | 
++ public | hll_hashval | 
++(3 rows)
+ 
+ create table foo (f1 cube, f2 int);
+ drop extension cube;  -- fail, foo.f1 requires it
+@@ -995,43 +999,183 @@
+ drop extension cube;
+ -- list what's installed
+ \dT
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++         List of data types
++ Schema |    Name     | Description 
++--------+-------------+-------------
++ public | hll         | 
++ public | hll_hashval | 
++(2 rows)
+ 
+ \df
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                                                                           List of functions
++ Schema |          Name           | Result data type |                                                                           Argument data types                                                                            | Type 
++--------+-------------------------+------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------
++ public | hll                     | hll              | hll, integer, boolean                                                                                                                                                    | func
++ public | hll_add                 | hll              | hll, hll_hashval                                                                                                                                                         | func
++ public | hll_add_agg             | hll              | hll_hashval                                                                                                                                                              | agg
++ public | hll_add_agg             | hll              | hll_hashval, integer                                                                                                                                                     | agg
++ public | hll_add_agg             | hll              | hll_hashval, integer, integer                                                                                                                                            | agg
++ public | hll_add_agg             | hll              | hll_hashval, integer, integer, bigint                                                                                                                                    | agg
++ public | hll_add_agg             | hll              | hll_hashval, integer, integer, bigint, integer                                                                                                                           | agg
++ public | hll_add_rev             | hll              | hll_hashval, hll                                                                                                                                                         | func
++ public | hll_add_trans0          | internal         | internal, hll_hashval                                                                                                                                                    | func
++ public | hll_add_trans1          | internal         | internal, hll_hashval, integer                                                                                                                                           | func
++ public | hll_add_trans2          | internal         | internal, hll_hashval, integer, integer                                                                                                                                  | func
++ public | hll_add_trans3          | internal         | internal, hll_hashval, integer, integer, bigint                                                                                                                          | func
++ public | hll_add_trans4          | internal         | internal, hll_hashval, integer, integer, bigint, integer                                                                                                                 | func
++ public | hll_card_unpacked       | double precision | internal                                                                                                                                                                 | func
++ public | hll_cardinality         | double precision | hll                                                                                                                                                                      | func
++ public | hll_ceil_card_unpacked  | bigint           | internal                                                                                                                                                                 | func
++ public | hll_deserialize         | internal         | bytea, internal                                                                                                                                                          | func
++ public | hll_empty               | hll              |                                                                                                                                                                          | func
++ public | hll_empty               | hll              | integer                                                                                                                                                                  | func
++ public | hll_empty               | hll              | integer, integer                                                                                                                                                         | func
++ public | hll_empty               | hll              | integer, integer, bigint                                                                                                                                                 | func
++ public | hll_empty               | hll              | integer, integer, bigint, integer                                                                                                                                        | func
++ public | hll_eq                  | boolean          | hll, hll                                                                                                                                                                 | func
++ public | hll_expthresh           | record           | hll, OUT specified bigint, OUT effective bigint                                                                                                                          | func
++ public | hll_floor_card_unpacked | bigint           | internal                                                                                                                                                                 | func
++ public | hll_hash_any            | hll_hashval      | anyelement, integer DEFAULT 0                                                                                                                                            | func
++ public | hll_hash_bigint         | hll_hashval      | bigint, integer DEFAULT 0                                                                                                                                                | func
++ public | hll_hash_boolean        | hll_hashval      | boolean, integer DEFAULT 0                                                                                                                                               | func
++ public | hll_hash_bytea          | hll_hashval      | bytea, integer DEFAULT 0                                                                                                                                                 | func
++ public | hll_hash_integer        | hll_hashval      | integer, integer DEFAULT 0                                                                                                                                               | func
++ public | hll_hash_smallint       | hll_hashval      | smallint, integer DEFAULT 0                                                                                                                                              | func
++ public | hll_hash_text           | hll_hashval      | text, integer DEFAULT 0                                                                                                                                                  | func
++ public | hll_hashval             | hll_hashval      | bigint                                                                                                                                                                   | func
++ public | hll_hashval_eq          | boolean          | hll_hashval, hll_hashval                                                                                                                                                 | func
++ public | hll_hashval_in          | hll_hashval      | cstring, oid, integer                                                                                                                                                    | func
++ public | hll_hashval_int4        | hll_hashval      | integer                                                                                                                                                                  | func
++ public | hll_hashval_ne          | boolean          | hll_hashval, hll_hashval                                                                                                                                                 | func
++ public | hll_hashval_out         | cstring          | hll_hashval                                                                                                                                                              | func
++ public | hll_in                  | hll              | cstring, oid, integer                                                                                                                                                    | func
++ public | hll_log2m               | integer          | hll                                                                                                                                                                      | func
++ public | hll_ne                  | boolean          | hll, hll                                                                                                                                                                 | func
++ public | hll_out                 | cstring          | hll                                                                                                                                                                      | func
++ public | hll_pack                | hll              | internal                                                                                                                                                                 | func
++ public | hll_print               | cstring          | hll                                                                                                                                                                      | func
++ public | hll_recv                | hll              | internal                                                                                                                                                                 | func
++ public | hll_regwidth            | integer          | hll                                                                                                                                                                      | func
++ public | hll_schema_version      | integer          | hll                                                                                                                                                                      | func
++ public | hll_send                | bytea            | hll                                                                                                                                                                      | func
++ public | hll_serialize           | bytea            | internal                                                                                                                                                                 | func
++ public | hll_set_defaults        | record           | i_log2m integer, i_regwidth integer, i_expthresh bigint, i_sparseon integer, OUT o_log2m integer, OUT o_regwidth integer, OUT o_expthresh bigint, OUT o_sparseon integer | func
++ public | hll_set_max_sparse      | integer          | integer                                                                                                                                                                  | func
++ public | hll_set_output_version  | integer          | integer                                                                                                                                                                  | func
++ public | hll_sparseon            | integer          | hll                                                                                                                                                                      | func
++ public | hll_type                | integer          | hll                                                                                                                                                                      | func
++ public | hll_typmod_in           | integer          | cstring[]                                                                                                                                                                | func
++ public | hll_typmod_out          | cstring          | integer                                                                                                                                                                  | func
++ public | hll_union               | hll              | hll, hll                                                                                                                                                                 | func
++ public | hll_union_agg           | hll              | hll                                                                                                                                                                      | agg
++ public | hll_union_internal      | internal         | internal, internal                                                                                                                                                       | func
++ public | hll_union_trans         | internal         | internal, hll                                                                                                                                                            | func
++(60 rows)
+ 
+ \do
+-                             List of operators
+- Schema | Name | Left arg type | Right arg type | Result type | Description 
+---------+------+---------------+----------------+-------------+-------------
+-(0 rows)
++                                List of operators
++ Schema | Name | Left arg type | Right arg type |   Result type    | Description 
++--------+------+---------------+----------------+------------------+-------------
++ public | #    |               | hll            | double precision | 
++ public | <>   | hll           | hll            | boolean          | 
++ public | <>   | hll_hashval   | hll_hashval    | boolean          | 
++ public | =    | hll           | hll            | boolean          | 
++ public | =    | hll_hashval   | hll_hashval    | boolean          | 
++ public | ||   | hll           | hll            | hll              | 
++ public | ||   | hll           | hll_hashval    | hll              | 
++ public | ||   | hll_hashval   | hll            | hll              | 
++(8 rows)
+ 
+ create schema c;
+ create extension cube with schema c;
+ -- list what's installed
+ \dT public.*
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++         List of data types
++ Schema |    Name     | Description 
++--------+-------------+-------------
++ public | hll         | 
++ public | hll_hashval | 
++(2 rows)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                                                                           List of functions
++ Schema |          Name           | Result data type |                                                                           Argument data types                                                                            | Type 
++--------+-------------------------+------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------
++ public | hll                     | hll              | hll, integer, boolean                                                                                                                                                    | func
++ public | hll_add                 | hll              | hll, hll_hashval                                                                                                                                                         | func
++ public | hll_add_agg             | hll              | hll_hashval                                                                                                                                                              | agg
++ public | hll_add_agg             | hll              | hll_hashval, integer                                                                                                                                                     | agg
++ public | hll_add_agg             | hll              | hll_hashval, integer, integer                                                                                                                                            | agg
++ public | hll_add_agg             | hll              | hll_hashval, integer, integer, bigint                                                                                                                                    | agg
++ public | hll_add_agg             | hll              | hll_hashval, integer, integer, bigint, integer                                                                                                                           | agg
++ public | hll_add_rev             | hll              | hll_hashval, hll                                                                                                                                                         | func
++ public | hll_add_trans0          | internal         | internal, hll_hashval                                                                                                                                                    | func
++ public | hll_add_trans1          | internal         | internal, hll_hashval, integer                                                                                                                                           | func
++ public | hll_add_trans2          | internal         | internal, hll_hashval, integer, integer                                                                                                                                  | func
++ public | hll_add_trans3          | internal         | internal, hll_hashval, integer, integer, bigint                                                                                                                          | func
++ public | hll_add_trans4          | internal         | internal, hll_hashval, integer, integer, bigint, integer                                                                                                                 | func
++ public | hll_card_unpacked       | double precision | internal                                                                                                                                                                 | func
++ public | hll_cardinality         | double precision | hll                                                                                                                                                                      | func
++ public | hll_ceil_card_unpacked  | bigint           | internal                                                                                                                                                                 | func
++ public | hll_deserialize         | internal         | bytea, internal                                                                                                                                                          | func
++ public | hll_empty               | hll              |                                                                                                                                                                          | func
++ public | hll_empty               | hll              | integer                                                                                                                                                                  | func
++ public | hll_empty               | hll              | integer, integer                                                                                                                                                         | func
++ public | hll_empty               | hll              | integer, integer, bigint                                                                                                                                                 | func
++ public | hll_empty               | hll              | integer, integer, bigint, integer                                                                                                                                        | func
++ public | hll_eq                  | boolean          | hll, hll                                                                                                                                                                 | func
++ public | hll_expthresh           | record           | hll, OUT specified bigint, OUT effective bigint                                                                                                                          | func
++ public | hll_floor_card_unpacked | bigint           | internal                                                                                                                                                                 | func
++ public | hll_hash_any            | hll_hashval      | anyelement, integer DEFAULT 0                                                                                                                                            | func
++ public | hll_hash_bigint         | hll_hashval      | bigint, integer DEFAULT 0                                                                                                                                                | func
++ public | hll_hash_boolean        | hll_hashval      | boolean, integer DEFAULT 0                                                                                                                                               | func
++ public | hll_hash_bytea          | hll_hashval      | bytea, integer DEFAULT 0                                                                                                                                                 | func
++ public | hll_hash_integer        | hll_hashval      | integer, integer DEFAULT 0                                                                                                                                               | func
++ public | hll_hash_smallint       | hll_hashval      | smallint, integer DEFAULT 0                                                                                                                                              | func
++ public | hll_hash_text           | hll_hashval      | text, integer DEFAULT 0                                                                                                                                                  | func
++ public | hll_hashval             | hll_hashval      | bigint                                                                                                                                                                   | func
++ public | hll_hashval_eq          | boolean          | hll_hashval, hll_hashval                                                                                                                                                 | func
++ public | hll_hashval_in          | hll_hashval      | cstring, oid, integer                                                                                                                                                    | func
++ public | hll_hashval_int4        | hll_hashval      | integer                                                                                                                                                                  | func
++ public | hll_hashval_ne          | boolean          | hll_hashval, hll_hashval                                                                                                                                                 | func
++ public | hll_hashval_out         | cstring          | hll_hashval                                                                                                                                                              | func
++ public | hll_in                  | hll              | cstring, oid, integer                                                                                                                                                    | func
++ public | hll_log2m               | integer          | hll                                                                                                                                                                      | func
++ public | hll_ne                  | boolean          | hll, hll                                                                                                                                                                 | func
++ public | hll_out                 | cstring          | hll                                                                                                                                                                      | func
++ public | hll_pack                | hll              | internal                                                                                                                                                                 | func
++ public | hll_print               | cstring          | hll                                                                                                                                                                      | func
++ public | hll_recv                | hll              | internal                                                                                                                                                                 | func
++ public | hll_regwidth            | integer          | hll                                                                                                                                                                      | func
++ public | hll_schema_version      | integer          | hll                                                                                                                                                                      | func
++ public | hll_send                | bytea            | hll                                                                                                                                                                      | func
++ public | hll_serialize           | bytea            | internal                                                                                                                                                                 | func
++ public | hll_set_defaults        | record           | i_log2m integer, i_regwidth integer, i_expthresh bigint, i_sparseon integer, OUT o_log2m integer, OUT o_regwidth integer, OUT o_expthresh bigint, OUT o_sparseon integer | func
++ public | hll_set_max_sparse      | integer          | integer                                                                                                                                                                  | func
++ public | hll_set_output_version  | integer          | integer                                                                                                                                                                  | func
++ public | hll_sparseon            | integer          | hll                                                                                                                                                                      | func
++ public | hll_type                | integer          | hll                                                                                                                                                                      | func
++ public | hll_typmod_in           | integer          | cstring[]                                                                                                                                                                | func
++ public | hll_typmod_out          | cstring          | integer                                                                                                                                                                  | func
++ public | hll_union               | hll              | hll, hll                                                                                                                                                                 | func
++ public | hll_union_agg           | hll              | hll                                                                                                                                                                      | agg
++ public | hll_union_internal      | internal         | internal, internal                                                                                                                                                       | func
++ public | hll_union_trans         | internal         | internal, hll                                                                                                                                                            | func
++(60 rows)
+ 
+ \do public.*
+-                             List of operators
+- Schema | Name | Left arg type | Right arg type | Result type | Description 
+---------+------+---------------+----------------+-------------+-------------
+-(0 rows)
++                                List of operators
++ Schema | Name | Left arg type | Right arg type |   Result type    | Description 
++--------+------+---------------+----------------+------------------+-------------
++ public | #    |               | hll            | double precision | 
++ public | <>   | hll           | hll            | boolean          | 
++ public | <>   | hll_hashval   | hll_hashval    | boolean          | 
++ public | =    | hll           | hll            | boolean          | 
++ public | =    | hll_hashval   | hll_hashval    | boolean          | 
++ public | ||   | hll           | hll            | hll              | 
++ public | ||   | hll           | hll_hashval    | hll              | 
++ public | ||   | hll_hashval   | hll            | hll              | 
++(8 rows)
+ 
+ \dT c.*
+                                               List of data types
+@@ -1060,22 +1204,92 @@
+ 
+ -- list what's installed
+ \dT public.*
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++         List of data types
++ Schema |    Name     | Description 
++--------+-------------+-------------
++ public | hll         | 
++ public | hll_hashval | 
++(2 rows)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                                                                           List of functions
++ Schema |          Name           | Result data type |                                                                           Argument data types                                                                            | Type 
++--------+-------------------------+------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------
++ public | hll                     | hll              | hll, integer, boolean                                                                                                                                                    | func
++ public | hll_add                 | hll              | hll, hll_hashval                                                                                                                                                         | func
++ public | hll_add_agg             | hll              | hll_hashval                                                                                                                                                              | agg
++ public | hll_add_agg             | hll              | hll_hashval, integer                                                                                                                                                     | agg
++ public | hll_add_agg             | hll              | hll_hashval, integer, integer                                                                                                                                            | agg
++ public | hll_add_agg             | hll              | hll_hashval, integer, integer, bigint                                                                                                                                    | agg
++ public | hll_add_agg             | hll              | hll_hashval, integer, integer, bigint, integer                                                                                                                           | agg
++ public | hll_add_rev             | hll              | hll_hashval, hll                                                                                                                                                         | func
++ public | hll_add_trans0          | internal         | internal, hll_hashval                                                                                                                                                    | func
++ public | hll_add_trans1          | internal         | internal, hll_hashval, integer                                                                                                                                           | func
++ public | hll_add_trans2          | internal         | internal, hll_hashval, integer, integer                                                                                                                                  | func
++ public | hll_add_trans3          | internal         | internal, hll_hashval, integer, integer, bigint                                                                                                                          | func
++ public | hll_add_trans4          | internal         | internal, hll_hashval, integer, integer, bigint, integer                                                                                                                 | func
++ public | hll_card_unpacked       | double precision | internal                                                                                                                                                                 | func
++ public | hll_cardinality         | double precision | hll                                                                                                                                                                      | func
++ public | hll_ceil_card_unpacked  | bigint           | internal                                                                                                                                                                 | func
++ public | hll_deserialize         | internal         | bytea, internal                                                                                                                                                          | func
++ public | hll_empty               | hll              |                                                                                                                                                                          | func
++ public | hll_empty               | hll              | integer                                                                                                                                                                  | func
++ public | hll_empty               | hll              | integer, integer                                                                                                                                                         | func
++ public | hll_empty               | hll              | integer, integer, bigint                                                                                                                                                 | func
++ public | hll_empty               | hll              | integer, integer, bigint, integer                                                                                                                                        | func
++ public | hll_eq                  | boolean          | hll, hll                                                                                                                                                                 | func
++ public | hll_expthresh           | record           | hll, OUT specified bigint, OUT effective bigint                                                                                                                          | func
++ public | hll_floor_card_unpacked | bigint           | internal                                                                                                                                                                 | func
++ public | hll_hash_any            | hll_hashval      | anyelement, integer DEFAULT 0                                                                                                                                            | func
++ public | hll_hash_bigint         | hll_hashval      | bigint, integer DEFAULT 0                                                                                                                                                | func
++ public | hll_hash_boolean        | hll_hashval      | boolean, integer DEFAULT 0                                                                                                                                               | func
++ public | hll_hash_bytea          | hll_hashval      | bytea, integer DEFAULT 0                                                                                                                                                 | func
++ public | hll_hash_integer        | hll_hashval      | integer, integer DEFAULT 0                                                                                                                                               | func
++ public | hll_hash_smallint       | hll_hashval      | smallint, integer DEFAULT 0                                                                                                                                              | func
++ public | hll_hash_text           | hll_hashval      | text, integer DEFAULT 0                                                                                                                                                  | func
++ public | hll_hashval             | hll_hashval      | bigint                                                                                                                                                                   | func
++ public | hll_hashval_eq          | boolean          | hll_hashval, hll_hashval                                                                                                                                                 | func
++ public | hll_hashval_in          | hll_hashval      | cstring, oid, integer                                                                                                                                                    | func
++ public | hll_hashval_int4        | hll_hashval      | integer                                                                                                                                                                  | func
++ public | hll_hashval_ne          | boolean          | hll_hashval, hll_hashval                                                                                                                                                 | func
++ public | hll_hashval_out         | cstring          | hll_hashval                                                                                                                                                              | func
++ public | hll_in                  | hll              | cstring, oid, integer                                                                                                                                                    | func
++ public | hll_log2m               | integer          | hll                                                                                                                                                                      | func
++ public | hll_ne                  | boolean          | hll, hll                                                                                                                                                                 | func
++ public | hll_out                 | cstring          | hll                                                                                                                                                                      | func
++ public | hll_pack                | hll              | internal                                                                                                                                                                 | func
++ public | hll_print               | cstring          | hll                                                                                                                                                                      | func
++ public | hll_recv                | hll              | internal                                                                                                                                                                 | func
++ public | hll_regwidth            | integer          | hll                                                                                                                                                                      | func
++ public | hll_schema_version      | integer          | hll                                                                                                                                                                      | func
++ public | hll_send                | bytea            | hll                                                                                                                                                                      | func
++ public | hll_serialize           | bytea            | internal                                                                                                                                                                 | func
++ public | hll_set_defaults        | record           | i_log2m integer, i_regwidth integer, i_expthresh bigint, i_sparseon integer, OUT o_log2m integer, OUT o_regwidth integer, OUT o_expthresh bigint, OUT o_sparseon integer | func
++ public | hll_set_max_sparse      | integer          | integer                                                                                                                                                                  | func
++ public | hll_set_output_version  | integer          | integer                                                                                                                                                                  | func
++ public | hll_sparseon            | integer          | hll                                                                                                                                                                      | func
++ public | hll_type                | integer          | hll                                                                                                                                                                      | func
++ public | hll_typmod_in           | integer          | cstring[]                                                                                                                                                                | func
++ public | hll_typmod_out          | cstring          | integer                                                                                                                                                                  | func
++ public | hll_union               | hll              | hll, hll                                                                                                                                                                 | func
++ public | hll_union_agg           | hll              | hll                                                                                                                                                                      | agg
++ public | hll_union_internal      | internal         | internal, internal                                                                                                                                                       | func
++ public | hll_union_trans         | internal         | internal, hll                                                                                                                                                            | func
++(60 rows)
+ 
+ \do public.*
+-                             List of operators
+- Schema | Name | Left arg type | Right arg type | Result type | Description 
+---------+------+---------------+----------------+-------------+-------------
+-(0 rows)
++                                List of operators
++ Schema | Name | Left arg type | Right arg type |   Result type    | Description 
++--------+------+---------------+----------------+------------------+-------------
++ public | #    |               | hll            | double precision | 
++ public | <>   | hll           | hll            | boolean          | 
++ public | <>   | hll_hashval   | hll_hashval    | boolean          | 
++ public | =    | hll           | hll            | boolean          | 
++ public | =    | hll_hashval   | hll_hashval    | boolean          | 
++ public | ||   | hll           | hll            | hll              | 
++ public | ||   | hll           | hll_hashval    | hll              | 
++ public | ||   | hll_hashval   | hll            | hll              | 
++(8 rows)
+ 
+ \dT c.*
+      List of data types

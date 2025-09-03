@@ -1,0 +1,63 @@
+2023-11-25 05:26:55.786 UTC [1366259] LOG:  00000: number of prepared transactions has not been configured, overriding
+2023-11-25 05:26:55.786 UTC [1366259] DETAIL:  max_prepared_transactions is now set to 200
+2023-11-25 05:26:55.786 UTC [1366259] LOCATION:  AdjustMaxPreparedTransactions, transaction_management.c:761
+2023-11-25 05:26:55.803 UTC [1366259] LOG:  00000: starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-11-25 05:26:55.803 UTC [1366259] LOCATION:  PostmasterMain, postmaster.c:1189
+2023-11-25 05:26:55.803 UTC [1366259] LOG:  00000: listening on IPv4 address "127.0.0.1", port 57636
+2023-11-25 05:26:55.803 UTC [1366259] LOCATION:  StreamServerPort, pqcomm.c:582
+2023-11-25 05:26:55.803 UTC [1366259] LOG:  00000: listening on Unix socket "/tmp/.s.PGSQL.57636"
+2023-11-25 05:26:55.803 UTC [1366259] LOCATION:  StreamServerPort, pqcomm.c:577
+2023-11-25 05:26:55.805 UTC [1366262] LOG:  00000: database system was shut down at 2023-11-25 05:26:55 UTC
+2023-11-25 05:26:55.805 UTC [1366262] LOCATION:  StartupXLOG, xlog.c:4928
+2023-11-25 05:26:55.807 UTC [1366259] LOG:  00000: database system is ready to accept connections
+2023-11-25 05:26:55.807 UTC [1366259] LOCATION:  reaper, postmaster.c:3117
+2023-11-25 05:26:56.858 UTC [1366324] LOG:  00000: citus extension created on postgres without ssl enabled, turning it on during creation of the extension
+2023-11-25 05:26:56.858 UTC [1366324] CONTEXT:  SQL statement "SELECT citus_setup_ssl()"
+	PL/pgSQL function inline_code_block line 5 at PERFORM
+2023-11-25 05:26:56.858 UTC [1366324] LOCATION:  citus_setup_ssl, enable_ssl.c:107
+2023-11-25 05:26:56.858 UTC [1366324] STATEMENT:  CREATE EXTENSION IF NOT EXISTS "citus"
+2023-11-25 05:26:56.859 UTC [1366324] LOG:  00000: no certificate present, generating self signed certificate
+2023-11-25 05:26:56.859 UTC [1366324] CONTEXT:  SQL statement "SELECT citus_setup_ssl()"
+	PL/pgSQL function inline_code_block line 5 at PERFORM
+2023-11-25 05:26:56.859 UTC [1366324] LOCATION:  CreateCertificatesWhenNeeded, enable_ssl.c:283
+2023-11-25 05:26:56.859 UTC [1366324] STATEMENT:  CREATE EXTENSION IF NOT EXISTS "citus"
+2023-11-25 05:26:56.948 UTC [1366259] LOG:  00000: received SIGHUP, reloading configuration files
+2023-11-25 05:26:56.948 UTC [1366259] LOCATION:  SIGHUP_handler, postmaster.c:2769
+2023-11-25 05:26:56.948 UTC [1366259] LOG:  00000: parameter "ssl" changed to "on"
+2023-11-25 05:26:56.948 UTC [1366259] LOCATION:  ProcessConfigFileInternal, guc-file.l:453
+2023-11-25 05:26:56.948 UTC [1366259] LOG:  00000: parameter "ssl_ciphers" changed to "ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384"
+2023-11-25 05:26:56.948 UTC [1366259] LOCATION:  ProcessConfigFileInternal, guc-file.l:453
+2023-11-25 05:26:57.062 UTC [1366329] LOG:  00000: starting maintenance daemon on database 16384 user 10
+2023-11-25 05:26:57.062 UTC [1366329] CONTEXT:  Citus maintenance daemon for database 16384 user 10
+2023-11-25 05:26:57.062 UTC [1366329] LOCATION:  CitusMaintenanceDaemonMain, maintenanced.c:373
+2023-11-25 05:26:57.067 UTC [1366328] FATAL:  XX000: extension "timescaledb" must be preloaded
+2023-11-25 05:26:57.067 UTC [1366328] HINT:  Please preload the timescaledb library via shared_preload_libraries.
+	
+	This can be done by editing the config file at: /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/tmp_check/master/data/postgresql.conf
+	and adding 'timescaledb' to the list in the shared_preload_libraries config.
+		# Modify postgresql.conf:
+		shared_preload_libraries = 'timescaledb'
+	
+	Another way to do this, if not preloading other libraries, is with the command:
+		echo "shared_preload_libraries = 'timescaledb'" >> /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/tmp_check/master/data/postgresql.conf 
+	
+	(Will require a database restart.)
+	
+	If you REALLY know what you are doing and would like to load the library without preloading, you can disable this check with: 
+		SET timescaledb.allow_install_without_preload = 'on';
+2023-11-25 05:26:57.067 UTC [1366328] LOCATION:  extension_load_without_preload, extension_utils.c:196
+2023-11-25 05:26:57.067 UTC [1366328] STATEMENT:  CREATE EXTENSION IF NOT EXISTS "timescaledb"
+2023-11-25 05:26:57.073 UTC [1366259] LOG:  00000: received fast shutdown request
+2023-11-25 05:26:57.073 UTC [1366259] LOCATION:  pmdie, postmaster.c:2904
+2023-11-25 05:26:57.073 UTC [1366259] LOG:  00000: aborting any active transactions
+2023-11-25 05:26:57.073 UTC [1366259] LOCATION:  pmdie, postmaster.c:2922
+2023-11-25 05:26:57.074 UTC [1366259] LOG:  00000: background worker "logical replication launcher" (PID 1366265) exited with exit code 1
+2023-11-25 05:26:57.074 UTC [1366259] LOCATION:  LogChildExit, postmaster.c:3737
+2023-11-25 05:26:57.075 UTC [1366260] LOG:  00000: shutting down
+2023-11-25 05:26:57.075 UTC [1366260] LOCATION:  ShutdownXLOG, xlog.c:6039
+2023-11-25 05:26:57.075 UTC [1366260] LOG:  00000: checkpoint starting: shutdown immediate
+2023-11-25 05:26:57.075 UTC [1366260] LOCATION:  LogCheckpointStart, xlog.c:6089
+2023-11-25 05:26:57.081 UTC [1366260] LOG:  00000: checkpoint complete: wrote 1091 buffers (6.7%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.006 s, sync=0.001 s, total=0.007 s; sync files=0, longest=0.000 s, average=0.000 s; distance=6454 kB, estimate=6454 kB
+2023-11-25 05:26:57.081 UTC [1366260] LOCATION:  LogCheckpointEnd, xlog.c:6170
+2023-11-25 05:26:57.089 UTC [1366259] LOG:  00000: database system is shut down
+2023-11-25 05:26:57.089 UTC [1366259] LOCATION:  UnlinkLockFiles, miscinit.c:977

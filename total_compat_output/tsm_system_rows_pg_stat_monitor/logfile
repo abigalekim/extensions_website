@@ -1,0 +1,38 @@
+2023-07-26 15:17:11.942 UTC [3523515] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 15:17:11.942 UTC [3523515] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 15:17:11.955 UTC [3523515] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 15:17:11.969 UTC [3523518] LOG:  database system was shut down at 2023-07-26 15:17:11 UTC
+2023-07-26 15:17:11.975 UTC [3523515] LOG:  database system is ready to accept connections
+2023-07-26 15:17:12.257 UTC [3523534] ERROR:  sample size must not be negative
+2023-07-26 15:17:12.257 UTC [3523534] STATEMENT:  SELECT id FROM test_tablesample TABLESAMPLE system_rows (-1);
+2023-07-26 15:17:12.258 UTC [3523534] ERROR:  tablesample method system_rows does not support REPEATABLE at character 44
+2023-07-26 15:17:12.258 UTC [3523534] STATEMENT:  SELECT * FROM test_tablesample TABLESAMPLE system_rows (10) REPEATABLE (0);
+2023-07-26 15:17:12.262 UTC [3523534] ERROR:  cannot drop extension tsm_system_rows because other objects depend on it
+2023-07-26 15:17:12.262 UTC [3523534] DETAIL:  view vv depends on function system_rows(internal)
+2023-07-26 15:17:12.262 UTC [3523534] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 15:17:12.262 UTC [3523534] STATEMENT:  DROP EXTENSION tsm_system_rows;
+2023-07-26 15:17:12.831 UTC [3523516] LOG:  checkpoint starting: immediate force wait
+2023-07-26 15:17:13.047 UTC [3523516] LOG:  checkpoint complete: wrote 2746 buffers (16.8%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.084 s, sync=0.092 s, total=0.217 s; sync files=744, longest=0.023 s, average=0.001 s; distance=16962 kB, estimate=16962 kB
+2023-07-26 15:17:13.073 UTC [3523516] LOG:  checkpoint starting: immediate force wait
+2023-07-26 15:17:13.130 UTC [3523516] LOG:  checkpoint complete: wrote 2 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.011 s, sync=0.010 s, total=0.058 s; sync files=2, longest=0.008 s, average=0.005 s; distance=1 kB, estimate=15266 kB
+2023-07-26 15:17:13.228 UTC [3523574] ERROR:  current user cannot be dropped
+2023-07-26 15:17:13.228 UTC [3523574] STATEMENT:  DROP USER su;
+2023-07-26 15:17:13.726 UTC [3523516] LOG:  checkpoint starting: immediate force wait
+2023-07-26 15:17:13.844 UTC [3523516] LOG:  checkpoint complete: wrote 1033 buffers (6.3%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.058 s, sync=0.029 s, total=0.119 s; sync files=297, longest=0.008 s, average=0.001 s; distance=9075 kB, estimate=14647 kB
+2023-07-26 15:17:13.874 UTC [3523516] LOG:  checkpoint starting: immediate force wait
+2023-07-26 15:17:13.924 UTC [3523516] LOG:  checkpoint complete: wrote 10 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.012 s, sync=0.010 s, total=0.050 s; sync files=7, longest=0.006 s, average=0.002 s; distance=42 kB, estimate=13186 kB
+2023-07-26 15:17:14.040 UTC [3523602] ERROR:  duplicate key value violates unique constraint "company_pkey"
+2023-07-26 15:17:14.040 UTC [3523602] DETAIL:  Key (id)=(1) already exists.
+2023-07-26 15:17:14.040 UTC [3523602] STATEMENT:  INSERT  INTO Company(ID, Name) VALUES (1, 'Percona');
+2023-07-26 15:17:14.334 UTC [3523622] ERROR:  division by zero
+2023-07-26 15:17:14.334 UTC [3523622] STATEMENT:  SELECT 1/0;
+2023-07-26 15:17:14.334 UTC [3523622] ERROR:  relation "unknown" does not exist at character 15
+2023-07-26 15:17:14.334 UTC [3523622] STATEMENT:  SELECT * FROM unknown;
+2023-07-26 15:17:14.335 UTC [3523622] ERROR:  syntax error at or near "ELECET" at character 1
+2023-07-26 15:17:14.335 UTC [3523622] STATEMENT:  ELECET * FROM unknown;
+2023-07-26 15:17:14.335 UTC [3523622] WARNING:  warning message
+2023-07-26 15:17:14.335 UTC [3523622] CONTEXT:  PL/pgSQL function inline_code_block line 3 at RAISE
+2023-07-26 15:17:14.526 UTC [3523636] ERROR:  role "su" already exists
+2023-07-26 15:17:14.526 UTC [3523636] STATEMENT:  CREATE USER su WITH SUPERUSER;
+2023-07-26 15:17:14.561 UTC [3523636] ERROR:  permission denied for function pg_stat_monitor_reset
+2023-07-26 15:17:14.561 UTC [3523636] STATEMENT:  SELECT pg_stat_monitor_reset();

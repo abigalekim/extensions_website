@@ -1,0 +1,186 @@
+2023-07-25 10:41:31.352 UTC [730972] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 10:41:31.352 UTC [730972] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 10:41:31.358 UTC [730972] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 10:41:31.366 UTC [730975] LOG:  database system was shut down at 2023-07-25 10:41:31 UTC
+2023-07-25 10:41:31.370 UTC [730972] LOG:  database system is ready to accept connections
+2023-07-25 10:41:35.790 UTC [730994] ERROR:  insufficient privilege
+2023-07-25 10:41:35.790 UTC [730994] DETAIL:  Insufficient privilege to access pipe
+2023-07-25 10:41:35.790 UTC [730994] CONTEXT:  SQL statement "SELECT dbms_pipe.receive_message(pipename,2)"
+	PL/pgSQL function receivefrom(text) line 6 at PERFORM
+2023-07-25 10:41:35.790 UTC [730994] STATEMENT:  SELECT receiveFrom('private_pipe_2');
+2023-07-25 10:41:55.099 UTC [731013] ERROR:  too few parameters specified for template string
+2023-07-25 10:41:55.099 UTC [731013] STATEMENT:  select plvsubst.string('My name is %s.', '');
+2023-07-25 10:41:55.127 UTC [731013] ERROR:  string is not qualified SQL name
+2023-07-25 10:41:55.127 UTC [731013] STATEMENT:  select dbms_assert.qualified_sql_name('aaa.bbb.cc%c."aaaa""aaa"');
+2023-07-25 10:41:55.127 UTC [731013] ERROR:  invalid schema name
+2023-07-25 10:41:55.127 UTC [731013] STATEMENT:  select dbms_assert.schema_name('jabadabado');
+2023-07-25 10:41:55.127 UTC [731013] ERROR:  string is not simple SQL name
+2023-07-25 10:41:55.127 UTC [731013] STATEMENT:  select dbms_assert.simple_sql_name('ajajaj -- ajaj');
+2023-07-25 10:41:55.127 UTC [731013] ERROR:  invalid object name
+2023-07-25 10:41:55.127 UTC [731013] STATEMENT:  select dbms_assert.object_name('dbms_assert.fooo');
+2023-07-25 10:41:55.127 UTC [731013] ERROR:  string is not qualified SQL name
+2023-07-25 10:41:55.127 UTC [731013] STATEMENT:  select dbms_assert.qualified_sql_name(NULL);
+2023-07-25 10:41:55.127 UTC [731013] ERROR:  string is not qualified SQL name
+2023-07-25 10:41:55.127 UTC [731013] STATEMENT:  select dbms_assert.qualified_sql_name(NULL);
+2023-07-25 10:41:55.127 UTC [731013] ERROR:  invalid schema name
+2023-07-25 10:41:55.127 UTC [731013] STATEMENT:  select dbms_assert.schema_name(NULL);
+2023-07-25 10:41:55.128 UTC [731013] ERROR:  invalid schema name
+2023-07-25 10:41:55.128 UTC [731013] STATEMENT:  select dbms_assert.schema_name(NULL);
+2023-07-25 10:41:55.128 UTC [731013] ERROR:  string is not simple SQL name
+2023-07-25 10:41:55.128 UTC [731013] STATEMENT:  select dbms_assert.simple_sql_name(NULL);
+2023-07-25 10:41:55.128 UTC [731013] ERROR:  string is not simple SQL name
+2023-07-25 10:41:55.128 UTC [731013] STATEMENT:  select dbms_assert.simple_sql_name(NULL);
+2023-07-25 10:41:55.128 UTC [731013] ERROR:  invalid object name
+2023-07-25 10:41:55.128 UTC [731013] STATEMENT:  select dbms_assert.object_name(NULL);
+2023-07-25 10:41:55.128 UTC [731013] ERROR:  invalid object name
+2023-07-25 10:41:55.128 UTC [731013] STATEMENT:  select dbms_assert.object_name(NULL);
+2023-07-25 10:41:55.128 UTC [731013] ERROR:  plunit.assert_true exception
+2023-07-25 10:41:55.128 UTC [731013] DETAIL:  Plunit.assertation fails (assert_true).
+2023-07-25 10:41:55.128 UTC [731013] STATEMENT:  select plunit.assert_true(NULL);
+2023-07-25 10:41:55.128 UTC [731013] ERROR:  plunit.assert_true exception
+2023-07-25 10:41:55.128 UTC [731013] DETAIL:  Plunit.assertation fails (assert_true).
+2023-07-25 10:41:55.128 UTC [731013] STATEMENT:  select plunit.assert_true(1 = 2);
+2023-07-25 10:41:55.128 UTC [731013] ERROR:  one is not two
+2023-07-25 10:41:55.128 UTC [731013] DETAIL:  Plunit.assertation fails (assert_true).
+2023-07-25 10:41:55.128 UTC [731013] STATEMENT:  select plunit.assert_true(1 = 2, 'one is not two');
+2023-07-25 10:41:55.128 UTC [731013] ERROR:  plunit.assert_false exception
+2023-07-25 10:41:55.128 UTC [731013] DETAIL:  Plunit.assertation fails (assert_false).
+2023-07-25 10:41:55.128 UTC [731013] STATEMENT:  select plunit.assert_false(1 = 1);
+2023-07-25 10:41:55.128 UTC [731013] ERROR:  trap is open
+2023-07-25 10:41:55.128 UTC [731013] DETAIL:  Plunit.assertation fails (assert_false).
+2023-07-25 10:41:55.128 UTC [731013] STATEMENT:  select plunit.assert_false(1 = 1, 'trap is open');
+2023-07-25 10:41:55.128 UTC [731013] ERROR:  plunit.assert_false exception
+2023-07-25 10:41:55.128 UTC [731013] DETAIL:  Plunit.assertation fails (assert_false).
+2023-07-25 10:41:55.128 UTC [731013] STATEMENT:  select plunit.assert_false(NULL);
+2023-07-25 10:41:55.128 UTC [731013] ERROR:  plunit.assert_null exception
+2023-07-25 10:41:55.128 UTC [731013] DETAIL:  Plunit.assertation fails (assert_null).
+2023-07-25 10:41:55.128 UTC [731013] STATEMENT:  select plunit.assert_null(current_date);
+2023-07-25 10:41:55.129 UTC [731013] ERROR:  plunit.assert_not_null exception
+2023-07-25 10:41:55.129 UTC [731013] DETAIL:  Plunit.assertation fails (assert_not_null).
+2023-07-25 10:41:55.129 UTC [731013] STATEMENT:  select plunit.assert_not_null(NULL::date);
+2023-07-25 10:41:55.129 UTC [731013] ERROR:  diff dates
+2023-07-25 10:41:55.129 UTC [731013] DETAIL:  Plunit.assertation fails (assert_equals).
+2023-07-25 10:41:55.129 UTC [731013] STATEMENT:  select plunit.assert_equals(current_date, current_date + 1, 'diff dates');
+2023-07-25 10:41:55.129 UTC [731013] ERROR:  attention some diff
+2023-07-25 10:41:55.129 UTC [731013] DETAIL:  Plunit.assertation fails (assert_equals).
+2023-07-25 10:41:55.129 UTC [731013] STATEMENT:  select plunit.assert_equals(10.2, 10.3, 0.01, 'attention some diff');
+2023-07-25 10:41:55.129 UTC [731013] ERROR:  plunit.assert_fail exception
+2023-07-25 10:41:55.129 UTC [731013] DETAIL:  Plunit.assertation (assert_fail).
+2023-07-25 10:41:55.129 UTC [731013] STATEMENT:  select plunit.fail();
+2023-07-25 10:41:55.129 UTC [731013] ERROR:  custom exception
+2023-07-25 10:41:55.129 UTC [731013] DETAIL:  Plunit.assertation (assert_fail).
+2023-07-25 10:41:55.129 UTC [731013] STATEMENT:  select plunit.fail('custom exception');
+2023-07-25 10:41:55.150 UTC [731013] ERROR:  an argument is NULL
+2023-07-25 10:41:55.150 UTC [731013] STATEMENT:  select dbms_random.string(null, 42);
+2023-07-25 10:41:55.150 UTC [731013] ERROR:  pipe name is NULL
+2023-07-25 10:41:55.150 UTC [731013] DETAIL:  Pipename may not be NULL.
+2023-07-25 10:41:55.150 UTC [731013] STATEMENT:  select dbms_pipe.create_pipe(null);
+2023-07-25 10:41:55.150 UTC [731013] ERROR:  plunit.assert_not_equal exception
+2023-07-25 10:41:55.150 UTC [731013] DETAIL:  Plunit.assertation fails (assert_not_equals).
+2023-07-25 10:41:55.150 UTC [731013] STATEMENT:  select plunit.assert_not_equals(1,2,3);
+2023-07-25 10:41:55.156 UTC [731013] WARNING:  Field "a" of table "trg_test" is empty string (replaced by NULL).
+2023-07-25 10:41:55.157 UTC [731013] WARNING:  Field "c" of table "trg_test" is empty string (replaced by NULL).
+2023-07-25 10:41:55.169 UTC [731013] ERROR:  invalid Unicode surrogate pair
+2023-07-25 10:41:55.169 UTC [731013] STATEMENT:  SELECT oracle.unistr('wrong: \db99');
+2023-07-25 10:41:55.169 UTC [731013] ERROR:  invalid Unicode surrogate pair
+2023-07-25 10:41:55.169 UTC [731013] STATEMENT:  SELECT oracle.unistr('wrong: \db99\0061');
+2023-07-25 10:41:55.169 UTC [731013] ERROR:  invalid Unicode surrogate pair
+2023-07-25 10:41:55.169 UTC [731013] STATEMENT:  SELECT oracle.unistr('wrong: \+00db99\+000061');
+2023-07-25 10:41:55.170 UTC [731013] ERROR:  invalid Unicode escape value
+2023-07-25 10:41:55.170 UTC [731013] STATEMENT:  SELECT oracle.unistr('wrong: \+2FFFFF');
+2023-07-25 10:41:55.170 UTC [731013] ERROR:  invalid Unicode surrogate pair
+2023-07-25 10:41:55.170 UTC [731013] STATEMENT:  SELECT oracle.unistr('wrong: \udb99\u0061');
+2023-07-25 10:41:55.170 UTC [731013] ERROR:  invalid Unicode surrogate pair
+2023-07-25 10:41:55.170 UTC [731013] STATEMENT:  SELECT oracle.unistr('wrong: \U0000db99\U00000061');
+2023-07-25 10:41:55.170 UTC [731013] ERROR:  invalid Unicode escape value
+2023-07-25 10:41:55.170 UTC [731013] STATEMENT:  SELECT oracle.unistr('wrong: \U002FFFFF');
+2023-07-25 10:41:55.211 UTC [731017] ERROR:  could not determine polymorphic type because input has type unknown
+2023-07-25 10:41:55.211 UTC [731017] STATEMENT:  select oracle.decode('2012-01-01', '2012-01-01', 23, '2012-01-02', 24);
+2023-07-25 10:41:55.227 UTC [731021] ERROR:  function dbms_output_test() does not exist
+2023-07-25 10:41:55.227 UTC [731021] STATEMENT:  DROP FUNCTION dbms_output_test();
+2023-07-25 10:41:55.228 UTC [731021] ERROR:  table "dbms_output_test" does not exist
+2023-07-25 10:41:55.228 UTC [731021] STATEMENT:  DROP TABLE dbms_output_test;
+2023-07-25 10:41:57.575 UTC [731029] ERROR:  UTL_FILE_INVALID_PATH
+2023-07-25 10:41:57.575 UTC [731029] DETAIL:  you cannot access locality
+2023-07-25 10:41:57.575 UTC [731029] HINT:  locality is not found in utl_file_dir table
+2023-07-25 10:41:57.575 UTC [731029] STATEMENT:  SELECT utl_file.fopen(utl_file.tmpdir(),'sample.txt','r');
+2023-07-25 10:41:57.577 UTC [731029] ERROR:  UTL_FILE_INVALID_PATH
+2023-07-25 10:41:57.577 UTC [731029] DETAIL:  No such file or directory
+2023-07-25 10:41:57.577 UTC [731029] STATEMENT:  SELECT utl_file.fopen('test_tmp_dir','file.txt.','w');
+2023-07-25 10:41:57.580 UTC [731029] ERROR:  UTL_FILE_INVALID_PATH
+2023-07-25 10:41:57.580 UTC [731029] DETAIL:  No such file or directory
+2023-07-25 10:41:57.580 UTC [731029] STATEMENT:  SELECT utl_file.fopen(utl_file.tmpdir(),'non_existent_file.txt','r');
+2023-07-25 10:41:57.581 UTC [731029] ERROR:  permission denied for table utl_file_dir
+2023-07-25 10:41:57.581 UTC [731029] STATEMENT:  INSERT INTO utl_file.utl_file_dir(dir) VALUES('test_tmp_dir');
+2023-07-25 10:41:57.619 UTC [731033] ERROR:  length for type varchar must be at least 1 at character 21
+2023-07-25 10:41:57.619 UTC [731033] STATEMENT:  CREATE TABLE foo (a VARCHAR2(0));
+2023-07-25 10:41:57.619 UTC [731033] ERROR:  invalid type modifier at character 21
+2023-07-25 10:41:57.619 UTC [731033] STATEMENT:  CREATE TABLE foo (a VARCHAR2(10, 1));
+2023-07-25 10:41:57.645 UTC [731033] ERROR:  input value length is 6; too long for type varchar2(5)
+2023-07-25 10:41:57.645 UTC [731033] STATEMENT:  INSERT INTO foo VALUES ('abcdef');
+2023-07-25 10:41:57.645 UTC [731033] ERROR:  input value length is 7; too long for type varchar2(5)
+2023-07-25 10:41:57.645 UTC [731033] STATEMENT:  INSERT INTO foo VALUES ('abcde  ');
+2023-07-25 10:41:57.675 UTC [731037] ERROR:  length for type varchar must be at least 1 at character 21
+2023-07-25 10:41:57.675 UTC [731037] STATEMENT:  CREATE TABLE bar (a NVARCHAR2(0));
+2023-07-25 10:41:57.675 UTC [731037] ERROR:  invalid type modifier at character 21
+2023-07-25 10:41:57.675 UTC [731037] STATEMENT:  CREATE TABLE bar (a NVARCHAR2(10, 1));
+2023-07-25 10:41:57.700 UTC [731037] ERROR:  input value too long for type nvarchar2(5)
+2023-07-25 10:41:57.700 UTC [731037] STATEMENT:  INSERT INTO bar VALUES ('abcdef');
+2023-07-25 10:41:57.700 UTC [731037] ERROR:  input value too long for type nvarchar2(5)
+2023-07-25 10:41:57.700 UTC [731037] STATEMENT:  INSERT INTO bar VALUES ('abcde  ');
+2023-07-25 10:41:57.887 UTC [731046] ERROR:  failed to set the requested LC_COLLATE value [invalid]
+2023-07-25 10:41:57.887 UTC [731046] CONTEXT:  SQL function "nlssort" statement 1
+2023-07-25 10:41:57.887 UTC [731046] STATEMENT:  SELECT * FROM test_sort ORDER BY NLSSORT(name);
+2023-07-25 10:41:57.904 UTC [731054] ERROR:  argument 'position' must be a number greater than 0
+2023-07-25 10:41:57.904 UTC [731054] CONTEXT:  PL/pgSQL function regexp_count(text,text,integer,text) line 12 at RAISE
+2023-07-25 10:41:57.904 UTC [731054] STATEMENT:  SELECT REGEXP_COUNT('foo' || chr(10) || 'bar' || chr(10) || 'bequq' || chr(10) || 'baz', '^bar', 0, 'm');
+2023-07-25 10:41:57.905 UTC [731054] ERROR:  argument 'position' must be a number greater than 0
+2023-07-25 10:41:57.905 UTC [731054] CONTEXT:  PL/pgSQL function regexp_count(text,text,integer,text) line 12 at RAISE
+2023-07-25 10:41:57.905 UTC [731054] STATEMENT:  SELECT REGEXP_COUNT('ORANGE' || chr(10) || 'GREEN', '^..([aeiou])\1', -1, 'i');
+2023-07-25 10:41:57.910 UTC [731054] ERROR:  argument 'position' must be a number greater than 0
+2023-07-25 10:41:57.910 UTC [731054] STATEMENT:  SELECT REGEXP_INSTR('1234567890 1234567890 1234567890', '(123)(4(56)(78))', -1, 3, 1, 'i', 4);
+2023-07-25 10:41:57.910 UTC [731054] ERROR:  argument 'occurence' must be a number greater than 0
+2023-07-25 10:41:57.910 UTC [731054] STATEMENT:  SELECT REGEXP_INSTR('1234567890 1234567890 1234567890', '(123)(4(56)(78))', 1, -3, 1, 'i', 4);
+2023-07-25 10:41:57.910 UTC [731054] ERROR:  argument 'return_opt' must be 0 or 1
+2023-07-25 10:41:57.910 UTC [731054] STATEMENT:  SELECT REGEXP_INSTR('1234567890 1234567890 1234567890', '(123)(4(56)(78))', 1, 3, -1, 'i', 4);
+2023-07-25 10:41:57.910 UTC [731054] ERROR:  argument 'group' must be a positive number
+2023-07-25 10:41:57.910 UTC [731054] STATEMENT:  SELECT REGEXP_INSTR('1234567890 1234567890 1234567890', '(123)(4(56)(78))', 1, 3, 1, 'i', -4);
+2023-07-25 10:41:57.914 UTC [731054] ERROR:  argument 'position' must be a number greater than 0
+2023-07-25 10:41:57.914 UTC [731054] CONTEXT:  PL/pgSQL function regexp_substr(text,text,integer,integer,text,integer) line 15 at RAISE
+2023-07-25 10:41:57.914 UTC [731054] STATEMENT:  SELECT REGEXP_SUBSTR('1234567890 1234567890', '(123)(4(56)(78))', -1, 1, 'i', 0);
+2023-07-25 10:41:57.914 UTC [731054] ERROR:  argument 'occurence' must be a number greater than 0
+2023-07-25 10:41:57.914 UTC [731054] CONTEXT:  PL/pgSQL function regexp_substr(text,text,integer,integer,text,integer) line 18 at RAISE
+2023-07-25 10:41:57.914 UTC [731054] STATEMENT:  SELECT REGEXP_SUBSTR('1234567890 1234567890', '(123)(4(56)(78))', 1, -1, 'i', 0);
+2023-07-25 10:41:57.914 UTC [731054] ERROR:  argument 'group' must be a positive number
+2023-07-25 10:41:57.914 UTC [731054] CONTEXT:  PL/pgSQL function regexp_substr(text,text,integer,integer,text,integer) line 21 at RAISE
+2023-07-25 10:41:57.914 UTC [731054] STATEMENT:  SELECT REGEXP_SUBSTR('1234567890 1234567890', '(123)(4(56)(78))', 1, 1, 'i', -1);
+2023-07-25 10:41:57.915 UTC [731054] ERROR:  argument 'position' must be a number greater than 0
+2023-07-25 10:41:57.915 UTC [731054] STATEMENT:  SELECT oracle.REGEXP_REPLACE ('A PostgreSQL function', 'a|e|i|o|u', 'X', -1, 0, 'i');
+2023-07-25 10:41:57.915 UTC [731054] ERROR:  argument 'occurrence' must be a positive number
+2023-07-25 10:41:57.915 UTC [731054] STATEMENT:  SELECT oracle.REGEXP_REPLACE ('A PostgreSQL function', 'a|e|i|o|u', 'X', 1, -1, 'i');
+2023-07-25 10:41:57.915 UTC [731054] ERROR:  modifier 'g' is not supported by this function
+2023-07-25 10:41:57.915 UTC [731054] STATEMENT:  SELECT oracle.REGEXP_REPLACE ('A PostgreSQL function', 'a|e|i|o|u', 'X', 1, 1, 'g');
+2023-07-25 10:41:57.990 UTC [730973] LOG:  checkpoint starting: immediate force wait
+2023-07-25 10:41:58.114 UTC [730973] LOG:  checkpoint complete: wrote 975 buffers (6.0%); 1 WAL file(s) added, 0 removed, 0 recycled; write=0.036 s, sync=0.024 s, total=0.124 s; sync files=260, longest=0.004 s, average=0.001 s; distance=10366 kB, estimate=10366 kB
+2023-07-25 10:41:58.265 UTC [730972] LOG:  received SIGHUP, reloading configuration files
+2023-07-25 10:41:58.267 UTC [730972] LOG:  parameter "session_preload_libraries" changed to "pgextwlist"
+2023-07-25 10:41:58.267 UTC [730972] LOG:  parameter "extwlist.extensions" changed to "citext,earthdistance,pg_trgm,pg_stat_statements,refint"
+2023-07-25 10:41:58.267 UTC [730972] LOG:  parameter "extwlist.custom_path" changed to "/home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/test-scripts"
+2023-07-25 10:41:58.351 UTC [731084] ERROR:  extension "plpgsql" already exists
+2023-07-25 10:41:58.351 UTC [731084] STATEMENT:  CREATE EXTENSION plpgsql;
+2023-07-25 10:41:58.352 UTC [731084] ERROR:  extension "hstore" does not exist
+2023-07-25 10:41:58.352 UTC [731084] STATEMENT:  COMMENT ON EXTENSION hstore IS 'plpgsql comment';
+2023-07-25 10:41:58.352 UTC [731084] ERROR:  permission denied to create extension "hstore"
+2023-07-25 10:41:58.352 UTC [731084] HINT:  Must have CREATE privilege on current database to create this extension.
+2023-07-25 10:41:58.352 UTC [731084] STATEMENT:  CREATE EXTENSION hstore;
+2023-07-25 10:41:58.352 UTC [731084] ERROR:  extension "hstore" does not exist
+2023-07-25 10:41:58.352 UTC [731084] STATEMENT:  COMMENT ON EXTENSION hstore IS 'hstore comment';
+2023-07-25 10:41:58.353 UTC [731084] ERROR:  required extension "cube" is not installed
+2023-07-25 10:41:58.353 UTC [731084] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-25 10:41:58.353 UTC [731084] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-25 10:41:58.353 UTC [731084] ERROR:  must be owner of extension plpgsql
+2023-07-25 10:41:58.353 UTC [731084] STATEMENT:  DROP EXTENSION plpgsql;
+2023-07-25 10:41:58.369 UTC [731092] ERROR:  cannot drop extension citext because other objects depend on it
+2023-07-25 10:41:58.369 UTC [731092] DETAIL:  column t of table mere_table depends on type citext
+2023-07-25 10:41:58.369 UTC [731092] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 10:41:58.369 UTC [731092] STATEMENT:  DROP EXTENSION citext;

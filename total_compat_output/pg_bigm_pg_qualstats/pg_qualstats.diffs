@@ -1,0 +1,33 @@
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_qualstats/expected/pg_qualstats.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_qualstats/results/pg_qualstats.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_qualstats/expected/pg_qualstats.out	2023-07-25 04:22:34.483519318 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_qualstats/results/pg_qualstats.out	2023-07-25 14:48:14.956743741 +0000
+@@ -242,8 +242,9 @@
+ ---------------------------------------------------------------
+  "CREATE INDEX ON public.adv USING btree (id1)"
+  "CREATE INDEX ON public.adv USING btree (val, id1, id2, id3)"
++ "CREATE INDEX ON public.adv USING gin (val gin_bigm_ops)"
+  "CREATE INDEX ON public.pgqs USING btree (id)"
+-(3 rows)
++(4 rows)
+ 
+ SELECT v->'qual' AS v
+   FROM json_array_elements(
+@@ -251,9 +252,8 @@
+   ORDER BY v::text COLLATE "C";
+         v        
+ -----------------
+- "adv.val ~~ ?"
+  "adv.val ~~* ?"
+-(2 rows)
++(1 row)
+ 
+ -- check quals on removed table
+ DROP TABLE pgqs;
+@@ -265,5 +265,6 @@
+ ---------------------------------------------------------------
+  "CREATE INDEX ON public.adv USING btree (id1)"
+  "CREATE INDEX ON public.adv USING btree (val, id1, id2, id3)"
+-(2 rows)
++ "CREATE INDEX ON public.adv USING gin (val gin_bigm_ops)"
++(3 rows)
+ 

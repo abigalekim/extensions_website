@@ -1,0 +1,145 @@
+The files belonging to this database system will be owned by user "abigalek".
+This user must also own the server process.
+
+The database cluster will be initialized with locale "en_US.UTF-8".
+The default database encoding has accordingly been set to "UTF8".
+The default text search configuration will be set to "english".
+
+Data page checksums are disabled.
+
+creating directory pg-15-data ... ok
+creating subdirectories ... ok
+selecting dynamic shared memory implementation ... posix
+selecting default max_connections ... 100
+selecting default shared_buffers ... 128MB
+selecting default time zone ... Etc/UTC
+creating configuration files ... ok
+running bootstrap script ... ok
+performing post-bootstrap initialization ... ok
+syncing data to disk ... ok
+
+initdb: warning: enabling "trust" authentication for local connections
+initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+
+Success. You can now start the database server using:
+
+    pg-15-dist/bin/pg_ctl -D pg-15-data -l logfile start
+
+waiting for server to start.... done
+server started
+(using postmaster on Unix socket, default port)
+============== dropping database "contrib_regression" ==============
+SET
+DROP DATABASE
+============== creating database "contrib_regression" ==============
+CREATE DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+============== installing pgcrypto                    ==============
+CREATE EXTENSION
+============== running regression test queries        ==============
+test page                         ... ok           34 ms
+test btree                        ... ok           31 ms
+test brin                         ... ok           41 ms
+test gin                          ... ok          183 ms
+test gist                         ... ok           53 ms
+test hash                         ... ok           44 ms
+test checksum                     ... ok           14 ms
+test oldextversions               ... ok           58 ms
+
+=====================
+ All 8 tests passed. 
+=====================
+
+(using postmaster on Unix socket, default port)
+============== dropping database "contrib_regression" ==============
+SET
+DROP DATABASE
+============== creating database "contrib_regression" ==============
+CREATE DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+============== installing pageinspect                 ==============
+CREATE EXTENSION
+============== running regression test queries        ==============
+test init                         ... ok           14 ms
+test md5                          ... ok            9 ms
+test sha1                         ... ok            9 ms
+test hmac-md5                     ... ok           10 ms
+test hmac-sha1                    ... ok           10 ms
+test blowfish                     ... ok           10 ms
+test rijndael                     ... ok           11 ms
+test sha2                         ... ok           11 ms
+test des                          ... ok            9 ms
+test 3des                         ... ok           10 ms
+test cast5                        ... ok            9 ms
+test crypt-des                    ... ok           20 ms
+test crypt-md5                    ... ok           23 ms
+test crypt-blowfish               ... ok           74 ms
+test crypt-xdes                   ... ok           20 ms
+test pgp-armor                    ... ok           14 ms
+test pgp-decrypt                  ... ok           27 ms
+test pgp-encrypt                  ... ok          394 ms
+test pgp-compression              ... ok           15 ms
+test pgp-pubkey-decrypt           ... ok           83 ms
+test pgp-pubkey-encrypt           ... ok           19 ms
+test pgp-info                     ... ok            8 ms
+
+======================
+ All 22 tests passed. 
+======================
+
+CREATE EXTENSION
+CREATE EXTENSION
+dropping old tables...
+NOTICE:  table "pgbench_accounts" does not exist, skipping
+NOTICE:  table "pgbench_branches" does not exist, skipping
+NOTICE:  table "pgbench_history" does not exist, skipping
+NOTICE:  table "pgbench_tellers" does not exist, skipping
+creating tables...
+generating data (client-side)...
+100000 of 1000000 tuples (10%) done (elapsed 0.07 s, remaining 0.64 s)
+200000 of 1000000 tuples (20%) done (elapsed 0.15 s, remaining 0.59 s)
+300000 of 1000000 tuples (30%) done (elapsed 0.24 s, remaining 0.56 s)
+400000 of 1000000 tuples (40%) done (elapsed 0.32 s, remaining 0.48 s)
+500000 of 1000000 tuples (50%) done (elapsed 0.43 s, remaining 0.43 s)
+600000 of 1000000 tuples (60%) done (elapsed 0.55 s, remaining 0.37 s)
+700000 of 1000000 tuples (70%) done (elapsed 0.63 s, remaining 0.27 s)
+800000 of 1000000 tuples (80%) done (elapsed 0.75 s, remaining 0.19 s)
+900000 of 1000000 tuples (90%) done (elapsed 0.89 s, remaining 0.10 s)
+1000000 of 1000000 tuples (100%) done (elapsed 0.97 s, remaining 0.00 s)
+vacuuming...
+creating primary keys...
+done in 1.46 s (drop tables 0.00 s, create tables 0.01 s, client-side generate 1.02 s, vacuum 0.13 s, primary keys 0.31 s).
+CREATE EXTENSION
+CREATE EXTENSION
+dropping old tables...
+NOTICE:  table "pgbench_accounts" does not exist, skipping
+NOTICE:  table "pgbench_branches" does not exist, skipping
+NOTICE:  table "pgbench_history" does not exist, skipping
+NOTICE:  table "pgbench_tellers" does not exist, skipping
+creating tables...
+generating data (client-side)...
+100000 of 1000000 tuples (10%) done (elapsed 0.07 s, remaining 0.63 s)
+200000 of 1000000 tuples (20%) done (elapsed 0.15 s, remaining 0.58 s)
+300000 of 1000000 tuples (30%) done (elapsed 0.23 s, remaining 0.54 s)
+400000 of 1000000 tuples (40%) done (elapsed 0.31 s, remaining 0.46 s)
+500000 of 1000000 tuples (50%) done (elapsed 0.39 s, remaining 0.39 s)
+600000 of 1000000 tuples (60%) done (elapsed 0.47 s, remaining 0.31 s)
+700000 of 1000000 tuples (70%) done (elapsed 0.54 s, remaining 0.23 s)
+800000 of 1000000 tuples (80%) done (elapsed 0.62 s, remaining 0.15 s)
+900000 of 1000000 tuples (90%) done (elapsed 0.70 s, remaining 0.08 s)
+1000000 of 1000000 tuples (100%) done (elapsed 0.79 s, remaining 0.00 s)
+vacuuming...
+creating primary keys...
+done in 1.21 s (drop tables 0.00 s, create tables 0.01 s, client-side generate 0.82 s, vacuum 0.11 s, primary keys 0.27 s).
+waiting for server to shut down.... done
+server stopped

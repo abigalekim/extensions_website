@@ -1,0 +1,77 @@
+2023-07-25 07:08:58.699 UTC [703565] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 07:08:58.699 UTC [703565] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 07:08:58.714 UTC [703565] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 07:08:58.733 UTC [703568] LOG:  database system was shut down at 2023-07-25 07:08:58 UTC
+2023-07-25 07:08:58.746 UTC [703565] LOG:  database system is ready to accept connections
+2023-07-25 07:08:59.023 UTC [703587] ERROR:  ltree syntax error at character 1 at character 8
+2023-07-25 07:08:59.023 UTC [703587] STATEMENT:  SELECT '.2.3'::ltree;
+2023-07-25 07:08:59.023 UTC [703587] ERROR:  ltree syntax error at character 3 at character 8
+2023-07-25 07:08:59.023 UTC [703587] STATEMENT:  SELECT '1..3'::ltree;
+2023-07-25 07:08:59.023 UTC [703587] ERROR:  ltree syntax error at character 8
+2023-07-25 07:08:59.023 UTC [703587] DETAIL:  Unexpected end of input.
+2023-07-25 07:08:59.023 UTC [703587] STATEMENT:  SELECT '1.2.'::ltree;
+2023-07-25 07:08:59.024 UTC [703587] ERROR:  label string is too long
+2023-07-25 07:08:59.024 UTC [703587] DETAIL:  Label length is 256, must be at most 255, at character 257.
+2023-07-25 07:08:59.024 UTC [703587] STATEMENT:  SELECT repeat('x', 256)::ltree;
+2023-07-25 07:08:59.028 UTC [703587] ERROR:  lquery syntax error at character 1 at character 8
+2023-07-25 07:08:59.028 UTC [703587] STATEMENT:  SELECT '.2.3'::lquery;
+2023-07-25 07:08:59.028 UTC [703587] ERROR:  lquery syntax error at character 3 at character 8
+2023-07-25 07:08:59.028 UTC [703587] STATEMENT:  SELECT '1..3'::lquery;
+2023-07-25 07:08:59.028 UTC [703587] ERROR:  lquery syntax error at character 8
+2023-07-25 07:08:59.028 UTC [703587] DETAIL:  Unexpected end of input.
+2023-07-25 07:08:59.028 UTC [703587] STATEMENT:  SELECT '1.2.'::lquery;
+2023-07-25 07:08:59.028 UTC [703587] ERROR:  lquery syntax error at character 1 at character 8
+2023-07-25 07:08:59.028 UTC [703587] STATEMENT:  SELECT '@.2.3'::lquery;
+2023-07-25 07:08:59.028 UTC [703587] ERROR:  lquery syntax error at character 3 at character 8
+2023-07-25 07:08:59.028 UTC [703587] STATEMENT:  SELECT '1.@.3'::lquery;
+2023-07-25 07:08:59.028 UTC [703587] ERROR:  lquery syntax error at character 5 at character 8
+2023-07-25 07:08:59.028 UTC [703587] STATEMENT:  SELECT '1.2.@'::lquery;
+2023-07-25 07:08:59.028 UTC [703587] ERROR:  lquery syntax error at character 2 at character 8
+2023-07-25 07:08:59.028 UTC [703587] DETAIL:  Empty labels are not allowed.
+2023-07-25 07:08:59.028 UTC [703587] STATEMENT:  SELECT '!.2.3'::lquery;
+2023-07-25 07:08:59.028 UTC [703587] ERROR:  lquery syntax error at character 4 at character 8
+2023-07-25 07:08:59.028 UTC [703587] DETAIL:  Empty labels are not allowed.
+2023-07-25 07:08:59.028 UTC [703587] STATEMENT:  SELECT '1.!.3'::lquery;
+2023-07-25 07:08:59.028 UTC [703587] ERROR:  lquery syntax error at character 6 at character 8
+2023-07-25 07:08:59.028 UTC [703587] DETAIL:  Empty labels are not allowed.
+2023-07-25 07:08:59.028 UTC [703587] STATEMENT:  SELECT '1.2.!'::lquery;
+2023-07-25 07:08:59.028 UTC [703587] ERROR:  lquery syntax error at character 7 at character 8
+2023-07-25 07:08:59.028 UTC [703587] STATEMENT:  SELECT '1.2.3|@.4'::lquery;
+2023-07-25 07:08:59.028 UTC [703587] ERROR:  label string is too long
+2023-07-25 07:08:59.028 UTC [703587] DETAIL:  Label length is 256, must be at most 255, at character 257.
+2023-07-25 07:08:59.028 UTC [703587] STATEMENT:  SELECT (repeat('x', 256) || '*@@*')::lquery;
+2023-07-25 07:08:59.028 UTC [703587] ERROR:  label string is too long
+2023-07-25 07:08:59.028 UTC [703587] DETAIL:  Label length is 256, must be at most 255, at character 258.
+2023-07-25 07:08:59.028 UTC [703587] STATEMENT:  SELECT ('!' || repeat('x', 256))::lquery;
+2023-07-25 07:08:59.034 UTC [703587] ERROR:  number of ltree labels (65536) exceeds the maximum allowed (65535)
+2023-07-25 07:08:59.034 UTC [703587] STATEMENT:  SELECT nlevel(('1' || repeat('.1', 65535))::ltree);
+2023-07-25 07:08:59.037 UTC [703587] ERROR:  number of ltree levels (65536) exceeds the maximum allowed (65535)
+2023-07-25 07:08:59.037 UTC [703587] STATEMENT:  SELECT nlevel(('1' || repeat('.1', 65534))::ltree || '1');
+2023-07-25 07:08:59.046 UTC [703587] ERROR:  number of lquery items (65536) exceeds the maximum allowed (65535)
+2023-07-25 07:08:59.046 UTC [703587] STATEMENT:  SELECT ('1' || repeat('.1', 65535))::lquery IS NULL;
+2023-07-25 07:08:59.046 UTC [703587] ERROR:  lquery syntax error at character 8
+2023-07-25 07:08:59.046 UTC [703587] DETAIL:  Low limit (65536) exceeds the maximum allowed (65535), at character 3.
+2023-07-25 07:08:59.046 UTC [703587] STATEMENT:  SELECT '*{65536}'::lquery;
+2023-07-25 07:08:59.046 UTC [703587] ERROR:  lquery syntax error at character 8
+2023-07-25 07:08:59.046 UTC [703587] DETAIL:  High limit (65536) exceeds the maximum allowed (65535), at character 4.
+2023-07-25 07:08:59.046 UTC [703587] STATEMENT:  SELECT '*{,65536}'::lquery;
+2023-07-25 07:08:59.046 UTC [703587] ERROR:  lquery syntax error at character 8
+2023-07-25 07:08:59.046 UTC [703587] DETAIL:  Low limit (4) is greater than high limit (3), at character 5.
+2023-07-25 07:08:59.046 UTC [703587] STATEMENT:  SELECT '*{4,3}'::lquery;
+2023-07-25 07:08:59.172 UTC [703587] ERROR:  value 0 out of bounds for option "siglen"
+2023-07-25 07:08:59.172 UTC [703587] DETAIL:  Valid values are between "4" and "2024".
+2023-07-25 07:08:59.172 UTC [703587] STATEMENT:  create index tstidx on ltreetest using gist (t gist_ltree_ops(siglen=0));
+2023-07-25 07:08:59.172 UTC [703587] ERROR:  value 2025 out of bounds for option "siglen"
+2023-07-25 07:08:59.172 UTC [703587] DETAIL:  Valid values are between "4" and "2024".
+2023-07-25 07:08:59.172 UTC [703587] STATEMENT:  create index tstidx on ltreetest using gist (t gist_ltree_ops(siglen=2025));
+2023-07-25 07:08:59.173 UTC [703587] ERROR:  value 2028 out of bounds for option "siglen"
+2023-07-25 07:08:59.173 UTC [703587] DETAIL:  Valid values are between "4" and "2024".
+2023-07-25 07:08:59.173 UTC [703587] STATEMENT:  create index tstidx on ltreetest using gist (t gist_ltree_ops(siglen=2028));
+2023-07-25 07:08:59.174 UTC [703587] ERROR:  siglen value must be a multiple of 4
+2023-07-25 07:08:59.174 UTC [703587] STATEMENT:  create index tstidx on ltreetest using gist (t gist_ltree_ops(siglen=2019));
+2023-07-25 07:08:59.254 UTC [703587] ERROR:  value 0 out of bounds for option "siglen"
+2023-07-25 07:08:59.254 UTC [703587] DETAIL:  Valid values are between "1" and "2024".
+2023-07-25 07:08:59.254 UTC [703587] STATEMENT:  create index _tstidx on _ltreetest using gist (t gist__ltree_ops(siglen=0));
+2023-07-25 07:08:59.254 UTC [703587] ERROR:  value 2025 out of bounds for option "siglen"
+2023-07-25 07:08:59.254 UTC [703587] DETAIL:  Valid values are between "1" and "2024".
+2023-07-25 07:08:59.254 UTC [703587] STATEMENT:  create index _tstidx on _ltreetest using gist (t gist__ltree_ops(siglen=2025));

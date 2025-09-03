@@ -1,0 +1,356 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out	2023-07-26 14:02:39.484383973 +0000
+@@ -963,12 +963,14 @@
+ --
+ -- list what's installed
+ \dT
+-                                              List of data types
+- Schema | Name  |                                         Description                                         
+---------+-------+---------------------------------------------------------------------------------------------
+- public | cube  | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
+- public | earth | 
+-(2 rows)
++                                                 List of data types
++ Schema |    Name     |                                         Description                                         
++--------+-------------+---------------------------------------------------------------------------------------------
++ public | cube        | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
++ public | earth       | 
++ public | intbig_gkey | 
++ public | query_int   | 
++(4 rows)
+ 
+ drop extension cube;  -- fail, earthdistance requires it
+ ERROR:  cannot drop extension cube because other objects depend on it
+@@ -980,11 +982,13 @@
+ HINT:  You can drop extension cube instead.
+ -- list what's installed
+ \dT
+-                                             List of data types
+- Schema | Name |                                         Description                                         
+---------+------+---------------------------------------------------------------------------------------------
+- public | cube | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
+-(1 row)
++                                                 List of data types
++ Schema |    Name     |                                         Description                                         
++--------+-------------+---------------------------------------------------------------------------------------------
++ public | cube        | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
++ public | intbig_gkey | 
++ public | query_int   | 
++(3 rows)
+ 
+ create table foo (f1 cube, f2 int);
+ drop extension cube;  -- fail, foo.f1 requires it
+@@ -995,43 +999,183 @@
+ drop extension cube;
+ -- list what's installed
+ \dT
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++         List of data types
++ Schema |    Name     | Description 
++--------+-------------+-------------
++ public | intbig_gkey | 
++ public | query_int   | 
++(2 rows)
+ 
+ \df
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                             List of functions
++ Schema |          Name          | Result data type |                              Argument data types                               | Type 
++--------+------------------------+------------------+--------------------------------------------------------------------------------+------
++ public | _int_contained         | boolean          | integer[], integer[]                                                           | func
++ public | _int_contained_joinsel | double precision | internal, oid, internal, smallint, internal                                    | func
++ public | _int_contained_sel     | double precision | internal, oid, internal, integer                                               | func
++ public | _int_contains          | boolean          | integer[], integer[]                                                           | func
++ public | _int_contains_joinsel  | double precision | internal, oid, internal, smallint, internal                                    | func
++ public | _int_contains_sel      | double precision | internal, oid, internal, integer                                               | func
++ public | _int_different         | boolean          | integer[], integer[]                                                           | func
++ public | _int_inter             | integer[]        | integer[], integer[]                                                           | func
++ public | _int_matchsel          | double precision | internal, oid, internal, integer                                               | func
++ public | _int_overlap           | boolean          | integer[], integer[]                                                           | func
++ public | _int_overlap_joinsel   | double precision | internal, oid, internal, smallint, internal                                    | func
++ public | _int_overlap_sel       | double precision | internal, oid, internal, integer                                               | func
++ public | _int_same              | boolean          | integer[], integer[]                                                           | func
++ public | _int_union             | integer[]        | integer[], integer[]                                                           | func
++ public | _intbig_in             | intbig_gkey      | cstring                                                                        | func
++ public | _intbig_out            | cstring          | intbig_gkey                                                                    | func
++ public | boolop                 | boolean          | integer[], query_int                                                           | func
++ public | bqarr_in               | query_int        | cstring                                                                        | func
++ public | bqarr_out              | cstring          | query_int                                                                      | func
++ public | g_int_compress         | internal         | internal                                                                       | func
++ public | g_int_consistent       | boolean          | internal, integer[], smallint, oid, internal                                   | func
++ public | g_int_decompress       | internal         | internal                                                                       | func
++ public | g_int_options          | void             | internal                                                                       | func
++ public | g_int_penalty          | internal         | internal, internal, internal                                                   | func
++ public | g_int_picksplit        | internal         | internal, internal                                                             | func
++ public | g_int_same             | internal         | integer[], integer[], internal                                                 | func
++ public | g_int_union            | integer[]        | internal, internal                                                             | func
++ public | g_intbig_compress      | internal         | internal                                                                       | func
++ public | g_intbig_consistent    | boolean          | internal, integer[], smallint, oid, internal                                   | func
++ public | g_intbig_decompress    | internal         | internal                                                                       | func
++ public | g_intbig_options       | void             | internal                                                                       | func
++ public | g_intbig_penalty       | internal         | internal, internal, internal                                                   | func
++ public | g_intbig_picksplit     | internal         | internal, internal                                                             | func
++ public | g_intbig_same          | internal         | intbig_gkey, intbig_gkey, internal                                             | func
++ public | g_intbig_union         | intbig_gkey      | internal, internal                                                             | func
++ public | ginint4_consistent     | boolean          | internal, smallint, integer[], integer, internal, internal, internal, internal | func
++ public | ginint4_queryextract   | internal         | integer[], internal, smallint, internal, internal, internal, internal          | func
++ public | icount                 | integer          | integer[]                                                                      | func
++ public | idx                    | integer          | integer[], integer                                                             | func
++ public | intarray_del_elem      | integer[]        | integer[], integer                                                             | func
++ public | intarray_push_array    | integer[]        | integer[], integer[]                                                           | func
++ public | intarray_push_elem     | integer[]        | integer[], integer                                                             | func
++ public | intset                 | integer[]        | integer                                                                        | func
++ public | intset_subtract        | integer[]        | integer[], integer[]                                                           | func
++ public | intset_union_elem      | integer[]        | integer[], integer                                                             | func
++ public | querytree              | text             | query_int                                                                      | func
++ public | rboolop                | boolean          | query_int, integer[]                                                           | func
++ public | sort                   | integer[]        | integer[]                                                                      | func
++ public | sort                   | integer[]        | integer[], text                                                                | func
++ public | sort_asc               | integer[]        | integer[]                                                                      | func
++ public | sort_desc              | integer[]        | integer[]                                                                      | func
++ public | subarray               | integer[]        | integer[], integer                                                             | func
++ public | subarray               | integer[]        | integer[], integer, integer                                                    | func
++ public | uniq                   | integer[]        | integer[]                                                                      | func
++(54 rows)
+ 
+ \do
+-                             List of operators
+- Schema | Name | Left arg type | Right arg type | Result type | Description 
+---------+------+---------------+----------------+-------------+-------------
+-(0 rows)
++                                      List of operators
++ Schema | Name | Left arg type | Right arg type | Result type |         Description          
++--------+------+---------------+----------------+-------------+------------------------------
++ public | #    | integer[]     | integer        | integer     | 
++ public | #    |               | integer[]      | integer     | 
++ public | &    | integer[]     | integer[]      | integer[]   | 
++ public | &&   | integer[]     | integer[]      | boolean     | overlaps
++ public | +    | integer[]     | integer        | integer[]   | 
++ public | +    | integer[]     | integer[]      | integer[]   | 
++ public | -    | integer[]     | integer        | integer[]   | 
++ public | -    | integer[]     | integer[]      | integer[]   | 
++ public | <@   | integer[]     | integer[]      | boolean     | contained in
++ public | @>   | integer[]     | integer[]      | boolean     | contains
++ public | @@   | integer[]     | query_int      | boolean     | boolean operation with array
++ public | |    | integer[]     | integer        | integer[]   | 
++ public | |    | integer[]     | integer[]      | integer[]   | 
++ public | ~~   | query_int     | integer[]      | boolean     | boolean operation with array
++(14 rows)
+ 
+ create schema c;
+ create extension cube with schema c;
+ -- list what's installed
+ \dT public.*
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++         List of data types
++ Schema |    Name     | Description 
++--------+-------------+-------------
++ public | intbig_gkey | 
++ public | query_int   | 
++(2 rows)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                             List of functions
++ Schema |          Name          | Result data type |                              Argument data types                               | Type 
++--------+------------------------+------------------+--------------------------------------------------------------------------------+------
++ public | _int_contained         | boolean          | integer[], integer[]                                                           | func
++ public | _int_contained_joinsel | double precision | internal, oid, internal, smallint, internal                                    | func
++ public | _int_contained_sel     | double precision | internal, oid, internal, integer                                               | func
++ public | _int_contains          | boolean          | integer[], integer[]                                                           | func
++ public | _int_contains_joinsel  | double precision | internal, oid, internal, smallint, internal                                    | func
++ public | _int_contains_sel      | double precision | internal, oid, internal, integer                                               | func
++ public | _int_different         | boolean          | integer[], integer[]                                                           | func
++ public | _int_inter             | integer[]        | integer[], integer[]                                                           | func
++ public | _int_matchsel          | double precision | internal, oid, internal, integer                                               | func
++ public | _int_overlap           | boolean          | integer[], integer[]                                                           | func
++ public | _int_overlap_joinsel   | double precision | internal, oid, internal, smallint, internal                                    | func
++ public | _int_overlap_sel       | double precision | internal, oid, internal, integer                                               | func
++ public | _int_same              | boolean          | integer[], integer[]                                                           | func
++ public | _int_union             | integer[]        | integer[], integer[]                                                           | func
++ public | _intbig_in             | intbig_gkey      | cstring                                                                        | func
++ public | _intbig_out            | cstring          | intbig_gkey                                                                    | func
++ public | boolop                 | boolean          | integer[], query_int                                                           | func
++ public | bqarr_in               | query_int        | cstring                                                                        | func
++ public | bqarr_out              | cstring          | query_int                                                                      | func
++ public | g_int_compress         | internal         | internal                                                                       | func
++ public | g_int_consistent       | boolean          | internal, integer[], smallint, oid, internal                                   | func
++ public | g_int_decompress       | internal         | internal                                                                       | func
++ public | g_int_options          | void             | internal                                                                       | func
++ public | g_int_penalty          | internal         | internal, internal, internal                                                   | func
++ public | g_int_picksplit        | internal         | internal, internal                                                             | func
++ public | g_int_same             | internal         | integer[], integer[], internal                                                 | func
++ public | g_int_union            | integer[]        | internal, internal                                                             | func
++ public | g_intbig_compress      | internal         | internal                                                                       | func
++ public | g_intbig_consistent    | boolean          | internal, integer[], smallint, oid, internal                                   | func
++ public | g_intbig_decompress    | internal         | internal                                                                       | func
++ public | g_intbig_options       | void             | internal                                                                       | func
++ public | g_intbig_penalty       | internal         | internal, internal, internal                                                   | func
++ public | g_intbig_picksplit     | internal         | internal, internal                                                             | func
++ public | g_intbig_same          | internal         | intbig_gkey, intbig_gkey, internal                                             | func
++ public | g_intbig_union         | intbig_gkey      | internal, internal                                                             | func
++ public | ginint4_consistent     | boolean          | internal, smallint, integer[], integer, internal, internal, internal, internal | func
++ public | ginint4_queryextract   | internal         | integer[], internal, smallint, internal, internal, internal, internal          | func
++ public | icount                 | integer          | integer[]                                                                      | func
++ public | idx                    | integer          | integer[], integer                                                             | func
++ public | intarray_del_elem      | integer[]        | integer[], integer                                                             | func
++ public | intarray_push_array    | integer[]        | integer[], integer[]                                                           | func
++ public | intarray_push_elem     | integer[]        | integer[], integer                                                             | func
++ public | intset                 | integer[]        | integer                                                                        | func
++ public | intset_subtract        | integer[]        | integer[], integer[]                                                           | func
++ public | intset_union_elem      | integer[]        | integer[], integer                                                             | func
++ public | querytree              | text             | query_int                                                                      | func
++ public | rboolop                | boolean          | query_int, integer[]                                                           | func
++ public | sort                   | integer[]        | integer[]                                                                      | func
++ public | sort                   | integer[]        | integer[], text                                                                | func
++ public | sort_asc               | integer[]        | integer[]                                                                      | func
++ public | sort_desc              | integer[]        | integer[]                                                                      | func
++ public | subarray               | integer[]        | integer[], integer                                                             | func
++ public | subarray               | integer[]        | integer[], integer, integer                                                    | func
++ public | uniq                   | integer[]        | integer[]                                                                      | func
++(54 rows)
+ 
+ \do public.*
+-                             List of operators
+- Schema | Name | Left arg type | Right arg type | Result type | Description 
+---------+------+---------------+----------------+-------------+-------------
+-(0 rows)
++                                      List of operators
++ Schema | Name | Left arg type | Right arg type | Result type |         Description          
++--------+------+---------------+----------------+-------------+------------------------------
++ public | #    | integer[]     | integer        | integer     | 
++ public | #    |               | integer[]      | integer     | 
++ public | &    | integer[]     | integer[]      | integer[]   | 
++ public | &&   | integer[]     | integer[]      | boolean     | overlaps
++ public | +    | integer[]     | integer        | integer[]   | 
++ public | +    | integer[]     | integer[]      | integer[]   | 
++ public | -    | integer[]     | integer        | integer[]   | 
++ public | -    | integer[]     | integer[]      | integer[]   | 
++ public | <@   | integer[]     | integer[]      | boolean     | contained in
++ public | @>   | integer[]     | integer[]      | boolean     | contains
++ public | @@   | integer[]     | query_int      | boolean     | boolean operation with array
++ public | |    | integer[]     | integer        | integer[]   | 
++ public | |    | integer[]     | integer[]      | integer[]   | 
++ public | ~~   | query_int     | integer[]      | boolean     | boolean operation with array
++(14 rows)
+ 
+ \dT c.*
+                                               List of data types
+@@ -1060,22 +1204,92 @@
+ 
+ -- list what's installed
+ \dT public.*
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++         List of data types
++ Schema |    Name     | Description 
++--------+-------------+-------------
++ public | intbig_gkey | 
++ public | query_int   | 
++(2 rows)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                             List of functions
++ Schema |          Name          | Result data type |                              Argument data types                               | Type 
++--------+------------------------+------------------+--------------------------------------------------------------------------------+------
++ public | _int_contained         | boolean          | integer[], integer[]                                                           | func
++ public | _int_contained_joinsel | double precision | internal, oid, internal, smallint, internal                                    | func
++ public | _int_contained_sel     | double precision | internal, oid, internal, integer                                               | func
++ public | _int_contains          | boolean          | integer[], integer[]                                                           | func
++ public | _int_contains_joinsel  | double precision | internal, oid, internal, smallint, internal                                    | func
++ public | _int_contains_sel      | double precision | internal, oid, internal, integer                                               | func
++ public | _int_different         | boolean          | integer[], integer[]                                                           | func
++ public | _int_inter             | integer[]        | integer[], integer[]                                                           | func
++ public | _int_matchsel          | double precision | internal, oid, internal, integer                                               | func
++ public | _int_overlap           | boolean          | integer[], integer[]                                                           | func
++ public | _int_overlap_joinsel   | double precision | internal, oid, internal, smallint, internal                                    | func
++ public | _int_overlap_sel       | double precision | internal, oid, internal, integer                                               | func
++ public | _int_same              | boolean          | integer[], integer[]                                                           | func
++ public | _int_union             | integer[]        | integer[], integer[]                                                           | func
++ public | _intbig_in             | intbig_gkey      | cstring                                                                        | func
++ public | _intbig_out            | cstring          | intbig_gkey                                                                    | func
++ public | boolop                 | boolean          | integer[], query_int                                                           | func
++ public | bqarr_in               | query_int        | cstring                                                                        | func
++ public | bqarr_out              | cstring          | query_int                                                                      | func
++ public | g_int_compress         | internal         | internal                                                                       | func
++ public | g_int_consistent       | boolean          | internal, integer[], smallint, oid, internal                                   | func
++ public | g_int_decompress       | internal         | internal                                                                       | func
++ public | g_int_options          | void             | internal                                                                       | func
++ public | g_int_penalty          | internal         | internal, internal, internal                                                   | func
++ public | g_int_picksplit        | internal         | internal, internal                                                             | func
++ public | g_int_same             | internal         | integer[], integer[], internal                                                 | func
++ public | g_int_union            | integer[]        | internal, internal                                                             | func
++ public | g_intbig_compress      | internal         | internal                                                                       | func
++ public | g_intbig_consistent    | boolean          | internal, integer[], smallint, oid, internal                                   | func
++ public | g_intbig_decompress    | internal         | internal                                                                       | func
++ public | g_intbig_options       | void             | internal                                                                       | func
++ public | g_intbig_penalty       | internal         | internal, internal, internal                                                   | func
++ public | g_intbig_picksplit     | internal         | internal, internal                                                             | func
++ public | g_intbig_same          | internal         | intbig_gkey, intbig_gkey, internal                                             | func
++ public | g_intbig_union         | intbig_gkey      | internal, internal                                                             | func
++ public | ginint4_consistent     | boolean          | internal, smallint, integer[], integer, internal, internal, internal, internal | func
++ public | ginint4_queryextract   | internal         | integer[], internal, smallint, internal, internal, internal, internal          | func
++ public | icount                 | integer          | integer[]                                                                      | func
++ public | idx                    | integer          | integer[], integer                                                             | func
++ public | intarray_del_elem      | integer[]        | integer[], integer                                                             | func
++ public | intarray_push_array    | integer[]        | integer[], integer[]                                                           | func
++ public | intarray_push_elem     | integer[]        | integer[], integer                                                             | func
++ public | intset                 | integer[]        | integer                                                                        | func
++ public | intset_subtract        | integer[]        | integer[], integer[]                                                           | func
++ public | intset_union_elem      | integer[]        | integer[], integer                                                             | func
++ public | querytree              | text             | query_int                                                                      | func
++ public | rboolop                | boolean          | query_int, integer[]                                                           | func
++ public | sort                   | integer[]        | integer[]                                                                      | func
++ public | sort                   | integer[]        | integer[], text                                                                | func
++ public | sort_asc               | integer[]        | integer[]                                                                      | func
++ public | sort_desc              | integer[]        | integer[]                                                                      | func
++ public | subarray               | integer[]        | integer[], integer                                                             | func
++ public | subarray               | integer[]        | integer[], integer, integer                                                    | func
++ public | uniq                   | integer[]        | integer[]                                                                      | func
++(54 rows)
+ 
+ \do public.*
+-                             List of operators
+- Schema | Name | Left arg type | Right arg type | Result type | Description 
+---------+------+---------------+----------------+-------------+-------------
+-(0 rows)
++                                      List of operators
++ Schema | Name | Left arg type | Right arg type | Result type |         Description          
++--------+------+---------------+----------------+-------------+------------------------------
++ public | #    | integer[]     | integer        | integer     | 
++ public | #    |               | integer[]      | integer     | 
++ public | &    | integer[]     | integer[]      | integer[]   | 
++ public | &&   | integer[]     | integer[]      | boolean     | overlaps
++ public | +    | integer[]     | integer        | integer[]   | 
++ public | +    | integer[]     | integer[]      | integer[]   | 
++ public | -    | integer[]     | integer        | integer[]   | 
++ public | -    | integer[]     | integer[]      | integer[]   | 
++ public | <@   | integer[]     | integer[]      | boolean     | contained in
++ public | @>   | integer[]     | integer[]      | boolean     | contains
++ public | @@   | integer[]     | query_int      | boolean     | boolean operation with array
++ public | |    | integer[]     | integer        | integer[]   | 
++ public | |    | integer[]     | integer[]      | integer[]   | 
++ public | ~~   | query_int     | integer[]      | boolean     | boolean operation with array
++(14 rows)
+ 
+ \dT c.*
+      List of data types

@@ -1,0 +1,34 @@
+2023-07-25 05:35:24.215 UTC [1790802] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 05:35:24.215 UTC [1790802] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 05:35:24.221 UTC [1790802] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 05:35:24.228 UTC [1790805] LOG:  database system was shut down at 2023-07-25 05:35:24 UTC
+2023-07-25 05:35:24.233 UTC [1790802] LOG:  database system is ready to accept connections
+2023-07-25 05:35:24.407 UTC [1790824] ERROR:  file "test_file1" exists
+2023-07-25 05:35:24.407 UTC [1790824] STATEMENT:  SELECT pg_file_write('test_file1', 'test1', false);
+2023-07-25 05:35:24.411 UTC [1790824] ERROR:  path must be in or below the current directory
+2023-07-25 05:35:24.411 UTC [1790824] STATEMENT:  SELECT pg_file_write('../test_file0', 'test0', false);
+2023-07-25 05:35:24.411 UTC [1790824] ERROR:  absolute path not allowed
+2023-07-25 05:35:24.411 UTC [1790824] STATEMENT:  SELECT pg_file_write('/tmp/test_file0', 'test0', false);
+2023-07-25 05:35:24.412 UTC [1790824] ERROR:  absolute path not allowed
+2023-07-25 05:35:24.412 UTC [1790824] STATEMENT:  SELECT pg_file_write(current_setting('data_directory') || '/../test_file4', 'test4', false);
+2023-07-25 05:35:24.425 UTC [1790824] ERROR:  could not stat file "test_file2": No such file or directory
+2023-07-25 05:35:24.425 UTC [1790824] STATEMENT:  SELECT pg_file_sync('test_file2');
+2023-07-25 05:35:24.427 UTC [1790824] ERROR:  could not open file "test_file1" for reading: No such file or directory
+2023-07-25 05:35:24.427 UTC [1790824] STATEMENT:  SELECT pg_read_file('test_file1');
+2023-07-25 05:35:24.428 UTC [1790824] WARNING:  file "test_file1" is not accessible: No such file or directory
+2023-07-25 05:35:24.428 UTC [1790824] CONTEXT:  SQL function "pg_file_rename" statement 1
+2023-07-25 05:35:24.430 UTC [1790824] ERROR:  could not open file "test_file2" for reading: No such file or directory
+2023-07-25 05:35:24.430 UTC [1790824] STATEMENT:  SELECT pg_read_file('test_file2');
+2023-07-25 05:35:24.436 UTC [1790824] ERROR:  permission denied for function pg_file_write
+2023-07-25 05:35:24.436 UTC [1790824] STATEMENT:  SELECT pg_file_write('test_file0', 'test0', false);
+2023-07-25 05:35:24.437 UTC [1790824] ERROR:  permission denied for function pg_file_sync
+2023-07-25 05:35:24.437 UTC [1790824] STATEMENT:  SELECT pg_file_sync('test_file0');
+2023-07-25 05:35:24.438 UTC [1790824] ERROR:  permission denied for function pg_file_rename
+2023-07-25 05:35:24.438 UTC [1790824] CONTEXT:  SQL function "pg_file_rename" statement 1
+2023-07-25 05:35:24.438 UTC [1790824] STATEMENT:  SELECT pg_file_rename('test_file0', 'test_file0');
+2023-07-25 05:35:24.438 UTC [1790824] ERROR:  permission denied for function pg_file_unlink
+2023-07-25 05:35:24.438 UTC [1790824] STATEMENT:  SELECT pg_file_unlink('test_file0');
+2023-07-25 05:35:24.438 UTC [1790824] ERROR:  permission denied for function pg_logdir_ls
+2023-07-25 05:35:24.438 UTC [1790824] STATEMENT:  SELECT pg_logdir_ls();
+2023-07-25 05:35:24.473 UTC [1790803] LOG:  checkpoint starting: immediate force wait
+2023-07-25 05:35:24.507 UTC [1790803] LOG:  checkpoint complete: wrote 22 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.011 s, sync=0.009 s, total=0.034 s; sync files=18, longest=0.006 s, average=0.001 s; distance=4115 kB, estimate=4115 kB

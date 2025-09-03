@@ -1,0 +1,25 @@
+2023-07-26 21:43:15.273 UTC [1176820] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 21:43:15.273 UTC [1176820] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 21:43:15.288 UTC [1176820] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 21:43:15.304 UTC [1176823] LOG:  database system was shut down at 2023-07-26 21:43:14 UTC
+2023-07-26 21:43:15.315 UTC [1176820] LOG:  database system is ready to accept connections
+2023-07-26 21:43:15.567 UTC [1176842] ERROR:  cannot transform non-hash Perl value to hstore
+2023-07-26 21:43:15.567 UTC [1176842] CONTEXT:  PL/Perl function "test2"
+2023-07-26 21:43:15.567 UTC [1176842] STATEMENT:  SELECT test2();
+2023-07-26 21:43:15.571 UTC [1176842] ERROR:  cannot transform non-hash Perl value to hstore
+2023-07-26 21:43:15.571 UTC [1176842] CONTEXT:  PL/Perl function "test2"
+2023-07-26 21:43:15.571 UTC [1176842] STATEMENT:  SELECT test2();
+2023-07-26 21:43:15.845 UTC [1176850] ERROR:  type "foo" does not exist
+2023-07-26 21:43:15.845 UTC [1176850] STATEMENT:  CREATE TRANSFORM FOR foo LANGUAGE plperl (FROM SQL WITH FUNCTION hstore_to_plperl(internal), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-26 21:43:15.846 UTC [1176850] ERROR:  language "foo" does not exist
+2023-07-26 21:43:15.846 UTC [1176850] STATEMENT:  CREATE TRANSFORM FOR hstore LANGUAGE foo (FROM SQL WITH FUNCTION hstore_to_plperl(internal), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-26 21:43:15.846 UTC [1176850] ERROR:  return data type of FROM SQL function must be internal
+2023-07-26 21:43:15.846 UTC [1176850] STATEMENT:  CREATE TRANSFORM FOR hstore LANGUAGE plperl (FROM SQL WITH FUNCTION hstore_out(hstore), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-26 21:43:15.846 UTC [1176850] ERROR:  first argument of transform function must be type internal
+2023-07-26 21:43:15.846 UTC [1176850] STATEMENT:  CREATE TRANSFORM FOR hstore LANGUAGE plperl (FROM SQL WITH FUNCTION internal_in(cstring), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-26 21:43:15.848 UTC [1176850] ERROR:  transform for type hstore language "plperl" already exists
+2023-07-26 21:43:15.848 UTC [1176850] STATEMENT:  CREATE TRANSFORM FOR hstore LANGUAGE plperl (FROM SQL WITH FUNCTION hstore_to_plperl(internal), TO SQL WITH FUNCTION plperl_to_hstore(internal));
+2023-07-26 21:43:15.861 UTC [1176850] ERROR:  type "foo" does not exist
+2023-07-26 21:43:15.861 UTC [1176850] STATEMENT:  DROP TRANSFORM FOR foo LANGUAGE plperl;
+2023-07-26 21:43:15.861 UTC [1176850] ERROR:  language "foo" does not exist
+2023-07-26 21:43:15.861 UTC [1176850] STATEMENT:  DROP TRANSFORM FOR hstore LANGUAGE foo;

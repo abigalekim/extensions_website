@@ -1,0 +1,9 @@
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_kcache/expected/pgsk.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_kcache/results/pgsk.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_kcache/expected/pgsk.out	2023-07-25 04:22:22.183553500 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_kcache/results/pgsk.out	2023-07-25 20:07:10.228898101 +0000
+@@ -1,4 +1,5 @@
+ CREATE EXTENSION pg_stat_statements;
++ERROR:  extension "pg_stat_statements" already exists
+ CREATE EXTENSION pg_stat_kcache;
+ -- first make sure that catcache is loaded to avoid physical reads
+ SELECT count(*) >= 0 FROM pg_stat_kcache;

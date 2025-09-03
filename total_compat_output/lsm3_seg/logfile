@@ -1,0 +1,61 @@
+2023-07-25 06:10:30.513 UTC [695822] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 06:10:30.513 UTC [695822] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 06:10:30.519 UTC [695822] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 06:10:30.529 UTC [695825] LOG:  database system was shut down at 2023-07-25 06:10:30 UTC
+2023-07-25 06:10:30.537 UTC [695822] LOG:  database system is ready to accept connections
+2023-07-25 06:10:30.690 UTC [695841] LOG:  lsm3_build lsm3_index
+2023-07-25 06:10:30.690 UTC [695841] STATEMENT:  create index lsm3_index on t using lsm3(k);
+2023-07-25 06:10:31.811 UTC [695842] LOG:  Lsm3: merge top index lsm3_index_top0 with size 2 blocks
+2023-07-25 06:10:31.813 UTC [695842] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 06:10:32.766 UTC [695842] LOG:  Lsm3: merge top index lsm3_index_top1 with size 2 blocks
+2023-07-25 06:10:32.767 UTC [695842] LOG:  Lsm3: truncate index lsm3_index_top1
+2023-07-25 06:10:33.776 UTC [695842] LOG:  Lsm3: merge top index lsm3_index_top0 with size 2 blocks
+2023-07-25 06:10:33.777 UTC [695842] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 06:10:34.787 UTC [695842] LOG:  Lsm3: merge top index lsm3_index_top1 with size 2 blocks
+2023-07-25 06:10:34.787 UTC [695842] LOG:  Lsm3: truncate index lsm3_index_top1
+2023-07-25 06:10:35.797 UTC [695842] LOG:  Lsm3: merge top index lsm3_index_top0 with size 2 blocks
+2023-07-25 06:10:35.798 UTC [695842] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 06:10:36.932 UTC [695842] LOG:  Lsm3: merge top index lsm3_index_top1 with size 181 blocks
+2023-07-25 06:10:37.073 UTC [695842] LOG:  Lsm3: truncate index lsm3_index_top1
+2023-07-25 06:10:37.160 UTC [695842] LOG:  Lsm3: merge top index lsm3_index_top0 with size 250 blocks
+2023-07-25 06:10:37.300 UTC [695842] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 06:10:37.360 UTC [695842] LOG:  Lsm3: merge top index lsm3_index_top1 with size 181 blocks
+2023-07-25 06:10:37.439 UTC [695841] LOG:  lsm3_build lsm3_index
+2023-07-25 06:10:37.439 UTC [695841] STATEMENT:  truncate table t;
+2023-07-25 06:10:38.439 UTC [695842] ERROR:  deadlock detected
+2023-07-25 06:10:38.439 UTC [695842] DETAIL:  Process 695842 waits for AccessShareLock on relation 17104 of database 16384; blocked by process 695841.
+	Process 695841 waits for AccessExclusiveLock on relation 17109 of database 16384; blocked by process 695842.
+	Process 695842: truncate
+	Process 695841: truncate table t;
+2023-07-25 06:10:38.439 UTC [695842] HINT:  See server log for query details.
+2023-07-25 06:10:38.444 UTC [695822] LOG:  background worker "lsm3-merger-17107" (PID 695842) exited with exit code 1
+2023-07-25 06:10:40.509 UTC [695841] LOG:  lsm3_build lsm3_index
+2023-07-25 06:10:40.509 UTC [695841] STATEMENT:  reindex table t;
+2023-07-25 06:10:41.657 UTC [695841] LOG:  lsm3_build lsm_k_idx
+2023-07-25 06:10:41.657 UTC [695841] STATEMENT:  create index concurrently on lsm using lsm3(k);
+2023-07-25 06:10:42.331 UTC [695861] ERROR:  bad seg representation at character 8
+2023-07-25 06:10:42.331 UTC [695861] DETAIL:  syntax error at end of input
+2023-07-25 06:10:42.331 UTC [695861] STATEMENT:  SELECT ''::seg AS seg;
+2023-07-25 06:10:42.331 UTC [695861] ERROR:  bad seg representation at character 8
+2023-07-25 06:10:42.331 UTC [695861] DETAIL:  syntax error at or near "A"
+2023-07-25 06:10:42.331 UTC [695861] STATEMENT:  SELECT 'ABC'::seg AS seg;
+2023-07-25 06:10:42.331 UTC [695861] ERROR:  bad seg representation at character 8
+2023-07-25 06:10:42.331 UTC [695861] DETAIL:  syntax error at or near "A"
+2023-07-25 06:10:42.331 UTC [695861] STATEMENT:  SELECT '1ABC'::seg AS seg;
+2023-07-25 06:10:42.331 UTC [695861] ERROR:  bad seg representation at character 8
+2023-07-25 06:10:42.331 UTC [695861] DETAIL:  syntax error at or near "."
+2023-07-25 06:10:42.331 UTC [695861] STATEMENT:  SELECT '1.'::seg AS seg;
+2023-07-25 06:10:42.331 UTC [695861] ERROR:  bad seg representation at character 8
+2023-07-25 06:10:42.331 UTC [695861] DETAIL:  syntax error at or near ".."
+2023-07-25 06:10:42.331 UTC [695861] STATEMENT:  SELECT '1.....'::seg AS seg;
+2023-07-25 06:10:42.331 UTC [695861] ERROR:  bad seg representation at character 8
+2023-07-25 06:10:42.331 UTC [695861] DETAIL:  syntax error at or near "."
+2023-07-25 06:10:42.331 UTC [695861] STATEMENT:  SELECT '.1'::seg AS seg;
+2023-07-25 06:10:42.331 UTC [695861] ERROR:  bad seg representation at character 8
+2023-07-25 06:10:42.331 UTC [695861] DETAIL:  syntax error at or near "."
+2023-07-25 06:10:42.331 UTC [695861] STATEMENT:  SELECT '1..2.'::seg AS seg;
+2023-07-25 06:10:42.331 UTC [695861] ERROR:  bad seg representation at character 8
+2023-07-25 06:10:42.331 UTC [695861] DETAIL:  syntax error at or near "e"
+2023-07-25 06:10:42.331 UTC [695861] STATEMENT:  SELECT '1 e7'::seg AS seg;
+2023-07-25 06:10:42.331 UTC [695861] ERROR:  "1e700" is out of range for type real at character 8
+2023-07-25 06:10:42.331 UTC [695861] STATEMENT:  SELECT '1e700'::seg AS seg;

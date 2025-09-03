@@ -1,0 +1,68 @@
+2023-07-26 08:15:04.440 UTC [2049398] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 08:15:04.440 UTC [2049398] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 08:15:04.455 UTC [2049398] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 08:15:04.469 UTC [2049401] LOG:  database system was shut down at 2023-07-26 08:15:04 UTC
+2023-07-26 08:15:04.479 UTC [2049398] LOG:  database system is ready to accept connections
+2023-07-26 08:15:04.737 UTC [2049420] ERROR:  array must have even number of elements
+2023-07-26 08:15:04.737 UTC [2049420] STATEMENT:  select ARRAY['a','g','b','h','asd']::hstore;
+2023-07-26 08:15:04.738 UTC [2049420] ERROR:  array must have two columns
+2023-07-26 08:15:04.738 UTC [2049420] STATEMENT:  select ARRAY[['a','g','b'],['h','asd','i']]::hstore;
+2023-07-26 08:15:04.738 UTC [2049420] ERROR:  wrong number of array subscripts
+2023-07-26 08:15:04.738 UTC [2049420] STATEMENT:  select ARRAY[[['a','g'],['b','h'],['asd','i']]]::hstore;
+2023-07-26 08:15:04.738 UTC [2049420] ERROR:  array must have even number of elements
+2023-07-26 08:15:04.738 UTC [2049420] STATEMENT:  select hstore(ARRAY['a','g','b','h','asd']);
+2023-07-26 08:15:04.738 UTC [2049420] ERROR:  array must have two columns
+2023-07-26 08:15:04.738 UTC [2049420] STATEMENT:  select hstore(ARRAY[['a','g','b'],['h','asd','i']]);
+2023-07-26 08:15:04.738 UTC [2049420] ERROR:  wrong number of array subscripts
+2023-07-26 08:15:04.738 UTC [2049420] STATEMENT:  select hstore(ARRAY[[['a','g'],['b','h'],['asd','i']]]);
+2023-07-26 08:15:04.740 UTC [2049420] ERROR:  arrays must have same bounds
+2023-07-26 08:15:04.740 UTC [2049420] STATEMENT:  select hstore(ARRAY['a'], '{}'::text[]);
+2023-07-26 08:15:04.740 UTC [2049420] ERROR:  arrays must have same bounds
+2023-07-26 08:15:04.740 UTC [2049420] STATEMENT:  select hstore('{}'::text[], ARRAY['a']);
+2023-07-26 08:15:04.788 UTC [2049420] ERROR:  domain hstestdom1 does not allow null values
+2023-07-26 08:15:04.788 UTC [2049420] STATEMENT:  select populate_record(v, hstore('e', null)) from testhstore1 v;
+2023-07-26 08:15:04.790 UTC [2049420] ERROR:  domain hstestdom1 does not allow null values
+2023-07-26 08:15:04.790 UTC [2049420] STATEMENT:  select populate_record(v, hstore('b', 'foo') || hstore('e', null)) from testhstore1 v;
+2023-07-26 08:15:04.791 UTC [2049420] ERROR:  domain hstestdom1 does not allow null values
+2023-07-26 08:15:04.791 UTC [2049420] STATEMENT:  select populate_record(null::testhstore1, hstore('c', '3.45') || hstore('a', '123'));
+2023-07-26 08:15:04.792 UTC [2049420] ERROR:  domain hstestdom1 does not allow null values
+2023-07-26 08:15:04.792 UTC [2049420] STATEMENT:  select populate_record(null::testhstore1, '');
+2023-07-26 08:15:04.795 UTC [2049420] ERROR:  domain hstestdom1 does not allow null values
+2023-07-26 08:15:04.795 UTC [2049420] STATEMENT:  select v #= hstore('e', null) from testhstore1 v;
+2023-07-26 08:15:04.798 UTC [2049420] ERROR:  domain hstestdom1 does not allow null values
+2023-07-26 08:15:04.798 UTC [2049420] STATEMENT:  select null::testhstore1 #= (hstore('c', '3.45') || hstore('a', '123'));
+2023-07-26 08:15:04.799 UTC [2049420] ERROR:  domain hstestdom1 does not allow null values
+2023-07-26 08:15:04.799 UTC [2049420] STATEMENT:  select null::testhstore1 #= hstore '';
+2023-07-26 08:15:04.888 UTC [2049420] ERROR:  value 0 out of bounds for option "siglen"
+2023-07-26 08:15:04.888 UTC [2049420] DETAIL:  Valid values are between "1" and "2024".
+2023-07-26 08:15:04.888 UTC [2049420] STATEMENT:  create index hidx on testhstore using gist(h gist_hstore_ops(siglen=0));
+2023-07-26 08:15:04.888 UTC [2049420] ERROR:  value 2025 out of bounds for option "siglen"
+2023-07-26 08:15:04.888 UTC [2049420] DETAIL:  Valid values are between "1" and "2024".
+2023-07-26 08:15:04.888 UTC [2049420] STATEMENT:  create index hidx on testhstore using gist(h gist_hstore_ops(siglen=2025));
+2023-07-26 08:15:05.422 UTC [2049420] ERROR:  hstore allows only one subscript
+2023-07-26 08:15:05.422 UTC [2049420] STATEMENT:  select f2['d']['e'] from test_json_agg;
+2023-07-26 08:15:05.423 UTC [2049420] ERROR:  hstore allows only one subscript
+2023-07-26 08:15:05.423 UTC [2049420] STATEMENT:  select f2['d':'e'] from test_json_agg;
+2023-07-26 08:15:05.651 UTC [2049435] ERROR:  required extension "cube" is not installed
+2023-07-26 08:15:05.651 UTC [2049435] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-26 08:15:05.651 UTC [2049435] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-26 08:15:05.706 UTC [2049435] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-26 08:15:05.706 UTC [2049435] DETAIL:  extension earthdistance depends on extension cube
+2023-07-26 08:15:05.706 UTC [2049435] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 08:15:05.706 UTC [2049435] STATEMENT:  drop extension cube;
+2023-07-26 08:15:05.709 UTC [2049435] ERROR:  cannot drop type cube because extension cube requires it
+2023-07-26 08:15:05.709 UTC [2049435] HINT:  You can drop extension cube instead.
+2023-07-26 08:15:05.709 UTC [2049435] STATEMENT:  drop type cube;
+2023-07-26 08:15:05.715 UTC [2049435] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-26 08:15:05.715 UTC [2049435] DETAIL:  column f1 of table foo depends on type cube
+2023-07-26 08:15:05.715 UTC [2049435] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 08:15:05.715 UTC [2049435] STATEMENT:  drop extension cube;
+2023-07-26 08:15:05.810 UTC [2049435] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-26 08:15:05.810 UTC [2049435] DETAIL:  column f1 of table foo depends on type c.cube
+2023-07-26 08:15:05.810 UTC [2049435] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 08:15:05.810 UTC [2049435] STATEMENT:  drop extension cube;
+2023-07-26 08:15:05.812 UTC [2049435] ERROR:  cannot drop schema c because other objects depend on it
+2023-07-26 08:15:05.812 UTC [2049435] DETAIL:  extension cube depends on schema c
+	column f1 of table foo depends on type c.cube
+2023-07-26 08:15:05.812 UTC [2049435] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 08:15:05.812 UTC [2049435] STATEMENT:  drop schema c;

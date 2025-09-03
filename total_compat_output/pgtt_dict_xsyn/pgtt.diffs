@@ -1,0 +1,13 @@
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pgtt-2.10/test/expected/08_plplgsql.out /home/abigalek/pgext-cli-python/pgextworkdir/pgtt-2.10/results/08_plplgsql.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pgtt-2.10/test/expected/08_plplgsql.out	2023-02-23 18:41:16.000000000 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pgtt-2.10/results/08_plplgsql.out	2023-07-25 21:24:47.095697883 +0000
+@@ -102,7 +102,8 @@
+  regexp_replace |      relname      
+ ----------------+-------------------
+  pgtt_schema    | t_glob_temptable1
+-(1 row)
++ pg_temp_x      | t_glob_temptable1
++(2 rows)
+ 
+ -- Look at Global Temporary Table definition, the table must be present
+ SELECT nspname, relname, preserved, code FROM pgtt_schema.pg_global_temp_tables;

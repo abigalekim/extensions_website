@@ -1,0 +1,58 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/hstore_plperl/expected/hstore_plperl.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/hstore_plperl/results/hstore_plperl.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/hstore_plperl/expected/hstore_plperl.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/hstore_plperl/results/hstore_plperl.out	2023-07-26 21:21:22.489038621 +0000
+@@ -1,6 +1,5 @@
+ CREATE EXTENSION hstore_plperl CASCADE;
+ NOTICE:  installing required extension "hstore"
+-NOTICE:  installing required extension "plperl"
+ SELECT transforms.udt_schema, transforms.udt_name,
+        routine_schema, routine_name,
+        group_name, transform_type
+@@ -9,9 +8,11 @@
+ ORDER BY 1, 2, 5, 6;
+  udt_schema | udt_name | routine_schema |   routine_name   | group_name | transform_type 
+ ------------+----------+----------------+------------------+------------+----------------
++ pg_catalog | jsonb    | public         | jsonb_to_plperl  | plperl     | FROM SQL
++ pg_catalog | jsonb    | public         | plperl_to_jsonb  | plperl     | TO SQL
+  public     | hstore   | public         | hstore_to_plperl | plperl     | FROM SQL
+  public     | hstore   | public         | plperl_to_hstore | plperl     | TO SQL
+-(2 rows)
++(4 rows)
+ 
+ -- test perl -> hstore
+ CREATE FUNCTION test2() RETURNS hstore
+@@ -65,3 +66,6 @@
+ DROP EXTENSION hstore_plperl;
+ DROP EXTENSION hstore;
+ DROP EXTENSION plperl;
++ERROR:  cannot drop extension plperl because other objects depend on it
++DETAIL:  extension jsonb_plperl depends on extension plperl
++HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/hstore_plperl/expected/hstore_plperlu.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/hstore_plperl/results/hstore_plperlu.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/hstore_plperl/expected/hstore_plperlu.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/hstore_plperl/results/hstore_plperlu.out	2023-07-26 21:21:22.633038489 +0000
+@@ -9,9 +9,11 @@
+ ORDER BY 1, 2, 5, 6;
+  udt_schema | udt_name | routine_schema |   routine_name    | group_name | transform_type 
+ ------------+----------+----------------+-------------------+------------+----------------
++ pg_catalog | jsonb    | public         | jsonb_to_plperl   | plperl     | FROM SQL
++ pg_catalog | jsonb    | public         | plperl_to_jsonb   | plperl     | TO SQL
+  public     | hstore   | public         | hstore_to_plperlu | plperlu    | FROM SQL
+  public     | hstore   | public         | plperlu_to_hstore | plperlu    | TO SQL
+-(2 rows)
++(4 rows)
+ 
+ -- test hstore -> perl
+ CREATE FUNCTION test1(val hstore) RETURNS int
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/hstore_plperl/expected/create_transform.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/hstore_plperl/results/create_transform.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/hstore_plperl/expected/create_transform.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/hstore_plperl/results/create_transform.out	2023-07-26 21:21:22.793038342 +0000
+@@ -2,7 +2,7 @@
+ DROP EXTENSION IF EXISTS hstore CASCADE;
+ NOTICE:  extension "hstore" does not exist, skipping
+ DROP EXTENSION IF EXISTS plperl CASCADE;
+-NOTICE:  extension "plperl" does not exist, skipping
++NOTICE:  drop cascades to extension jsonb_plperl
+ DROP EXTENSION IF EXISTS hstore_plperl CASCADE;
+ NOTICE:  extension "hstore_plperl" does not exist, skipping
+ CREATE EXTENSION hstore;

@@ -1,0 +1,93 @@
+diff -U3 /home/abigalek/pgext-cli/postgresql-15.3/contrib/btree_gist/expected/float4.out /home/abigalek/pgext-cli/postgresql-15.3/contrib/btree_gist/results/float4.out
+--- /home/abigalek/pgext-cli/postgresql-15.3/contrib/btree_gist/expected/float4.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli/postgresql-15.3/contrib/btree_gist/results/float4.out	2023-10-28 02:52:39.935080518 +0000
+@@ -33,11 +33,11 @@
+ (1 row)
+ 
+ SELECT a, a <-> '-179.0' FROM float4tmp ORDER BY a <-> '-179.0' LIMIT 3;
+-     a      | ?column?  
+-------------+-----------
+-       -179 |         0
+- -189.02386 | 10.023865
+- -158.17741 | 20.822586
++    a     | ?column? 
++----------+----------
++     -179 |        0
++ -189.024 |  10.0239
++ -158.177 |  20.8226
+ (3 rows)
+ 
+ CREATE INDEX float4idx ON float4tmp USING gist ( a );
+@@ -82,10 +82,10 @@
+ (3 rows)
+ 
+ SELECT a, a <-> '-179.0' FROM float4tmp ORDER BY a <-> '-179.0' LIMIT 3;
+-     a      | ?column?  
+-------------+-----------
+-       -179 |         0
+- -189.02386 | 10.023865
+- -158.17741 | 20.822586
++    a     | ?column? 
++----------+----------
++     -179 |        0
++ -189.024 |  10.0239
++ -158.177 |  20.8226
+ (3 rows)
+ 
+diff -U3 /home/abigalek/pgext-cli/postgresql-15.3/contrib/btree_gist/expected/float8.out /home/abigalek/pgext-cli/postgresql-15.3/contrib/btree_gist/results/float8.out
+--- /home/abigalek/pgext-cli/postgresql-15.3/contrib/btree_gist/expected/float8.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli/postgresql-15.3/contrib/btree_gist/results/float8.out	2023-10-28 02:52:39.959080428 +0000
+@@ -33,11 +33,11 @@
+ (1 row)
+ 
+ SELECT a, a <-> '-1890.0' FROM float8tmp ORDER BY a <-> '-1890.0' LIMIT 3;
+-      a       |      ?column?      
+---------------+--------------------
+-        -1890 |                  0
+- -2003.634512 | 113.63451200000009
+-  -1769.73634 | 120.26366000000007
++      a       |  ?column?  
++--------------+------------
++        -1890 |          0
++ -2003.634512 | 113.634512
++  -1769.73634 |  120.26366
+ (3 rows)
+ 
+ CREATE INDEX float8idx ON float8tmp USING gist ( a );
+@@ -82,10 +82,10 @@
+ (3 rows)
+ 
+ SELECT a, a <-> '-1890.0' FROM float8tmp ORDER BY a <-> '-1890.0' LIMIT 3;
+-      a       |      ?column?      
+---------------+--------------------
+-        -1890 |                  0
+- -2003.634512 | 113.63451200000009
+-  -1769.73634 | 120.26366000000007
++      a       |  ?column?  
++--------------+------------
++        -1890 |          0
++ -2003.634512 | 113.634512
++  -1769.73634 |  120.26366
+ (3 rows)
+ 
+diff -U3 /home/abigalek/pgext-cli/postgresql-15.3/contrib/btree_gist/expected/enum.out /home/abigalek/pgext-cli/postgresql-15.3/contrib/btree_gist/results/enum.out
+--- /home/abigalek/pgext-cli/postgresql-15.3/contrib/btree_gist/expected/enum.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli/postgresql-15.3/contrib/btree_gist/results/enum.out	2023-10-28 02:52:40.703077658 +0000
+@@ -80,12 +80,10 @@
+ 
+ EXPLAIN (COSTS OFF)
+ SELECT count(*) FROM enumtmp WHERE a >= 'g'::rainbow;
+-                  QUERY PLAN                   
+------------------------------------------------
++                   QUERY PLAN                   
++------------------------------------------------
+  Aggregate
+-   ->  Bitmap Heap Scan on enumtmp
+-         Recheck Cond: (a >= 'g'::rainbow)
+-         ->  Bitmap Index Scan on enumidx
+-               Index Cond: (a >= 'g'::rainbow)
+-(5 rows)
++   ->  Index Only Scan using enumidx on enumtmp
++         Index Cond: (a >= 'g'::rainbow)
++(3 rows)
+ 

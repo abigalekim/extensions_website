@@ -1,0 +1,173 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out	2023-07-24 22:53:56.933746600 +0000
+@@ -1001,10 +1001,51 @@
+ (0 rows)
+ 
+ \df
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                                     List of functions
++ Schema |         Name          |                Result data type                 |                       Argument data types                       | Type 
++--------+-----------------------+-------------------------------------------------+-----------------------------------------------------------------+------
++ public | algorithm_sign        | text                                            | signables text, secret text, algorithm text                     | func
++ public | armor                 | text                                            | bytea                                                           | func
++ public | armor                 | text                                            | bytea, text[], text[]                                           | func
++ public | crypt                 | text                                            | text, text                                                      | func
++ public | dearmor               | bytea                                           | text                                                            | func
++ public | decrypt               | bytea                                           | bytea, bytea, text                                              | func
++ public | decrypt_iv            | bytea                                           | bytea, bytea, bytea, text                                       | func
++ public | digest                | bytea                                           | bytea, text                                                     | func
++ public | digest                | bytea                                           | text, text                                                      | func
++ public | encrypt               | bytea                                           | bytea, bytea, text                                              | func
++ public | encrypt_iv            | bytea                                           | bytea, bytea, bytea, text                                       | func
++ public | gen_random_bytes      | bytea                                           | integer                                                         | func
++ public | gen_salt              | text                                            | text                                                            | func
++ public | gen_salt              | text                                            | text, integer                                                   | func
++ public | hmac                  | bytea                                           | bytea, bytea, text                                              | func
++ public | hmac                  | bytea                                           | text, text, text                                                | func
++ public | pgp_armor_headers     | SETOF record                                    | text, OUT key text, OUT value text                              | func
++ public | pgp_key_id            | text                                            | bytea                                                           | func
++ public | pgp_pub_decrypt       | text                                            | bytea, bytea                                                    | func
++ public | pgp_pub_decrypt       | text                                            | bytea, bytea, text                                              | func
++ public | pgp_pub_decrypt       | text                                            | bytea, bytea, text, text                                        | func
++ public | pgp_pub_decrypt_bytea | bytea                                           | bytea, bytea                                                    | func
++ public | pgp_pub_decrypt_bytea | bytea                                           | bytea, bytea, text                                              | func
++ public | pgp_pub_decrypt_bytea | bytea                                           | bytea, bytea, text, text                                        | func
++ public | pgp_pub_encrypt       | bytea                                           | text, bytea                                                     | func
++ public | pgp_pub_encrypt       | bytea                                           | text, bytea, text                                               | func
++ public | pgp_pub_encrypt_bytea | bytea                                           | bytea, bytea                                                    | func
++ public | pgp_pub_encrypt_bytea | bytea                                           | bytea, bytea, text                                              | func
++ public | pgp_sym_decrypt       | text                                            | bytea, text                                                     | func
++ public | pgp_sym_decrypt       | text                                            | bytea, text, text                                               | func
++ public | pgp_sym_decrypt_bytea | bytea                                           | bytea, text                                                     | func
++ public | pgp_sym_decrypt_bytea | bytea                                           | bytea, text, text                                               | func
++ public | pgp_sym_encrypt       | bytea                                           | text, text                                                      | func
++ public | pgp_sym_encrypt       | bytea                                           | text, text, text                                                | func
++ public | pgp_sym_encrypt_bytea | bytea                                           | bytea, text                                                     | func
++ public | pgp_sym_encrypt_bytea | bytea                                           | bytea, text, text                                               | func
++ public | sign                  | text                                            | payload json, secret text, algorithm text DEFAULT 'HS256'::text | func
++ public | try_cast_double       | double precision                                | inp text                                                        | func
++ public | url_decode            | bytea                                           | data text                                                       | func
++ public | url_encode            | text                                            | data bytea                                                      | func
++ public | verify                | TABLE(header json, payload json, valid boolean) | token text, secret text, algorithm text DEFAULT 'HS256'::text   | func
++(41 rows)
+ 
+ \do
+                              List of operators
+@@ -1022,10 +1063,52 @@
+ (0 rows)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                                     List of functions
++ Schema |         Name          |                Result data type                 |                       Argument data types                       | Type 
++--------+-----------------------+-------------------------------------------------+-----------------------------------------------------------------+------
++ public | algorithm_sign        | text                                            | signables text, secret text, algorithm text                     | func
++ public | armor                 | text                                            | bytea                                                           | func
++ public | armor                 | text                                            | bytea, text[], text[]                                           | func
++ public | crypt                 | text                                            | text, text                                                      | func
++ public | dearmor               | bytea                                           | text                                                            | func
++ public | decrypt               | bytea                                           | bytea, bytea, text                                              | func
++ public | decrypt_iv            | bytea                                           | bytea, bytea, bytea, text                                       | func
++ public | digest                | bytea                                           | bytea, text                                                     | func
++ public | digest                | bytea                                           | text, text                                                      | func
++ public | encrypt               | bytea                                           | bytea, bytea, text                                              | func
++ public | encrypt_iv            | bytea                                           | bytea, bytea, bytea, text                                       | func
++ public | gen_random_bytes      | bytea                                           | integer                                                         | func
++ public | gen_random_uuid       | uuid                                            |                                                                 | func
++ public | gen_salt              | text                                            | text                                                            | func
++ public | gen_salt              | text                                            | text, integer                                                   | func
++ public | hmac                  | bytea                                           | bytea, bytea, text                                              | func
++ public | hmac                  | bytea                                           | text, text, text                                                | func
++ public | pgp_armor_headers     | SETOF record                                    | text, OUT key text, OUT value text                              | func
++ public | pgp_key_id            | text                                            | bytea                                                           | func
++ public | pgp_pub_decrypt       | text                                            | bytea, bytea                                                    | func
++ public | pgp_pub_decrypt       | text                                            | bytea, bytea, text                                              | func
++ public | pgp_pub_decrypt       | text                                            | bytea, bytea, text, text                                        | func
++ public | pgp_pub_decrypt_bytea | bytea                                           | bytea, bytea                                                    | func
++ public | pgp_pub_decrypt_bytea | bytea                                           | bytea, bytea, text                                              | func
++ public | pgp_pub_decrypt_bytea | bytea                                           | bytea, bytea, text, text                                        | func
++ public | pgp_pub_encrypt       | bytea                                           | text, bytea                                                     | func
++ public | pgp_pub_encrypt       | bytea                                           | text, bytea, text                                               | func
++ public | pgp_pub_encrypt_bytea | bytea                                           | bytea, bytea                                                    | func
++ public | pgp_pub_encrypt_bytea | bytea                                           | bytea, bytea, text                                              | func
++ public | pgp_sym_decrypt       | text                                            | bytea, text                                                     | func
++ public | pgp_sym_decrypt       | text                                            | bytea, text, text                                               | func
++ public | pgp_sym_decrypt_bytea | bytea                                           | bytea, text                                                     | func
++ public | pgp_sym_decrypt_bytea | bytea                                           | bytea, text, text                                               | func
++ public | pgp_sym_encrypt       | bytea                                           | text, text                                                      | func
++ public | pgp_sym_encrypt       | bytea                                           | text, text, text                                                | func
++ public | pgp_sym_encrypt_bytea | bytea                                           | bytea, text                                                     | func
++ public | pgp_sym_encrypt_bytea | bytea                                           | bytea, text, text                                               | func
++ public | sign                  | text                                            | payload json, secret text, algorithm text DEFAULT 'HS256'::text | func
++ public | try_cast_double       | double precision                                | inp text                                                        | func
++ public | url_decode            | bytea                                           | data text                                                       | func
++ public | url_encode            | text                                            | data bytea                                                      | func
++ public | verify                | TABLE(header json, payload json, valid boolean) | token text, secret text, algorithm text DEFAULT 'HS256'::text   | func
++(42 rows)
+ 
+ \do public.*
+                              List of operators
+@@ -1066,10 +1149,52 @@
+ (0 rows)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                                                     List of functions
++ Schema |         Name          |                Result data type                 |                       Argument data types                       | Type 
++--------+-----------------------+-------------------------------------------------+-----------------------------------------------------------------+------
++ public | algorithm_sign        | text                                            | signables text, secret text, algorithm text                     | func
++ public | armor                 | text                                            | bytea                                                           | func
++ public | armor                 | text                                            | bytea, text[], text[]                                           | func
++ public | crypt                 | text                                            | text, text                                                      | func
++ public | dearmor               | bytea                                           | text                                                            | func
++ public | decrypt               | bytea                                           | bytea, bytea, text                                              | func
++ public | decrypt_iv            | bytea                                           | bytea, bytea, bytea, text                                       | func
++ public | digest                | bytea                                           | bytea, text                                                     | func
++ public | digest                | bytea                                           | text, text                                                      | func
++ public | encrypt               | bytea                                           | bytea, bytea, text                                              | func
++ public | encrypt_iv            | bytea                                           | bytea, bytea, bytea, text                                       | func
++ public | gen_random_bytes      | bytea                                           | integer                                                         | func
++ public | gen_random_uuid       | uuid                                            |                                                                 | func
++ public | gen_salt              | text                                            | text                                                            | func
++ public | gen_salt              | text                                            | text, integer                                                   | func
++ public | hmac                  | bytea                                           | bytea, bytea, text                                              | func
++ public | hmac                  | bytea                                           | text, text, text                                                | func
++ public | pgp_armor_headers     | SETOF record                                    | text, OUT key text, OUT value text                              | func
++ public | pgp_key_id            | text                                            | bytea                                                           | func
++ public | pgp_pub_decrypt       | text                                            | bytea, bytea                                                    | func
++ public | pgp_pub_decrypt       | text                                            | bytea, bytea, text                                              | func
++ public | pgp_pub_decrypt       | text                                            | bytea, bytea, text, text                                        | func
++ public | pgp_pub_decrypt_bytea | bytea                                           | bytea, bytea                                                    | func
++ public | pgp_pub_decrypt_bytea | bytea                                           | bytea, bytea, text                                              | func
++ public | pgp_pub_decrypt_bytea | bytea                                           | bytea, bytea, text, text                                        | func
++ public | pgp_pub_encrypt       | bytea                                           | text, bytea                                                     | func
++ public | pgp_pub_encrypt       | bytea                                           | text, bytea, text                                               | func
++ public | pgp_pub_encrypt_bytea | bytea                                           | bytea, bytea                                                    | func
++ public | pgp_pub_encrypt_bytea | bytea                                           | bytea, bytea, text                                              | func
++ public | pgp_sym_decrypt       | text                                            | bytea, text                                                     | func
++ public | pgp_sym_decrypt       | text                                            | bytea, text, text                                               | func
++ public | pgp_sym_decrypt_bytea | bytea                                           | bytea, text                                                     | func
++ public | pgp_sym_decrypt_bytea | bytea                                           | bytea, text, text                                               | func
++ public | pgp_sym_encrypt       | bytea                                           | text, text                                                      | func
++ public | pgp_sym_encrypt       | bytea                                           | text, text, text                                                | func
++ public | pgp_sym_encrypt_bytea | bytea                                           | bytea, text                                                     | func
++ public | pgp_sym_encrypt_bytea | bytea                                           | bytea, text, text                                               | func
++ public | sign                  | text                                            | payload json, secret text, algorithm text DEFAULT 'HS256'::text | func
++ public | try_cast_double       | double precision                                | inp text                                                        | func
++ public | url_decode            | bytea                                           | data text                                                       | func
++ public | url_encode            | text                                            | data bytea                                                      | func
++ public | verify                | TABLE(header json, payload json, valid boolean) | token text, secret text, algorithm text DEFAULT 'HS256'::text   | func
++(42 rows)
+ 
+ \do public.*
+                              List of operators

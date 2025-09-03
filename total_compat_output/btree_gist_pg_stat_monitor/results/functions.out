@@ -1,0 +1,424 @@
+DROP ROLE IF EXISTS su;
+NOTICE:  role "su" does not exist, skipping
+CREATE USER su WITH SUPERUSER;
+SET ROLE su;
+CREATE EXTENSION pg_stat_monitor;
+CREATE USER u1;
+SELECT pg_stat_monitor_reset();
+ pg_stat_monitor_reset 
+-----------------------
+ 
+(1 row)
+
+SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+ routine_schema |       routine_name       | routine_type |    data_type     
+----------------+--------------------------+--------------+------------------
+ public         | cash_dist                | FUNCTION     | money
+ public         | date_dist                | FUNCTION     | integer
+ public         | decode_error_level       | FUNCTION     | text
+ public         | float4_dist              | FUNCTION     | real
+ public         | float8_dist              | FUNCTION     | double precision
+ public         | gbt_bit_compress         | FUNCTION     | internal
+ public         | gbt_bit_consistent       | FUNCTION     | boolean
+ public         | gbt_bit_penalty          | FUNCTION     | internal
+ public         | gbt_bit_picksplit        | FUNCTION     | internal
+ public         | gbt_bit_same             | FUNCTION     | internal
+ public         | gbt_bit_union            | FUNCTION     | USER-DEFINED
+ public         | gbt_bool_compress        | FUNCTION     | internal
+ public         | gbt_bool_consistent      | FUNCTION     | boolean
+ public         | gbt_bool_fetch           | FUNCTION     | internal
+ public         | gbt_bool_penalty         | FUNCTION     | internal
+ public         | gbt_bool_picksplit       | FUNCTION     | internal
+ public         | gbt_bool_same            | FUNCTION     | internal
+ public         | gbt_bool_union           | FUNCTION     | USER-DEFINED
+ public         | gbt_bpchar_compress      | FUNCTION     | internal
+ public         | gbt_bpchar_consistent    | FUNCTION     | boolean
+ public         | gbt_bytea_compress       | FUNCTION     | internal
+ public         | gbt_bytea_consistent     | FUNCTION     | boolean
+ public         | gbt_bytea_penalty        | FUNCTION     | internal
+ public         | gbt_bytea_picksplit      | FUNCTION     | internal
+ public         | gbt_bytea_same           | FUNCTION     | internal
+ public         | gbt_bytea_union          | FUNCTION     | USER-DEFINED
+ public         | gbt_cash_compress        | FUNCTION     | internal
+ public         | gbt_cash_consistent      | FUNCTION     | boolean
+ public         | gbt_cash_distance        | FUNCTION     | double precision
+ public         | gbt_cash_fetch           | FUNCTION     | internal
+ public         | gbt_cash_penalty         | FUNCTION     | internal
+ public         | gbt_cash_picksplit       | FUNCTION     | internal
+ public         | gbt_cash_same            | FUNCTION     | internal
+ public         | gbt_cash_union           | FUNCTION     | USER-DEFINED
+ public         | gbt_date_compress        | FUNCTION     | internal
+ public         | gbt_date_consistent      | FUNCTION     | boolean
+ public         | gbt_date_distance        | FUNCTION     | double precision
+ public         | gbt_date_fetch           | FUNCTION     | internal
+ public         | gbt_date_penalty         | FUNCTION     | internal
+ public         | gbt_date_picksplit       | FUNCTION     | internal
+ public         | gbt_date_same            | FUNCTION     | internal
+ public         | gbt_date_union           | FUNCTION     | USER-DEFINED
+ public         | gbt_decompress           | FUNCTION     | internal
+ public         | gbt_enum_compress        | FUNCTION     | internal
+ public         | gbt_enum_consistent      | FUNCTION     | boolean
+ public         | gbt_enum_fetch           | FUNCTION     | internal
+ public         | gbt_enum_penalty         | FUNCTION     | internal
+ public         | gbt_enum_picksplit       | FUNCTION     | internal
+ public         | gbt_enum_same            | FUNCTION     | internal
+ public         | gbt_enum_union           | FUNCTION     | USER-DEFINED
+ public         | gbt_float4_compress      | FUNCTION     | internal
+ public         | gbt_float4_consistent    | FUNCTION     | boolean
+ public         | gbt_float4_distance      | FUNCTION     | double precision
+ public         | gbt_float4_fetch         | FUNCTION     | internal
+ public         | gbt_float4_penalty       | FUNCTION     | internal
+ public         | gbt_float4_picksplit     | FUNCTION     | internal
+ public         | gbt_float4_same          | FUNCTION     | internal
+ public         | gbt_float4_union         | FUNCTION     | USER-DEFINED
+ public         | gbt_float8_compress      | FUNCTION     | internal
+ public         | gbt_float8_consistent    | FUNCTION     | boolean
+ public         | gbt_float8_distance      | FUNCTION     | double precision
+ public         | gbt_float8_fetch         | FUNCTION     | internal
+ public         | gbt_float8_penalty       | FUNCTION     | internal
+ public         | gbt_float8_picksplit     | FUNCTION     | internal
+ public         | gbt_float8_same          | FUNCTION     | internal
+ public         | gbt_float8_union         | FUNCTION     | USER-DEFINED
+ public         | gbt_inet_compress        | FUNCTION     | internal
+ public         | gbt_inet_consistent      | FUNCTION     | boolean
+ public         | gbt_inet_penalty         | FUNCTION     | internal
+ public         | gbt_inet_picksplit       | FUNCTION     | internal
+ public         | gbt_inet_same            | FUNCTION     | internal
+ public         | gbt_inet_union           | FUNCTION     | USER-DEFINED
+ public         | gbt_int2_compress        | FUNCTION     | internal
+ public         | gbt_int2_consistent      | FUNCTION     | boolean
+ public         | gbt_int2_distance        | FUNCTION     | double precision
+ public         | gbt_int2_fetch           | FUNCTION     | internal
+ public         | gbt_int2_penalty         | FUNCTION     | internal
+ public         | gbt_int2_picksplit       | FUNCTION     | internal
+ public         | gbt_int2_same            | FUNCTION     | internal
+ public         | gbt_int2_union           | FUNCTION     | USER-DEFINED
+ public         | gbt_int4_compress        | FUNCTION     | internal
+ public         | gbt_int4_consistent      | FUNCTION     | boolean
+ public         | gbt_int4_distance        | FUNCTION     | double precision
+ public         | gbt_int4_fetch           | FUNCTION     | internal
+ public         | gbt_int4_penalty         | FUNCTION     | internal
+ public         | gbt_int4_picksplit       | FUNCTION     | internal
+ public         | gbt_int4_same            | FUNCTION     | internal
+ public         | gbt_int4_union           | FUNCTION     | USER-DEFINED
+ public         | gbt_int8_compress        | FUNCTION     | internal
+ public         | gbt_int8_consistent      | FUNCTION     | boolean
+ public         | gbt_int8_distance        | FUNCTION     | double precision
+ public         | gbt_int8_fetch           | FUNCTION     | internal
+ public         | gbt_int8_penalty         | FUNCTION     | internal
+ public         | gbt_int8_picksplit       | FUNCTION     | internal
+ public         | gbt_int8_same            | FUNCTION     | internal
+ public         | gbt_int8_union           | FUNCTION     | USER-DEFINED
+ public         | gbt_intv_compress        | FUNCTION     | internal
+ public         | gbt_intv_consistent      | FUNCTION     | boolean
+ public         | gbt_intv_decompress      | FUNCTION     | internal
+ public         | gbt_intv_distance        | FUNCTION     | double precision
+ public         | gbt_intv_fetch           | FUNCTION     | internal
+ public         | gbt_intv_penalty         | FUNCTION     | internal
+ public         | gbt_intv_picksplit       | FUNCTION     | internal
+ public         | gbt_intv_same            | FUNCTION     | internal
+ public         | gbt_intv_union           | FUNCTION     | USER-DEFINED
+ public         | gbt_macad8_compress      | FUNCTION     | internal
+ public         | gbt_macad8_consistent    | FUNCTION     | boolean
+ public         | gbt_macad8_fetch         | FUNCTION     | internal
+ public         | gbt_macad8_penalty       | FUNCTION     | internal
+ public         | gbt_macad8_picksplit     | FUNCTION     | internal
+ public         | gbt_macad8_same          | FUNCTION     | internal
+ public         | gbt_macad8_union         | FUNCTION     | USER-DEFINED
+ public         | gbt_macad_compress       | FUNCTION     | internal
+ public         | gbt_macad_consistent     | FUNCTION     | boolean
+ public         | gbt_macad_fetch          | FUNCTION     | internal
+ public         | gbt_macad_penalty        | FUNCTION     | internal
+ public         | gbt_macad_picksplit      | FUNCTION     | internal
+ public         | gbt_macad_same           | FUNCTION     | internal
+ public         | gbt_macad_union          | FUNCTION     | USER-DEFINED
+ public         | gbt_numeric_compress     | FUNCTION     | internal
+ public         | gbt_numeric_consistent   | FUNCTION     | boolean
+ public         | gbt_numeric_penalty      | FUNCTION     | internal
+ public         | gbt_numeric_picksplit    | FUNCTION     | internal
+ public         | gbt_numeric_same         | FUNCTION     | internal
+ public         | gbt_numeric_union        | FUNCTION     | USER-DEFINED
+ public         | gbt_oid_compress         | FUNCTION     | internal
+ public         | gbt_oid_consistent       | FUNCTION     | boolean
+ public         | gbt_oid_distance         | FUNCTION     | double precision
+ public         | gbt_oid_fetch            | FUNCTION     | internal
+ public         | gbt_oid_penalty          | FUNCTION     | internal
+ public         | gbt_oid_picksplit        | FUNCTION     | internal
+ public         | gbt_oid_same             | FUNCTION     | internal
+ public         | gbt_oid_union            | FUNCTION     | USER-DEFINED
+ public         | gbt_text_compress        | FUNCTION     | internal
+ public         | gbt_text_consistent      | FUNCTION     | boolean
+ public         | gbt_text_penalty         | FUNCTION     | internal
+ public         | gbt_text_picksplit       | FUNCTION     | internal
+ public         | gbt_text_same            | FUNCTION     | internal
+ public         | gbt_text_union           | FUNCTION     | USER-DEFINED
+ public         | gbt_time_compress        | FUNCTION     | internal
+ public         | gbt_time_consistent      | FUNCTION     | boolean
+ public         | gbt_time_distance        | FUNCTION     | double precision
+ public         | gbt_time_fetch           | FUNCTION     | internal
+ public         | gbt_time_penalty         | FUNCTION     | internal
+ public         | gbt_time_picksplit       | FUNCTION     | internal
+ public         | gbt_time_same            | FUNCTION     | internal
+ public         | gbt_time_union           | FUNCTION     | USER-DEFINED
+ public         | gbt_timetz_compress      | FUNCTION     | internal
+ public         | gbt_timetz_consistent    | FUNCTION     | boolean
+ public         | gbt_ts_compress          | FUNCTION     | internal
+ public         | gbt_ts_consistent        | FUNCTION     | boolean
+ public         | gbt_ts_distance          | FUNCTION     | double precision
+ public         | gbt_ts_fetch             | FUNCTION     | internal
+ public         | gbt_ts_penalty           | FUNCTION     | internal
+ public         | gbt_ts_picksplit         | FUNCTION     | internal
+ public         | gbt_ts_same              | FUNCTION     | internal
+ public         | gbt_ts_union             | FUNCTION     | USER-DEFINED
+ public         | gbt_tstz_compress        | FUNCTION     | internal
+ public         | gbt_tstz_consistent      | FUNCTION     | boolean
+ public         | gbt_tstz_distance        | FUNCTION     | double precision
+ public         | gbt_uuid_compress        | FUNCTION     | internal
+ public         | gbt_uuid_consistent      | FUNCTION     | boolean
+ public         | gbt_uuid_fetch           | FUNCTION     | internal
+ public         | gbt_uuid_penalty         | FUNCTION     | internal
+ public         | gbt_uuid_picksplit       | FUNCTION     | internal
+ public         | gbt_uuid_same            | FUNCTION     | internal
+ public         | gbt_uuid_union           | FUNCTION     | USER-DEFINED
+ public         | gbt_var_decompress       | FUNCTION     | internal
+ public         | gbt_var_fetch            | FUNCTION     | internal
+ public         | gbtreekey16_in           | FUNCTION     | USER-DEFINED
+ public         | gbtreekey16_out          | FUNCTION     | cstring
+ public         | gbtreekey2_in            | FUNCTION     | USER-DEFINED
+ public         | gbtreekey2_out           | FUNCTION     | cstring
+ public         | gbtreekey32_in           | FUNCTION     | USER-DEFINED
+ public         | gbtreekey32_out          | FUNCTION     | cstring
+ public         | gbtreekey4_in            | FUNCTION     | USER-DEFINED
+ public         | gbtreekey4_out           | FUNCTION     | cstring
+ public         | gbtreekey8_in            | FUNCTION     | USER-DEFINED
+ public         | gbtreekey8_out           | FUNCTION     | cstring
+ public         | gbtreekey_var_in         | FUNCTION     | USER-DEFINED
+ public         | gbtreekey_var_out        | FUNCTION     | cstring
+ public         | get_cmd_type             | FUNCTION     | text
+ public         | get_histogram_timings    | FUNCTION     | text
+ public         | histogram                | FUNCTION     | record
+ public         | int2_dist                | FUNCTION     | smallint
+ public         | int4_dist                | FUNCTION     | integer
+ public         | int8_dist                | FUNCTION     | bigint
+ public         | interval_dist            | FUNCTION     | interval
+ public         | oid_dist                 | FUNCTION     | oid
+ public         | pg_stat_monitor_internal | FUNCTION     | record
+ public         | pg_stat_monitor_reset    | FUNCTION     | void
+ public         | pg_stat_monitor_version  | FUNCTION     | text
+ public         | pgsm_create_11_view      | FUNCTION     | integer
+ public         | pgsm_create_13_view      | FUNCTION     | integer
+ public         | pgsm_create_14_view      | FUNCTION     | integer
+ public         | pgsm_create_15_view      | FUNCTION     | integer
+ public         | pgsm_create_view         | FUNCTION     | integer
+ public         | range                    | FUNCTION     | ARRAY
+ public         | time_dist                | FUNCTION     | interval
+ public         | ts_dist                  | FUNCTION     | interval
+ public         | tstz_dist                | FUNCTION     | interval
+(201 rows)
+
+SET ROLE u1;
+SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+ routine_schema |       routine_name       | routine_type |    data_type     
+----------------+--------------------------+--------------+------------------
+ public         | cash_dist                | FUNCTION     | money
+ public         | date_dist                | FUNCTION     | integer
+ public         | decode_error_level       | FUNCTION     | text
+ public         | float4_dist              | FUNCTION     | real
+ public         | float8_dist              | FUNCTION     | double precision
+ public         | gbt_bit_compress         | FUNCTION     | internal
+ public         | gbt_bit_consistent       | FUNCTION     | boolean
+ public         | gbt_bit_penalty          | FUNCTION     | internal
+ public         | gbt_bit_picksplit        | FUNCTION     | internal
+ public         | gbt_bit_same             | FUNCTION     | internal
+ public         | gbt_bit_union            | FUNCTION     | USER-DEFINED
+ public         | gbt_bool_compress        | FUNCTION     | internal
+ public         | gbt_bool_consistent      | FUNCTION     | boolean
+ public         | gbt_bool_fetch           | FUNCTION     | internal
+ public         | gbt_bool_penalty         | FUNCTION     | internal
+ public         | gbt_bool_picksplit       | FUNCTION     | internal
+ public         | gbt_bool_same            | FUNCTION     | internal
+ public         | gbt_bool_union           | FUNCTION     | USER-DEFINED
+ public         | gbt_bpchar_compress      | FUNCTION     | internal
+ public         | gbt_bpchar_consistent    | FUNCTION     | boolean
+ public         | gbt_bytea_compress       | FUNCTION     | internal
+ public         | gbt_bytea_consistent     | FUNCTION     | boolean
+ public         | gbt_bytea_penalty        | FUNCTION     | internal
+ public         | gbt_bytea_picksplit      | FUNCTION     | internal
+ public         | gbt_bytea_same           | FUNCTION     | internal
+ public         | gbt_bytea_union          | FUNCTION     | USER-DEFINED
+ public         | gbt_cash_compress        | FUNCTION     | internal
+ public         | gbt_cash_consistent      | FUNCTION     | boolean
+ public         | gbt_cash_distance        | FUNCTION     | double precision
+ public         | gbt_cash_fetch           | FUNCTION     | internal
+ public         | gbt_cash_penalty         | FUNCTION     | internal
+ public         | gbt_cash_picksplit       | FUNCTION     | internal
+ public         | gbt_cash_same            | FUNCTION     | internal
+ public         | gbt_cash_union           | FUNCTION     | USER-DEFINED
+ public         | gbt_date_compress        | FUNCTION     | internal
+ public         | gbt_date_consistent      | FUNCTION     | boolean
+ public         | gbt_date_distance        | FUNCTION     | double precision
+ public         | gbt_date_fetch           | FUNCTION     | internal
+ public         | gbt_date_penalty         | FUNCTION     | internal
+ public         | gbt_date_picksplit       | FUNCTION     | internal
+ public         | gbt_date_same            | FUNCTION     | internal
+ public         | gbt_date_union           | FUNCTION     | USER-DEFINED
+ public         | gbt_decompress           | FUNCTION     | internal
+ public         | gbt_enum_compress        | FUNCTION     | internal
+ public         | gbt_enum_consistent      | FUNCTION     | boolean
+ public         | gbt_enum_fetch           | FUNCTION     | internal
+ public         | gbt_enum_penalty         | FUNCTION     | internal
+ public         | gbt_enum_picksplit       | FUNCTION     | internal
+ public         | gbt_enum_same            | FUNCTION     | internal
+ public         | gbt_enum_union           | FUNCTION     | USER-DEFINED
+ public         | gbt_float4_compress      | FUNCTION     | internal
+ public         | gbt_float4_consistent    | FUNCTION     | boolean
+ public         | gbt_float4_distance      | FUNCTION     | double precision
+ public         | gbt_float4_fetch         | FUNCTION     | internal
+ public         | gbt_float4_penalty       | FUNCTION     | internal
+ public         | gbt_float4_picksplit     | FUNCTION     | internal
+ public         | gbt_float4_same          | FUNCTION     | internal
+ public         | gbt_float4_union         | FUNCTION     | USER-DEFINED
+ public         | gbt_float8_compress      | FUNCTION     | internal
+ public         | gbt_float8_consistent    | FUNCTION     | boolean
+ public         | gbt_float8_distance      | FUNCTION     | double precision
+ public         | gbt_float8_fetch         | FUNCTION     | internal
+ public         | gbt_float8_penalty       | FUNCTION     | internal
+ public         | gbt_float8_picksplit     | FUNCTION     | internal
+ public         | gbt_float8_same          | FUNCTION     | internal
+ public         | gbt_float8_union         | FUNCTION     | USER-DEFINED
+ public         | gbt_inet_compress        | FUNCTION     | internal
+ public         | gbt_inet_consistent      | FUNCTION     | boolean
+ public         | gbt_inet_penalty         | FUNCTION     | internal
+ public         | gbt_inet_picksplit       | FUNCTION     | internal
+ public         | gbt_inet_same            | FUNCTION     | internal
+ public         | gbt_inet_union           | FUNCTION     | USER-DEFINED
+ public         | gbt_int2_compress        | FUNCTION     | internal
+ public         | gbt_int2_consistent      | FUNCTION     | boolean
+ public         | gbt_int2_distance        | FUNCTION     | double precision
+ public         | gbt_int2_fetch           | FUNCTION     | internal
+ public         | gbt_int2_penalty         | FUNCTION     | internal
+ public         | gbt_int2_picksplit       | FUNCTION     | internal
+ public         | gbt_int2_same            | FUNCTION     | internal
+ public         | gbt_int2_union           | FUNCTION     | USER-DEFINED
+ public         | gbt_int4_compress        | FUNCTION     | internal
+ public         | gbt_int4_consistent      | FUNCTION     | boolean
+ public         | gbt_int4_distance        | FUNCTION     | double precision
+ public         | gbt_int4_fetch           | FUNCTION     | internal
+ public         | gbt_int4_penalty         | FUNCTION     | internal
+ public         | gbt_int4_picksplit       | FUNCTION     | internal
+ public         | gbt_int4_same            | FUNCTION     | internal
+ public         | gbt_int4_union           | FUNCTION     | USER-DEFINED
+ public         | gbt_int8_compress        | FUNCTION     | internal
+ public         | gbt_int8_consistent      | FUNCTION     | boolean
+ public         | gbt_int8_distance        | FUNCTION     | double precision
+ public         | gbt_int8_fetch           | FUNCTION     | internal
+ public         | gbt_int8_penalty         | FUNCTION     | internal
+ public         | gbt_int8_picksplit       | FUNCTION     | internal
+ public         | gbt_int8_same            | FUNCTION     | internal
+ public         | gbt_int8_union           | FUNCTION     | USER-DEFINED
+ public         | gbt_intv_compress        | FUNCTION     | internal
+ public         | gbt_intv_consistent      | FUNCTION     | boolean
+ public         | gbt_intv_decompress      | FUNCTION     | internal
+ public         | gbt_intv_distance        | FUNCTION     | double precision
+ public         | gbt_intv_fetch           | FUNCTION     | internal
+ public         | gbt_intv_penalty         | FUNCTION     | internal
+ public         | gbt_intv_picksplit       | FUNCTION     | internal
+ public         | gbt_intv_same            | FUNCTION     | internal
+ public         | gbt_intv_union           | FUNCTION     | USER-DEFINED
+ public         | gbt_macad8_compress      | FUNCTION     | internal
+ public         | gbt_macad8_consistent    | FUNCTION     | boolean
+ public         | gbt_macad8_fetch         | FUNCTION     | internal
+ public         | gbt_macad8_penalty       | FUNCTION     | internal
+ public         | gbt_macad8_picksplit     | FUNCTION     | internal
+ public         | gbt_macad8_same          | FUNCTION     | internal
+ public         | gbt_macad8_union         | FUNCTION     | USER-DEFINED
+ public         | gbt_macad_compress       | FUNCTION     | internal
+ public         | gbt_macad_consistent     | FUNCTION     | boolean
+ public         | gbt_macad_fetch          | FUNCTION     | internal
+ public         | gbt_macad_penalty        | FUNCTION     | internal
+ public         | gbt_macad_picksplit      | FUNCTION     | internal
+ public         | gbt_macad_same           | FUNCTION     | internal
+ public         | gbt_macad_union          | FUNCTION     | USER-DEFINED
+ public         | gbt_numeric_compress     | FUNCTION     | internal
+ public         | gbt_numeric_consistent   | FUNCTION     | boolean
+ public         | gbt_numeric_penalty      | FUNCTION     | internal
+ public         | gbt_numeric_picksplit    | FUNCTION     | internal
+ public         | gbt_numeric_same         | FUNCTION     | internal
+ public         | gbt_numeric_union        | FUNCTION     | USER-DEFINED
+ public         | gbt_oid_compress         | FUNCTION     | internal
+ public         | gbt_oid_consistent       | FUNCTION     | boolean
+ public         | gbt_oid_distance         | FUNCTION     | double precision
+ public         | gbt_oid_fetch            | FUNCTION     | internal
+ public         | gbt_oid_penalty          | FUNCTION     | internal
+ public         | gbt_oid_picksplit        | FUNCTION     | internal
+ public         | gbt_oid_same             | FUNCTION     | internal
+ public         | gbt_oid_union            | FUNCTION     | USER-DEFINED
+ public         | gbt_text_compress        | FUNCTION     | internal
+ public         | gbt_text_consistent      | FUNCTION     | boolean
+ public         | gbt_text_penalty         | FUNCTION     | internal
+ public         | gbt_text_picksplit       | FUNCTION     | internal
+ public         | gbt_text_same            | FUNCTION     | internal
+ public         | gbt_text_union           | FUNCTION     | USER-DEFINED
+ public         | gbt_time_compress        | FUNCTION     | internal
+ public         | gbt_time_consistent      | FUNCTION     | boolean
+ public         | gbt_time_distance        | FUNCTION     | double precision
+ public         | gbt_time_fetch           | FUNCTION     | internal
+ public         | gbt_time_penalty         | FUNCTION     | internal
+ public         | gbt_time_picksplit       | FUNCTION     | internal
+ public         | gbt_time_same            | FUNCTION     | internal
+ public         | gbt_time_union           | FUNCTION     | USER-DEFINED
+ public         | gbt_timetz_compress      | FUNCTION     | internal
+ public         | gbt_timetz_consistent    | FUNCTION     | boolean
+ public         | gbt_ts_compress          | FUNCTION     | internal
+ public         | gbt_ts_consistent        | FUNCTION     | boolean
+ public         | gbt_ts_distance          | FUNCTION     | double precision
+ public         | gbt_ts_fetch             | FUNCTION     | internal
+ public         | gbt_ts_penalty           | FUNCTION     | internal
+ public         | gbt_ts_picksplit         | FUNCTION     | internal
+ public         | gbt_ts_same              | FUNCTION     | internal
+ public         | gbt_ts_union             | FUNCTION     | USER-DEFINED
+ public         | gbt_tstz_compress        | FUNCTION     | internal
+ public         | gbt_tstz_consistent      | FUNCTION     | boolean
+ public         | gbt_tstz_distance        | FUNCTION     | double precision
+ public         | gbt_uuid_compress        | FUNCTION     | internal
+ public         | gbt_uuid_consistent      | FUNCTION     | boolean
+ public         | gbt_uuid_fetch           | FUNCTION     | internal
+ public         | gbt_uuid_penalty         | FUNCTION     | internal
+ public         | gbt_uuid_picksplit       | FUNCTION     | internal
+ public         | gbt_uuid_same            | FUNCTION     | internal
+ public         | gbt_uuid_union           | FUNCTION     | USER-DEFINED
+ public         | gbt_var_decompress       | FUNCTION     | internal
+ public         | gbt_var_fetch            | FUNCTION     | internal
+ public         | gbtreekey16_in           | FUNCTION     | USER-DEFINED
+ public         | gbtreekey16_out          | FUNCTION     | cstring
+ public         | gbtreekey2_in            | FUNCTION     | USER-DEFINED
+ public         | gbtreekey2_out           | FUNCTION     | cstring
+ public         | gbtreekey32_in           | FUNCTION     | USER-DEFINED
+ public         | gbtreekey32_out          | FUNCTION     | cstring
+ public         | gbtreekey4_in            | FUNCTION     | USER-DEFINED
+ public         | gbtreekey4_out           | FUNCTION     | cstring
+ public         | gbtreekey8_in            | FUNCTION     | USER-DEFINED
+ public         | gbtreekey8_out           | FUNCTION     | cstring
+ public         | gbtreekey_var_in         | FUNCTION     | USER-DEFINED
+ public         | gbtreekey_var_out        | FUNCTION     | cstring
+ public         | get_cmd_type             | FUNCTION     | text
+ public         | get_histogram_timings    | FUNCTION     | text
+ public         | histogram                | FUNCTION     | record
+ public         | int2_dist                | FUNCTION     | smallint
+ public         | int4_dist                | FUNCTION     | integer
+ public         | int8_dist                | FUNCTION     | bigint
+ public         | interval_dist            | FUNCTION     | interval
+ public         | oid_dist                 | FUNCTION     | oid
+ public         | pg_stat_monitor_internal | FUNCTION     | record
+ public         | pg_stat_monitor_version  | FUNCTION     | text
+ public         | range                    | FUNCTION     | ARRAY
+ public         | time_dist                | FUNCTION     | interval
+ public         | ts_dist                  | FUNCTION     | interval
+ public         | tstz_dist                | FUNCTION     | interval
+(195 rows)
+
+SET ROLE su;
+DROP USER u1;
+DROP EXTENSION pg_stat_monitor;
+DROP USER su;
+ERROR:  current user cannot be dropped

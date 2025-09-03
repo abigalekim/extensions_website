@@ -1,0 +1,28 @@
+CREATE OR REPLACE FUNCTION test_context_value() RETURNS text as $V8$
+    return ctx_value;    
+$V8$ LANGUAGE plv8;
+ERROR:  language "plv8" does not exist
+CREATE OR REPLACE FUNCTION set_context_value(val TEXT) RETURNS void as $V8$
+    ctx_value = val;    
+$V8$ LANGUAGE plv8;
+ERROR:  language "plv8" does not exist
+SELECT set_context_value('test');
+ERROR:  function set_context_value(unknown) does not exist
+LINE 1: SELECT set_context_value('test');
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+SELECT test_context_value();
+ERROR:  function test_context_value() does not exist
+LINE 1: SELECT test_context_value();
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+SELECT plv8_reset();
+ERROR:  function plv8_reset() does not exist
+LINE 1: SELECT plv8_reset();
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+SELECT test_context_value();
+ERROR:  function test_context_value() does not exist
+LINE 1: SELECT test_context_value();
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.

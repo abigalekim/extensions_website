@@ -1,0 +1,60 @@
+2023-07-25 05:46:18.491 UTC [693123] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 05:46:18.491 UTC [693123] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 05:46:18.497 UTC [693123] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 05:46:18.506 UTC [693126] LOG:  database system was shut down at 2023-07-25 05:46:18 UTC
+2023-07-25 05:46:18.513 UTC [693123] LOG:  database system is ready to accept connections
+2023-07-25 05:46:18.720 UTC [693142] LOG:  lsm3_build lsm3_index
+2023-07-25 05:46:18.720 UTC [693142] STATEMENT:  create index lsm3_index on t using lsm3(k);
+2023-07-25 05:46:20.043 UTC [693143] LOG:  Lsm3: merge top index lsm3_index_top0 with size 2 blocks
+2023-07-25 05:46:20.044 UTC [693143] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:46:20.807 UTC [693143] LOG:  Lsm3: merge top index lsm3_index_top1 with size 2 blocks
+2023-07-25 05:46:20.808 UTC [693143] LOG:  Lsm3: truncate index lsm3_index_top1
+2023-07-25 05:46:21.818 UTC [693143] LOG:  Lsm3: merge top index lsm3_index_top0 with size 2 blocks
+2023-07-25 05:46:21.818 UTC [693143] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:46:22.829 UTC [693143] LOG:  Lsm3: merge top index lsm3_index_top1 with size 2 blocks
+2023-07-25 05:46:22.829 UTC [693143] LOG:  Lsm3: truncate index lsm3_index_top1
+2023-07-25 05:46:23.839 UTC [693143] LOG:  Lsm3: merge top index lsm3_index_top0 with size 2 blocks
+2023-07-25 05:46:23.840 UTC [693143] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:46:24.972 UTC [693143] LOG:  Lsm3: merge top index lsm3_index_top1 with size 181 blocks
+2023-07-25 05:46:25.066 UTC [693143] LOG:  Lsm3: truncate index lsm3_index_top1
+2023-07-25 05:46:25.136 UTC [693143] LOG:  Lsm3: merge top index lsm3_index_top0 with size 250 blocks
+2023-07-25 05:46:25.238 UTC [693143] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:46:25.318 UTC [693143] LOG:  Lsm3: merge top index lsm3_index_top1 with size 181 blocks
+2023-07-25 05:46:25.395 UTC [693142] LOG:  lsm3_build lsm3_index
+2023-07-25 05:46:25.395 UTC [693142] STATEMENT:  truncate table t;
+2023-07-25 05:46:26.396 UTC [693143] ERROR:  deadlock detected
+2023-07-25 05:46:26.396 UTC [693143] DETAIL:  Process 693143 waits for AccessShareLock on relation 17049 of database 16384; blocked by process 693142.
+	Process 693142 waits for AccessExclusiveLock on relation 17054 of database 16384; blocked by process 693143.
+	Process 693143: truncate
+	Process 693142: truncate table t;
+2023-07-25 05:46:26.396 UTC [693143] HINT:  See server log for query details.
+2023-07-25 05:46:26.399 UTC [693123] LOG:  background worker "lsm3-merger-17052" (PID 693143) exited with exit code 1
+2023-07-25 05:46:28.389 UTC [693142] LOG:  lsm3_build lsm3_index
+2023-07-25 05:46:28.389 UTC [693142] STATEMENT:  reindex table t;
+2023-07-25 05:46:29.522 UTC [693142] LOG:  lsm3_build lsm_k_idx
+2023-07-25 05:46:29.522 UTC [693142] STATEMENT:  create index concurrently on lsm using lsm3(k);
+2023-07-25 05:46:30.352 UTC [693124] LOG:  checkpoint starting: immediate force wait
+2023-07-25 05:46:30.562 UTC [693124] LOG:  checkpoint complete: wrote 2743 buffers (16.7%); 0 WAL file(s) added, 0 removed, 18 recycled; write=0.062 s, sync=0.048 s, total=0.210 s; sync files=749, longest=0.007 s, average=0.001 s; distance=296276 kB, estimate=296276 kB
+2023-07-25 05:46:30.577 UTC [693124] LOG:  checkpoint starting: immediate force wait
+2023-07-25 05:46:30.600 UTC [693124] LOG:  checkpoint complete: wrote 2 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.005 s, sync=0.004 s, total=0.024 s; sync files=2, longest=0.003 s, average=0.002 s; distance=1 kB, estimate=266649 kB
+2023-07-25 05:46:30.690 UTC [693184] ERROR:  current user cannot be dropped
+2023-07-25 05:46:30.690 UTC [693184] STATEMENT:  DROP USER su;
+2023-07-25 05:46:30.952 UTC [693124] LOG:  checkpoint starting: immediate force wait
+2023-07-25 05:46:31.023 UTC [693124] LOG:  checkpoint complete: wrote 1021 buffers (6.2%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.037 s, sync=0.021 s, total=0.071 s; sync files=298, longest=0.004 s, average=0.001 s; distance=8784 kB, estimate=240862 kB
+2023-07-25 05:46:31.042 UTC [693124] LOG:  checkpoint starting: immediate force wait
+2023-07-25 05:46:31.064 UTC [693124] LOG:  checkpoint complete: wrote 8 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.005 s, sync=0.005 s, total=0.022 s; sync files=7, longest=0.003 s, average=0.001 s; distance=34 kB, estimate=216780 kB
+2023-07-25 05:46:31.142 UTC [693212] ERROR:  duplicate key value violates unique constraint "company_pkey"
+2023-07-25 05:46:31.142 UTC [693212] DETAIL:  Key (id)=(1) already exists.
+2023-07-25 05:46:31.142 UTC [693212] STATEMENT:  INSERT  INTO Company(ID, Name) VALUES (1, 'Percona');
+2023-07-25 05:46:31.263 UTC [693232] ERROR:  division by zero
+2023-07-25 05:46:31.263 UTC [693232] STATEMENT:  SELECT 1/0;
+2023-07-25 05:46:31.263 UTC [693232] ERROR:  relation "unknown" does not exist at character 15
+2023-07-25 05:46:31.263 UTC [693232] STATEMENT:  SELECT * FROM unknown;
+2023-07-25 05:46:31.264 UTC [693232] ERROR:  syntax error at or near "ELECET" at character 1
+2023-07-25 05:46:31.264 UTC [693232] STATEMENT:  ELECET * FROM unknown;
+2023-07-25 05:46:31.264 UTC [693232] WARNING:  warning message
+2023-07-25 05:46:31.264 UTC [693232] CONTEXT:  PL/pgSQL function inline_code_block line 3 at RAISE
+2023-07-25 05:46:31.331 UTC [693246] ERROR:  role "su" already exists
+2023-07-25 05:46:31.331 UTC [693246] STATEMENT:  CREATE USER su WITH SUPERUSER;
+2023-07-25 05:46:31.345 UTC [693246] ERROR:  permission denied for function pg_stat_monitor_reset
+2023-07-25 05:46:31.345 UTC [693246] STATEMENT:  SELECT pg_stat_monitor_reset();

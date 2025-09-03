@@ -1,0 +1,38 @@
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/functions.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/functions.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/functions.out	2023-07-26 18:23:18.888661850 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/functions.out	2023-07-26 19:40:05.471555927 +0000
+@@ -13,6 +13,7 @@
+ SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+  routine_schema |       routine_name       | routine_type | data_type 
+ ----------------+--------------------------+--------------+-----------
++ public         | bool_to_plperl           | FUNCTION     | internal
+  public         | decode_error_level       | FUNCTION     | text
+  public         | get_cmd_type             | FUNCTION     | text
+  public         | get_histogram_timings    | FUNCTION     | text
+@@ -25,21 +26,24 @@
+  public         | pgsm_create_14_view      | FUNCTION     | integer
+  public         | pgsm_create_15_view      | FUNCTION     | integer
+  public         | pgsm_create_view         | FUNCTION     | integer
++ public         | plperl_to_bool           | FUNCTION     | boolean
+  public         | range                    | FUNCTION     | ARRAY
+-(13 rows)
++(15 rows)
+ 
+ SET ROLE u1;
+ SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+  routine_schema |       routine_name       | routine_type | data_type 
+ ----------------+--------------------------+--------------+-----------
++ public         | bool_to_plperl           | FUNCTION     | internal
+  public         | decode_error_level       | FUNCTION     | text
+  public         | get_cmd_type             | FUNCTION     | text
+  public         | get_histogram_timings    | FUNCTION     | text
+  public         | histogram                | FUNCTION     | record
+  public         | pg_stat_monitor_internal | FUNCTION     | record
+  public         | pg_stat_monitor_version  | FUNCTION     | text
++ public         | plperl_to_bool           | FUNCTION     | boolean
+  public         | range                    | FUNCTION     | ARRAY
+-(7 rows)
++(9 rows)
+ 
+ SET ROLE su;
+ DROP USER u1;

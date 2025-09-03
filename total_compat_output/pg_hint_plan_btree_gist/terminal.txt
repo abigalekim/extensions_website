@@ -1,0 +1,123 @@
+The files belonging to this database system will be owned by user "abigalek".
+This user must also own the server process.
+
+The database cluster will be initialized with locale "en_US.UTF-8".
+The default database encoding has accordingly been set to "UTF8".
+The default text search configuration will be set to "english".
+
+Data page checksums are disabled.
+
+creating directory pg-15-data ... ok
+creating subdirectories ... ok
+selecting dynamic shared memory implementation ... posix
+selecting default max_connections ... 100
+selecting default shared_buffers ... 128MB
+selecting default time zone ... Etc/UTC
+creating configuration files ... ok
+running bootstrap script ... ok
+performing post-bootstrap initialization ... ok
+syncing data to disk ... ok
+
+initdb: warning: enabling "trust" authentication for local connections
+initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+
+Success. You can now start the database server using:
+
+    pg-15-dist/bin/pg_ctl -D pg-15-data -l logfile start
+
+waiting for server to start.... done
+server started
+(using postmaster on Unix socket, default port)
+============== dropping database "contrib_regression" ==============
+SET
+DROP DATABASE
+============== creating database "contrib_regression" ==============
+CREATE DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+============== installing btree_gist                  ==============
+CREATE EXTENSION
+============== running regression test queries        ==============
+test init                         ... ok         1347 ms
+test base_plan                    ... ok           15 ms
+test pg_hint_plan                 ... ok         7437 ms
+test ut-init                      ... FAILED      831 ms
+test ut-A                         ... ok          379 ms
+test ut-S                         ... ok          194 ms
+test ut-J                         ... ok          133 ms
+test ut-L                         ... ok           94 ms
+test ut-G                         ... ok           31 ms
+test ut-R                         ... ok          444 ms
+test ut-fdw                       ... ok           37 ms
+test ut-W                         ... ok           81 ms
+test ut-T                         ... ok           24 ms
+test ut-fini                      ... ok           21 ms
+test hints_anywhere               ... ok           23 ms
+test plpgsql                      ... ok           80 ms
+test oldextversions               ... ok          135 ms
+
+=======================
+ 1 of 17 tests failed. 
+=======================
+
+The differences that caused some tests to fail can be viewed in the
+file "/home/abigalek/pgext-cli-python/pgextworkdir/pg_hint_plan-REL15_1_5_0/regression.diffs".  A copy of the test summary that you see
+above is saved in the file "/home/abigalek/pgext-cli-python/pgextworkdir/pg_hint_plan-REL15_1_5_0/regression.out".
+
+(using postmaster on Unix socket, default port)
+============== dropping database "contrib_regression" ==============
+SET
+DROP DATABASE
+============== creating database "contrib_regression" ==============
+CREATE DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+============== installing pg_stat_statements          ==============
+CREATE EXTENSION
+============== installing pg_hint_plan                ==============
+CREATE EXTENSION
+============== running regression test queries        ==============
+test init                         ... ok           58 ms
+test int2                         ... ok           12 ms
+test int4                         ... ok           11 ms
+test int8                         ... ok           11 ms
+test float4                       ... ok           11 ms
+test float8                       ... ok           12 ms
+test cash                         ... ok           11 ms
+test oid                          ... ok           10 ms
+test timestamp                    ... ok           11 ms
+test timestamptz                  ... ok           15 ms
+test time                         ... ok           13 ms
+test timetz                       ... ok           74 ms
+test date                         ... ok           19 ms
+test interval                     ... ok           12 ms
+test macaddr                      ... ok           11 ms
+test macaddr8                     ... ok           11 ms
+test inet                         ... ok           21 ms
+test cidr                         ... ok           15 ms
+test text                         ... ok           23 ms
+test varchar                      ... ok           17 ms
+test char                         ... ok           20 ms
+test bytea                        ... ok           45 ms
+test bit                          ... ok           23 ms
+test varbit                       ... ok           27 ms
+test numeric                      ... ok           68 ms
+test uuid                         ... ok           13 ms
+test not_equal                    ... ok           28 ms
+test enum                         ... ok           12 ms
+test bool                         ... ok           14 ms
+
+======================
+ All 29 tests passed. 
+======================
+
+waiting for server to shut down.... done
+server stopped

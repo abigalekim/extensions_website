@@ -1,0 +1,96 @@
+drop extension if exists pg_query_rewrite;
+NOTICE:  extension "pg_query_rewrite" does not exist, skipping
+--
+create extension pg_query_rewrite;
+select pgqr_truncate();
+ pgqr_truncate 
+---------------
+ t
+(1 row)
+
+--
+drop table if exists t;
+NOTICE:  table "t" does not exist, skipping
+create table t(x int, y int);
+--
+insert into t values(1,2);
+--
+select pgqr_add_rule('select 10;','select 11;');
+ pgqr_add_rule 
+---------------
+ t
+(1 row)
+
+select pgqr_add_rule('select 1+1;','select 1+2;');
+ pgqr_add_rule 
+---------------
+ t
+(1 row)
+
+select pgqr_add_rule('select x from t;','select x,y from t;');
+ pgqr_add_rule 
+---------------
+ t
+(1 row)
+
+select pgqr_add_rule('delete from t;','delete from t where 1=0;');
+ pgqr_add_rule 
+---------------
+ t
+(1 row)
+
+select pgqr_add_rule('update t set x=y;','update t set x=y where 1=0;');
+ pgqr_add_rule 
+---------------
+ t
+(1 row)
+
+--
+select 10;
+ ?column? 
+----------
+       11
+(1 row)
+
+select 1+1;
+ ?column? 
+----------
+        3
+(1 row)
+
+select x from t;
+ x | y 
+---+---
+ 1 | 2
+(1 row)
+
+begin;
+delete from t;
+select * from t;
+ x | y 
+---+---
+ 1 | 2
+(1 row)
+
+rollback;
+select * from t;
+ x | y 
+---+---
+ 1 | 2
+(1 row)
+
+begin;
+update t set x=y;
+select * from t;
+ x | y 
+---+---
+ 1 | 2
+(1 row)
+
+rollback;
+select * from t;
+ x | y 
+---+---
+ 1 | 2
+(1 row)
+

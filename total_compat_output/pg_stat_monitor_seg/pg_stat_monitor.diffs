@@ -1,0 +1,96 @@
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/functions.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/functions.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/functions.out	2023-07-25 04:55:55.016790254 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/functions.out	2023-07-26 10:19:33.324811194 +0000
+@@ -11,11 +11,16 @@
+ (1 row)
+ 
+ SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+- routine_schema |       routine_name       | routine_type | data_type 
+-----------------+--------------------------+--------------+-----------
++ routine_schema |       routine_name       | routine_type |  data_type   
++----------------+--------------------------+--------------+--------------
+  public         | decode_error_level       | FUNCTION     | text
+  public         | get_cmd_type             | FUNCTION     | text
+  public         | get_histogram_timings    | FUNCTION     | text
++ public         | gseg_consistent          | FUNCTION     | boolean
++ public         | gseg_penalty             | FUNCTION     | internal
++ public         | gseg_picksplit           | FUNCTION     | internal
++ public         | gseg_same                | FUNCTION     | internal
++ public         | gseg_union               | FUNCTION     | USER-DEFINED
+  public         | histogram                | FUNCTION     | record
+  public         | pg_stat_monitor_internal | FUNCTION     | record
+  public         | pg_stat_monitor_reset    | FUNCTION     | void
+@@ -26,20 +31,69 @@
+  public         | pgsm_create_15_view      | FUNCTION     | integer
+  public         | pgsm_create_view         | FUNCTION     | integer
+  public         | range                    | FUNCTION     | ARRAY
+-(13 rows)
++ public         | seg_center               | FUNCTION     | real
++ public         | seg_cmp                  | FUNCTION     | integer
++ public         | seg_contained            | FUNCTION     | boolean
++ public         | seg_contains             | FUNCTION     | boolean
++ public         | seg_different            | FUNCTION     | boolean
++ public         | seg_ge                   | FUNCTION     | boolean
++ public         | seg_gt                   | FUNCTION     | boolean
++ public         | seg_in                   | FUNCTION     | USER-DEFINED
++ public         | seg_inter                | FUNCTION     | USER-DEFINED
++ public         | seg_le                   | FUNCTION     | boolean
++ public         | seg_left                 | FUNCTION     | boolean
++ public         | seg_lower                | FUNCTION     | real
++ public         | seg_lt                   | FUNCTION     | boolean
++ public         | seg_out                  | FUNCTION     | cstring
++ public         | seg_over_left            | FUNCTION     | boolean
++ public         | seg_over_right           | FUNCTION     | boolean
++ public         | seg_overlap              | FUNCTION     | boolean
++ public         | seg_right                | FUNCTION     | boolean
++ public         | seg_same                 | FUNCTION     | boolean
++ public         | seg_size                 | FUNCTION     | real
++ public         | seg_union                | FUNCTION     | USER-DEFINED
++ public         | seg_upper                | FUNCTION     | real
++(40 rows)
+ 
+ SET ROLE u1;
+ SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+- routine_schema |       routine_name       | routine_type | data_type 
+-----------------+--------------------------+--------------+-----------
++ routine_schema |       routine_name       | routine_type |  data_type   
++----------------+--------------------------+--------------+--------------
+  public         | decode_error_level       | FUNCTION     | text
+  public         | get_cmd_type             | FUNCTION     | text
+  public         | get_histogram_timings    | FUNCTION     | text
++ public         | gseg_consistent          | FUNCTION     | boolean
++ public         | gseg_penalty             | FUNCTION     | internal
++ public         | gseg_picksplit           | FUNCTION     | internal
++ public         | gseg_same                | FUNCTION     | internal
++ public         | gseg_union               | FUNCTION     | USER-DEFINED
+  public         | histogram                | FUNCTION     | record
+  public         | pg_stat_monitor_internal | FUNCTION     | record
+  public         | pg_stat_monitor_version  | FUNCTION     | text
+  public         | range                    | FUNCTION     | ARRAY
+-(7 rows)
++ public         | seg_center               | FUNCTION     | real
++ public         | seg_cmp                  | FUNCTION     | integer
++ public         | seg_contained            | FUNCTION     | boolean
++ public         | seg_contains             | FUNCTION     | boolean
++ public         | seg_different            | FUNCTION     | boolean
++ public         | seg_ge                   | FUNCTION     | boolean
++ public         | seg_gt                   | FUNCTION     | boolean
++ public         | seg_in                   | FUNCTION     | USER-DEFINED
++ public         | seg_inter                | FUNCTION     | USER-DEFINED
++ public         | seg_le                   | FUNCTION     | boolean
++ public         | seg_left                 | FUNCTION     | boolean
++ public         | seg_lower                | FUNCTION     | real
++ public         | seg_lt                   | FUNCTION     | boolean
++ public         | seg_out                  | FUNCTION     | cstring
++ public         | seg_over_left            | FUNCTION     | boolean
++ public         | seg_over_right           | FUNCTION     | boolean
++ public         | seg_overlap              | FUNCTION     | boolean
++ public         | seg_right                | FUNCTION     | boolean
++ public         | seg_same                 | FUNCTION     | boolean
++ public         | seg_size                 | FUNCTION     | real
++ public         | seg_union                | FUNCTION     | USER-DEFINED
++ public         | seg_upper                | FUNCTION     | real
++(34 rows)
+ 
+ SET ROLE su;
+ DROP USER u1;

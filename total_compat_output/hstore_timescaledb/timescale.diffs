@@ -1,0 +1,46 @@
+diff -u /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/drop_extension.out /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/drop_extension.out
+--- /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/drop_extension.out	2023-06-28 16:40:59.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/drop_extension.out	2023-10-28 04:46:08.759183795 +0000
+@@ -72,7 +72,7 @@
+ --test drops thru cascades of other objects
+ \c :TEST_DBNAME :ROLE_SUPERUSER
+ drop schema public cascade;
+-NOTICE:  drop cascades to 3 other objects
++NOTICE:  drop cascades to 4 other objects
+ \dn
+   List of schemas
+  Name |   Owner    
+diff -u /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/plain.out /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/plain.out
+--- /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/plain.out	2023-06-28 16:40:59.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/plain.out	2023-10-28 04:46:21.827178726 +0000
+@@ -29,17 +29,19 @@
+ CREATE TYPE rainbow AS ENUM ('red', 'orange', 'yellow', 'green', 'blue', 'purple');
+ ALTER TYPE rainbow RENAME TO colors;
+ \dT+
+-                                           List of data types
+- Schema |  Name  | Internal name | Size | Elements |       Owner       | Access privileges | Description 
+---------+--------+---------------+------+----------+-------------------+-------------------+-------------
+- public | colors | colors        | 4    | red     +| default_perm_user |                   | 
+-        |        |               |      | orange  +|                   |                   | 
+-        |        |               |      | yellow  +|                   |                   | 
+-        |        |               |      | green   +|                   |                   | 
+-        |        |               |      | blue    +|                   |                   | 
+-        |        |               |      | purple   |                   |                   | 
+- public | rxid   | rxid          | 16   |          | super_user        |                   | 
+-(2 rows)
++                                            List of data types
++ Schema |  Name   | Internal name | Size | Elements |       Owner       | Access privileges | Description 
++--------+---------+---------------+------+----------+-------------------+-------------------+-------------
++ public | colors  | colors        | 4    | red     +| default_perm_user |                   | 
++        |         |               |      | orange  +|                   |                   | 
++        |         |               |      | yellow  +|                   |                   | 
++        |         |               |      | green   +|                   |                   | 
++        |         |               |      | blue    +|                   |                   | 
++        |         |               |      | purple   |                   |                   | 
++ public | ghstore | ghstore       | var  |          | abigalek          |                   | 
++ public | hstore  | hstore        | var  |          | abigalek          |                   | 
++ public | rxid    | rxid          | 16   |          | super_user        |                   | 
++(4 rows)
+ 
+ REINDEX TABLE regular_table;
+ \c :TEST_DBNAME :ROLE_SUPERUSER

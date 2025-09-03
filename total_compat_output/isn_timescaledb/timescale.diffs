@@ -1,0 +1,45 @@
+diff -u /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/drop_extension.out /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/drop_extension.out
+--- /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/drop_extension.out	2023-06-28 16:40:59.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/drop_extension.out	2023-10-28 04:53:25.950691950 +0000
+@@ -72,7 +72,7 @@
+ --test drops thru cascades of other objects
+ \c :TEST_DBNAME :ROLE_SUPERUSER
+ drop schema public cascade;
+-NOTICE:  drop cascades to 3 other objects
++NOTICE:  drop cascades to 4 other objects
+ \dn
+   List of schemas
+  Name |   Owner    
+diff -u /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/plain.out /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/plain.out
+--- /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/plain.out	2023-06-28 16:40:59.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/plain.out	2023-10-28 04:53:53.346644590 +0000
+@@ -29,17 +29,25 @@
+ CREATE TYPE rainbow AS ENUM ('red', 'orange', 'yellow', 'green', 'blue', 'purple');
+ ALTER TYPE rainbow RENAME TO colors;
+ \dT+
+-                                           List of data types
+- Schema |  Name  | Internal name | Size | Elements |       Owner       | Access privileges | Description 
+---------+--------+---------------+------+----------+-------------------+-------------------+-------------
++                                                              List of data types
++ Schema |  Name  | Internal name | Size | Elements |       Owner       | Access privileges |                   Description                    
++--------+--------+---------------+------+----------+-------------------+-------------------+--------------------------------------------------
+  public | colors | colors        | 4    | red     +| default_perm_user |                   | 
+         |        |               |      | orange  +|                   |                   | 
+         |        |               |      | yellow  +|                   |                   | 
+         |        |               |      | green   +|                   |                   | 
+         |        |               |      | blue    +|                   |                   | 
+         |        |               |      | purple   |                   |                   | 
++ public | ean13  | ean13         | 8    |          | abigalek          |                   | International European Article Number (EAN13)
++ public | isbn   | isbn          | 8    |          | abigalek          |                   | International Standard Book Number (ISBN)
++ public | isbn13 | isbn13        | 8    |          | abigalek          |                   | International Standard Book Number 13 (ISBN13)
++ public | ismn   | ismn          | 8    |          | abigalek          |                   | International Standard Music Number (ISMN)
++ public | ismn13 | ismn13        | 8    |          | abigalek          |                   | International Standard Music Number 13 (ISMN13)
++ public | issn   | issn          | 8    |          | abigalek          |                   | International Standard Serial Number (ISSN)
++ public | issn13 | issn13        | 8    |          | abigalek          |                   | International Standard Serial Number 13 (ISSN13)
+  public | rxid   | rxid          | 16   |          | super_user        |                   | 
+-(2 rows)
++ public | upc    | upc           | 8    |          | abigalek          |                   | Universal Product Code (UPC)
++(10 rows)
+ 
+ REINDEX TABLE regular_table;
+ \c :TEST_DBNAME :ROLE_SUPERUSER

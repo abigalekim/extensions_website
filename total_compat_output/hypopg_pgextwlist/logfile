@@ -1,0 +1,37 @@
+2023-07-26 10:24:06.683 UTC [2068044] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 10:24:06.684 UTC [2068044] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 10:24:06.699 UTC [2068044] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 10:24:06.715 UTC [2068047] LOG:  database system was shut down at 2023-07-26 10:24:06 UTC
+2023-07-26 10:24:06.726 UTC [2068044] LOG:  database system is ready to accept connections
+2023-07-26 10:24:07.148 UTC [2068062] WARNING:  hypopg: SQL order #1 is not a CREATE INDEX statement
+2023-07-26 10:24:07.149 UTC [2068062] WARNING:  hypopg: SQL order #3 is not a CREATE INDEX statement
+2023-07-26 10:24:07.151 UTC [2068062] ERROR:  value 1 out of bounds for option "fillfactor"
+2023-07-26 10:24:07.151 UTC [2068062] DETAIL:  Valid values are between "10" and "100".
+2023-07-26 10:24:07.151 UTC [2068062] STATEMENT:  SELECT COUNT(*) AS NB
+	FROM public.hypopg_create_index('CREATE INDEX ON hypo(id) WITH (fillfactor = 1)');
+2023-07-26 10:24:07.152 UTC [2068062] ERROR:  oid 1 is not a hypothetical index
+2023-07-26 10:24:07.152 UTC [2068062] STATEMENT:  SELECT hypopg_relation_size(1);
+2023-07-26 10:24:07.677 UTC [2068045] LOG:  checkpoint starting: immediate force wait
+2023-07-26 10:24:07.748 UTC [2068045] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.018 s, sync=0.014 s, total=0.072 s; sync files=7, longest=0.008 s, average=0.002 s; distance=17308 kB, estimate=17308 kB
+2023-07-26 10:24:07.938 UTC [2068044] LOG:  received SIGHUP, reloading configuration files
+2023-07-26 10:24:07.940 UTC [2068044] LOG:  parameter "session_preload_libraries" changed to "pgextwlist"
+2023-07-26 10:24:07.940 UTC [2068044] LOG:  parameter "extwlist.extensions" changed to "citext,earthdistance,pg_trgm,pg_stat_statements,refint"
+2023-07-26 10:24:07.940 UTC [2068044] LOG:  parameter "extwlist.custom_path" changed to "/home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/test-scripts"
+2023-07-26 10:24:08.040 UTC [2068108] ERROR:  extension "plpgsql" already exists
+2023-07-26 10:24:08.040 UTC [2068108] STATEMENT:  CREATE EXTENSION plpgsql;
+2023-07-26 10:24:08.040 UTC [2068108] ERROR:  extension "hstore" does not exist
+2023-07-26 10:24:08.040 UTC [2068108] STATEMENT:  COMMENT ON EXTENSION hstore IS 'plpgsql comment';
+2023-07-26 10:24:08.041 UTC [2068108] ERROR:  permission denied to create extension "hstore"
+2023-07-26 10:24:08.041 UTC [2068108] HINT:  Must have CREATE privilege on current database to create this extension.
+2023-07-26 10:24:08.041 UTC [2068108] STATEMENT:  CREATE EXTENSION hstore;
+2023-07-26 10:24:08.041 UTC [2068108] ERROR:  extension "hstore" does not exist
+2023-07-26 10:24:08.041 UTC [2068108] STATEMENT:  COMMENT ON EXTENSION hstore IS 'hstore comment';
+2023-07-26 10:24:08.041 UTC [2068108] ERROR:  required extension "cube" is not installed
+2023-07-26 10:24:08.041 UTC [2068108] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-26 10:24:08.041 UTC [2068108] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-26 10:24:08.041 UTC [2068108] ERROR:  must be owner of extension plpgsql
+2023-07-26 10:24:08.041 UTC [2068108] STATEMENT:  DROP EXTENSION plpgsql;
+2023-07-26 10:24:08.071 UTC [2068116] ERROR:  cannot drop extension citext because other objects depend on it
+2023-07-26 10:24:08.071 UTC [2068116] DETAIL:  column t of table mere_table depends on type citext
+2023-07-26 10:24:08.071 UTC [2068116] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 10:24:08.071 UTC [2068116] STATEMENT:  DROP EXTENSION citext;

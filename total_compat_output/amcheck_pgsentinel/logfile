@@ -1,0 +1,56 @@
+2023-07-25 07:21:10.711 UTC [1818319] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 07:21:10.711 UTC [1818319] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 07:21:10.726 UTC [1818319] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 07:21:10.742 UTC [1818322] LOG:  database system was shut down at 2023-07-25 07:21:10 UTC
+2023-07-25 07:21:10.751 UTC [1818319] LOG:  database system is ready to accept connections
+2023-07-25 07:21:10.751 UTC [1818325] LOG:  starting bgworker pgsentinel
+2023-07-25 07:21:10.752 UTC [1818325] FATAL:  database "contrib_regression" does not exist
+2023-07-25 07:21:10.758 UTC [1818319] LOG:  background worker "pgsentinel" (PID 1818325) exited with exit code 1
+2023-07-25 07:21:11.772 UTC [1818346] ERROR:  permission denied for function bt_index_check
+2023-07-25 07:21:11.772 UTC [1818346] STATEMENT:  SELECT bt_index_check('bttest_a_idx'::regclass);
+2023-07-25 07:21:11.772 UTC [1818346] ERROR:  permission denied for function bt_index_parent_check
+2023-07-25 07:21:11.772 UTC [1818346] STATEMENT:  SELECT bt_index_parent_check('bttest_a_idx'::regclass);
+2023-07-25 07:21:11.836 UTC [1818346] ERROR:  "bttest_a" is not an index
+2023-07-25 07:21:11.836 UTC [1818346] STATEMENT:  SELECT bt_index_check('bttest_a');
+2023-07-25 07:21:11.836 UTC [1818346] ERROR:  "bttest_a" is not an index
+2023-07-25 07:21:11.836 UTC [1818346] STATEMENT:  SELECT bt_index_parent_check('bttest_a');
+2023-07-25 07:21:11.836 UTC [1818346] ERROR:  could not open relation with OID 17
+2023-07-25 07:21:11.836 UTC [1818346] STATEMENT:  SELECT bt_index_check(17);
+2023-07-25 07:21:11.836 UTC [1818346] ERROR:  could not open relation with OID 17
+2023-07-25 07:21:11.836 UTC [1818346] STATEMENT:  SELECT bt_index_parent_check(17);
+2023-07-25 07:21:11.851 UTC [1818346] ERROR:  only B-Tree indexes are supported as targets for verification
+2023-07-25 07:21:11.851 UTC [1818346] DETAIL:  Relation "bttest_a_brin_idx" is not a B-Tree index.
+2023-07-25 07:21:11.851 UTC [1818346] STATEMENT:  SELECT bt_index_parent_check('bttest_a_brin_idx');
+2023-07-25 07:21:12.760 UTC [1818347] LOG:  starting bgworker pgsentinel
+2023-07-25 07:21:13.069 UTC [1818351] ERROR:  invalid skip option
+2023-07-25 07:21:13.069 UTC [1818351] HINT:  Valid skip options are "all-visible", "all-frozen", and "none".
+2023-07-25 07:21:13.069 UTC [1818351] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest', skip := 'rope');
+2023-07-25 07:21:13.080 UTC [1818351] ERROR:  permission denied for function verify_heapam
+2023-07-25 07:21:13.080 UTC [1818351] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest');
+2023-07-25 07:21:13.085 UTC [1818351] ERROR:  ending block number must be between 0 and 0
+2023-07-25 07:21:13.085 UTC [1818351] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest', startblock := 0, endblock := 10000);
+2023-07-25 07:21:13.085 UTC [1818351] ERROR:  starting block number must be between 0 and 0
+2023-07-25 07:21:13.085 UTC [1818351] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest', startblock := 10000, endblock := 11000);
+2023-07-25 07:21:13.095 UTC [1818351] ERROR:  cannot check relation "test_partitioned"
+2023-07-25 07:21:13.095 UTC [1818351] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-25 07:21:13.095 UTC [1818351] STATEMENT:  SELECT * FROM verify_heapam('test_partitioned',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-25 07:21:13.182 UTC [1818351] ERROR:  cannot check relation "test_index"
+2023-07-25 07:21:13.182 UTC [1818351] DETAIL:  This operation is not supported for indexes.
+2023-07-25 07:21:13.182 UTC [1818351] STATEMENT:  SELECT * FROM verify_heapam('test_index',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-25 07:21:13.185 UTC [1818351] ERROR:  cannot check relation "test_view"
+2023-07-25 07:21:13.185 UTC [1818351] DETAIL:  This operation is not supported for views.
+2023-07-25 07:21:13.185 UTC [1818351] STATEMENT:  SELECT * FROM verify_heapam('test_view',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-25 07:21:13.199 UTC [1818351] ERROR:  cannot check relation "test_foreign_table"
+2023-07-25 07:21:13.199 UTC [1818351] DETAIL:  This operation is not supported for foreign tables.
+2023-07-25 07:21:13.199 UTC [1818351] STATEMENT:  SELECT * FROM verify_heapam('test_foreign_table',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-25 07:21:18.255 UTC [1818358] ERROR:  database "contrib_regression" is being accessed by other users
+2023-07-25 07:21:18.255 UTC [1818358] DETAIL:  There is 1 other session using the database.
+2023-07-25 07:21:18.255 UTC [1818358] STATEMENT:  DROP DATABASE IF EXISTS "contrib_regression"

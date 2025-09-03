@@ -1,0 +1,22 @@
+2023-07-26 20:19:35.727 UTC [2153809] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 20:19:35.728 UTC [2153809] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 20:19:35.734 UTC [2153809] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 20:19:35.742 UTC [2153812] LOG:  database system was shut down at 2023-07-26 20:19:35 UTC
+2023-07-26 20:19:35.748 UTC [2153809] LOG:  database system is ready to accept connections
+2023-07-26 20:19:35.941 UTC [2153841] ERROR:  function blah() does not exist at character 8
+2023-07-26 20:19:35.941 UTC [2153841] HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+2023-07-26 20:19:35.941 UTC [2153841] STATEMENT:  SELECT blah();
+2023-07-26 20:19:45.947 UTC [2153841] ERROR:  XXXXX
+2023-07-26 20:19:45.947 UTC [2153841] CONTEXT:  PL/pgSQL function inline_code_block line 3 at RAISE
+2023-07-26 20:19:45.947 UTC [2153841] STATEMENT:  DO LANGUAGE plpgsql $$
+	BEGIN
+	    RAISE SQLSTATE 'XXXXX';
+	END;
+	$$;
+2023-07-26 20:19:45.948 UTC [2153841] ERROR:  XXXXY
+2023-07-26 20:19:45.948 UTC [2153841] CONTEXT:  PL/pgSQL function inline_code_block line 3 at RAISE
+2023-07-26 20:19:45.948 UTC [2153841] STATEMENT:  DO LANGUAGE plpgsql $$
+	BEGIN
+	    RAISE SQLSTATE 'XXXXY';
+	END;
+	$$;

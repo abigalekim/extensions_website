@@ -1,0 +1,34 @@
+2023-11-25 02:46:10.293 UTC [454398] LOG:  number of prepared transactions has not been configured, overriding
+2023-11-25 02:46:10.293 UTC [454398] DETAIL:  max_prepared_transactions is now set to 200
+2023-11-25 02:46:10.438 UTC [454398] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-11-25 02:46:10.438 UTC [454398] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-11-25 02:46:10.448 UTC [454398] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-11-25 02:46:10.455 UTC [454401] LOG:  database system was shut down at 2023-11-25 02:46:10 UTC
+2023-11-25 02:46:10.464 UTC [454398] LOG:  database system is ready to accept connections
+2023-11-25 02:48:03.703 UTC [471221] LOG:  starting maintenance daemon on database 16407 user 10
+2023-11-25 02:48:03.703 UTC [471221] CONTEXT:  Citus maintenance daemon for database 16407 user 10
+2023-11-25 02:48:03.891 UTC [454399] LOG:  checkpoint starting: immediate force wait
+2023-11-25 02:48:03.971 UTC [454399] LOG:  checkpoint complete: wrote 2148 buffers (13.1%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.028 s, sync=0.038 s, total=0.081 s; sync files=573, longest=0.003 s, average=0.001 s; distance=15433 kB, estimate=15433 kB
+2023-11-25 02:48:03.977 UTC [454399] LOG:  checkpoint starting: immediate force wait
+2023-11-25 02:48:03.997 UTC [454399] LOG:  checkpoint complete: wrote 2 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.004 s, sync=0.004 s, total=0.021 s; sync files=2, longest=0.003 s, average=0.002 s; distance=1 kB, estimate=13890 kB
+2023-11-25 02:48:04.037 UTC [471246] ERROR:  current user cannot be dropped
+2023-11-25 02:48:04.037 UTC [471246] STATEMENT:  DROP USER su;
+2023-11-25 02:48:04.228 UTC [454399] LOG:  checkpoint starting: immediate force wait
+2023-11-25 02:48:04.282 UTC [454399] LOG:  checkpoint complete: wrote 1090 buffers (6.7%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.018 s, sync=0.021 s, total=0.054 s; sync files=293, longest=0.004 s, average=0.001 s; distance=9638 kB, estimate=13464 kB
+2023-11-25 02:48:04.297 UTC [454399] LOG:  checkpoint starting: immediate force wait
+2023-11-25 02:48:04.329 UTC [454399] LOG:  checkpoint complete: wrote 8 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.008 s, sync=0.008 s, total=0.033 s; sync files=7, longest=0.007 s, average=0.002 s; distance=23 kB, estimate=12120 kB
+2023-11-25 02:48:04.362 UTC [471270] ERROR:  duplicate key value violates unique constraint "company_pkey"
+2023-11-25 02:48:04.362 UTC [471270] DETAIL:  Key (id)=(1) already exists.
+2023-11-25 02:48:04.362 UTC [471270] STATEMENT:  INSERT  INTO Company(ID, Name) VALUES (1, 'Percona');
+2023-11-25 02:48:04.458 UTC [471294] ERROR:  division by zero
+2023-11-25 02:48:04.458 UTC [471294] STATEMENT:  SELECT 1/0;
+2023-11-25 02:48:04.459 UTC [471294] ERROR:  relation "unknown" does not exist at character 15
+2023-11-25 02:48:04.459 UTC [471294] STATEMENT:  SELECT * FROM unknown;
+2023-11-25 02:48:04.459 UTC [471294] ERROR:  syntax error at or near "ELECET" at character 1
+2023-11-25 02:48:04.459 UTC [471294] STATEMENT:  ELECET * FROM unknown;
+2023-11-25 02:48:04.459 UTC [471294] WARNING:  warning message
+2023-11-25 02:48:04.459 UTC [471294] CONTEXT:  PL/pgSQL function inline_code_block line 3 at RAISE
+2023-11-25 02:48:04.536 UTC [471308] ERROR:  role "su" already exists
+2023-11-25 02:48:04.536 UTC [471308] STATEMENT:  CREATE USER su WITH SUPERUSER;
+2023-11-25 02:48:04.547 UTC [471308] ERROR:  permission denied for function pg_stat_monitor_reset
+2023-11-25 02:48:04.547 UTC [471308] STATEMENT:  SELECT pg_stat_monitor_reset();

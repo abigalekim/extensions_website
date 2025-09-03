@@ -1,0 +1,47 @@
+diff -u /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/drop_extension.out /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/drop_extension.out
+--- /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/drop_extension.out	2023-06-28 16:40:59.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/drop_extension.out	2023-10-28 03:20:11.694323108 +0000
+@@ -72,7 +72,7 @@
+ --test drops thru cascades of other objects
+ \c :TEST_DBNAME :ROLE_SUPERUSER
+ drop schema public cascade;
+-NOTICE:  drop cascades to 3 other objects
++NOTICE:  drop cascades to 4 other objects
+ \dn
+   List of schemas
+  Name |   Owner    
+diff -u /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/drop_hypertable.out /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/drop_hypertable.out
+--- /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/test/expected/drop_hypertable.out	2023-06-28 16:40:59.000000000 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/timescaledb-2.11.1/build/test/results/drop_hypertable.out	2023-10-28 03:20:11.022323805 +0000
+@@ -38,10 +38,11 @@
+ DROP TABLE hyper_with_dependencies CASCADE;
+ NOTICE:  drop cascades to view dependent_view
+ \dv
+-      List of relations
+- Schema | Name | Type | Owner 
+---------+------+------+-------
+-(0 rows)
++             List of relations
++ Schema |      Name      | Type |  Owner   
++--------+----------------+------+----------
++ public | pg_buffercache | view | abigalek
++(1 row)
+ 
+ CREATE TABLE chunk_with_dependencies (time timestamp, temp float8);
+ SELECT create_hypertable('chunk_with_dependencies', 'time');
+@@ -61,10 +62,11 @@
+ DROP TABLE chunk_with_dependencies CASCADE;
+ NOTICE:  drop cascades to view dependent_view_chunk
+ \dv
+-      List of relations
+- Schema | Name | Type | Owner 
+---------+------+------+-------
+-(0 rows)
++             List of relations
++ Schema |      Name      | Type |  Owner   
++--------+----------------+------+----------
++ public | pg_buffercache | view | abigalek
++(1 row)
+ 
+ -- Calling create hypertable again will increment hypertable ID
+ -- although no new hypertable is created. Make sure we can handle this.

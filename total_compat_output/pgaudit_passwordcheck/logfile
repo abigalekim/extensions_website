@@ -1,0 +1,36 @@
+2023-07-25 13:18:51.020 UTC [3211214] LOG:  pgaudit extension initialized
+2023-07-25 13:18:51.052 UTC [3211214] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 13:18:51.052 UTC [3211214] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 13:18:51.058 UTC [3211214] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 13:18:51.066 UTC [3211217] LOG:  database system was shut down at 2023-07-25 13:18:50 UTC
+2023-07-25 13:18:51.071 UTC [3211214] LOG:  database system is ready to accept connections
+2023-07-25 13:18:51.191 UTC [3211230] LOG:  AUDIT: SESSION,1,1,MISC,SET,,,SET pgaudit.log = 'all';,<not logged>
+2023-07-25 13:18:51.192 UTC [3211230] LOG:  AUDIT: SESSION,2,1,MISC,SET,,,SET pgaudit.log_client = ON;,<not logged>
+2023-07-25 13:18:51.202 UTC [3211230] LOG:  AUDIT: SESSION,6,1,MISC,RESET,,,RESET pgaudit.log_client;,<not logged>
+2023-07-25 13:18:51.203 UTC [3211230] LOG:  AUDIT: SESSION,7,1,DDL,DROP TABLE,TABLE,public.tmp,DROP TABLE tmp;,<not logged>
+2023-07-25 13:18:51.204 UTC [3211230] LOG:  AUDIT: SESSION,8,1,DDL,DROP TABLE,TABLE,public.tmp2,DROP TABLE tmp2;,<not logged>
+2023-07-25 13:18:51.212 UTC [3211231] ERROR:  password must contain both letters and nonletters
+2023-07-25 13:18:51.212 UTC [3211231] STATEMENT:  CREATE USER user1 password 'password';
+2023-07-25 13:18:51.212 UTC [3211231] ERROR:  role "user1" does not exist
+2023-07-25 13:18:51.212 UTC [3211231] STATEMENT:  ALTER ROLE user1 SET pgaudit.log = 'ddl, ROLE';
+2023-07-25 13:18:51.213 UTC [3211231] ERROR:  role "user1" does not exist
+2023-07-25 13:18:51.213 UTC [3211231] STATEMENT:  ALTER ROLE user1 SET pgaudit.log_level = 'notice';
+2023-07-25 13:18:51.213 UTC [3211231] ERROR:  role "user1" does not exist
+2023-07-25 13:18:51.213 UTC [3211231] STATEMENT:  ALTER ROLE user1 PassWord 'password2' NOLOGIN;
+2023-07-25 13:18:51.213 UTC [3211231] ERROR:  role "user1" does not exist
+2023-07-25 13:18:51.213 UTC [3211231] STATEMENT:  ALTER USER user1 encrypted /* random comment */PASSWORD
+		/* random comment */
+	    'md565cb1da342495ea6bb0418a6e5718c38' LOGIN;
+2023-07-25 13:18:51.213 UTC [3211231] ERROR:  role "user1" does not exist
+2023-07-25 13:18:51.213 UTC [3211231] STATEMENT:  ALTER ROLE user1 SET pgaudit.log_client = ON;
+2023-07-25 13:18:51.214 UTC [3211232] FATAL:  role "user1" does not exist
+2023-07-25 13:18:51.234 UTC [3211215] LOG:  checkpoint starting: immediate force wait
+2023-07-25 13:18:51.263 UTC [3211215] LOG:  checkpoint complete: wrote 13 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.009 s, sync=0.008 s, total=0.030 s; sync files=11, longest=0.003 s, average=0.001 s; distance=4163 kB, estimate=4163 kB
+2023-07-25 13:18:51.390 UTC [3211253] ERROR:  password is too short
+2023-07-25 13:18:51.390 UTC [3211253] STATEMENT:  ALTER USER regress_user1 PASSWORD 'tooshrt';
+2023-07-25 13:18:51.390 UTC [3211253] ERROR:  password must not contain user name
+2023-07-25 13:18:51.390 UTC [3211253] STATEMENT:  ALTER USER regress_user1 PASSWORD 'xyzregress_user1';
+2023-07-25 13:18:51.390 UTC [3211253] ERROR:  password must contain both letters and nonletters
+2023-07-25 13:18:51.390 UTC [3211253] STATEMENT:  ALTER USER regress_user1 PASSWORD 'alessnicelongpassword';
+2023-07-25 13:18:51.391 UTC [3211253] ERROR:  password must not equal user name
+2023-07-25 13:18:51.391 UTC [3211253] STATEMENT:  ALTER USER regress_user1 PASSWORD 'md5e589150ae7d28f93333afae92b36ef48';

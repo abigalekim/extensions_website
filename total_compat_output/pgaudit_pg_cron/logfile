@@ -1,0 +1,12 @@
+2023-07-25 13:21:03.073 UTC [3211640] LOG:  pgaudit extension initialized
+2023-07-25 13:21:03.112 UTC [3211640] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 13:21:03.113 UTC [3211640] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 13:21:03.123 UTC [3211640] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 13:21:03.137 UTC [3211643] LOG:  database system was shut down at 2023-07-25 13:21:02 UTC
+2023-07-25 13:21:03.144 UTC [3211640] LOG:  database system is ready to accept connections
+2023-07-25 13:21:03.150 UTC [3211646] LOG:  pg_cron scheduler started
+2023-07-25 13:21:03.263 UTC [3211658] ERROR:  can only create extension in database postgres
+2023-07-25 13:21:03.263 UTC [3211658] DETAIL:  Jobs must be scheduled from the database configured in cron.database_name, since the pg_cron background worker reads job descriptions from this database.
+2023-07-25 13:21:03.263 UTC [3211658] HINT:  Add cron.database_name = 'regression' in postgresql.conf to use the current database.
+2023-07-25 13:21:03.263 UTC [3211658] CONTEXT:  PL/pgSQL function inline_code_block line 4 at RAISE
+2023-07-25 13:21:03.263 UTC [3211658] STATEMENT:  CREATE EXTENSION IF NOT EXISTS "pg_cron"

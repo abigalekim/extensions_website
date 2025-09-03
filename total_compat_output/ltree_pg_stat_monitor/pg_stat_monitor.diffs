@@ -1,0 +1,199 @@
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/functions.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/functions.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/functions.out	2023-07-25 04:55:55.016790254 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/functions.out	2023-07-25 07:12:34.033112803 +0000
+@@ -11,12 +11,86 @@
+ (1 row)
+ 
+ SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+- routine_schema |       routine_name       | routine_type | data_type 
+-----------------+--------------------------+--------------+-----------
++ routine_schema |       routine_name       | routine_type |    data_type     
++----------------+--------------------------+--------------+------------------
++ public         | _lt_q_regex              | FUNCTION     | boolean
++ public         | _lt_q_rregex             | FUNCTION     | boolean
++ public         | _ltq_extract_regex       | FUNCTION     | USER-DEFINED
++ public         | _ltq_regex               | FUNCTION     | boolean
++ public         | _ltq_rregex              | FUNCTION     | boolean
++ public         | _ltree_compress          | FUNCTION     | internal
++ public         | _ltree_consistent        | FUNCTION     | boolean
++ public         | _ltree_extract_isparent  | FUNCTION     | USER-DEFINED
++ public         | _ltree_extract_risparent | FUNCTION     | USER-DEFINED
++ public         | _ltree_gist_options      | FUNCTION     | void
++ public         | _ltree_isparent          | FUNCTION     | boolean
++ public         | _ltree_penalty           | FUNCTION     | internal
++ public         | _ltree_picksplit         | FUNCTION     | internal
++ public         | _ltree_r_isparent        | FUNCTION     | boolean
++ public         | _ltree_r_risparent       | FUNCTION     | boolean
++ public         | _ltree_risparent         | FUNCTION     | boolean
++ public         | _ltree_same              | FUNCTION     | internal
++ public         | _ltree_union             | FUNCTION     | USER-DEFINED
++ public         | _ltxtq_exec              | FUNCTION     | boolean
++ public         | _ltxtq_extract_exec      | FUNCTION     | USER-DEFINED
++ public         | _ltxtq_rexec             | FUNCTION     | boolean
+  public         | decode_error_level       | FUNCTION     | text
+  public         | get_cmd_type             | FUNCTION     | text
+  public         | get_histogram_timings    | FUNCTION     | text
+  public         | histogram                | FUNCTION     | record
++ public         | index                    | FUNCTION     | integer
++ public         | index                    | FUNCTION     | integer
++ public         | lca                      | FUNCTION     | USER-DEFINED
++ public         | lca                      | FUNCTION     | USER-DEFINED
++ public         | lca                      | FUNCTION     | USER-DEFINED
++ public         | lca                      | FUNCTION     | USER-DEFINED
++ public         | lca                      | FUNCTION     | USER-DEFINED
++ public         | lca                      | FUNCTION     | USER-DEFINED
++ public         | lca                      | FUNCTION     | USER-DEFINED
++ public         | lca                      | FUNCTION     | USER-DEFINED
++ public         | lquery_in                | FUNCTION     | USER-DEFINED
++ public         | lquery_out               | FUNCTION     | cstring
++ public         | lquery_recv              | FUNCTION     | USER-DEFINED
++ public         | lquery_send              | FUNCTION     | bytea
++ public         | lt_q_regex               | FUNCTION     | boolean
++ public         | lt_q_rregex              | FUNCTION     | boolean
++ public         | ltq_regex                | FUNCTION     | boolean
++ public         | ltq_rregex               | FUNCTION     | boolean
++ public         | ltree2text               | FUNCTION     | text
++ public         | ltree_addltree           | FUNCTION     | USER-DEFINED
++ public         | ltree_addtext            | FUNCTION     | USER-DEFINED
++ public         | ltree_cmp                | FUNCTION     | integer
++ public         | ltree_compress           | FUNCTION     | internal
++ public         | ltree_consistent         | FUNCTION     | boolean
++ public         | ltree_decompress         | FUNCTION     | internal
++ public         | ltree_eq                 | FUNCTION     | boolean
++ public         | ltree_ge                 | FUNCTION     | boolean
++ public         | ltree_gist_in            | FUNCTION     | USER-DEFINED
++ public         | ltree_gist_options       | FUNCTION     | void
++ public         | ltree_gist_out           | FUNCTION     | cstring
++ public         | ltree_gt                 | FUNCTION     | boolean
++ public         | ltree_in                 | FUNCTION     | USER-DEFINED
++ public         | ltree_isparent           | FUNCTION     | boolean
++ public         | ltree_le                 | FUNCTION     | boolean
++ public         | ltree_lt                 | FUNCTION     | boolean
++ public         | ltree_ne                 | FUNCTION     | boolean
++ public         | ltree_out                | FUNCTION     | cstring
++ public         | ltree_penalty            | FUNCTION     | internal
++ public         | ltree_picksplit          | FUNCTION     | internal
++ public         | ltree_recv               | FUNCTION     | USER-DEFINED
++ public         | ltree_risparent          | FUNCTION     | boolean
++ public         | ltree_same               | FUNCTION     | internal
++ public         | ltree_send               | FUNCTION     | bytea
++ public         | ltree_textadd            | FUNCTION     | USER-DEFINED
++ public         | ltree_union              | FUNCTION     | USER-DEFINED
++ public         | ltreeparentsel           | FUNCTION     | double precision
++ public         | ltxtq_exec               | FUNCTION     | boolean
++ public         | ltxtq_in                 | FUNCTION     | USER-DEFINED
++ public         | ltxtq_out                | FUNCTION     | cstring
++ public         | ltxtq_recv               | FUNCTION     | USER-DEFINED
++ public         | ltxtq_rexec              | FUNCTION     | boolean
++ public         | ltxtq_send               | FUNCTION     | bytea
++ public         | nlevel                   | FUNCTION     | integer
+  public         | pg_stat_monitor_internal | FUNCTION     | record
+  public         | pg_stat_monitor_reset    | FUNCTION     | void
+  public         | pg_stat_monitor_version  | FUNCTION     | text
+@@ -26,20 +100,102 @@
+  public         | pgsm_create_15_view      | FUNCTION     | integer
+  public         | pgsm_create_view         | FUNCTION     | integer
+  public         | range                    | FUNCTION     | ARRAY
+-(13 rows)
++ public         | subltree                 | FUNCTION     | USER-DEFINED
++ public         | subpath                  | FUNCTION     | USER-DEFINED
++ public         | subpath                  | FUNCTION     | USER-DEFINED
++ public         | text2ltree               | FUNCTION     | USER-DEFINED
++(91 rows)
+ 
+ SET ROLE u1;
+ SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+- routine_schema |       routine_name       | routine_type | data_type 
+-----------------+--------------------------+--------------+-----------
++ routine_schema |       routine_name       | routine_type |    data_type     
++----------------+--------------------------+--------------+------------------
++ public         | _lt_q_regex              | FUNCTION     | boolean
++ public         | _lt_q_rregex             | FUNCTION     | boolean
++ public         | _ltq_extract_regex       | FUNCTION     | USER-DEFINED
++ public         | _ltq_regex               | FUNCTION     | boolean
++ public         | _ltq_rregex              | FUNCTION     | boolean
++ public         | _ltree_compress          | FUNCTION     | internal
++ public         | _ltree_consistent        | FUNCTION     | boolean
++ public         | _ltree_extract_isparent  | FUNCTION     | USER-DEFINED
++ public         | _ltree_extract_risparent | FUNCTION     | USER-DEFINED
++ public         | _ltree_gist_options      | FUNCTION     | void
++ public         | _ltree_isparent          | FUNCTION     | boolean
++ public         | _ltree_penalty           | FUNCTION     | internal
++ public         | _ltree_picksplit         | FUNCTION     | internal
++ public         | _ltree_r_isparent        | FUNCTION     | boolean
++ public         | _ltree_r_risparent       | FUNCTION     | boolean
++ public         | _ltree_risparent         | FUNCTION     | boolean
++ public         | _ltree_same              | FUNCTION     | internal
++ public         | _ltree_union             | FUNCTION     | USER-DEFINED
++ public         | _ltxtq_exec              | FUNCTION     | boolean
++ public         | _ltxtq_extract_exec      | FUNCTION     | USER-DEFINED
++ public         | _ltxtq_rexec             | FUNCTION     | boolean
+  public         | decode_error_level       | FUNCTION     | text
+  public         | get_cmd_type             | FUNCTION     | text
+  public         | get_histogram_timings    | FUNCTION     | text
+  public         | histogram                | FUNCTION     | record
++ public         | index                    | FUNCTION     | integer
++ public         | index                    | FUNCTION     | integer
++ public         | lca                      | FUNCTION     | USER-DEFINED
++ public         | lca                      | FUNCTION     | USER-DEFINED
++ public         | lca                      | FUNCTION     | USER-DEFINED
++ public         | lca                      | FUNCTION     | USER-DEFINED
++ public         | lca                      | FUNCTION     | USER-DEFINED
++ public         | lca                      | FUNCTION     | USER-DEFINED
++ public         | lca                      | FUNCTION     | USER-DEFINED
++ public         | lca                      | FUNCTION     | USER-DEFINED
++ public         | lquery_in                | FUNCTION     | USER-DEFINED
++ public         | lquery_out               | FUNCTION     | cstring
++ public         | lquery_recv              | FUNCTION     | USER-DEFINED
++ public         | lquery_send              | FUNCTION     | bytea
++ public         | lt_q_regex               | FUNCTION     | boolean
++ public         | lt_q_rregex              | FUNCTION     | boolean
++ public         | ltq_regex                | FUNCTION     | boolean
++ public         | ltq_rregex               | FUNCTION     | boolean
++ public         | ltree2text               | FUNCTION     | text
++ public         | ltree_addltree           | FUNCTION     | USER-DEFINED
++ public         | ltree_addtext            | FUNCTION     | USER-DEFINED
++ public         | ltree_cmp                | FUNCTION     | integer
++ public         | ltree_compress           | FUNCTION     | internal
++ public         | ltree_consistent         | FUNCTION     | boolean
++ public         | ltree_decompress         | FUNCTION     | internal
++ public         | ltree_eq                 | FUNCTION     | boolean
++ public         | ltree_ge                 | FUNCTION     | boolean
++ public         | ltree_gist_in            | FUNCTION     | USER-DEFINED
++ public         | ltree_gist_options       | FUNCTION     | void
++ public         | ltree_gist_out           | FUNCTION     | cstring
++ public         | ltree_gt                 | FUNCTION     | boolean
++ public         | ltree_in                 | FUNCTION     | USER-DEFINED
++ public         | ltree_isparent           | FUNCTION     | boolean
++ public         | ltree_le                 | FUNCTION     | boolean
++ public         | ltree_lt                 | FUNCTION     | boolean
++ public         | ltree_ne                 | FUNCTION     | boolean
++ public         | ltree_out                | FUNCTION     | cstring
++ public         | ltree_penalty            | FUNCTION     | internal
++ public         | ltree_picksplit          | FUNCTION     | internal
++ public         | ltree_recv               | FUNCTION     | USER-DEFINED
++ public         | ltree_risparent          | FUNCTION     | boolean
++ public         | ltree_same               | FUNCTION     | internal
++ public         | ltree_send               | FUNCTION     | bytea
++ public         | ltree_textadd            | FUNCTION     | USER-DEFINED
++ public         | ltree_union              | FUNCTION     | USER-DEFINED
++ public         | ltreeparentsel           | FUNCTION     | double precision
++ public         | ltxtq_exec               | FUNCTION     | boolean
++ public         | ltxtq_in                 | FUNCTION     | USER-DEFINED
++ public         | ltxtq_out                | FUNCTION     | cstring
++ public         | ltxtq_recv               | FUNCTION     | USER-DEFINED
++ public         | ltxtq_rexec              | FUNCTION     | boolean
++ public         | ltxtq_send               | FUNCTION     | bytea
++ public         | nlevel                   | FUNCTION     | integer
+  public         | pg_stat_monitor_internal | FUNCTION     | record
+  public         | pg_stat_monitor_version  | FUNCTION     | text
+  public         | range                    | FUNCTION     | ARRAY
+-(7 rows)
++ public         | subltree                 | FUNCTION     | USER-DEFINED
++ public         | subpath                  | FUNCTION     | USER-DEFINED
++ public         | subpath                  | FUNCTION     | USER-DEFINED
++ public         | text2ltree               | FUNCTION     | USER-DEFINED
++(85 rows)
+ 
+ SET ROLE su;
+ DROP USER u1;

@@ -1,0 +1,2912 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/postgres_fdw/expected/postgres_fdw.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/postgres_fdw/results/postgres_fdw.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/postgres_fdw/expected/postgres_fdw.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/postgres_fdw/results/postgres_fdw.out	2023-07-26 09:45:04.265924824 +0000
+@@ -298,7 +298,8 @@
+          ->  Foreign Scan on public.ft1 t1
+                Output: c1, c2, c3, c4, c5, c6, c7, c8, tableoid
+                Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1"
+-(8 rows)
++ Query Identifier: -5172222868391874181
++(9 rows)
+ 
+ SELECT * FROM ft1 t1 ORDER BY t1.c3, t1.c1, t1.tableoid OFFSET 100 LIMIT 10;
+  c1  | c2 |  c3   |              c4              |            c5            | c6 |     c7     | c8  
+@@ -322,7 +323,8 @@
+  Foreign Scan on public.ft1 t1
+    Output: t1.*, c3, c1
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" ORDER BY c3 ASC NULLS LAST, "C 1" ASC NULLS LAST LIMIT 10::bigint OFFSET 100::bigint
+-(3 rows)
++ Query Identifier: 9193780703421972698
++(4 rows)
+ 
+ SELECT t1 FROM ft1 t1 ORDER BY t1.c3, t1.c1 OFFSET 100 LIMIT 10;
+                                              t1                                             
+@@ -352,7 +354,8 @@
+  Foreign Scan on public.ft1 t1
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE ((c7 >= '1')) AND (("C 1" = 101)) AND ((c6 = '1'))
+-(3 rows)
++ Query Identifier: -196021639336972569
++(4 rows)
+ 
+ SELECT * FROM ft1 t1 WHERE t1.c1 = 101 AND t1.c6 = '1' AND t1.c7 >= '1';
+  c1  | c2 |  c3   |              c4              |            c5            | c6 |     c7     | c8  
+@@ -367,7 +370,8 @@
+  Foreign Scan on public.ft1 t1
+    Output: c1, c2, c3, c4, c5, c6, c7, c8, t1.*
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE (("C 1" = 101)) FOR UPDATE
+-(3 rows)
++ Query Identifier: 6890302308452560925
++(4 rows)
+ 
+ SELECT * FROM ft1 t1 WHERE c1 = 101 FOR UPDATE;
+  c1  | c2 |  c3   |              c4              |            c5            | c6 |     c7     | c8  
+@@ -381,7 +385,8 @@
+  Foreign Scan on public.ft1 t1
+    Output: c1, c2, c3, c4, c5, c6, c7, c8, t1.*
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE (("C 1" = 102)) FOR SHARE
+-(3 rows)
++ Query Identifier: -8641797817720312063
++(4 rows)
+ 
+ SELECT * FROM ft1 t1 WHERE c1 = 102 FOR SHARE;
+  c1  | c2 |  c3   |              c4              |            c5            | c6 |     c7     | c8  
+@@ -461,7 +466,8 @@
+                Remote SQL: SELECT "C 1" FROM "S 1"."T 1" ORDER BY "C 1" ASC NULLS LAST
+          ->  Index Only Scan using t1_pkey on "S 1"."T 1" t2
+                Output: t2."C 1"
+-(11 rows)
++ Query Identifier: -1524624065706160598
++(12 rows)
+ 
+ SELECT t1.c1, t2."C 1" FROM ft2 t1 JOIN "S 1"."T 1" t2 ON (t1.c1 = t2."C 1") OFFSET 100 LIMIT 10;
+  c1  | C 1 
+@@ -495,7 +501,8 @@
+                Remote SQL: SELECT "C 1" FROM "S 1"."T 1" ORDER BY "C 1" ASC NULLS LAST
+          ->  Index Only Scan using t1_pkey on "S 1"."T 1" t2
+                Output: t2."C 1"
+-(11 rows)
++ Query Identifier: -7775947262008113788
++(12 rows)
+ 
+ SELECT t1.c1, t2."C 1" FROM ft2 t1 LEFT JOIN "S 1"."T 1" t2 ON (t1.c1 = t2."C 1") OFFSET 100 LIMIT 10;
+  c1  | C 1 
+@@ -530,7 +537,8 @@
+                Remote SQL: SELECT r3."C 1" FROM ("S 1"."T 1" r2 INNER JOIN "S 1"."T 1" r3 ON (((r2."C 1" = r3."C 1")))) ORDER BY r2."C 1" ASC NULLS LAST
+          ->  Index Only Scan using t1_pkey on "S 1"."T 1" t1
+                Output: t1."C 1"
+-(12 rows)
++ Query Identifier: -1604121533194595063
++(13 rows)
+ 
+ SELECT t1."C 1" FROM "S 1"."T 1" t1 left join ft1 t2 join ft2 t3 on (t2.c1 = t3.c1) on (t3.c1 = t1."C 1") OFFSET 100 LIMIT 10;
+  C 1 
+@@ -566,7 +574,8 @@
+                Remote SQL: SELECT r3."C 1", r2."C 1" FROM ("S 1"."T 1" r3 LEFT JOIN "S 1"."T 1" r2 ON (((r2."C 1" = r3."C 1")))) ORDER BY r3."C 1" ASC NULLS LAST
+          ->  Index Only Scan using t1_pkey on "S 1"."T 1" t1
+                Output: t1."C 1"
+-(12 rows)
++ Query Identifier: -8133634306087905172
++(13 rows)
+ 
+ SELECT t1."C 1", t2.c1, t3.c1 FROM "S 1"."T 1" t1 left join ft1 t2 full join ft2 t3 on (t2.c1 = t3.c1) on (t3.c1 = t1."C 1") OFFSET 100 LIMIT 10;
+  C 1 | c1  | c1  
+@@ -600,7 +609,8 @@
+                Remote SQL: SELECT r2."C 1", r3."C 1" FROM ("S 1"."T 1" r2 FULL JOIN "S 1"."T 1" r3 ON (((r2."C 1" = r3."C 1")))) ORDER BY r3."C 1" ASC NULLS LAST
+          ->  Index Only Scan using t1_pkey on "S 1"."T 1" t1
+                Output: t1."C 1"
+-(12 rows)
++ Query Identifier: 1989388744379605958
++(13 rows)
+ 
+ SELECT t1."C 1", t2.c1, t3.c1 FROM "S 1"."T 1" t1 full join ft1 t2 full join ft2 t3 on (t2.c1 = t3.c1) on (t3.c1 = t1."C 1") OFFSET 100 LIMIT 10;
+  C 1 | c1  | c1  
+@@ -635,7 +645,8 @@
+  Foreign Scan on public.ft_empty
+    Output: c1, c2
+    Remote SQL: SELECT c1, c2 FROM public.loct_empty ORDER BY c1 ASC NULLS LAST
+-(3 rows)
++ Query Identifier: 2776501142114710333
++(4 rows)
+ 
+ -- ===================================================================
+ -- WHERE with remotely-executable conditions
+@@ -646,7 +657,8 @@
+  Foreign Scan on public.ft1 t1
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE (("C 1" = 1))
+-(3 rows)
++ Query Identifier: -5601578888941139157
++(4 rows)
+ 
+ EXPLAIN (VERBOSE, COSTS OFF) SELECT * FROM ft1 t1 WHERE t1.c1 = 100 AND t1.c2 = 0; -- BoolExpr
+                                                   QUERY PLAN                                                  
+@@ -654,7 +666,8 @@
+  Foreign Scan on public.ft1 t1
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE (("C 1" = 100)) AND ((c2 = 0))
+-(3 rows)
++ Query Identifier: -8029295860212400581
++(4 rows)
+ 
+ EXPLAIN (VERBOSE, COSTS OFF) SELECT * FROM ft1 t1 WHERE c1 IS NULL;        -- NullTest
+                                            QUERY PLAN                                            
+@@ -662,7 +675,8 @@
+  Foreign Scan on public.ft1 t1
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE (("C 1" IS NULL))
+-(3 rows)
++ Query Identifier: -8047084363341985455
++(4 rows)
+ 
+ EXPLAIN (VERBOSE, COSTS OFF) SELECT * FROM ft1 t1 WHERE c1 IS NOT NULL;    -- NullTest
+                                              QUERY PLAN                                              
+@@ -670,7 +684,8 @@
+  Foreign Scan on public.ft1 t1
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE (("C 1" IS NOT NULL))
+-(3 rows)
++ Query Identifier: 6337604576258802626
++(4 rows)
+ 
+ EXPLAIN (VERBOSE, COSTS OFF) SELECT * FROM ft1 t1 WHERE round(abs(c1), 0) = 1; -- FuncExpr
+                                                      QUERY PLAN                                                      
+@@ -678,7 +693,8 @@
+  Foreign Scan on public.ft1 t1
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE ((round(abs("C 1"), 0) = 1::numeric))
+-(3 rows)
++ Query Identifier: 1093423898295775759
++(4 rows)
+ 
+ EXPLAIN (VERBOSE, COSTS OFF) SELECT * FROM ft1 t1 WHERE c1 = -c1;          -- OpExpr(l)
+                                              QUERY PLAN                                              
+@@ -686,7 +702,8 @@
+  Foreign Scan on public.ft1 t1
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE (("C 1" = (- "C 1")))
+-(3 rows)
++ Query Identifier: 8838477522292227998
++(4 rows)
+ 
+ EXPLAIN (VERBOSE, COSTS OFF) SELECT * FROM ft1 t1 WHERE (c1 IS NOT NULL) IS DISTINCT FROM (c1 IS NOT NULL); -- DistinctExpr
+                                                                  QUERY PLAN                                                                 
+@@ -694,7 +711,8 @@
+  Foreign Scan on public.ft1 t1
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE ((("C 1" IS NOT NULL) IS DISTINCT FROM ("C 1" IS NOT NULL)))
+-(3 rows)
++ Query Identifier: -2927554012448306072
++(4 rows)
+ 
+ EXPLAIN (VERBOSE, COSTS OFF) SELECT * FROM ft1 t1 WHERE c1 = ANY(ARRAY[c2, 1, c1 + 0]); -- ScalarArrayOpExpr
+                                                         QUERY PLAN                                                         
+@@ -702,7 +720,8 @@
+  Foreign Scan on public.ft1 t1
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE (("C 1" = ANY (ARRAY[c2, 1, ("C 1" + 0)])))
+-(3 rows)
++ Query Identifier: -7852576066737343680
++(4 rows)
+ 
+ EXPLAIN (VERBOSE, COSTS OFF) SELECT * FROM ft1 t1 WHERE c1 = (ARRAY[c1,c2,3])[1]; -- SubscriptingRef
+                                                       QUERY PLAN                                                      
+@@ -710,7 +729,8 @@
+  Foreign Scan on public.ft1 t1
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE (("C 1" = ((ARRAY["C 1", c2, 3])[1])))
+-(3 rows)
++ Query Identifier: -452822197314044376
++(4 rows)
+ 
+ EXPLAIN (VERBOSE, COSTS OFF) SELECT * FROM ft1 t1 WHERE c6 = E'foo''s\\bar';  -- check special chars
+                                               QUERY PLAN                                               
+@@ -718,7 +738,8 @@
+  Foreign Scan on public.ft1 t1
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE ((c6 = E'foo''s\\bar'))
+-(3 rows)
++ Query Identifier: -5328736352404195960
++(4 rows)
+ 
+ EXPLAIN (VERBOSE, COSTS OFF) SELECT * FROM ft1 t1 WHERE c8 = 'foo';  -- can't be sent to remote
+                                QUERY PLAN                                
+@@ -727,7 +748,8 @@
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Filter: (t1.c8 = 'foo'::user_enum)
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1"
+-(4 rows)
++ Query Identifier: -1887094792756503623
++(5 rows)
+ 
+ -- parameterized remote path for foreign table
+ EXPLAIN (VERBOSE, COSTS OFF)
+@@ -742,7 +764,8 @@
+    ->  Foreign Scan on public.ft2 b
+          Output: b.c1, b.c2, b.c3, b.c4, b.c5, b.c6, b.c7, b.c8
+          Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE (($1::integer = "C 1"))
+-(8 rows)
++ Query Identifier: 1814673454708569640
++(9 rows)
+ 
+ SELECT * FROM ft2 a, ft2 b WHERE a.c1 = 47 AND b.c1 = a.c2;
+  c1 | c2 |  c3   |              c4              |            c5            | c6 |     c7     | c8  | c1 | c2 |  c3   |              c4              |            c5            | c6 |     c7     | c8  
+@@ -766,7 +789,8 @@
+          Output: b.c1, b.c2, b.c3, b.c4, b.c5, b.c6, b.c7, b.c8
+          Filter: (upper((a.c7)::text) = (b.c7)::text)
+          Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE (($1::integer = "C 1"))
+-(10 rows)
++ Query Identifier: 401849638525558073
++(11 rows)
+ 
+ SELECT * FROM ft2 a, ft2 b
+ WHERE a.c2 = 6 AND b.c1 = a.c1 AND a.c8 = 'foo' AND b.c7 = upper(a.c7);
+@@ -905,7 +929,8 @@
+    ->  Foreign Scan on public.ft2
+          Output: c1, c2, c3, c4, c5, c6, c7, c8, random()
+          Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1"
+-(6 rows)
++ Query Identifier: -4438345299824993414
++(7 rows)
+ 
+ EXPLAIN (VERBOSE, COSTS OFF)
+ 	SELECT * FROM ft2 ORDER BY ft2.c1, ft2.c3 collate "C";
+@@ -917,7 +942,8 @@
+    ->  Foreign Scan on public.ft2
+          Output: c1, c2, c3, c4, c5, c6, c7, c8, c3
+          Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1"
+-(6 rows)
++ Query Identifier: 8242244445874310501
++(7 rows)
+ 
+ -- user-defined operator/function
+ CREATE FUNCTION postgres_fdw_abs(int) RETURNS int AS $$
+@@ -940,7 +966,8 @@
+    Output: (count(c3))
+    Relations: Aggregate on (public.ft1 t1)
+    Remote SQL: SELECT count(c3) FROM "S 1"."T 1" WHERE (("C 1" = abs(c2)))
+-(4 rows)
++ Query Identifier: 5089160447920486832
++(5 rows)
+ 
+ SELECT count(c3) FROM ft1 t1 WHERE t1.c1 = abs(t1.c2);
+  count 
+@@ -956,7 +983,8 @@
+    Output: (count(c3))
+    Relations: Aggregate on (public.ft1 t1)
+    Remote SQL: SELECT count(c3) FROM "S 1"."T 1" WHERE (("C 1" = c2))
+-(4 rows)
++ Query Identifier: 3384826228428912495
++(5 rows)
+ 
+ SELECT count(c3) FROM ft1 t1 WHERE t1.c1 = t1.c2;
+  count 
+@@ -975,7 +1003,8 @@
+          Output: c3
+          Filter: (t1.c1 = postgres_fdw_abs(t1.c2))
+          Remote SQL: SELECT "C 1", c2, c3 FROM "S 1"."T 1"
+-(6 rows)
++ Query Identifier: -4623377577926602095
++(7 rows)
+ 
+ SELECT count(c3) FROM ft1 t1 WHERE t1.c1 = postgres_fdw_abs(t1.c2);
+  count 
+@@ -993,7 +1022,8 @@
+          Output: c3
+          Filter: (t1.c1 === t1.c2)
+          Remote SQL: SELECT "C 1", c2, c3 FROM "S 1"."T 1"
+-(6 rows)
++ Query Identifier: 93208616623369657
++(7 rows)
+ 
+ SELECT count(c3) FROM ft1 t1 WHERE t1.c1 === t1.c2;
+  count 
+@@ -1012,7 +1042,8 @@
+          Output: c1, c2, c3, c4, c5, c6, c7, c8
+          Filter: (t1.c1 === t1.c2)
+          Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" ORDER BY c2 ASC NULLS LAST
+-(6 rows)
++ Query Identifier: 2913335918031998597
++(7 rows)
+ 
+ SELECT * FROM ft1 t1 WHERE t1.c1 === t1.c2 order by t1.c2 limit 1;
+  c1 | c2 |  c3   |              c4              |            c5            | c6 |     c7     | c8  
+@@ -1033,7 +1064,8 @@
+    Output: (count(c3))
+    Relations: Aggregate on (public.ft1 t1)
+    Remote SQL: SELECT count(c3) FROM "S 1"."T 1" WHERE (("C 1" = public.postgres_fdw_abs(c2)))
+-(4 rows)
++ Query Identifier: -4623377577926602095
++(5 rows)
+ 
+ SELECT count(c3) FROM ft1 t1 WHERE t1.c1 = postgres_fdw_abs(t1.c2);
+  count 
+@@ -1049,7 +1081,8 @@
+    Output: (count(c3))
+    Relations: Aggregate on (public.ft1 t1)
+    Remote SQL: SELECT count(c3) FROM "S 1"."T 1" WHERE (("C 1" OPERATOR(public.===) c2))
+-(4 rows)
++ Query Identifier: 93208616623369657
++(5 rows)
+ 
+ SELECT count(c3) FROM ft1 t1 WHERE t1.c1 === t1.c2;
+  count 
+@@ -1065,7 +1098,8 @@
+  Foreign Scan on public.ft1 t1
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE (("C 1" OPERATOR(public.===) c2)) ORDER BY c2 ASC NULLS LAST LIMIT 1::bigint
+-(3 rows)
++ Query Identifier: 2913335918031998597
++(4 rows)
+ 
+ SELECT * FROM ft1 t1 WHERE t1.c1 === t1.c2 order by t1.c2 limit 1;
+  c1 | c2 |  c3   |              c4              |            c5            | c6 |     c7     | c8  
+@@ -1081,7 +1115,8 @@
+  Foreign Scan on public.ft2
+    Output: c1, c2, c3
+    Remote SQL: SELECT "C 1", c2, c3 FROM "S 1"."T 1" WHERE (((CASE WHEN ("C 1" > 990) THEN "C 1" ELSE NULL::integer END) < 1000)) ORDER BY "C 1" ASC NULLS LAST
+-(3 rows)
++ Query Identifier: 7786024812877941514
++(4 rows)
+ 
+ SELECT c1,c2,c3 FROM ft2 WHERE CASE WHEN c1 > 990 THEN c1 END < 1000 ORDER BY c1;
+  c1  | c2 |  c3   
+@@ -1105,7 +1140,8 @@
+  Foreign Scan on public.ft2
+    Output: c1, c2, c3
+    Remote SQL: SELECT "C 1", c2, c3 FROM "S 1"."T 1" WHERE (((CASE (CASE WHEN (c2 > 0) THEN c2 ELSE NULL::integer END) WHEN 100 THEN 601 WHEN c2 THEN c2 ELSE 0 END) > 600)) ORDER BY "C 1" ASC NULLS LAST
+-(3 rows)
++ Query Identifier: -3202869628303002235
++(4 rows)
+ 
+ SELECT c1,c2,c3 FROM ft2 WHERE CASE CASE WHEN c2 > 0 THEN c2 END WHEN 100 THEN 601 WHEN c2 THEN c2 ELSE 0 END > 600 ORDER BY c1;
+  c1 | c2 | c3 
+@@ -1120,7 +1156,8 @@
+  Foreign Scan on public.ft1
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE (("C 1" > (CASE mod("C 1", 4) WHEN 0 THEN 1 WHEN 2 THEN 50 ELSE 100 END)))
+-(3 rows)
++ Query Identifier: 3406207288313804243
++(4 rows)
+ 
+ -- CASE cannot be pushed down because of unshippable arg clause
+ EXPLAIN (VERBOSE, COSTS OFF)
+@@ -1131,7 +1168,8 @@
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Filter: (ft1.c1 > CASE (random())::integer WHEN 0 THEN 1 WHEN 2 THEN 50 ELSE 100 END)
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1"
+-(4 rows)
++ Query Identifier: -6556558428696456821
++(5 rows)
+ 
+ -- these are shippable
+ EXPLAIN (VERBOSE, COSTS OFF)
+@@ -1141,7 +1179,8 @@
+  Foreign Scan on public.ft1
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE ((CASE c6 WHEN 'foo'::text THEN true ELSE (c3 < 'bar') END))
+-(3 rows)
++ Query Identifier: 441850891692834855
++(4 rows)
+ 
+ EXPLAIN (VERBOSE, COSTS OFF)
+ SELECT * FROM ft1 WHERE CASE c3 WHEN c6 THEN true ELSE c3 < 'bar' END;
+@@ -1150,7 +1189,8 @@
+  Foreign Scan on public.ft1
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE ((CASE c3 WHEN c6 THEN true ELSE (c3 < 'bar') END))
+-(3 rows)
++ Query Identifier: -7062192884628954466
++(4 rows)
+ 
+ -- but this is not because of collation
+ EXPLAIN (VERBOSE, COSTS OFF)
+@@ -1161,7 +1201,8 @@
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Filter: CASE (ft1.c3)::text WHEN ft1.c6 THEN true ELSE (ft1.c3 < 'bar'::text) END
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1"
+-(4 rows)
++ Query Identifier: -837343780171724536
++(5 rows)
+ 
+ -- check schema-qualification of regconfig constant
+ CREATE TEXT SEARCH CONFIGURATION public.custom_search
+@@ -1174,7 +1215,8 @@
+  Foreign Scan on public.ft1
+    Output: c1, to_tsvector('custom_search'::regconfig, c3)
+    Remote SQL: SELECT "C 1", c3 FROM "S 1"."T 1" WHERE (("C 1" = 642)) AND ((length(to_tsvector('public.custom_search'::regconfig, c3)) > 0))
+-(3 rows)
++ Query Identifier: 6512827124208072283
++(4 rows)
+ 
+ SELECT c1, to_tsvector('custom_search'::regconfig, c3) FROM ft1
+ WHERE c1 = 642 AND length(to_tsvector('custom_search'::regconfig, c3)) > 0;
+@@ -1199,7 +1241,8 @@
+    Output: t1.c1, t2.c1, t1.c3
+    Relations: (public.ft1 t1) INNER JOIN (public.ft2 t2)
+    Remote SQL: SELECT r1."C 1", r2."C 1", r1.c3 FROM ("S 1"."T 1" r1 INNER JOIN "S 1"."T 1" r2 ON (((r1."C 1" = r2."C 1")))) ORDER BY r1.c3 ASC NULLS LAST, r1."C 1" ASC NULLS LAST LIMIT 10::bigint OFFSET 100::bigint
+-(4 rows)
++ Query Identifier: 3207249661518983419
++(5 rows)
+ 
+ SELECT t1.c1, t2.c1 FROM ft1 t1 JOIN ft2 t2 ON (t1.c1 = t2.c1) ORDER BY t1.c3, t1.c1 OFFSET 100 LIMIT 10;
+  c1  | c1  
+@@ -1225,7 +1268,8 @@
+    Output: t1.c1, t2.c2, t3.c3, t1.c3
+    Relations: ((public.ft1 t1) INNER JOIN (public.ft2 t2)) INNER JOIN (public.ft4 t3)
+    Remote SQL: SELECT r1."C 1", r2.c2, r4.c3, r1.c3 FROM (("S 1"."T 1" r1 INNER JOIN "S 1"."T 1" r2 ON (((r1."C 1" = r2."C 1")))) INNER JOIN "S 1"."T 3" r4 ON (((r1."C 1" = r4.c1)))) ORDER BY r1.c3 ASC NULLS LAST, r1."C 1" ASC NULLS LAST LIMIT 10::bigint OFFSET 10::bigint
+-(4 rows)
++ Query Identifier: -5599891932410329562
++(5 rows)
+ 
+ SELECT t1.c1, t2.c2, t3.c3 FROM ft1 t1 JOIN ft2 t2 ON (t1.c1 = t2.c1) JOIN ft4 t3 ON (t3.c1 = t1.c1) ORDER BY t1.c3, t1.c1 OFFSET 10 LIMIT 10;
+  c1 | c2 |   c3   
+@@ -1251,7 +1295,8 @@
+    Output: t1.c1, t2.c1
+    Relations: (public.ft4 t1) LEFT JOIN (public.ft5 t2)
+    Remote SQL: SELECT r1.c1, r2.c1 FROM ("S 1"."T 3" r1 LEFT JOIN "S 1"."T 4" r2 ON (((r1.c1 = r2.c1)))) ORDER BY r1.c1 ASC NULLS LAST, r2.c1 ASC NULLS LAST LIMIT 10::bigint OFFSET 10::bigint
+-(4 rows)
++ Query Identifier: -5537537405946213719
++(5 rows)
+ 
+ SELECT t1.c1, t2.c1 FROM ft4 t1 LEFT JOIN ft5 t2 ON (t1.c1 = t2.c1) ORDER BY t1.c1, t2.c1 OFFSET 10 LIMIT 10;
+  c1 | c1 
+@@ -1277,7 +1322,8 @@
+    Output: t1.c1, t2.c2, t3.c3
+    Relations: ((public.ft2 t1) LEFT JOIN (public.ft2 t2)) LEFT JOIN (public.ft4 t3)
+    Remote SQL: SELECT r1."C 1", r2.c2, r4.c3 FROM (("S 1"."T 1" r1 LEFT JOIN "S 1"."T 1" r2 ON (((r1."C 1" = r2."C 1")))) LEFT JOIN "S 1"."T 3" r4 ON (((r2."C 1" = r4.c1)))) LIMIT 10::bigint OFFSET 10::bigint
+-(4 rows)
++ Query Identifier: -2892452098816908711
++(5 rows)
+ 
+ SELECT t1.c1, t2.c2, t3.c3 FROM ft2 t1 LEFT JOIN ft2 t2 ON (t1.c1 = t2.c1) LEFT JOIN ft4 t3 ON (t2.c1 = t3.c1) OFFSET 10 LIMIT 10;
+  c1 | c2 |   c3   
+@@ -1305,7 +1351,8 @@
+    Output: t1.c1, t1.c2, ft5.c1, ft5.c2
+    Relations: (public.ft4 t1) LEFT JOIN (public.ft5)
+    Remote SQL: SELECT r1.c1, r1.c2, r4.c1, r4.c2 FROM ("S 1"."T 3" r1 LEFT JOIN "S 1"."T 4" r4 ON (((r1.c1 = r4.c1)) AND ((r4.c1 < 10)))) WHERE ((r1.c1 < 10))
+-(4 rows)
++ Query Identifier: 6304081684827843385
++(5 rows)
+ 
+ SELECT t1.c1, t1.c2, t2.c1, t2.c2 FROM ft4 t1 LEFT JOIN (SELECT * FROM ft5 WHERE c1 < 10) t2 ON (t1.c1 = t2.c1) WHERE t1.c1 < 10;
+  c1 | c2 | c1 | c2 
+@@ -1327,7 +1374,8 @@
+    Output: t1.c1, t1.c2, ft5.c1, ft5.c2
+    Relations: (public.ft4 t1) LEFT JOIN (public.ft5)
+    Remote SQL: SELECT r1.c1, r1.c2, r4.c1, r4.c2 FROM ("S 1"."T 3" r1 LEFT JOIN "S 1"."T 4" r4 ON (((r1.c1 = r4.c1)) AND ((r4.c1 < 10)))) WHERE (((r4.c1 < 10) OR (r4.c1 IS NULL))) AND ((r1.c1 < 10))
+-(4 rows)
++ Query Identifier: -7516761003550343097
++(5 rows)
+ 
+ SELECT t1.c1, t1.c2, t2.c1, t2.c2 FROM ft4 t1 LEFT JOIN (SELECT * FROM ft5 WHERE c1 < 10) t2 ON (t1.c1 = t2.c1)
+ 			WHERE (t2.c1 < 10 OR t2.c1 IS NULL) AND t1.c1 < 10;
+@@ -1348,7 +1396,8 @@
+    Output: t1.c1, t2.c1
+    Relations: (public.ft4 t2) LEFT JOIN (public.ft5 t1)
+    Remote SQL: SELECT r1.c1, r2.c1 FROM ("S 1"."T 3" r2 LEFT JOIN "S 1"."T 4" r1 ON (((r1.c1 = r2.c1)))) ORDER BY r2.c1 ASC NULLS LAST, r1.c1 ASC NULLS LAST LIMIT 10::bigint OFFSET 10::bigint
+-(4 rows)
++ Query Identifier: -8863376778675649051
++(5 rows)
+ 
+ SELECT t1.c1, t2.c1 FROM ft5 t1 RIGHT JOIN ft4 t2 ON (t1.c1 = t2.c1) ORDER BY t2.c1, t1.c1 OFFSET 10 LIMIT 10;
+  c1 | c1 
+@@ -1374,7 +1423,8 @@
+    Output: t1.c1, t2.c2, t3.c3
+    Relations: ((public.ft4 t3) LEFT JOIN (public.ft2 t2)) LEFT JOIN (public.ft2 t1)
+    Remote SQL: SELECT r1."C 1", r2.c2, r4.c3 FROM (("S 1"."T 3" r4 LEFT JOIN "S 1"."T 1" r2 ON (((r2."C 1" = r4.c1)))) LEFT JOIN "S 1"."T 1" r1 ON (((r1."C 1" = r2."C 1")))) LIMIT 10::bigint OFFSET 10::bigint
+-(4 rows)
++ Query Identifier: -8041073399947685972
++(5 rows)
+ 
+ SELECT t1.c1, t2.c2, t3.c3 FROM ft2 t1 RIGHT JOIN ft2 t2 ON (t1.c1 = t2.c1) RIGHT JOIN ft4 t3 ON (t2.c1 = t3.c1) OFFSET 10 LIMIT 10;
+  c1 | c2 |   c3   
+@@ -1400,7 +1450,8 @@
+    Output: t1.c1, t2.c1
+    Relations: (public.ft4 t1) FULL JOIN (public.ft5 t2)
+    Remote SQL: SELECT r1.c1, r2.c1 FROM ("S 1"."T 3" r1 FULL JOIN "S 1"."T 4" r2 ON (((r1.c1 = r2.c1)))) ORDER BY r1.c1 ASC NULLS LAST, r2.c1 ASC NULLS LAST LIMIT 10::bigint OFFSET 45::bigint
+-(4 rows)
++ Query Identifier: -3487679168996515881
++(5 rows)
+ 
+ SELECT t1.c1, t2.c1 FROM ft4 t1 FULL JOIN ft5 t2 ON (t1.c1 = t2.c1) ORDER BY t1.c1, t2.c1 OFFSET 45 LIMIT 10;
+  c1  | c1 
+@@ -1427,7 +1478,8 @@
+    Output: ft4.c1, ft5.c1
+    Relations: (public.ft4) FULL JOIN (public.ft5)
+    Remote SQL: SELECT s4.c1, s5.c1 FROM ((SELECT c1 FROM "S 1"."T 3" WHERE ((c1 >= 50)) AND ((c1 <= 60))) s4(c1) FULL JOIN (SELECT c1 FROM "S 1"."T 4" WHERE ((c1 >= 50)) AND ((c1 <= 60))) s5(c1) ON (((s4.c1 = s5.c1)))) ORDER BY s4.c1 ASC NULLS LAST, s5.c1 ASC NULLS LAST
+-(4 rows)
++ Query Identifier: 2127464501572642549
++(5 rows)
+ 
+ SELECT t1.c1, t2.c1 FROM (SELECT c1 FROM ft4 WHERE c1 between 50 and 60) t1 FULL JOIN (SELECT c1 FROM ft5 WHERE c1 between 50 and 60) t2 ON (t1.c1 = t2.c1) ORDER BY t1.c1, t2.c1;
+  c1 | c1 
+@@ -1450,7 +1502,8 @@
+    Output: 1
+    Relations: (public.ft4) FULL JOIN (public.ft5)
+    Remote SQL: SELECT NULL FROM ((SELECT NULL FROM "S 1"."T 3" WHERE ((c1 >= 50)) AND ((c1 <= 60))) s4 FULL JOIN (SELECT NULL FROM "S 1"."T 4" WHERE ((c1 >= 50)) AND ((c1 <= 60))) s5 ON (TRUE)) LIMIT 10::bigint OFFSET 10::bigint
+-(4 rows)
++ Query Identifier: -6937222934141100287
++(5 rows)
+ 
+ SELECT 1 FROM (SELECT c1 FROM ft4 WHERE c1 between 50 and 60) t1 FULL JOIN (SELECT c1 FROM ft5 WHERE c1 between 50 and 60) t2 ON (TRUE) OFFSET 10 LIMIT 10;
+  ?column? 
+@@ -1477,7 +1530,8 @@
+    Output: ft4.c1, t2.c1, t3.c1
+    Relations: (public.ft4) FULL JOIN ((public.ft4 t2) LEFT JOIN (public.ft5 t3))
+    Remote SQL: SELECT s4.c1, s8.c1, s8.c2 FROM ((SELECT c1 FROM "S 1"."T 3" WHERE ((c1 >= 50)) AND ((c1 <= 60))) s4(c1) FULL JOIN (SELECT r5.c1, r6.c1 FROM ("S 1"."T 3" r5 LEFT JOIN "S 1"."T 4" r6 ON (((r5.c1 = r6.c1)))) WHERE ((r5.c1 >= 50)) AND ((r5.c1 <= 60))) s8(c1, c2) ON (((s4.c1 = s8.c1)))) ORDER BY s4.c1 ASC NULLS LAST, s8.c1 ASC NULLS LAST, s8.c2 ASC NULLS LAST
+-(4 rows)
++ Query Identifier: 2946969990285487324
++(5 rows)
+ 
+ SELECT t1.c1, ss.a, ss.b FROM (SELECT c1 FROM ft4 WHERE c1 between 50 and 60) t1 FULL JOIN (SELECT t2.c1, t3.c1 FROM ft4 t2 LEFT JOIN ft5 t3 ON (t2.c1 = t3.c1) WHERE (t2.c1 between 50 and 60)) ss(a, b) ON (t1.c1 = ss.a) ORDER BY t1.c1, ss.a, ss.b;
+  c1 | a  | b  
+@@ -1499,7 +1553,8 @@
+    Output: ft4.c1, ft4_1.c1, ft5.c1
+    Relations: (public.ft4) FULL JOIN ((public.ft4 ft4_1) FULL JOIN (public.ft5))
+    Remote SQL: SELECT s4.c1, s10.c1, s10.c2 FROM ((SELECT c1 FROM "S 1"."T 3" WHERE ((c1 >= 50)) AND ((c1 <= 60))) s4(c1) FULL JOIN (SELECT s8.c1, s9.c1 FROM ((SELECT c1 FROM "S 1"."T 3" WHERE ((c1 >= 50)) AND ((c1 <= 60))) s8(c1) FULL JOIN (SELECT c1 FROM "S 1"."T 4" WHERE ((c1 >= 50)) AND ((c1 <= 60))) s9(c1) ON (((s8.c1 = s9.c1)))) WHERE (((s8.c1 IS NULL) OR (s8.c1 IS NOT NULL)))) s10(c1, c2) ON (((s4.c1 = s10.c1)))) ORDER BY s4.c1 ASC NULLS LAST, s10.c1 ASC NULLS LAST, s10.c2 ASC NULLS LAST
+-(4 rows)
++ Query Identifier: -5861983462208957586
++(5 rows)
+ 
+ SELECT t1.c1, ss.a, ss.b FROM (SELECT c1 FROM ft4 WHERE c1 between 50 and 60) t1 FULL JOIN (SELECT t2.c1, t3.c1 FROM (SELECT c1 FROM ft4 WHERE c1 between 50 and 60) t2 FULL JOIN (SELECT c1 FROM ft5 WHERE c1 between 50 and 60) t3 ON (t2.c1 = t3.c1) WHERE t2.c1 IS NULL OR t2.c1 IS NOT NULL) ss(a, b) ON (t1.c1 = ss.a) ORDER BY t1.c1, ss.a, ss.b;
+  c1 | a  | b  
+@@ -1547,7 +1602,8 @@
+                ->  Seq Scan on "S 1"."T 3"
+                      Output: "T 3".c1, "T 3".ctid
+                      Filter: ("T 3".c1 = 50)
+-(28 rows)
++ Query Identifier: -5243152755419978475
++(29 rows)
+ 
+ SELECT t1.c1, ss.a, ss.b FROM (SELECT c1 FROM "S 1"."T 3" WHERE c1 = 50) t1 INNER JOIN (SELECT t2.c1, t3.c1 FROM (SELECT c1 FROM ft4 WHERE c1 between 50 and 60) t2 FULL JOIN (SELECT c1 FROM ft5 WHERE c1 between 50 and 60) t3 ON (t2.c1 = t3.c1) WHERE t2.c1 IS NULL OR t2.c1 IS NOT NULL) ss(a, b) ON (TRUE) ORDER BY t1.c1, ss.a, ss.b FOR UPDATE OF t1;
+  c1 | a  | b  
+@@ -1571,7 +1627,8 @@
+    Output: t1.c1, t2.c1, t3.c1
+    Relations: ((public.ft4 t1) INNER JOIN (public.ft5 t2)) FULL JOIN (public.ft4 t3)
+    Remote SQL: SELECT r1.c1, r2.c1, r4.c1 FROM (("S 1"."T 3" r1 INNER JOIN "S 1"."T 4" r2 ON (((r1.c1 = (r2.c1 + 1))) AND ((r1.c1 >= 50)) AND ((r1.c1 <= 60)))) FULL JOIN "S 1"."T 3" r4 ON (((r2.c1 = r4.c1)))) ORDER BY r1.c1 ASC NULLS LAST, r2.c1 ASC NULLS LAST, r4.c1 ASC NULLS LAST LIMIT 10::bigint
+-(4 rows)
++ Query Identifier: 4228929105731007081
++(5 rows)
+ 
+ SELECT t1.c1, t2.c1, t3.c1 FROM ft4 t1 INNER JOIN ft5 t2 ON (t1.c1 = t2.c1 + 1 and t1.c1 between 50 and 60) FULL JOIN ft4 t3 ON (t2.c1 = t3.c1) ORDER BY t1.c1, t2.c1, t3.c1 LIMIT 10;
+  c1 | c1 | c1 
+@@ -1597,7 +1654,8 @@
+    Output: t1.c1, t2.c2, t3.c3
+    Relations: ((public.ft2 t1) FULL JOIN (public.ft2 t2)) FULL JOIN (public.ft4 t3)
+    Remote SQL: SELECT r1."C 1", r2.c2, r4.c3 FROM (("S 1"."T 1" r1 FULL JOIN "S 1"."T 1" r2 ON (((r1."C 1" = r2."C 1")))) FULL JOIN "S 1"."T 3" r4 ON (((r2."C 1" = r4.c1)))) LIMIT 10::bigint OFFSET 10::bigint
+-(4 rows)
++ Query Identifier: -2877035989008770367
++(5 rows)
+ 
+ SELECT t1.c1, t2.c2, t3.c3 FROM ft2 t1 FULL JOIN ft2 t2 ON (t1.c1 = t2.c1) FULL JOIN ft4 t3 ON (t2.c1 = t3.c1) OFFSET 10 LIMIT 10;
+  c1 | c2 |   c3   
+@@ -1623,7 +1681,8 @@
+    Output: t1.c1, t2.c2, t3.c3
+    Relations: ((public.ft4 t3) LEFT JOIN (public.ft2 t2)) LEFT JOIN (public.ft2 t1)
+    Remote SQL: SELECT r1."C 1", r2.c2, r4.c3 FROM (("S 1"."T 3" r4 LEFT JOIN "S 1"."T 1" r2 ON (((r2."C 1" = r4.c1)))) LEFT JOIN "S 1"."T 1" r1 ON (((r1."C 1" = r2."C 1")))) LIMIT 10::bigint OFFSET 10::bigint
+-(4 rows)
++ Query Identifier: -5374204435123240393
++(5 rows)
+ 
+ SELECT t1.c1, t2.c2, t3.c3 FROM ft2 t1 FULL JOIN ft2 t2 ON (t1.c1 = t2.c1) RIGHT JOIN ft4 t3 ON (t2.c1 = t3.c1) OFFSET 10 LIMIT 10;
+  c1 | c2 |   c3   
+@@ -1649,7 +1708,8 @@
+    Output: t1.c1, t2.c2, t3.c3
+    Relations: ((public.ft2 t2) LEFT JOIN (public.ft2 t1)) FULL JOIN (public.ft4 t3)
+    Remote SQL: SELECT r1."C 1", r2.c2, r4.c3 FROM (("S 1"."T 1" r2 LEFT JOIN "S 1"."T 1" r1 ON (((r1."C 1" = r2."C 1")))) FULL JOIN "S 1"."T 3" r4 ON (((r2."C 1" = r4.c1)))) LIMIT 10::bigint OFFSET 10::bigint
+-(4 rows)
++ Query Identifier: -1577409713034816935
++(5 rows)
+ 
+ SELECT t1.c1, t2.c2, t3.c3 FROM ft2 t1 RIGHT JOIN ft2 t2 ON (t1.c1 = t2.c1) FULL JOIN ft4 t3 ON (t2.c1 = t3.c1) OFFSET 10 LIMIT 10;
+  c1 | c2 |   c3   
+@@ -1675,7 +1735,8 @@
+    Output: t1.c1, t2.c2, t3.c3
+    Relations: ((public.ft2 t1) FULL JOIN (public.ft2 t2)) LEFT JOIN (public.ft4 t3)
+    Remote SQL: SELECT r1."C 1", r2.c2, r4.c3 FROM (("S 1"."T 1" r1 FULL JOIN "S 1"."T 1" r2 ON (((r1."C 1" = r2."C 1")))) LEFT JOIN "S 1"."T 3" r4 ON (((r2."C 1" = r4.c1)))) LIMIT 10::bigint OFFSET 10::bigint
+-(4 rows)
++ Query Identifier: -3771851700127188634
++(5 rows)
+ 
+ SELECT t1.c1, t2.c2, t3.c3 FROM ft2 t1 FULL JOIN ft2 t2 ON (t1.c1 = t2.c1) LEFT JOIN ft4 t3 ON (t2.c1 = t3.c1) OFFSET 10 LIMIT 10;
+  c1 | c2 |   c3   
+@@ -1701,7 +1762,8 @@
+    Output: t1.c1, t2.c2, t3.c3
+    Relations: ((public.ft2 t1) LEFT JOIN (public.ft2 t2)) FULL JOIN (public.ft4 t3)
+    Remote SQL: SELECT r1."C 1", r2.c2, r4.c3 FROM (("S 1"."T 1" r1 LEFT JOIN "S 1"."T 1" r2 ON (((r1."C 1" = r2."C 1")))) FULL JOIN "S 1"."T 3" r4 ON (((r2."C 1" = r4.c1)))) LIMIT 10::bigint OFFSET 10::bigint
+-(4 rows)
++ Query Identifier: -9038130486149392369
++(5 rows)
+ 
+ SELECT t1.c1, t2.c2, t3.c3 FROM ft2 t1 LEFT JOIN ft2 t2 ON (t1.c1 = t2.c1) FULL JOIN ft4 t3 ON (t2.c1 = t3.c1) OFFSET 10 LIMIT 10;
+  c1 | c2 |   c3   
+@@ -1728,7 +1790,8 @@
+    Output: t1.c1, t2.c2, t3.c3
+    Relations: ((public.ft2 t2) LEFT JOIN (public.ft2 t1)) LEFT JOIN (public.ft4 t3)
+    Remote SQL: SELECT r1."C 1", r2.c2, r4.c3 FROM (("S 1"."T 1" r2 LEFT JOIN "S 1"."T 1" r1 ON (((r1."C 1" = r2."C 1")))) LEFT JOIN "S 1"."T 3" r4 ON (((r2."C 1" = r4.c1)))) LIMIT 10::bigint OFFSET 10::bigint
+-(4 rows)
++ Query Identifier: -6243981195144158532
++(5 rows)
+ 
+ SELECT t1.c1, t2.c2, t3.c3 FROM ft2 t1 RIGHT JOIN ft2 t2 ON (t1.c1 = t2.c1) LEFT JOIN ft4 t3 ON (t2.c1 = t3.c1) OFFSET 10 LIMIT 10;
+  c1 | c2 |   c3   
+@@ -1755,7 +1818,8 @@
+    Output: t1.c1, t2.c2, t3.c3
+    Relations: (public.ft4 t3) LEFT JOIN ((public.ft2 t1) INNER JOIN (public.ft2 t2))
+    Remote SQL: SELECT r1."C 1", r2.c2, r4.c3 FROM ("S 1"."T 3" r4 LEFT JOIN ("S 1"."T 1" r1 INNER JOIN "S 1"."T 1" r2 ON (((r1."C 1" = r2."C 1")))) ON (((r2."C 1" = r4.c1)))) LIMIT 10::bigint OFFSET 10::bigint
+-(4 rows)
++ Query Identifier: -2621573670949714224
++(5 rows)
+ 
+ SELECT t1.c1, t2.c2, t3.c3 FROM ft2 t1 LEFT JOIN ft2 t2 ON (t1.c1 = t2.c1) RIGHT JOIN ft4 t3 ON (t2.c1 = t3.c1) OFFSET 10 LIMIT 10;
+  c1 | c2 |   c3   
+@@ -1786,7 +1850,8 @@
+                Output: t1.c1, t2.c1
+                Relations: (public.ft4 t1) FULL JOIN (public.ft5 t2)
+                Remote SQL: SELECT r1.c1, r2.c1 FROM ("S 1"."T 3" r1 FULL JOIN "S 1"."T 4" r2 ON (((r1.c1 = r2.c1)))) WHERE (((r1.c1 = r2.c1) OR (r1.c1 IS NULL)))
+-(9 rows)
++ Query Identifier: 6031459408360621471
++(10 rows)
+ 
+ SELECT t1.c1, t2.c1 FROM ft4 t1 FULL JOIN ft5 t2 ON (t1.c1 = t2.c1) WHERE (t1.c1 = t2.c1 OR t1.c1 IS NULL) ORDER BY t1.c1, t2.c1 OFFSET 10 LIMIT 10;
+  c1 | c1 
+@@ -1812,7 +1877,8 @@
+    Output: t1.c1, t2.c2, t1.c3
+    Relations: (public.ft1 t1) FULL JOIN (public.ft2 t2)
+    Remote SQL: SELECT r1."C 1", r2.c2, r1.c3 FROM ("S 1"."T 1" r1 FULL JOIN "S 1"."T 1" r2 ON (((r1."C 1" = r2."C 1")))) WHERE ((public.postgres_fdw_abs(r1."C 1") > 0)) LIMIT 10::bigint OFFSET 10::bigint
+-(4 rows)
++ Query Identifier: -8315917404964529858
++(5 rows)
+ 
+ ALTER SERVER loopback OPTIONS (DROP extensions);
+ -- full outer join + WHERE clause with shippable extensions not set
+@@ -1827,7 +1893,8 @@
+          Filter: (postgres_fdw_abs(t1.c1) > 0)
+          Relations: (public.ft1 t1) FULL JOIN (public.ft2 t2)
+          Remote SQL: SELECT r1."C 1", r2.c2, r1.c3 FROM ("S 1"."T 1" r1 FULL JOIN "S 1"."T 1" r2 ON (((r1."C 1" = r2."C 1"))))
+-(7 rows)
++ Query Identifier: -8315917404964529858
++(8 rows)
+ 
+ ALTER SERVER loopback OPTIONS (ADD extensions 'postgres_fdw');
+ -- join two tables with FOR UPDATE clause
+@@ -1840,7 +1907,8 @@
+    Output: t1.c1, t2.c1, t1.c3, t1.*, t2.*
+    Relations: (public.ft1 t1) INNER JOIN (public.ft2 t2)
+    Remote SQL: SELECT r1."C 1", r2."C 1", r1.c3, CASE WHEN (r1.*)::text IS NOT NULL THEN ROW(r1."C 1", r1.c2, r1.c3, r1.c4, r1.c5, r1.c6, r1.c7, r1.c8) END, CASE WHEN (r2.*)::text IS NOT NULL THEN ROW(r2."C 1", r2.c2, r2.c3, r2.c4, r2.c5, r2.c6, r2.c7, r2.c8) END FROM ("S 1"."T 1" r1 INNER JOIN "S 1"."T 1" r2 ON (((r1."C 1" = r2."C 1")))) ORDER BY r1.c3 ASC NULLS LAST, r1."C 1" ASC NULLS LAST LIMIT 10::bigint OFFSET 100::bigint FOR UPDATE OF r1
+-(4 rows)
++ Query Identifier: -368760768350469440
++(5 rows)
+ 
+ SELECT t1.c1, t2.c1 FROM ft1 t1 JOIN ft2 t2 ON (t1.c1 = t2.c1) ORDER BY t1.c3, t1.c1 OFFSET 100 LIMIT 10 FOR UPDATE OF t1;
+  c1  | c1  
+@@ -1865,7 +1933,8 @@
+    Output: t1.c1, t2.c1, t1.c3, t1.*, t2.*
+    Relations: (public.ft1 t1) INNER JOIN (public.ft2 t2)
+    Remote SQL: SELECT r1."C 1", r2."C 1", r1.c3, CASE WHEN (r1.*)::text IS NOT NULL THEN ROW(r1."C 1", r1.c2, r1.c3, r1.c4, r1.c5, r1.c6, r1.c7, r1.c8) END, CASE WHEN (r2.*)::text IS NOT NULL THEN ROW(r2."C 1", r2.c2, r2.c3, r2.c4, r2.c5, r2.c6, r2.c7, r2.c8) END FROM ("S 1"."T 1" r1 INNER JOIN "S 1"."T 1" r2 ON (((r1."C 1" = r2."C 1")))) ORDER BY r1.c3 ASC NULLS LAST, r1."C 1" ASC NULLS LAST LIMIT 10::bigint OFFSET 100::bigint FOR UPDATE OF r1 FOR UPDATE OF r2
+-(4 rows)
++ Query Identifier: 3982015459346076731
++(5 rows)
+ 
+ SELECT t1.c1, t2.c1 FROM ft1 t1 JOIN ft2 t2 ON (t1.c1 = t2.c1) ORDER BY t1.c3, t1.c1 OFFSET 100 LIMIT 10 FOR UPDATE;
+  c1  | c1  
+@@ -1891,7 +1960,8 @@
+    Output: t1.c1, t2.c1, t1.c3, t1.*, t2.*
+    Relations: (public.ft1 t1) INNER JOIN (public.ft2 t2)
+    Remote SQL: SELECT r1."C 1", r2."C 1", r1.c3, CASE WHEN (r1.*)::text IS NOT NULL THEN ROW(r1."C 1", r1.c2, r1.c3, r1.c4, r1.c5, r1.c6, r1.c7, r1.c8) END, CASE WHEN (r2.*)::text IS NOT NULL THEN ROW(r2."C 1", r2.c2, r2.c3, r2.c4, r2.c5, r2.c6, r2.c7, r2.c8) END FROM ("S 1"."T 1" r1 INNER JOIN "S 1"."T 1" r2 ON (((r1."C 1" = r2."C 1")))) ORDER BY r1.c3 ASC NULLS LAST, r1."C 1" ASC NULLS LAST LIMIT 10::bigint OFFSET 100::bigint FOR SHARE OF r1
+-(4 rows)
++ Query Identifier: -2354175541637608638
++(5 rows)
+ 
+ SELECT t1.c1, t2.c1 FROM ft1 t1 JOIN ft2 t2 ON (t1.c1 = t2.c1) ORDER BY t1.c3, t1.c1 OFFSET 100 LIMIT 10 FOR SHARE OF t1;
+  c1  | c1  
+@@ -1916,7 +1986,8 @@
+    Output: t1.c1, t2.c1, t1.c3, t1.*, t2.*
+    Relations: (public.ft1 t1) INNER JOIN (public.ft2 t2)
+    Remote SQL: SELECT r1."C 1", r2."C 1", r1.c3, CASE WHEN (r1.*)::text IS NOT NULL THEN ROW(r1."C 1", r1.c2, r1.c3, r1.c4, r1.c5, r1.c6, r1.c7, r1.c8) END, CASE WHEN (r2.*)::text IS NOT NULL THEN ROW(r2."C 1", r2.c2, r2.c3, r2.c4, r2.c5, r2.c6, r2.c7, r2.c8) END FROM ("S 1"."T 1" r1 INNER JOIN "S 1"."T 1" r2 ON (((r1."C 1" = r2."C 1")))) ORDER BY r1.c3 ASC NULLS LAST, r1."C 1" ASC NULLS LAST LIMIT 10::bigint OFFSET 100::bigint FOR SHARE OF r1 FOR SHARE OF r2
+-(4 rows)
++ Query Identifier: 4170167137420901084
++(5 rows)
+ 
+ SELECT t1.c1, t2.c1 FROM ft1 t1 JOIN ft2 t2 ON (t1.c1 = t2.c1) ORDER BY t1.c3, t1.c1 OFFSET 100 LIMIT 10 FOR SHARE;
+  c1  | c1  
+@@ -1950,7 +2021,8 @@
+          Sort Key: t.c1_3, t.c1_1
+          ->  CTE Scan on t
+                Output: t.c1_1, t.c2_1, t.c1_3
+-(12 rows)
++ Query Identifier: 7050510220548158758
++(13 rows)
+ 
+ WITH t (c1_1, c1_3, c2_1) AS MATERIALIZED (SELECT t1.c1, t1.c3, t2.c1 FROM ft1 t1 JOIN ft2 t2 ON (t1.c1 = t2.c1)) SELECT c1_1, c2_1 FROM t ORDER BY c1_3, c1_1 OFFSET 100 LIMIT 10;
+  c1_1 | c2_1 
+@@ -1976,7 +2048,8 @@
+    Output: t1.ctid, t1.*, t2.*, t1.c1, t1.c3
+    Relations: (public.ft1 t1) INNER JOIN (public.ft2 t2)
+    Remote SQL: SELECT r1.ctid, CASE WHEN (r1.*)::text IS NOT NULL THEN ROW(r1."C 1", r1.c2, r1.c3, r1.c4, r1.c5, r1.c6, r1.c7, r1.c8) END, CASE WHEN (r2.*)::text IS NOT NULL THEN ROW(r2."C 1", r2.c2, r2.c3, r2.c4, r2.c5, r2.c6, r2.c7, r2.c8) END, r1."C 1", r1.c3 FROM ("S 1"."T 1" r1 INNER JOIN "S 1"."T 1" r2 ON (((r1."C 1" = r2."C 1")))) ORDER BY r1.c3 ASC NULLS LAST, r1."C 1" ASC NULLS LAST LIMIT 10::bigint OFFSET 100::bigint
+-(4 rows)
++ Query Identifier: -6577061620933263997
++(5 rows)
+ 
+ -- SEMI JOIN, not pushed down
+ EXPLAIN (VERBOSE, COSTS OFF)
+@@ -1994,7 +2067,8 @@
+          ->  Foreign Scan on public.ft2 t2
+                Output: t2.c1
+                Remote SQL: SELECT "C 1" FROM "S 1"."T 1" ORDER BY "C 1" ASC NULLS LAST
+-(11 rows)
++ Query Identifier: -459261036620737498
++(12 rows)
+ 
+ SELECT t1.c1 FROM ft1 t1 WHERE EXISTS (SELECT 1 FROM ft2 t2 WHERE t1.c1 = t2.c1) ORDER BY t1.c1 OFFSET 100 LIMIT 10;
+  c1  
+@@ -2027,7 +2101,8 @@
+          ->  Foreign Scan on public.ft2 t2
+                Output: t2.c2
+                Remote SQL: SELECT c2 FROM "S 1"."T 1" ORDER BY c2 ASC NULLS LAST
+-(11 rows)
++ Query Identifier: -2908739424189998573
++(12 rows)
+ 
+ SELECT t1.c1 FROM ft1 t1 WHERE NOT EXISTS (SELECT 1 FROM ft2 t2 WHERE t1.c1 = t2.c2) ORDER BY t1.c1 OFFSET 100 LIMIT 10;
+  c1  
+@@ -2053,7 +2128,8 @@
+    Output: t1.c1, t2.c1
+    Relations: (public.ft1 t1) INNER JOIN (public.ft2 t2)
+    Remote SQL: SELECT r1."C 1", r2."C 1" FROM ("S 1"."T 1" r1 INNER JOIN "S 1"."T 1" r2 ON (TRUE)) ORDER BY r1."C 1" ASC NULLS LAST, r2."C 1" ASC NULLS LAST LIMIT 10::bigint OFFSET 100::bigint
+-(4 rows)
++ Query Identifier: -483397253801521465
++(5 rows)
+ 
+ SELECT t1.c1, t2.c1 FROM ft1 t1 CROSS JOIN ft2 t2 ORDER BY t1.c1, t2.c1 OFFSET 100 LIMIT 10;
+  c1 | c1  
+@@ -2088,7 +2164,8 @@
+                ->  Foreign Scan on public.ft5 t1
+                      Output: t1.c1, t1.c2, t1.c3
+                      Remote SQL: SELECT c1 FROM "S 1"."T 4" ORDER BY c1 ASC NULLS LAST
+-(13 rows)
++ Query Identifier: -7115388029112804300
++(14 rows)
+ 
+ SELECT t1.c1, t2.c1 FROM ft5 t1 JOIN ft6 t2 ON (t1.c1 = t2.c1) ORDER BY t1.c1, t2.c1 OFFSET 100 LIMIT 10;
+  c1 | c1 
+@@ -2121,7 +2198,8 @@
+                      ->  Foreign Scan on public.ft2 t2
+                            Output: t2.c1, t2.c8
+                            Remote SQL: SELECT "C 1", c8 FROM "S 1"."T 1"
+-(20 rows)
++ Query Identifier: 674302445629383611
++(21 rows)
+ 
+ SELECT t1.c1, t2.c1 FROM ft1 t1 LEFT JOIN ft2 t2 ON (t1.c8 = t2.c8) ORDER BY t1.c1, t2.c1 OFFSET 100 LIMIT 10;
+  c1 | c1  
+@@ -2160,7 +2238,8 @@
+                            Output: t1.c1, t1.c3
+                            Filter: (t1.c8 = 'foo'::user_enum)
+                            Remote SQL: SELECT "C 1", c3, c8 FROM "S 1"."T 1"
+-(17 rows)
++ Query Identifier: -1674455045341803333
++(18 rows)
+ 
+ SELECT t1.c1, t2.c1 FROM ft1 t1 LEFT JOIN ft2 t2 ON (t1.c1 = t2.c1) WHERE t1.c8 = 'foo' ORDER BY t1.c3, t1.c1 OFFSET 100 LIMIT 10;
+  c1  | c1  
+@@ -2195,7 +2274,8 @@
+                Filter: (t1.c8 = t2.c8)
+                Relations: (public.ft1 t1) INNER JOIN (public.ft2 t2)
+                Remote SQL: SELECT r1."C 1", r2."C 1", r1.c3, r1.c8, r2.c8 FROM ("S 1"."T 1" r1 INNER JOIN "S 1"."T 1" r2 ON (((r1."C 1" = r2."C 1"))))
+-(10 rows)
++ Query Identifier: 6284994956201741626
++(11 rows)
+ 
+ SELECT t1.c1, t2.c1 FROM ft1 t1 JOIN ft2 t2 ON (t1.c1 = t2.c1) WHERE t1.c8 = t2.c8 ORDER BY t1.c3, t1.c1 OFFSET 100 LIMIT 10;
+  c1  | c1  
+@@ -2237,7 +2317,8 @@
+                                  Output: t1_1.c1, t2_1.c1
+                                  Relations: (public.ft1 t1_1) INNER JOIN (public.ft2 t2_1)
+                                  Remote SQL: SELECT r1."C 1", r2."C 1" FROM ("S 1"."T 1" r1 INNER JOIN "S 1"."T 1" r2 ON (((r1."C 1" = r2."C 1"))))
+-(20 rows)
++ Query Identifier: 1432080286383503169
++(21 rows)
+ 
+ SELECT t1c1, avg(t1c1 + t2c1) FROM (SELECT t1.c1, t2.c1 FROM ft1 t1 JOIN ft2 t2 ON (t1.c1 = t2.c1) UNION SELECT t1.c1, t2.c1 FROM ft1 t1 JOIN ft2 t2 ON (t1.c1 = t2.c1)) AS t (t1c1, t2c1) GROUP BY t1c1 ORDER BY t1c1 OFFSET 100 LIMIT 10;
+  t1c1 |         avg          
+@@ -2276,7 +2357,8 @@
+                                  Output: t2.c1, t3.c1
+                                  Relations: (public.ft1 t2) INNER JOIN (public.ft2 t3)
+                                  Remote SQL: SELECT r1."C 1", r2."C 1" FROM ("S 1"."T 1" r1 INNER JOIN "S 1"."T 1" r2 ON (((r1."C 1" = r2."C 1")) AND ((r1.c2 = $1::integer))))
+-(17 rows)
++ Query Identifier: 8799190626077324029
++(18 rows)
+ 
+ SELECT t1."C 1" FROM "S 1"."T 1" t1, LATERAL (SELECT DISTINCT t2.c1, t3.c1 FROM ft1 t2, ft2 t3 WHERE t2.c1 = t3.c1 AND t2.c2 = t1.c2) q ORDER BY t1."C 1" OFFSET 10 LIMIT 10;
+  C 1 
+@@ -2311,7 +2393,8 @@
+          ->  Foreign Scan on public.ft1
+                Output: 13
+                Remote SQL: SELECT NULL FROM "S 1"."T 1" WHERE (("C 1" = 13))
+-(11 rows)
++ Query Identifier: -953536762143737197
++(12 rows)
+ 
+ SELECT q.a, ft2.c1 FROM (SELECT 13 FROM ft1 WHERE c1 = 13) q(a) RIGHT JOIN ft2 ON (q.a = ft2.c1) WHERE ft2.c1 BETWEEN 10 AND 15;
+  a  | c1 
+@@ -2341,7 +2424,8 @@
+                Output: ft1.c1, ft2.c1, 13
+                Relations: (public.ft1) INNER JOIN (public.ft2)
+                Remote SQL: SELECT r4."C 1", r5."C 1" FROM ("S 1"."T 1" r4 INNER JOIN "S 1"."T 1" r5 ON (((r5."C 1" = 12)) AND ((r4."C 1" = 12)))) ORDER BY r4."C 1" ASC NULLS LAST
+-(12 rows)
++ Query Identifier: 1607365690280083930
++(13 rows)
+ 
+ SELECT ft4.c1, q.* FROM ft4 LEFT JOIN (SELECT 13, ft1.c1, ft2.c1 FROM ft1 RIGHT JOIN ft2 ON (ft1.c1 = ft2.c1) WHERE ft1.c1 = 12) q(a, b, c) ON (ft4.c1 = q.b) WHERE ft4.c1 BETWEEN 10 AND 15;
+  c1 | a  | b  | c  
+@@ -2361,7 +2445,8 @@
+    Output: ft5.*, ft5.c1, ft5.c2, ft5.c3, ft4.c1, ft4.c2
+    Relations: (public.ft5) INNER JOIN (public.ft4)
+    Remote SQL: SELECT CASE WHEN (r1.*)::text IS NOT NULL THEN ROW(r1.c1, r1.c2, r1.c3) END, r1.c1, r1.c2, r1.c3, r2.c1, r2.c2 FROM ("S 1"."T 4" r1 INNER JOIN "S 1"."T 3" r2 ON (((r1.c1 = r2.c1)) AND ((r2.c1 >= 10)) AND ((r2.c1 <= 30)))) ORDER BY r1.c1 ASC NULLS LAST
+-(4 rows)
++ Query Identifier: -6625541176463812719
++(5 rows)
+ 
+ SELECT ft5, ft5.c1, ft5.c2, ft5.c3, ft4.c1, ft4.c2 FROM ft5 left join ft4 on ft5.c1 = ft4.c1 WHERE ft4.c1 BETWEEN 10 and 30 ORDER BY ft5.c1, ft4.c1;
+       ft5       | c1 | c2 |   c3   | c1 | c2 
+@@ -2431,7 +2516,8 @@
+                                  Remote SQL: SELECT c1, c2, c3 FROM "S 1"."T 4" FOR UPDATE
+          ->  Index Scan using local_tbl_pkey on public.local_tbl
+                Output: local_tbl.c1, local_tbl.c2, local_tbl.c3, local_tbl.ctid
+-(47 rows)
++ Query Identifier: -7382846298593547153
++(48 rows)
+ 
+ SELECT * FROM ft1, ft2, ft4, ft5, local_tbl WHERE ft1.c1 = ft2.c1 AND ft1.c2 = ft4.c1
+     AND ft1.c2 = ft5.c1 AND ft1.c2 = local_tbl.c1 AND ft1.c1 < 100 AND ft2.c1 < 100 FOR UPDATE;
+@@ -2486,7 +2572,8 @@
+                                              ->  Foreign Scan on public.ft2
+                                                    Output: ft2.*, ft2.c1, ft2.c3
+                                                    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1"
+-(29 rows)
++ Query Identifier: 9116845631974239897
++(30 rows)
+ 
+ ALTER SERVER loopback OPTIONS (DROP extensions);
+ ALTER SERVER loopback OPTIONS (ADD fdw_startup_cost '10000.0');
+@@ -2526,7 +2613,8 @@
+                                        ->  Foreign Scan on public.ft2
+                                              Output: ft2.*, ft2.c1, ft2.c2, postgres_fdw_abs(ft2.c2)
+                                              Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" ORDER BY "C 1" ASC NULLS LAST
+-(32 rows)
++ Query Identifier: -3834598904217925383
++(33 rows)
+ 
+ ALTER SERVER loopback OPTIONS (DROP fdw_startup_cost);
+ ALTER SERVER loopback OPTIONS (ADD extensions 'postgres_fdw');
+@@ -2559,7 +2647,8 @@
+                      ->  Foreign Scan on public.ft5
+                            Output: ft5.c2, ft5.c1
+                            Remote SQL: SELECT c1, c2 FROM "S 1"."T 4"
+-(16 rows)
++ Query Identifier: 8135672022357754804
++(17 rows)
+ 
+ SELECT t1.c1, t2.c2 FROM v4 t1 LEFT JOIN v5 t2 ON (t1.c1 = t2.c1) ORDER BY t1.c1, t2.c1 OFFSET 10 LIMIT 10;
+  c1 | c2 
+@@ -2585,7 +2674,8 @@
+    Output: ft4.c1, ft5.c2, ft5.c1
+    Relations: (public.ft4) LEFT JOIN (public.ft5)
+    Remote SQL: SELECT r6.c1, r9.c2, r9.c1 FROM ("S 1"."T 3" r6 LEFT JOIN "S 1"."T 4" r9 ON (((r6.c1 = r9.c1)))) ORDER BY r6.c1 ASC NULLS LAST, r9.c1 ASC NULLS LAST LIMIT 10::bigint OFFSET 10::bigint
+-(4 rows)
++ Query Identifier: 8135672022357754804
++(5 rows)
+ 
+ SELECT t1.c1, t2.c2 FROM v4 t1 LEFT JOIN v5 t2 ON (t1.c1 = t2.c1) ORDER BY t1.c1, t2.c1 OFFSET 10 LIMIT 10;
+  c1 | c2 
+@@ -2622,7 +2712,8 @@
+                      ->  Foreign Scan on public.ft5 t2
+                            Output: t2.c2, t2.c1
+                            Remote SQL: SELECT c1, c2 FROM "S 1"."T 4"
+-(16 rows)
++ Query Identifier: 4327738853621101438
++(17 rows)
+ 
+ SELECT t1.c1, t2.c2 FROM v4 t1 LEFT JOIN ft5 t2 ON (t1.c1 = t2.c1) ORDER BY t1.c1, t2.c1 OFFSET 10 LIMIT 10;
+  c1 | c2 
+@@ -2648,7 +2739,8 @@
+    Output: ft4.c1, t2.c2, t2.c1
+    Relations: (public.ft4) LEFT JOIN (public.ft5 t2)
+    Remote SQL: SELECT r6.c1, r2.c2, r2.c1 FROM ("S 1"."T 3" r6 LEFT JOIN "S 1"."T 4" r2 ON (((r6.c1 = r2.c1)))) ORDER BY r6.c1 ASC NULLS LAST, r2.c1 ASC NULLS LAST LIMIT 10::bigint OFFSET 10::bigint
+-(4 rows)
++ Query Identifier: 4327738853621101438
++(5 rows)
+ 
+ SELECT t1.c1, t2.c2 FROM v4 t1 LEFT JOIN ft5 t2 ON (t1.c1 = t2.c1) ORDER BY t1.c1, t2.c1 OFFSET 10 LIMIT 10;
+  c1 | c2 
+@@ -2681,7 +2773,8 @@
+    Output: (count(c6)), (sum(c1)), (avg(c1)), (min(c2)), (max(c1)), (stddev(c2)), ((sum(c1)) * ((random() <= '1'::double precision))::integer), c2
+    Relations: Aggregate on (public.ft1)
+    Remote SQL: SELECT count(c6), sum("C 1"), avg("C 1"), min(c2), max("C 1"), stddev(c2), c2 FROM "S 1"."T 1" WHERE ((c2 < 5)) GROUP BY 7 ORDER BY count(c6) ASC NULLS LAST, sum("C 1") ASC NULLS LAST
+-(4 rows)
++ Query Identifier: 7577779352360313868
++(5 rows)
+ 
+ select count(c6), sum(c1), avg(c1), min(c2), max(c1), stddev(c2), sum(c1) * (random() <= 1)::int as sum2 from ft1 where c2 < 5 group by c2 order by 1, 2;
+  count |  sum  |         avg          | min | max  | stddev | sum2  
+@@ -2701,7 +2794,8 @@
+    Output: (count(c6)), (sum(c1)), (avg(c1)), (min(c2)), (max(c1)), (stddev(c2)), ((sum(c1)) * ((random() <= '1'::double precision))::integer), c2
+    Relations: Aggregate on (public.ft1)
+    Remote SQL: SELECT count(c6), sum("C 1"), avg("C 1"), min(c2), max("C 1"), stddev(c2), c2 FROM "S 1"."T 1" WHERE ((c2 < 5)) GROUP BY 7 ORDER BY count(c6) ASC NULLS LAST, sum("C 1") ASC NULLS LAST LIMIT 1::bigint
+-(4 rows)
++ Query Identifier: 8200280654569777297
++(5 rows)
+ 
+ select count(c6), sum(c1), avg(c1), min(c2), max(c1), stddev(c2), sum(c1) * (random() <= 1)::int as sum2 from ft1 where c2 < 5 group by c2 order by 1, 2 limit 1;
+  count |  sum  |         avg          | min | max | stddev | sum2  
+@@ -2719,7 +2813,8 @@
+    ->  Foreign Scan on public.ft1
+          Output: c1
+          Remote SQL: SELECT "C 1" FROM "S 1"."T 1"
+-(5 rows)
++ Query Identifier: -6178876938313727827
++(6 rows)
+ 
+ -- Aggregate over join query
+ explain (verbose, costs off)
+@@ -2730,7 +2825,8 @@
+    Output: (count(*)), (sum(t1.c1)), (avg(t2.c1))
+    Relations: Aggregate on ((public.ft1 t1) INNER JOIN (public.ft1 t2))
+    Remote SQL: SELECT count(*), sum(r1."C 1"), avg(r2."C 1") FROM ("S 1"."T 1" r1 INNER JOIN "S 1"."T 1" r2 ON (((r2.c2 = 6)) AND ((r1.c2 = 6))))
+-(4 rows)
++ Query Identifier: -2652168054236933041
++(5 rows)
+ 
+ select count(*), sum(t1.c1), avg(t2.c1) from ft1 t1 inner join ft1 t2 on (t1.c2 = t2.c2) where t1.c2 = 6;
+  count |   sum   |         avg          
+@@ -2750,7 +2846,8 @@
+          Filter: (((((t1.c1 * t2.c1) / (t1.c1 * t2.c1)))::double precision * random()) <= '1'::double precision)
+          Relations: (public.ft1 t1) INNER JOIN (public.ft2 t2)
+          Remote SQL: SELECT r1."C 1", r2."C 1" FROM ("S 1"."T 1" r1 INNER JOIN "S 1"."T 1" r2 ON (((r1."C 1" = r2."C 1"))))
+-(7 rows)
++ Query Identifier: 3543627067583326110
++(8 rows)
+ 
+ -- GROUP BY clause having expressions
+ explain (verbose, costs off)
+@@ -2761,7 +2858,8 @@
+    Output: ((c2 / 2)), ((sum(c2) * (c2 / 2)))
+    Relations: Aggregate on (public.ft1)
+    Remote SQL: SELECT (c2 / 2), (sum(c2) * (c2 / 2)) FROM "S 1"."T 1" GROUP BY 1 ORDER BY (c2 / 2) ASC NULLS LAST
+-(4 rows)
++ Query Identifier: 8107118564644302722
++(5 rows)
+ 
+ select c2/2, sum(c2) * (c2/2) from ft1 group by c2/2 order by c2/2;
+  ?column? | ?column? 
+@@ -2784,7 +2882,8 @@
+          Output: ft1.c2, (sum(ft1.c1)), (sqrt((ft1.c1)::double precision))
+          Relations: Aggregate on (public.ft1)
+          Remote SQL: SELECT c2, sum("C 1"), sqrt("C 1") FROM "S 1"."T 1" GROUP BY 1, 3 ORDER BY c2 ASC NULLS LAST, sum("C 1") ASC NULLS LAST
+-(6 rows)
++ Query Identifier: -394273777798329953
++(7 rows)
+ 
+ select count(x.a), sum(x.a) from (select c2 a, sum(c1) b from ft1 group by c2, sqrt(c1) order by 1, 2) x;
+  count | sum  
+@@ -2804,7 +2903,8 @@
+          Output: (c2 * ((random() <= '1'::double precision))::integer), ((sum(c1) * c2)), c2
+          Relations: Aggregate on (public.ft1)
+          Remote SQL: SELECT (sum("C 1") * c2), c2 FROM "S 1"."T 1" GROUP BY 2
+-(7 rows)
++ Query Identifier: -7777199568729853153
++(8 rows)
+ 
+ select c2 * (random() <= 1)::int as sum1, sum(c1) * c2 as sum2 from ft1 group by c2 order by 1, 2;
+  sum1 |  sum2  
+@@ -2835,7 +2935,8 @@
+          ->  Foreign Scan on public.ft2
+                Output: (c2 * ((random() <= '1'::double precision))::integer)
+                Remote SQL: SELECT c2 FROM "S 1"."T 1"
+-(9 rows)
++ Query Identifier: 7420267507132939381
++(10 rows)
+ 
+ -- GROUP BY clause in various forms, cardinal, alias and constant expression
+ explain (verbose, costs off)
+@@ -2849,7 +2950,8 @@
+          Output: (count(c2)), c2, 5, 7.0, 9
+          Relations: Aggregate on (public.ft1)
+          Remote SQL: SELECT count(c2), c2, 5, 7.0, 9 FROM "S 1"."T 1" GROUP BY 2, 3, 5
+-(7 rows)
++ Query Identifier: -3983794309699190632
++(8 rows)
+ 
+ select count(c2) w, c2 x, 5 y, 7.0 z from ft1 group by 2, y, 9.0::int order by 2;
+   w  | x | y |  z  
+@@ -2876,7 +2978,8 @@
+    Output: c2, c2, (sum(c1))
+    Relations: Aggregate on (public.ft1)
+    Remote SQL: SELECT c2, c2, sum("C 1") FROM "S 1"."T 1" WHERE ((c2 > 6)) GROUP BY 1, 2 ORDER BY sum("C 1") ASC NULLS LAST
+-(4 rows)
++ Query Identifier: -8332342240653762387
++(5 rows)
+ 
+ select c2, c2 from ft1 where c2 > 6 group by 1, 2 order by sum(c1);
+  c2 | c2 
+@@ -2895,7 +2998,8 @@
+    Output: c2, (sum(c1))
+    Relations: Aggregate on (public.ft2)
+    Remote SQL: SELECT c2, sum("C 1") FROM "S 1"."T 1" GROUP BY 1 HAVING ((avg("C 1") < 500::numeric)) AND ((sum("C 1") < 49800)) ORDER BY c2 ASC NULLS LAST
+-(4 rows)
++ Query Identifier: 256479060516694266
++(5 rows)
+ 
+ select c2, sum(c1) from ft2 group by c2 having avg(c1) < 500 and sum(c1) < 49800 order by c2;
+  c2 |  sum  
+@@ -2916,7 +3020,8 @@
+          Filter: (((((avg(ft1.c1)) / (avg(ft1.c1))))::double precision * random()) <= '1'::double precision)
+          Relations: Aggregate on (public.ft1)
+          Remote SQL: SELECT c5, NULL::bigint, sqrt(c2), avg("C 1") FROM "S 1"."T 1" GROUP BY 1, 3 HAVING ((avg("C 1") < 500::numeric))
+-(7 rows)
++ Query Identifier: 4524600585958449581
++(8 rows)
+ 
+ select count(*) from (select c5, count(c1) from ft1 group by c5, sqrt(c2) having (avg(c1) / avg(c1)) * random() <= 1 and avg(c1) < 500) x;
+  count 
+@@ -2939,7 +3044,8 @@
+          ->  Foreign Scan on public.ft1
+                Output: c1, c2
+                Remote SQL: SELECT "C 1", c2 FROM "S 1"."T 1"
+-(10 rows)
++ Query Identifier: 5003750156215024990
++(11 rows)
+ 
+ -- Remote aggregate in combination with a local Param (for the output
+ -- of an initplan) can be trouble, per bug #15781
+@@ -2953,7 +3059,8 @@
+    Remote SQL: SELECT sum("C 1") FROM "S 1"."T 1"
+    InitPlan 1 (returns $0)
+      ->  Seq Scan on pg_catalog.pg_enum
+-(6 rows)
++ Query Identifier: 402164119382280240
++(7 rows)
+ 
+ select exists(select 1 from pg_enum), sum(c1) from ft1;
+  exists |  sum   
+@@ -2973,7 +3080,8 @@
+    ->  Foreign Scan on public.ft1
+          Output: $0, ft1.c1
+          Remote SQL: SELECT "C 1" FROM "S 1"."T 1"
+-(8 rows)
++ Query Identifier: 8276920882913677331
++(9 rows)
+ 
+ select exists(select 1 from pg_enum), sum(c1) from ft1 group by 1;
+  exists |  sum   
+@@ -2991,7 +3099,8 @@
+    Output: (array_agg(c1 ORDER BY c1)), c2
+    Relations: Aggregate on (public.ft1)
+    Remote SQL: SELECT array_agg("C 1" ORDER BY "C 1" ASC NULLS LAST), c2 FROM "S 1"."T 1" WHERE (("C 1" < 100)) GROUP BY 2 ORDER BY array_agg("C 1" ORDER BY "C 1" ASC NULLS LAST) ASC NULLS LAST
+-(4 rows)
++ Query Identifier: -4270081630700168249
++(5 rows)
+ 
+ select array_agg(c1 order by c1) from ft1 where c1 < 100 group by c2 order by 1;
+            array_agg            
+@@ -3017,7 +3126,8 @@
+    Output: (array_agg(c5 ORDER BY c1 DESC))
+    Relations: Aggregate on (public.ft2)
+    Remote SQL: SELECT array_agg(c5 ORDER BY "C 1" DESC NULLS FIRST) FROM "S 1"."T 1" WHERE (("C 1" < 50)) AND ((c2 = 6))
+-(4 rows)
++ Query Identifier: -3658677046841029409
++(5 rows)
+ 
+ select array_agg(c5 order by c1 desc) from ft2 where c2 = 6 and c1 < 50;
+                                                                 array_agg                                                                 
+@@ -3034,7 +3144,8 @@
+    Output: (array_agg(DISTINCT (t1.c1 % 5))), ((t2.c1 % 3))
+    Relations: Aggregate on ((public.ft4 t1) FULL JOIN (public.ft5 t2))
+    Remote SQL: SELECT array_agg(DISTINCT (r1.c1 % 5)), (r2.c1 % 3) FROM ("S 1"."T 3" r1 FULL JOIN "S 1"."T 4" r2 ON (((r1.c1 = r2.c1)))) WHERE (((r1.c1 < 20) OR ((r1.c1 IS NULL) AND (r2.c1 < 5)))) GROUP BY 2 ORDER BY array_agg(DISTINCT (r1.c1 % 5)) ASC NULLS LAST
+-(4 rows)
++ Query Identifier: -7725260441783271399
++(5 rows)
+ 
+ select array_agg(distinct (t1.c1)%5) from ft4 t1 full join ft5 t2 on (t1.c1 = t2.c1) where t1.c1 < 20 or (t1.c1 is null and t2.c1 < 5) group by (t2.c1)%3 order by 1;
+   array_agg   
+@@ -3052,7 +3163,8 @@
+    Output: (array_agg(DISTINCT (t1.c1 % 5) ORDER BY (t1.c1 % 5))), ((t2.c1 % 3))
+    Relations: Aggregate on ((public.ft4 t1) FULL JOIN (public.ft5 t2))
+    Remote SQL: SELECT array_agg(DISTINCT (r1.c1 % 5) ORDER BY ((r1.c1 % 5)) ASC NULLS LAST), (r2.c1 % 3) FROM ("S 1"."T 3" r1 FULL JOIN "S 1"."T 4" r2 ON (((r1.c1 = r2.c1)))) WHERE (((r1.c1 < 20) OR ((r1.c1 IS NULL) AND (r2.c1 < 5)))) GROUP BY 2 ORDER BY array_agg(DISTINCT (r1.c1 % 5) ORDER BY ((r1.c1 % 5)) ASC NULLS LAST) ASC NULLS LAST
+-(4 rows)
++ Query Identifier: -571637638002082144
++(5 rows)
+ 
+ select array_agg(distinct (t1.c1)%5 order by (t1.c1)%5) from ft4 t1 full join ft5 t2 on (t1.c1 = t2.c1) where t1.c1 < 20 or (t1.c1 is null and t2.c1 < 5) group by (t2.c1)%3 order by 1;
+   array_agg   
+@@ -3069,7 +3181,8 @@
+    Output: (array_agg(DISTINCT (t1.c1 % 5) ORDER BY (t1.c1 % 5) DESC NULLS LAST)), ((t2.c1 % 3))
+    Relations: Aggregate on ((public.ft4 t1) FULL JOIN (public.ft5 t2))
+    Remote SQL: SELECT array_agg(DISTINCT (r1.c1 % 5) ORDER BY ((r1.c1 % 5)) DESC NULLS LAST), (r2.c1 % 3) FROM ("S 1"."T 3" r1 FULL JOIN "S 1"."T 4" r2 ON (((r1.c1 = r2.c1)))) WHERE (((r1.c1 < 20) OR ((r1.c1 IS NULL) AND (r2.c1 < 5)))) GROUP BY 2 ORDER BY array_agg(DISTINCT (r1.c1 % 5) ORDER BY ((r1.c1 % 5)) DESC NULLS LAST) ASC NULLS LAST
+-(4 rows)
++ Query Identifier: 4725799360471354716
++(5 rows)
+ 
+ select array_agg(distinct (t1.c1)%5 order by (t1.c1)%5 desc nulls last) from ft4 t1 full join ft5 t2 on (t1.c1 = t2.c1) where t1.c1 < 20 or (t1.c1 is null and t2.c1 < 5) group by (t2.c1)%3 order by 1;
+   array_agg   
+@@ -3087,7 +3200,8 @@
+    Output: (sum(c1) FILTER (WHERE ((c1 < 100) AND (c2 > 5)))), c2
+    Relations: Aggregate on (public.ft1)
+    Remote SQL: SELECT sum("C 1") FILTER (WHERE (("C 1" < 100) AND (c2 > 5))), c2 FROM "S 1"."T 1" GROUP BY 2 ORDER BY sum("C 1") FILTER (WHERE (("C 1" < 100) AND (c2 > 5))) ASC NULLS LAST
+-(4 rows)
++ Query Identifier: -6832525105513474204
++(5 rows)
+ 
+ select sum(c1) filter (where c1 < 100 and c2 > 5) from ft1 group by c2 order by 1 nulls last;
+  sum 
+@@ -3113,7 +3227,8 @@
+    Output: (sum((c1 % 3))), (sum(DISTINCT (c1 % 3) ORDER BY (c1 % 3)) FILTER (WHERE ((c1 % 3) < 2))), c2
+    Relations: Aggregate on (public.ft1)
+    Remote SQL: SELECT sum(("C 1" % 3)), sum(DISTINCT ("C 1" % 3) ORDER BY (("C 1" % 3)) ASC NULLS LAST) FILTER (WHERE (("C 1" % 3) < 2)), c2 FROM "S 1"."T 1" WHERE ((c2 = 6)) GROUP BY 3
+-(4 rows)
++ Query Identifier: 5151106438454177492
++(5 rows)
+ 
+ select sum(c1%3), sum(distinct c1%3 order by c1%3) filter (where c1%3 < 2), c2 from ft1 where c2 = 6 group by c2;
+  sum | sum | c2 
+@@ -3139,7 +3254,8 @@
+                  ->  Foreign Scan on public.ft1 t1
+                        Output: (count(*) FILTER (WHERE ((t2.c2 = 6) AND (t2.c1 < 10))))
+                        Remote SQL: SELECT NULL FROM "S 1"."T 1" WHERE (("C 1" = 6))
+-(13 rows)
++ Query Identifier: 6593944049737121329
++(14 rows)
+ 
+ select distinct (select count(*) filter (where t2.c2 = 6 and t2.c1 < 10) from ft1 t1 where t1.c1 = 6) from ft2 t2 where t2.c2 % 6 = 0 order by 1;
+  count 
+@@ -3165,7 +3281,8 @@
+                        Output: (count(t1.c1) FILTER (WHERE ((t2.c2 = 6) AND (t2.c1 < 10))))
+                        Relations: Aggregate on (public.ft1 t1)
+                        Remote SQL: SELECT count("C 1") FILTER (WHERE (($1::integer = 6) AND ($2::integer < 10))) FROM "S 1"."T 1" WHERE (("C 1" = 6))
+-(13 rows)
++ Query Identifier: 1513817544052560476
++(14 rows)
+ 
+ select distinct (select count(t1.c1) filter (where t2.c2 = 6 and t2.c1 < 10) from ft1 t1 where t1.c1 = 6) from ft2 t2 where t2.c2 % 6 = 0 order by 1;
+  count 
+@@ -3188,7 +3305,8 @@
+          ->  Foreign Scan on public.ft1
+                Output: c1, c2
+                Remote SQL: SELECT "C 1", c2 FROM "S 1"."T 1"
+-(9 rows)
++ Query Identifier: -3596925443822390880
++(10 rows)
+ 
+ explain (verbose, costs off)
+ select sum(c2) filter (where c2 in (select c2 from ft1 where c2 < 5)) from ft1;
+@@ -3203,7 +3321,8 @@
+      ->  Foreign Scan on public.ft1 ft1_1
+            Output: ft1_1.c2
+            Remote SQL: SELECT c2 FROM "S 1"."T 1" WHERE ((c2 < 5))
+-(9 rows)
++ Query Identifier: -3033533293071848102
++(10 rows)
+ 
+ -- Ordered-sets within aggregate
+ explain (verbose, costs off)
+@@ -3217,7 +3336,8 @@
+          Output: c2, (rank('10'::character varying) WITHIN GROUP (ORDER BY c6)), (percentile_cont((((c2)::numeric / '10'::numeric))::double precision) WITHIN GROUP (ORDER BY ((c1)::double precision)))
+          Relations: Aggregate on (public.ft1)
+          Remote SQL: SELECT c2, rank('10'::character varying) WITHIN GROUP (ORDER BY c6 ASC NULLS LAST), percentile_cont((c2 / 10::numeric)) WITHIN GROUP (ORDER BY ("C 1") ASC NULLS LAST) FROM "S 1"."T 1" WHERE ((c2 < 10)) GROUP BY 1 HAVING ((percentile_cont((c2 / 10::numeric)) WITHIN GROUP (ORDER BY ("C 1") ASC NULLS LAST) < 500::double precision))
+-(7 rows)
++ Query Identifier: -3452477083298164819
++(8 rows)
+ 
+ select c2, rank('10'::varchar) within group (order by c6), percentile_cont(c2/10::numeric) within group (order by c1) from ft1 where c2 < 10 group by c2 having percentile_cont(c2/10::numeric) within group (order by c1) < 500 order by c2;
+  c2 | rank | percentile_cont 
+@@ -3238,7 +3358,8 @@
+    Output: c1, (rank(c1, c2) WITHIN GROUP (ORDER BY c1, c2)), c2
+    Relations: Aggregate on (public.ft1)
+    Remote SQL: SELECT "C 1", rank("C 1", c2) WITHIN GROUP (ORDER BY "C 1" ASC NULLS LAST, c2 ASC NULLS LAST), c2 FROM "S 1"."T 1" WHERE (("C 1" = 6)) GROUP BY 1, 3
+-(4 rows)
++ Query Identifier: -776586204576482286
++(5 rows)
+ 
+ select c1, rank(c1, c2) within group (order by c1, c2) from ft1 group by c1, c2 having c1 = 6 order by 1;
+  c1 | rank 
+@@ -3266,7 +3387,8 @@
+    ->  Foreign Scan on public.ft1
+          Output: c2, c1
+          Remote SQL: SELECT "C 1", c2 FROM "S 1"."T 1" ORDER BY c2 ASC NULLS LAST
+-(6 rows)
++ Query Identifier: -3840865727240288793
++(7 rows)
+ 
+ -- Add function and aggregate into extension
+ alter extension postgres_fdw add function least_accum(anyelement, variadic anyarray);
+@@ -3284,7 +3406,8 @@
+          Output: c2, (least_agg(VARIADIC ARRAY[c1]))
+          Relations: Aggregate on (public.ft1)
+          Remote SQL: SELECT c2, public.least_agg(VARIADIC ARRAY["C 1"]) FROM "S 1"."T 1" WHERE ((c2 < 100)) GROUP BY 1
+-(7 rows)
++ Query Identifier: 7613942804867413656
++(8 rows)
+ 
+ select c2, least_agg(c1) from ft1 where c2 < 100 group by c2 order by c2;
+  c2 | least_agg 
+@@ -3316,7 +3439,8 @@
+    ->  Foreign Scan on public.ft1
+          Output: c2, c1
+          Remote SQL: SELECT "C 1", c2 FROM "S 1"."T 1" ORDER BY c2 ASC NULLS LAST
+-(6 rows)
++ Query Identifier: -3840865727240288793
++(7 rows)
+ 
+ -- Cleanup
+ reset enable_hashagg;
+@@ -3362,7 +3486,8 @@
+    ->  Foreign Scan on public.ft2
+          Output: c1, c2
+          Remote SQL: SELECT "C 1", c2 FROM "S 1"."T 1" WHERE (("C 1" < 100)) AND ((c2 = 6))
+-(6 rows)
++ Query Identifier: -6233026304906119960
++(7 rows)
+ 
+ -- This should not be pushed either.
+ explain (verbose, costs off)
+@@ -3375,7 +3500,8 @@
+    ->  Foreign Scan on public.ft2
+          Output: c1, c2, c3, c4, c5, c6, c7, c8
+          Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1"
+-(6 rows)
++ Query Identifier: 7298691539791868080
++(7 rows)
+ 
+ -- Update local stats on ft2
+ ANALYZE ft2;
+@@ -3396,7 +3522,8 @@
+    Output: (array_agg(c1 ORDER BY c1 USING <^ NULLS LAST)), c2
+    Relations: Aggregate on (public.ft2)
+    Remote SQL: SELECT array_agg("C 1" ORDER BY "C 1" USING OPERATOR(public.<^) NULLS LAST), c2 FROM "S 1"."T 1" WHERE (("C 1" < 100)) AND ((c2 = 6)) GROUP BY 2
+-(4 rows)
++ Query Identifier: -6233026304906119960
++(5 rows)
+ 
+ select array_agg(c1 order by c1 using operator(public.<^)) from ft2 where c2 = 6 and c1 < 100 group by c2;
+            array_agg            
+@@ -3412,7 +3539,8 @@
+  Foreign Scan on public.ft2
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" ORDER BY "C 1" USING OPERATOR(public.<^) NULLS LAST
+-(3 rows)
++ Query Identifier: 7298691539791868080
++(4 rows)
+ 
+ -- Remove from extension
+ alter extension postgres_fdw drop operator class my_op_class using btree;
+@@ -3433,7 +3561,8 @@
+    ->  Foreign Scan on public.ft2
+          Output: c1, c2
+          Remote SQL: SELECT "C 1", c2 FROM "S 1"."T 1" WHERE (("C 1" < 100)) AND ((c2 = 6))
+-(6 rows)
++ Query Identifier: -6233026304906119960
++(7 rows)
+ 
+ -- Cleanup
+ drop operator class my_op_class using btree;
+@@ -3461,7 +3590,8 @@
+                ->  Foreign Scan on public.ft2 t2
+                      Output: t2.c2
+                      Remote SQL: SELECT c2 FROM "S 1"."T 1"
+-(13 rows)
++ Query Identifier: 4357355072931689379
++(14 rows)
+ 
+ -- Subquery in FROM clause having aggregate
+ explain (verbose, costs off)
+@@ -3489,7 +3619,8 @@
+                                  Output: ft1_1.c2, (sum(ft1_1.c1))
+                                  Relations: Aggregate on (public.ft1 ft1_1)
+                                  Remote SQL: SELECT c2, sum("C 1") FROM "S 1"."T 1" GROUP BY 1
+-(21 rows)
++ Query Identifier: -772944551316618209
++(22 rows)
+ 
+ select count(*), x.b from ft1, (select c2 a, sum(c1) b from ft1 group by c2) x where ft1.c2 = x.a group by x.b order by 1, 2;
+  count |   b   
+@@ -3515,7 +3646,8 @@
+    Output: (avg(t1.c1)), (sum(t2.c1)), t2.c1
+    Relations: Aggregate on ((public.ft4 t1) FULL JOIN (public.ft5 t2))
+    Remote SQL: SELECT avg(r1.c1), sum(r2.c1), r2.c1 FROM ("S 1"."T 3" r1 FULL JOIN "S 1"."T 4" r2 ON (((r1.c1 = r2.c1)))) GROUP BY 3 HAVING ((((avg(r1.c1) IS NULL) AND (sum(r2.c1) < 10)) OR (sum(r2.c1) IS NULL))) ORDER BY avg(r1.c1) ASC NULLS LAST, sum(r2.c1) ASC NULLS LAST
+-(4 rows)
++ Query Identifier: 2031651815321352971
++(5 rows)
+ 
+ select avg(t1.c1), sum(t2.c1) from ft4 t1 full join ft5 t2 on (t1.c1 = t2.c1) group by t2.c1 having (avg(t1.c1) is null and sum(t2.c1) < 10) or sum(t2.c1) is null order by 1 nulls last, 2;
+          avg         | sum 
+@@ -3535,7 +3667,8 @@
+    Output: (count(*)), (sum(ft4.c1)), (avg(ft5.c1))
+    Relations: Aggregate on ((public.ft4) FULL JOIN (public.ft5))
+    Remote SQL: SELECT count(*), sum(s4.c1), avg(s5.c1) FROM ((SELECT c1 FROM "S 1"."T 3" WHERE ((c1 >= 50)) AND ((c1 <= 60))) s4(c1) FULL JOIN (SELECT c1 FROM "S 1"."T 4" WHERE ((c1 >= 50)) AND ((c1 <= 60))) s5(c1) ON (((s4.c1 = s5.c1))))
+-(4 rows)
++ Query Identifier: -6377742524701382348
++(5 rows)
+ 
+ select count(*), sum(t1.c1), avg(t2.c1) from (select c1 from ft4 where c1 between 50 and 60) t1 full join (select c1 from ft5 where c1 between 50 and 60) t2 on (t1.c1 = t2.c1);
+  count | sum |         avg         
+@@ -3556,7 +3689,8 @@
+          Output: ((sum(c2)) * ((random() <= '1'::double precision))::integer)
+          Relations: Aggregate on (public.ft1)
+          Remote SQL: SELECT sum(c2) FROM "S 1"."T 1"
+-(7 rows)
++ Query Identifier: 6389981341046273036
++(8 rows)
+ 
+ select sum(c2) * (random() <= 1)::int as sum from ft1 order by 1;
+  sum  
+@@ -3586,7 +3720,8 @@
+                      Output: (sum((t2.c1 + t1."C 1"))), t2.c1
+                      Relations: Aggregate on (public.ft2 t2)
+                      Remote SQL: SELECT sum(("C 1" + $1::integer)), "C 1" FROM "S 1"."T 1" GROUP BY 2
+-(16 rows)
++ Query Identifier: -3301085934025278009
++(17 rows)
+ 
+ select c2, sum from "S 1"."T 1" t1, lateral (select sum(t2.c1 + t1."C 1") sum from ft2 t2 group by t2.c1) qry where t1.c2 * 2 = qry.sum and t1.c2 < 3 and t1."C 1" < 100 order by 1;
+  c2 | sum 
+@@ -3626,7 +3761,8 @@
+          ->  Foreign Scan on public.ft2 ref_3
+                Output: ref_3.c3
+                Remote SQL: SELECT c3 FROM "S 1"."T 1" WHERE ((c3 = '00001'))
+-(15 rows)
++ Query Identifier: -4952347230755132875
++(16 rows)
+ 
+ SELECT ref_0.c2, subq_1.*
+ FROM
+@@ -3674,7 +3810,8 @@
+                            Output: 13, (avg(ft1.c1)), NULL::bigint
+                            Relations: Aggregate on ((public.ft2) LEFT JOIN (public.ft1))
+                            Remote SQL: SELECT 13, avg(r1."C 1"), NULL::bigint FROM ("S 1"."T 1" r2 LEFT JOIN "S 1"."T 1" r1 ON (((r1."C 1" = r2."C 1"))))
+-(17 rows)
++ Query Identifier: -1647075842706755482
++(18 rows)
+ 
+ select sum(q.a), count(q.b) from ft4 left join (select 13, avg(ft1.c1), sum(ft2.c1) from ft1 right join ft2 on (ft1.c1 = ft2.c1)) q(a, b, c) on (ft4.c1 <= q.b);
+  sum | count 
+@@ -3698,7 +3835,8 @@
+          ->  Foreign Scan on public.ft1
+                Output: c2, c1
+                Remote SQL: SELECT "C 1", c2 FROM "S 1"."T 1" WHERE ((c2 < 3))
+-(10 rows)
++ Query Identifier: -2888636718686367679
++(11 rows)
+ 
+ select c2, sum(c1) from ft1 where c2 < 3 group by rollup(c2) order by 1 nulls last;
+  c2 |  sum   
+@@ -3723,7 +3861,8 @@
+          ->  Foreign Scan on public.ft1
+                Output: c2, c1
+                Remote SQL: SELECT "C 1", c2 FROM "S 1"."T 1" WHERE ((c2 < 3))
+-(10 rows)
++ Query Identifier: -2888636718686367679
++(11 rows)
+ 
+ select c2, sum(c1) from ft1 where c2 < 3 group by cube(c2) order by 1 nulls last;
+  c2 |  sum   
+@@ -3748,7 +3887,8 @@
+          ->  Foreign Scan on public.ft1
+                Output: c2, c6, c1
+                Remote SQL: SELECT "C 1", c2, c6 FROM "S 1"."T 1" WHERE ((c2 < 3))
+-(10 rows)
++ Query Identifier: 1401702793828087396
++(11 rows)
+ 
+ select c2, c6, sum(c1) from ft1 where c2 < 3 group by grouping sets(c2, c6) order by 1 nulls last, 2 nulls last;
+  c2 | c6 |  sum  
+@@ -3774,7 +3914,8 @@
+          ->  Foreign Scan on public.ft1
+                Output: c2, c1
+                Remote SQL: SELECT "C 1", c2 FROM "S 1"."T 1" WHERE ((c2 < 3))
+-(9 rows)
++ Query Identifier: -7129474676115534947
++(10 rows)
+ 
+ select c2, sum(c1), grouping(c2) from ft1 where c2 < 3 group by c2 order by 1 nulls last;
+  c2 |  sum  | grouping 
+@@ -3798,7 +3939,8 @@
+                Output: ((sum(c1) / 1000)), c2
+                Relations: Aggregate on (public.ft2)
+                Remote SQL: SELECT (sum("C 1") / 1000), c2 FROM "S 1"."T 1" WHERE ((c2 < 6)) GROUP BY 2
+-(9 rows)
++ Query Identifier: -1009952511336949033
++(10 rows)
+ 
+ select distinct sum(c1)/1000 s from ft2 where c2 < 6 group by c2 order by 1;
+  s  
+@@ -3824,7 +3966,8 @@
+                      Output: c2, ((c2 % 2)), (sum(c2))
+                      Relations: Aggregate on (public.ft2)
+                      Remote SQL: SELECT c2, (c2 % 2), sum(c2) FROM "S 1"."T 1" WHERE ((c2 < 10)) GROUP BY 1
+-(12 rows)
++ Query Identifier: -5996587349505125896
++(13 rows)
+ 
+ select c2, sum(c2), count(c2) over (partition by c2%2) from ft2 where c2 < 10 group by c2 order by 1;
+  c2 | sum | count 
+@@ -3857,7 +4000,8 @@
+                      Output: c2, ((c2 % 2))
+                      Relations: Aggregate on (public.ft1)
+                      Remote SQL: SELECT c2, (c2 % 2) FROM "S 1"."T 1" WHERE ((c2 < 10)) GROUP BY 1
+-(12 rows)
++ Query Identifier: 8507466576416795603
++(13 rows)
+ 
+ select c2, array_agg(c2) over (partition by c2%2 order by c2 desc) from ft1 where c2 < 10 group by c2 order by 1;
+  c2 |  array_agg  
+@@ -3890,7 +4034,8 @@
+                      Output: c2, ((c2 % 2))
+                      Relations: Aggregate on (public.ft1)
+                      Remote SQL: SELECT c2, (c2 % 2) FROM "S 1"."T 1" WHERE ((c2 < 10)) GROUP BY 1
+-(12 rows)
++ Query Identifier: -6860702342007893290
++(13 rows)
+ 
+ select c2, array_agg(c2) over (partition by c2%2 order by c2 range between current row and unbounded following) from ft1 where c2 < 10 group by c2 order by 1;
+  c2 |  array_agg  
+@@ -3919,7 +4064,8 @@
+    Output: t1.c3, t2.c3
+    Relations: (public.ft1 t1) INNER JOIN (public.ft2 t2)
+    Remote SQL: SELECT r1.c3, r2.c3 FROM ("S 1"."T 1" r1 INNER JOIN "S 1"."T 1" r2 ON (((r2."C 1" = 2)) AND ((r1."C 1" = 1))))
+-(4 rows)
++ Query Identifier: 2915833541836421313
++(5 rows)
+ 
+ EXECUTE st1(1, 1);
+   c3   |  c3   
+@@ -3953,7 +4099,8 @@
+                      Output: t2.c3
+                      Filter: (date(t2.c4) = '01-17-1970'::date)
+                      Remote SQL: SELECT c3, c4 FROM "S 1"."T 1" WHERE (("C 1" > 10))
+-(15 rows)
++ Query Identifier: -2838936247384367603
++(16 rows)
+ 
+ EXECUTE st2(10, 20);
+  c1 | c2 |  c3   |              c4              |            c5            | c6 |     c7     | c8  
+@@ -3986,7 +4133,8 @@
+                ->  Foreign Scan on public.ft2 t2
+                      Output: t2.c3
+                      Remote SQL: SELECT c3 FROM "S 1"."T 1" WHERE (("C 1" > 10)) AND ((date(c5) = '1970-01-17'::date))
+-(14 rows)
++ Query Identifier: 3965403137130996197
++(15 rows)
+ 
+ EXECUTE st3(10, 20);
+  c1 | c2 |  c3   |              c4              |            c5            | c6 |     c7     | c8  
+@@ -4007,7 +4155,8 @@
+  Foreign Scan on public.ft1 t1
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE (("C 1" = 1))
+-(3 rows)
++ Query Identifier: -528634550131723876
++(4 rows)
+ 
+ EXPLAIN (VERBOSE, COSTS OFF) EXECUTE st4(1);
+                                          QUERY PLAN                                          
+@@ -4015,7 +4164,8 @@
+  Foreign Scan on public.ft1 t1
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE (("C 1" = 1))
+-(3 rows)
++ Query Identifier: -528634550131723876
++(4 rows)
+ 
+ EXPLAIN (VERBOSE, COSTS OFF) EXECUTE st4(1);
+                                          QUERY PLAN                                          
+@@ -4023,7 +4173,8 @@
+  Foreign Scan on public.ft1 t1
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE (("C 1" = 1))
+-(3 rows)
++ Query Identifier: -528634550131723876
++(4 rows)
+ 
+ EXPLAIN (VERBOSE, COSTS OFF) EXECUTE st4(1);
+                                          QUERY PLAN                                          
+@@ -4031,7 +4182,8 @@
+  Foreign Scan on public.ft1 t1
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE (("C 1" = 1))
+-(3 rows)
++ Query Identifier: -528634550131723876
++(4 rows)
+ 
+ EXPLAIN (VERBOSE, COSTS OFF) EXECUTE st4(1);
+                                          QUERY PLAN                                          
+@@ -4039,7 +4191,8 @@
+  Foreign Scan on public.ft1 t1
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE (("C 1" = 1))
+-(3 rows)
++ Query Identifier: -528634550131723876
++(4 rows)
+ 
+ -- once we try it enough times, should switch to generic plan
+ EXPLAIN (VERBOSE, COSTS OFF) EXECUTE st4(1);
+@@ -4048,7 +4201,8 @@
+  Foreign Scan on public.ft1 t1
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE (("C 1" = $1::integer))
+-(3 rows)
++ Query Identifier: -528634550131723876
++(4 rows)
+ 
+ -- value of $1 should not be sent to remote
+ PREPARE st5(user_enum,int) AS SELECT * FROM ft1 t1 WHERE c8 = $1 and c1 = $2;
+@@ -4059,7 +4213,8 @@
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Filter: (t1.c8 = 'foo'::user_enum)
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE (("C 1" = 1))
+-(4 rows)
++ Query Identifier: 2083726100190205144
++(5 rows)
+ 
+ EXPLAIN (VERBOSE, COSTS OFF) EXECUTE st5('foo', 1);
+                                          QUERY PLAN                                          
+@@ -4068,7 +4223,8 @@
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Filter: (t1.c8 = 'foo'::user_enum)
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE (("C 1" = 1))
+-(4 rows)
++ Query Identifier: 2083726100190205144
++(5 rows)
+ 
+ EXPLAIN (VERBOSE, COSTS OFF) EXECUTE st5('foo', 1);
+                                          QUERY PLAN                                          
+@@ -4077,7 +4233,8 @@
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Filter: (t1.c8 = 'foo'::user_enum)
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE (("C 1" = 1))
+-(4 rows)
++ Query Identifier: 2083726100190205144
++(5 rows)
+ 
+ EXPLAIN (VERBOSE, COSTS OFF) EXECUTE st5('foo', 1);
+                                          QUERY PLAN                                          
+@@ -4086,7 +4243,8 @@
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Filter: (t1.c8 = 'foo'::user_enum)
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE (("C 1" = 1))
+-(4 rows)
++ Query Identifier: 2083726100190205144
++(5 rows)
+ 
+ EXPLAIN (VERBOSE, COSTS OFF) EXECUTE st5('foo', 1);
+                                          QUERY PLAN                                          
+@@ -4095,7 +4253,8 @@
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Filter: (t1.c8 = 'foo'::user_enum)
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE (("C 1" = 1))
+-(4 rows)
++ Query Identifier: 2083726100190205144
++(5 rows)
+ 
+ EXPLAIN (VERBOSE, COSTS OFF) EXECUTE st5('foo', 1);
+                                               QUERY PLAN                                               
+@@ -4104,7 +4263,8 @@
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Filter: (t1.c8 = $1)
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE (("C 1" = $1::integer))
+-(4 rows)
++ Query Identifier: 2083726100190205144
++(5 rows)
+ 
+ EXECUTE st5('foo', 1);
+  c1 | c2 |  c3   |              c4              |            c5            | c6 |     c7     | c8  
+@@ -4120,7 +4280,8 @@
+  Foreign Scan on public.ft1 t1
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE (("C 1" = c2))
+-(3 rows)
++ Query Identifier: -5776016276126292429
++(4 rows)
+ 
+ PREPARE st7 AS INSERT INTO ft1 (c1,c2,c3) VALUES (1001,101,'foo');
+ EXPLAIN (VERBOSE, COSTS OFF) EXECUTE st7;
+@@ -4131,7 +4292,8 @@
+    Batch Size: 1
+    ->  Result
+          Output: NULL::integer, 1001, 101, 'foo'::text, NULL::timestamp with time zone, NULL::timestamp without time zone, NULL::character varying, 'ft1       '::character(10), NULL::user_enum
+-(5 rows)
++ Query Identifier: -222638185206382173
++(6 rows)
+ 
+ ALTER TABLE "S 1"."T 1" RENAME TO "T 0";
+ ALTER FOREIGN TABLE ft1 OPTIONS (SET table_name 'T 0');
+@@ -4141,7 +4303,8 @@
+  Foreign Scan on public.ft1 t1
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 0" WHERE (("C 1" = c2))
+-(3 rows)
++ Query Identifier: -5776016276126292429
++(4 rows)
+ 
+ EXECUTE st6;
+  c1 | c2 |  c3   |              c4              |            c5            | c6 |     c7     | c8  
+@@ -4165,7 +4328,8 @@
+    Batch Size: 1
+    ->  Result
+          Output: NULL::integer, 1001, 101, 'foo'::text, NULL::timestamp with time zone, NULL::timestamp without time zone, NULL::character varying, 'ft1       '::character(10), NULL::user_enum
+-(5 rows)
++ Query Identifier: -222638185206382173
++(6 rows)
+ 
+ ALTER TABLE "S 1"."T 0" RENAME TO "T 1";
+ ALTER FOREIGN TABLE ft1 OPTIONS (SET table_name 'T 1');
+@@ -4177,7 +4341,8 @@
+    Output: (count(c3))
+    Relations: Aggregate on (public.ft1 t1)
+    Remote SQL: SELECT count(c3) FROM "S 1"."T 1" WHERE (("C 1" OPERATOR(public.===) c2))
+-(4 rows)
++ Query Identifier: 93208616623369657
++(5 rows)
+ 
+ ALTER SERVER loopback OPTIONS (DROP extensions);
+ EXPLAIN (VERBOSE, COSTS OFF) EXECUTE st8;
+@@ -4189,7 +4354,8 @@
+          Output: c3
+          Filter: (t1.c1 === t1.c2)
+          Remote SQL: SELECT "C 1", c2, c3 FROM "S 1"."T 1"
+-(6 rows)
++ Query Identifier: 93208616623369657
++(7 rows)
+ 
+ EXECUTE st8;
+  count 
+@@ -4218,7 +4384,8 @@
+          Output: c1, c2, c3, c4, c5, c6, c7, c8
+          Filter: (t1.tableoid = '1259'::oid)
+          Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1"
+-(6 rows)
++ Query Identifier: -1331602460449167556
++(7 rows)
+ 
+ SELECT * FROM ft1 t1 WHERE t1.tableoid = 'ft1'::regclass LIMIT 1;
+  c1 | c2 |  c3   |              c4              |            c5            | c6 |     c7     | c8  
+@@ -4233,7 +4400,8 @@
+  Foreign Scan on public.ft1 t1
+    Output: (tableoid)::regclass, c1, c2, c3, c4, c5, c6, c7, c8
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" LIMIT 1::bigint
+-(3 rows)
++ Query Identifier: 2887980235707350251
++(4 rows)
+ 
+ SELECT tableoid::regclass, * FROM ft1 t1 LIMIT 1;
+  tableoid | c1 | c2 |  c3   |              c4              |            c5            | c6 |     c7     | c8  
+@@ -4248,7 +4416,8 @@
+  Foreign Scan on public.ft1 t1
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE ((ctid = '(0,2)'))
+-(3 rows)
++ Query Identifier: -7662937520638935696
++(4 rows)
+ 
+ SELECT * FROM ft1 t1 WHERE t1.ctid = '(0,2)';
+  c1 | c2 |  c3   |              c4              |            c5            | c6 |     c7     | c8  
+@@ -4263,7 +4432,8 @@
+  Foreign Scan on public.ft1 t1
+    Output: ctid, c1, c2, c3, c4, c5, c6, c7, c8
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8, ctid FROM "S 1"."T 1" LIMIT 1::bigint
+-(3 rows)
++ Query Identifier: 3769612645538056175
++(4 rows)
+ 
+ SELECT ctid, * FROM ft1 t1 LIMIT 1;
+  ctid  | c1 | c2 |  c3   |              c4              |            c5            | c6 |     c7     | c8  
+@@ -4345,7 +4515,8 @@
+  Foreign Scan on public.ft1
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE ((c8 = 'foo')) LIMIT 1::bigint
+-(3 rows)
++ Query Identifier: 4608391780112936553
++(4 rows)
+ 
+ SELECT * FROM ft1 WHERE c8 = 'foo' LIMIT 1;
+  c1 | c2 |  c3   |              c4              |            c5            | c6 |     c7     | c8  
+@@ -4360,7 +4531,8 @@
+  Foreign Scan on public.ft1
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" WHERE (('foo' = c8)) LIMIT 1::bigint
+-(3 rows)
++ Query Identifier: -5269592342297527720
++(4 rows)
+ 
+ SELECT * FROM ft1 WHERE 'foo' = c8 LIMIT 1;
+  c1 | c2 |  c3   |              c4              |            c5            | c6 |     c7     | c8  
+@@ -4435,7 +4607,8 @@
+  Foreign Scan on public.ft3
+    Output: f1, f2, f3
+    Remote SQL: SELECT f1, f2, f3 FROM public.loct3 WHERE ((f1 = 'foo'))
+-(3 rows)
++ Query Identifier: -8565928123731641386
++(4 rows)
+ 
+ explain (verbose, costs off) select * from ft3 where f1 COLLATE "C" = 'foo';
+                                QUERY PLAN                               
+@@ -4443,7 +4616,8 @@
+  Foreign Scan on public.ft3
+    Output: f1, f2, f3
+    Remote SQL: SELECT f1, f2, f3 FROM public.loct3 WHERE ((f1 = 'foo'))
+-(3 rows)
++ Query Identifier: -2298741637991641211
++(4 rows)
+ 
+ explain (verbose, costs off) select * from ft3 where f2 = 'foo';
+                                QUERY PLAN                               
+@@ -4451,7 +4625,8 @@
+  Foreign Scan on public.ft3
+    Output: f1, f2, f3
+    Remote SQL: SELECT f1, f2, f3 FROM public.loct3 WHERE ((f2 = 'foo'))
+-(3 rows)
++ Query Identifier: 3075682865269429177
++(4 rows)
+ 
+ explain (verbose, costs off) select * from ft3 where f3 = 'foo';
+                                QUERY PLAN                               
+@@ -4459,7 +4634,8 @@
+  Foreign Scan on public.ft3
+    Output: f1, f2, f3
+    Remote SQL: SELECT f1, f2, f3 FROM public.loct3 WHERE ((f3 = 'foo'))
+-(3 rows)
++ Query Identifier: -5597239790565065828
++(4 rows)
+ 
+ explain (verbose, costs off) select * from ft3 f, loct3 l
+   where f.f3 = l.f3 and l.f1 = 'foo';
+@@ -4473,7 +4649,8 @@
+    ->  Foreign Scan on public.ft3 f
+          Output: f.f1, f.f2, f.f3
+          Remote SQL: SELECT f1, f2, f3 FROM public.loct3 WHERE (($1::character varying(10) = f3))
+-(8 rows)
++ Query Identifier: 561950023965131783
++(9 rows)
+ 
+ -- can't be sent to remote
+ explain (verbose, costs off) select * from ft3 where f1 COLLATE "POSIX" = 'foo';
+@@ -4483,7 +4660,8 @@
+    Output: f1, f2, f3
+    Filter: ((ft3.f1)::text = 'foo'::text)
+    Remote SQL: SELECT f1, f2, f3 FROM public.loct3
+-(4 rows)
++ Query Identifier: -1958882655852646545
++(5 rows)
+ 
+ explain (verbose, costs off) select * from ft3 where f1 = 'foo' COLLATE "C";
+                     QUERY PLAN                     
+@@ -4492,7 +4670,8 @@
+    Output: f1, f2, f3
+    Filter: (ft3.f1 = 'foo'::text COLLATE "C")
+    Remote SQL: SELECT f1, f2, f3 FROM public.loct3
+-(4 rows)
++ Query Identifier: -4812038271796538336
++(5 rows)
+ 
+ explain (verbose, costs off) select * from ft3 where f2 COLLATE "C" = 'foo';
+                     QUERY PLAN                     
+@@ -4501,7 +4680,8 @@
+    Output: f1, f2, f3
+    Filter: ((ft3.f2)::text = 'foo'::text)
+    Remote SQL: SELECT f1, f2, f3 FROM public.loct3
+-(4 rows)
++ Query Identifier: 2752187129545942866
++(5 rows)
+ 
+ explain (verbose, costs off) select * from ft3 where f2 = 'foo' COLLATE "C";
+                     QUERY PLAN                     
+@@ -4510,7 +4690,8 @@
+    Output: f1, f2, f3
+    Filter: (ft3.f2 = 'foo'::text COLLATE "C")
+    Remote SQL: SELECT f1, f2, f3 FROM public.loct3
+-(4 rows)
++ Query Identifier: 421202254071985855
++(5 rows)
+ 
+ explain (verbose, costs off) select * from ft3 f, loct3 l
+   where f.f3 = l.f3 COLLATE "POSIX" and l.f1 = 'foo';
+@@ -4528,7 +4709,8 @@
+          ->  Index Scan using loct3_f1_key on public.loct3 l
+                Output: l.f1, l.f2, l.f3
+                Index Cond: (l.f1 = 'foo'::text)
+-(12 rows)
++ Query Identifier: -5275691012343119494
++(13 rows)
+ 
+ -- ===================================================================
+ -- test writable foreign table stuff
+@@ -4545,7 +4727,8 @@
+          ->  Foreign Scan on public.ft2 ft2_1
+                Output: (ft2_1.c1 + 1000), (ft2_1.c2 + 100), (ft2_1.c3 || ft2_1.c3)
+                Remote SQL: SELECT "C 1", c2, c3 FROM "S 1"."T 1" LIMIT 20::bigint
+-(8 rows)
++ Query Identifier: 7988315755726185609
++(9 rows)
+ 
+ INSERT INTO ft2 (c1,c2,c3) SELECT c1+1000,c2+100, c3 || c3 FROM ft2 LIMIT 20;
+ INSERT INTO ft2 (c1,c2,c3)
+@@ -4565,7 +4748,8 @@
+  Update on public.ft2
+    ->  Foreign Update on public.ft2
+          Remote SQL: UPDATE "S 1"."T 1" SET c2 = (c2 + 300), c3 = (c3 || '_update3') WHERE ((("C 1" % 10) = 3))
+-(3 rows)
++ Query Identifier: -1044452024062372887
++(4 rows)
+ 
+ UPDATE ft2 SET c2 = c2 + 300, c3 = c3 || '_update3' WHERE c1 % 10 = 3;
+ EXPLAIN (verbose, costs off)
+@@ -4576,7 +4760,8 @@
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    ->  Foreign Update on public.ft2
+          Remote SQL: UPDATE "S 1"."T 1" SET c2 = (c2 + 400), c3 = (c3 || '_update7') WHERE ((("C 1" % 10) = 7)) RETURNING "C 1", c2, c3, c4, c5, c6, c7, c8
+-(4 rows)
++ Query Identifier: -2779449424352802856
++(5 rows)
+ 
+ UPDATE ft2 SET c2 = c2 + 400, c3 = c3 || '_update7' WHERE c1 % 10 = 7 RETURNING *;
+   c1  | c2  |         c3         |              c4              |            c5            | c6 |     c7     | c8  
+@@ -4693,7 +4878,8 @@
+  Update on public.ft2
+    ->  Foreign Update
+          Remote SQL: UPDATE "S 1"."T 1" r1 SET c2 = (r1.c2 + 500), c3 = (r1.c3 || '_update9'), c7 = 'ft2       '::character(10) FROM "S 1"."T 1" r2 WHERE ((r1.c2 = r2."C 1")) AND (((r2."C 1" % 10) = 9))
+-(3 rows)
++ Query Identifier: -8643111478886428550
++(4 rows)
+ 
+ UPDATE ft2 SET c2 = ft2.c2 + 500, c3 = ft2.c3 || '_update9', c7 = DEFAULT
+   FROM ft1 WHERE ft1.c1 = ft2.c2 AND ft1.c1 % 10 = 9;
+@@ -4705,7 +4891,8 @@
+    Output: c1, c4
+    ->  Foreign Delete on public.ft2
+          Remote SQL: DELETE FROM "S 1"."T 1" WHERE ((("C 1" % 10) = 5)) RETURNING "C 1", c4
+-(4 rows)
++ Query Identifier: 1219764901996479048
++(5 rows)
+ 
+ DELETE FROM ft2 WHERE c1 % 10 = 5 RETURNING c1, c4;
+   c1  |              c4              
+@@ -4822,7 +5009,8 @@
+  Delete on public.ft2
+    ->  Foreign Delete
+          Remote SQL: DELETE FROM "S 1"."T 1" r1 USING "S 1"."T 1" r2 WHERE ((r1.c2 = r2."C 1")) AND (((r2."C 1" % 10) = 2))
+-(3 rows)
++ Query Identifier: -2951551150909660132
++(4 rows)
+ 
+ DELETE FROM ft2 USING ft1 WHERE ft1.c1 = ft2.c2 AND ft1.c1 % 10 = 2;
+ SELECT c1,c2,c3,c4 FROM ft2 ORDER BY c1;
+@@ -5659,7 +5847,8 @@
+    Batch Size: 1
+    ->  Result
+          Output: 1200, 999, NULL::integer, 'foo'::text, NULL::timestamp with time zone, NULL::timestamp without time zone, NULL::character varying, 'ft2       '::character(10), NULL::user_enum
+-(6 rows)
++ Query Identifier: -8841570526074261802
++(7 rows)
+ 
+ INSERT INTO ft2 (c1,c2,c3) VALUES (1200,999,'foo') RETURNING tableoid::regclass;
+  tableoid 
+@@ -5675,7 +5864,8 @@
+    Output: (tableoid)::regclass
+    ->  Foreign Update on public.ft2
+          Remote SQL: UPDATE "S 1"."T 1" SET c3 = 'bar'::text WHERE (("C 1" = 1200))
+-(4 rows)
++ Query Identifier: 7986005411945356602
++(5 rows)
+ 
+ UPDATE ft2 SET c3 = 'bar' WHERE c1 = 1200 RETURNING tableoid::regclass;
+  tableoid 
+@@ -5691,7 +5881,8 @@
+    Output: (tableoid)::regclass
+    ->  Foreign Delete on public.ft2
+          Remote SQL: DELETE FROM "S 1"."T 1" WHERE (("C 1" = 1200))
+-(4 rows)
++ Query Identifier: 4571087012333844000
++(5 rows)
+ 
+ DELETE FROM ft2 WHERE c1 = 1200 RETURNING tableoid::regclass;
+  tableoid 
+@@ -5713,7 +5904,8 @@
+    Output: ft2.*, ft2.c1, ft2.c2, ft2.c3, ft2.c4, ft2.c5, ft2.c6, ft2.c7, ft2.c8, ft4.*, ft4.c1, ft4.c2, ft4.c3
+    ->  Foreign Update
+          Remote SQL: UPDATE "S 1"."T 1" r1 SET c3 = 'foo'::text FROM ("S 1"."T 3" r2 INNER JOIN "S 1"."T 4" r3 ON (TRUE)) WHERE ((r2.c1 = r3.c1)) AND ((r1.c2 = r2.c1)) AND ((r1."C 1" > 1200)) RETURNING r1."C 1", r1.c2, r1.c3, r1.c4, r1.c5, r1.c6, r1.c7, r1.c8, CASE WHEN (r2.*)::text IS NOT NULL THEN ROW(r2.c1, r2.c2, r2.c3) END, r2.c1, r2.c2, r2.c3
+-(4 rows)
++ Query Identifier: 4907282227623381469
++(5 rows)
+ 
+ UPDATE ft2 SET c3 = 'foo'
+   FROM ft4 INNER JOIN ft5 ON (ft4.c1 = ft5.c1)
+@@ -5750,7 +5942,8 @@
+    Output: 100
+    ->  Foreign Delete
+          Remote SQL: DELETE FROM "S 1"."T 1" r1 USING ("S 1"."T 3" r2 LEFT JOIN "S 1"."T 4" r3 ON (((r2.c1 = r3.c1)))) WHERE ((r1.c2 = r2.c1)) AND ((r1."C 1" > 1200)) AND (((r1."C 1" % 10) = 0))
+-(4 rows)
++ Query Identifier: -334076519770584384
++(5 rows)
+ 
+ DELETE FROM ft2
+   USING ft4 LEFT JOIN ft5 ON (ft4.c1 = ft5.c1)
+@@ -5790,7 +5983,8 @@
+            ->  Foreign Scan on public.ft2 src
+                  Output: (src.c2 * 10), src.c7
+                  Remote SQL: SELECT c2, c7 FROM "S 1"."T 1" WHERE (($1::integer = "C 1"))
+-(9 rows)
++ Query Identifier: -6213678840891105911
++(10 rows)
+ 
+ UPDATE ft2 AS target SET (c2, c7) = (
+     SELECT c2 * 10, c7
+@@ -5826,7 +6020,8 @@
+                      ->  Foreign Scan on public.ft2 t
+                            Output: t.*, t.c1
+                            Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1"
+-(17 rows)
++ Query Identifier: -6586700788884546006
++(18 rows)
+ 
+ UPDATE ft2 d SET c2 = CASE WHEN random() >= 0 THEN d.c2 ELSE 0 END
+   FROM ft2 AS t WHERE d.c1 = t.c1 AND d.c1 > 1000;
+@@ -5846,7 +6041,8 @@
+          Output: 'bar'::text, ctid, ft2.*
+          Filter: (postgres_fdw_abs(ft2.c1) > 2000)
+          Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8, ctid FROM "S 1"."T 1" FOR UPDATE
+-(7 rows)
++ Query Identifier: -5099698332786369044
++(8 rows)
+ 
+ UPDATE ft2 SET c3 = 'bar' WHERE postgres_fdw_abs(c1) > 2000 RETURNING *;
+   c1  | c2 | c3  | c4 | c5 | c6 |     c7     | c8 
+@@ -5894,7 +6090,8 @@
+                            ->  Foreign Scan on public.ft5
+                                  Output: ft5.*, ft5.c1, ft5.c2, ft5.c3
+                                  Remote SQL: SELECT c1, c2, c3 FROM "S 1"."T 4"
+-(24 rows)
++ Query Identifier: -4046952293328327934
++(25 rows)
+ 
+ UPDATE ft2 SET c3 = 'baz'
+   FROM ft4 INNER JOIN ft5 ON (ft4.c1 = ft5.c1)
+@@ -5934,7 +6131,8 @@
+                ->  Foreign Scan on public.ft5
+                      Output: ft5.*, ft5.c1
+                      Remote SQL: SELECT c1, c2, c3 FROM "S 1"."T 4"
+-(22 rows)
++ Query Identifier: -3956697349886881274
++(23 rows)
+ 
+ DELETE FROM ft2
+   USING ft4 INNER JOIN ft5 ON (ft4.c1 === ft5.c1)
+@@ -6357,7 +6555,8 @@
+  Foreign Scan on public.ft1
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" ORDER BY c6 DESC NULLS LAST, "C 1" ASC NULLS LAST LIMIT 10::bigint OFFSET 795::bigint
+-(3 rows)
++ Query Identifier: -4981431758561924185
++(4 rows)
+ 
+ SELECT * FROM ft1 ORDER BY c6 DESC NULLS LAST, c1 OFFSET 795  LIMIT 10;
+   c1  | c2  |         c3         |              c4              |            c5            |  c6  |     c7     | c8  
+@@ -6381,7 +6580,8 @@
+  Foreign Scan on public.ft1
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" ORDER BY c6 DESC NULLS FIRST, "C 1" ASC NULLS LAST LIMIT 10::bigint OFFSET 15::bigint
+-(3 rows)
++ Query Identifier: -6854219722974525530
++(4 rows)
+ 
+ SELECT * FROM ft1 ORDER BY c6 DESC NULLS FIRST, c1 OFFSET 15 LIMIT 10;
+   c1  | c2  |       c3        |              c4              |            c5            | c6 |     c7     | c8  
+@@ -6405,7 +6605,8 @@
+  Foreign Scan on public.ft1
+    Output: c1, c2, c3, c4, c5, c6, c7, c8
+    Remote SQL: SELECT "C 1", c2, c3, c4, c5, c6, c7, c8 FROM "S 1"."T 1" ORDER BY c6 ASC NULLS FIRST, "C 1" ASC NULLS LAST LIMIT 10::bigint OFFSET 15::bigint
+-(3 rows)
++ Query Identifier: 3302656221846087899
++(4 rows)
+ 
+ SELECT * FROM ft1 ORDER BY c6 ASC NULLS FIRST, c1 OFFSET 15 LIMIT 10;
+   c1  | c2  |        c3         |              c4              |            c5            |  c6  |     c7     | c8  
+@@ -6434,7 +6635,8 @@
+    Output: (count(*))
+    Relations: Aggregate on (public.ft1)
+    Remote SQL: SELECT count(*) FROM "S 1"."T 1" WHERE ((c2 < 0))
+-(4 rows)
++ Query Identifier: -3254088195421414479
++(5 rows)
+ 
+ SELECT count(*) FROM ft1 WHERE c2 < 0;
+  count 
+@@ -6444,13 +6646,14 @@
+ 
+ SET constraint_exclusion = 'on';
+ EXPLAIN (VERBOSE, COSTS OFF) SELECT count(*) FROM ft1 WHERE c2 < 0;
+-           QUERY PLAN           
+---------------------------------
++               QUERY PLAN               
++----------------------------------------
+  Aggregate
+    Output: count(*)
+    ->  Result
+          One-Time Filter: false
+-(4 rows)
++ Query Identifier: -3254088195421414479
++(5 rows)
+ 
+ SELECT count(*) FROM ft1 WHERE c2 < 0;
+  count 
+@@ -6478,7 +6681,8 @@
+    Output: (count(*))
+    Relations: Aggregate on (public.ft1)
+    Remote SQL: SELECT count(*) FROM "S 1"."T 1" WHERE ((c2 >= 0))
+-(4 rows)
++ Query Identifier: -5399108269398968812
++(5 rows)
+ 
+ SELECT count(*) FROM ft1 WHERE c2 >= 0;
+  count 
+@@ -6488,13 +6692,14 @@
+ 
+ SET constraint_exclusion = 'on';
+ EXPLAIN (VERBOSE, COSTS OFF) SELECT count(*) FROM ft1 WHERE c2 >= 0;
+-           QUERY PLAN           
+---------------------------------
++               QUERY PLAN               
++----------------------------------------
+  Aggregate
+    Output: count(*)
+    ->  Result
+          One-Time Filter: false
+-(4 rows)
++ Query Identifier: -5399108269398968812
++(5 rows)
+ 
+ SELECT count(*) FROM ft1 WHERE c2 >= 0;
+  count 
+@@ -6540,7 +6745,8 @@
+    Batch Size: 1
+    ->  Result
+          Output: 0, 5
+-(5 rows)
++ Query Identifier: -4231559299069706609
++(6 rows)
+ 
+ INSERT INTO rw_view VALUES (0, 5); -- should fail
+ ERROR:  new row violates check option for view "rw_view"
+@@ -6554,7 +6760,8 @@
+    Batch Size: 1
+    ->  Result
+          Output: 0, 15
+-(5 rows)
++ Query Identifier: -4231559299069706609
++(6 rows)
+ 
+ INSERT INTO rw_view VALUES (0, 15); -- ok
+ SELECT * FROM foreign_tbl;
+@@ -6572,7 +6779,8 @@
+    ->  Foreign Scan on public.foreign_tbl
+          Output: (foreign_tbl.b + 5), foreign_tbl.ctid, foreign_tbl.*
+          Remote SQL: SELECT a, b, ctid FROM public.base_tbl WHERE ((a < b)) FOR UPDATE
+-(5 rows)
++ Query Identifier: -4414615961129412734
++(6 rows)
+ 
+ UPDATE rw_view SET b = b + 5; -- should fail
+ ERROR:  new row violates check option for view "rw_view"
+@@ -6586,7 +6794,8 @@
+    ->  Foreign Scan on public.foreign_tbl
+          Output: (foreign_tbl.b + 15), foreign_tbl.ctid, foreign_tbl.*
+          Remote SQL: SELECT a, b, ctid FROM public.base_tbl WHERE ((a < b)) FOR UPDATE
+-(5 rows)
++ Query Identifier: -4414615961129412734
++(6 rows)
+ 
+ UPDATE rw_view SET b = b + 15; -- ok
+ SELECT * FROM foreign_tbl;
+@@ -6606,7 +6815,8 @@
+    Batch Size: 1
+    ->  Values Scan on "*VALUES*"
+          Output: "*VALUES*".column1, "*VALUES*".column2
+-(5 rows)
++ Query Identifier: 2566817957732115425
++(6 rows)
+ 
+ INSERT INTO rw_view VALUES (0, 15), (0, 5); -- should fail
+ ERROR:  new row violates check option for view "rw_view"
+@@ -6650,24 +6860,26 @@
+ 
+ EXPLAIN (VERBOSE, COSTS OFF)
+ INSERT INTO rw_view VALUES (0, 5);
+-         QUERY PLAN          
+------------------------------
++               QUERY PLAN               
++----------------------------------------
+  Insert on public.parent_tbl
+    ->  Result
+          Output: 0, 5
+-(3 rows)
++ Query Identifier: -7885800297006286663
++(4 rows)
+ 
+ INSERT INTO rw_view VALUES (0, 5); -- should fail
+ ERROR:  new row violates check option for view "rw_view"
+ DETAIL:  Failing row contains (10, 5).
+ EXPLAIN (VERBOSE, COSTS OFF)
+ INSERT INTO rw_view VALUES (0, 15);
+-         QUERY PLAN          
+------------------------------
++               QUERY PLAN               
++----------------------------------------
+  Insert on public.parent_tbl
+    ->  Result
+          Output: 0, 15
+-(3 rows)
++ Query Identifier: -7885800297006286663
++(4 rows)
+ 
+ INSERT INTO rw_view VALUES (0, 15); -- ok
+ SELECT * FROM foreign_tbl;
+@@ -6686,7 +6898,8 @@
+    ->  Foreign Scan on public.foreign_tbl parent_tbl_1
+          Output: (parent_tbl_1.b + 5), parent_tbl_1.tableoid, parent_tbl_1.ctid, parent_tbl_1.*
+          Remote SQL: SELECT a, b, ctid FROM public.child_tbl WHERE ((a < b)) FOR UPDATE
+-(6 rows)
++ Query Identifier: 3732504612125047827
++(7 rows)
+ 
+ UPDATE rw_view SET b = b + 5; -- should fail
+ ERROR:  new row violates check option for view "rw_view"
+@@ -6701,7 +6914,8 @@
+    ->  Foreign Scan on public.foreign_tbl parent_tbl_1
+          Output: (parent_tbl_1.b + 15), parent_tbl_1.tableoid, parent_tbl_1.ctid, parent_tbl_1.*
+          Remote SQL: SELECT a, b, ctid FROM public.child_tbl WHERE ((a < b)) FOR UPDATE
+-(6 rows)
++ Query Identifier: 3732504612125047827
++(7 rows)
+ 
+ UPDATE rw_view SET b = b + 15; -- ok
+ SELECT * FROM foreign_tbl;
+@@ -6719,7 +6933,8 @@
+  Insert on public.parent_tbl
+    ->  Values Scan on "*VALUES*"
+          Output: "*VALUES*".column1, "*VALUES*".column2
+-(3 rows)
++ Query Identifier: 6105295881176741188
++(4 rows)
+ 
+ INSERT INTO rw_view VALUES (0, 15), (0, 5); -- should fail
+ ERROR:  new row violates check option for view "rw_view"
+@@ -6791,7 +7006,8 @@
+    Batch Size: 1
+    ->  Values Scan on "*VALUES*"
+          Output: "*VALUES*".column1, NULL::integer
+-(5 rows)
++ Query Identifier: 7727421866136845631
++(6 rows)
+ 
+ insert into grem1 (a) values (1), (2);
+ explain (verbose, costs off)
+@@ -6803,7 +7019,8 @@
+    ->  Foreign Scan on public.grem1
+          Output: 22, ctid, grem1.*
+          Remote SQL: SELECT a, b, ctid FROM public.gloc1 WHERE ((a = 2)) FOR UPDATE
+-(5 rows)
++ Query Identifier: -3158977128395638756
++(6 rows)
+ 
+ update grem1 set a = 22 where a = 2;
+ select * from gloc1;
+@@ -6849,7 +7066,8 @@
+    Batch Size: 10
+    ->  Values Scan on "*VALUES*"
+          Output: "*VALUES*".column1, NULL::integer
+-(5 rows)
++ Query Identifier: 7727421866136845631
++(6 rows)
+ 
+ insert into grem1 (a) values (1), (2);
+ select * from gloc1;
+@@ -7133,7 +7351,8 @@
+    ->  Foreign Scan on public.rem1
+          Output: 10, ctid, rem1.*
+          Remote SQL: SELECT f1, f2, ctid FROM public.loc1 FOR UPDATE
+-(5 rows)
++ Query Identifier: -4884487118472626859
++(6 rows)
+ 
+ UPDATE rem1 set f1 = 10;
+ SELECT * from loc1;
+@@ -7270,7 +7489,8 @@
+  Delete on public.rem1
+    ->  Foreign Delete on public.rem1
+          Remote SQL: DELETE FROM public.loc1
+-(3 rows)
++ Query Identifier: 5959403458037684673
++(4 rows)
+ 
+ EXPLAIN (verbose, costs off)
+ DELETE FROM rem1 WHERE false;     -- currently can't be pushed down
+@@ -7281,7 +7501,8 @@
+    ->  Result
+          Output: ctid
+          One-Time Filter: false
+-(5 rows)
++ Query Identifier: 1145851926887438031
++(6 rows)
+ 
+ -- Test with statement-level triggers
+ CREATE TRIGGER trig_stmt_before
+@@ -7294,7 +7515,8 @@
+  Update on public.rem1
+    ->  Foreign Update on public.rem1
+          Remote SQL: UPDATE public.loc1 SET f2 = ''::text
+-(3 rows)
++ Query Identifier: 7742902631230751151
++(4 rows)
+ 
+ EXPLAIN (verbose, costs off)
+ DELETE FROM rem1;                 -- can be pushed down
+@@ -7303,7 +7525,8 @@
+  Delete on public.rem1
+    ->  Foreign Delete on public.rem1
+          Remote SQL: DELETE FROM public.loc1
+-(3 rows)
++ Query Identifier: 5959403458037684673
++(4 rows)
+ 
+ DROP TRIGGER trig_stmt_before ON rem1;
+ CREATE TRIGGER trig_stmt_after
+@@ -7316,7 +7539,8 @@
+  Update on public.rem1
+    ->  Foreign Update on public.rem1
+          Remote SQL: UPDATE public.loc1 SET f2 = ''::text
+-(3 rows)
++ Query Identifier: 7742902631230751151
++(4 rows)
+ 
+ EXPLAIN (verbose, costs off)
+ DELETE FROM rem1;                 -- can be pushed down
+@@ -7325,7 +7549,8 @@
+  Delete on public.rem1
+    ->  Foreign Delete on public.rem1
+          Remote SQL: DELETE FROM public.loc1
+-(3 rows)
++ Query Identifier: 5959403458037684673
++(4 rows)
+ 
+ DROP TRIGGER trig_stmt_after ON rem1;
+ -- Test with row-level ON INSERT triggers
+@@ -7339,7 +7564,8 @@
+  Update on public.rem1
+    ->  Foreign Update on public.rem1
+          Remote SQL: UPDATE public.loc1 SET f2 = ''::text
+-(3 rows)
++ Query Identifier: 7742902631230751151
++(4 rows)
+ 
+ EXPLAIN (verbose, costs off)
+ DELETE FROM rem1;                 -- can be pushed down
+@@ -7348,7 +7574,8 @@
+  Delete on public.rem1
+    ->  Foreign Delete on public.rem1
+          Remote SQL: DELETE FROM public.loc1
+-(3 rows)
++ Query Identifier: 5959403458037684673
++(4 rows)
+ 
+ DROP TRIGGER trig_row_before_insert ON rem1;
+ CREATE TRIGGER trig_row_after_insert
+@@ -7361,7 +7588,8 @@
+  Update on public.rem1
+    ->  Foreign Update on public.rem1
+          Remote SQL: UPDATE public.loc1 SET f2 = ''::text
+-(3 rows)
++ Query Identifier: 7742902631230751151
++(4 rows)
+ 
+ EXPLAIN (verbose, costs off)
+ DELETE FROM rem1;                 -- can be pushed down
+@@ -7370,7 +7598,8 @@
+  Delete on public.rem1
+    ->  Foreign Delete on public.rem1
+          Remote SQL: DELETE FROM public.loc1
+-(3 rows)
++ Query Identifier: 5959403458037684673
++(4 rows)
+ 
+ DROP TRIGGER trig_row_after_insert ON rem1;
+ -- Test with row-level ON UPDATE triggers
+@@ -7386,7 +7615,8 @@
+    ->  Foreign Scan on public.rem1
+          Output: ''::text, ctid, rem1.*
+          Remote SQL: SELECT f1, f2, ctid FROM public.loc1 FOR UPDATE
+-(5 rows)
++ Query Identifier: 7742902631230751151
++(6 rows)
+ 
+ EXPLAIN (verbose, costs off)
+ DELETE FROM rem1;                 -- can be pushed down
+@@ -7395,7 +7625,8 @@
+  Delete on public.rem1
+    ->  Foreign Delete on public.rem1
+          Remote SQL: DELETE FROM public.loc1
+-(3 rows)
++ Query Identifier: 5959403458037684673
++(4 rows)
+ 
+ DROP TRIGGER trig_row_before_update ON rem1;
+ CREATE TRIGGER trig_row_after_update
+@@ -7410,7 +7641,8 @@
+    ->  Foreign Scan on public.rem1
+          Output: ''::text, ctid, rem1.*
+          Remote SQL: SELECT f1, f2, ctid FROM public.loc1 FOR UPDATE
+-(5 rows)
++ Query Identifier: 7742902631230751151
++(6 rows)
+ 
+ EXPLAIN (verbose, costs off)
+ DELETE FROM rem1;                 -- can be pushed down
+@@ -7419,7 +7651,8 @@
+  Delete on public.rem1
+    ->  Foreign Delete on public.rem1
+          Remote SQL: DELETE FROM public.loc1
+-(3 rows)
++ Query Identifier: 5959403458037684673
++(4 rows)
+ 
+ DROP TRIGGER trig_row_after_update ON rem1;
+ -- Test with row-level ON DELETE triggers
+@@ -7433,7 +7666,8 @@
+  Update on public.rem1
+    ->  Foreign Update on public.rem1
+          Remote SQL: UPDATE public.loc1 SET f2 = ''::text
+-(3 rows)
++ Query Identifier: 7742902631230751151
++(4 rows)
+ 
+ EXPLAIN (verbose, costs off)
+ DELETE FROM rem1;                 -- can't be pushed down
+@@ -7444,7 +7678,8 @@
+    ->  Foreign Scan on public.rem1
+          Output: ctid, rem1.*
+          Remote SQL: SELECT f1, f2, ctid FROM public.loc1 FOR UPDATE
+-(5 rows)
++ Query Identifier: 5959403458037684673
++(6 rows)
+ 
+ DROP TRIGGER trig_row_before_delete ON rem1;
+ CREATE TRIGGER trig_row_after_delete
+@@ -7457,7 +7692,8 @@
+  Update on public.rem1
+    ->  Foreign Update on public.rem1
+          Remote SQL: UPDATE public.loc1 SET f2 = ''::text
+-(3 rows)
++ Query Identifier: 7742902631230751151
++(4 rows)
+ 
+ EXPLAIN (verbose, costs off)
+ DELETE FROM rem1;                 -- can't be pushed down
+@@ -7468,7 +7704,8 @@
+    ->  Foreign Scan on public.rem1
+          Output: ctid, rem1.*
+          Remote SQL: SELECT f1, f2, ctid FROM public.loc1 FOR UPDATE
+-(5 rows)
++ Query Identifier: 5959403458037684673
++(6 rows)
+ 
+ DROP TRIGGER trig_row_after_delete ON rem1;
+ -- ===================================================================
+@@ -7666,7 +7903,8 @@
+                            ->  Foreign Scan on public.foo2 foo_2
+                                  Output: foo_2.ctid, foo_2.f1, foo_2.*, foo_2.tableoid
+                                  Remote SQL: SELECT f1, f2, f3, ctid FROM public.loct1
+-(23 rows)
++ Query Identifier: -3425754051097360707
++(24 rows)
+ 
+ select * from bar where f1 in (select f1 from foo) for update;
+  f1 | f2 
+@@ -7704,7 +7942,8 @@
+                            ->  Foreign Scan on public.foo2 foo_2
+                                  Output: foo_2.ctid, foo_2.f1, foo_2.*, foo_2.tableoid
+                                  Remote SQL: SELECT f1, f2, f3, ctid FROM public.loct1
+-(23 rows)
++ Query Identifier: 341790419497598973
++(24 rows)
+ 
+ select * from bar where f1 in (select f1 from foo) for share;
+  f1 | f2 
+@@ -7750,7 +7989,8 @@
+                            ->  Foreign Scan on public.foo2child foo2_2
+                                  Output: foo2_2.*, foo2_2.f1, foo2_2.tableoid
+                                  Remote SQL: SELECT f1, f2, f3 FROM public.loct4
+-(24 rows)
++ Query Identifier: 100697430155727001
++(25 rows)
+ 
+ select * from bar where f1 in (select f1 from foo2) for share;
+  f1 | f2 
+@@ -7791,7 +8031,8 @@
+                                  Remote SQL: SELECT f1, f2, f3, ctid FROM public.loct1
+                            ->  Seq Scan on public.foo2child foo2_2
+                                  Output: foo2_2.*, foo2_2.f1, foo2_2.ctid, foo2_2.tableoid
+-(23 rows)
++ Query Identifier: 100697430155727001
++(24 rows)
+ 
+ select * from bar where f1 in (select f1 from foo2) for share;
+  f1 | f2 
+@@ -7831,7 +8072,8 @@
+                            ->  Foreign Scan on public.foo2 foo_2
+                                  Output: foo_2.ctid, foo_2.f1, foo_2.*, foo_2.tableoid
+                                  Remote SQL: SELECT f1, f2, f3, ctid FROM public.loct1
+-(25 rows)
++ Query Identifier: -7262115118340775981
++(26 rows)
+ 
+ update bar set f2 = f2 + 100 where f1 in (select f1 from foo);
+ select tableoid::regclass, * from bar order by 1,2;
+@@ -7883,7 +8125,8 @@
+                      ->  Foreign Scan on public.foo2 foo_3
+                            Output: ROW((foo_3.f1 + 3)), (foo_3.f1 + 3)
+                            Remote SQL: SELECT f1 FROM public.loct1
+-(30 rows)
++ Query Identifier: 8881479845749605465
++(31 rows)
+ 
+ update bar set f2 = f2 + 100
+ from
+@@ -7936,7 +8179,8 @@
+                            Remote SQL: SELECT f1, f2 FROM public.loct1 ORDER BY f1 ASC NULLS LAST
+                ->  Index Only Scan using i_loct1_f1 on public.loct1
+                      Output: loct1.f1
+-(17 rows)
++ Query Identifier: -5236999666346518079
++(18 rows)
+ 
+ select foo.f1, loct1.f1 from foo join loct1 on (foo.f1 = loct1.f1) order by foo.f2 offset 10 limit 10;
+  f1 | f1 
+@@ -7976,7 +8220,8 @@
+                            Remote SQL: SELECT f1, f2 FROM public.loct1 ORDER BY f1 ASC NULLS LAST
+                ->  Index Only Scan using i_loct1_f1 on public.loct1
+                      Output: loct1.f1
+-(17 rows)
++ Query Identifier: -6308758616559141237
++(18 rows)
+ 
+ select foo.f1, loct1.f1 from foo left join loct1 on (foo.f1 = loct1.f1) order by foo.f2 offset 10 limit 10;
+  f1 | f1 
+@@ -8021,7 +8266,8 @@
+                Index Cond: (foo_1.f1 < 5)
+          ->  Foreign Delete on public.foo2 foo_2
+                Remote SQL: DELETE FROM public.loct1 WHERE ((f1 < 5)) RETURNING f1, f2
+-(10 rows)
++ Query Identifier: -8077308889343079641
++(11 rows)
+ 
+ delete from foo where f1 < 5 returning *;
+  f1 | f2 
+@@ -8048,7 +8294,8 @@
+                      Output: bar_1.f2, bar_1.tableoid, bar_1.ctid, NULL::record
+                ->  Foreign Update on public.bar2 bar_2
+                      Remote SQL: UPDATE public.loct2 SET f2 = (f2 + 100) RETURNING f1, f2
+-(11 rows)
++ Query Identifier: 7014457387518065743
++(12 rows)
+ 
+ update bar set f2 = f2 + 100 returning *;
+  f1 | f2  
+@@ -8084,7 +8331,8 @@
+                ->  Foreign Scan on public.bar2 bar_2
+                      Output: bar_2.f2, bar_2.tableoid, bar_2.ctid, bar_2.*
+                      Remote SQL: SELECT f1, f2, f3, ctid FROM public.loct2 FOR UPDATE
+-(12 rows)
++ Query Identifier: 3507972889134268986
++(13 rows)
+ 
+ update bar set f2 = f2 + 100;
+ NOTICE:  trig_row_before(23, skidoo) BEFORE ROW UPDATE ON bar2
+@@ -8114,7 +8362,8 @@
+          ->  Foreign Scan on public.bar2 bar_2
+                Output: bar_2.tableoid, bar_2.ctid, bar_2.*
+                Remote SQL: SELECT f1, f2, f3, ctid FROM public.loct2 WHERE ((f2 < 400)) FOR UPDATE
+-(11 rows)
++ Query Identifier: -3066479338947675381
++(12 rows)
+ 
+ delete from bar where f2 < 400;
+ NOTICE:  trig_row_before(23, skidoo) BEFORE ROW DELETE ON bar2
+@@ -8166,7 +8415,8 @@
+                ->  Foreign Scan on public.remt2
+                      Output: remt2.b, remt2.*, remt2.a
+                      Remote SQL: SELECT a, b FROM public.loct2
+-(19 rows)
++ Query Identifier: -9138372153156506619
++(20 rows)
+ 
+ update parent set b = parent.b || remt2.b from remt2 where parent.a = remt2.a returning *;
+  a |   b    | a |  b  
+@@ -8198,7 +8448,8 @@
+                ->  Foreign Scan on public.remt2
+                      Output: remt2.*, remt2.a
+                      Remote SQL: SELECT a, b FROM public.loct2
+-(19 rows)
++ Query Identifier: -2321790859091591376
++(20 rows)
+ 
+ delete from parent using remt2 where parent.a = remt2.a returning parent;
+    parent   
+@@ -8424,7 +8675,8 @@
+          ->  Seq Scan on public.locp utrtest_2
+                Output: 1, utrtest_2.tableoid, utrtest_2.ctid, NULL::record
+                Filter: ((utrtest_2.a = 1) OR (utrtest_2.a = 2))
+-(10 rows)
++ Query Identifier: -8658116465184863838
++(11 rows)
+ 
+ -- The new values are concatenated with ' triggered !'
+ update utrtest set a = 1 where a = 1 or a = 2 returning *;
+@@ -8442,7 +8694,8 @@
+    ->  Seq Scan on public.locp utrtest_1
+          Output: 1, utrtest_1.tableoid, utrtest_1.ctid
+          Filter: (utrtest_1.a = 2)
+-(6 rows)
++ Query Identifier: 7230790257533683437
++(7 rows)
+ 
+ -- The new values are concatenated with ' triggered !'
+ update utrtest set a = 1 where a = 2 returning *;
+@@ -8472,7 +8725,8 @@
+                Remote SQL: UPDATE public.loct SET a = 1 RETURNING a, b
+          ->  Seq Scan on public.locp utrtest_2
+                Output: 1, utrtest_2.tableoid, utrtest_2.ctid, NULL::record
+-(9 rows)
++ Query Identifier: -2130122427306789058
++(10 rows)
+ 
+ update utrtest set a = 1 returning *;
+ ERROR:  cannot route tuples into foreign table to be updated "remp"
+@@ -8502,7 +8756,8 @@
+                Output: "*VALUES*".*, "*VALUES*".column1
+                ->  Values Scan on "*VALUES*"
+                      Output: "*VALUES*".*, "*VALUES*".column1
+-(18 rows)
++ Query Identifier: -6837269029577795900
++(19 rows)
+ 
+ update utrtest set a = 1 from (values (1), (2)) s(x) where a = s.x returning *;
+ ERROR:  cannot route tuples into foreign table to be updated "remp"
+@@ -8532,7 +8787,8 @@
+                Output: 3, utrtest_1.tableoid, utrtest_1.ctid, NULL::record
+          ->  Foreign Update on public.remp utrtest_2
+                Remote SQL: UPDATE public.loct SET a = 3 RETURNING a, b
+-(9 rows)
++ Query Identifier: -2130122427306789058
++(10 rows)
+ 
+ update utrtest set a = 3 returning *; -- ERROR
+ ERROR:  cannot route tuples into foreign table to be updated "remp"
+@@ -8559,7 +8815,8 @@
+                Output: "*VALUES*".*, "*VALUES*".column1
+                ->  Values Scan on "*VALUES*"
+                      Output: "*VALUES*".*, "*VALUES*".column1
+-(18 rows)
++ Query Identifier: -6837269029577795900
++(19 rows)
+ 
+ update utrtest set a = 3 from (values (2), (3)) s(x) where a = s.x returning *; -- ERROR
+ ERROR:  cannot route tuples into foreign table to be updated "remp"
+@@ -9386,7 +9643,8 @@
+    Output: t1.a, fprt2.b, fprt2.c
+    Relations: (public.ftprt1_p1 t1) LEFT JOIN (public.ftprt2_p1 fprt2)
+    Remote SQL: SELECT r5.a, r6.b, r6.c FROM (public.fprt1_p1 r5 LEFT JOIN public.fprt2_p1 r6 ON (((r5.a = r6.b)) AND ((r5.b = r6.a)) AND ((r6.a < 10)))) WHERE ((r5.a < 10)) ORDER BY r5.a ASC NULLS LAST, r6.b ASC NULLS LAST, r6.c ASC NULLS LAST
+-(4 rows)
++ Query Identifier: 7997503394037765820
++(5 rows)
+ 
+ SELECT t1.a,t2.b,t2.c FROM fprt1 t1 LEFT JOIN (SELECT * FROM fprt2 WHERE a < 10) t2 ON (t1.a = t2.b and t1.b = t2.a) WHERE t1.a < 10 ORDER BY 1,2,3;
+  a | b |  c   
+@@ -9621,7 +9879,8 @@
+                ->  Foreign Scan on public.fpagg_tab_p3 t1_2
+                      Output: t1_2.a, t1_2.*, t1_2.b
+                      Remote SQL: SELECT a, b, c FROM public.pagg_tab_p3
+-(25 rows)
++ Query Identifier: 4912496546591849919
++(26 rows)
+ 
+ SELECT a, count(t1) FROM pagg_tab t1 GROUP BY a HAVING avg(b) < 22 ORDER BY 1;
+  a  | count 
+@@ -10127,7 +10386,8 @@
+    ->  Function Scan on pg_catalog.generate_series i
+          Output: i.i
+          Function Call: generate_series(1, 10)
+-(6 rows)
++ Query Identifier: -2069021785084707895
++(7 rows)
+ 
+ INSERT INTO ftable SELECT * FROM generate_series(1, 10) i;
+ INSERT INTO ftable SELECT * FROM generate_series(11, 31) i;
+@@ -10162,7 +10422,8 @@
+    Batch Size: 1
+    ->  Values Scan on "*VALUES*"
+          Output: "*VALUES*".column1
+-(5 rows)
++ Query Identifier: 8437350813838419858
++(6 rows)
+ 
+ INSERT INTO ftable VALUES (1), (2);
+ SELECT COUNT(*) FROM ftable;
+@@ -10184,7 +10445,8 @@
+    Batch Size: 1
+    ->  Values Scan on "*VALUES*"
+          Output: "*VALUES*".column1
+-(5 rows)
++ Query Identifier: 8437350813838419858
++(6 rows)
+ 
+ INSERT INTO ftable VALUES (3), (4);
+ NOTICE:  trig_row_before(23, skidoo) BEFORE ROW INSERT ON ftable
+@@ -10482,7 +10744,8 @@
+          ->  Async Foreign Scan on public.async_p2 async_pt_2
+                Output: async_pt_2.a, async_pt_2.b, async_pt_2.c
+                Remote SQL: SELECT a, b, c FROM public.base_tbl2 WHERE (((b % 100) = 0))
+-(8 rows)
++ Query Identifier: 4737540645927781178
++(9 rows)
+ 
+ INSERT INTO result_tbl SELECT * FROM async_pt WHERE b % 100 = 0;
+ SELECT * FROM result_tbl ORDER BY a;
+@@ -10525,7 +10788,8 @@
+                Output: async_pt_2.a, async_pt_2.b, async_pt_2.c
+                Filter: (async_pt_2.b === 505)
+                Remote SQL: SELECT a, b, c FROM public.base_tbl2
+-(10 rows)
++ Query Identifier: 7685793214243400064
++(11 rows)
+ 
+ INSERT INTO result_tbl SELECT * FROM async_pt WHERE b === 505;
+ SELECT * FROM result_tbl ORDER BY a;
+@@ -10550,7 +10814,8 @@
+                Output: async_pt_2.a, async_pt_2.b, ('AAA'::text || async_pt_2.c)
+                Filter: (async_pt_2.b === 505)
+                Remote SQL: SELECT a, b, c FROM public.base_tbl2
+-(10 rows)
++ Query Identifier: 5853153927078026322
++(11 rows)
+ 
+ INSERT INTO result_tbl SELECT a, b, 'AAA' || c FROM async_pt WHERE b === 505;
+ SELECT * FROM result_tbl ORDER BY a;
+@@ -10585,7 +10850,8 @@
+                Output: async_pt_3.a, async_pt_3.b, async_pt_3.c
+                Filter: (async_pt_3.b === 505)
+                Remote SQL: SELECT a, b, c FROM public.base_tbl3
+-(14 rows)
++ Query Identifier: 7685793214243400064
++(15 rows)
+ 
+ INSERT INTO result_tbl SELECT * FROM async_pt WHERE b === 505;
+ SELECT * FROM result_tbl ORDER BY a;
+@@ -10620,7 +10886,8 @@
+          ->  Seq Scan on public.async_p3 async_pt_3
+                Output: async_pt_3.a, async_pt_3.b, async_pt_3.c
+                Filter: (async_pt_3.b === 505)
+-(13 rows)
++ Query Identifier: 7685793214243400064
++(14 rows)
+ 
+ INSERT INTO result_tbl SELECT * FROM async_pt WHERE b === 505;
+ SELECT * FROM result_tbl ORDER BY a;
+@@ -10659,7 +10926,8 @@
+                      ->  Seq Scan on public.async_p3 t1_3
+                            Output: t1_3.a, t1_3.b, t1_3.c
+                            Filter: ((t1_3.b % 100) = 0)
+-(20 rows)
++ Query Identifier: 2832432096047376414
++(21 rows)
+ 
+ INSERT INTO join_tbl SELECT * FROM async_pt t1, async_pt t2 WHERE t1.a = t2.a AND t1.b = t2.b AND t1.b % 100 = 0;
+ SELECT * FROM join_tbl ORDER BY a1;
+@@ -10722,7 +10990,8 @@
+                      ->  Seq Scan on public.async_p3 t1_3
+                            Output: t1_3.a, t1_3.b, t1_3.c
+                            Filter: ((t1_3.b % 100) = 0)
+-(20 rows)
++ Query Identifier: -7499212922743764651
++(21 rows)
+ 
+ INSERT INTO join_tbl SELECT t1.a, t1.b, 'AAA' || t1.c, t2.a, t2.b, 'AAA' || t2.c FROM async_pt t1, async_pt t2 WHERE t1.a = t2.a AND t1.b = t2.b AND t1.b % 100 = 0;
+ SELECT * FROM join_tbl ORDER BY a1;
+@@ -10784,7 +11053,8 @@
+                      Remote SQL: SELECT a, b, c FROM public.base_tbl2
+                ->  Seq Scan on public.async_p3 t2_3
+                      Output: t2_3.a, t2_3.b, t2_3.c
+-(16 rows)
++ Query Identifier: 2781744574687176020
++(17 rows)
+ 
+ INSERT INTO join_tbl SELECT * FROM async_p1 t1, async_pt t2 WHERE t1.a = t2.a AND t1.b = t2.b AND t1.b % 100 = 0;
+ SELECT * FROM join_tbl ORDER BY a1;
+@@ -10816,7 +11086,8 @@
+    ->  Async Foreign Scan on public.async_p2 async_pt_2
+          Output: async_pt_2.a, async_pt_2.b, async_pt_2.c
+          Remote SQL: SELECT a, b, c FROM public.base_tbl2 WHERE ((a < 3000))
+-(7 rows)
++ Query Identifier: 6502363956662892297
++(8 rows)
+ 
+ EXPLAIN (VERBOSE, COSTS OFF)
+ SELECT * FROM async_pt WHERE a < 2000;
+@@ -10825,7 +11096,8 @@
+  Foreign Scan on public.async_p1 async_pt
+    Output: async_pt.a, async_pt.b, async_pt.c
+    Remote SQL: SELECT a, b, c FROM public.base_tbl1 WHERE ((a < 2000))
+-(3 rows)
++ Query Identifier: 6502363956662892297
++(4 rows)
+ 
+ -- Test interaction of async execution with run-time partition pruning
+ SET plan_cache_mode TO force_generic_plan;
+@@ -10846,7 +11118,8 @@
+                Output: async_pt_2.a, async_pt_2.b, async_pt_2.c
+                Filter: (async_pt_2.b === $2)
+                Remote SQL: SELECT a, b, c FROM public.base_tbl2 WHERE ((a < $1::integer))
+-(11 rows)
++ Query Identifier: -3605642956977896929
++(12 rows)
+ 
+ EXECUTE async_pt_query (3000, 505);
+ SELECT * FROM result_tbl ORDER BY a;
+@@ -10868,7 +11141,8 @@
+                Output: async_pt_1.a, async_pt_1.b, async_pt_1.c
+                Filter: (async_pt_1.b === $2)
+                Remote SQL: SELECT a, b, c FROM public.base_tbl1 WHERE ((a < $1::integer))
+-(7 rows)
++ Query Identifier: -3605642956977896929
++(8 rows)
+ 
+ EXECUTE async_pt_query (2000, 505);
+ SELECT * FROM result_tbl ORDER BY a;
+@@ -10909,7 +11183,8 @@
+          ->  Seq Scan on public.async_p3 async_pt_3
+                Output: async_pt_3.a, async_pt_3.b, async_pt_3.c
+                Filter: (local_tbl.a = async_pt_3.a)
+-(15 rows)
++ Query Identifier: -5208098487766574955
++(16 rows)
+ 
+ EXPLAIN (ANALYZE, COSTS OFF, SUMMARY OFF, TIMING OFF)
+ SELECT * FROM local_tbl, async_pt WHERE local_tbl.a = async_pt.a AND local_tbl.c = 'bar';
+@@ -10957,7 +11232,8 @@
+                ->  Async Foreign Scan on public.async_p2
+                      Output: async_p2.a, async_p2.b, ('AAA'::text || async_p2.c)
+                      Remote SQL: SELECT a, b, c FROM public.base_tbl2 WHERE ((b < 10))
+-(11 rows)
++ Query Identifier: 5238467057281603941
++(12 rows)
+ 
+ INSERT INTO result_tbl
+ (SELECT a, b, 'AAA' || c FROM async_p1 ORDER BY a LIMIT 10)
+@@ -10996,7 +11272,8 @@
+          ->  Async Foreign Scan on public.async_p2
+                Output: async_p2.a, async_p2.b, ('AAA'::text || async_p2.c)
+                Remote SQL: SELECT a, b, c FROM public.base_tbl2 WHERE ((b < 10))
+-(8 rows)
++ Query Identifier: -4720867720901781302
++(9 rows)
+ 
+ INSERT INTO result_tbl
+ (SELECT a, b, 'AAA' || c FROM async_p1 ORDER BY a LIMIT 10)
+@@ -11044,7 +11321,8 @@
+          One-Time Filter: (CURRENT_USER = SESSION_USER)
+          ->  Seq Scan on public.async_p3 async_pt_3
+                Output: async_pt_3.a, async_pt_3.b, async_pt_3.c
+-(18 rows)
++ Query Identifier: -6134516376428857168
++(19 rows)
+ 
+ EXPLAIN (VERBOSE, COSTS OFF)
+ (SELECT * FROM async_p1 WHERE CURRENT_USER = SESSION_USER)
+@@ -11065,7 +11343,8 @@
+          ->  Foreign Scan on public.async_p2
+                Output: async_p2.a, async_p2.b, async_p2.c
+                Remote SQL: SELECT a, b, c FROM public.base_tbl2
+-(13 rows)
++ Query Identifier: -347112198345919741
++(14 rows)
+ 
+ EXPLAIN (VERBOSE, COSTS OFF)
+ SELECT * FROM ((SELECT * FROM async_p1 WHERE b < 10) UNION ALL (SELECT * FROM async_p2 WHERE b < 10)) s WHERE CURRENT_USER = SESSION_USER;
+@@ -11084,7 +11363,8 @@
+          ->  Foreign Scan on public.async_p2
+                Output: async_p2.a, async_p2.b, async_p2.c
+                Remote SQL: SELECT a, b, c FROM public.base_tbl2 WHERE ((b < 10))
+-(13 rows)
++ Query Identifier: 1927061614837143423
++(14 rows)
+ 
+ -- Test that pending requests are processed properly
+ SET enable_mergejoin TO false;
+@@ -11113,7 +11393,8 @@
+          ->  Foreign Scan on public.async_p2 t2
+                Output: t2.a, t2.b, t2.c
+                Remote SQL: SELECT a, b, c FROM public.base_tbl2
+-(20 rows)
++ Query Identifier: -9115380457231245260
++(21 rows)
+ 
+ SELECT * FROM async_pt t1, async_p2 t2 WHERE t1.a = t2.a AND t1.b === 505;
+   a   |  b  |  c   |  a   |  b  |  c   
+@@ -11148,7 +11429,8 @@
+          ->  Async Foreign Scan on public.async_p2 async_pt_2
+                Output: async_pt_2.a, async_pt_2.b, async_pt_2.c, $0
+                Remote SQL: SELECT a, b, c FROM public.base_tbl2 WHERE ((a < 3000))
+-(20 rows)
++ Query Identifier: 4733683197701191764
++(21 rows)
+ 
+ EXPLAIN (ANALYZE, COSTS OFF, SUMMARY OFF, TIMING OFF)
+ SELECT * FROM local_tbl t1 LEFT JOIN (SELECT *, (SELECT count(*) FROM async_pt WHERE a < 3000) FROM async_pt WHERE a < 3000) t2 ON t1.a = t2.a;
+@@ -11192,7 +11474,8 @@
+          ->  Seq Scan on public.async_p3 t1_3
+                Output: t1_3.a, t1_3.b, t1_3.c
+                Filter: (t1_3.b === 505)
+-(14 rows)
++ Query Identifier: -7315230867931486642
++(15 rows)
+ 
+ EXPLAIN (ANALYZE, COSTS OFF, SUMMARY OFF, TIMING OFF)
+ SELECT * FROM async_pt t1 WHERE t1.b === 505 LIMIT 1;
+@@ -11236,7 +11519,8 @@
+          ->  Async Foreign Scan on public.remote_tbl
+                Output: remote_tbl.a, remote_tbl.b, remote_tbl.c
+                Remote SQL: SELECT a, b, c FROM public.base_tbl3
+-(9 rows)
++ Query Identifier: 8640685938287590768
++(10 rows)
+ 
+ INSERT INTO insert_tbl (SELECT * FROM local_tbl UNION ALL SELECT * FROM remote_tbl);
+ SELECT * FROM insert_tbl ORDER BY a;
+@@ -11275,7 +11559,8 @@
+                      Filter: (async_pt_3.b === 505)
+          ->  CTE Scan on t
+                Output: t.a, t.b, t.c
+-(23 rows)
++ Query Identifier: 8551563385302251469
++(24 rows)
+ 
+ WITH t AS (UPDATE remote_tbl SET c = c || c RETURNING *)
+ INSERT INTO join_tbl SELECT * FROM async_pt LEFT JOIN t ON (async_pt.a = t.a AND async_pt.b = t.b) WHERE async_pt.b === 505;
+@@ -11313,7 +11598,8 @@
+          ->  Seq Scan on public.async_p3 async_pt_3
+                Output: (async_pt_3.c || async_pt_3.c), async_pt_3.tableoid, async_pt_3.ctid, NULL::record
+                Filter: (async_pt_3.b = 0)
+-(13 rows)
++ Query Identifier: -1698105977350365637
++(14 rows)
+ 
+ UPDATE async_pt SET c = c || c WHERE b = 0 RETURNING *;
+   a   | b |    c     
+@@ -11340,7 +11626,8 @@
+          ->  Seq Scan on public.async_p3 async_pt_3
+                Output: async_pt_3.tableoid, async_pt_3.ctid
+                Filter: (async_pt_3.b = 0)
+-(13 rows)
++ Query Identifier: -5318089964395332046
++(14 rows)
+ 
+ DELETE FROM async_pt WHERE b = 0 RETURNING *;
+   a   | b |    c     
+@@ -11393,7 +11680,8 @@
+                        Remote SQL: SELECT NULL FROM public.base_tbl
+                  ->  Async Foreign Scan on public.foreign_tbl2 foreign_tbl_2
+                        Remote SQL: SELECT NULL FROM public.base_tbl
+-(11 rows)
++ Query Identifier: -5817763835718771657
++(12 rows)
+ 
+ SELECT a FROM base_tbl WHERE a IN (SELECT a FROM foreign_tbl);
+  a 

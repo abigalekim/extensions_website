@@ -1,0 +1,16 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/pgcrypto/expected/pgp-decrypt_1.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/pgcrypto/results/pgp-decrypt.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/pgcrypto/expected/pgp-decrypt_1.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/pgcrypto/results/pgp-decrypt.out	2023-07-24 20:32:27.969961954 +0000
+@@ -263,11 +263,7 @@
+ =gWDh
+ -----END PGP MESSAGE-----
+ '), '0123456789abcdefghij2jk4h5g2j54khg23h54g2kh54g2khj54g23hj54');
+- pgp_sym_decrypt 
+------------------
+- Secret message.
+-(1 row)
+-
++ERROR:  Wrong key or corrupt data
+ select pgp_sym_decrypt(dearmor('
+ -----BEGIN PGP MESSAGE-----
+ Comment: dat1.aes.sha1.mdc.s2k3.z0

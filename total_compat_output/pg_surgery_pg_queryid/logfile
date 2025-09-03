@@ -1,0 +1,17 @@
+2023-07-26 12:27:59.312 UTC [1083865] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 12:27:59.312 UTC [1083865] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 12:27:59.327 UTC [1083865] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 12:27:59.343 UTC [1083868] LOG:  database system was shut down at 2023-07-26 12:27:58 UTC
+2023-07-26 12:27:59.352 UTC [1083865] LOG:  database system is ready to accept connections
+2023-07-26 12:27:59.546 UTC [1083887] ERROR:  argument must be empty or one-dimensional array
+2023-07-26 12:27:59.546 UTC [1083887] STATEMENT:  select heap_force_kill('htab2'::regclass, ARRAY[['(0, 2)']]::tid[]);
+2023-07-26 12:27:59.546 UTC [1083887] ERROR:  array must not contain nulls
+2023-07-26 12:27:59.546 UTC [1083887] STATEMENT:  select heap_force_kill('htab2'::regclass, ARRAY[NULL]::tid[]);
+2023-07-26 12:27:59.557 UTC [1083887] ERROR:  cannot operate on relation "vw"
+2023-07-26 12:27:59.557 UTC [1083887] DETAIL:  This operation is not supported for views.
+2023-07-26 12:27:59.557 UTC [1083887] STATEMENT:  select heap_force_kill('vw'::regclass, ARRAY['(0, 1)']::tid[]);
+2023-07-26 12:27:59.558 UTC [1083887] ERROR:  cannot operate on relation "vw"
+2023-07-26 12:27:59.558 UTC [1083887] DETAIL:  This operation is not supported for views.
+2023-07-26 12:27:59.558 UTC [1083887] STATEMENT:  select heap_force_freeze('vw'::regclass, ARRAY['(0, 1)']::tid[]);
+2023-07-26 12:27:59.599 UTC [1083866] LOG:  checkpoint starting: immediate force wait
+2023-07-26 12:27:59.667 UTC [1083866] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.024 s, sync=0.015 s, total=0.069 s; sync files=7, longest=0.008 s, average=0.003 s; distance=4129 kB, estimate=4129 kB

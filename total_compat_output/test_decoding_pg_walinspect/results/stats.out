@@ -1,0 +1,103 @@
+-- predictability
+SET synchronous_commit = on;
+SELECT 'init' FROM
+    pg_create_logical_replication_slot('regression_slot_stats1', 'test_decoding') s1,
+    pg_create_logical_replication_slot('regression_slot_stats2', 'test_decoding') s2,
+    pg_create_logical_replication_slot('regression_slot_stats3', 'test_decoding') s3;
+ERROR:  logical decoding requires wal_level >= logical
+CREATE TABLE stats_test(data text);
+-- non-spilled xact
+SET logical_decoding_work_mem to '64MB';
+INSERT INTO stats_test values(1);
+SELECT count(*) FROM pg_logical_slot_get_changes('regression_slot_stats1', NULL, NULL, 'skip-empty-xacts', '1');
+ERROR:  logical decoding requires wal_level >= logical
+SELECT count(*) FROM pg_logical_slot_get_changes('regression_slot_stats2', NULL, NULL, 'skip-empty-xacts', '1');
+ERROR:  logical decoding requires wal_level >= logical
+SELECT count(*) FROM pg_logical_slot_get_changes('regression_slot_stats3', NULL, NULL, 'skip-empty-xacts', '1');
+ERROR:  logical decoding requires wal_level >= logical
+SELECT pg_stat_force_next_flush();
+ pg_stat_force_next_flush 
+--------------------------
+ 
+(1 row)
+
+SELECT slot_name, spill_txns = 0 AS spill_txns, spill_count = 0 AS spill_count, total_txns > 0 AS total_txns, total_bytes > 0 AS total_bytes FROM pg_stat_replication_slots ORDER BY slot_name;
+ slot_name | spill_txns | spill_count | total_txns | total_bytes 
+-----------+------------+-------------+------------+-------------
+(0 rows)
+
+RESET logical_decoding_work_mem;
+-- reset stats for one slot, others should be unaffected
+SELECT pg_stat_reset_replication_slot('regression_slot_stats1');
+ERROR:  replication slot "regression_slot_stats1" does not exist
+SELECT slot_name, spill_txns = 0 AS spill_txns, spill_count = 0 AS spill_count, total_txns > 0 AS total_txns, total_bytes > 0 AS total_bytes FROM pg_stat_replication_slots ORDER BY slot_name;
+ slot_name | spill_txns | spill_count | total_txns | total_bytes 
+-----------+------------+-------------+------------+-------------
+(0 rows)
+
+-- reset stats for all slots
+SELECT pg_stat_reset_replication_slot(NULL);
+ pg_stat_reset_replication_slot 
+--------------------------------
+ 
+(1 row)
+
+SELECT slot_name, spill_txns = 0 AS spill_txns, spill_count = 0 AS spill_count, total_txns > 0 AS total_txns, total_bytes > 0 AS total_bytes FROM pg_stat_replication_slots ORDER BY slot_name;
+ slot_name | spill_txns | spill_count | total_txns | total_bytes 
+-----------+------------+-------------+------------+-------------
+(0 rows)
+
+-- verify accessing/resetting stats for non-existent slot does something reasonable
+SELECT * FROM pg_stat_get_replication_slot('do-not-exist');
+  slot_name   | spill_txns | spill_count | spill_bytes | stream_txns | stream_count | stream_bytes | total_txns | total_bytes | stats_reset 
+--------------+------------+-------------+-------------+-------------+--------------+--------------+------------+-------------+-------------
+ do-not-exist |          0 |           0 |           0 |           0 |            0 |            0 |          0 |           0 | 
+(1 row)
+
+SELECT pg_stat_reset_replication_slot('do-not-exist');
+ERROR:  replication slot "do-not-exist" does not exist
+SELECT * FROM pg_stat_get_replication_slot('do-not-exist');
+  slot_name   | spill_txns | spill_count | spill_bytes | stream_txns | stream_count | stream_bytes | total_txns | total_bytes | stats_reset 
+--------------+------------+-------------+-------------+-------------+--------------+--------------+------------+-------------+-------------
+ do-not-exist |          0 |           0 |           0 |           0 |            0 |            0 |          0 |           0 | 
+(1 row)
+
+-- spilling the xact
+BEGIN;
+INSERT INTO stats_test SELECT 'serialize-topbig--1:'||g.i FROM generate_series(1, 5000) g(i);
+COMMIT;
+SELECT count(*) FROM pg_logical_slot_peek_changes('regression_slot_stats1', NULL, NULL, 'skip-empty-xacts', '1');
+ERROR:  logical decoding requires wal_level >= logical
+-- Check stats. We can't test the exact stats count as that can vary if any
+-- background transaction (say by autovacuum) happens in parallel to the main
+-- transaction.
+SELECT pg_stat_force_next_flush();
+ pg_stat_force_next_flush 
+--------------------------
+ 
+(1 row)
+
+SELECT slot_name, spill_txns > 0 AS spill_txns, spill_count > 0 AS spill_count FROM pg_stat_replication_slots;
+ slot_name | spill_txns | spill_count 
+-----------+------------+-------------
+(0 rows)
+
+-- Ensure stats can be repeatedly accessed using the same stats snapshot. See
+-- https://postgr.es/m/20210317230447.c7uc4g3vbs4wi32i%40alap3.anarazel.de
+BEGIN;
+SELECT slot_name FROM pg_stat_replication_slots;
+ slot_name 
+-----------
+(0 rows)
+
+SELECT slot_name FROM pg_stat_replication_slots;
+ slot_name 
+-----------
+(0 rows)
+
+COMMIT;
+DROP TABLE stats_test;
+SELECT pg_drop_replication_slot('regression_slot_stats1'),
+    pg_drop_replication_slot('regression_slot_stats2'),
+    pg_drop_replication_slot('regression_slot_stats3');
+ERROR:  replication slot "regression_slot_stats1" does not exist

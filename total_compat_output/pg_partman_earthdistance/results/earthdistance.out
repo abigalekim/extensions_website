@@ -1,0 +1,1229 @@
+--
+--  Test earthdistance extension
+--
+-- In this file we also do some testing of extension create/drop scenarios.
+-- That's really exercising the core database's dependency logic, so ideally
+-- we'd do it in the core regression tests, but we can't for lack of suitable
+-- guaranteed-available extensions.  earthdistance is a good test case because
+-- it has a dependency on the cube extension.
+--
+CREATE EXTENSION earthdistance;  -- fail, must install cube first
+ERROR:  required extension "cube" is not installed
+HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+CREATE EXTENSION cube;
+CREATE EXTENSION earthdistance;
+--
+-- The radius of the Earth we are using.
+--
+SELECT earth()::numeric(20,5);
+     earth     
+---------------
+ 6378168.00000
+(1 row)
+
+--
+-- Convert straight line distances to great circle distances.
+--
+SELECT (pi()*earth())::numeric(20,5);
+    numeric     
+----------------
+ 20037605.73216
+(1 row)
+
+SELECT sec_to_gc(0)::numeric(20,5);
+ sec_to_gc 
+-----------
+   0.00000
+(1 row)
+
+SELECT sec_to_gc(2*earth())::numeric(20,5);
+   sec_to_gc    
+----------------
+ 20037605.73216
+(1 row)
+
+SELECT sec_to_gc(10*earth())::numeric(20,5);
+   sec_to_gc    
+----------------
+ 20037605.73216
+(1 row)
+
+SELECT sec_to_gc(-earth())::numeric(20,5);
+ sec_to_gc 
+-----------
+   0.00000
+(1 row)
+
+SELECT sec_to_gc(1000)::numeric(20,5);
+ sec_to_gc  
+------------
+ 1000.00000
+(1 row)
+
+SELECT sec_to_gc(10000)::numeric(20,5);
+  sec_to_gc  
+-------------
+ 10000.00102
+(1 row)
+
+SELECT sec_to_gc(100000)::numeric(20,5);
+  sec_to_gc   
+--------------
+ 100001.02426
+(1 row)
+
+SELECT sec_to_gc(1000000)::numeric(20,5);
+   sec_to_gc   
+---------------
+ 1001027.07131
+(1 row)
+
+--
+-- Convert great circle distances to straight line distances.
+--
+SELECT gc_to_sec(0)::numeric(20,5);
+ gc_to_sec 
+-----------
+   0.00000
+(1 row)
+
+SELECT gc_to_sec(sec_to_gc(2*earth()))::numeric(20,5);
+   gc_to_sec    
+----------------
+ 12756336.00000
+(1 row)
+
+SELECT gc_to_sec(10*earth())::numeric(20,5);
+   gc_to_sec    
+----------------
+ 12756336.00000
+(1 row)
+
+SELECT gc_to_sec(pi()*earth())::numeric(20,5);
+   gc_to_sec    
+----------------
+ 12756336.00000
+(1 row)
+
+SELECT gc_to_sec(-1000)::numeric(20,5);
+ gc_to_sec 
+-----------
+   0.00000
+(1 row)
+
+SELECT gc_to_sec(1000)::numeric(20,5);
+ gc_to_sec  
+------------
+ 1000.00000
+(1 row)
+
+SELECT gc_to_sec(10000)::numeric(20,5);
+ gc_to_sec  
+------------
+ 9999.99898
+(1 row)
+
+SELECT gc_to_sec(100000)::numeric(20,5);
+  gc_to_sec  
+-------------
+ 99998.97577
+(1 row)
+
+SELECT gc_to_sec(1000000)::numeric(20,5);
+  gc_to_sec   
+--------------
+ 998976.08618
+(1 row)
+
+--
+-- Set coordinates using latitude and longitude.
+-- Extract each coordinate separately so we can round them.
+--
+SELECT cube_ll_coord(ll_to_earth(0,0),1)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(0,0),2)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(0,0),3)::numeric(20,5);
+ cube_ll_coord | cube_ll_coord | cube_ll_coord 
+---------------+---------------+---------------
+ 6378168.00000 |       0.00000 |       0.00000
+(1 row)
+
+SELECT cube_ll_coord(ll_to_earth(360,360),1)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(360,360),2)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(360,360),3)::numeric(20,5);
+ cube_ll_coord | cube_ll_coord | cube_ll_coord 
+---------------+---------------+---------------
+ 6378168.00000 |       0.00000 |       0.00000
+(1 row)
+
+SELECT cube_ll_coord(ll_to_earth(180,180),1)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(180,180),2)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(180,180),3)::numeric(20,5);
+ cube_ll_coord | cube_ll_coord | cube_ll_coord 
+---------------+---------------+---------------
+ 6378168.00000 |       0.00000 |       0.00000
+(1 row)
+
+SELECT cube_ll_coord(ll_to_earth(180,360),1)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(180,360),2)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(180,360),3)::numeric(20,5);
+ cube_ll_coord  | cube_ll_coord | cube_ll_coord 
+----------------+---------------+---------------
+ -6378168.00000 |       0.00000 |       0.00000
+(1 row)
+
+SELECT cube_ll_coord(ll_to_earth(-180,-360),1)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(-180,-360),2)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(-180,-360),3)::numeric(20,5);
+ cube_ll_coord  | cube_ll_coord | cube_ll_coord 
+----------------+---------------+---------------
+ -6378168.00000 |       0.00000 |       0.00000
+(1 row)
+
+SELECT cube_ll_coord(ll_to_earth(0,180),1)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(0,180),2)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(0,180),3)::numeric(20,5);
+ cube_ll_coord  | cube_ll_coord | cube_ll_coord 
+----------------+---------------+---------------
+ -6378168.00000 |       0.00000 |       0.00000
+(1 row)
+
+SELECT cube_ll_coord(ll_to_earth(0,-180),1)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(0,-180),2)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(0,-180),3)::numeric(20,5);
+ cube_ll_coord  | cube_ll_coord | cube_ll_coord 
+----------------+---------------+---------------
+ -6378168.00000 |       0.00000 |       0.00000
+(1 row)
+
+SELECT cube_ll_coord(ll_to_earth(90,0),1)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(90,0),2)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(90,0),3)::numeric(20,5);
+ cube_ll_coord | cube_ll_coord | cube_ll_coord 
+---------------+---------------+---------------
+       0.00000 |       0.00000 | 6378168.00000
+(1 row)
+
+SELECT cube_ll_coord(ll_to_earth(90,180),1)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(90,180),2)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(90,180),3)::numeric(20,5);
+ cube_ll_coord | cube_ll_coord | cube_ll_coord 
+---------------+---------------+---------------
+       0.00000 |       0.00000 | 6378168.00000
+(1 row)
+
+SELECT cube_ll_coord(ll_to_earth(-90,0),1)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(-90,0),2)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(-90,0),3)::numeric(20,5);
+ cube_ll_coord | cube_ll_coord | cube_ll_coord  
+---------------+---------------+----------------
+       0.00000 |       0.00000 | -6378168.00000
+(1 row)
+
+SELECT cube_ll_coord(ll_to_earth(-90,180),1)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(-90,180),2)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(-90,180),3)::numeric(20,5);
+ cube_ll_coord | cube_ll_coord | cube_ll_coord  
+---------------+---------------+----------------
+       0.00000 |       0.00000 | -6378168.00000
+(1 row)
+
+--
+-- Test getting the latitude of a location.
+--
+SELECT latitude(ll_to_earth(0,0))::numeric(20,10);
+   latitude   
+--------------
+ 0.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(45,0))::numeric(20,10);
+   latitude    
+---------------
+ 45.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(90,0))::numeric(20,10);
+   latitude    
+---------------
+ 90.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(-45,0))::numeric(20,10);
+    latitude    
+----------------
+ -45.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(-90,0))::numeric(20,10);
+    latitude    
+----------------
+ -90.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(0,90))::numeric(20,10);
+   latitude   
+--------------
+ 0.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(45,90))::numeric(20,10);
+   latitude    
+---------------
+ 45.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(90,90))::numeric(20,10);
+   latitude    
+---------------
+ 90.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(-45,90))::numeric(20,10);
+    latitude    
+----------------
+ -45.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(-90,90))::numeric(20,10);
+    latitude    
+----------------
+ -90.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(0,180))::numeric(20,10);
+   latitude   
+--------------
+ 0.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(45,180))::numeric(20,10);
+   latitude    
+---------------
+ 45.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(90,180))::numeric(20,10);
+   latitude    
+---------------
+ 90.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(-45,180))::numeric(20,10);
+    latitude    
+----------------
+ -45.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(-90,180))::numeric(20,10);
+    latitude    
+----------------
+ -90.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(0,-90))::numeric(20,10);
+   latitude   
+--------------
+ 0.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(45,-90))::numeric(20,10);
+   latitude    
+---------------
+ 45.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(90,-90))::numeric(20,10);
+   latitude    
+---------------
+ 90.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(-45,-90))::numeric(20,10);
+    latitude    
+----------------
+ -45.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(-90,-90))::numeric(20,10);
+    latitude    
+----------------
+ -90.0000000000
+(1 row)
+
+--
+-- Test getting the longitude of a location.
+--
+SELECT longitude(ll_to_earth(0,0))::numeric(20,10);
+  longitude   
+--------------
+ 0.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(45,0))::numeric(20,10);
+  longitude   
+--------------
+ 0.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(90,0))::numeric(20,10);
+  longitude   
+--------------
+ 0.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(-45,0))::numeric(20,10);
+  longitude   
+--------------
+ 0.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(-90,0))::numeric(20,10);
+  longitude   
+--------------
+ 0.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(0,90))::numeric(20,10);
+   longitude   
+---------------
+ 90.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(45,90))::numeric(20,10);
+   longitude   
+---------------
+ 90.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(90,90))::numeric(20,10);
+   longitude   
+---------------
+ 90.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(-45,90))::numeric(20,10);
+   longitude   
+---------------
+ 90.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(-90,90))::numeric(20,10);
+   longitude   
+---------------
+ 90.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(0,180))::numeric(20,10);
+   longitude    
+----------------
+ 180.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(45,180))::numeric(20,10);
+   longitude    
+----------------
+ 180.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(90,180))::numeric(20,10);
+   longitude    
+----------------
+ 180.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(-45,180))::numeric(20,10);
+   longitude    
+----------------
+ 180.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(-90,180))::numeric(20,10);
+   longitude    
+----------------
+ 180.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(0,-90))::numeric(20,10);
+   longitude    
+----------------
+ -90.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(45,-90))::numeric(20,10);
+   longitude    
+----------------
+ -90.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(90,-90))::numeric(20,10);
+   longitude    
+----------------
+ -90.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(-45,-90))::numeric(20,10);
+   longitude    
+----------------
+ -90.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(-90,-90))::numeric(20,10);
+   longitude    
+----------------
+ -90.0000000000
+(1 row)
+
+--
+-- For the distance tests the following is some real life data.
+--
+-- Chicago has a latitude of 41.8 and a longitude of 87.6.
+-- Albuquerque has a latitude of 35.1 and a longitude of 106.7.
+-- (Note that latitude and longitude are specified differently
+-- in the cube based functions than for the point based functions.)
+--
+--
+-- Test getting the distance between two points using earth_distance.
+--
+SELECT earth_distance(ll_to_earth(0,0),ll_to_earth(0,0))::numeric(20,5);
+ earth_distance 
+----------------
+        0.00000
+(1 row)
+
+SELECT earth_distance(ll_to_earth(0,0),ll_to_earth(0,180))::numeric(20,5);
+ earth_distance 
+----------------
+ 20037605.73216
+(1 row)
+
+SELECT earth_distance(ll_to_earth(0,0),ll_to_earth(90,0))::numeric(20,5);
+ earth_distance 
+----------------
+ 10018802.86608
+(1 row)
+
+SELECT earth_distance(ll_to_earth(0,0),ll_to_earth(0,90))::numeric(20,5);
+ earth_distance 
+----------------
+ 10018802.86608
+(1 row)
+
+SELECT earth_distance(ll_to_earth(0,0),ll_to_earth(0,1))::numeric(20,5);
+ earth_distance 
+----------------
+   111320.03185
+(1 row)
+
+SELECT earth_distance(ll_to_earth(0,0),ll_to_earth(1,0))::numeric(20,5);
+ earth_distance 
+----------------
+   111320.03185
+(1 row)
+
+SELECT earth_distance(ll_to_earth(30,0),ll_to_earth(30,1))::numeric(20,5);
+ earth_distance 
+----------------
+    96405.66962
+(1 row)
+
+SELECT earth_distance(ll_to_earth(30,0),ll_to_earth(31,0))::numeric(20,5);
+ earth_distance 
+----------------
+   111320.03185
+(1 row)
+
+SELECT earth_distance(ll_to_earth(60,0),ll_to_earth(60,1))::numeric(20,5);
+ earth_distance 
+----------------
+    55659.48608
+(1 row)
+
+SELECT earth_distance(ll_to_earth(60,0),ll_to_earth(61,0))::numeric(20,5);
+ earth_distance 
+----------------
+   111320.03185
+(1 row)
+
+SELECT earth_distance(ll_to_earth(41.8,87.6),ll_to_earth(35.1,106.7))::numeric(20,5);
+ earth_distance 
+----------------
+  1819303.21265
+(1 row)
+
+SELECT (earth_distance(ll_to_earth(41.8,87.6),ll_to_earth(35.1,106.7))*
+      100./2.54/12./5280.)::numeric(20,5);
+  numeric   
+------------
+ 1130.46261
+(1 row)
+
+--
+-- Test getting the distance between two points using geo_distance.
+--
+SELECT geo_distance('(0,0)'::point,'(0,0)'::point)::numeric(20,5);
+ geo_distance 
+--------------
+      0.00000
+(1 row)
+
+SELECT geo_distance('(0,0)'::point,'(180,0)'::point)::numeric(20,5);
+ geo_distance 
+--------------
+  12436.77274
+(1 row)
+
+SELECT geo_distance('(0,0)'::point,'(0,90)'::point)::numeric(20,5);
+ geo_distance 
+--------------
+   6218.38637
+(1 row)
+
+SELECT geo_distance('(0,0)'::point,'(90,0)'::point)::numeric(20,5);
+ geo_distance 
+--------------
+   6218.38637
+(1 row)
+
+SELECT geo_distance('(0,0)'::point,'(1,0)'::point)::numeric(20,5);
+ geo_distance 
+--------------
+     69.09318
+(1 row)
+
+SELECT geo_distance('(0,0)'::point,'(0,1)'::point)::numeric(20,5);
+ geo_distance 
+--------------
+     69.09318
+(1 row)
+
+SELECT geo_distance('(0,30)'::point,'(1,30)'::point)::numeric(20,5);
+ geo_distance 
+--------------
+     59.83626
+(1 row)
+
+SELECT geo_distance('(0,30)'::point,'(0,31)'::point)::numeric(20,5);
+ geo_distance 
+--------------
+     69.09318
+(1 row)
+
+SELECT geo_distance('(0,60)'::point,'(1,60)'::point)::numeric(20,5);
+ geo_distance 
+--------------
+     34.54626
+(1 row)
+
+SELECT geo_distance('(0,60)'::point,'(0,61)'::point)::numeric(20,5);
+ geo_distance 
+--------------
+     69.09318
+(1 row)
+
+SELECT geo_distance('(87.6,41.8)'::point,'(106.7,35.1)'::point)::numeric(20,5);
+ geo_distance 
+--------------
+   1129.18983
+(1 row)
+
+SELECT (geo_distance('(87.6,41.8)'::point,'(106.7,35.1)'::point)*5280.*12.*2.54/100.)::numeric(20,5);
+    numeric    
+---------------
+ 1817254.87730
+(1 row)
+
+--
+-- Test getting the distance between two points using the <@> operator.
+--
+SELECT ('(0,0)'::point <@> '(0,0)'::point)::numeric(20,5);
+ numeric 
+---------
+ 0.00000
+(1 row)
+
+SELECT ('(0,0)'::point <@> '(180,0)'::point)::numeric(20,5);
+   numeric   
+-------------
+ 12436.77274
+(1 row)
+
+SELECT ('(0,0)'::point <@> '(0,90)'::point)::numeric(20,5);
+  numeric   
+------------
+ 6218.38637
+(1 row)
+
+SELECT ('(0,0)'::point <@> '(90,0)'::point)::numeric(20,5);
+  numeric   
+------------
+ 6218.38637
+(1 row)
+
+SELECT ('(0,0)'::point <@> '(1,0)'::point)::numeric(20,5);
+ numeric  
+----------
+ 69.09318
+(1 row)
+
+SELECT ('(0,0)'::point <@> '(0,1)'::point)::numeric(20,5);
+ numeric  
+----------
+ 69.09318
+(1 row)
+
+SELECT ('(0,30)'::point <@> '(1,30)'::point)::numeric(20,5);
+ numeric  
+----------
+ 59.83626
+(1 row)
+
+SELECT ('(0,30)'::point <@> '(0,31)'::point)::numeric(20,5);
+ numeric  
+----------
+ 69.09318
+(1 row)
+
+SELECT ('(0,60)'::point <@> '(1,60)'::point)::numeric(20,5);
+ numeric  
+----------
+ 34.54626
+(1 row)
+
+SELECT ('(0,60)'::point <@> '(0,61)'::point)::numeric(20,5);
+ numeric  
+----------
+ 69.09318
+(1 row)
+
+SELECT ('(87.6,41.8)'::point <@> '(106.7,35.1)'::point)::numeric(20,5);
+  numeric   
+------------
+ 1129.18983
+(1 row)
+
+SELECT (('(87.6,41.8)'::point <@> '(106.7,35.1)'::point)*5280.*12.*2.54/100.)::numeric(20,5);
+    numeric    
+---------------
+ 1817254.87730
+(1 row)
+
+--
+-- Test getting a bounding box around points.
+--
+SELECT cube_ll_coord(earth_box(ll_to_earth(0,0),112000),1)::numeric(20,5),
+       cube_ll_coord(earth_box(ll_to_earth(0,0),112000),2)::numeric(20,5),
+       cube_ll_coord(earth_box(ll_to_earth(0,0),112000),3)::numeric(20,5),
+       cube_ur_coord(earth_box(ll_to_earth(0,0),112000),1)::numeric(20,5),
+       cube_ur_coord(earth_box(ll_to_earth(0,0),112000),2)::numeric(20,5),
+       cube_ur_coord(earth_box(ll_to_earth(0,0),112000),3)::numeric(20,5);
+ cube_ll_coord | cube_ll_coord | cube_ll_coord | cube_ur_coord | cube_ur_coord | cube_ur_coord 
+---------------+---------------+---------------+---------------+---------------+---------------
+ 6266169.43896 | -111998.56104 | -111998.56104 | 6490166.56104 |  111998.56104 |  111998.56104
+(1 row)
+
+SELECT cube_ll_coord(earth_box(ll_to_earth(0,0),pi()*earth()),1)::numeric(20,5),
+       cube_ll_coord(earth_box(ll_to_earth(0,0),pi()*earth()),2)::numeric(20,5),
+       cube_ll_coord(earth_box(ll_to_earth(0,0),pi()*earth()),3)::numeric(20,5),
+       cube_ur_coord(earth_box(ll_to_earth(0,0),pi()*earth()),1)::numeric(20,5),
+       cube_ur_coord(earth_box(ll_to_earth(0,0),pi()*earth()),2)::numeric(20,5),
+       cube_ur_coord(earth_box(ll_to_earth(0,0),pi()*earth()),3)::numeric(20,5);
+ cube_ll_coord  |  cube_ll_coord  |  cube_ll_coord  | cube_ur_coord  | cube_ur_coord  | cube_ur_coord  
+----------------+-----------------+-----------------+----------------+----------------+----------------
+ -6378168.00000 | -12756336.00000 | -12756336.00000 | 19134504.00000 | 12756336.00000 | 12756336.00000
+(1 row)
+
+SELECT cube_ll_coord(earth_box(ll_to_earth(0,0),10*earth()),1)::numeric(20,5),
+       cube_ll_coord(earth_box(ll_to_earth(0,0),10*earth()),2)::numeric(20,5),
+       cube_ll_coord(earth_box(ll_to_earth(0,0),10*earth()),3)::numeric(20,5),
+       cube_ur_coord(earth_box(ll_to_earth(0,0),10*earth()),1)::numeric(20,5),
+       cube_ur_coord(earth_box(ll_to_earth(0,0),10*earth()),2)::numeric(20,5),
+       cube_ur_coord(earth_box(ll_to_earth(0,0),10*earth()),3)::numeric(20,5);
+ cube_ll_coord  |  cube_ll_coord  |  cube_ll_coord  | cube_ur_coord  | cube_ur_coord  | cube_ur_coord  
+----------------+-----------------+-----------------+----------------+----------------+----------------
+ -6378168.00000 | -12756336.00000 | -12756336.00000 | 19134504.00000 | 12756336.00000 | 12756336.00000
+(1 row)
+
+--
+-- Test for points that should be in bounding boxes.
+--
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0,1))*1.00001) @>
+       ll_to_earth(0,1);
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0,0.1))*1.00001) @>
+       ll_to_earth(0,0.1);
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0,0.01))*1.00001) @>
+       ll_to_earth(0,0.01);
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0,0.001))*1.00001) @>
+       ll_to_earth(0,0.001);
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0,0.0001))*1.00001) @>
+       ll_to_earth(0,0.0001);
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0.0001,0.0001))*1.00001) @>
+       ll_to_earth(0.0001,0.0001);
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT earth_box(ll_to_earth(45,45),
+       earth_distance(ll_to_earth(45,45),ll_to_earth(45.0001,45.0001))*1.00001) @>
+       ll_to_earth(45.0001,45.0001);
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT earth_box(ll_to_earth(90,180),
+       earth_distance(ll_to_earth(90,180),ll_to_earth(90.0001,180.0001))*1.00001) @>
+       ll_to_earth(90.0001,180.0001);
+ ?column? 
+----------
+ t
+(1 row)
+
+--
+-- Test for points that shouldn't be in bounding boxes. Note that we need
+-- to make points way outside, since some points close may be in the box
+-- but further away than the distance we are testing.
+--
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0,1))*.57735) @>
+       ll_to_earth(0,1);
+ ?column? 
+----------
+ f
+(1 row)
+
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0,0.1))*.57735) @>
+       ll_to_earth(0,0.1);
+ ?column? 
+----------
+ f
+(1 row)
+
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0,0.01))*.57735) @>
+       ll_to_earth(0,0.01);
+ ?column? 
+----------
+ f
+(1 row)
+
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0,0.001))*.57735) @>
+       ll_to_earth(0,0.001);
+ ?column? 
+----------
+ f
+(1 row)
+
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0,0.0001))*.57735) @>
+       ll_to_earth(0,0.0001);
+ ?column? 
+----------
+ f
+(1 row)
+
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0.0001,0.0001))*.57735) @>
+       ll_to_earth(0.0001,0.0001);
+ ?column? 
+----------
+ f
+(1 row)
+
+SELECT earth_box(ll_to_earth(45,45),
+       earth_distance(ll_to_earth(45,45),ll_to_earth(45.0001,45.0001))*.57735) @>
+       ll_to_earth(45.0001,45.0001);
+ ?column? 
+----------
+ f
+(1 row)
+
+SELECT earth_box(ll_to_earth(90,180),
+       earth_distance(ll_to_earth(90,180),ll_to_earth(90.0001,180.0001))*.57735) @>
+       ll_to_earth(90.0001,180.0001);
+ ?column? 
+----------
+ f
+(1 row)
+
+--
+-- Test the recommended constraints.
+--
+SELECT cube_is_point(ll_to_earth(0,0));
+ cube_is_point 
+---------------
+ t
+(1 row)
+
+SELECT cube_dim(ll_to_earth(0,0)) <= 3;
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT abs(cube_distance(ll_to_earth(0,0), '(0)'::cube) / earth() - 1) <
+       '10e-12'::float8;
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT cube_is_point(ll_to_earth(30,60));
+ cube_is_point 
+---------------
+ t
+(1 row)
+
+SELECT cube_dim(ll_to_earth(30,60)) <= 3;
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT abs(cube_distance(ll_to_earth(30,60), '(0)'::cube) / earth() - 1) <
+       '10e-12'::float8;
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT cube_is_point(ll_to_earth(60,90));
+ cube_is_point 
+---------------
+ t
+(1 row)
+
+SELECT cube_dim(ll_to_earth(60,90)) <= 3;
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT abs(cube_distance(ll_to_earth(60,90), '(0)'::cube) / earth() - 1) <
+       '10e-12'::float8;
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT cube_is_point(ll_to_earth(-30,-90));
+ cube_is_point 
+---------------
+ t
+(1 row)
+
+SELECT cube_dim(ll_to_earth(-30,-90)) <= 3;
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT abs(cube_distance(ll_to_earth(-30,-90), '(0)'::cube) / earth() - 1) <
+       '10e-12'::float8;
+ ?column? 
+----------
+ t
+(1 row)
+
+--
+-- Now we are going to test extension create/drop scenarios.
+--
+-- list what's installed
+\dT
+                                                     List of data types
+ Schema |        Name         |                                         Description                                         
+--------+---------------------+---------------------------------------------------------------------------------------------
+ public | check_default_table | 
+ public | cube                | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
+ public | earth               | 
+(3 rows)
+
+drop extension cube;  -- fail, earthdistance requires it
+ERROR:  cannot drop extension cube because other objects depend on it
+DETAIL:  extension earthdistance depends on extension cube
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+drop extension earthdistance;
+drop type cube;  -- fail, extension cube requires it
+ERROR:  cannot drop type cube because extension cube requires it
+HINT:  You can drop extension cube instead.
+-- list what's installed
+\dT
+                                                     List of data types
+ Schema |        Name         |                                         Description                                         
+--------+---------------------+---------------------------------------------------------------------------------------------
+ public | check_default_table | 
+ public | cube                | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
+(2 rows)
+
+create table foo (f1 cube, f2 int);
+drop extension cube;  -- fail, foo.f1 requires it
+ERROR:  cannot drop extension cube because other objects depend on it
+DETAIL:  column f1 of table foo depends on type cube
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+drop table foo;
+drop extension cube;
+-- list what's installed
+\dT
+             List of data types
+ Schema |        Name         | Description 
+--------+---------------------+-------------
+ public | check_default_table | 
+(1 row)
+
+\df
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             List of functions
+ Schema |               Name                |                                                                                                                                                                                                                                                                                                                          Result data type                                                                                                                                                                                                                                                                                                                          |                                                                                                                                                                                                                                               Argument data types                                                                                                                                                                                                                                                | Type 
+--------+-----------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------
+ public | apply_cluster                     | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_schema text, p_parent_tablename text, p_child_schema text, p_child_tablename text                                                                                                                                                                                                                                                                                                                                                                                                                       | func
+ public | apply_constraints                 | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_table text, p_child_table text DEFAULT NULL::text, p_analyze boolean DEFAULT false, p_job_id bigint DEFAULT NULL::bigint                                                                                                                                                                                                                                                                                                                                                                                | func
+ public | apply_foreign_keys                | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_table text, p_child_table text, p_job_id bigint DEFAULT NULL::bigint, p_debug boolean DEFAULT false                                                                                                                                                                                                                                                                                                                                                                                                     | func
+ public | apply_privileges                  | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_schema text, p_parent_tablename text, p_child_schema text, p_child_tablename text, p_job_id bigint DEFAULT NULL::bigint                                                                                                                                                                                                                                                                                                                                                                                 | func
+ public | apply_publications                | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_table text, p_child_schema text, p_child_tablename text                                                                                                                                                                                                                                                                                                                                                                                                                                                 | func
+ public | autovacuum_off                    | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_parent_schema text, p_parent_tablename text, p_source_schema text DEFAULT NULL::text, p_source_tablename text DEFAULT NULL::text                                                                                                                                                                                                                                                                                                                                                                               | func
+ public | autovacuum_reset                  | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_parent_schema text, p_parent_tablename text, p_source_schema text DEFAULT NULL::text, p_source_tablename text DEFAULT NULL::text                                                                                                                                                                                                                                                                                                                                                                               | func
+ public | check_automatic_maintenance_value | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_automatic_maintenance text                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | func
+ public | check_control_type                | TABLE(general_type text, exact_type text)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | p_parent_schema text, p_parent_tablename text, p_control text                                                                                                                                                                                                                                                                                                                                                                                                                                                    | func
+ public | check_default                     | SETOF check_default_table                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | p_exact_count boolean DEFAULT true                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | func
+ public | check_epoch_type                  | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_type text                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | func
+ public | check_name_length                 | text                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_object_name text, p_suffix text DEFAULT NULL::text, p_table_partition boolean DEFAULT false                                                                                                                                                                                                                                                                                                                                                                                                                    | func
+ public | check_partition_type              | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_type text                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | func
+ public | check_subpart_sameconfig          | TABLE(sub_partition_type text, sub_control text, sub_partition_interval text, sub_constraint_cols text[], sub_premake integer, sub_optimize_trigger integer, sub_optimize_constraint integer, sub_epoch text, sub_inherit_fk boolean, sub_retention text, sub_retention_schema text, sub_retention_keep_table boolean, sub_retention_keep_index boolean, sub_infinite_time_partitions boolean, sub_automatic_maintenance text, sub_jobmon boolean, sub_trigger_exception_handling boolean, sub_upsert text, sub_trigger_return_null boolean, sub_template_table text, sub_inherit_privileges boolean, sub_constraint_valid boolean, sub_subscription_refresh text) | p_parent_table text                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | func
+ public | check_subpartition_limits         | record                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | p_parent_table text, p_type text, OUT sub_min text, OUT sub_max text                                                                                                                                                                                                                                                                                                                                                                                                                                             | func
+ public | create_function_id                | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_table text, p_job_id bigint DEFAULT NULL::bigint                                                                                                                                                                                                                                                                                                                                                                                                                                                        | func
+ public | create_function_time              | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_table text, p_job_id bigint DEFAULT NULL::bigint                                                                                                                                                                                                                                                                                                                                                                                                                                                        | func
+ public | create_parent                     | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_parent_table text, p_control text, p_type text, p_interval text, p_constraint_cols text[] DEFAULT NULL::text[], p_premake integer DEFAULT 4, p_automatic_maintenance text DEFAULT 'on'::text, p_start_partition text DEFAULT NULL::text, p_inherit_fk boolean DEFAULT true, p_epoch text DEFAULT 'none'::text, p_upsert text DEFAULT ''::text, p_publications text[] DEFAULT NULL::text[], p_trigger_return_null boolean DEFAULT true, p_template_table text DEFAULT NULL::text, p_jobmon boolean DEFAULT true | func
+ public | create_partition_id               | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_parent_table text, p_partition_ids bigint[], p_analyze boolean DEFAULT true, p_start_partition text DEFAULT NULL::text                                                                                                                                                                                                                                                                                                                                                                                         | func
+ public | create_partition_time             | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_parent_table text, p_partition_times timestamp with time zone[], p_analyze boolean DEFAULT true, p_start_partition text DEFAULT NULL::text                                                                                                                                                                                                                                                                                                                                                                     | func
+ public | create_sub_parent                 | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_top_parent text, p_control text, p_type text, p_interval text, p_native_check text DEFAULT NULL::text, p_constraint_cols text[] DEFAULT NULL::text[], p_premake integer DEFAULT 4, p_start_partition text DEFAULT NULL::text, p_inherit_fk boolean DEFAULT true, p_epoch text DEFAULT 'none'::text, p_upsert text DEFAULT ''::text, p_trigger_return_null boolean DEFAULT true, p_jobmon boolean DEFAULT true                                                                                                  | func
+ public | create_trigger                    | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_table text                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | func
+ public | drop_constraints                  | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_table text, p_child_table text, p_debug boolean DEFAULT false                                                                                                                                                                                                                                                                                                                                                                                                                                           | func
+ public | drop_partition_column             | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_table text, p_column text                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | func
+ public | drop_partition_id                 | integer                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_parent_table text, p_retention bigint DEFAULT NULL::bigint, p_keep_table boolean DEFAULT NULL::boolean, p_keep_index boolean DEFAULT NULL::boolean, p_retention_schema text DEFAULT NULL::text                                                                                                                                                                                                                                                                                                                 | func
+ public | drop_partition_time               | integer                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_parent_table text, p_retention interval DEFAULT NULL::interval, p_keep_table boolean DEFAULT NULL::boolean, p_keep_index boolean DEFAULT NULL::boolean, p_retention_schema text DEFAULT NULL::text                                                                                                                                                                                                                                                                                                             | func
+ public | dump_partitioned_table_definition | text                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_table text, p_ignore_template_table boolean DEFAULT false                                                                                                                                                                                                                                                                                                                                                                                                                                               | func
+ public | inherit_template_properties       | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_parent_table text, p_child_schema text, p_child_tablename text                                                                                                                                                                                                                                                                                                                                                                                                                                                 | func
+ public | partition_data_id                 | bigint                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | p_parent_table text, p_batch_count integer DEFAULT 1, p_batch_interval bigint DEFAULT NULL::bigint, p_lock_wait numeric DEFAULT 0, p_order text DEFAULT 'ASC'::text, p_analyze boolean DEFAULT true, p_source_table text DEFAULT NULL::text, p_ignored_columns text[] DEFAULT NULL::text[]                                                                                                                                                                                                                       | func
+ public | partition_data_proc               |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | IN p_parent_table text, IN p_interval text DEFAULT NULL::text, IN p_batch integer DEFAULT NULL::integer, IN p_wait integer DEFAULT 1, IN p_source_table text DEFAULT NULL::text, IN p_order text DEFAULT 'ASC'::text, IN p_lock_wait integer DEFAULT 0, IN p_lock_wait_tries integer DEFAULT 10, IN p_quiet boolean DEFAULT false, IN p_ignored_columns text[] DEFAULT NULL::text[]                                                                                                                              | proc
+ public | partition_data_time               | bigint                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | p_parent_table text, p_batch_count integer DEFAULT 1, p_batch_interval interval DEFAULT NULL::interval, p_lock_wait numeric DEFAULT 0, p_order text DEFAULT 'ASC'::text, p_analyze boolean DEFAULT true, p_source_table text DEFAULT NULL::text, p_ignored_columns text[] DEFAULT NULL::text[]                                                                                                                                                                                                                   | func
+ public | partition_gap_fill                | integer                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_parent_table text                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | func
+ public | reapply_constraints_proc          |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | IN p_parent_table text, IN p_drop_constraints boolean DEFAULT false, IN p_apply_constraints boolean DEFAULT false, IN p_wait integer DEFAULT 0, IN p_dryrun boolean DEFAULT false                                                                                                                                                                                                                                                                                                                                | proc
+ public | reapply_privileges                | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_table text                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | func
+ public | run_maintenance                   | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_table text DEFAULT NULL::text, p_analyze boolean DEFAULT NULL::boolean, p_jobmon boolean DEFAULT true                                                                                                                                                                                                                                                                                                                                                                                                   | func
+ public | run_maintenance_proc              |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | IN p_wait integer DEFAULT 0, IN p_analyze boolean DEFAULT NULL::boolean, IN p_jobmon boolean DEFAULT true                                                                                                                                                                                                                                                                                                                                                                                                        | proc
+ public | show_partition_info               | record                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | p_child_table text, p_partition_interval text DEFAULT NULL::text, p_parent_table text DEFAULT NULL::text, OUT child_start_time timestamp with time zone, OUT child_end_time timestamp with time zone, OUT child_start_id bigint, OUT child_end_id bigint, OUT suffix text                                                                                                                                                                                                                                        | func
+ public | show_partition_name               | record                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | p_parent_table text, p_value text, OUT partition_schema text, OUT partition_table text, OUT suffix_timestamp timestamp with time zone, OUT suffix_id bigint, OUT table_exists boolean                                                                                                                                                                                                                                                                                                                            | func
+ public | show_partitions                   | TABLE(partition_schemaname text, partition_tablename text)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | p_parent_table text, p_order text DEFAULT 'ASC'::text, p_include_default boolean DEFAULT false                                                                                                                                                                                                                                                                                                                                                                                                                   | func
+ public | stop_sub_partition                | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_parent_table text, p_jobmon boolean DEFAULT true                                                                                                                                                                                                                                                                                                                                                                                                                                                               | func
+ public | undo_partition                    | record                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | p_parent_table text, p_batch_count integer DEFAULT 1, p_batch_interval text DEFAULT NULL::text, p_keep_table boolean DEFAULT true, p_lock_wait numeric DEFAULT 0, p_target_table text DEFAULT NULL::text, p_ignored_columns text[] DEFAULT NULL::text[], OUT partitions_undone integer, OUT rows_undone bigint                                                                                                                                                                                                   | func
+ public | undo_partition_proc               |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | IN p_parent_table text, IN p_interval text DEFAULT NULL::text, IN p_batch integer DEFAULT NULL::integer, IN p_wait integer DEFAULT 1, IN p_target_table text DEFAULT NULL::text, IN p_keep_table boolean DEFAULT true, IN p_lock_wait integer DEFAULT 0, IN p_lock_wait_tries integer DEFAULT 10, IN p_quiet boolean DEFAULT false, IN p_ignored_columns text[] DEFAULT NULL::text[]                                                                                                                             | proc
+(42 rows)
+
+\do
+                             List of operators
+ Schema | Name | Left arg type | Right arg type | Result type | Description 
+--------+------+---------------+----------------+-------------+-------------
+(0 rows)
+
+create schema c;
+create extension cube with schema c;
+-- list what's installed
+\dT public.*
+             List of data types
+ Schema |        Name         | Description 
+--------+---------------------+-------------
+ public | check_default_table | 
+(1 row)
+
+\df public.*
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             List of functions
+ Schema |               Name                |                                                                                                                                                                                                                                                                                                                          Result data type                                                                                                                                                                                                                                                                                                                          |                                                                                                                                                                                                                                               Argument data types                                                                                                                                                                                                                                                | Type 
+--------+-----------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------
+ public | apply_cluster                     | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_schema text, p_parent_tablename text, p_child_schema text, p_child_tablename text                                                                                                                                                                                                                                                                                                                                                                                                                       | func
+ public | apply_constraints                 | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_table text, p_child_table text DEFAULT NULL::text, p_analyze boolean DEFAULT false, p_job_id bigint DEFAULT NULL::bigint                                                                                                                                                                                                                                                                                                                                                                                | func
+ public | apply_foreign_keys                | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_table text, p_child_table text, p_job_id bigint DEFAULT NULL::bigint, p_debug boolean DEFAULT false                                                                                                                                                                                                                                                                                                                                                                                                     | func
+ public | apply_privileges                  | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_schema text, p_parent_tablename text, p_child_schema text, p_child_tablename text, p_job_id bigint DEFAULT NULL::bigint                                                                                                                                                                                                                                                                                                                                                                                 | func
+ public | apply_publications                | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_table text, p_child_schema text, p_child_tablename text                                                                                                                                                                                                                                                                                                                                                                                                                                                 | func
+ public | autovacuum_off                    | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_parent_schema text, p_parent_tablename text, p_source_schema text DEFAULT NULL::text, p_source_tablename text DEFAULT NULL::text                                                                                                                                                                                                                                                                                                                                                                               | func
+ public | autovacuum_reset                  | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_parent_schema text, p_parent_tablename text, p_source_schema text DEFAULT NULL::text, p_source_tablename text DEFAULT NULL::text                                                                                                                                                                                                                                                                                                                                                                               | func
+ public | check_automatic_maintenance_value | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_automatic_maintenance text                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | func
+ public | check_control_type                | TABLE(general_type text, exact_type text)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | p_parent_schema text, p_parent_tablename text, p_control text                                                                                                                                                                                                                                                                                                                                                                                                                                                    | func
+ public | check_default                     | SETOF check_default_table                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | p_exact_count boolean DEFAULT true                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | func
+ public | check_epoch_type                  | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_type text                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | func
+ public | check_name_length                 | text                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_object_name text, p_suffix text DEFAULT NULL::text, p_table_partition boolean DEFAULT false                                                                                                                                                                                                                                                                                                                                                                                                                    | func
+ public | check_partition_type              | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_type text                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | func
+ public | check_subpart_sameconfig          | TABLE(sub_partition_type text, sub_control text, sub_partition_interval text, sub_constraint_cols text[], sub_premake integer, sub_optimize_trigger integer, sub_optimize_constraint integer, sub_epoch text, sub_inherit_fk boolean, sub_retention text, sub_retention_schema text, sub_retention_keep_table boolean, sub_retention_keep_index boolean, sub_infinite_time_partitions boolean, sub_automatic_maintenance text, sub_jobmon boolean, sub_trigger_exception_handling boolean, sub_upsert text, sub_trigger_return_null boolean, sub_template_table text, sub_inherit_privileges boolean, sub_constraint_valid boolean, sub_subscription_refresh text) | p_parent_table text                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | func
+ public | check_subpartition_limits         | record                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | p_parent_table text, p_type text, OUT sub_min text, OUT sub_max text                                                                                                                                                                                                                                                                                                                                                                                                                                             | func
+ public | create_function_id                | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_table text, p_job_id bigint DEFAULT NULL::bigint                                                                                                                                                                                                                                                                                                                                                                                                                                                        | func
+ public | create_function_time              | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_table text, p_job_id bigint DEFAULT NULL::bigint                                                                                                                                                                                                                                                                                                                                                                                                                                                        | func
+ public | create_parent                     | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_parent_table text, p_control text, p_type text, p_interval text, p_constraint_cols text[] DEFAULT NULL::text[], p_premake integer DEFAULT 4, p_automatic_maintenance text DEFAULT 'on'::text, p_start_partition text DEFAULT NULL::text, p_inherit_fk boolean DEFAULT true, p_epoch text DEFAULT 'none'::text, p_upsert text DEFAULT ''::text, p_publications text[] DEFAULT NULL::text[], p_trigger_return_null boolean DEFAULT true, p_template_table text DEFAULT NULL::text, p_jobmon boolean DEFAULT true | func
+ public | create_partition_id               | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_parent_table text, p_partition_ids bigint[], p_analyze boolean DEFAULT true, p_start_partition text DEFAULT NULL::text                                                                                                                                                                                                                                                                                                                                                                                         | func
+ public | create_partition_time             | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_parent_table text, p_partition_times timestamp with time zone[], p_analyze boolean DEFAULT true, p_start_partition text DEFAULT NULL::text                                                                                                                                                                                                                                                                                                                                                                     | func
+ public | create_sub_parent                 | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_top_parent text, p_control text, p_type text, p_interval text, p_native_check text DEFAULT NULL::text, p_constraint_cols text[] DEFAULT NULL::text[], p_premake integer DEFAULT 4, p_start_partition text DEFAULT NULL::text, p_inherit_fk boolean DEFAULT true, p_epoch text DEFAULT 'none'::text, p_upsert text DEFAULT ''::text, p_trigger_return_null boolean DEFAULT true, p_jobmon boolean DEFAULT true                                                                                                  | func
+ public | create_trigger                    | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_table text                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | func
+ public | drop_constraints                  | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_table text, p_child_table text, p_debug boolean DEFAULT false                                                                                                                                                                                                                                                                                                                                                                                                                                           | func
+ public | drop_partition_column             | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_table text, p_column text                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | func
+ public | drop_partition_id                 | integer                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_parent_table text, p_retention bigint DEFAULT NULL::bigint, p_keep_table boolean DEFAULT NULL::boolean, p_keep_index boolean DEFAULT NULL::boolean, p_retention_schema text DEFAULT NULL::text                                                                                                                                                                                                                                                                                                                 | func
+ public | drop_partition_time               | integer                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_parent_table text, p_retention interval DEFAULT NULL::interval, p_keep_table boolean DEFAULT NULL::boolean, p_keep_index boolean DEFAULT NULL::boolean, p_retention_schema text DEFAULT NULL::text                                                                                                                                                                                                                                                                                                             | func
+ public | dump_partitioned_table_definition | text                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_table text, p_ignore_template_table boolean DEFAULT false                                                                                                                                                                                                                                                                                                                                                                                                                                               | func
+ public | inherit_template_properties       | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_parent_table text, p_child_schema text, p_child_tablename text                                                                                                                                                                                                                                                                                                                                                                                                                                                 | func
+ public | partition_data_id                 | bigint                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | p_parent_table text, p_batch_count integer DEFAULT 1, p_batch_interval bigint DEFAULT NULL::bigint, p_lock_wait numeric DEFAULT 0, p_order text DEFAULT 'ASC'::text, p_analyze boolean DEFAULT true, p_source_table text DEFAULT NULL::text, p_ignored_columns text[] DEFAULT NULL::text[]                                                                                                                                                                                                                       | func
+ public | partition_data_proc               |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | IN p_parent_table text, IN p_interval text DEFAULT NULL::text, IN p_batch integer DEFAULT NULL::integer, IN p_wait integer DEFAULT 1, IN p_source_table text DEFAULT NULL::text, IN p_order text DEFAULT 'ASC'::text, IN p_lock_wait integer DEFAULT 0, IN p_lock_wait_tries integer DEFAULT 10, IN p_quiet boolean DEFAULT false, IN p_ignored_columns text[] DEFAULT NULL::text[]                                                                                                                              | proc
+ public | partition_data_time               | bigint                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | p_parent_table text, p_batch_count integer DEFAULT 1, p_batch_interval interval DEFAULT NULL::interval, p_lock_wait numeric DEFAULT 0, p_order text DEFAULT 'ASC'::text, p_analyze boolean DEFAULT true, p_source_table text DEFAULT NULL::text, p_ignored_columns text[] DEFAULT NULL::text[]                                                                                                                                                                                                                   | func
+ public | partition_gap_fill                | integer                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_parent_table text                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | func
+ public | reapply_constraints_proc          |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | IN p_parent_table text, IN p_drop_constraints boolean DEFAULT false, IN p_apply_constraints boolean DEFAULT false, IN p_wait integer DEFAULT 0, IN p_dryrun boolean DEFAULT false                                                                                                                                                                                                                                                                                                                                | proc
+ public | reapply_privileges                | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_table text                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | func
+ public | run_maintenance                   | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_table text DEFAULT NULL::text, p_analyze boolean DEFAULT NULL::boolean, p_jobmon boolean DEFAULT true                                                                                                                                                                                                                                                                                                                                                                                                   | func
+ public | run_maintenance_proc              |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | IN p_wait integer DEFAULT 0, IN p_analyze boolean DEFAULT NULL::boolean, IN p_jobmon boolean DEFAULT true                                                                                                                                                                                                                                                                                                                                                                                                        | proc
+ public | show_partition_info               | record                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | p_child_table text, p_partition_interval text DEFAULT NULL::text, p_parent_table text DEFAULT NULL::text, OUT child_start_time timestamp with time zone, OUT child_end_time timestamp with time zone, OUT child_start_id bigint, OUT child_end_id bigint, OUT suffix text                                                                                                                                                                                                                                        | func
+ public | show_partition_name               | record                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | p_parent_table text, p_value text, OUT partition_schema text, OUT partition_table text, OUT suffix_timestamp timestamp with time zone, OUT suffix_id bigint, OUT table_exists boolean                                                                                                                                                                                                                                                                                                                            | func
+ public | show_partitions                   | TABLE(partition_schemaname text, partition_tablename text)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | p_parent_table text, p_order text DEFAULT 'ASC'::text, p_include_default boolean DEFAULT false                                                                                                                                                                                                                                                                                                                                                                                                                   | func
+ public | stop_sub_partition                | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_parent_table text, p_jobmon boolean DEFAULT true                                                                                                                                                                                                                                                                                                                                                                                                                                                               | func
+ public | undo_partition                    | record                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | p_parent_table text, p_batch_count integer DEFAULT 1, p_batch_interval text DEFAULT NULL::text, p_keep_table boolean DEFAULT true, p_lock_wait numeric DEFAULT 0, p_target_table text DEFAULT NULL::text, p_ignored_columns text[] DEFAULT NULL::text[], OUT partitions_undone integer, OUT rows_undone bigint                                                                                                                                                                                                   | func
+ public | undo_partition_proc               |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | IN p_parent_table text, IN p_interval text DEFAULT NULL::text, IN p_batch integer DEFAULT NULL::integer, IN p_wait integer DEFAULT 1, IN p_target_table text DEFAULT NULL::text, IN p_keep_table boolean DEFAULT true, IN p_lock_wait integer DEFAULT 0, IN p_lock_wait_tries integer DEFAULT 10, IN p_quiet boolean DEFAULT false, IN p_ignored_columns text[] DEFAULT NULL::text[]                                                                                                                             | proc
+(42 rows)
+
+\do public.*
+                             List of operators
+ Schema | Name | Left arg type | Right arg type | Result type | Description 
+--------+------+---------------+----------------+-------------+-------------
+(0 rows)
+
+\dT c.*
+                                              List of data types
+ Schema |  Name  |                                         Description                                         
+--------+--------+---------------------------------------------------------------------------------------------
+ c      | c.cube | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
+(1 row)
+
+create table foo (f1 c.cube, f2 int);
+drop extension cube;  -- fail, foo.f1 requires it
+ERROR:  cannot drop extension cube because other objects depend on it
+DETAIL:  column f1 of table foo depends on type c.cube
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+drop schema c;  -- fail, cube requires it
+ERROR:  cannot drop schema c because other objects depend on it
+DETAIL:  extension cube depends on schema c
+column f1 of table foo depends on type c.cube
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+drop extension cube cascade;
+NOTICE:  drop cascades to column f1 of table foo
+\d foo
+                Table "public.foo"
+ Column |  Type   | Collation | Nullable | Default 
+--------+---------+-----------+----------+---------
+ f2     | integer |           |          | 
+
+-- list what's installed
+\dT public.*
+             List of data types
+ Schema |        Name         | Description 
+--------+---------------------+-------------
+ public | check_default_table | 
+(1 row)
+
+\df public.*
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             List of functions
+ Schema |               Name                |                                                                                                                                                                                                                                                                                                                          Result data type                                                                                                                                                                                                                                                                                                                          |                                                                                                                                                                                                                                               Argument data types                                                                                                                                                                                                                                                | Type 
+--------+-----------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------
+ public | apply_cluster                     | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_schema text, p_parent_tablename text, p_child_schema text, p_child_tablename text                                                                                                                                                                                                                                                                                                                                                                                                                       | func
+ public | apply_constraints                 | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_table text, p_child_table text DEFAULT NULL::text, p_analyze boolean DEFAULT false, p_job_id bigint DEFAULT NULL::bigint                                                                                                                                                                                                                                                                                                                                                                                | func
+ public | apply_foreign_keys                | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_table text, p_child_table text, p_job_id bigint DEFAULT NULL::bigint, p_debug boolean DEFAULT false                                                                                                                                                                                                                                                                                                                                                                                                     | func
+ public | apply_privileges                  | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_schema text, p_parent_tablename text, p_child_schema text, p_child_tablename text, p_job_id bigint DEFAULT NULL::bigint                                                                                                                                                                                                                                                                                                                                                                                 | func
+ public | apply_publications                | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_table text, p_child_schema text, p_child_tablename text                                                                                                                                                                                                                                                                                                                                                                                                                                                 | func
+ public | autovacuum_off                    | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_parent_schema text, p_parent_tablename text, p_source_schema text DEFAULT NULL::text, p_source_tablename text DEFAULT NULL::text                                                                                                                                                                                                                                                                                                                                                                               | func
+ public | autovacuum_reset                  | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_parent_schema text, p_parent_tablename text, p_source_schema text DEFAULT NULL::text, p_source_tablename text DEFAULT NULL::text                                                                                                                                                                                                                                                                                                                                                                               | func
+ public | check_automatic_maintenance_value | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_automatic_maintenance text                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | func
+ public | check_control_type                | TABLE(general_type text, exact_type text)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | p_parent_schema text, p_parent_tablename text, p_control text                                                                                                                                                                                                                                                                                                                                                                                                                                                    | func
+ public | check_default                     | SETOF check_default_table                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | p_exact_count boolean DEFAULT true                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | func
+ public | check_epoch_type                  | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_type text                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | func
+ public | check_name_length                 | text                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_object_name text, p_suffix text DEFAULT NULL::text, p_table_partition boolean DEFAULT false                                                                                                                                                                                                                                                                                                                                                                                                                    | func
+ public | check_partition_type              | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_type text                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | func
+ public | check_subpart_sameconfig          | TABLE(sub_partition_type text, sub_control text, sub_partition_interval text, sub_constraint_cols text[], sub_premake integer, sub_optimize_trigger integer, sub_optimize_constraint integer, sub_epoch text, sub_inherit_fk boolean, sub_retention text, sub_retention_schema text, sub_retention_keep_table boolean, sub_retention_keep_index boolean, sub_infinite_time_partitions boolean, sub_automatic_maintenance text, sub_jobmon boolean, sub_trigger_exception_handling boolean, sub_upsert text, sub_trigger_return_null boolean, sub_template_table text, sub_inherit_privileges boolean, sub_constraint_valid boolean, sub_subscription_refresh text) | p_parent_table text                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | func
+ public | check_subpartition_limits         | record                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | p_parent_table text, p_type text, OUT sub_min text, OUT sub_max text                                                                                                                                                                                                                                                                                                                                                                                                                                             | func
+ public | create_function_id                | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_table text, p_job_id bigint DEFAULT NULL::bigint                                                                                                                                                                                                                                                                                                                                                                                                                                                        | func
+ public | create_function_time              | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_table text, p_job_id bigint DEFAULT NULL::bigint                                                                                                                                                                                                                                                                                                                                                                                                                                                        | func
+ public | create_parent                     | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_parent_table text, p_control text, p_type text, p_interval text, p_constraint_cols text[] DEFAULT NULL::text[], p_premake integer DEFAULT 4, p_automatic_maintenance text DEFAULT 'on'::text, p_start_partition text DEFAULT NULL::text, p_inherit_fk boolean DEFAULT true, p_epoch text DEFAULT 'none'::text, p_upsert text DEFAULT ''::text, p_publications text[] DEFAULT NULL::text[], p_trigger_return_null boolean DEFAULT true, p_template_table text DEFAULT NULL::text, p_jobmon boolean DEFAULT true | func
+ public | create_partition_id               | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_parent_table text, p_partition_ids bigint[], p_analyze boolean DEFAULT true, p_start_partition text DEFAULT NULL::text                                                                                                                                                                                                                                                                                                                                                                                         | func
+ public | create_partition_time             | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_parent_table text, p_partition_times timestamp with time zone[], p_analyze boolean DEFAULT true, p_start_partition text DEFAULT NULL::text                                                                                                                                                                                                                                                                                                                                                                     | func
+ public | create_sub_parent                 | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_top_parent text, p_control text, p_type text, p_interval text, p_native_check text DEFAULT NULL::text, p_constraint_cols text[] DEFAULT NULL::text[], p_premake integer DEFAULT 4, p_start_partition text DEFAULT NULL::text, p_inherit_fk boolean DEFAULT true, p_epoch text DEFAULT 'none'::text, p_upsert text DEFAULT ''::text, p_trigger_return_null boolean DEFAULT true, p_jobmon boolean DEFAULT true                                                                                                  | func
+ public | create_trigger                    | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_table text                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | func
+ public | drop_constraints                  | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_table text, p_child_table text, p_debug boolean DEFAULT false                                                                                                                                                                                                                                                                                                                                                                                                                                           | func
+ public | drop_partition_column             | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_table text, p_column text                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | func
+ public | drop_partition_id                 | integer                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_parent_table text, p_retention bigint DEFAULT NULL::bigint, p_keep_table boolean DEFAULT NULL::boolean, p_keep_index boolean DEFAULT NULL::boolean, p_retention_schema text DEFAULT NULL::text                                                                                                                                                                                                                                                                                                                 | func
+ public | drop_partition_time               | integer                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_parent_table text, p_retention interval DEFAULT NULL::interval, p_keep_table boolean DEFAULT NULL::boolean, p_keep_index boolean DEFAULT NULL::boolean, p_retention_schema text DEFAULT NULL::text                                                                                                                                                                                                                                                                                                             | func
+ public | dump_partitioned_table_definition | text                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_table text, p_ignore_template_table boolean DEFAULT false                                                                                                                                                                                                                                                                                                                                                                                                                                               | func
+ public | inherit_template_properties       | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_parent_table text, p_child_schema text, p_child_tablename text                                                                                                                                                                                                                                                                                                                                                                                                                                                 | func
+ public | partition_data_id                 | bigint                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | p_parent_table text, p_batch_count integer DEFAULT 1, p_batch_interval bigint DEFAULT NULL::bigint, p_lock_wait numeric DEFAULT 0, p_order text DEFAULT 'ASC'::text, p_analyze boolean DEFAULT true, p_source_table text DEFAULT NULL::text, p_ignored_columns text[] DEFAULT NULL::text[]                                                                                                                                                                                                                       | func
+ public | partition_data_proc               |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | IN p_parent_table text, IN p_interval text DEFAULT NULL::text, IN p_batch integer DEFAULT NULL::integer, IN p_wait integer DEFAULT 1, IN p_source_table text DEFAULT NULL::text, IN p_order text DEFAULT 'ASC'::text, IN p_lock_wait integer DEFAULT 0, IN p_lock_wait_tries integer DEFAULT 10, IN p_quiet boolean DEFAULT false, IN p_ignored_columns text[] DEFAULT NULL::text[]                                                                                                                              | proc
+ public | partition_data_time               | bigint                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | p_parent_table text, p_batch_count integer DEFAULT 1, p_batch_interval interval DEFAULT NULL::interval, p_lock_wait numeric DEFAULT 0, p_order text DEFAULT 'ASC'::text, p_analyze boolean DEFAULT true, p_source_table text DEFAULT NULL::text, p_ignored_columns text[] DEFAULT NULL::text[]                                                                                                                                                                                                                   | func
+ public | partition_gap_fill                | integer                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_parent_table text                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | func
+ public | reapply_constraints_proc          |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | IN p_parent_table text, IN p_drop_constraints boolean DEFAULT false, IN p_apply_constraints boolean DEFAULT false, IN p_wait integer DEFAULT 0, IN p_dryrun boolean DEFAULT false                                                                                                                                                                                                                                                                                                                                | proc
+ public | reapply_privileges                | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_table text                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | func
+ public | run_maintenance                   | void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | p_parent_table text DEFAULT NULL::text, p_analyze boolean DEFAULT NULL::boolean, p_jobmon boolean DEFAULT true                                                                                                                                                                                                                                                                                                                                                                                                   | func
+ public | run_maintenance_proc              |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | IN p_wait integer DEFAULT 0, IN p_analyze boolean DEFAULT NULL::boolean, IN p_jobmon boolean DEFAULT true                                                                                                                                                                                                                                                                                                                                                                                                        | proc
+ public | show_partition_info               | record                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | p_child_table text, p_partition_interval text DEFAULT NULL::text, p_parent_table text DEFAULT NULL::text, OUT child_start_time timestamp with time zone, OUT child_end_time timestamp with time zone, OUT child_start_id bigint, OUT child_end_id bigint, OUT suffix text                                                                                                                                                                                                                                        | func
+ public | show_partition_name               | record                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | p_parent_table text, p_value text, OUT partition_schema text, OUT partition_table text, OUT suffix_timestamp timestamp with time zone, OUT suffix_id bigint, OUT table_exists boolean                                                                                                                                                                                                                                                                                                                            | func
+ public | show_partitions                   | TABLE(partition_schemaname text, partition_tablename text)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | p_parent_table text, p_order text DEFAULT 'ASC'::text, p_include_default boolean DEFAULT false                                                                                                                                                                                                                                                                                                                                                                                                                   | func
+ public | stop_sub_partition                | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | p_parent_table text, p_jobmon boolean DEFAULT true                                                                                                                                                                                                                                                                                                                                                                                                                                                               | func
+ public | undo_partition                    | record                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | p_parent_table text, p_batch_count integer DEFAULT 1, p_batch_interval text DEFAULT NULL::text, p_keep_table boolean DEFAULT true, p_lock_wait numeric DEFAULT 0, p_target_table text DEFAULT NULL::text, p_ignored_columns text[] DEFAULT NULL::text[], OUT partitions_undone integer, OUT rows_undone bigint                                                                                                                                                                                                   | func
+ public | undo_partition_proc               |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | IN p_parent_table text, IN p_interval text DEFAULT NULL::text, IN p_batch integer DEFAULT NULL::integer, IN p_wait integer DEFAULT 1, IN p_target_table text DEFAULT NULL::text, IN p_keep_table boolean DEFAULT true, IN p_lock_wait integer DEFAULT 0, IN p_lock_wait_tries integer DEFAULT 10, IN p_quiet boolean DEFAULT false, IN p_ignored_columns text[] DEFAULT NULL::text[]                                                                                                                             | proc
+(42 rows)
+
+\do public.*
+                             List of operators
+ Schema | Name | Left arg type | Right arg type | Result type | Description 
+--------+------+---------------+----------------+-------------+-------------
+(0 rows)
+
+\dT c.*
+     List of data types
+ Schema | Name | Description 
+--------+------+-------------
+(0 rows)
+
+\df c.*
+                       List of functions
+ Schema | Name | Result data type | Argument data types | Type 
+--------+------+------------------+---------------------+------
+(0 rows)
+
+\do c.*
+                             List of operators
+ Schema | Name | Left arg type | Right arg type | Result type | Description 
+--------+------+---------------+----------------+-------------+-------------
+(0 rows)
+
+drop schema c;

@@ -1,0 +1,238 @@
+diff -U3 /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/functions_1.out /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/functions.out
+--- /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/regression/expected/functions_1.out	2023-07-25 04:12:42.052174645 +0000
++++ /home/abigalek/pgext-cli-python/pgextworkdir/pg_stat_monitor/results/functions.out	2023-07-25 16:16:42.770431171 +0000
+@@ -11,32 +11,212 @@
+ (1 row)
+ 
+ SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+- routine_schema |       routine_name       | routine_type | data_type 
+-----------------+--------------------------+--------------+-----------
+- public         | decode_error_level       | FUNCTION     | text
+- public         | get_cmd_type             | FUNCTION     | text
+- public         | get_histogram_timings    | FUNCTION     | text
+- public         | histogram                | FUNCTION     | record
+- public         | pg_stat_monitor_internal | FUNCTION     | record
+- public         | pg_stat_monitor_reset    | FUNCTION     | void
+- public         | pg_stat_monitor_version  | FUNCTION     | text
+- public         | pgsm_create_11_view      | FUNCTION     | integer
+- public         | pgsm_create_13_view      | FUNCTION     | integer
+- public         | pgsm_create_14_view      | FUNCTION     | integer
+- public         | pgsm_create_15_view      | FUNCTION     | integer
+- public         | pgsm_create_view         | FUNCTION     | integer
+- public         | range                    | FUNCTION     | ARRAY
+-(13 rows)
++ routine_schema |          routine_name          | routine_type | data_type 
++----------------+--------------------------------+--------------+-----------
++ public         | decode_error_level             | FUNCTION     | text
++ public         | get_cmd_type                   | FUNCTION     | text
++ public         | get_histogram_timings          | FUNCTION     | text
++ public         | gin_btree_consistent           | FUNCTION     | boolean
++ public         | gin_compare_prefix_anyenum     | FUNCTION     | integer
++ public         | gin_compare_prefix_bit         | FUNCTION     | integer
++ public         | gin_compare_prefix_bool        | FUNCTION     | integer
++ public         | gin_compare_prefix_bpchar      | FUNCTION     | integer
++ public         | gin_compare_prefix_bytea       | FUNCTION     | integer
++ public         | gin_compare_prefix_char        | FUNCTION     | integer
++ public         | gin_compare_prefix_cidr        | FUNCTION     | integer
++ public         | gin_compare_prefix_date        | FUNCTION     | integer
++ public         | gin_compare_prefix_float4      | FUNCTION     | integer
++ public         | gin_compare_prefix_float8      | FUNCTION     | integer
++ public         | gin_compare_prefix_inet        | FUNCTION     | integer
++ public         | gin_compare_prefix_int2        | FUNCTION     | integer
++ public         | gin_compare_prefix_int4        | FUNCTION     | integer
++ public         | gin_compare_prefix_int8        | FUNCTION     | integer
++ public         | gin_compare_prefix_interval    | FUNCTION     | integer
++ public         | gin_compare_prefix_macaddr     | FUNCTION     | integer
++ public         | gin_compare_prefix_macaddr8    | FUNCTION     | integer
++ public         | gin_compare_prefix_money       | FUNCTION     | integer
++ public         | gin_compare_prefix_name        | FUNCTION     | integer
++ public         | gin_compare_prefix_numeric     | FUNCTION     | integer
++ public         | gin_compare_prefix_oid         | FUNCTION     | integer
++ public         | gin_compare_prefix_text        | FUNCTION     | integer
++ public         | gin_compare_prefix_time        | FUNCTION     | integer
++ public         | gin_compare_prefix_timestamp   | FUNCTION     | integer
++ public         | gin_compare_prefix_timestamptz | FUNCTION     | integer
++ public         | gin_compare_prefix_timetz      | FUNCTION     | integer
++ public         | gin_compare_prefix_uuid        | FUNCTION     | integer
++ public         | gin_compare_prefix_varbit      | FUNCTION     | integer
++ public         | gin_enum_cmp                   | FUNCTION     | integer
++ public         | gin_extract_query_anyenum      | FUNCTION     | internal
++ public         | gin_extract_query_bit          | FUNCTION     | internal
++ public         | gin_extract_query_bool         | FUNCTION     | internal
++ public         | gin_extract_query_bpchar       | FUNCTION     | internal
++ public         | gin_extract_query_bytea        | FUNCTION     | internal
++ public         | gin_extract_query_char         | FUNCTION     | internal
++ public         | gin_extract_query_cidr         | FUNCTION     | internal
++ public         | gin_extract_query_date         | FUNCTION     | internal
++ public         | gin_extract_query_float4       | FUNCTION     | internal
++ public         | gin_extract_query_float8       | FUNCTION     | internal
++ public         | gin_extract_query_inet         | FUNCTION     | internal
++ public         | gin_extract_query_int2         | FUNCTION     | internal
++ public         | gin_extract_query_int4         | FUNCTION     | internal
++ public         | gin_extract_query_int8         | FUNCTION     | internal
++ public         | gin_extract_query_interval     | FUNCTION     | internal
++ public         | gin_extract_query_macaddr      | FUNCTION     | internal
++ public         | gin_extract_query_macaddr8     | FUNCTION     | internal
++ public         | gin_extract_query_money        | FUNCTION     | internal
++ public         | gin_extract_query_name         | FUNCTION     | internal
++ public         | gin_extract_query_numeric      | FUNCTION     | internal
++ public         | gin_extract_query_oid          | FUNCTION     | internal
++ public         | gin_extract_query_text         | FUNCTION     | internal
++ public         | gin_extract_query_time         | FUNCTION     | internal
++ public         | gin_extract_query_timestamp    | FUNCTION     | internal
++ public         | gin_extract_query_timestamptz  | FUNCTION     | internal
++ public         | gin_extract_query_timetz       | FUNCTION     | internal
++ public         | gin_extract_query_uuid         | FUNCTION     | internal
++ public         | gin_extract_query_varbit       | FUNCTION     | internal
++ public         | gin_extract_value_anyenum      | FUNCTION     | internal
++ public         | gin_extract_value_bit          | FUNCTION     | internal
++ public         | gin_extract_value_bool         | FUNCTION     | internal
++ public         | gin_extract_value_bpchar       | FUNCTION     | internal
++ public         | gin_extract_value_bytea        | FUNCTION     | internal
++ public         | gin_extract_value_char         | FUNCTION     | internal
++ public         | gin_extract_value_cidr         | FUNCTION     | internal
++ public         | gin_extract_value_date         | FUNCTION     | internal
++ public         | gin_extract_value_float4       | FUNCTION     | internal
++ public         | gin_extract_value_float8       | FUNCTION     | internal
++ public         | gin_extract_value_inet         | FUNCTION     | internal
++ public         | gin_extract_value_int2         | FUNCTION     | internal
++ public         | gin_extract_value_int4         | FUNCTION     | internal
++ public         | gin_extract_value_int8         | FUNCTION     | internal
++ public         | gin_extract_value_interval     | FUNCTION     | internal
++ public         | gin_extract_value_macaddr      | FUNCTION     | internal
++ public         | gin_extract_value_macaddr8     | FUNCTION     | internal
++ public         | gin_extract_value_money        | FUNCTION     | internal
++ public         | gin_extract_value_name         | FUNCTION     | internal
++ public         | gin_extract_value_numeric      | FUNCTION     | internal
++ public         | gin_extract_value_oid          | FUNCTION     | internal
++ public         | gin_extract_value_text         | FUNCTION     | internal
++ public         | gin_extract_value_time         | FUNCTION     | internal
++ public         | gin_extract_value_timestamp    | FUNCTION     | internal
++ public         | gin_extract_value_timestamptz  | FUNCTION     | internal
++ public         | gin_extract_value_timetz       | FUNCTION     | internal
++ public         | gin_extract_value_uuid         | FUNCTION     | internal
++ public         | gin_extract_value_varbit       | FUNCTION     | internal
++ public         | gin_numeric_cmp                | FUNCTION     | integer
++ public         | histogram                      | FUNCTION     | record
++ public         | pg_stat_monitor_internal       | FUNCTION     | record
++ public         | pg_stat_monitor_reset          | FUNCTION     | void
++ public         | pg_stat_monitor_version        | FUNCTION     | text
++ public         | pgsm_create_11_view            | FUNCTION     | integer
++ public         | pgsm_create_13_view            | FUNCTION     | integer
++ public         | pgsm_create_14_view            | FUNCTION     | integer
++ public         | pgsm_create_15_view            | FUNCTION     | integer
++ public         | pgsm_create_view               | FUNCTION     | integer
++ public         | range                          | FUNCTION     | ARRAY
++(100 rows)
+ 
+ SET ROLE u1;
+ SELECT routine_schema, routine_name, routine_type, data_type FROM information_schema.routines WHERE routine_schema = 'public' ORDER BY routine_name COLLATE "C";
+- routine_schema |      routine_name       | routine_type | data_type 
+-----------------+-------------------------+--------------+-----------
+- public         | histogram               | FUNCTION     | record
+- public         | pg_stat_monitor_reset   | FUNCTION     | void
+- public         | pg_stat_monitor_version | FUNCTION     | text
+-(3 rows)
++ routine_schema |          routine_name          | routine_type | data_type 
++----------------+--------------------------------+--------------+-----------
++ public         | decode_error_level             | FUNCTION     | text
++ public         | get_cmd_type                   | FUNCTION     | text
++ public         | get_histogram_timings          | FUNCTION     | text
++ public         | gin_btree_consistent           | FUNCTION     | boolean
++ public         | gin_compare_prefix_anyenum     | FUNCTION     | integer
++ public         | gin_compare_prefix_bit         | FUNCTION     | integer
++ public         | gin_compare_prefix_bool        | FUNCTION     | integer
++ public         | gin_compare_prefix_bpchar      | FUNCTION     | integer
++ public         | gin_compare_prefix_bytea       | FUNCTION     | integer
++ public         | gin_compare_prefix_char        | FUNCTION     | integer
++ public         | gin_compare_prefix_cidr        | FUNCTION     | integer
++ public         | gin_compare_prefix_date        | FUNCTION     | integer
++ public         | gin_compare_prefix_float4      | FUNCTION     | integer
++ public         | gin_compare_prefix_float8      | FUNCTION     | integer
++ public         | gin_compare_prefix_inet        | FUNCTION     | integer
++ public         | gin_compare_prefix_int2        | FUNCTION     | integer
++ public         | gin_compare_prefix_int4        | FUNCTION     | integer
++ public         | gin_compare_prefix_int8        | FUNCTION     | integer
++ public         | gin_compare_prefix_interval    | FUNCTION     | integer
++ public         | gin_compare_prefix_macaddr     | FUNCTION     | integer
++ public         | gin_compare_prefix_macaddr8    | FUNCTION     | integer
++ public         | gin_compare_prefix_money       | FUNCTION     | integer
++ public         | gin_compare_prefix_name        | FUNCTION     | integer
++ public         | gin_compare_prefix_numeric     | FUNCTION     | integer
++ public         | gin_compare_prefix_oid         | FUNCTION     | integer
++ public         | gin_compare_prefix_text        | FUNCTION     | integer
++ public         | gin_compare_prefix_time        | FUNCTION     | integer
++ public         | gin_compare_prefix_timestamp   | FUNCTION     | integer
++ public         | gin_compare_prefix_timestamptz | FUNCTION     | integer
++ public         | gin_compare_prefix_timetz      | FUNCTION     | integer
++ public         | gin_compare_prefix_uuid        | FUNCTION     | integer
++ public         | gin_compare_prefix_varbit      | FUNCTION     | integer
++ public         | gin_enum_cmp                   | FUNCTION     | integer
++ public         | gin_extract_query_anyenum      | FUNCTION     | internal
++ public         | gin_extract_query_bit          | FUNCTION     | internal
++ public         | gin_extract_query_bool         | FUNCTION     | internal
++ public         | gin_extract_query_bpchar       | FUNCTION     | internal
++ public         | gin_extract_query_bytea        | FUNCTION     | internal
++ public         | gin_extract_query_char         | FUNCTION     | internal
++ public         | gin_extract_query_cidr         | FUNCTION     | internal
++ public         | gin_extract_query_date         | FUNCTION     | internal
++ public         | gin_extract_query_float4       | FUNCTION     | internal
++ public         | gin_extract_query_float8       | FUNCTION     | internal
++ public         | gin_extract_query_inet         | FUNCTION     | internal
++ public         | gin_extract_query_int2         | FUNCTION     | internal
++ public         | gin_extract_query_int4         | FUNCTION     | internal
++ public         | gin_extract_query_int8         | FUNCTION     | internal
++ public         | gin_extract_query_interval     | FUNCTION     | internal
++ public         | gin_extract_query_macaddr      | FUNCTION     | internal
++ public         | gin_extract_query_macaddr8     | FUNCTION     | internal
++ public         | gin_extract_query_money        | FUNCTION     | internal
++ public         | gin_extract_query_name         | FUNCTION     | internal
++ public         | gin_extract_query_numeric      | FUNCTION     | internal
++ public         | gin_extract_query_oid          | FUNCTION     | internal
++ public         | gin_extract_query_text         | FUNCTION     | internal
++ public         | gin_extract_query_time         | FUNCTION     | internal
++ public         | gin_extract_query_timestamp    | FUNCTION     | internal
++ public         | gin_extract_query_timestamptz  | FUNCTION     | internal
++ public         | gin_extract_query_timetz       | FUNCTION     | internal
++ public         | gin_extract_query_uuid         | FUNCTION     | internal
++ public         | gin_extract_query_varbit       | FUNCTION     | internal
++ public         | gin_extract_value_anyenum      | FUNCTION     | internal
++ public         | gin_extract_value_bit          | FUNCTION     | internal
++ public         | gin_extract_value_bool         | FUNCTION     | internal
++ public         | gin_extract_value_bpchar       | FUNCTION     | internal
++ public         | gin_extract_value_bytea        | FUNCTION     | internal
++ public         | gin_extract_value_char         | FUNCTION     | internal
++ public         | gin_extract_value_cidr         | FUNCTION     | internal
++ public         | gin_extract_value_date         | FUNCTION     | internal
++ public         | gin_extract_value_float4       | FUNCTION     | internal
++ public         | gin_extract_value_float8       | FUNCTION     | internal
++ public         | gin_extract_value_inet         | FUNCTION     | internal
++ public         | gin_extract_value_int2         | FUNCTION     | internal
++ public         | gin_extract_value_int4         | FUNCTION     | internal
++ public         | gin_extract_value_int8         | FUNCTION     | internal
++ public         | gin_extract_value_interval     | FUNCTION     | internal
++ public         | gin_extract_value_macaddr      | FUNCTION     | internal
++ public         | gin_extract_value_macaddr8     | FUNCTION     | internal
++ public         | gin_extract_value_money        | FUNCTION     | internal
++ public         | gin_extract_value_name         | FUNCTION     | internal
++ public         | gin_extract_value_numeric      | FUNCTION     | internal
++ public         | gin_extract_value_oid          | FUNCTION     | internal
++ public         | gin_extract_value_text         | FUNCTION     | internal
++ public         | gin_extract_value_time         | FUNCTION     | internal
++ public         | gin_extract_value_timestamp    | FUNCTION     | internal
++ public         | gin_extract_value_timestamptz  | FUNCTION     | internal
++ public         | gin_extract_value_timetz       | FUNCTION     | internal
++ public         | gin_extract_value_uuid         | FUNCTION     | internal
++ public         | gin_extract_value_varbit       | FUNCTION     | internal
++ public         | gin_numeric_cmp                | FUNCTION     | integer
++ public         | histogram                      | FUNCTION     | record
++ public         | pg_stat_monitor_internal       | FUNCTION     | record
++ public         | pg_stat_monitor_version        | FUNCTION     | text
++ public         | range                          | FUNCTION     | ARRAY
++(94 rows)
+ 
+ SET ROLE su;
+ DROP USER u1;
+ DROP EXTENSION pg_stat_monitor;
++DROP USER su;
++ERROR:  current user cannot be dropped

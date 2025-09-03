@@ -1,0 +1,107 @@
+2023-07-25 05:23:29.984 UTC [689587] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 05:23:29.984 UTC [689587] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 05:23:29.990 UTC [689587] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 05:23:30.000 UTC [689590] LOG:  database system was shut down at 2023-07-25 05:23:29 UTC
+2023-07-25 05:23:30.008 UTC [689587] LOG:  database system is ready to accept connections
+2023-07-25 05:23:30.222 UTC [689606] LOG:  lsm3_build lsm3_index
+2023-07-25 05:23:30.222 UTC [689606] STATEMENT:  create index lsm3_index on t using lsm3(k);
+2023-07-25 05:23:31.381 UTC [689607] LOG:  Lsm3: merge top index lsm3_index_top0 with size 2 blocks
+2023-07-25 05:23:31.382 UTC [689607] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:23:32.303 UTC [689607] LOG:  Lsm3: merge top index lsm3_index_top1 with size 2 blocks
+2023-07-25 05:23:32.304 UTC [689607] LOG:  Lsm3: truncate index lsm3_index_top1
+2023-07-25 05:23:33.314 UTC [689607] LOG:  Lsm3: merge top index lsm3_index_top0 with size 2 blocks
+2023-07-25 05:23:33.314 UTC [689607] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:23:34.324 UTC [689607] LOG:  Lsm3: merge top index lsm3_index_top1 with size 2 blocks
+2023-07-25 05:23:34.325 UTC [689607] LOG:  Lsm3: truncate index lsm3_index_top1
+2023-07-25 05:23:35.335 UTC [689607] LOG:  Lsm3: merge top index lsm3_index_top0 with size 2 blocks
+2023-07-25 05:23:35.335 UTC [689607] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:23:36.469 UTC [689607] LOG:  Lsm3: merge top index lsm3_index_top1 with size 181 blocks
+2023-07-25 05:23:36.560 UTC [689607] LOG:  Lsm3: truncate index lsm3_index_top1
+2023-07-25 05:23:36.658 UTC [689607] LOG:  Lsm3: merge top index lsm3_index_top0 with size 250 blocks
+2023-07-25 05:23:36.755 UTC [689607] LOG:  Lsm3: truncate index lsm3_index_top0
+2023-07-25 05:23:36.822 UTC [689607] LOG:  Lsm3: merge top index lsm3_index_top1 with size 181 blocks
+2023-07-25 05:23:36.896 UTC [689606] LOG:  lsm3_build lsm3_index
+2023-07-25 05:23:36.896 UTC [689606] STATEMENT:  truncate table t;
+2023-07-25 05:23:37.897 UTC [689607] ERROR:  deadlock detected
+2023-07-25 05:23:37.897 UTC [689607] DETAIL:  Process 689607 waits for AccessShareLock on relation 17215 of database 16384; blocked by process 689606.
+	Process 689606 waits for AccessExclusiveLock on relation 17220 of database 16384; blocked by process 689607.
+	Process 689607: truncate
+	Process 689606: truncate table t;
+2023-07-25 05:23:37.897 UTC [689607] HINT:  See server log for query details.
+2023-07-25 05:23:37.901 UTC [689587] LOG:  background worker "lsm3-merger-17218" (PID 689607) exited with exit code 1
+2023-07-25 05:23:39.921 UTC [689606] LOG:  lsm3_build lsm3_index
+2023-07-25 05:23:39.921 UTC [689606] STATEMENT:  reindex table t;
+2023-07-25 05:23:41.024 UTC [689606] LOG:  lsm3_build lsm_k_idx
+2023-07-25 05:23:41.024 UTC [689606] STATEMENT:  create index concurrently on lsm using lsm3(k);
+2023-07-25 05:23:41.639 UTC [689622] ERROR:  ltree syntax error at character 1 at character 8
+2023-07-25 05:23:41.639 UTC [689622] STATEMENT:  SELECT '.2.3'::ltree;
+2023-07-25 05:23:41.639 UTC [689622] ERROR:  ltree syntax error at character 3 at character 8
+2023-07-25 05:23:41.639 UTC [689622] STATEMENT:  SELECT '1..3'::ltree;
+2023-07-25 05:23:41.639 UTC [689622] ERROR:  ltree syntax error at character 8
+2023-07-25 05:23:41.639 UTC [689622] DETAIL:  Unexpected end of input.
+2023-07-25 05:23:41.639 UTC [689622] STATEMENT:  SELECT '1.2.'::ltree;
+2023-07-25 05:23:41.639 UTC [689622] ERROR:  label string is too long
+2023-07-25 05:23:41.639 UTC [689622] DETAIL:  Label length is 256, must be at most 255, at character 257.
+2023-07-25 05:23:41.639 UTC [689622] STATEMENT:  SELECT repeat('x', 256)::ltree;
+2023-07-25 05:23:41.643 UTC [689622] ERROR:  lquery syntax error at character 1 at character 8
+2023-07-25 05:23:41.643 UTC [689622] STATEMENT:  SELECT '.2.3'::lquery;
+2023-07-25 05:23:41.643 UTC [689622] ERROR:  lquery syntax error at character 3 at character 8
+2023-07-25 05:23:41.643 UTC [689622] STATEMENT:  SELECT '1..3'::lquery;
+2023-07-25 05:23:41.643 UTC [689622] ERROR:  lquery syntax error at character 8
+2023-07-25 05:23:41.643 UTC [689622] DETAIL:  Unexpected end of input.
+2023-07-25 05:23:41.643 UTC [689622] STATEMENT:  SELECT '1.2.'::lquery;
+2023-07-25 05:23:41.643 UTC [689622] ERROR:  lquery syntax error at character 1 at character 8
+2023-07-25 05:23:41.643 UTC [689622] STATEMENT:  SELECT '@.2.3'::lquery;
+2023-07-25 05:23:41.643 UTC [689622] ERROR:  lquery syntax error at character 3 at character 8
+2023-07-25 05:23:41.643 UTC [689622] STATEMENT:  SELECT '1.@.3'::lquery;
+2023-07-25 05:23:41.643 UTC [689622] ERROR:  lquery syntax error at character 5 at character 8
+2023-07-25 05:23:41.643 UTC [689622] STATEMENT:  SELECT '1.2.@'::lquery;
+2023-07-25 05:23:41.643 UTC [689622] ERROR:  lquery syntax error at character 2 at character 8
+2023-07-25 05:23:41.643 UTC [689622] DETAIL:  Empty labels are not allowed.
+2023-07-25 05:23:41.643 UTC [689622] STATEMENT:  SELECT '!.2.3'::lquery;
+2023-07-25 05:23:41.643 UTC [689622] ERROR:  lquery syntax error at character 4 at character 8
+2023-07-25 05:23:41.643 UTC [689622] DETAIL:  Empty labels are not allowed.
+2023-07-25 05:23:41.643 UTC [689622] STATEMENT:  SELECT '1.!.3'::lquery;
+2023-07-25 05:23:41.643 UTC [689622] ERROR:  lquery syntax error at character 6 at character 8
+2023-07-25 05:23:41.643 UTC [689622] DETAIL:  Empty labels are not allowed.
+2023-07-25 05:23:41.643 UTC [689622] STATEMENT:  SELECT '1.2.!'::lquery;
+2023-07-25 05:23:41.643 UTC [689622] ERROR:  lquery syntax error at character 7 at character 8
+2023-07-25 05:23:41.643 UTC [689622] STATEMENT:  SELECT '1.2.3|@.4'::lquery;
+2023-07-25 05:23:41.643 UTC [689622] ERROR:  label string is too long
+2023-07-25 05:23:41.643 UTC [689622] DETAIL:  Label length is 256, must be at most 255, at character 257.
+2023-07-25 05:23:41.643 UTC [689622] STATEMENT:  SELECT (repeat('x', 256) || '*@@*')::lquery;
+2023-07-25 05:23:41.643 UTC [689622] ERROR:  label string is too long
+2023-07-25 05:23:41.643 UTC [689622] DETAIL:  Label length is 256, must be at most 255, at character 258.
+2023-07-25 05:23:41.643 UTC [689622] STATEMENT:  SELECT ('!' || repeat('x', 256))::lquery;
+2023-07-25 05:23:41.648 UTC [689622] ERROR:  number of ltree labels (65536) exceeds the maximum allowed (65535)
+2023-07-25 05:23:41.648 UTC [689622] STATEMENT:  SELECT nlevel(('1' || repeat('.1', 65535))::ltree);
+2023-07-25 05:23:41.651 UTC [689622] ERROR:  number of ltree levels (65536) exceeds the maximum allowed (65535)
+2023-07-25 05:23:41.651 UTC [689622] STATEMENT:  SELECT nlevel(('1' || repeat('.1', 65534))::ltree || '1');
+2023-07-25 05:23:41.658 UTC [689622] ERROR:  number of lquery items (65536) exceeds the maximum allowed (65535)
+2023-07-25 05:23:41.658 UTC [689622] STATEMENT:  SELECT ('1' || repeat('.1', 65535))::lquery IS NULL;
+2023-07-25 05:23:41.659 UTC [689622] ERROR:  lquery syntax error at character 8
+2023-07-25 05:23:41.659 UTC [689622] DETAIL:  Low limit (65536) exceeds the maximum allowed (65535), at character 3.
+2023-07-25 05:23:41.659 UTC [689622] STATEMENT:  SELECT '*{65536}'::lquery;
+2023-07-25 05:23:41.659 UTC [689622] ERROR:  lquery syntax error at character 8
+2023-07-25 05:23:41.659 UTC [689622] DETAIL:  High limit (65536) exceeds the maximum allowed (65535), at character 4.
+2023-07-25 05:23:41.659 UTC [689622] STATEMENT:  SELECT '*{,65536}'::lquery;
+2023-07-25 05:23:41.659 UTC [689622] ERROR:  lquery syntax error at character 8
+2023-07-25 05:23:41.659 UTC [689622] DETAIL:  Low limit (4) is greater than high limit (3), at character 5.
+2023-07-25 05:23:41.659 UTC [689622] STATEMENT:  SELECT '*{4,3}'::lquery;
+2023-07-25 05:23:41.728 UTC [689622] ERROR:  value 0 out of bounds for option "siglen"
+2023-07-25 05:23:41.728 UTC [689622] DETAIL:  Valid values are between "4" and "2024".
+2023-07-25 05:23:41.728 UTC [689622] STATEMENT:  create index tstidx on ltreetest using gist (t gist_ltree_ops(siglen=0));
+2023-07-25 05:23:41.730 UTC [689622] ERROR:  value 2025 out of bounds for option "siglen"
+2023-07-25 05:23:41.730 UTC [689622] DETAIL:  Valid values are between "4" and "2024".
+2023-07-25 05:23:41.730 UTC [689622] STATEMENT:  create index tstidx on ltreetest using gist (t gist_ltree_ops(siglen=2025));
+2023-07-25 05:23:41.731 UTC [689622] ERROR:  value 2028 out of bounds for option "siglen"
+2023-07-25 05:23:41.731 UTC [689622] DETAIL:  Valid values are between "4" and "2024".
+2023-07-25 05:23:41.731 UTC [689622] STATEMENT:  create index tstidx on ltreetest using gist (t gist_ltree_ops(siglen=2028));
+2023-07-25 05:23:41.732 UTC [689622] ERROR:  siglen value must be a multiple of 4
+2023-07-25 05:23:41.732 UTC [689622] STATEMENT:  create index tstidx on ltreetest using gist (t gist_ltree_ops(siglen=2019));
+2023-07-25 05:23:41.773 UTC [689622] ERROR:  value 0 out of bounds for option "siglen"
+2023-07-25 05:23:41.773 UTC [689622] DETAIL:  Valid values are between "1" and "2024".
+2023-07-25 05:23:41.773 UTC [689622] STATEMENT:  create index _tstidx on _ltreetest using gist (t gist__ltree_ops(siglen=0));
+2023-07-25 05:23:41.773 UTC [689622] ERROR:  value 2025 out of bounds for option "siglen"
+2023-07-25 05:23:41.773 UTC [689622] DETAIL:  Valid values are between "1" and "2024".
+2023-07-25 05:23:41.773 UTC [689622] STATEMENT:  create index _tstidx on _ltreetest using gist (t gist__ltree_ops(siglen=2025));

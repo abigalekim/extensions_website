@@ -1,0 +1,44 @@
+2023-07-26 14:36:41.843 UTC [2108805] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 14:36:41.843 UTC [2108805] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 14:36:41.858 UTC [2108805] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 14:36:41.874 UTC [2108808] LOG:  database system was shut down at 2023-07-26 14:36:41 UTC
+2023-07-26 14:36:41.883 UTC [2108805] LOG:  database system is ready to accept connections
+2023-07-26 14:36:42.441 UTC [2108824] ERROR:  value 0 out of bounds for option "numranges"
+2023-07-26 14:36:42.441 UTC [2108824] DETAIL:  Valid values are between "1" and "252".
+2023-07-26 14:36:42.441 UTC [2108824] STATEMENT:  CREATE INDEX text_idx on test__int using gist (a gist__int_ops(numranges = 0));
+2023-07-26 14:36:42.442 UTC [2108824] ERROR:  value 253 out of bounds for option "numranges"
+2023-07-26 14:36:42.442 UTC [2108824] DETAIL:  Valid values are between "1" and "252".
+2023-07-26 14:36:42.442 UTC [2108824] STATEMENT:  CREATE INDEX text_idx on test__int using gist (a gist__int_ops(numranges = 253));
+2023-07-26 14:36:42.677 UTC [2108824] ERROR:  value 0 out of bounds for option "siglen"
+2023-07-26 14:36:42.677 UTC [2108824] DETAIL:  Valid values are between "1" and "2024".
+2023-07-26 14:36:42.677 UTC [2108824] STATEMENT:  CREATE INDEX text_idx on test__int using gist (a gist__intbig_ops(siglen = 0));
+2023-07-26 14:36:42.678 UTC [2108824] ERROR:  value 2025 out of bounds for option "siglen"
+2023-07-26 14:36:42.678 UTC [2108824] DETAIL:  Valid values are between "1" and "2024".
+2023-07-26 14:36:42.678 UTC [2108824] STATEMENT:  CREATE INDEX text_idx on test__int using gist (a gist__intbig_ops(siglen = 2025));
+2023-07-26 14:36:43.580 UTC [2108806] LOG:  checkpoint starting: immediate force wait
+2023-07-26 14:36:43.657 UTC [2108806] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 2 recycled; write=0.017 s, sync=0.014 s, total=0.077 s; sync files=7, longest=0.007 s, average=0.002 s; distance=29491 kB, estimate=29491 kB
+2023-07-26 14:36:44.102 UTC [2108806] LOG:  checkpoint starting: immediate force wait
+2023-07-26 14:36:44.259 UTC [2108806] LOG:  checkpoint complete: wrote 1799 buffers (11.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.067 s, sync=0.057 s, total=0.158 s; sync files=496, longest=0.018 s, average=0.001 s; distance=12432 kB, estimate=27785 kB
+2023-07-26 14:36:44.280 UTC [2108806] LOG:  checkpoint starting: immediate force wait
+2023-07-26 14:36:44.336 UTC [2108806] LOG:  checkpoint complete: wrote 2 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.012 s, sync=0.011 s, total=0.056 s; sync files=2, longest=0.008 s, average=0.006 s; distance=1 kB, estimate=25007 kB
+2023-07-26 14:36:44.483 UTC [2108864] ERROR:  current user cannot be dropped
+2023-07-26 14:36:44.483 UTC [2108864] STATEMENT:  DROP USER su;
+2023-07-26 14:36:44.978 UTC [2108806] LOG:  checkpoint starting: immediate force wait
+2023-07-26 14:36:45.110 UTC [2108806] LOG:  checkpoint complete: wrote 1039 buffers (6.3%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.050 s, sync=0.043 s, total=0.133 s; sync files=297, longest=0.010 s, average=0.001 s; distance=8792 kB, estimate=23385 kB
+2023-07-26 14:36:45.141 UTC [2108806] LOG:  checkpoint starting: immediate force wait
+2023-07-26 14:36:45.197 UTC [2108806] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.012 s, sync=0.012 s, total=0.057 s; sync files=7, longest=0.008 s, average=0.002 s; distance=38 kB, estimate=21051 kB
+2023-07-26 14:36:45.315 UTC [2108892] ERROR:  duplicate key value violates unique constraint "company_pkey"
+2023-07-26 14:36:45.315 UTC [2108892] DETAIL:  Key (id)=(1) already exists.
+2023-07-26 14:36:45.315 UTC [2108892] STATEMENT:  INSERT  INTO Company(ID, Name) VALUES (1, 'Percona');
+2023-07-26 14:36:45.558 UTC [2108912] ERROR:  division by zero
+2023-07-26 14:36:45.558 UTC [2108912] STATEMENT:  SELECT 1/0;
+2023-07-26 14:36:45.558 UTC [2108912] ERROR:  relation "unknown" does not exist at character 15
+2023-07-26 14:36:45.558 UTC [2108912] STATEMENT:  SELECT * FROM unknown;
+2023-07-26 14:36:45.558 UTC [2108912] ERROR:  syntax error at or near "ELECET" at character 1
+2023-07-26 14:36:45.558 UTC [2108912] STATEMENT:  ELECET * FROM unknown;
+2023-07-26 14:36:45.559 UTC [2108912] WARNING:  warning message
+2023-07-26 14:36:45.559 UTC [2108912] CONTEXT:  PL/pgSQL function inline_code_block line 3 at RAISE
+2023-07-26 14:36:45.744 UTC [2108926] ERROR:  role "su" already exists
+2023-07-26 14:36:45.744 UTC [2108926] STATEMENT:  CREATE USER su WITH SUPERUSER;
+2023-07-26 14:36:45.775 UTC [2108926] ERROR:  permission denied for function pg_stat_monitor_reset
+2023-07-26 14:36:45.775 UTC [2108926] STATEMENT:  SELECT pg_stat_monitor_reset();

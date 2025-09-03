@@ -1,0 +1,39 @@
+2023-07-26 11:17:04.061 UTC [1074515] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 11:17:04.061 UTC [1074515] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 11:17:04.074 UTC [1074515] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 11:17:04.090 UTC [1074518] LOG:  database system was shut down at 2023-07-26 11:17:03 UTC
+2023-07-26 11:17:04.099 UTC [1074515] LOG:  database system is ready to accept connections
+2023-07-26 11:17:04.603 UTC [1074535] ERROR:  permission denied for function pg_stat_statements_reset
+2023-07-26 11:17:04.603 UTC [1074535] STATEMENT:  SELECT pg_stat_statements_reset();
+2023-07-26 11:17:04.616 UTC [1074535] ERROR:  permission denied for function pg_stat_statements_reset
+2023-07-26 11:17:04.616 UTC [1074535] STATEMENT:  SELECT pg_stat_statements_reset();
+2023-07-26 11:17:04.624 UTC [1074535] ERROR:  permission denied for function pg_stat_statements_reset
+2023-07-26 11:17:04.624 UTC [1074535] STATEMENT:  SELECT pg_stat_statements_reset();
+2023-07-26 11:17:04.686 UTC [1074516] LOG:  checkpoint starting: immediate force wait
+2023-07-26 11:17:04.764 UTC [1074516] LOG:  checkpoint complete: wrote 13 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.020 s, sync=0.023 s, total=0.079 s; sync files=11, longest=0.008 s, average=0.002 s; distance=4329 kB, estimate=4329 kB
+2023-07-26 11:17:04.953 UTC [1074515] LOG:  received SIGHUP, reloading configuration files
+2023-07-26 11:17:04.955 UTC [1074515] LOG:  parameter "session_preload_libraries" changed to "pgextwlist"
+2023-07-26 11:17:04.955 UTC [1074515] LOG:  parameter "extwlist.extensions" changed to "citext,earthdistance,pg_trgm,pg_stat_statements,refint"
+2023-07-26 11:17:04.955 UTC [1074515] LOG:  parameter "extwlist.custom_path" changed to "/home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/test-scripts"
+2023-07-26 11:17:05.029 UTC [1074555] ERROR:  extension "pg_stat_statements" already exists
+2023-07-26 11:17:05.029 UTC [1074555] STATEMENT:  CREATE EXTENSION pg_stat_statements;
+2023-07-26 11:17:05.032 UTC [1074555] ERROR:  role "stat_resetters" does not exist
+2023-07-26 11:17:05.032 UTC [1074555] STATEMENT:  DROP EXTENSION pg_stat_statements;
+2023-07-26 11:17:05.042 UTC [1074561] ERROR:  extension "plpgsql" already exists
+2023-07-26 11:17:05.042 UTC [1074561] STATEMENT:  CREATE EXTENSION plpgsql;
+2023-07-26 11:17:05.042 UTC [1074561] ERROR:  extension "hstore" does not exist
+2023-07-26 11:17:05.042 UTC [1074561] STATEMENT:  COMMENT ON EXTENSION hstore IS 'plpgsql comment';
+2023-07-26 11:17:05.043 UTC [1074561] ERROR:  permission denied to create extension "hstore"
+2023-07-26 11:17:05.043 UTC [1074561] HINT:  Must have CREATE privilege on current database to create this extension.
+2023-07-26 11:17:05.043 UTC [1074561] STATEMENT:  CREATE EXTENSION hstore;
+2023-07-26 11:17:05.043 UTC [1074561] ERROR:  extension "hstore" does not exist
+2023-07-26 11:17:05.043 UTC [1074561] STATEMENT:  COMMENT ON EXTENSION hstore IS 'hstore comment';
+2023-07-26 11:17:05.044 UTC [1074561] ERROR:  required extension "cube" is not installed
+2023-07-26 11:17:05.044 UTC [1074561] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-26 11:17:05.044 UTC [1074561] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-26 11:17:05.044 UTC [1074561] ERROR:  must be owner of extension plpgsql
+2023-07-26 11:17:05.044 UTC [1074561] STATEMENT:  DROP EXTENSION plpgsql;
+2023-07-26 11:17:05.075 UTC [1074569] ERROR:  cannot drop extension citext because other objects depend on it
+2023-07-26 11:17:05.075 UTC [1074569] DETAIL:  column t of table mere_table depends on type citext
+2023-07-26 11:17:05.075 UTC [1074569] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 11:17:05.075 UTC [1074569] STATEMENT:  DROP EXTENSION citext;

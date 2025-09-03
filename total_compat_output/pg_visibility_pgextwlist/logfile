@@ -1,0 +1,106 @@
+2023-07-25 09:24:24.439 UTC [3168035] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 09:24:24.439 UTC [3168035] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 09:24:24.449 UTC [3168035] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 09:24:24.462 UTC [3168038] LOG:  database system was shut down at 2023-07-25 09:24:24 UTC
+2023-07-25 09:24:24.472 UTC [3168035] LOG:  database system is ready to accept connections
+2023-07-25 09:24:24.638 UTC [3168051] ERROR:  could not open relation with OID 16394
+2023-07-25 09:24:24.638 UTC [3168051] STATEMENT:  SELECT * FROM pg_visibility_map(16394);
+2023-07-25 09:24:24.640 UTC [3168051] ERROR:  could not open relation with OID 16394
+2023-07-25 09:24:24.640 UTC [3168051] STATEMENT:  SELECT * FROM pg_visibility_map(16394);
+2023-07-25 09:24:24.645 UTC [3168051] ERROR:  relation "test_partitioned" is of wrong relation kind
+2023-07-25 09:24:24.645 UTC [3168051] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-25 09:24:24.645 UTC [3168051] STATEMENT:  select pg_visibility('test_partitioned', 0);
+2023-07-25 09:24:24.646 UTC [3168051] ERROR:  relation "test_partitioned" is of wrong relation kind
+2023-07-25 09:24:24.646 UTC [3168051] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-25 09:24:24.646 UTC [3168051] STATEMENT:  select pg_visibility_map('test_partitioned');
+2023-07-25 09:24:24.646 UTC [3168051] ERROR:  relation "test_partitioned" is of wrong relation kind
+2023-07-25 09:24:24.646 UTC [3168051] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-25 09:24:24.646 UTC [3168051] STATEMENT:  select pg_visibility_map_summary('test_partitioned');
+2023-07-25 09:24:24.646 UTC [3168051] ERROR:  relation "test_partitioned" is of wrong relation kind
+2023-07-25 09:24:24.646 UTC [3168051] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-25 09:24:24.646 UTC [3168051] STATEMENT:  select pg_check_frozen('test_partitioned');
+2023-07-25 09:24:24.647 UTC [3168051] ERROR:  relation "test_partitioned" is of wrong relation kind
+2023-07-25 09:24:24.647 UTC [3168051] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-25 09:24:24.647 UTC [3168051] STATEMENT:  select pg_truncate_visibility_map('test_partitioned');
+2023-07-25 09:24:24.659 UTC [3168051] ERROR:  relation "test_index" is of wrong relation kind
+2023-07-25 09:24:24.659 UTC [3168051] DETAIL:  This operation is not supported for indexes.
+2023-07-25 09:24:24.659 UTC [3168051] STATEMENT:  select pg_visibility('test_index', 0);
+2023-07-25 09:24:24.659 UTC [3168051] ERROR:  relation "test_index" is of wrong relation kind
+2023-07-25 09:24:24.659 UTC [3168051] DETAIL:  This operation is not supported for indexes.
+2023-07-25 09:24:24.659 UTC [3168051] STATEMENT:  select pg_visibility_map('test_index');
+2023-07-25 09:24:24.660 UTC [3168051] ERROR:  relation "test_index" is of wrong relation kind
+2023-07-25 09:24:24.660 UTC [3168051] DETAIL:  This operation is not supported for indexes.
+2023-07-25 09:24:24.660 UTC [3168051] STATEMENT:  select pg_visibility_map_summary('test_index');
+2023-07-25 09:24:24.660 UTC [3168051] ERROR:  relation "test_index" is of wrong relation kind
+2023-07-25 09:24:24.660 UTC [3168051] DETAIL:  This operation is not supported for indexes.
+2023-07-25 09:24:24.660 UTC [3168051] STATEMENT:  select pg_check_frozen('test_index');
+2023-07-25 09:24:24.660 UTC [3168051] ERROR:  relation "test_index" is of wrong relation kind
+2023-07-25 09:24:24.660 UTC [3168051] DETAIL:  This operation is not supported for indexes.
+2023-07-25 09:24:24.660 UTC [3168051] STATEMENT:  select pg_truncate_visibility_map('test_index');
+2023-07-25 09:24:24.664 UTC [3168051] ERROR:  relation "test_view" is of wrong relation kind
+2023-07-25 09:24:24.664 UTC [3168051] DETAIL:  This operation is not supported for views.
+2023-07-25 09:24:24.664 UTC [3168051] STATEMENT:  select pg_visibility('test_view', 0);
+2023-07-25 09:24:24.665 UTC [3168051] ERROR:  relation "test_view" is of wrong relation kind
+2023-07-25 09:24:24.665 UTC [3168051] DETAIL:  This operation is not supported for views.
+2023-07-25 09:24:24.665 UTC [3168051] STATEMENT:  select pg_visibility_map('test_view');
+2023-07-25 09:24:24.665 UTC [3168051] ERROR:  relation "test_view" is of wrong relation kind
+2023-07-25 09:24:24.665 UTC [3168051] DETAIL:  This operation is not supported for views.
+2023-07-25 09:24:24.665 UTC [3168051] STATEMENT:  select pg_visibility_map_summary('test_view');
+2023-07-25 09:24:24.665 UTC [3168051] ERROR:  relation "test_view" is of wrong relation kind
+2023-07-25 09:24:24.665 UTC [3168051] DETAIL:  This operation is not supported for views.
+2023-07-25 09:24:24.665 UTC [3168051] STATEMENT:  select pg_check_frozen('test_view');
+2023-07-25 09:24:24.665 UTC [3168051] ERROR:  relation "test_view" is of wrong relation kind
+2023-07-25 09:24:24.665 UTC [3168051] DETAIL:  This operation is not supported for views.
+2023-07-25 09:24:24.665 UTC [3168051] STATEMENT:  select pg_truncate_visibility_map('test_view');
+2023-07-25 09:24:24.670 UTC [3168051] ERROR:  relation "test_sequence" is of wrong relation kind
+2023-07-25 09:24:24.670 UTC [3168051] DETAIL:  This operation is not supported for sequences.
+2023-07-25 09:24:24.670 UTC [3168051] STATEMENT:  select pg_visibility('test_sequence', 0);
+2023-07-25 09:24:24.670 UTC [3168051] ERROR:  relation "test_sequence" is of wrong relation kind
+2023-07-25 09:24:24.670 UTC [3168051] DETAIL:  This operation is not supported for sequences.
+2023-07-25 09:24:24.670 UTC [3168051] STATEMENT:  select pg_visibility_map('test_sequence');
+2023-07-25 09:24:24.670 UTC [3168051] ERROR:  relation "test_sequence" is of wrong relation kind
+2023-07-25 09:24:24.670 UTC [3168051] DETAIL:  This operation is not supported for sequences.
+2023-07-25 09:24:24.670 UTC [3168051] STATEMENT:  select pg_visibility_map_summary('test_sequence');
+2023-07-25 09:24:24.671 UTC [3168051] ERROR:  relation "test_sequence" is of wrong relation kind
+2023-07-25 09:24:24.671 UTC [3168051] DETAIL:  This operation is not supported for sequences.
+2023-07-25 09:24:24.671 UTC [3168051] STATEMENT:  select pg_check_frozen('test_sequence');
+2023-07-25 09:24:24.671 UTC [3168051] ERROR:  relation "test_sequence" is of wrong relation kind
+2023-07-25 09:24:24.671 UTC [3168051] DETAIL:  This operation is not supported for sequences.
+2023-07-25 09:24:24.671 UTC [3168051] STATEMENT:  select pg_truncate_visibility_map('test_sequence');
+2023-07-25 09:24:24.676 UTC [3168051] ERROR:  relation "test_foreign_table" is of wrong relation kind
+2023-07-25 09:24:24.676 UTC [3168051] DETAIL:  This operation is not supported for foreign tables.
+2023-07-25 09:24:24.676 UTC [3168051] STATEMENT:  select pg_visibility('test_foreign_table', 0);
+2023-07-25 09:24:24.676 UTC [3168051] ERROR:  relation "test_foreign_table" is of wrong relation kind
+2023-07-25 09:24:24.676 UTC [3168051] DETAIL:  This operation is not supported for foreign tables.
+2023-07-25 09:24:24.676 UTC [3168051] STATEMENT:  select pg_visibility_map('test_foreign_table');
+2023-07-25 09:24:24.676 UTC [3168051] ERROR:  relation "test_foreign_table" is of wrong relation kind
+2023-07-25 09:24:24.676 UTC [3168051] DETAIL:  This operation is not supported for foreign tables.
+2023-07-25 09:24:24.676 UTC [3168051] STATEMENT:  select pg_visibility_map_summary('test_foreign_table');
+2023-07-25 09:24:24.676 UTC [3168051] ERROR:  relation "test_foreign_table" is of wrong relation kind
+2023-07-25 09:24:24.676 UTC [3168051] DETAIL:  This operation is not supported for foreign tables.
+2023-07-25 09:24:24.676 UTC [3168051] STATEMENT:  select pg_check_frozen('test_foreign_table');
+2023-07-25 09:24:24.677 UTC [3168051] ERROR:  relation "test_foreign_table" is of wrong relation kind
+2023-07-25 09:24:24.677 UTC [3168051] DETAIL:  This operation is not supported for foreign tables.
+2023-07-25 09:24:24.677 UTC [3168051] STATEMENT:  select pg_truncate_visibility_map('test_foreign_table');
+2023-07-25 09:24:25.003 UTC [3168035] LOG:  received SIGHUP, reloading configuration files
+2023-07-25 09:24:25.006 UTC [3168035] LOG:  parameter "session_preload_libraries" changed to "pgextwlist"
+2023-07-25 09:24:25.006 UTC [3168035] LOG:  parameter "extwlist.extensions" changed to "citext,earthdistance,pg_trgm,pg_stat_statements,refint"
+2023-07-25 09:24:25.006 UTC [3168035] LOG:  parameter "extwlist.custom_path" changed to "/home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/test-scripts"
+2023-07-25 09:24:25.101 UTC [3168077] ERROR:  extension "plpgsql" already exists
+2023-07-25 09:24:25.101 UTC [3168077] STATEMENT:  CREATE EXTENSION plpgsql;
+2023-07-25 09:24:25.101 UTC [3168077] ERROR:  extension "hstore" does not exist
+2023-07-25 09:24:25.101 UTC [3168077] STATEMENT:  COMMENT ON EXTENSION hstore IS 'plpgsql comment';
+2023-07-25 09:24:25.102 UTC [3168077] ERROR:  permission denied to create extension "hstore"
+2023-07-25 09:24:25.102 UTC [3168077] HINT:  Must have CREATE privilege on current database to create this extension.
+2023-07-25 09:24:25.102 UTC [3168077] STATEMENT:  CREATE EXTENSION hstore;
+2023-07-25 09:24:25.102 UTC [3168077] ERROR:  extension "hstore" does not exist
+2023-07-25 09:24:25.102 UTC [3168077] STATEMENT:  COMMENT ON EXTENSION hstore IS 'hstore comment';
+2023-07-25 09:24:25.102 UTC [3168077] ERROR:  required extension "cube" is not installed
+2023-07-25 09:24:25.102 UTC [3168077] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-25 09:24:25.102 UTC [3168077] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-25 09:24:25.102 UTC [3168077] ERROR:  must be owner of extension plpgsql
+2023-07-25 09:24:25.102 UTC [3168077] STATEMENT:  DROP EXTENSION plpgsql;
+2023-07-25 09:24:25.126 UTC [3168085] ERROR:  cannot drop extension citext because other objects depend on it
+2023-07-25 09:24:25.126 UTC [3168085] DETAIL:  column t of table mere_table depends on type citext
+2023-07-25 09:24:25.126 UTC [3168085] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 09:24:25.126 UTC [3168085] STATEMENT:  DROP EXTENSION citext;

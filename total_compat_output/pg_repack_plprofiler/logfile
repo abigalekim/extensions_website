@@ -1,0 +1,14 @@
+2023-07-26 08:20:01.066 UTC [1029402] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 08:20:01.066 UTC [1029402] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 08:20:01.072 UTC [1029402] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 08:20:01.079 UTC [1029405] LOG:  database system was shut down at 2023-07-26 08:20:00 UTC
+2023-07-26 08:20:01.084 UTC [1029402] LOG:  database system is ready to accept connections
+2023-07-26 08:20:01.472 UTC [1029429] ERROR:  could not create unique index "idx_badindex_n"
+2023-07-26 08:20:01.472 UTC [1029429] DETAIL:  Key (n)=(10) is duplicated.
+2023-07-26 08:20:01.472 UTC [1029429] STATEMENT:  CREATE UNIQUE INDEX CONCURRENTLY idx_badindex_n ON tbl_badindex (n);
+2023-07-26 08:20:06.488 UTC [1029603] ERROR:  permission denied for schema repack at character 8
+2023-07-26 08:20:06.488 UTC [1029603] STATEMENT:  select repack.version(), repack.version_sql()
+2023-07-26 08:20:08.249 UTC [1029692] ERROR:  table name not found for OID 1
+2023-07-26 08:20:08.249 UTC [1029692] STATEMENT:  SELECT repack.get_order_by('issue321_idx'::regclass::oid, 1);
+2023-07-26 08:20:08.250 UTC [1029692] ERROR:  cache lookup failed for index 1
+2023-07-26 08:20:08.250 UTC [1029692] STATEMENT:  SELECT repack.get_order_by(1, 1);

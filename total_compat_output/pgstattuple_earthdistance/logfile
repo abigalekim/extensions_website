@@ -1,0 +1,94 @@
+2023-07-25 18:33:18.232 UTC [3277933] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 18:33:18.232 UTC [3277933] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 18:33:18.242 UTC [3277933] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 18:33:18.256 UTC [3277936] LOG:  database system was shut down at 2023-07-25 18:33:17 UTC
+2023-07-25 18:33:18.264 UTC [3277933] LOG:  database system is ready to accept connections
+2023-07-25 18:33:18.479 UTC [3277955] ERROR:  relation "test_pkey" is not a GIN index
+2023-07-25 18:33:18.479 UTC [3277955] STATEMENT:  select pgstatginindex('test_pkey');
+2023-07-25 18:33:18.479 UTC [3277955] ERROR:  relation "test_pkey" is not a hash index
+2023-07-25 18:33:18.479 UTC [3277955] STATEMENT:  select pgstathashindex('test_pkey');
+2023-07-25 18:33:18.479 UTC [3277955] ERROR:  relation "test_ginidx" is not a btree index
+2023-07-25 18:33:18.479 UTC [3277955] STATEMENT:  select pgstatindex('test_ginidx');
+2023-07-25 18:33:18.479 UTC [3277955] ERROR:  relation "test_ginidx" is not a hash index
+2023-07-25 18:33:18.479 UTC [3277955] STATEMENT:  select pgstathashindex('test_ginidx');
+2023-07-25 18:33:18.479 UTC [3277955] ERROR:  relation "test_hashidx" is not a btree index
+2023-07-25 18:33:18.479 UTC [3277955] STATEMENT:  select pgstatindex('test_hashidx');
+2023-07-25 18:33:18.479 UTC [3277955] ERROR:  relation "test_hashidx" is not a GIN index
+2023-07-25 18:33:18.479 UTC [3277955] STATEMENT:  select pgstatginindex('test_hashidx');
+2023-07-25 18:33:18.486 UTC [3277955] ERROR:  cannot get tuple-level statistics for relation "test_partitioned"
+2023-07-25 18:33:18.486 UTC [3277955] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-25 18:33:18.486 UTC [3277955] STATEMENT:  select pgstattuple('test_partitioned');
+2023-07-25 18:33:18.487 UTC [3277955] ERROR:  cannot get tuple-level statistics for relation "test_partitioned_index"
+2023-07-25 18:33:18.487 UTC [3277955] DETAIL:  This operation is not supported for partitioned indexes.
+2023-07-25 18:33:18.487 UTC [3277955] STATEMENT:  select pgstattuple('test_partitioned_index');
+2023-07-25 18:33:18.487 UTC [3277955] ERROR:  relation "test_partitioned" is of wrong relation kind
+2023-07-25 18:33:18.487 UTC [3277955] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-25 18:33:18.487 UTC [3277955] STATEMENT:  select pgstattuple_approx('test_partitioned');
+2023-07-25 18:33:18.487 UTC [3277955] ERROR:  cannot get page count of relation "test_partitioned"
+2023-07-25 18:33:18.487 UTC [3277955] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-25 18:33:18.487 UTC [3277955] STATEMENT:  select pg_relpages('test_partitioned');
+2023-07-25 18:33:18.487 UTC [3277955] ERROR:  relation "test_partitioned" is not a btree index
+2023-07-25 18:33:18.487 UTC [3277955] STATEMENT:  select pgstatindex('test_partitioned');
+2023-07-25 18:33:18.488 UTC [3277955] ERROR:  relation "test_partitioned" is not a GIN index
+2023-07-25 18:33:18.488 UTC [3277955] STATEMENT:  select pgstatginindex('test_partitioned');
+2023-07-25 18:33:18.488 UTC [3277955] ERROR:  "test_partitioned" is not an index
+2023-07-25 18:33:18.488 UTC [3277955] STATEMENT:  select pgstathashindex('test_partitioned');
+2023-07-25 18:33:18.492 UTC [3277955] ERROR:  cannot get tuple-level statistics for relation "test_view"
+2023-07-25 18:33:18.492 UTC [3277955] DETAIL:  This operation is not supported for views.
+2023-07-25 18:33:18.492 UTC [3277955] STATEMENT:  select pgstattuple('test_view');
+2023-07-25 18:33:18.492 UTC [3277955] ERROR:  relation "test_view" is of wrong relation kind
+2023-07-25 18:33:18.492 UTC [3277955] DETAIL:  This operation is not supported for views.
+2023-07-25 18:33:18.492 UTC [3277955] STATEMENT:  select pgstattuple_approx('test_view');
+2023-07-25 18:33:18.492 UTC [3277955] ERROR:  cannot get page count of relation "test_view"
+2023-07-25 18:33:18.492 UTC [3277955] DETAIL:  This operation is not supported for views.
+2023-07-25 18:33:18.492 UTC [3277955] STATEMENT:  select pg_relpages('test_view');
+2023-07-25 18:33:18.492 UTC [3277955] ERROR:  relation "test_view" is not a btree index
+2023-07-25 18:33:18.492 UTC [3277955] STATEMENT:  select pgstatindex('test_view');
+2023-07-25 18:33:18.492 UTC [3277955] ERROR:  relation "test_view" is not a GIN index
+2023-07-25 18:33:18.492 UTC [3277955] STATEMENT:  select pgstatginindex('test_view');
+2023-07-25 18:33:18.493 UTC [3277955] ERROR:  "test_view" is not an index
+2023-07-25 18:33:18.493 UTC [3277955] STATEMENT:  select pgstathashindex('test_view');
+2023-07-25 18:33:18.500 UTC [3277955] ERROR:  cannot get tuple-level statistics for relation "test_foreign_table"
+2023-07-25 18:33:18.500 UTC [3277955] DETAIL:  This operation is not supported for foreign tables.
+2023-07-25 18:33:18.500 UTC [3277955] STATEMENT:  select pgstattuple('test_foreign_table');
+2023-07-25 18:33:18.500 UTC [3277955] ERROR:  relation "test_foreign_table" is of wrong relation kind
+2023-07-25 18:33:18.500 UTC [3277955] DETAIL:  This operation is not supported for foreign tables.
+2023-07-25 18:33:18.500 UTC [3277955] STATEMENT:  select pgstattuple_approx('test_foreign_table');
+2023-07-25 18:33:18.500 UTC [3277955] ERROR:  cannot get page count of relation "test_foreign_table"
+2023-07-25 18:33:18.500 UTC [3277955] DETAIL:  This operation is not supported for foreign tables.
+2023-07-25 18:33:18.500 UTC [3277955] STATEMENT:  select pg_relpages('test_foreign_table');
+2023-07-25 18:33:18.501 UTC [3277955] ERROR:  relation "test_foreign_table" is not a btree index
+2023-07-25 18:33:18.501 UTC [3277955] STATEMENT:  select pgstatindex('test_foreign_table');
+2023-07-25 18:33:18.501 UTC [3277955] ERROR:  relation "test_foreign_table" is not a GIN index
+2023-07-25 18:33:18.501 UTC [3277955] STATEMENT:  select pgstatginindex('test_foreign_table');
+2023-07-25 18:33:18.502 UTC [3277955] ERROR:  "test_foreign_table" is not an index
+2023-07-25 18:33:18.502 UTC [3277955] STATEMENT:  select pgstathashindex('test_foreign_table');
+2023-07-25 18:33:18.518 UTC [3277955] ERROR:  relation "test_partition" is not a btree index
+2023-07-25 18:33:18.518 UTC [3277955] STATEMENT:  select pgstatindex('test_partition');
+2023-07-25 18:33:18.518 UTC [3277955] ERROR:  relation "test_partition" is not a GIN index
+2023-07-25 18:33:18.518 UTC [3277955] STATEMENT:  select pgstatginindex('test_partition');
+2023-07-25 18:33:18.519 UTC [3277955] ERROR:  "test_partition" is not an index
+2023-07-25 18:33:18.519 UTC [3277955] STATEMENT:  select pgstathashindex('test_partition');
+2023-07-25 18:33:18.711 UTC [3277970] ERROR:  required extension "cube" is not installed
+2023-07-25 18:33:18.711 UTC [3277970] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-25 18:33:18.711 UTC [3277970] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-25 18:33:18.774 UTC [3277970] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-25 18:33:18.774 UTC [3277970] DETAIL:  extension earthdistance depends on extension cube
+2023-07-25 18:33:18.774 UTC [3277970] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 18:33:18.774 UTC [3277970] STATEMENT:  drop extension cube;
+2023-07-25 18:33:18.775 UTC [3277970] ERROR:  cannot drop type cube because extension cube requires it
+2023-07-25 18:33:18.775 UTC [3277970] HINT:  You can drop extension cube instead.
+2023-07-25 18:33:18.775 UTC [3277970] STATEMENT:  drop type cube;
+2023-07-25 18:33:18.780 UTC [3277970] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-25 18:33:18.780 UTC [3277970] DETAIL:  column f1 of table foo depends on type cube
+2023-07-25 18:33:18.780 UTC [3277970] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 18:33:18.780 UTC [3277970] STATEMENT:  drop extension cube;
+2023-07-25 18:33:18.871 UTC [3277970] ERROR:  cannot drop extension cube because other objects depend on it
+2023-07-25 18:33:18.871 UTC [3277970] DETAIL:  column f1 of table foo depends on type c.cube
+2023-07-25 18:33:18.871 UTC [3277970] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 18:33:18.871 UTC [3277970] STATEMENT:  drop extension cube;
+2023-07-25 18:33:18.871 UTC [3277970] ERROR:  cannot drop schema c because other objects depend on it
+2023-07-25 18:33:18.871 UTC [3277970] DETAIL:  extension cube depends on schema c
+	column f1 of table foo depends on type c.cube
+2023-07-25 18:33:18.871 UTC [3277970] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-25 18:33:18.871 UTC [3277970] STATEMENT:  drop schema c;

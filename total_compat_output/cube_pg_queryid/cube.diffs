@@ -1,0 +1,158 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/cube/expected/cube.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/cube/results/cube.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/cube/expected/cube.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/cube/results/cube.out	2023-07-25 20:22:43.542438614 +0000
+@@ -514,32 +514,20 @@
+ DETAIL:  A cube cannot have more than 100 dimensions.
+ -- from an array
+ select cube(array(SELECT 0 as a FROM generate_series(1,101)));
+-ERROR:  array is too long
+-DETAIL:  A cube cannot have more than 100 dimensions.
++ERROR:  cache lookup failed for type 23
+ select cube(array(SELECT 0 as a FROM generate_series(1,101)),array(SELECT 0 as a FROM generate_series(1,101)));
+-ERROR:  can't extend cube
+-DETAIL:  A cube cannot have more than 100 dimensions.
++ERROR:  cache lookup failed for type 23
+ -- extend cube beyond limit
+ -- this should work
+ select cube(array(SELECT 0 as a FROM generate_series(1,100)));
+-                                                                                                                                                     cube                                                                                                                                                     
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+- (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+-(1 row)
+-
++ERROR:  cache lookup failed for type 23
+ select cube(array(SELECT 0 as a FROM generate_series(1,100)),array(SELECT 0 as a FROM generate_series(1,100)));
+-                                                                                                                                                     cube                                                                                                                                                     
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+- (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+-(1 row)
+-
++ERROR:  cache lookup failed for type 23
+ -- this should fail
+ select cube(cube(array(SELECT 0 as a FROM generate_series(1,100))), 0);
+-ERROR:  can't extend cube
+-DETAIL:  A cube cannot have more than 100 dimensions.
++ERROR:  cache lookup failed for type 23
+ select cube(cube(array(SELECT 0 as a FROM generate_series(1,100)),array(SELECT 0 as a FROM generate_series(1,100))), 0, 0);
+-ERROR:  can't extend cube
+-DETAIL:  A cube cannot have more than 100 dimensions.
++ERROR:  cache lookup failed for type 23
+ --
+ -- testing the  operators
+ --
+@@ -1417,96 +1405,44 @@
+ 
+ -- coordinate access
+ SELECT cube(array[10,20,30], array[40,50,60])->1;
+- ?column? 
+-----------
+-       10
+-(1 row)
+-
++ERROR:  cache lookup failed for type 23
+ SELECT cube(array[40,50,60], array[10,20,30])->1;
+- ?column? 
+-----------
+-       40
+-(1 row)
+-
++ERROR:  cache lookup failed for type 23
+ SELECT cube(array[10,20,30], array[40,50,60])->6;
+- ?column? 
+-----------
+-       60
+-(1 row)
+-
++ERROR:  cache lookup failed for type 23
+ SELECT cube(array[10,20,30], array[40,50,60])->0;
+-ERROR:  cube index 0 is out of bounds
++ERROR:  cache lookup failed for type 23
+ SELECT cube(array[10,20,30], array[40,50,60])->7;
+-ERROR:  cube index 7 is out of bounds
++ERROR:  cache lookup failed for type 23
+ SELECT cube(array[10,20,30], array[40,50,60])->-1;
+-ERROR:  cube index -1 is out of bounds
++ERROR:  cache lookup failed for type 23
+ SELECT cube(array[10,20,30], array[40,50,60])->-6;
+-ERROR:  cube index -6 is out of bounds
++ERROR:  cache lookup failed for type 23
+ SELECT cube(array[10,20,30])->3;
+- ?column? 
+-----------
+-       30
+-(1 row)
+-
++ERROR:  cache lookup failed for type 23
+ SELECT cube(array[10,20,30])->6;
+- ?column? 
+-----------
+-       30
+-(1 row)
+-
++ERROR:  cache lookup failed for type 23
+ SELECT cube(array[10,20,30])->-6;
+-ERROR:  cube index -6 is out of bounds
++ERROR:  cache lookup failed for type 23
+ -- "normalized" coordinate access
+ SELECT cube(array[10,20,30], array[40,50,60])~>1;
+- ?column? 
+-----------
+-       10
+-(1 row)
+-
++ERROR:  cache lookup failed for type 23
+ SELECT cube(array[40,50,60], array[10,20,30])~>1;
+- ?column? 
+-----------
+-       10
+-(1 row)
+-
++ERROR:  cache lookup failed for type 23
+ SELECT cube(array[10,20,30], array[40,50,60])~>2;
+- ?column? 
+-----------
+-       40
+-(1 row)
+-
++ERROR:  cache lookup failed for type 23
+ SELECT cube(array[40,50,60], array[10,20,30])~>2;
+- ?column? 
+-----------
+-       40
+-(1 row)
+-
++ERROR:  cache lookup failed for type 23
+ SELECT cube(array[10,20,30], array[40,50,60])~>3;
+- ?column? 
+-----------
+-       20
+-(1 row)
+-
++ERROR:  cache lookup failed for type 23
+ SELECT cube(array[40,50,60], array[10,20,30])~>3;
+- ?column? 
+-----------
+-       20
+-(1 row)
+-
++ERROR:  cache lookup failed for type 23
+ SELECT cube(array[40,50,60], array[10,20,30])~>0;
+-ERROR:  zero cube index is not defined
++ERROR:  cache lookup failed for type 23
+ SELECT cube(array[40,50,60], array[10,20,30])~>4;
+- ?column? 
+-----------
+-       50
+-(1 row)
+-
++ERROR:  cache lookup failed for type 23
+ SELECT cube(array[40,50,60], array[10,20,30])~>(-1);
+- ?column? 
+-----------
+-      -10
+-(1 row)
+-
++ERROR:  cache lookup failed for type 23
+ -- Load some example data and build the index
+ --
+ CREATE TABLE test_cube (c cube);

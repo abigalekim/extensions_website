@@ -1,0 +1,280 @@
+make: Entering directory '/home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress'
+'/usr/bin/perl' /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/pg_regress_multi.pl --pgxsdir="/home/abigalek/pgext-cli/pg-15-dist/lib/postgresql/pgxs" --bindir="/home/abigalek/pgext-cli/pg-15-dist/bin" --libdir="/home/abigalek/pgext-cli/pg-15-dist/lib" --majorversion="15" --postgres-builddir="/home/abigalek/pgext-cli/postgresql-15.3" --postgres-srcdir="/home/abigalek/pgext-cli/postgresql-15.3" --citus_abs_srcdir="/home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress" --load-extension=citus \
+-- --inputdir=/home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress   --launcher="/home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/log_test_times" --schedule=/home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/multi_schedule --temp-config=../../pg-15-data/postgresql.conf --load-extension=postgres_fdw
+The files belonging to this database system will be owned by user "abigalek".
+This user must also own the server process.
+
+The database cluster will be initialized with locale "C".
+The default text search configuration will be set to "english".
+
+Data page checksums are disabled.
+
+creating directory tmp_check/master/data ... ok
+creating subdirectories ... ok
+selecting dynamic shared memory implementation ... posix
+selecting default max_connections ... 100
+selecting default shared_buffers ... 128MB
+selecting default time zone ... Etc/UTC
+creating configuration files ... ok
+running bootstrap script ... ok
+performing post-bootstrap initialization ... ok
+
+Sync to disk skipped.
+The data directory might become corrupt if the operating system crashes.
+
+
+Success. You can now start the database server using:
+
+    /home/abigalek/pgext-cli/pg-15-dist/bin/pg_ctl -D tmp_check/master/data -l logfile start
+
+waiting for server to start.... done
+server started
+waiting for server to start.... done
+server started
+waiting for server to start.... done
+server started
+CREATE DATABASE
+CREATE EXTENSION
+CREATE FUNCTION
+CREATE FOREIGN DATA WRAPPER
+CREATE DATABASE
+CREATE EXTENSION
+CREATE FUNCTION
+CREATE FOREIGN DATA WRAPPER
+(using postmaster on localhost, port 57636)
+============== dropping database "regression"         ==============
+SET
+DROP DATABASE
+============== creating database "regression"         ==============
+CREATE DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+============== installing citus                       ==============
+CREATE EXTENSION
+============== installing postgres_fdw                ==============
+CREATE EXTENSION
+============== running regression test queries        ==============
+parallel group (2 tests):  multi_test_helpers_superuser multi_test_helpers
+     multi_test_helpers           ... ok           20 ms
+     multi_test_helpers_superuser ... ok           12 ms
+test multi_cluster_management     ... ok          804 ms
+test create_role_propagation      ... ok          416 ms
+test multi_create_fdw             ... ok           15 ms
+test multi_test_catalog_views     ... ok          138 ms
+test replicated_table_disable_node ... ok          262 ms
+test multi_create_table           ... ok          360 ms
+test multi_create_table_superuser ... ok          897 ms
+parallel group (5 tests):  multi_master_protocol multi_load_data_superuser multi_load_data multi_behavioral_analytics_create_table multi_create_table_constraints
+     multi_create_table_constraints ... ok          619 ms
+     multi_master_protocol        ... ok           10 ms
+     multi_load_data              ... ok          377 ms
+     multi_load_data_superuser    ... ok          368 ms
+     multi_behavioral_analytics_create_table ... ok          534 ms
+parallel group (5 tests):  multi_insert_select_non_pushable_queries multi_behavioral_analytics_single_shard_queries multi_behavioral_analytics_basics multi_behavioral_analytics_create_table_superuser multi_insert_select
+     multi_behavioral_analytics_basics ... ok          375 ms
+     multi_behavioral_analytics_single_shard_queries ... ok          272 ms
+     multi_insert_select_non_pushable_queries ... ok          135 ms
+     multi_insert_select          ... ok         2190 ms
+     multi_behavioral_analytics_create_table_superuser ... ok          532 ms
+parallel group (2 tests):  recursive_dml_with_different_planners_executors multi_shard_update_delete
+     multi_shard_update_delete    ... ok          635 ms
+     recursive_dml_with_different_planners_executors ... ok          263 ms
+parallel group (4 tests):  window_functions dml_recursive multi_insert_select_window insert_select_repartition
+     insert_select_repartition    ... ok         1391 ms
+     window_functions             ... ok          405 ms
+     dml_recursive                ... ok          598 ms
+     multi_insert_select_window   ... ok          711 ms
+parallel group (2 tests):  citus_table_triggers multi_insert_select_conflict
+     multi_insert_select_conflict ... ok          431 ms
+     citus_table_triggers         ... ok           92 ms
+parallel group (2 tests):  multi_row_insert insert_select_into_local_table
+     multi_row_insert             ... ok           40 ms
+     insert_select_into_local_table ... ok          338 ms
+test multi_agg_approximate_distinct ... ok           47 ms
+test tablespace                   ... ok           12 ms
+test insert_select_connection_leak ... ok          762 ms
+test ensure_no_intermediate_data_leak ... ok           31 ms
+parallel group (3 tests):  multi_partitioning_utils replicated_partitioned_table multi_partitioning
+     multi_partitioning_utils     ... ok          128 ms
+     multi_partitioning           ... ok         6000 ms
+     replicated_partitioned_table ... ok          570 ms
+test subquery_basics              ... ok          161 ms
+test subquery_local_tables        ... ok          235 ms
+test subquery_executors           ... ok          213 ms
+test subquery_and_cte             ... ok          665 ms
+test set_operations               ... ok          395 ms
+test union_pushdown               ... ok          494 ms
+test set_operation_and_local_tables ... ok          208 ms
+parallel group (4 tests):  subqueries_not_supported subqueries_deep subquery_partitioning subquery_view
+     subqueries_deep              ... ok          133 ms
+     subquery_view                ... ok          731 ms
+     subquery_partitioning        ... ok          446 ms
+     subqueries_not_supported     ... ok           63 ms
+parallel group (4 tests):  subquery_append subquery_in_targetlist subquery_in_where subquery_complex_target_list
+     subquery_in_targetlist       ... ok          385 ms
+     subquery_in_where            ... ok          386 ms
+     subquery_complex_target_list ... ok          408 ms
+     subquery_append              ... ok          192 ms
+test subquery_prepared_statements ... ok           76 ms
+parallel group (2 tests):  non_colocated_leaf_subquery_joins non_colocated_subquery_joins
+     non_colocated_leaf_subquery_joins ... ok           53 ms
+     non_colocated_subquery_joins ... ok          698 ms
+parallel group (5 tests):  recursive_view_local_table sequences_with_different_types values multi_level_recursive_queries cte_inline
+     cte_inline                   ... ok          865 ms
+     recursive_view_local_table   ... ok           76 ms
+     values                       ... ok          386 ms
+     sequences_with_different_types ... ok          306 ms
+     multi_level_recursive_queries ... ok          444 ms
+parallel group (2 tests):  pg13 pg12
+     pg13                         ... ok          111 ms
+     pg12                         ... ok          534 ms
+test pg14                         ... FAILED     3102 ms
+test pg15                         ... ok         1715 ms
+parallel group (2 tests):  pg15_jsonpath detect_conn_close
+     pg15_jsonpath                ... ok          198 ms
+     detect_conn_close            ... ok         1823 ms
+test drop_column_partitioned_table ... ok          210 ms
+test tableam                      ... ok          182 ms
+parallel group (4 tests):  multi_deparse_shard_query limit_intermediate_size intermediate_results multi_distributed_transaction_id
+     multi_deparse_shard_query    ... ok          112 ms
+     multi_distributed_transaction_id ... ok          583 ms
+     intermediate_results         ... ok          446 ms
+     limit_intermediate_size      ... ok          370 ms
+parallel group (5 tests):  distributed_intermediate_results multi_real_time_transaction hyperscale_tutorial multi_explain partitioned_intermediate_results
+     multi_explain                ... ok         1983 ms
+     hyperscale_tutorial          ... ok         1911 ms
+     partitioned_intermediate_results ... ok         2604 ms
+     distributed_intermediate_results ... ok          588 ms
+     multi_real_time_transaction  ... ok         1538 ms
+parallel group (6 tests):  multi_basic_queries multi_complex_expressions multi_subquery_behavioral_analytics cross_join multi_subquery multi_subquery_complex_queries
+     multi_basic_queries          ... ok           50 ms
+     cross_join                   ... ok          737 ms
+     multi_complex_expressions    ... ok          452 ms
+     multi_subquery               ... ok          806 ms
+     multi_subquery_complex_queries ... ok         6164 ms
+     multi_subquery_behavioral_analytics ... ok          729 ms
+parallel group (5 tests):  multi_sql_function multi_subquery_window_functions multi_prepare_sql multi_subquery_complex_reference_clause multi_view
+     multi_subquery_complex_reference_clause ... ok         1505 ms
+     multi_subquery_window_functions ... ok          362 ms
+     multi_view                   ... ok         1758 ms
+     multi_sql_function           ... ok          262 ms
+     multi_prepare_sql            ... ok          711 ms
+parallel group (4 tests):  multi_function_in_join sql_procedure row_types materialized_view
+     sql_procedure                ... ok          296 ms
+     multi_function_in_join       ... ok          235 ms
+     row_types                    ... ok          305 ms
+     materialized_view            ... ok         1098 ms
+parallel group (4 tests):  propagate_set_commands multi_subquery_in_where_reference_clause geqo adaptive_executor
+     multi_subquery_in_where_reference_clause ... ok          118 ms
+     adaptive_executor            ... ok          684 ms
+     propagate_set_commands       ... ok           90 ms
+     geqo                         ... ok          573 ms
+test forcedelegation_functions    ... ok          990 ms
+test join_pushdown                ... ok          679 ms
+parallel group (4 tests):  multi_subquery_misc multi_subquery_in_where_clause multi_subquery_union statement_cancel_error_message
+     multi_subquery_union         ... ok          277 ms
+     multi_subquery_in_where_clause ... ok          188 ms
+     multi_subquery_misc          ... ok          181 ms
+     statement_cancel_error_message ... ok         1203 ms
+parallel group (6 tests):  multi_limit_clause_approximate set_role_in_transaction multi_single_relation_subquery multi_outer_join_reference multi_agg_distinct multi_prepare_plsql
+     multi_agg_distinct           ... ok          715 ms
+     multi_limit_clause_approximate ... ok          331 ms
+     multi_outer_join_reference   ... ok          711 ms
+     multi_single_relation_subquery ... ok          553 ms
+     multi_prepare_plsql          ... ok          726 ms
+     set_role_in_transaction      ... ok          420 ms
+parallel group (4 tests):  multi_select_for_update pg13_with_ties relation_access_tracking multi_reference_table
+     multi_reference_table        ... ok          976 ms
+     multi_select_for_update      ... ok          142 ms
+     relation_access_tracking     ... ok          773 ms
+     pg13_with_ties               ... ok          324 ms
+parallel group (3 tests):  tdigest_aggregate_support custom_aggregate_support aggregate_support
+     custom_aggregate_support     ... ok          311 ms
+     aggregate_support            ... ok          888 ms
+     tdigest_aggregate_support    ... ok          113 ms
+parallel group (4 tests):  having_subquery multi_average_expression multi_working_columns multi_having_pushdown
+     multi_average_expression     ... ok           39 ms
+     multi_working_columns        ... ok           69 ms
+     multi_having_pushdown        ... ok           78 ms
+     having_subquery              ... ok           28 ms
+parallel group (3 tests):  multi_array_agg multi_orderby_limit_pushdown multi_limit_clause
+     multi_array_agg              ... ok           63 ms
+     multi_limit_clause           ... ok          281 ms
+     multi_orderby_limit_pushdown ... ok          115 ms
+parallel group (9 tests):  multi_json_agg multi_jsonb_agg multi_jsonb_object_agg multi_json_object_agg bool_agg anonymous_columns ch_bench_having expression_reference_join chbenchmark_all_queries
+     multi_jsonb_agg              ... ok          149 ms
+     multi_jsonb_object_agg       ... ok          158 ms
+     multi_json_agg               ... ok          138 ms
+     multi_json_object_agg        ... ok          158 ms
+     bool_agg                     ... ok          176 ms
+     ch_bench_having              ... ok          362 ms
+     chbenchmark_all_queries      ... ok         1334 ms
+     expression_reference_join    ... ok          432 ms
+     anonymous_columns            ... ok          315 ms
+test ch_bench_subquery_repartition ... ok          491 ms
+parallel group (3 tests):  multi_count_type_conversion multi_agg_type_conversion recursive_relation_planning_restriction_pushdown
+     multi_agg_type_conversion    ... ok           35 ms
+     multi_count_type_conversion  ... ok           23 ms
+     recursive_relation_planning_restriction_pushdown ... ok          224 ms
+parallel group (3 tests):  multi_partition_pruning unsupported_lateral_subqueries single_hash_repartition_join
+     multi_partition_pruning      ... ok           43 ms
+     single_hash_repartition_join ... ok          463 ms
+     unsupported_lateral_subqueries ... ok           73 ms
+parallel group (3 tests):  multi_join_pruning multi_hash_pruning intermediate_result_pruning
+     multi_join_pruning           ... ok           34 ms
+     multi_hash_pruning           ... ok          220 ms
+     intermediate_result_pruning  ... ok          313 ms
+parallel group (2 tests):  multi_null_minmax_value_pruning cursors
+     multi_null_minmax_value_pruning ... ok           53 ms
+     cursors                      ... ok          113 ms
+parallel group (2 tests):  adv_lock_permission modification_correctness
+     modification_correctness     ... ok          171 ms
+     adv_lock_permission          ... ok          135 ms
+test multi_query_directory_cleanup ... ok           69 ms
+parallel group (2 tests):  multi_task_assignment_policy multi_cross_shard
+     multi_task_assignment_policy ... ok          101 ms
+     multi_cross_shard            ... ok          205 ms
+test multi_utility_statements     ... ok          114 ms
+parallel group (2 tests):  multi_dropped_column_aliases foreign_key_restriction_enforcement
+     multi_dropped_column_aliases ... ok           46 ms
+     foreign_key_restriction_enforcement ... ok          837 ms
+test binary_protocol              ... ok           98 ms
+test alter_table_set_access_method ... ok          703 ms
+test alter_distributed_table      ... ok         1798 ms
+parallel group (4 tests):  issue_5099 issue_6543 issue_5763 issue_5248
+     issue_5248                   ... ok         1356 ms
+     issue_5099                   ... ok           33 ms
+     issue_5763                   ... ok          135 ms
+     issue_6543                   ... ok           85 ms
+test object_propagation_debug     ... ok           44 ms
+test undistribute_table           ... ok          297 ms
+test run_command_on_all_nodes     ... ok          375 ms
+test background_task_queue_monitor ... ok        39072 ms
+test clock                        ... ok          193 ms
+test merge                        ... ok          931 ms
+test pgmerge                      ... ok          469 ms
+test ensure_no_intermediate_data_leak ... ok           32 ms
+test ensure_no_shared_connection_leak ... ok          369 ms
+test check_mx                     ... ok           25 ms
+test generated_identity           ... ok         1757 ms
+test drop_database                ... ok          694 ms
+
+========================
+ 1 of 169 tests failed. 
+========================
+
+The differences that caused some tests to fail can be viewed in the
+file "/home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/regression.diffs".  A copy of the test summary that you see
+above is saved in the file "/home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/regression.out".
+
+waiting for server to shut down.... done
+server stopped
+waiting for server to shut down.... done
+server stopped
+waiting for server to shut down.... done
+server stopped
+make: Leaving directory '/home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress'

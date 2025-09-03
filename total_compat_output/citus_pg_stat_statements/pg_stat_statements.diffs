@@ -1,0 +1,99 @@
+diff -U3 /home/abigalek/pgext-cli/postgresql-15.3/contrib/pg_stat_statements/expected/pg_stat_statements.out /home/abigalek/pgext-cli/postgresql-15.3/contrib/pg_stat_statements/results/pg_stat_statements.out
+--- /home/abigalek/pgext-cli/postgresql-15.3/contrib/pg_stat_statements/expected/pg_stat_statements.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli/postgresql-15.3/contrib/pg_stat_statements/results/pg_stat_statements.out	2023-11-25 02:51:40.148477258 +0000
+@@ -394,14 +394,15 @@
+ (1 row)
+ 
+ SELECT query, calls, rows FROM pg_stat_statements ORDER BY query COLLATE "C";
+-                                    query                                     | calls | rows 
+-------------------------------------------------------------------------------+-------+------
+- SELECT $1::TEXT                                                              |     1 |    1
+- SELECT PLUS_ONE($1)                                                          |     2 |    2
+- SELECT PLUS_TWO($1)                                                          |     2 |    2
+- SELECT pg_stat_statements_reset()                                            |     1 |    1
+- SELECT query, calls, rows FROM pg_stat_statements ORDER BY query COLLATE "C" |     0 |    0
+-(5 rows)
++                                                    query                                                    | calls | rows 
++-------------------------------------------------------------------------------------------------------------+-------+------
++ INSERT INTO pg_catalog.pg_dist_object (classid, objid, objsubid) VALUES ($1, $2, $3) ON CONFLICT DO NOTHING |     1 |    1
++ SELECT $1::TEXT                                                                                             |     1 |    1
++ SELECT PLUS_ONE($1)                                                                                         |     2 |    2
++ SELECT PLUS_TWO($1)                                                                                         |     2 |    2
++ SELECT pg_stat_statements_reset()                                                                           |     1 |    1
++ SELECT query, calls, rows FROM pg_stat_statements ORDER BY query COLLATE "C"                                |     0 |    0
++(6 rows)
+ 
+ --
+ -- pg_stat_statements.track = all
+@@ -452,15 +453,21 @@
+ (1 row)
+ 
+ SELECT query, calls, rows FROM pg_stat_statements ORDER BY query COLLATE "C";
+-                                    query                                     | calls | rows 
+-------------------------------------------------------------------------------+-------+------
+- SELECT (i + $2 + $3)::INTEGER                                                |     2 |    2
+- SELECT (i + $2)::INTEGER LIMIT $3                                            |     2 |    2
+- SELECT PLUS_ONE($1)                                                          |     2 |    2
+- SELECT PLUS_TWO($1)                                                          |     2 |    2
+- SELECT pg_stat_statements_reset()                                            |     1 |    1
+- SELECT query, calls, rows FROM pg_stat_statements ORDER BY query COLLATE "C" |     0 |    0
+-(6 rows)
++                                          query                                          | calls | rows 
++-----------------------------------------------------------------------------------------+-------+------
++ SELECT (i + $2 + $3)::INTEGER                                                           |     2 |    2
++ SELECT (i + $2)::INTEGER LIMIT $3                                                       |     2 |    2
++ SELECT * FROM pg_event_trigger_dropped_objects()                                        |     2 |    0
++ SELECT * FROM pg_event_trigger_dropped_objects()                                       +|     2 |    0
++                  WHERE object_type IN ('table', 'foreign table')                        |       | 
++ SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()+|     2 |    2
++     WHERE object_type IN ('table constraint')                                           |       | 
++ SELECT PLUS_ONE($1)                                                                     |     2 |    2
++ SELECT PLUS_TWO($1)                                                                     |     2 |    2
++ SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)     |     2 |    2
++ SELECT pg_stat_statements_reset()                                                       |     1 |    1
++ SELECT query, calls, rows FROM pg_stat_statements ORDER BY query COLLATE "C"            |     0 |    0
++(10 rows)
+ 
+ --
+ -- queries with locking clauses
+@@ -579,18 +586,28 @@
+ NOTICE:  function plus_one(pg_catalog.int4) does not exist, skipping
+ DROP FUNCTION PLUS_TWO(INTEGER);
+ SELECT query, calls, rows FROM pg_stat_statements ORDER BY query COLLATE "C";
+-                                    query                                     | calls | rows 
+-------------------------------------------------------------------------------+-------+------
+- CREATE INDEX test_b ON test(b)                                               |     1 |    0
+- DROP FUNCTION IF EXISTS PLUS_ONE(INTEGER)                                    |     1 |    0
+- DROP FUNCTION PLUS_ONE(INTEGER)                                              |     1 |    0
+- DROP FUNCTION PLUS_TWO(INTEGER)                                              |     1 |    0
+- DROP TABLE IF EXISTS test                                                    |     3 |    0
+- DROP TABLE test                                                              |     1 |    0
+- SELECT $1                                                                    |     1 |    1
+- SELECT pg_stat_statements_reset()                                            |     1 |    1
+- SELECT query, calls, rows FROM pg_stat_statements ORDER BY query COLLATE "C" |     0 |    0
+-(9 rows)
++                                                        query                                                        | calls | rows 
++---------------------------------------------------------------------------------------------------------------------+-------+------
++ CREATE INDEX test_b ON test(b)                                                                                      |     1 |    0
++ DROP FUNCTION IF EXISTS PLUS_ONE(INTEGER)                                                                           |     1 |    0
++ DROP FUNCTION PLUS_ONE(INTEGER)                                                                                     |     1 |    0
++ DROP FUNCTION PLUS_TWO(INTEGER)                                                                                     |     1 |    0
++ DROP TABLE IF EXISTS test                                                                                           |     3 |    0
++ DROP TABLE test                                                                                                     |     1 |    0
++ SELECT $1                                                                                                           |     1 |    1
++ SELECT (v_obj.original = false AND v_obj.normal = false)                                                            |     1 |    1
++ SELECT * FROM pg_event_trigger_dropped_objects()                                                                    |     3 |    0
++ SELECT * FROM pg_event_trigger_dropped_objects()                                                                   +|     3 |    0
++                  WHERE object_type IN ('table', 'foreign table')                                                    |       | 
++ SELECT COUNT(*)                                 FROM pg_event_trigger_dropped_objects()                            +|     3 |    3
++     WHERE object_type IN ('table constraint')                                                                       |       | 
++ SELECT citus_drop_all_shards(v_obj.objid, v_obj.schema_name, v_obj.object_name, drop_shards_metadata_only := false) |     1 |    1
++ SELECT master_remove_distributed_table_metadata_from_workers(v_obj.objid, v_obj.schema_name, v_obj.object_name)     |     1 |    1
++ SELECT master_remove_partition_metadata(v_obj.objid, v_obj.schema_name, v_obj.object_name)                          |     1 |    1
++ SELECT master_unmark_object_distributed(v_obj.classid, v_obj.objid, v_obj.objsubid)                                 |     6 |    6
++ SELECT pg_stat_statements_reset()                                                                                   |     1 |    1
++ SELECT query, calls, rows FROM pg_stat_statements ORDER BY query COLLATE "C"                                        |     0 |    0
++(17 rows)
+ 
+ --
+ -- Track the total number of rows retrieved or affected by the utility

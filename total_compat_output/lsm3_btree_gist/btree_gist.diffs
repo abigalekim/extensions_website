@@ -1,0 +1,22 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/btree_gist/expected/init.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/btree_gist/results/init.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/btree_gist/expected/init.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/btree_gist/results/init.out	2023-07-25 05:05:14.279155918 +0000
+@@ -3,7 +3,15 @@
+ SELECT amname, opcname
+ FROM pg_opclass opc LEFT JOIN pg_am am ON am.oid = opcmethod
+ WHERE opc.oid >= 16384 AND NOT amvalidate(opc.oid);
+- amname | opcname 
+---------+---------
+-(0 rows)
++INFO:  operator family "time_ops" of access method btree contains function in_range(time without time zone,time without time zone,interval,boolean,boolean) with wrong signature for support number 3
++INFO:  operator family "timetz_ops" of access method btree contains function in_range(time with time zone,time with time zone,interval,boolean,boolean) with wrong signature for support number 3
++INFO:  operator family "time_ops" of access method btree contains function in_range(time without time zone,time without time zone,interval,boolean,boolean) with wrong signature for support number 3
++INFO:  operator family "timetz_ops" of access method btree contains function in_range(time with time zone,time with time zone,interval,boolean,boolean) with wrong signature for support number 3
++       amname       |  opcname   
++--------------------+------------
++ lsm3               | time_ops
++ lsm3               | timetz_ops
++ lsm3_btree_wrapper | time_ops
++ lsm3_btree_wrapper | timetz_ops
++(4 rows)
+ 

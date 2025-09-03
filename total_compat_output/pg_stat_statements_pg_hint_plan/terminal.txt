@@ -1,0 +1,94 @@
+The files belonging to this database system will be owned by user "abigalek".
+This user must also own the server process.
+
+The database cluster will be initialized with locale "en_US.UTF-8".
+The default database encoding has accordingly been set to "UTF8".
+The default text search configuration will be set to "english".
+
+Data page checksums are disabled.
+
+creating directory pg-15-data ... ok
+creating subdirectories ... ok
+selecting dynamic shared memory implementation ... posix
+selecting default max_connections ... 100
+selecting default shared_buffers ... 128MB
+selecting default time zone ... Etc/UTC
+creating configuration files ... ok
+running bootstrap script ... ok
+performing post-bootstrap initialization ... ok
+syncing data to disk ... ok
+
+initdb: warning: enabling "trust" authentication for local connections
+initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+
+Success. You can now start the database server using:
+
+    pg-15-dist/bin/pg_ctl -D pg-15-data -l logfile start
+
+waiting for server to start.... done
+server started
+(using postmaster on Unix socket, default port)
+============== dropping database "regression"         ==============
+SET
+DROP DATABASE
+============== creating database "regression"         ==============
+CREATE DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+============== installing pg_hint_plan                ==============
+CREATE EXTENSION
+============== running regression test queries        ==============
+test pg_stat_statements           ... ok          327 ms
+test oldextversions               ... ok           96 ms
+
+=====================
+ All 2 tests passed. 
+=====================
+
+(using postmaster on Unix socket, default port)
+============== dropping database "contrib_regression" ==============
+SET
+DROP DATABASE
+============== creating database "contrib_regression" ==============
+CREATE DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+ALTER DATABASE
+============== installing pg_stat_statements          ==============
+CREATE EXTENSION
+============== running regression test queries        ==============
+test init                         ... ok         2786 ms
+test base_plan                    ... ok           16 ms
+test pg_hint_plan                 ... ok         7537 ms
+test ut-init                      ... FAILED     1295 ms
+test ut-A                         ... ok          574 ms
+test ut-S                         ... ok          194 ms
+test ut-J                         ... ok          133 ms
+test ut-L                         ... ok           97 ms
+test ut-G                         ... ok           37 ms
+test ut-R                         ... ok          458 ms
+test ut-fdw                       ... ok           45 ms
+test ut-W                         ... ok           83 ms
+test ut-T                         ... ok           29 ms
+test ut-fini                      ... ok           16 ms
+test hints_anywhere               ... ok            7 ms
+test plpgsql                      ... ok           48 ms
+test oldextversions               ... ok          138 ms
+
+=======================
+ 1 of 17 tests failed. 
+=======================
+
+The differences that caused some tests to fail can be viewed in the
+file "/home/abigalek/pgext-cli-python/pgextworkdir/pg_hint_plan-REL15_1_5_0/regression.diffs".  A copy of the test summary that you see
+above is saved in the file "/home/abigalek/pgext-cli-python/pgextworkdir/pg_hint_plan-REL15_1_5_0/regression.out".
+
+waiting for server to shut down.... done
+server stopped

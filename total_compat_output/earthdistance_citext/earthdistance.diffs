@@ -1,0 +1,355 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/expected/earthdistance.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/earthdistance/results/earthdistance.out	2023-07-26 03:02:52.651950174 +0000
+@@ -964,11 +964,12 @@
+ -- list what's installed
+ \dT
+                                               List of data types
+- Schema | Name  |                                         Description                                         
+---------+-------+---------------------------------------------------------------------------------------------
+- public | cube  | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
+- public | earth | 
+-(2 rows)
++ Schema |  Name  |                                         Description                                         
++--------+--------+---------------------------------------------------------------------------------------------
++ public | citext | 
++ public | cube   | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
++ public | earth  | 
++(3 rows)
+ 
+ drop extension cube;  -- fail, earthdistance requires it
+ ERROR:  cannot drop extension cube because other objects depend on it
+@@ -980,11 +981,12 @@
+ HINT:  You can drop extension cube instead.
+ -- list what's installed
+ \dT
+-                                             List of data types
+- Schema | Name |                                         Description                                         
+---------+------+---------------------------------------------------------------------------------------------
+- public | cube | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
+-(1 row)
++                                              List of data types
++ Schema |  Name  |                                         Description                                         
++--------+--------+---------------------------------------------------------------------------------------------
++ public | citext | 
++ public | cube   | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
++(2 rows)
+ 
+ create table foo (f1 cube, f2 int);
+ drop extension cube;  -- fail, foo.f1 requires it
+@@ -995,43 +997,191 @@
+ drop extension cube;
+ -- list what's installed
+ \dT
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++      List of data types
++ Schema |  Name  | Description 
++--------+--------+-------------
++ public | citext | 
++(1 row)
+ 
+ \df
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                   List of functions
++ Schema |         Name          | Result data type |    Argument data types     | Type 
++--------+-----------------------+------------------+----------------------------+------
++ public | citext                | citext           | boolean                    | func
++ public | citext                | citext           | character                  | func
++ public | citext                | citext           | inet                       | func
++ public | citext_cmp            | integer          | citext, citext             | func
++ public | citext_eq             | boolean          | citext, citext             | func
++ public | citext_ge             | boolean          | citext, citext             | func
++ public | citext_gt             | boolean          | citext, citext             | func
++ public | citext_hash           | integer          | citext                     | func
++ public | citext_hash_extended  | bigint           | citext, bigint             | func
++ public | citext_larger         | citext           | citext, citext             | func
++ public | citext_le             | boolean          | citext, citext             | func
++ public | citext_lt             | boolean          | citext, citext             | func
++ public | citext_ne             | boolean          | citext, citext             | func
++ public | citext_pattern_cmp    | integer          | citext, citext             | func
++ public | citext_pattern_ge     | boolean          | citext, citext             | func
++ public | citext_pattern_gt     | boolean          | citext, citext             | func
++ public | citext_pattern_le     | boolean          | citext, citext             | func
++ public | citext_pattern_lt     | boolean          | citext, citext             | func
++ public | citext_smaller        | citext           | citext, citext             | func
++ public | citextin              | citext           | cstring                    | func
++ public | citextout             | cstring          | citext                     | func
++ public | citextrecv            | citext           | internal                   | func
++ public | citextsend            | bytea            | citext                     | func
++ public | max                   | citext           | citext                     | agg
++ public | min                   | citext           | citext                     | agg
++ public | regexp_match          | text[]           | citext, citext             | func
++ public | regexp_match          | text[]           | citext, citext, text       | func
++ public | regexp_matches        | SETOF text[]     | citext, citext             | func
++ public | regexp_matches        | SETOF text[]     | citext, citext, text       | func
++ public | regexp_replace        | text             | citext, citext, text       | func
++ public | regexp_replace        | text             | citext, citext, text, text | func
++ public | regexp_split_to_array | text[]           | citext, citext             | func
++ public | regexp_split_to_array | text[]           | citext, citext, text       | func
++ public | regexp_split_to_table | SETOF text       | citext, citext             | func
++ public | regexp_split_to_table | SETOF text       | citext, citext, text       | func
++ public | replace               | text             | citext, citext, citext     | func
++ public | split_part            | text             | citext, citext, integer    | func
++ public | strpos                | integer          | citext, citext             | func
++ public | texticlike            | boolean          | citext, citext             | func
++ public | texticlike            | boolean          | citext, text               | func
++ public | texticnlike           | boolean          | citext, citext             | func
++ public | texticnlike           | boolean          | citext, text               | func
++ public | texticregexeq         | boolean          | citext, citext             | func
++ public | texticregexeq         | boolean          | citext, text               | func
++ public | texticregexne         | boolean          | citext, citext             | func
++ public | texticregexne         | boolean          | citext, text               | func
++ public | translate             | text             | citext, citext, text       | func
++(47 rows)
+ 
+ \do
+                              List of operators
+  Schema | Name | Left arg type | Right arg type | Result type | Description 
+ --------+------+---------------+----------------+-------------+-------------
+-(0 rows)
++ public | !~   | citext        | citext         | boolean     | 
++ public | !~   | citext        | text           | boolean     | 
++ public | !~*  | citext        | citext         | boolean     | 
++ public | !~*  | citext        | text           | boolean     | 
++ public | !~~  | citext        | citext         | boolean     | 
++ public | !~~  | citext        | text           | boolean     | 
++ public | !~~* | citext        | citext         | boolean     | 
++ public | !~~* | citext        | text           | boolean     | 
++ public | <    | citext        | citext         | boolean     | 
++ public | <=   | citext        | citext         | boolean     | 
++ public | <>   | citext        | citext         | boolean     | 
++ public | =    | citext        | citext         | boolean     | 
++ public | >    | citext        | citext         | boolean     | 
++ public | >=   | citext        | citext         | boolean     | 
++ public | ~    | citext        | citext         | boolean     | 
++ public | ~    | citext        | text           | boolean     | 
++ public | ~*   | citext        | citext         | boolean     | 
++ public | ~*   | citext        | text           | boolean     | 
++ public | ~<=~ | citext        | citext         | boolean     | 
++ public | ~<~  | citext        | citext         | boolean     | 
++ public | ~>=~ | citext        | citext         | boolean     | 
++ public | ~>~  | citext        | citext         | boolean     | 
++ public | ~~   | citext        | citext         | boolean     | 
++ public | ~~   | citext        | text           | boolean     | 
++ public | ~~*  | citext        | citext         | boolean     | 
++ public | ~~*  | citext        | text           | boolean     | 
++(26 rows)
+ 
+ create schema c;
+ create extension cube with schema c;
+ -- list what's installed
+ \dT public.*
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++      List of data types
++ Schema |  Name  | Description 
++--------+--------+-------------
++ public | citext | 
++(1 row)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                   List of functions
++ Schema |         Name          | Result data type |    Argument data types     | Type 
++--------+-----------------------+------------------+----------------------------+------
++ public | citext                | citext           | boolean                    | func
++ public | citext                | citext           | character                  | func
++ public | citext                | citext           | inet                       | func
++ public | citext_cmp            | integer          | citext, citext             | func
++ public | citext_eq             | boolean          | citext, citext             | func
++ public | citext_ge             | boolean          | citext, citext             | func
++ public | citext_gt             | boolean          | citext, citext             | func
++ public | citext_hash           | integer          | citext                     | func
++ public | citext_hash_extended  | bigint           | citext, bigint             | func
++ public | citext_larger         | citext           | citext, citext             | func
++ public | citext_le             | boolean          | citext, citext             | func
++ public | citext_lt             | boolean          | citext, citext             | func
++ public | citext_ne             | boolean          | citext, citext             | func
++ public | citext_pattern_cmp    | integer          | citext, citext             | func
++ public | citext_pattern_ge     | boolean          | citext, citext             | func
++ public | citext_pattern_gt     | boolean          | citext, citext             | func
++ public | citext_pattern_le     | boolean          | citext, citext             | func
++ public | citext_pattern_lt     | boolean          | citext, citext             | func
++ public | citext_smaller        | citext           | citext, citext             | func
++ public | citextin              | citext           | cstring                    | func
++ public | citextout             | cstring          | citext                     | func
++ public | citextrecv            | citext           | internal                   | func
++ public | citextsend            | bytea            | citext                     | func
++ public | max                   | citext           | citext                     | agg
++ public | min                   | citext           | citext                     | agg
++ public | regexp_match          | text[]           | citext, citext             | func
++ public | regexp_match          | text[]           | citext, citext, text       | func
++ public | regexp_matches        | SETOF text[]     | citext, citext             | func
++ public | regexp_matches        | SETOF text[]     | citext, citext, text       | func
++ public | regexp_replace        | text             | citext, citext, text       | func
++ public | regexp_replace        | text             | citext, citext, text, text | func
++ public | regexp_split_to_array | text[]           | citext, citext             | func
++ public | regexp_split_to_array | text[]           | citext, citext, text       | func
++ public | regexp_split_to_table | SETOF text       | citext, citext             | func
++ public | regexp_split_to_table | SETOF text       | citext, citext, text       | func
++ public | replace               | text             | citext, citext, citext     | func
++ public | split_part            | text             | citext, citext, integer    | func
++ public | strpos                | integer          | citext, citext             | func
++ public | texticlike            | boolean          | citext, citext             | func
++ public | texticlike            | boolean          | citext, text               | func
++ public | texticnlike           | boolean          | citext, citext             | func
++ public | texticnlike           | boolean          | citext, text               | func
++ public | texticregexeq         | boolean          | citext, citext             | func
++ public | texticregexeq         | boolean          | citext, text               | func
++ public | texticregexne         | boolean          | citext, citext             | func
++ public | texticregexne         | boolean          | citext, text               | func
++ public | translate             | text             | citext, citext, text       | func
++(47 rows)
+ 
+ \do public.*
+                              List of operators
+  Schema | Name | Left arg type | Right arg type | Result type | Description 
+ --------+------+---------------+----------------+-------------+-------------
+-(0 rows)
++ public | !~   | citext        | citext         | boolean     | 
++ public | !~   | citext        | text           | boolean     | 
++ public | !~*  | citext        | citext         | boolean     | 
++ public | !~*  | citext        | text           | boolean     | 
++ public | !~~  | citext        | citext         | boolean     | 
++ public | !~~  | citext        | text           | boolean     | 
++ public | !~~* | citext        | citext         | boolean     | 
++ public | !~~* | citext        | text           | boolean     | 
++ public | <    | citext        | citext         | boolean     | 
++ public | <=   | citext        | citext         | boolean     | 
++ public | <>   | citext        | citext         | boolean     | 
++ public | =    | citext        | citext         | boolean     | 
++ public | >    | citext        | citext         | boolean     | 
++ public | >=   | citext        | citext         | boolean     | 
++ public | ~    | citext        | citext         | boolean     | 
++ public | ~    | citext        | text           | boolean     | 
++ public | ~*   | citext        | citext         | boolean     | 
++ public | ~*   | citext        | text           | boolean     | 
++ public | ~<=~ | citext        | citext         | boolean     | 
++ public | ~<~  | citext        | citext         | boolean     | 
++ public | ~>=~ | citext        | citext         | boolean     | 
++ public | ~>~  | citext        | citext         | boolean     | 
++ public | ~~   | citext        | citext         | boolean     | 
++ public | ~~   | citext        | text           | boolean     | 
++ public | ~~*  | citext        | citext         | boolean     | 
++ public | ~~*  | citext        | text           | boolean     | 
++(26 rows)
+ 
+ \dT c.*
+                                               List of data types
+@@ -1060,22 +1210,96 @@
+ 
+ -- list what's installed
+ \dT public.*
+-     List of data types
+- Schema | Name | Description 
+---------+------+-------------
+-(0 rows)
++      List of data types
++ Schema |  Name  | Description 
++--------+--------+-------------
++ public | citext | 
++(1 row)
+ 
+ \df public.*
+-                       List of functions
+- Schema | Name | Result data type | Argument data types | Type 
+---------+------+------------------+---------------------+------
+-(0 rows)
++                                   List of functions
++ Schema |         Name          | Result data type |    Argument data types     | Type 
++--------+-----------------------+------------------+----------------------------+------
++ public | citext                | citext           | boolean                    | func
++ public | citext                | citext           | character                  | func
++ public | citext                | citext           | inet                       | func
++ public | citext_cmp            | integer          | citext, citext             | func
++ public | citext_eq             | boolean          | citext, citext             | func
++ public | citext_ge             | boolean          | citext, citext             | func
++ public | citext_gt             | boolean          | citext, citext             | func
++ public | citext_hash           | integer          | citext                     | func
++ public | citext_hash_extended  | bigint           | citext, bigint             | func
++ public | citext_larger         | citext           | citext, citext             | func
++ public | citext_le             | boolean          | citext, citext             | func
++ public | citext_lt             | boolean          | citext, citext             | func
++ public | citext_ne             | boolean          | citext, citext             | func
++ public | citext_pattern_cmp    | integer          | citext, citext             | func
++ public | citext_pattern_ge     | boolean          | citext, citext             | func
++ public | citext_pattern_gt     | boolean          | citext, citext             | func
++ public | citext_pattern_le     | boolean          | citext, citext             | func
++ public | citext_pattern_lt     | boolean          | citext, citext             | func
++ public | citext_smaller        | citext           | citext, citext             | func
++ public | citextin              | citext           | cstring                    | func
++ public | citextout             | cstring          | citext                     | func
++ public | citextrecv            | citext           | internal                   | func
++ public | citextsend            | bytea            | citext                     | func
++ public | max                   | citext           | citext                     | agg
++ public | min                   | citext           | citext                     | agg
++ public | regexp_match          | text[]           | citext, citext             | func
++ public | regexp_match          | text[]           | citext, citext, text       | func
++ public | regexp_matches        | SETOF text[]     | citext, citext             | func
++ public | regexp_matches        | SETOF text[]     | citext, citext, text       | func
++ public | regexp_replace        | text             | citext, citext, text       | func
++ public | regexp_replace        | text             | citext, citext, text, text | func
++ public | regexp_split_to_array | text[]           | citext, citext             | func
++ public | regexp_split_to_array | text[]           | citext, citext, text       | func
++ public | regexp_split_to_table | SETOF text       | citext, citext             | func
++ public | regexp_split_to_table | SETOF text       | citext, citext, text       | func
++ public | replace               | text             | citext, citext, citext     | func
++ public | split_part            | text             | citext, citext, integer    | func
++ public | strpos                | integer          | citext, citext             | func
++ public | texticlike            | boolean          | citext, citext             | func
++ public | texticlike            | boolean          | citext, text               | func
++ public | texticnlike           | boolean          | citext, citext             | func
++ public | texticnlike           | boolean          | citext, text               | func
++ public | texticregexeq         | boolean          | citext, citext             | func
++ public | texticregexeq         | boolean          | citext, text               | func
++ public | texticregexne         | boolean          | citext, citext             | func
++ public | texticregexne         | boolean          | citext, text               | func
++ public | translate             | text             | citext, citext, text       | func
++(47 rows)
+ 
+ \do public.*
+                              List of operators
+  Schema | Name | Left arg type | Right arg type | Result type | Description 
+ --------+------+---------------+----------------+-------------+-------------
+-(0 rows)
++ public | !~   | citext        | citext         | boolean     | 
++ public | !~   | citext        | text           | boolean     | 
++ public | !~*  | citext        | citext         | boolean     | 
++ public | !~*  | citext        | text           | boolean     | 
++ public | !~~  | citext        | citext         | boolean     | 
++ public | !~~  | citext        | text           | boolean     | 
++ public | !~~* | citext        | citext         | boolean     | 
++ public | !~~* | citext        | text           | boolean     | 
++ public | <    | citext        | citext         | boolean     | 
++ public | <=   | citext        | citext         | boolean     | 
++ public | <>   | citext        | citext         | boolean     | 
++ public | =    | citext        | citext         | boolean     | 
++ public | >    | citext        | citext         | boolean     | 
++ public | >=   | citext        | citext         | boolean     | 
++ public | ~    | citext        | citext         | boolean     | 
++ public | ~    | citext        | text           | boolean     | 
++ public | ~*   | citext        | citext         | boolean     | 
++ public | ~*   | citext        | text           | boolean     | 
++ public | ~<=~ | citext        | citext         | boolean     | 
++ public | ~<~  | citext        | citext         | boolean     | 
++ public | ~>=~ | citext        | citext         | boolean     | 
++ public | ~>~  | citext        | citext         | boolean     | 
++ public | ~~   | citext        | citext         | boolean     | 
++ public | ~~   | citext        | text           | boolean     | 
++ public | ~~*  | citext        | citext         | boolean     | 
++ public | ~~*  | citext        | text           | boolean     | 
++(26 rows)
+ 
+ \dT c.*
+      List of data types

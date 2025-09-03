@@ -1,0 +1,32 @@
+diff -dU10 -w /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/expected/multi_complex_expressions.out /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/results/multi_complex_expressions.out
+--- /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/expected/multi_complex_expressions.out.modified	2023-11-25 09:02:03.086909478 +0000
++++ /home/abigalek/pgext-cli/pgextworkdir/citus-11.3.0/src/test/regress/results/multi_complex_expressions.out.modified	2023-11-25 09:02:03.098909416 +0000
+@@ -157,25 +157,23 @@
+ SELECT count(*) FROM lineitem
+ 	WHERE l_partkey = ALL(ARRAY[19353]);
+  count 
+ -------
+      1
+ (1 row)
+ 
+ -- operator expressions involving arrays
+ SELECT count(*) FROM lineitem
+ 	WHERE ARRAY[19353, 19354, 19355] @> ARRAY[l_partkey];
+- count
+----------------------------------------------------------------------
+-     1
+-(1 row)
+-
++ERROR:  operator does not exist: integer[] public.@> integer[]
++HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
++CONTEXT:  while executing command on localhost:57637
+ -- coerced via io expressions can be pushed down
+ SELECT count(*) FROM lineitem
+ 	WHERE (l_quantity/100)::int::bool::text::bool;
+  count 
+ -------
+    260
+ (1 row)
+ 
+ -- case expressions can be pushed down
+ SELECT count(*) FROM lineitem

@@ -1,0 +1,691 @@
+2023-07-22 03:44:11.783 UTC [2690467] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:44:11.784 UTC [2690467] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:44:11.790 UTC [2690467] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:44:11.798 UTC [2690470] LOG:  database system was shut down at 2023-07-22 03:44:11 UTC
+2023-07-22 03:44:11.803 UTC [2690467] LOG:  database system is ready to accept connections
+2023-07-22 03:44:11.923 UTC [2690486] ERROR:  file "test_file1" exists
+2023-07-22 03:44:11.923 UTC [2690486] STATEMENT:  SELECT pg_file_write('test_file1', 'test1', false);
+2023-07-22 03:44:11.926 UTC [2690486] ERROR:  path must be in or below the current directory
+2023-07-22 03:44:11.926 UTC [2690486] STATEMENT:  SELECT pg_file_write('../test_file0', 'test0', false);
+2023-07-22 03:44:11.926 UTC [2690486] ERROR:  absolute path not allowed
+2023-07-22 03:44:11.926 UTC [2690486] STATEMENT:  SELECT pg_file_write('/tmp/test_file0', 'test0', false);
+2023-07-22 03:44:11.927 UTC [2690486] ERROR:  absolute path not allowed
+2023-07-22 03:44:11.927 UTC [2690486] STATEMENT:  SELECT pg_file_write(current_setting('data_directory') || '/../test_file4', 'test4', false);
+2023-07-22 03:44:11.935 UTC [2690486] ERROR:  could not stat file "test_file2": No such file or directory
+2023-07-22 03:44:11.935 UTC [2690486] STATEMENT:  SELECT pg_file_sync('test_file2');
+2023-07-22 03:44:11.936 UTC [2690486] ERROR:  could not open file "test_file1" for reading: No such file or directory
+2023-07-22 03:44:11.936 UTC [2690486] STATEMENT:  SELECT pg_read_file('test_file1');
+2023-07-22 03:44:11.936 UTC [2690486] WARNING:  file "test_file1" is not accessible: No such file or directory
+2023-07-22 03:44:11.936 UTC [2690486] CONTEXT:  SQL function "pg_file_rename" statement 1
+2023-07-22 03:44:11.936 UTC [2690486] ERROR:  could not open file "test_file2" for reading: No such file or directory
+2023-07-22 03:44:11.936 UTC [2690486] STATEMENT:  SELECT pg_read_file('test_file2');
+2023-07-22 03:44:11.939 UTC [2690486] ERROR:  permission denied for function pg_file_write
+2023-07-22 03:44:11.939 UTC [2690486] STATEMENT:  SELECT pg_file_write('test_file0', 'test0', false);
+2023-07-22 03:44:11.939 UTC [2690486] ERROR:  permission denied for function pg_file_sync
+2023-07-22 03:44:11.939 UTC [2690486] STATEMENT:  SELECT pg_file_sync('test_file0');
+2023-07-22 03:44:11.939 UTC [2690486] ERROR:  permission denied for function pg_file_rename
+2023-07-22 03:44:11.939 UTC [2690486] CONTEXT:  SQL function "pg_file_rename" statement 1
+2023-07-22 03:44:11.939 UTC [2690486] STATEMENT:  SELECT pg_file_rename('test_file0', 'test_file0');
+2023-07-22 03:44:11.940 UTC [2690486] ERROR:  permission denied for function pg_file_unlink
+2023-07-22 03:44:11.940 UTC [2690486] STATEMENT:  SELECT pg_file_unlink('test_file0');
+2023-07-22 03:44:11.940 UTC [2690486] ERROR:  permission denied for function pg_logdir_ls
+2023-07-22 03:44:11.940 UTC [2690486] STATEMENT:  SELECT pg_logdir_ls();
+2023-07-22 03:44:12.053 UTC [2690501] ERROR:  gen_salt: Unknown salt algorithm
+2023-07-22 03:44:12.053 UTC [2690501] STATEMENT:  select gen_salt('foo');
+2023-07-22 03:44:12.053 UTC [2690501] ERROR:  Cannot use "foo": No such hash algorithm
+2023-07-22 03:44:12.053 UTC [2690501] STATEMENT:  select digest('foo', 'foo');
+2023-07-22 03:44:12.053 UTC [2690501] ERROR:  Cannot use "foo": No such hash algorithm
+2023-07-22 03:44:12.053 UTC [2690501] STATEMENT:  select hmac('foo', 'foo', 'foo');
+2023-07-22 03:44:12.053 UTC [2690501] ERROR:  Cannot use "foo": No such cipher algorithm
+2023-07-22 03:44:12.053 UTC [2690501] STATEMENT:  select encrypt('foo', 'foo', 'foo');
+2023-07-22 03:44:12.090 UTC [2690521] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:44:12.090 UTC [2690521] STATEMENT:  SELECT encrypt('\x0000000000000000', '\x0000000000000000', 'bf-ecb/pad:none');
+2023-07-22 03:44:12.090 UTC [2690521] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:44:12.090 UTC [2690521] STATEMENT:  SELECT encrypt('\xffffffffffffffff', '\xffffffffffffffff', 'bf-ecb/pad:none');
+2023-07-22 03:44:12.091 UTC [2690521] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:44:12.091 UTC [2690521] STATEMENT:  SELECT encrypt('\x1000000000000001', '\x3000000000000000', 'bf-ecb/pad:none');
+2023-07-22 03:44:12.091 UTC [2690521] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:44:12.091 UTC [2690521] STATEMENT:  SELECT encrypt('\x1111111111111111', '\x1111111111111111', 'bf-ecb/pad:none');
+2023-07-22 03:44:12.091 UTC [2690521] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:44:12.091 UTC [2690521] STATEMENT:  SELECT encrypt('\x0123456789abcdef', '\xfedcba9876543210', 'bf-ecb/pad:none');
+2023-07-22 03:44:12.091 UTC [2690521] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:44:12.091 UTC [2690521] STATEMENT:  SELECT encrypt('\x01a1d6d039776742', '\xfedcba9876543210', 'bf-ecb/pad:none');
+2023-07-22 03:44:12.091 UTC [2690521] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:44:12.091 UTC [2690521] STATEMENT:  SELECT encrypt('\xffffffffffffffff', '\x0000000000000000', 'bf-ecb/pad:none');
+2023-07-22 03:44:12.091 UTC [2690521] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:44:12.091 UTC [2690521] STATEMENT:  SELECT encrypt('\xfedcba9876543210', '\xf0e1d2c3b4a5968778695a4b3c2d1e0f', 'bf-ecb/pad:none');
+2023-07-22 03:44:12.091 UTC [2690521] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:44:12.091 UTC [2690521] STATEMENT:  SELECT encrypt('\x01234567890123456789', '\x33443344334433443344334433443344', 'bf-ecb');
+2023-07-22 03:44:12.091 UTC [2690521] ERROR:  encrypt error: Key was too big
+2023-07-22 03:44:12.091 UTC [2690521] STATEMENT:  SELECT encrypt('\x6b77b4d63006dee605b156e27403979358deb9e7154616d959f1652bd5',
+	               '\x37363534333231204e6f77206973207468652074696d6520666f7220',
+	               'bf-cbc');
+2023-07-22 03:44:12.091 UTC [2690521] ERROR:  encrypt error: Key was too big
+2023-07-22 03:44:12.091 UTC [2690521] STATEMENT:  SELECT encrypt('\x6b77b4d63006dee605b156e27403979358deb9e7154616d959f1652bd5ff92cc',
+	               '\x37363534333231204e6f77206973207468652074696d6520666f722000',
+	               'bf-cbc');
+2023-07-22 03:44:12.091 UTC [2690521] ERROR:  encrypt error: Key was too big
+2023-07-22 03:44:12.091 UTC [2690521] STATEMENT:  SELECT encrypt('\xfedcba9876543210',
+	               '\xf0e1d2c3b4a5968778695a4b3c2d1e0f001122334455667704689104c2fd3b2f584023641aba61761f1f1f1f0e0e0e0effffffffffffffff',
+	               'bf-ecb/pad:none');
+2023-07-22 03:44:12.091 UTC [2690521] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:44:12.091 UTC [2690521] STATEMENT:  select encrypt('', 'foo', 'bf');
+2023-07-22 03:44:12.092 UTC [2690521] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:44:12.092 UTC [2690521] STATEMENT:  select encrypt('foo', '0123456789', 'bf');
+2023-07-22 03:44:12.092 UTC [2690521] ERROR:  encrypt error: Key was too big
+2023-07-22 03:44:12.092 UTC [2690521] STATEMENT:  select encrypt('foo', '0123456789012345678901', 'bf');
+2023-07-22 03:44:12.092 UTC [2690521] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:44:12.092 UTC [2690521] STATEMENT:  select encode(decrypt(encrypt('foo', '0123456', 'bf'), '0123456', 'bf'), 'escape');
+2023-07-22 03:44:12.092 UTC [2690521] ERROR:  encrypt_iv error: Cipher cannot be initialized
+2023-07-22 03:44:12.092 UTC [2690521] STATEMENT:  select encrypt_iv('foo', '0123456', 'abcd', 'bf');
+2023-07-22 03:44:12.092 UTC [2690521] ERROR:  decrypt_iv error: Cipher cannot be initialized
+2023-07-22 03:44:12.092 UTC [2690521] STATEMENT:  select encode(decrypt_iv('\x95c7e89322525d59', '0123456', 'abcd', 'bf'), 'escape');
+2023-07-22 03:44:12.092 UTC [2690521] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:44:12.092 UTC [2690521] STATEMENT:  select encrypt('Lets try a longer message.', '0123456789', 'bf');
+2023-07-22 03:44:12.092 UTC [2690521] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:44:12.092 UTC [2690521] STATEMENT:  select encode(decrypt(encrypt('Lets try a longer message.', '0123456789', 'bf'), '0123456789', 'bf'), 'escape');
+2023-07-22 03:44:12.100 UTC [2690527] ERROR:  encrypt error: Encryption failed
+2023-07-22 03:44:12.100 UTC [2690527] STATEMENT:  SELECT encrypt(
+	'\x00112233445566778899aabbccddeeff00',
+	'\x000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f',
+	'aes-cbc/pad:none');
+2023-07-22 03:44:12.101 UTC [2690527] ERROR:  decrypt error: Decryption failed
+2023-07-22 03:44:12.101 UTC [2690527] STATEMENT:  select encode(decrypt(encrypt('foo', '0123456', 'aes') || '\x00'::bytea, '0123456', 'aes'), 'escape');
+2023-07-22 03:44:12.101 UTC [2690527] ERROR:  decrypt_iv error: Decryption failed
+2023-07-22 03:44:12.101 UTC [2690527] STATEMENT:  select encode(decrypt_iv('\xa21a9c15231465964e3396d32095e67eb52bab05f556a581621dee1b85385789', '0123456', 'abcd', 'aes'), 'escape');
+2023-07-22 03:44:12.116 UTC [2690535] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:44:12.116 UTC [2690535] STATEMENT:  SELECT encrypt('\x0123456789abcdef', '\xfedcba9876543210', 'des-ecb/pad:none');
+2023-07-22 03:44:12.116 UTC [2690535] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:44:12.116 UTC [2690535] STATEMENT:  select encrypt('', 'foo', 'des');
+2023-07-22 03:44:12.116 UTC [2690535] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:44:12.116 UTC [2690535] STATEMENT:  select encrypt('foo', '01234589', 'des');
+2023-07-22 03:44:12.117 UTC [2690535] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:44:12.117 UTC [2690535] STATEMENT:  select encode(decrypt(encrypt('foo', '0123456', 'des'), '0123456', 'des'), 'escape');
+2023-07-22 03:44:12.117 UTC [2690535] ERROR:  encrypt_iv error: Cipher cannot be initialized
+2023-07-22 03:44:12.117 UTC [2690535] STATEMENT:  select encrypt_iv('foo', '0123456', 'abcd', 'des');
+2023-07-22 03:44:12.117 UTC [2690535] ERROR:  decrypt_iv error: Cipher cannot be initialized
+2023-07-22 03:44:12.117 UTC [2690535] STATEMENT:  select encode(decrypt_iv('\x50735067b073bb93', '0123456', 'abcd', 'des'), 'escape');
+2023-07-22 03:44:12.117 UTC [2690535] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:44:12.117 UTC [2690535] STATEMENT:  select encrypt('Lets try a longer message.', '01234567', 'des');
+2023-07-22 03:44:12.117 UTC [2690535] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:44:12.117 UTC [2690535] STATEMENT:  select encode(decrypt(encrypt('Lets try a longer message.', '01234567', 'des'), '01234567', 'des'), 'escape');
+2023-07-22 03:44:12.132 UTC [2690545] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:44:12.132 UTC [2690545] STATEMENT:  SELECT encrypt('\x0123456789ABCDEF', '\x0123456712345678234567893456789A', 'cast5-ecb/pad:none');
+2023-07-22 03:44:12.132 UTC [2690545] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:44:12.132 UTC [2690545] STATEMENT:  SELECT encrypt('\x0123456789ABCDEF', '\x01234567123456782345', 'cast5-ecb/pad:none');
+2023-07-22 03:44:12.132 UTC [2690545] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:44:12.132 UTC [2690545] STATEMENT:  SELECT encrypt('\x0123456789ABCDEF', '\x0123456712', 'cast5-ecb/pad:none');
+2023-07-22 03:44:12.132 UTC [2690545] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:44:12.132 UTC [2690545] STATEMENT:  select encrypt('', 'foo', 'cast5');
+2023-07-22 03:44:12.133 UTC [2690545] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:44:12.133 UTC [2690545] STATEMENT:  select encrypt('foo', '0123456789', 'cast5');
+2023-07-22 03:44:12.133 UTC [2690545] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:44:12.133 UTC [2690545] STATEMENT:  select encode(decrypt(encrypt('foo', '0123456', 'cast5'), '0123456', 'cast5'), 'escape');
+2023-07-22 03:44:12.133 UTC [2690545] ERROR:  encrypt_iv error: Cipher cannot be initialized
+2023-07-22 03:44:12.133 UTC [2690545] STATEMENT:  select encrypt_iv('foo', '0123456', 'abcd', 'cast5');
+2023-07-22 03:44:12.133 UTC [2690545] ERROR:  decrypt_iv error: Cipher cannot be initialized
+2023-07-22 03:44:12.133 UTC [2690545] STATEMENT:  select encode(decrypt_iv('\x384a970695ce016a', '0123456', 'abcd', 'cast5'), 'escape');
+2023-07-22 03:44:12.133 UTC [2690545] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:44:12.133 UTC [2690545] STATEMENT:  select encrypt('Lets try a longer message.', '0123456789', 'cast5');
+2023-07-22 03:44:12.133 UTC [2690545] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:44:12.133 UTC [2690545] STATEMENT:  select encode(decrypt(encrypt('Lets try a longer message.', '0123456789', 'cast5'), '0123456789', 'cast5'), 'escape');
+2023-07-22 03:44:12.141 UTC [2690551] ERROR:  invalid salt
+2023-07-22 03:44:12.141 UTC [2690551] STATEMENT:  SELECT crypt('password', 'a');
+2023-07-22 03:44:12.244 UTC [2690559] ERROR:  invalid salt
+2023-07-22 03:44:12.244 UTC [2690559] STATEMENT:  SELECT crypt('foox', '$2a$');
+2023-07-22 03:44:12.244 UTC [2690559] ERROR:  invalid salt
+2023-07-22 03:44:12.244 UTC [2690559] STATEMENT:  SELECT crypt('foox', '$2a$40$RQiOJ.3ELirrXwxIZY8q0O');
+2023-07-22 03:44:12.244 UTC [2690559] ERROR:  invalid salt
+2023-07-22 03:44:12.244 UTC [2690559] STATEMENT:  SELECT crypt('foox', '$2a$00$RQiOJ.3ELirrXwxIZY8q0O');
+2023-07-22 03:44:12.302 UTC [2690563] ERROR:  invalid salt
+2023-07-22 03:44:12.302 UTC [2690563] STATEMENT:  SELECT crypt('foox', '_J9..BWH');
+2023-07-22 03:44:12.303 UTC [2690563] ERROR:  crypt(3) returned NULL
+2023-07-22 03:44:12.303 UTC [2690563] STATEMENT:  SELECT crypt('password', '_........');
+2023-07-22 03:44:12.303 UTC [2690563] ERROR:  crypt(3) returned NULL
+2023-07-22 03:44:12.303 UTC [2690563] STATEMENT:  SELECT crypt('password', '_..!!!!!!');
+2023-07-22 03:44:12.329 UTC [2690567] ERROR:  Corrupt ascii-armor
+2023-07-22 03:44:12.329 UTC [2690567] STATEMENT:  select dearmor('
+	-----BEGIN PGP MESSAGE-----
+	
+	em9va2E=
+	=ZZZZ
+	-----END PGP MESSAGE-----
+	');
+2023-07-22 03:44:12.330 UTC [2690567] ERROR:  Corrupt ascii-armor
+2023-07-22 03:44:12.330 UTC [2690567] STATEMENT:  select * from pgp_armor_headers('
+	-----BEGIN PGP MESSAGE-----
+	foo:
+	
+	em9va2E=
+	=ZZZZ
+	-----END PGP MESSAGE-----
+	');
+2023-07-22 03:44:12.330 UTC [2690567] ERROR:  Corrupt ascii-armor
+2023-07-22 03:44:12.330 UTC [2690567] STATEMENT:  select * from pgp_armor_headers('
+	-----BEGIN PGP MESSAGE-----
+	em9va2E=
+	=ZZZZ
+	-----END PGP MESSAGE-----
+	');
+2023-07-22 03:44:12.332 UTC [2690567] ERROR:  mismatched array dimensions
+2023-07-22 03:44:12.332 UTC [2690567] STATEMENT:  select armor('', array['foo'], array['too', 'many']);
+2023-07-22 03:44:12.332 UTC [2690567] ERROR:  mismatched array dimensions
+2023-07-22 03:44:12.332 UTC [2690567] STATEMENT:  select armor('', array['too', 'many'], array['foo']);
+2023-07-22 03:44:12.332 UTC [2690567] ERROR:  wrong number of array subscripts
+2023-07-22 03:44:12.332 UTC [2690567] STATEMENT:  select armor('', array[['']], array['foo']);
+2023-07-22 03:44:12.332 UTC [2690567] ERROR:  wrong number of array subscripts
+2023-07-22 03:44:12.332 UTC [2690567] STATEMENT:  select armor('', array['foo'], array[['']]);
+2023-07-22 03:44:12.332 UTC [2690567] ERROR:  null value not allowed for header key
+2023-07-22 03:44:12.332 UTC [2690567] STATEMENT:  select armor('', array[null], array['foo']);
+2023-07-22 03:44:12.332 UTC [2690567] ERROR:  null value not allowed for header value
+2023-07-22 03:44:12.332 UTC [2690567] STATEMENT:  select armor('', array['foo'], array[null]);
+2023-07-22 03:44:12.332 UTC [2690567] ERROR:  header key must not contain newlines
+2023-07-22 03:44:12.332 UTC [2690567] STATEMENT:  select armor('', array[E'embedded\nnewline'], array['foo']);
+2023-07-22 03:44:12.333 UTC [2690567] ERROR:  header value must not contain newlines
+2023-07-22 03:44:12.333 UTC [2690567] STATEMENT:  select armor('', array['foo'], array[E'embedded\nnewline']);
+2023-07-22 03:44:12.333 UTC [2690567] ERROR:  header key must not contain ": "
+2023-07-22 03:44:12.333 UTC [2690567] STATEMENT:  select armor('', array['embedded: colon+space'], array['foo']);
+2023-07-22 03:44:12.342 UTC [2690571] ERROR:  Wrong key or corrupt data
+2023-07-22 03:44:12.342 UTC [2690571] STATEMENT:  select pgp_sym_decrypt(dearmor('
+	-----BEGIN PGP MESSAGE-----
+	Comment: dat1.blowfish.sha1.mdc.s2k3.z0
+	
+	jA0EBAMCfFNwxnvodX9g0jwB4n4s26/g5VmKzVab1bX1SmwY7gvgvlWdF3jKisvS
+	yA6Ce1QTMK3KdL2MPfamsTUSAML8huCJMwYQFfE=
+	=JcP+
+	-----END PGP MESSAGE-----
+	'), 'foobar');
+2023-07-22 03:44:12.356 UTC [2690571] ERROR:  Wrong key or corrupt data
+2023-07-22 03:44:12.356 UTC [2690571] STATEMENT:  select pgp_sym_decrypt(dearmor('
+	-----BEGIN PGP MESSAGE-----
+	
+	ww0EBwMCxf8PTrQBmJdl0jcB6y2joE7GSLKRv7trbNsF5Z8ou5NISLUg31llVH/S0B2wl4bvzZjV
+	VsxxqLSPzNLAeIspJk5G
+	=mSd/
+	-----END PGP MESSAGE-----
+	'), 'wrong-key', 'debug=1');
+2023-07-22 03:44:12.357 UTC [2690571] ERROR:  Not text data
+2023-07-22 03:44:12.357 UTC [2690571] STATEMENT:  select pgp_sym_decrypt(pgp_sym_encrypt_bytea('P', 'key'), 'key', 'debug=1');
+2023-07-22 03:44:12.358 UTC [2690571] ERROR:  Wrong key or corrupt data
+2023-07-22 03:44:12.358 UTC [2690571] STATEMENT:  select pgp_sym_decrypt(dearmor('
+	-----BEGIN PGP MESSAGE-----
+	
+	ww0EBwMC9rK/dMkF5Zlt0jcBlzAQ1mQY2qYbKYbw8h3EZ5Jk0K2IiY92R82TRhWzBIF/8cmXDPtP
+	GXsd65oYJZp3Khz0qfyn
+	=Nmpq
+	-----END PGP MESSAGE-----
+	'), 'wrong-key', 'debug=1');
+2023-07-22 03:44:12.359 UTC [2690571] ERROR:  Unsupported compression algorithm
+2023-07-22 03:44:12.359 UTC [2690571] STATEMENT:  select pgp_sym_decrypt(dearmor('
+	-----BEGIN PGP MESSAGE-----
+	
+	jA0EBwMCRhFrAKNcLVJg0mMBLJG1cCASNk/x/3dt1zJ+2eo7jHfjgg3N6wpB3XIe
+	QCwkWJwlBG5pzbO5gu7xuPQN+TbPJ7aQ2sLx3bAHhtYb0i3vV9RO10Gw++yUyd4R
+	UCAAw2JRIISttRHMfDpDuZJpvYo=
+	=AZ9M
+	-----END PGP MESSAGE-----
+	'), 'key', 'debug=1');
+2023-07-22 03:44:12.376 UTC [2690577] ERROR:  Not text data
+2023-07-22 03:44:12.376 UTC [2690577] STATEMENT:  select pgp_sym_decrypt(pgp_sym_encrypt_bytea('Binary', 'baz'), 'baz');
+2023-07-22 03:44:12.817 UTC [2690585] ERROR:  Wrong key or corrupt data
+2023-07-22 03:44:12.817 UTC [2690585] STATEMENT:  select pgp_pub_decrypt(dearmor(data), dearmor(seckey))
+	from keytbl, encdata where keytbl.id=2 and encdata.id=2;
+2023-07-22 03:44:12.826 UTC [2690585] ERROR:  Wrong key
+2023-07-22 03:44:12.826 UTC [2690585] STATEMENT:  select pgp_pub_decrypt(dearmor(data), dearmor(seckey))
+	from keytbl, encdata where keytbl.id=2 and encdata.id=1;
+2023-07-22 03:44:12.826 UTC [2690585] ERROR:  No encryption key found
+2023-07-22 03:44:12.826 UTC [2690585] STATEMENT:  select pgp_pub_decrypt(dearmor(data), dearmor(seckey))
+	from keytbl, encdata where keytbl.id=4 and encdata.id=1;
+2023-07-22 03:44:12.827 UTC [2690585] ERROR:  Wrong key or corrupt data
+2023-07-22 03:44:12.827 UTC [2690585] STATEMENT:  select pgp_pub_decrypt(dearmor(data), dearmor(seckey), '123')
+	from keytbl, encdata where keytbl.id=7 and encdata.id=4;
+2023-07-22 03:44:12.831 UTC [2690585] ERROR:  Need password for secret key
+2023-07-22 03:44:12.831 UTC [2690585] STATEMENT:  select pgp_pub_decrypt(dearmor(data), dearmor(seckey))
+	from keytbl, encdata where keytbl.id=5 and encdata.id=1;
+2023-07-22 03:44:12.832 UTC [2690585] ERROR:  Wrong key or corrupt data
+2023-07-22 03:44:12.832 UTC [2690585] STATEMENT:  select pgp_pub_decrypt(dearmor(data), dearmor(seckey), 'foo')
+	from keytbl, encdata where keytbl.id=5 and encdata.id=1;
+2023-07-22 03:44:12.837 UTC [2690585] ERROR:  Wrong key or corrupt data
+2023-07-22 03:44:12.837 UTC [2690585] STATEMENT:  select pgp_pub_decrypt(dearmor(data), dearmor(seckey))
+	from keytbl, encdata where keytbl.id=6 and encdata.id=5;
+2023-07-22 03:44:12.868 UTC [2690591] ERROR:  No encryption key found
+2023-07-22 03:44:12.868 UTC [2690591] STATEMENT:  select pgp_pub_decrypt(
+			pgp_pub_encrypt('Secret msg', dearmor(pubkey)),
+			dearmor(seckey))
+	from keytbl where keytbl.id=4;
+2023-07-22 03:44:12.868 UTC [2690591] ERROR:  Refusing to encrypt with secret key
+2023-07-22 03:44:12.868 UTC [2690591] STATEMENT:  select pgp_pub_decrypt(
+			pgp_pub_encrypt('Secret msg', dearmor(seckey)),
+			dearmor(seckey))
+	from keytbl where keytbl.id=1;
+2023-07-22 03:44:12.870 UTC [2690591] ERROR:  Not text data
+2023-07-22 03:44:12.870 UTC [2690591] STATEMENT:  select pgp_pub_decrypt(
+			pgp_pub_encrypt_bytea('Secret msg', dearmor(pubkey)),
+			dearmor(seckey))
+	from keytbl where keytbl.id=1;
+2023-07-22 03:44:12.878 UTC [2690595] ERROR:  No encryption key found
+2023-07-22 03:44:12.878 UTC [2690595] STATEMENT:  select pgp_key_id(dearmor(pubkey)) from keytbl where id=4;
+2023-07-22 03:44:12.878 UTC [2690595] ERROR:  No encryption key found
+2023-07-22 03:44:12.878 UTC [2690595] STATEMENT:  select pgp_key_id(dearmor(seckey)) from keytbl where id=4;
+2023-07-22 03:44:44.503 UTC [2690468] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:44:44.762 UTC [2690468] LOG:  checkpoint complete: wrote 1129 buffers (6.9%); 0 WAL file(s) added, 0 removed, 9 recycled; write=0.035 s, sync=0.182 s, total=0.259 s; sync files=517, longest=0.054 s, average=0.001 s; distance=145489 kB, estimate=145489 kB
+2023-07-22 03:45:16.097 UTC [2690468] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:45:16.144 UTC [2690468] LOG:  checkpoint complete: wrote 10 buffers (0.1%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.007 s, sync=0.004 s, total=0.048 s; sync files=4, longest=0.003 s, average=0.001 s; distance=137088 kB, estimate=144649 kB
+2023-07-22 03:45:16.206 UTC [2690467] LOG:  received fast shutdown request
+2023-07-22 03:45:16.209 UTC [2690467] LOG:  aborting any active transactions
+2023-07-22 03:45:16.210 UTC [2690467] LOG:  background worker "logical replication launcher" (PID 2690473) exited with exit code 1
+2023-07-22 03:45:16.211 UTC [2690468] LOG:  shutting down
+2023-07-22 03:45:16.213 UTC [2690468] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:45:16.229 UTC [2690468] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.004 s, sync=0.001 s, total=0.019 s; sync files=1, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=130184 kB
+2023-07-22 03:45:16.249 UTC [2690467] LOG:  database system is shut down
+2023-07-22 03:45:16.936 UTC [2690722] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:45:16.936 UTC [2690722] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:45:16.942 UTC [2690722] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:45:16.949 UTC [2690725] LOG:  database system was shut down at 2023-07-22 03:45:16 UTC
+2023-07-22 03:45:16.955 UTC [2690722] LOG:  database system is ready to accept connections
+2023-07-22 03:45:17.138 UTC [2690744] ERROR:  file "test_file1" exists
+2023-07-22 03:45:17.138 UTC [2690744] STATEMENT:  SELECT pg_file_write('test_file1', 'test1', false);
+2023-07-22 03:45:17.143 UTC [2690744] ERROR:  path must be in or below the current directory
+2023-07-22 03:45:17.143 UTC [2690744] STATEMENT:  SELECT pg_file_write('../test_file0', 'test0', false);
+2023-07-22 03:45:17.143 UTC [2690744] ERROR:  absolute path not allowed
+2023-07-22 03:45:17.143 UTC [2690744] STATEMENT:  SELECT pg_file_write('/tmp/test_file0', 'test0', false);
+2023-07-22 03:45:17.144 UTC [2690744] ERROR:  absolute path not allowed
+2023-07-22 03:45:17.144 UTC [2690744] STATEMENT:  SELECT pg_file_write(current_setting('data_directory') || '/../test_file4', 'test4', false);
+2023-07-22 03:45:17.155 UTC [2690744] ERROR:  could not stat file "test_file2": No such file or directory
+2023-07-22 03:45:17.155 UTC [2690744] STATEMENT:  SELECT pg_file_sync('test_file2');
+2023-07-22 03:45:17.156 UTC [2690744] ERROR:  could not open file "test_file1" for reading: No such file or directory
+2023-07-22 03:45:17.156 UTC [2690744] STATEMENT:  SELECT pg_read_file('test_file1');
+2023-07-22 03:45:17.157 UTC [2690744] WARNING:  file "test_file1" is not accessible: No such file or directory
+2023-07-22 03:45:17.157 UTC [2690744] CONTEXT:  SQL function "pg_file_rename" statement 1
+2023-07-22 03:45:17.159 UTC [2690744] ERROR:  could not open file "test_file2" for reading: No such file or directory
+2023-07-22 03:45:17.159 UTC [2690744] STATEMENT:  SELECT pg_read_file('test_file2');
+2023-07-22 03:45:17.165 UTC [2690744] ERROR:  permission denied for function pg_file_write
+2023-07-22 03:45:17.165 UTC [2690744] STATEMENT:  SELECT pg_file_write('test_file0', 'test0', false);
+2023-07-22 03:45:17.166 UTC [2690744] ERROR:  permission denied for function pg_file_sync
+2023-07-22 03:45:17.166 UTC [2690744] STATEMENT:  SELECT pg_file_sync('test_file0');
+2023-07-22 03:45:17.166 UTC [2690744] ERROR:  permission denied for function pg_file_rename
+2023-07-22 03:45:17.166 UTC [2690744] CONTEXT:  SQL function "pg_file_rename" statement 1
+2023-07-22 03:45:17.166 UTC [2690744] STATEMENT:  SELECT pg_file_rename('test_file0', 'test_file0');
+2023-07-22 03:45:17.167 UTC [2690744] ERROR:  permission denied for function pg_file_unlink
+2023-07-22 03:45:17.167 UTC [2690744] STATEMENT:  SELECT pg_file_unlink('test_file0');
+2023-07-22 03:45:17.167 UTC [2690744] ERROR:  permission denied for function pg_logdir_ls
+2023-07-22 03:45:17.167 UTC [2690744] STATEMENT:  SELECT pg_logdir_ls();
+2023-07-22 03:45:48.778 UTC [2690723] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:45:48.868 UTC [2690723] LOG:  checkpoint complete: wrote 462 buffers (2.8%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.017 s, sync=0.037 s, total=0.091 s; sync files=263, longest=0.003 s, average=0.001 s; distance=141459 kB, estimate=141459 kB
+2023-07-22 03:46:20.222 UTC [2690723] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:46:20.305 UTC [2690723] LOG:  checkpoint complete: wrote 10 buffers (0.1%); 0 WAL file(s) added, 0 removed, 9 recycled; write=0.011 s, sync=0.006 s, total=0.083 s; sync files=4, longest=0.005 s, average=0.002 s; distance=136818 kB, estimate=140995 kB
+2023-07-22 03:46:20.375 UTC [2690722] LOG:  received fast shutdown request
+2023-07-22 03:46:20.381 UTC [2690722] LOG:  aborting any active transactions
+2023-07-22 03:46:20.383 UTC [2690722] LOG:  background worker "logical replication launcher" (PID 2690728) exited with exit code 1
+2023-07-22 03:46:20.383 UTC [2690723] LOG:  shutting down
+2023-07-22 03:46:20.388 UTC [2690723] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:46:20.411 UTC [2690723] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.006 s, sync=0.001 s, total=0.028 s; sync files=1, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=126895 kB
+2023-07-22 03:46:20.438 UTC [2690722] LOG:  database system is shut down
+2023-07-22 03:46:21.237 UTC [2690876] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:46:21.237 UTC [2690876] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:46:21.250 UTC [2690876] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:46:21.263 UTC [2690879] LOG:  database system was shut down at 2023-07-22 03:46:20 UTC
+2023-07-22 03:46:21.272 UTC [2690876] LOG:  database system is ready to accept connections
+2023-07-22 03:46:22.109 UTC [2690899] ERROR:  permission denied for function bt_index_check
+2023-07-22 03:46:22.109 UTC [2690899] STATEMENT:  SELECT bt_index_check('bttest_a_idx'::regclass);
+2023-07-22 03:46:22.109 UTC [2690899] ERROR:  permission denied for function bt_index_parent_check
+2023-07-22 03:46:22.109 UTC [2690899] STATEMENT:  SELECT bt_index_parent_check('bttest_a_idx'::regclass);
+2023-07-22 03:46:22.164 UTC [2690899] ERROR:  "bttest_a" is not an index
+2023-07-22 03:46:22.164 UTC [2690899] STATEMENT:  SELECT bt_index_check('bttest_a');
+2023-07-22 03:46:22.165 UTC [2690899] ERROR:  "bttest_a" is not an index
+2023-07-22 03:46:22.165 UTC [2690899] STATEMENT:  SELECT bt_index_parent_check('bttest_a');
+2023-07-22 03:46:22.165 UTC [2690899] ERROR:  could not open relation with OID 17
+2023-07-22 03:46:22.165 UTC [2690899] STATEMENT:  SELECT bt_index_check(17);
+2023-07-22 03:46:22.165 UTC [2690899] ERROR:  could not open relation with OID 17
+2023-07-22 03:46:22.165 UTC [2690899] STATEMENT:  SELECT bt_index_parent_check(17);
+2023-07-22 03:46:22.179 UTC [2690899] ERROR:  only B-Tree indexes are supported as targets for verification
+2023-07-22 03:46:22.179 UTC [2690899] DETAIL:  Relation "bttest_a_brin_idx" is not a B-Tree index.
+2023-07-22 03:46:22.179 UTC [2690899] STATEMENT:  SELECT bt_index_parent_check('bttest_a_brin_idx');
+2023-07-22 03:46:23.210 UTC [2690903] ERROR:  invalid skip option
+2023-07-22 03:46:23.210 UTC [2690903] HINT:  Valid skip options are "all-visible", "all-frozen", and "none".
+2023-07-22 03:46:23.210 UTC [2690903] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest', skip := 'rope');
+2023-07-22 03:46:23.215 UTC [2690903] ERROR:  permission denied for function verify_heapam
+2023-07-22 03:46:23.215 UTC [2690903] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest');
+2023-07-22 03:46:23.217 UTC [2690903] ERROR:  ending block number must be between 0 and 0
+2023-07-22 03:46:23.217 UTC [2690903] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest', startblock := 0, endblock := 10000);
+2023-07-22 03:46:23.217 UTC [2690903] ERROR:  starting block number must be between 0 and 0
+2023-07-22 03:46:23.217 UTC [2690903] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest', startblock := 10000, endblock := 11000);
+2023-07-22 03:46:23.223 UTC [2690903] ERROR:  cannot check relation "test_partitioned"
+2023-07-22 03:46:23.223 UTC [2690903] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-22 03:46:23.223 UTC [2690903] STATEMENT:  SELECT * FROM verify_heapam('test_partitioned',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-22 03:46:23.299 UTC [2690903] ERROR:  cannot check relation "test_index"
+2023-07-22 03:46:23.299 UTC [2690903] DETAIL:  This operation is not supported for indexes.
+2023-07-22 03:46:23.299 UTC [2690903] STATEMENT:  SELECT * FROM verify_heapam('test_index',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-22 03:46:23.303 UTC [2690903] ERROR:  cannot check relation "test_view"
+2023-07-22 03:46:23.303 UTC [2690903] DETAIL:  This operation is not supported for views.
+2023-07-22 03:46:23.303 UTC [2690903] STATEMENT:  SELECT * FROM verify_heapam('test_view',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-22 03:46:23.312 UTC [2690903] ERROR:  cannot check relation "test_foreign_table"
+2023-07-22 03:46:23.312 UTC [2690903] DETAIL:  This operation is not supported for foreign tables.
+2023-07-22 03:46:23.312 UTC [2690903] STATEMENT:  SELECT * FROM verify_heapam('test_foreign_table',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-22 03:46:23.333 UTC [2690877] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:46:23.402 UTC [2690877] LOG:  checkpoint complete: wrote 18 buffers (0.1%); 0 WAL file(s) added, 0 removed, 4 recycled; write=0.012 s, sync=0.011 s, total=0.069 s; sync files=14, longest=0.006 s, average=0.001 s; distance=61130 kB, estimate=61130 kB
+2023-07-22 03:46:23.507 UTC [2690918] ERROR:  gen_salt: Unknown salt algorithm
+2023-07-22 03:46:23.507 UTC [2690918] STATEMENT:  select gen_salt('foo');
+2023-07-22 03:46:23.507 UTC [2690918] ERROR:  Cannot use "foo": No such hash algorithm
+2023-07-22 03:46:23.507 UTC [2690918] STATEMENT:  select digest('foo', 'foo');
+2023-07-22 03:46:23.507 UTC [2690918] ERROR:  Cannot use "foo": No such hash algorithm
+2023-07-22 03:46:23.507 UTC [2690918] STATEMENT:  select hmac('foo', 'foo', 'foo');
+2023-07-22 03:46:23.508 UTC [2690918] ERROR:  Cannot use "foo": No such cipher algorithm
+2023-07-22 03:46:23.508 UTC [2690918] STATEMENT:  select encrypt('foo', 'foo', 'foo');
+2023-07-22 03:46:23.558 UTC [2690938] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:46:23.558 UTC [2690938] STATEMENT:  SELECT encrypt('\x0000000000000000', '\x0000000000000000', 'bf-ecb/pad:none');
+2023-07-22 03:46:23.558 UTC [2690938] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:46:23.558 UTC [2690938] STATEMENT:  SELECT encrypt('\xffffffffffffffff', '\xffffffffffffffff', 'bf-ecb/pad:none');
+2023-07-22 03:46:23.558 UTC [2690938] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:46:23.558 UTC [2690938] STATEMENT:  SELECT encrypt('\x1000000000000001', '\x3000000000000000', 'bf-ecb/pad:none');
+2023-07-22 03:46:23.558 UTC [2690938] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:46:23.558 UTC [2690938] STATEMENT:  SELECT encrypt('\x1111111111111111', '\x1111111111111111', 'bf-ecb/pad:none');
+2023-07-22 03:46:23.558 UTC [2690938] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:46:23.558 UTC [2690938] STATEMENT:  SELECT encrypt('\x0123456789abcdef', '\xfedcba9876543210', 'bf-ecb/pad:none');
+2023-07-22 03:46:23.559 UTC [2690938] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:46:23.559 UTC [2690938] STATEMENT:  SELECT encrypt('\x01a1d6d039776742', '\xfedcba9876543210', 'bf-ecb/pad:none');
+2023-07-22 03:46:23.559 UTC [2690938] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:46:23.559 UTC [2690938] STATEMENT:  SELECT encrypt('\xffffffffffffffff', '\x0000000000000000', 'bf-ecb/pad:none');
+2023-07-22 03:46:23.559 UTC [2690938] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:46:23.559 UTC [2690938] STATEMENT:  SELECT encrypt('\xfedcba9876543210', '\xf0e1d2c3b4a5968778695a4b3c2d1e0f', 'bf-ecb/pad:none');
+2023-07-22 03:46:23.559 UTC [2690938] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:46:23.559 UTC [2690938] STATEMENT:  SELECT encrypt('\x01234567890123456789', '\x33443344334433443344334433443344', 'bf-ecb');
+2023-07-22 03:46:23.559 UTC [2690938] ERROR:  encrypt error: Key was too big
+2023-07-22 03:46:23.559 UTC [2690938] STATEMENT:  SELECT encrypt('\x6b77b4d63006dee605b156e27403979358deb9e7154616d959f1652bd5',
+	               '\x37363534333231204e6f77206973207468652074696d6520666f7220',
+	               'bf-cbc');
+2023-07-22 03:46:23.559 UTC [2690938] ERROR:  encrypt error: Key was too big
+2023-07-22 03:46:23.559 UTC [2690938] STATEMENT:  SELECT encrypt('\x6b77b4d63006dee605b156e27403979358deb9e7154616d959f1652bd5ff92cc',
+	               '\x37363534333231204e6f77206973207468652074696d6520666f722000',
+	               'bf-cbc');
+2023-07-22 03:46:23.559 UTC [2690938] ERROR:  encrypt error: Key was too big
+2023-07-22 03:46:23.559 UTC [2690938] STATEMENT:  SELECT encrypt('\xfedcba9876543210',
+	               '\xf0e1d2c3b4a5968778695a4b3c2d1e0f001122334455667704689104c2fd3b2f584023641aba61761f1f1f1f0e0e0e0effffffffffffffff',
+	               'bf-ecb/pad:none');
+2023-07-22 03:46:23.559 UTC [2690938] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:46:23.559 UTC [2690938] STATEMENT:  select encrypt('', 'foo', 'bf');
+2023-07-22 03:46:23.559 UTC [2690938] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:46:23.559 UTC [2690938] STATEMENT:  select encrypt('foo', '0123456789', 'bf');
+2023-07-22 03:46:23.560 UTC [2690938] ERROR:  encrypt error: Key was too big
+2023-07-22 03:46:23.560 UTC [2690938] STATEMENT:  select encrypt('foo', '0123456789012345678901', 'bf');
+2023-07-22 03:46:23.560 UTC [2690938] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:46:23.560 UTC [2690938] STATEMENT:  select encode(decrypt(encrypt('foo', '0123456', 'bf'), '0123456', 'bf'), 'escape');
+2023-07-22 03:46:23.560 UTC [2690938] ERROR:  encrypt_iv error: Cipher cannot be initialized
+2023-07-22 03:46:23.560 UTC [2690938] STATEMENT:  select encrypt_iv('foo', '0123456', 'abcd', 'bf');
+2023-07-22 03:46:23.560 UTC [2690938] ERROR:  decrypt_iv error: Cipher cannot be initialized
+2023-07-22 03:46:23.560 UTC [2690938] STATEMENT:  select encode(decrypt_iv('\x95c7e89322525d59', '0123456', 'abcd', 'bf'), 'escape');
+2023-07-22 03:46:23.560 UTC [2690938] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:46:23.560 UTC [2690938] STATEMENT:  select encrypt('Lets try a longer message.', '0123456789', 'bf');
+2023-07-22 03:46:23.560 UTC [2690938] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:46:23.560 UTC [2690938] STATEMENT:  select encode(decrypt(encrypt('Lets try a longer message.', '0123456789', 'bf'), '0123456789', 'bf'), 'escape');
+2023-07-22 03:46:23.573 UTC [2690944] ERROR:  encrypt error: Encryption failed
+2023-07-22 03:46:23.573 UTC [2690944] STATEMENT:  SELECT encrypt(
+	'\x00112233445566778899aabbccddeeff00',
+	'\x000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f',
+	'aes-cbc/pad:none');
+2023-07-22 03:46:23.574 UTC [2690944] ERROR:  decrypt error: Decryption failed
+2023-07-22 03:46:23.574 UTC [2690944] STATEMENT:  select encode(decrypt(encrypt('foo', '0123456', 'aes') || '\x00'::bytea, '0123456', 'aes'), 'escape');
+2023-07-22 03:46:23.575 UTC [2690944] ERROR:  decrypt_iv error: Decryption failed
+2023-07-22 03:46:23.575 UTC [2690944] STATEMENT:  select encode(decrypt_iv('\xa21a9c15231465964e3396d32095e67eb52bab05f556a581621dee1b85385789', '0123456', 'abcd', 'aes'), 'escape');
+2023-07-22 03:46:23.598 UTC [2690952] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:46:23.598 UTC [2690952] STATEMENT:  SELECT encrypt('\x0123456789abcdef', '\xfedcba9876543210', 'des-ecb/pad:none');
+2023-07-22 03:46:23.598 UTC [2690952] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:46:23.598 UTC [2690952] STATEMENT:  select encrypt('', 'foo', 'des');
+2023-07-22 03:46:23.599 UTC [2690952] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:46:23.599 UTC [2690952] STATEMENT:  select encrypt('foo', '01234589', 'des');
+2023-07-22 03:46:23.599 UTC [2690952] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:46:23.599 UTC [2690952] STATEMENT:  select encode(decrypt(encrypt('foo', '0123456', 'des'), '0123456', 'des'), 'escape');
+2023-07-22 03:46:23.599 UTC [2690952] ERROR:  encrypt_iv error: Cipher cannot be initialized
+2023-07-22 03:46:23.599 UTC [2690952] STATEMENT:  select encrypt_iv('foo', '0123456', 'abcd', 'des');
+2023-07-22 03:46:23.599 UTC [2690952] ERROR:  decrypt_iv error: Cipher cannot be initialized
+2023-07-22 03:46:23.599 UTC [2690952] STATEMENT:  select encode(decrypt_iv('\x50735067b073bb93', '0123456', 'abcd', 'des'), 'escape');
+2023-07-22 03:46:23.599 UTC [2690952] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:46:23.599 UTC [2690952] STATEMENT:  select encrypt('Lets try a longer message.', '01234567', 'des');
+2023-07-22 03:46:23.600 UTC [2690952] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:46:23.600 UTC [2690952] STATEMENT:  select encode(decrypt(encrypt('Lets try a longer message.', '01234567', 'des'), '01234567', 'des'), 'escape');
+2023-07-22 03:46:23.623 UTC [2690962] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:46:23.623 UTC [2690962] STATEMENT:  SELECT encrypt('\x0123456789ABCDEF', '\x0123456712345678234567893456789A', 'cast5-ecb/pad:none');
+2023-07-22 03:46:23.623 UTC [2690962] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:46:23.623 UTC [2690962] STATEMENT:  SELECT encrypt('\x0123456789ABCDEF', '\x01234567123456782345', 'cast5-ecb/pad:none');
+2023-07-22 03:46:23.623 UTC [2690962] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:46:23.623 UTC [2690962] STATEMENT:  SELECT encrypt('\x0123456789ABCDEF', '\x0123456712', 'cast5-ecb/pad:none');
+2023-07-22 03:46:23.624 UTC [2690962] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:46:23.624 UTC [2690962] STATEMENT:  select encrypt('', 'foo', 'cast5');
+2023-07-22 03:46:23.624 UTC [2690962] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:46:23.624 UTC [2690962] STATEMENT:  select encrypt('foo', '0123456789', 'cast5');
+2023-07-22 03:46:23.624 UTC [2690962] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:46:23.624 UTC [2690962] STATEMENT:  select encode(decrypt(encrypt('foo', '0123456', 'cast5'), '0123456', 'cast5'), 'escape');
+2023-07-22 03:46:23.624 UTC [2690962] ERROR:  encrypt_iv error: Cipher cannot be initialized
+2023-07-22 03:46:23.624 UTC [2690962] STATEMENT:  select encrypt_iv('foo', '0123456', 'abcd', 'cast5');
+2023-07-22 03:46:23.624 UTC [2690962] ERROR:  decrypt_iv error: Cipher cannot be initialized
+2023-07-22 03:46:23.624 UTC [2690962] STATEMENT:  select encode(decrypt_iv('\x384a970695ce016a', '0123456', 'abcd', 'cast5'), 'escape');
+2023-07-22 03:46:23.625 UTC [2690962] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:46:23.625 UTC [2690962] STATEMENT:  select encrypt('Lets try a longer message.', '0123456789', 'cast5');
+2023-07-22 03:46:23.625 UTC [2690962] ERROR:  encrypt error: Cipher cannot be initialized
+2023-07-22 03:46:23.625 UTC [2690962] STATEMENT:  select encode(decrypt(encrypt('Lets try a longer message.', '0123456789', 'cast5'), '0123456789', 'cast5'), 'escape');
+2023-07-22 03:46:23.637 UTC [2690968] ERROR:  invalid salt
+2023-07-22 03:46:23.637 UTC [2690968] STATEMENT:  SELECT crypt('password', 'a');
+2023-07-22 03:46:23.740 UTC [2690976] ERROR:  invalid salt
+2023-07-22 03:46:23.740 UTC [2690976] STATEMENT:  SELECT crypt('foox', '$2a$');
+2023-07-22 03:46:23.741 UTC [2690976] ERROR:  invalid salt
+2023-07-22 03:46:23.741 UTC [2690976] STATEMENT:  SELECT crypt('foox', '$2a$40$RQiOJ.3ELirrXwxIZY8q0O');
+2023-07-22 03:46:23.741 UTC [2690976] ERROR:  invalid salt
+2023-07-22 03:46:23.741 UTC [2690976] STATEMENT:  SELECT crypt('foox', '$2a$00$RQiOJ.3ELirrXwxIZY8q0O');
+2023-07-22 03:46:23.798 UTC [2690980] ERROR:  invalid salt
+2023-07-22 03:46:23.798 UTC [2690980] STATEMENT:  SELECT crypt('foox', '_J9..BWH');
+2023-07-22 03:46:23.798 UTC [2690980] ERROR:  crypt(3) returned NULL
+2023-07-22 03:46:23.798 UTC [2690980] STATEMENT:  SELECT crypt('password', '_........');
+2023-07-22 03:46:23.798 UTC [2690980] ERROR:  crypt(3) returned NULL
+2023-07-22 03:46:23.798 UTC [2690980] STATEMENT:  SELECT crypt('password', '_..!!!!!!');
+2023-07-22 03:46:23.849 UTC [2690984] ERROR:  Corrupt ascii-armor
+2023-07-22 03:46:23.849 UTC [2690984] STATEMENT:  select dearmor('
+	-----BEGIN PGP MESSAGE-----
+	
+	em9va2E=
+	=ZZZZ
+	-----END PGP MESSAGE-----
+	');
+2023-07-22 03:46:23.850 UTC [2690984] ERROR:  Corrupt ascii-armor
+2023-07-22 03:46:23.850 UTC [2690984] STATEMENT:  select * from pgp_armor_headers('
+	-----BEGIN PGP MESSAGE-----
+	foo:
+	
+	em9va2E=
+	=ZZZZ
+	-----END PGP MESSAGE-----
+	');
+2023-07-22 03:46:23.851 UTC [2690984] ERROR:  Corrupt ascii-armor
+2023-07-22 03:46:23.851 UTC [2690984] STATEMENT:  select * from pgp_armor_headers('
+	-----BEGIN PGP MESSAGE-----
+	em9va2E=
+	=ZZZZ
+	-----END PGP MESSAGE-----
+	');
+2023-07-22 03:46:23.860 UTC [2690984] ERROR:  mismatched array dimensions
+2023-07-22 03:46:23.860 UTC [2690984] STATEMENT:  select armor('', array['foo'], array['too', 'many']);
+2023-07-22 03:46:23.861 UTC [2690984] ERROR:  mismatched array dimensions
+2023-07-22 03:46:23.861 UTC [2690984] STATEMENT:  select armor('', array['too', 'many'], array['foo']);
+2023-07-22 03:46:23.861 UTC [2690984] ERROR:  wrong number of array subscripts
+2023-07-22 03:46:23.861 UTC [2690984] STATEMENT:  select armor('', array[['']], array['foo']);
+2023-07-22 03:46:23.862 UTC [2690984] ERROR:  wrong number of array subscripts
+2023-07-22 03:46:23.862 UTC [2690984] STATEMENT:  select armor('', array['foo'], array[['']]);
+2023-07-22 03:46:23.862 UTC [2690984] ERROR:  null value not allowed for header key
+2023-07-22 03:46:23.862 UTC [2690984] STATEMENT:  select armor('', array[null], array['foo']);
+2023-07-22 03:46:23.863 UTC [2690984] ERROR:  null value not allowed for header value
+2023-07-22 03:46:23.863 UTC [2690984] STATEMENT:  select armor('', array['foo'], array[null]);
+2023-07-22 03:46:23.864 UTC [2690984] ERROR:  header key must not contain newlines
+2023-07-22 03:46:23.864 UTC [2690984] STATEMENT:  select armor('', array[E'embedded\nnewline'], array['foo']);
+2023-07-22 03:46:23.864 UTC [2690984] ERROR:  header value must not contain newlines
+2023-07-22 03:46:23.864 UTC [2690984] STATEMENT:  select armor('', array['foo'], array[E'embedded\nnewline']);
+2023-07-22 03:46:23.864 UTC [2690984] ERROR:  header key must not contain ": "
+2023-07-22 03:46:23.864 UTC [2690984] STATEMENT:  select armor('', array['embedded: colon+space'], array['foo']);
+2023-07-22 03:46:23.892 UTC [2690988] ERROR:  Wrong key or corrupt data
+2023-07-22 03:46:23.892 UTC [2690988] STATEMENT:  select pgp_sym_decrypt(dearmor('
+	-----BEGIN PGP MESSAGE-----
+	Comment: dat1.blowfish.sha1.mdc.s2k3.z0
+	
+	jA0EBAMCfFNwxnvodX9g0jwB4n4s26/g5VmKzVab1bX1SmwY7gvgvlWdF3jKisvS
+	yA6Ce1QTMK3KdL2MPfamsTUSAML8huCJMwYQFfE=
+	=JcP+
+	-----END PGP MESSAGE-----
+	'), 'foobar');
+2023-07-22 03:46:23.926 UTC [2690988] ERROR:  Wrong key or corrupt data
+2023-07-22 03:46:23.926 UTC [2690988] STATEMENT:  select pgp_sym_decrypt(dearmor('
+	-----BEGIN PGP MESSAGE-----
+	
+	ww0EBwMCxf8PTrQBmJdl0jcB6y2joE7GSLKRv7trbNsF5Z8ou5NISLUg31llVH/S0B2wl4bvzZjV
+	VsxxqLSPzNLAeIspJk5G
+	=mSd/
+	-----END PGP MESSAGE-----
+	'), 'wrong-key', 'debug=1');
+2023-07-22 03:46:23.927 UTC [2690988] ERROR:  Not text data
+2023-07-22 03:46:23.927 UTC [2690988] STATEMENT:  select pgp_sym_decrypt(pgp_sym_encrypt_bytea('P', 'key'), 'key', 'debug=1');
+2023-07-22 03:46:23.928 UTC [2690988] ERROR:  Wrong key or corrupt data
+2023-07-22 03:46:23.928 UTC [2690988] STATEMENT:  select pgp_sym_decrypt(dearmor('
+	-----BEGIN PGP MESSAGE-----
+	
+	ww0EBwMC9rK/dMkF5Zlt0jcBlzAQ1mQY2qYbKYbw8h3EZ5Jk0K2IiY92R82TRhWzBIF/8cmXDPtP
+	GXsd65oYJZp3Khz0qfyn
+	=Nmpq
+	-----END PGP MESSAGE-----
+	'), 'wrong-key', 'debug=1');
+2023-07-22 03:46:23.929 UTC [2690988] ERROR:  Unsupported compression algorithm
+2023-07-22 03:46:23.929 UTC [2690988] STATEMENT:  select pgp_sym_decrypt(dearmor('
+	-----BEGIN PGP MESSAGE-----
+	
+	jA0EBwMCRhFrAKNcLVJg0mMBLJG1cCASNk/x/3dt1zJ+2eo7jHfjgg3N6wpB3XIe
+	QCwkWJwlBG5pzbO5gu7xuPQN+TbPJ7aQ2sLx3bAHhtYb0i3vV9RO10Gw++yUyd4R
+	UCAAw2JRIISttRHMfDpDuZJpvYo=
+	=AZ9M
+	-----END PGP MESSAGE-----
+	'), 'key', 'debug=1');
+2023-07-22 03:46:23.945 UTC [2690994] ERROR:  Not text data
+2023-07-22 03:46:23.945 UTC [2690994] STATEMENT:  select pgp_sym_decrypt(pgp_sym_encrypt_bytea('Binary', 'baz'), 'baz');
+2023-07-22 03:46:24.396 UTC [2691002] ERROR:  Wrong key or corrupt data
+2023-07-22 03:46:24.396 UTC [2691002] STATEMENT:  select pgp_pub_decrypt(dearmor(data), dearmor(seckey))
+	from keytbl, encdata where keytbl.id=2 and encdata.id=2;
+2023-07-22 03:46:24.417 UTC [2691002] ERROR:  Wrong key
+2023-07-22 03:46:24.417 UTC [2691002] STATEMENT:  select pgp_pub_decrypt(dearmor(data), dearmor(seckey))
+	from keytbl, encdata where keytbl.id=2 and encdata.id=1;
+2023-07-22 03:46:24.418 UTC [2691002] ERROR:  No encryption key found
+2023-07-22 03:46:24.418 UTC [2691002] STATEMENT:  select pgp_pub_decrypt(dearmor(data), dearmor(seckey))
+	from keytbl, encdata where keytbl.id=4 and encdata.id=1;
+2023-07-22 03:46:24.420 UTC [2691002] ERROR:  Wrong key or corrupt data
+2023-07-22 03:46:24.420 UTC [2691002] STATEMENT:  select pgp_pub_decrypt(dearmor(data), dearmor(seckey), '123')
+	from keytbl, encdata where keytbl.id=7 and encdata.id=4;
+2023-07-22 03:46:24.426 UTC [2691002] ERROR:  Need password for secret key
+2023-07-22 03:46:24.426 UTC [2691002] STATEMENT:  select pgp_pub_decrypt(dearmor(data), dearmor(seckey))
+	from keytbl, encdata where keytbl.id=5 and encdata.id=1;
+2023-07-22 03:46:24.427 UTC [2691002] ERROR:  Wrong key or corrupt data
+2023-07-22 03:46:24.427 UTC [2691002] STATEMENT:  select pgp_pub_decrypt(dearmor(data), dearmor(seckey), 'foo')
+	from keytbl, encdata where keytbl.id=5 and encdata.id=1;
+2023-07-22 03:46:24.432 UTC [2691002] ERROR:  Wrong key or corrupt data
+2023-07-22 03:46:24.432 UTC [2691002] STATEMENT:  select pgp_pub_decrypt(dearmor(data), dearmor(seckey))
+	from keytbl, encdata where keytbl.id=6 and encdata.id=5;
+2023-07-22 03:46:24.454 UTC [2691008] ERROR:  No encryption key found
+2023-07-22 03:46:24.454 UTC [2691008] STATEMENT:  select pgp_pub_decrypt(
+			pgp_pub_encrypt('Secret msg', dearmor(pubkey)),
+			dearmor(seckey))
+	from keytbl where keytbl.id=4;
+2023-07-22 03:46:24.455 UTC [2691008] ERROR:  Refusing to encrypt with secret key
+2023-07-22 03:46:24.455 UTC [2691008] STATEMENT:  select pgp_pub_decrypt(
+			pgp_pub_encrypt('Secret msg', dearmor(seckey)),
+			dearmor(seckey))
+	from keytbl where keytbl.id=1;
+2023-07-22 03:46:24.456 UTC [2691008] ERROR:  Not text data
+2023-07-22 03:46:24.456 UTC [2691008] STATEMENT:  select pgp_pub_decrypt(
+			pgp_pub_encrypt_bytea('Secret msg', dearmor(pubkey)),
+			dearmor(seckey))
+	from keytbl where keytbl.id=1;
+2023-07-22 03:46:24.464 UTC [2691012] ERROR:  No encryption key found
+2023-07-22 03:46:24.464 UTC [2691012] STATEMENT:  select pgp_key_id(dearmor(pubkey)) from keytbl where id=4;
+2023-07-22 03:46:24.465 UTC [2691012] ERROR:  No encryption key found
+2023-07-22 03:46:24.465 UTC [2691012] STATEMENT:  select pgp_key_id(dearmor(seckey)) from keytbl where id=4;
+2023-07-22 03:46:55.938 UTC [2690877] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:46:56.081 UTC [2690877] LOG:  checkpoint complete: wrote 556 buffers (3.4%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.020 s, sync=0.086 s, total=0.143 s; sync files=260, longest=0.007 s, average=0.001 s; distance=141421 kB, estimate=141421 kB
+2023-07-22 03:47:27.424 UTC [2690877] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:47:27.481 UTC [2690877] LOG:  checkpoint complete: wrote 11 buffers (0.1%); 0 WAL file(s) added, 0 removed, 9 recycled; write=0.008 s, sync=0.004 s, total=0.057 s; sync files=4, longest=0.003 s, average=0.001 s; distance=137205 kB, estimate=140999 kB
+2023-07-22 03:47:27.519 UTC [2690876] LOG:  received fast shutdown request
+2023-07-22 03:47:27.522 UTC [2690876] LOG:  aborting any active transactions
+2023-07-22 03:47:27.523 UTC [2690876] LOG:  background worker "logical replication launcher" (PID 2690882) exited with exit code 1
+2023-07-22 03:47:27.524 UTC [2690877] LOG:  shutting down
+2023-07-22 03:47:27.526 UTC [2690877] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:47:27.543 UTC [2690877] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.004 s, sync=0.001 s, total=0.020 s; sync files=1, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=126899 kB
+2023-07-22 03:47:27.597 UTC [2690876] LOG:  database system is shut down
+2023-07-22 03:47:28.267 UTC [2691137] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:47:28.267 UTC [2691137] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:47:28.273 UTC [2691137] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:47:28.279 UTC [2691140] LOG:  database system was shut down at 2023-07-22 03:47:28 UTC
+2023-07-22 03:47:28.285 UTC [2691137] LOG:  database system is ready to accept connections
+2023-07-22 03:47:28.943 UTC [2691163] ERROR:  permission denied for function bt_index_check
+2023-07-22 03:47:28.943 UTC [2691163] STATEMENT:  SELECT bt_index_check('bttest_a_idx'::regclass);
+2023-07-22 03:47:28.944 UTC [2691163] ERROR:  permission denied for function bt_index_parent_check
+2023-07-22 03:47:28.944 UTC [2691163] STATEMENT:  SELECT bt_index_parent_check('bttest_a_idx'::regclass);
+2023-07-22 03:47:28.991 UTC [2691163] ERROR:  "bttest_a" is not an index
+2023-07-22 03:47:28.991 UTC [2691163] STATEMENT:  SELECT bt_index_check('bttest_a');
+2023-07-22 03:47:28.991 UTC [2691163] ERROR:  "bttest_a" is not an index
+2023-07-22 03:47:28.991 UTC [2691163] STATEMENT:  SELECT bt_index_parent_check('bttest_a');
+2023-07-22 03:47:28.991 UTC [2691163] ERROR:  could not open relation with OID 17
+2023-07-22 03:47:28.991 UTC [2691163] STATEMENT:  SELECT bt_index_check(17);
+2023-07-22 03:47:28.991 UTC [2691163] ERROR:  could not open relation with OID 17
+2023-07-22 03:47:28.991 UTC [2691163] STATEMENT:  SELECT bt_index_parent_check(17);
+2023-07-22 03:47:29.005 UTC [2691163] ERROR:  only B-Tree indexes are supported as targets for verification
+2023-07-22 03:47:29.005 UTC [2691163] DETAIL:  Relation "bttest_a_brin_idx" is not a B-Tree index.
+2023-07-22 03:47:29.005 UTC [2691163] STATEMENT:  SELECT bt_index_parent_check('bttest_a_brin_idx');
+2023-07-22 03:47:29.805 UTC [2691167] ERROR:  invalid skip option
+2023-07-22 03:47:29.805 UTC [2691167] HINT:  Valid skip options are "all-visible", "all-frozen", and "none".
+2023-07-22 03:47:29.805 UTC [2691167] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest', skip := 'rope');
+2023-07-22 03:47:29.810 UTC [2691167] ERROR:  permission denied for function verify_heapam
+2023-07-22 03:47:29.810 UTC [2691167] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest');
+2023-07-22 03:47:29.811 UTC [2691167] ERROR:  ending block number must be between 0 and 0
+2023-07-22 03:47:29.811 UTC [2691167] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest', startblock := 0, endblock := 10000);
+2023-07-22 03:47:29.811 UTC [2691167] ERROR:  starting block number must be between 0 and 0
+2023-07-22 03:47:29.811 UTC [2691167] STATEMENT:  SELECT * FROM verify_heapam(relation := 'heaptest', startblock := 10000, endblock := 11000);
+2023-07-22 03:47:29.813 UTC [2691167] ERROR:  cannot check relation "test_partitioned"
+2023-07-22 03:47:29.813 UTC [2691167] DETAIL:  This operation is not supported for partitioned tables.
+2023-07-22 03:47:29.813 UTC [2691167] STATEMENT:  SELECT * FROM verify_heapam('test_partitioned',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-22 03:47:29.851 UTC [2691167] ERROR:  cannot check relation "test_index"
+2023-07-22 03:47:29.851 UTC [2691167] DETAIL:  This operation is not supported for indexes.
+2023-07-22 03:47:29.851 UTC [2691167] STATEMENT:  SELECT * FROM verify_heapam('test_index',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-22 03:47:29.852 UTC [2691167] ERROR:  cannot check relation "test_view"
+2023-07-22 03:47:29.852 UTC [2691167] DETAIL:  This operation is not supported for views.
+2023-07-22 03:47:29.852 UTC [2691167] STATEMENT:  SELECT * FROM verify_heapam('test_view',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-22 03:47:29.857 UTC [2691167] ERROR:  cannot check relation "test_foreign_table"
+2023-07-22 03:47:29.857 UTC [2691167] DETAIL:  This operation is not supported for foreign tables.
+2023-07-22 03:47:29.857 UTC [2691167] STATEMENT:  SELECT * FROM verify_heapam('test_foreign_table',
+								startblock := NULL,
+								endblock := NULL);
+2023-07-22 03:48:01.452 UTC [2691138] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:48:01.599 UTC [2691138] LOG:  checkpoint complete: wrote 536 buffers (3.3%); 0 WAL file(s) added, 0 removed, 12 recycled; write=0.027 s, sync=0.063 s, total=0.148 s; sync files=282, longest=0.004 s, average=0.001 s; distance=198352 kB, estimate=198352 kB
+2023-07-22 03:48:33.131 UTC [2691138] LOG:  checkpoint starting: immediate force wait
+2023-07-22 03:48:33.217 UTC [2691138] LOG:  checkpoint complete: wrote 7 buffers (0.0%); 0 WAL file(s) added, 0 removed, 8 recycled; write=0.009 s, sync=0.009 s, total=0.087 s; sync files=4, longest=0.006 s, average=0.003 s; distance=133468 kB, estimate=191864 kB
+2023-07-22 03:48:33.285 UTC [2691137] LOG:  received fast shutdown request
+2023-07-22 03:48:33.290 UTC [2691137] LOG:  aborting any active transactions
+2023-07-22 03:48:33.291 UTC [2691137] LOG:  background worker "logical replication launcher" (PID 2691143) exited with exit code 1
+2023-07-22 03:48:33.292 UTC [2691138] LOG:  shutting down
+2023-07-22 03:48:33.299 UTC [2691138] LOG:  checkpoint starting: shutdown immediate
+2023-07-22 03:48:33.328 UTC [2691138] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.008 s, sync=0.003 s, total=0.037 s; sync files=1, longest=0.003 s, average=0.003 s; distance=0 kB, estimate=172677 kB
+2023-07-22 03:48:33.368 UTC [2691137] LOG:  database system is shut down
+2023-07-22 03:48:34.114 UTC [2691299] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-22 03:48:34.114 UTC [2691299] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-22 03:48:34.126 UTC [2691299] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-22 03:48:34.136 UTC [2691302] LOG:  database system was shut down at 2023-07-22 03:48:33 UTC
+2023-07-22 03:48:34.151 UTC [2691299] LOG:  database system is ready to accept connections
+2023-07-22 03:48:34.338 UTC [2691316] ERROR:  extension "auth_delay" is not available
+2023-07-22 03:48:34.338 UTC [2691316] DETAIL:  Could not open extension control file "/home/abigalek/pgext-cli-python/pg-15-dist/share/postgresql/extension/auth_delay.control": No such file or directory.
+2023-07-22 03:48:34.338 UTC [2691316] HINT:  The extension must first be installed on the system where PostgreSQL is running.
+2023-07-22 03:48:34.338 UTC [2691316] STATEMENT:  CREATE EXTENSION IF NOT EXISTS "auth_delay"

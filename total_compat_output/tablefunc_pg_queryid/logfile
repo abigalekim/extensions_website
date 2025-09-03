@@ -1,0 +1,42 @@
+2023-07-26 10:21:39.155 UTC [3464812] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 10:21:39.155 UTC [3464812] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 10:21:39.168 UTC [3464812] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 10:21:39.183 UTC [3464815] LOG:  database system was shut down at 2023-07-26 10:21:38 UTC
+2023-07-26 10:21:39.193 UTC [3464812] LOG:  database system is ready to accept connections
+2023-07-26 10:21:39.436 UTC [3464834] ERROR:  number of rows cannot be negative
+2023-07-26 10:21:39.436 UTC [3464834] STATEMENT:  SELECT avg(normal_rand)::int, count(*) FROM normal_rand(-1, 250, 0.2);
+2023-07-26 10:21:39.493 UTC [3464834] ERROR:  cache lookup failed for type 23
+2023-07-26 10:21:39.493 UTC [3464834] STATEMENT:  insert into cth values(DEFAULT,'test1','01 March 2003','temperature','42');
+2023-07-26 10:21:39.493 UTC [3464834] ERROR:  cache lookup failed for type 23
+2023-07-26 10:21:39.493 UTC [3464834] STATEMENT:  insert into cth values(DEFAULT,'test1','01 March 2003','test_result','PASS');
+2023-07-26 10:21:39.494 UTC [3464834] ERROR:  cache lookup failed for type 23
+2023-07-26 10:21:39.494 UTC [3464834] STATEMENT:  insert into cth values(DEFAULT,'test1','01 March 2003','volts','2.6987');
+2023-07-26 10:21:39.494 UTC [3464834] ERROR:  cache lookup failed for type 23
+2023-07-26 10:21:39.494 UTC [3464834] STATEMENT:  insert into cth values(DEFAULT,'test2','02 March 2003','temperature','53');
+2023-07-26 10:21:39.494 UTC [3464834] ERROR:  cache lookup failed for type 23
+2023-07-26 10:21:39.494 UTC [3464834] STATEMENT:  insert into cth values(DEFAULT,'test2','02 March 2003','test_result','FAIL');
+2023-07-26 10:21:39.495 UTC [3464834] ERROR:  cache lookup failed for type 23
+2023-07-26 10:21:39.495 UTC [3464834] STATEMENT:  insert into cth values(DEFAULT,'test2','02 March 2003','test_startdate','01 March 2003');
+2023-07-26 10:21:39.495 UTC [3464834] ERROR:  cache lookup failed for type 23
+2023-07-26 10:21:39.495 UTC [3464834] STATEMENT:  insert into cth values(DEFAULT,'test2','02 March 2003','volts','3.1234');
+2023-07-26 10:21:39.496 UTC [3464834] ERROR:  cache lookup failed for type 23
+2023-07-26 10:21:39.496 UTC [3464834] STATEMENT:  insert into cth values(DEFAULT,NULL,'25 October 2007','temperature','57');
+2023-07-26 10:21:39.496 UTC [3464834] ERROR:  cache lookup failed for type 23
+2023-07-26 10:21:39.496 UTC [3464834] STATEMENT:  insert into cth values(DEFAULT,NULL,'25 October 2007','test_result','PASS');
+2023-07-26 10:21:39.496 UTC [3464834] ERROR:  cache lookup failed for type 23
+2023-07-26 10:21:39.496 UTC [3464834] STATEMENT:  insert into cth values(DEFAULT,NULL,'25 October 2007','test_startdate','24 October 2007');
+2023-07-26 10:21:39.497 UTC [3464834] ERROR:  cache lookup failed for type 23
+2023-07-26 10:21:39.497 UTC [3464834] STATEMENT:  insert into cth values(DEFAULT,NULL,'25 October 2007','volts','1.41234');
+2023-07-26 10:21:39.570 UTC [3464834] ERROR:  infinite recursion detected
+2023-07-26 10:21:39.570 UTC [3464834] STATEMENT:  SELECT * FROM connectby('connectby_int', 'keyid', 'parent_keyid', '2', 0, '~') AS t(keyid int, parent_keyid int, level int, branch text);
+2023-07-26 10:21:39.572 UTC [3464834] ERROR:  invalid return type
+2023-07-26 10:21:39.572 UTC [3464834] DETAIL:  First two columns must be the same type.
+2023-07-26 10:21:39.572 UTC [3464834] STATEMENT:  SELECT * FROM connectby('connectby_int', 'keyid', 'parent_keyid', '2', 0, '~') AS t(keyid text, parent_keyid int, level int, branch text);
+2023-07-26 10:21:39.573 UTC [3464834] ERROR:  invalid return type
+2023-07-26 10:21:39.573 UTC [3464834] DETAIL:  SQL key field type double precision does not match return key field type integer.
+2023-07-26 10:21:39.573 UTC [3464834] STATEMENT:  SELECT * FROM connectby('connectby_int', 'keyid', 'parent_keyid', '2', 0, '~') AS t(keyid float8, parent_keyid float8, level int, branch text);
+2023-07-26 10:21:39.574 UTC [3464834] ERROR:  invalid return type
+2023-07-26 10:21:39.574 UTC [3464834] DETAIL:  Query must return at least two columns.
+2023-07-26 10:21:39.574 UTC [3464834] STATEMENT:  SELECT * FROM connectby('connectby_int', '1; --', 'parent_keyid', '2', 0) AS t(keyid int, parent_keyid int, level int);
+2023-07-26 10:21:39.575 UTC [3464834] ERROR:  infinite recursion detected
+2023-07-26 10:21:39.575 UTC [3464834] STATEMENT:  SELECT * FROM connectby('connectby_int', '1::int, NULL::int; --', 'parent_keyid', '2', 0) AS t(keyid int, parent_keyid int, level int);

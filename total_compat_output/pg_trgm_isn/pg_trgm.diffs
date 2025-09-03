@@ -1,0 +1,48 @@
+diff -U3 /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/pg_trgm/expected/pg_trgm.out /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/pg_trgm/results/pg_trgm.out
+--- /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/pg_trgm/expected/pg_trgm.out	2023-05-08 21:13:20.000000000 +0000
++++ /home/abigalek/pgext-cli-python/postgresql-15.3/contrib/pg_trgm/results/pg_trgm.out	2023-07-26 14:57:55.474558697 +0000
+@@ -3,9 +3,41 @@
+ SELECT amname, opcname
+ FROM pg_opclass opc LEFT JOIN pg_am am ON am.oid = opcmethod
+ WHERE opc.oid >= 16384 AND NOT amvalidate(opc.oid);
+- amname | opcname 
+---------+---------
+-(0 rows)
++INFO:  operator family "isn_ops" of access method btree is missing cross-type operator(s)
++INFO:  operator family "isn_ops" of access method hash is missing cross-type operator(s)
++INFO:  operator family "isn_ops" of access method btree is missing cross-type operator(s)
++INFO:  operator family "isn_ops" of access method hash is missing cross-type operator(s)
++INFO:  operator family "isn_ops" of access method btree is missing cross-type operator(s)
++INFO:  operator family "isn_ops" of access method hash is missing cross-type operator(s)
++INFO:  operator family "isn_ops" of access method btree is missing cross-type operator(s)
++INFO:  operator family "isn_ops" of access method hash is missing cross-type operator(s)
++INFO:  operator family "isn_ops" of access method btree is missing cross-type operator(s)
++INFO:  operator family "isn_ops" of access method hash is missing cross-type operator(s)
++INFO:  operator family "isn_ops" of access method btree is missing cross-type operator(s)
++INFO:  operator family "isn_ops" of access method hash is missing cross-type operator(s)
++INFO:  operator family "isn_ops" of access method btree is missing cross-type operator(s)
++INFO:  operator family "isn_ops" of access method hash is missing cross-type operator(s)
++INFO:  operator family "isn_ops" of access method btree is missing cross-type operator(s)
++INFO:  operator family "isn_ops" of access method hash is missing cross-type operator(s)
++ amname |  opcname   
++--------+------------
++ btree  | ean13_ops
++ hash   | ean13_ops
++ btree  | isbn13_ops
++ hash   | isbn13_ops
++ btree  | isbn_ops
++ hash   | isbn_ops
++ btree  | ismn13_ops
++ hash   | ismn13_ops
++ btree  | ismn_ops
++ hash   | ismn_ops
++ btree  | issn13_ops
++ hash   | issn13_ops
++ btree  | issn_ops
++ hash   | issn_ops
++ btree  | upc_ops
++ hash   | upc_ops
++(16 rows)
+ 
+ --backslash is used in tests below, installcheck will fail if
+ --standard_conforming_string is off

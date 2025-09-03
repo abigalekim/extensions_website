@@ -1,0 +1,151 @@
+CREATE FUNCTION test_sql_error() RETURNS void AS $$ plv8.execute("ERROR") $$ LANGUAGE plv8;
+ERROR:  language "plv8" does not exist
+SELECT test_sql_error();
+ERROR:  function test_sql_error() does not exist
+LINE 1: SELECT test_sql_error();
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+CREATE FUNCTION catch_sql_error() RETURNS void AS $$
+try {
+	plv8.execute("throw SQL error");
+	plv8.elog(NOTICE, "should not come here");
+} catch (e) {
+	plv8.elog(NOTICE, e);
+}
+$$ LANGUAGE plv8;
+ERROR:  language "plv8" does not exist
+SELECT catch_sql_error();
+ERROR:  function catch_sql_error() does not exist
+LINE 1: SELECT catch_sql_error();
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+CREATE FUNCTION catch_sql_error_2() RETURNS text AS $$
+try {
+	plv8.execute("throw SQL error");
+	plv8.elog(NOTICE, "should not come here");
+} catch (e) {
+	plv8.elog(NOTICE, e);
+	return plv8.execute("select 'and can execute queries again' t").shift().t;
+}
+$$ LANGUAGE plv8;
+ERROR:  language "plv8" does not exist
+SELECT catch_sql_error_2();
+ERROR:  function catch_sql_error_2() does not exist
+LINE 1: SELECT catch_sql_error_2();
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+CREATE FUNCTION catch_sql_error_3() RETURNS text AS $$
+try {
+	plv8.execute("throw SQL error");
+	plv8.elog(NOTICE, "should not come here");
+} catch (e) {
+	plv8.elog(NOTICE, e.sqlerrcode);
+	return e.sqlerrcode;
+}
+$$ LANGUAGE plv8;
+ERROR:  language "plv8" does not exist
+SELECT catch_sql_error_3();
+ERROR:  function catch_sql_error_3() does not exist
+LINE 1: SELECT catch_sql_error_3();
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+-- subtransaction()
+CREATE TABLE subtrant(a int);
+CREATE FUNCTION test_subtransaction_catch() RETURNS void AS $$
+try {
+	plv8.subtransaction(function(){
+		plv8.execute("INSERT INTO subtrant VALUES(1)");
+		plv8.execute("INSERT INTO subtrant VALUES(1/0)");
+	});
+} catch (e) {
+	plv8.elog(NOTICE, e);
+	plv8.execute("INSERT INTO subtrant VALUES(2)");
+}
+$$ LANGUAGE plv8;
+ERROR:  language "plv8" does not exist
+SELECT test_subtransaction_catch();
+ERROR:  function test_subtransaction_catch() does not exist
+LINE 1: SELECT test_subtransaction_catch();
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+SELECT * FROM subtrant;
+ a 
+---
+(0 rows)
+
+TRUNCATE subtrant;
+CREATE FUNCTION test_subtransaction_throw() RETURNS void AS $$
+plv8.subtransaction(function(){
+	plv8.execute("INSERT INTO subtrant VALUES(1)");
+	plv8.execute("INSERT INTO subtrant VALUES(1/0)");
+});
+$$ LANGUAGE plv8;
+ERROR:  language "plv8" does not exist
+SELECT test_subtransaction_throw();
+ERROR:  function test_subtransaction_throw() does not exist
+LINE 1: SELECT test_subtransaction_throw();
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+SELECT * FROM subtrant;
+ a 
+---
+(0 rows)
+
+-- exception handling
+CREATE OR REPLACE FUNCTION v8_test_throw() RETURNS float AS
+$$ 
+throw new Error('Error');
+$$
+LANGUAGE plv8;
+ERROR:  language "plv8" does not exist
+CREATE OR REPLACE FUNCTION v8_test_catch_throw() RETURNS text AS
+$$
+ try{
+   var res = plv8.execute('select * from  v8_test_throw()');
+ } catch(e) {
+   return JSON.stringify({"result": "error"});
+ }
+$$
+language plv8;
+ERROR:  language "plv8" does not exist
+SELECT v8_test_catch_throw();
+ERROR:  function v8_test_catch_throw() does not exist
+LINE 1: SELECT v8_test_catch_throw();
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+CREATE FUNCTION catch_elog_error() RETURNS void AS $$
+function f (){
+}
+f.prototype.toString = function(){
+        throw 'custom exception';
+}
+try {
+	plv8.elog(NOTICE, (new f));
+	plv8.elog(NOTICE, "should not come here");
+} catch (e) {
+	plv8.elog(NOTICE, 'catch result:'+ e);
+}
+$$ LANGUAGE plv8;
+ERROR:  language "plv8" does not exist
+SELECT catch_elog_error();
+ERROR:  function catch_elog_error() does not exist
+LINE 1: SELECT catch_elog_error();
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+CREATE FUNCTION catch_elog_error2() RETURNS void AS $$
+function f (){
+}
+f.prototype.toString = function(){
+        throw 'custom exception';
+}
+
+plv8.elog(NOTICE, (new f));
+plv8.elog(NOTICE, "should not come here");
+
+$$ LANGUAGE plv8;
+ERROR:  language "plv8" does not exist
+SELECT catch_elog_error2();
+ERROR:  function catch_elog_error2() does not exist
+LINE 1: SELECT catch_elog_error2();
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.

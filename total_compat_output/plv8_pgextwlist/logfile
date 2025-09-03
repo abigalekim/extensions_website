@@ -1,0 +1,170 @@
+2023-07-26 02:54:37.471 UTC [3376784] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-26 02:54:37.472 UTC [3376784] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-26 02:54:37.478 UTC [3376784] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-26 02:54:37.487 UTC [3376787] LOG:  database system was shut down at 2023-07-26 02:54:37 UTC
+2023-07-26 02:54:37.494 UTC [3376784] LOG:  database system is ready to accept connections
+2023-07-26 02:54:37.760 UTC [3376811] ERROR:  invalid input syntax for type integer: "abc"
+2023-07-26 02:54:37.760 UTC [3376811] STATEMENT:  SELECT text_to_int4('abc');
+2023-07-26 02:54:37.790 UTC [3376811] ERROR:  a column definition list is required for functions returning "record" at character 15
+2023-07-26 02:54:37.790 UTC [3376811] STATEMENT:  SELECT * FROM return_record(1, 'a');
+2023-07-26 02:54:37.791 UTC [3376811] ERROR:  input of anonymous composite types is not implemented
+2023-07-26 02:54:37.791 UTC [3376811] STATEMENT:  SELECT * FROM return_record(1, 'a') AS t(j integer, s text);
+2023-07-26 02:54:37.791 UTC [3376811] ERROR:  input of anonymous composite types is not implemented
+2023-07-26 02:54:37.791 UTC [3376811] STATEMENT:  SELECT * FROM return_record(1, 'a') AS t(x text, y text);
+2023-07-26 02:54:37.799 UTC [3376811] ERROR:  argument must be an object
+2023-07-26 02:54:37.799 UTC [3376811] CONTEXT:  set_of_record_but_non_obj() LINE 2: 	plv8.return_next( "abc" );
+2023-07-26 02:54:37.799 UTC [3376811] STATEMENT:  SELECT * FROM set_of_record_but_non_obj();
+2023-07-26 02:54:37.806 UTC [3376811] ERROR:  function returning record called in context that cannot accept type record
+2023-07-26 02:54:37.806 UTC [3376811] STATEMENT:  SELECT set_of_unnamed_records();
+2023-07-26 02:54:37.810 UTC [3376811] ERROR:  field name / property name mismatch
+2023-07-26 02:54:37.810 UTC [3376811] CONTEXT:  set_of_unnamed_records() LINE 2:     plv8.return_next({"a": 1, "b": 2}); 
+2023-07-26 02:54:37.810 UTC [3376811] STATEMENT:  SELECT * FROM set_of_unnamed_records() AS x(a int, c int);
+2023-07-26 02:54:37.812 UTC [3376811] ERROR:  value is not an Array
+2023-07-26 02:54:37.812 UTC [3376811] STATEMENT:  SELECT bogus_return_type();
+2023-07-26 02:54:37.819 UTC [3376811] ERROR:  NULL element, or multi-dimension array not allowed in external array type
+2023-07-26 02:54:37.819 UTC [3376811] STATEMENT:  SELECT fastsum(ARRAY[NULL, 2]);
+2023-07-26 02:54:37.821 UTC [3376811] WARNING:  warning
+2023-07-26 02:54:37.821 UTC [3376811] ERROR:  FATAL is not allowed
+2023-07-26 02:54:37.821 UTC [3376811] CONTEXT:  test_elog() LINE 9: 	plv8.elog(21, 'FATAL is not allowed');
+2023-07-26 02:54:37.821 UTC [3376811] STATEMENT:  SELECT test_elog('ABC');
+2023-07-26 02:54:37.881 UTC [3376811] ERROR:  SyntaxError: Invalid or unexpected token
+2023-07-26 02:54:37.881 UTC [3376811] CONTEXT:  syntax_error() LINE 1: @
+2023-07-26 02:54:37.881 UTC [3376811] STATEMENT:  CREATE FUNCTION syntax_error() RETURNS text AS '@' LANGUAGE plv8;
+2023-07-26 02:54:37.884 UTC [3376811] ERROR:  ReferenceError: not_defined is not defined
+2023-07-26 02:54:37.884 UTC [3376811] CONTEXT:  reference_error() LINE 1: not_defined
+2023-07-26 02:54:37.884 UTC [3376811] STATEMENT:  SELECT reference_error();
+2023-07-26 02:54:37.887 UTC [3376811] ERROR:  an error
+2023-07-26 02:54:37.887 UTC [3376811] CONTEXT:  throw() LINE 1: throw new Error("an error");
+2023-07-26 02:54:37.887 UTC [3376811] STATEMENT:  SELECT throw();
+2023-07-26 02:54:37.896 UTC [3376811] WARNING:  Error: plan expected -1 argument(s), given is 0
+2023-07-26 02:54:37.897 UTC [3376811] WARNING:  Error: cannot find cursor
+2023-07-26 02:54:37.908 UTC [3376811] ERROR:  javascript function is not found for "sqlf"
+2023-07-26 02:54:37.908 UTC [3376811] CONTEXT:  caller() LINE 8:     func = plv8.find_function("sqlf");
+2023-07-26 02:54:37.908 UTC [3376811] STATEMENT:  SELECT caller(10, 3);
+2023-07-26 02:54:37.909 UTC [3376811] ERROR:  function "callee(int, int)" does not exist
+2023-07-26 02:54:37.909 UTC [3376811] CONTEXT:  caller() LINE 10:     func = plv8.find_function("callee(int, int)");
+2023-07-26 02:54:37.909 UTC [3376811] STATEMENT:  SELECT caller(10, 4);
+2023-07-26 02:54:37.924 UTC [3376811] ERROR:  relation "t" does not exist at character 28
+2023-07-26 02:54:37.924 UTC [3376811] STATEMENT:  SELECT f_attdrop(t.*) FROM t;
+2023-07-26 02:54:38.049 UTC [3376828] ERROR:  syntax error at or near "ERROR"
+2023-07-26 02:54:38.049 UTC [3376828] CONTEXT:  test_sql_error() LINE 1:  plv8.execute("ERROR") 
+2023-07-26 02:54:38.049 UTC [3376828] STATEMENT:  SELECT test_sql_error();
+2023-07-26 02:54:38.061 UTC [3376828] ERROR:  division by zero
+2023-07-26 02:54:38.061 UTC [3376828] CONTEXT:  test_subtransaction_throw() LINE 2: plv8.subtransaction(function(){
+2023-07-26 02:54:38.061 UTC [3376828] STATEMENT:  SELECT test_subtransaction_throw();
+2023-07-26 02:54:38.067 UTC [3376828] ERROR:  custom exception
+2023-07-26 02:54:38.067 UTC [3376828] CONTEXT:  catch_elog_error2() LINE 5:         throw 'custom exception';
+2023-07-26 02:54:38.067 UTC [3376828] STATEMENT:  SELECT catch_elog_error2();
+2023-07-26 02:54:38.107 UTC [3376839] ERROR:  return_next called in context that cannot accept a set
+2023-07-26 02:54:38.107 UTC [3376839] CONTEXT:  undefined() LINE 1:  plv8.return_next(new Object());
+2023-07-26 02:54:38.107 UTC [3376839] STATEMENT:  DO $$ plv8.return_next(new Object());$$ LANGUAGE plv8;
+2023-07-26 02:54:38.279 UTC [3376872] WARNING:  failed to find js function function "foo" does not exist
+2023-07-26 02:54:38.279 UTC [3376872] ERROR:  ReferenceError: foo is not defined
+2023-07-26 02:54:38.279 UTC [3376872] CONTEXT:  undefined() LINE 1:  plv8.elog(NOTICE, 'foo = ' + foo) 
+2023-07-26 02:54:38.279 UTC [3376872] STATEMENT:  do $$ plv8.elog(NOTICE, 'foo = ' + foo) $$ language plv8;
+2023-07-26 02:54:38.336 UTC [3376880] ERROR:  ReferenceError: foo is not defined
+2023-07-26 02:54:38.336 UTC [3376880] CONTEXT:  undefined() LINE 1:  plv8.elog(NOTICE, 'foo = ' + foo) 
+2023-07-26 02:54:38.336 UTC [3376880] STATEMENT:  do $$ plv8.elog(NOTICE, 'foo = ' + foo) $$ language plv8;
+2023-07-26 02:54:38.599 UTC [3376926] ERROR:  window local memory overflow
+2023-07-26 02:54:38.599 UTC [3376926] CONTEXT:  bad_alloc() LINE 5:   winobj.set_partition_local(context);
+2023-07-26 02:54:38.599 UTC [3376926] STATEMENT:  SELECT bad_alloc('5') OVER ();
+2023-07-26 02:54:38.599 UTC [3376926] ERROR:  window local memory overflow
+2023-07-26 02:54:38.599 UTC [3376926] CONTEXT:  bad_alloc() LINE 5:   winobj.set_partition_local(context);
+2023-07-26 02:54:38.599 UTC [3376926] STATEMENT:  SELECT bad_alloc('not a number') OVER ();
+2023-07-26 02:54:38.601 UTC [3376926] ERROR:  get_window_object called in wrong context
+2023-07-26 02:54:38.601 UTC [3376926] CONTEXT:  non_window() LINE 2:   var winobj = plv8.get_window_object();
+2023-07-26 02:54:38.601 UTC [3376926] STATEMENT:  SELECT non_window();
+2023-07-26 02:54:38.921 UTC [3376992] WARNING:  failed to find js function start
+2023-07-26 02:54:39.025 UTC [3377014] WARNING:  failed to find or no permission for js function perm
+2023-07-26 02:54:39.025 UTC [3377014] WARNING:  failed to find or no permission for js function perm()
+2023-07-26 02:54:39.075 UTC [3377025] ERROR:  RangeError: Array buffer allocation failed
+2023-07-26 02:54:39.075 UTC [3377025] CONTEXT:  undefined() LINE 3:   const a = new ArrayBuffer(limit*1024*1024);
+2023-07-26 02:54:39.075 UTC [3377025] STATEMENT:  do $$
+	  const limit = plv8.execute(`select setting from pg_settings where name = $1`, ['plv8.memory_limit'])[0].setting;
+	  const a = new ArrayBuffer(limit*1024*1024);
+	$$ language plv8;
+2023-07-26 02:54:43.460 UTC [3377025] ERROR:  RangeError: Array buffer allocation failed
+2023-07-26 02:54:43.460 UTC [3377025] CONTEXT:  undefined() LINE 6:     s.push(new ArrayBuffer(63)) // small non-aligned allocations
+2023-07-26 02:54:43.460 UTC [3377025] STATEMENT:  do $$
+	  const limit = plv8.execute(`select setting from pg_settings where name = $1`, ['plv8.memory_limit'])[0].setting;
+	  const a = new ArrayBuffer(limit*1024*1024/1.5);
+	  const s = [];
+	  while(true) {
+	    s.push(new ArrayBuffer(63)) // small non-aligned allocations
+	  }
+	$$ language plv8;
+2023-07-26 02:54:43.524 UTC [3377036] ERROR:  ReferenceError: ctx_value is not defined
+2023-07-26 02:54:43.524 UTC [3377036] CONTEXT:  test_context_value() LINE 2:     return ctx_value;    
+2023-07-26 02:54:43.524 UTC [3377036] STATEMENT:  SELECT test_context_value();
+
+<--- Last few GCs --->
+
+[3377064:0x55faa3c82eb0]    51554 ms: Mark-sweep 443.8 (445.5) -> 266.4 (268.1) MB, 776.4 / 0.0 ms  (average mu = 0.959, current mu = 0.955) allocation failure scavenge might not succeed
+
+
+<--- JS stacktrace --->
+
+2023-07-26 02:55:35.146 UTC [3377064] ERROR:  Out of memory error
+2023-07-26 02:55:35.146 UTC [3377064] STATEMENT:  do $$
+	  Object.prototype[Symbol.iterator] = function() {
+	     return {
+	       next:() => this
+	     }
+	  };
+	  [...({})];
+	$$ language plv8;
+2023-07-26 02:55:35.146 UTC [3377064] LOG:  Disposing of a dead isolate for: abigalek
+2023-07-26 02:55:35.146 UTC [3377064] STATEMENT:  do $$
+	  Object.prototype[Symbol.iterator] = function() {
+	     return {
+	       next:() => this
+	     }
+	  };
+	  [...({})];
+	$$ language plv8;
+
+<--- Last few GCs --->
+
+[3377064:0x55faa3d17b80]    51526 ms: Mark-sweep 443.8 (445.5) -> 266.4 (268.1) MB, 800.4 / 0.0 ms  (average mu = 0.958, current mu = 0.954) allocation failure scavenge might not succeed
+
+
+<--- JS stacktrace --->
+
+2023-07-26 02:56:26.691 UTC [3377064] ERROR:  Out of memory error
+2023-07-26 02:56:26.691 UTC [3377064] STATEMENT:  do $$
+	  Object.prototype[Symbol.iterator] = function() {
+	     return {
+	       next:() => this
+	     }
+	  };
+	  [...({})];
+	$$ language plv8;
+2023-07-26 02:56:26.728 UTC [3377186] ERROR:  cannot find cursor
+2023-07-26 02:56:26.728 UTC [3377186] CONTEXT:  undefined() LINE 2:   plv8.prepare('SELECT * FROM (VALUES (1)) AS foo').cursor().fetch.apply(null)
+2023-07-26 02:56:26.728 UTC [3377186] STATEMENT:  DO $$
+	  plv8.prepare('SELECT * FROM (VALUES (1)) AS foo').cursor().fetch.apply(null)
+	$$ language plv8;
+2023-07-26 02:56:26.735 UTC [3376785] LOG:  checkpoint starting: immediate force wait
+2023-07-26 02:56:26.767 UTC [3376785] LOG:  checkpoint complete: wrote 55 buffers (0.3%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.010 s, sync=0.010 s, total=0.032 s; sync files=20, longest=0.007 s, average=0.001 s; distance=4670 kB, estimate=4670 kB
+2023-07-26 02:56:26.905 UTC [3376784] LOG:  received SIGHUP, reloading configuration files
+2023-07-26 02:56:26.906 UTC [3376784] LOG:  parameter "session_preload_libraries" changed to "pgextwlist"
+2023-07-26 02:56:26.906 UTC [3376784] LOG:  parameter "extwlist.extensions" changed to "citext,earthdistance,pg_trgm,pg_stat_statements,refint"
+2023-07-26 02:56:26.907 UTC [3376784] LOG:  parameter "extwlist.custom_path" changed to "/home/abigalek/pgext-cli-python/pgextworkdir/pgextwlist-1.15/test-scripts"
+2023-07-26 02:56:26.983 UTC [3377226] ERROR:  extension "plpgsql" already exists
+2023-07-26 02:56:26.983 UTC [3377226] STATEMENT:  CREATE EXTENSION plpgsql;
+2023-07-26 02:56:26.983 UTC [3377226] ERROR:  extension "hstore" does not exist
+2023-07-26 02:56:26.983 UTC [3377226] STATEMENT:  COMMENT ON EXTENSION hstore IS 'plpgsql comment';
+2023-07-26 02:56:26.984 UTC [3377226] ERROR:  permission denied to create extension "hstore"
+2023-07-26 02:56:26.984 UTC [3377226] HINT:  Must have CREATE privilege on current database to create this extension.
+2023-07-26 02:56:26.984 UTC [3377226] STATEMENT:  CREATE EXTENSION hstore;
+2023-07-26 02:56:26.984 UTC [3377226] ERROR:  extension "hstore" does not exist
+2023-07-26 02:56:26.984 UTC [3377226] STATEMENT:  COMMENT ON EXTENSION hstore IS 'hstore comment';
+2023-07-26 02:56:26.984 UTC [3377226] ERROR:  required extension "cube" is not installed
+2023-07-26 02:56:26.984 UTC [3377226] HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+2023-07-26 02:56:26.984 UTC [3377226] STATEMENT:  CREATE EXTENSION earthdistance;
+2023-07-26 02:56:26.985 UTC [3377226] ERROR:  must be owner of extension plpgsql
+2023-07-26 02:56:26.985 UTC [3377226] STATEMENT:  DROP EXTENSION plpgsql;
+2023-07-26 02:56:27.002 UTC [3377234] ERROR:  cannot drop extension citext because other objects depend on it
+2023-07-26 02:56:27.002 UTC [3377234] DETAIL:  column t of table mere_table depends on type citext
+2023-07-26 02:56:27.002 UTC [3377234] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-07-26 02:56:27.002 UTC [3377234] STATEMENT:  DROP EXTENSION citext;

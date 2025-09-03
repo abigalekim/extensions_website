@@ -1,0 +1,1728 @@
+--
+--  Test earthdistance extension
+--
+-- In this file we also do some testing of extension create/drop scenarios.
+-- That's really exercising the core database's dependency logic, so ideally
+-- we'd do it in the core regression tests, but we can't for lack of suitable
+-- guaranteed-available extensions.  earthdistance is a good test case because
+-- it has a dependency on the cube extension.
+--
+CREATE EXTENSION earthdistance;  -- fail, must install cube first
+ERROR:  required extension "cube" is not installed
+HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+CREATE EXTENSION cube;
+CREATE EXTENSION earthdistance;
+--
+-- The radius of the Earth we are using.
+--
+SELECT earth()::numeric(20,5);
+     earth     
+---------------
+ 6378168.00000
+(1 row)
+
+--
+-- Convert straight line distances to great circle distances.
+--
+SELECT (pi()*earth())::numeric(20,5);
+    numeric     
+----------------
+ 20037605.73216
+(1 row)
+
+SELECT sec_to_gc(0)::numeric(20,5);
+ sec_to_gc 
+-----------
+   0.00000
+(1 row)
+
+SELECT sec_to_gc(2*earth())::numeric(20,5);
+   sec_to_gc    
+----------------
+ 20037605.73216
+(1 row)
+
+SELECT sec_to_gc(10*earth())::numeric(20,5);
+   sec_to_gc    
+----------------
+ 20037605.73216
+(1 row)
+
+SELECT sec_to_gc(-earth())::numeric(20,5);
+ sec_to_gc 
+-----------
+   0.00000
+(1 row)
+
+SELECT sec_to_gc(1000)::numeric(20,5);
+ sec_to_gc  
+------------
+ 1000.00000
+(1 row)
+
+SELECT sec_to_gc(10000)::numeric(20,5);
+  sec_to_gc  
+-------------
+ 10000.00102
+(1 row)
+
+SELECT sec_to_gc(100000)::numeric(20,5);
+  sec_to_gc   
+--------------
+ 100001.02426
+(1 row)
+
+SELECT sec_to_gc(1000000)::numeric(20,5);
+   sec_to_gc   
+---------------
+ 1001027.07131
+(1 row)
+
+--
+-- Convert great circle distances to straight line distances.
+--
+SELECT gc_to_sec(0)::numeric(20,5);
+ gc_to_sec 
+-----------
+   0.00000
+(1 row)
+
+SELECT gc_to_sec(sec_to_gc(2*earth()))::numeric(20,5);
+   gc_to_sec    
+----------------
+ 12756336.00000
+(1 row)
+
+SELECT gc_to_sec(10*earth())::numeric(20,5);
+   gc_to_sec    
+----------------
+ 12756336.00000
+(1 row)
+
+SELECT gc_to_sec(pi()*earth())::numeric(20,5);
+   gc_to_sec    
+----------------
+ 12756336.00000
+(1 row)
+
+SELECT gc_to_sec(-1000)::numeric(20,5);
+ gc_to_sec 
+-----------
+   0.00000
+(1 row)
+
+SELECT gc_to_sec(1000)::numeric(20,5);
+ gc_to_sec  
+------------
+ 1000.00000
+(1 row)
+
+SELECT gc_to_sec(10000)::numeric(20,5);
+ gc_to_sec  
+------------
+ 9999.99898
+(1 row)
+
+SELECT gc_to_sec(100000)::numeric(20,5);
+  gc_to_sec  
+-------------
+ 99998.97577
+(1 row)
+
+SELECT gc_to_sec(1000000)::numeric(20,5);
+  gc_to_sec   
+--------------
+ 998976.08618
+(1 row)
+
+--
+-- Set coordinates using latitude and longitude.
+-- Extract each coordinate separately so we can round them.
+--
+SELECT cube_ll_coord(ll_to_earth(0,0),1)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(0,0),2)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(0,0),3)::numeric(20,5);
+ cube_ll_coord | cube_ll_coord | cube_ll_coord 
+---------------+---------------+---------------
+ 6378168.00000 |       0.00000 |       0.00000
+(1 row)
+
+SELECT cube_ll_coord(ll_to_earth(360,360),1)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(360,360),2)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(360,360),3)::numeric(20,5);
+ cube_ll_coord | cube_ll_coord | cube_ll_coord 
+---------------+---------------+---------------
+ 6378168.00000 |       0.00000 |       0.00000
+(1 row)
+
+SELECT cube_ll_coord(ll_to_earth(180,180),1)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(180,180),2)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(180,180),3)::numeric(20,5);
+ cube_ll_coord | cube_ll_coord | cube_ll_coord 
+---------------+---------------+---------------
+ 6378168.00000 |       0.00000 |       0.00000
+(1 row)
+
+SELECT cube_ll_coord(ll_to_earth(180,360),1)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(180,360),2)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(180,360),3)::numeric(20,5);
+ cube_ll_coord  | cube_ll_coord | cube_ll_coord 
+----------------+---------------+---------------
+ -6378168.00000 |       0.00000 |       0.00000
+(1 row)
+
+SELECT cube_ll_coord(ll_to_earth(-180,-360),1)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(-180,-360),2)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(-180,-360),3)::numeric(20,5);
+ cube_ll_coord  | cube_ll_coord | cube_ll_coord 
+----------------+---------------+---------------
+ -6378168.00000 |       0.00000 |       0.00000
+(1 row)
+
+SELECT cube_ll_coord(ll_to_earth(0,180),1)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(0,180),2)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(0,180),3)::numeric(20,5);
+ cube_ll_coord  | cube_ll_coord | cube_ll_coord 
+----------------+---------------+---------------
+ -6378168.00000 |       0.00000 |       0.00000
+(1 row)
+
+SELECT cube_ll_coord(ll_to_earth(0,-180),1)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(0,-180),2)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(0,-180),3)::numeric(20,5);
+ cube_ll_coord  | cube_ll_coord | cube_ll_coord 
+----------------+---------------+---------------
+ -6378168.00000 |       0.00000 |       0.00000
+(1 row)
+
+SELECT cube_ll_coord(ll_to_earth(90,0),1)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(90,0),2)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(90,0),3)::numeric(20,5);
+ cube_ll_coord | cube_ll_coord | cube_ll_coord 
+---------------+---------------+---------------
+       0.00000 |       0.00000 | 6378168.00000
+(1 row)
+
+SELECT cube_ll_coord(ll_to_earth(90,180),1)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(90,180),2)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(90,180),3)::numeric(20,5);
+ cube_ll_coord | cube_ll_coord | cube_ll_coord 
+---------------+---------------+---------------
+       0.00000 |       0.00000 | 6378168.00000
+(1 row)
+
+SELECT cube_ll_coord(ll_to_earth(-90,0),1)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(-90,0),2)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(-90,0),3)::numeric(20,5);
+ cube_ll_coord | cube_ll_coord | cube_ll_coord  
+---------------+---------------+----------------
+       0.00000 |       0.00000 | -6378168.00000
+(1 row)
+
+SELECT cube_ll_coord(ll_to_earth(-90,180),1)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(-90,180),2)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(-90,180),3)::numeric(20,5);
+ cube_ll_coord | cube_ll_coord | cube_ll_coord  
+---------------+---------------+----------------
+       0.00000 |       0.00000 | -6378168.00000
+(1 row)
+
+--
+-- Test getting the latitude of a location.
+--
+SELECT latitude(ll_to_earth(0,0))::numeric(20,10);
+   latitude   
+--------------
+ 0.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(45,0))::numeric(20,10);
+   latitude    
+---------------
+ 45.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(90,0))::numeric(20,10);
+   latitude    
+---------------
+ 90.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(-45,0))::numeric(20,10);
+    latitude    
+----------------
+ -45.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(-90,0))::numeric(20,10);
+    latitude    
+----------------
+ -90.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(0,90))::numeric(20,10);
+   latitude   
+--------------
+ 0.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(45,90))::numeric(20,10);
+   latitude    
+---------------
+ 45.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(90,90))::numeric(20,10);
+   latitude    
+---------------
+ 90.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(-45,90))::numeric(20,10);
+    latitude    
+----------------
+ -45.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(-90,90))::numeric(20,10);
+    latitude    
+----------------
+ -90.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(0,180))::numeric(20,10);
+   latitude   
+--------------
+ 0.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(45,180))::numeric(20,10);
+   latitude    
+---------------
+ 45.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(90,180))::numeric(20,10);
+   latitude    
+---------------
+ 90.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(-45,180))::numeric(20,10);
+    latitude    
+----------------
+ -45.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(-90,180))::numeric(20,10);
+    latitude    
+----------------
+ -90.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(0,-90))::numeric(20,10);
+   latitude   
+--------------
+ 0.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(45,-90))::numeric(20,10);
+   latitude    
+---------------
+ 45.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(90,-90))::numeric(20,10);
+   latitude    
+---------------
+ 90.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(-45,-90))::numeric(20,10);
+    latitude    
+----------------
+ -45.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(-90,-90))::numeric(20,10);
+    latitude    
+----------------
+ -90.0000000000
+(1 row)
+
+--
+-- Test getting the longitude of a location.
+--
+SELECT longitude(ll_to_earth(0,0))::numeric(20,10);
+  longitude   
+--------------
+ 0.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(45,0))::numeric(20,10);
+  longitude   
+--------------
+ 0.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(90,0))::numeric(20,10);
+  longitude   
+--------------
+ 0.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(-45,0))::numeric(20,10);
+  longitude   
+--------------
+ 0.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(-90,0))::numeric(20,10);
+  longitude   
+--------------
+ 0.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(0,90))::numeric(20,10);
+   longitude   
+---------------
+ 90.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(45,90))::numeric(20,10);
+   longitude   
+---------------
+ 90.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(90,90))::numeric(20,10);
+   longitude   
+---------------
+ 90.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(-45,90))::numeric(20,10);
+   longitude   
+---------------
+ 90.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(-90,90))::numeric(20,10);
+   longitude   
+---------------
+ 90.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(0,180))::numeric(20,10);
+   longitude    
+----------------
+ 180.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(45,180))::numeric(20,10);
+   longitude    
+----------------
+ 180.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(90,180))::numeric(20,10);
+   longitude    
+----------------
+ 180.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(-45,180))::numeric(20,10);
+   longitude    
+----------------
+ 180.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(-90,180))::numeric(20,10);
+   longitude    
+----------------
+ 180.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(0,-90))::numeric(20,10);
+   longitude    
+----------------
+ -90.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(45,-90))::numeric(20,10);
+   longitude    
+----------------
+ -90.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(90,-90))::numeric(20,10);
+   longitude    
+----------------
+ -90.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(-45,-90))::numeric(20,10);
+   longitude    
+----------------
+ -90.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(-90,-90))::numeric(20,10);
+   longitude    
+----------------
+ -90.0000000000
+(1 row)
+
+--
+-- For the distance tests the following is some real life data.
+--
+-- Chicago has a latitude of 41.8 and a longitude of 87.6.
+-- Albuquerque has a latitude of 35.1 and a longitude of 106.7.
+-- (Note that latitude and longitude are specified differently
+-- in the cube based functions than for the point based functions.)
+--
+--
+-- Test getting the distance between two points using earth_distance.
+--
+SELECT earth_distance(ll_to_earth(0,0),ll_to_earth(0,0))::numeric(20,5);
+ earth_distance 
+----------------
+        0.00000
+(1 row)
+
+SELECT earth_distance(ll_to_earth(0,0),ll_to_earth(0,180))::numeric(20,5);
+ earth_distance 
+----------------
+ 20037605.73216
+(1 row)
+
+SELECT earth_distance(ll_to_earth(0,0),ll_to_earth(90,0))::numeric(20,5);
+ earth_distance 
+----------------
+ 10018802.86608
+(1 row)
+
+SELECT earth_distance(ll_to_earth(0,0),ll_to_earth(0,90))::numeric(20,5);
+ earth_distance 
+----------------
+ 10018802.86608
+(1 row)
+
+SELECT earth_distance(ll_to_earth(0,0),ll_to_earth(0,1))::numeric(20,5);
+ earth_distance 
+----------------
+   111320.03185
+(1 row)
+
+SELECT earth_distance(ll_to_earth(0,0),ll_to_earth(1,0))::numeric(20,5);
+ earth_distance 
+----------------
+   111320.03185
+(1 row)
+
+SELECT earth_distance(ll_to_earth(30,0),ll_to_earth(30,1))::numeric(20,5);
+ earth_distance 
+----------------
+    96405.66962
+(1 row)
+
+SELECT earth_distance(ll_to_earth(30,0),ll_to_earth(31,0))::numeric(20,5);
+ earth_distance 
+----------------
+   111320.03185
+(1 row)
+
+SELECT earth_distance(ll_to_earth(60,0),ll_to_earth(60,1))::numeric(20,5);
+ earth_distance 
+----------------
+    55659.48608
+(1 row)
+
+SELECT earth_distance(ll_to_earth(60,0),ll_to_earth(61,0))::numeric(20,5);
+ earth_distance 
+----------------
+   111320.03185
+(1 row)
+
+SELECT earth_distance(ll_to_earth(41.8,87.6),ll_to_earth(35.1,106.7))::numeric(20,5);
+ earth_distance 
+----------------
+  1819303.21265
+(1 row)
+
+SELECT (earth_distance(ll_to_earth(41.8,87.6),ll_to_earth(35.1,106.7))*
+      100./2.54/12./5280.)::numeric(20,5);
+  numeric   
+------------
+ 1130.46261
+(1 row)
+
+--
+-- Test getting the distance between two points using geo_distance.
+--
+SELECT geo_distance('(0,0)'::point,'(0,0)'::point)::numeric(20,5);
+ geo_distance 
+--------------
+      0.00000
+(1 row)
+
+SELECT geo_distance('(0,0)'::point,'(180,0)'::point)::numeric(20,5);
+ geo_distance 
+--------------
+  12436.77274
+(1 row)
+
+SELECT geo_distance('(0,0)'::point,'(0,90)'::point)::numeric(20,5);
+ geo_distance 
+--------------
+   6218.38637
+(1 row)
+
+SELECT geo_distance('(0,0)'::point,'(90,0)'::point)::numeric(20,5);
+ geo_distance 
+--------------
+   6218.38637
+(1 row)
+
+SELECT geo_distance('(0,0)'::point,'(1,0)'::point)::numeric(20,5);
+ geo_distance 
+--------------
+     69.09318
+(1 row)
+
+SELECT geo_distance('(0,0)'::point,'(0,1)'::point)::numeric(20,5);
+ geo_distance 
+--------------
+     69.09318
+(1 row)
+
+SELECT geo_distance('(0,30)'::point,'(1,30)'::point)::numeric(20,5);
+ geo_distance 
+--------------
+     59.83626
+(1 row)
+
+SELECT geo_distance('(0,30)'::point,'(0,31)'::point)::numeric(20,5);
+ geo_distance 
+--------------
+     69.09318
+(1 row)
+
+SELECT geo_distance('(0,60)'::point,'(1,60)'::point)::numeric(20,5);
+ geo_distance 
+--------------
+     34.54626
+(1 row)
+
+SELECT geo_distance('(0,60)'::point,'(0,61)'::point)::numeric(20,5);
+ geo_distance 
+--------------
+     69.09318
+(1 row)
+
+SELECT geo_distance('(87.6,41.8)'::point,'(106.7,35.1)'::point)::numeric(20,5);
+ geo_distance 
+--------------
+   1129.18983
+(1 row)
+
+SELECT (geo_distance('(87.6,41.8)'::point,'(106.7,35.1)'::point)*5280.*12.*2.54/100.)::numeric(20,5);
+    numeric    
+---------------
+ 1817254.87730
+(1 row)
+
+--
+-- Test getting the distance between two points using the <@> operator.
+--
+SELECT ('(0,0)'::point <@> '(0,0)'::point)::numeric(20,5);
+ numeric 
+---------
+ 0.00000
+(1 row)
+
+SELECT ('(0,0)'::point <@> '(180,0)'::point)::numeric(20,5);
+   numeric   
+-------------
+ 12436.77274
+(1 row)
+
+SELECT ('(0,0)'::point <@> '(0,90)'::point)::numeric(20,5);
+  numeric   
+------------
+ 6218.38637
+(1 row)
+
+SELECT ('(0,0)'::point <@> '(90,0)'::point)::numeric(20,5);
+  numeric   
+------------
+ 6218.38637
+(1 row)
+
+SELECT ('(0,0)'::point <@> '(1,0)'::point)::numeric(20,5);
+ numeric  
+----------
+ 69.09318
+(1 row)
+
+SELECT ('(0,0)'::point <@> '(0,1)'::point)::numeric(20,5);
+ numeric  
+----------
+ 69.09318
+(1 row)
+
+SELECT ('(0,30)'::point <@> '(1,30)'::point)::numeric(20,5);
+ numeric  
+----------
+ 59.83626
+(1 row)
+
+SELECT ('(0,30)'::point <@> '(0,31)'::point)::numeric(20,5);
+ numeric  
+----------
+ 69.09318
+(1 row)
+
+SELECT ('(0,60)'::point <@> '(1,60)'::point)::numeric(20,5);
+ numeric  
+----------
+ 34.54626
+(1 row)
+
+SELECT ('(0,60)'::point <@> '(0,61)'::point)::numeric(20,5);
+ numeric  
+----------
+ 69.09318
+(1 row)
+
+SELECT ('(87.6,41.8)'::point <@> '(106.7,35.1)'::point)::numeric(20,5);
+  numeric   
+------------
+ 1129.18983
+(1 row)
+
+SELECT (('(87.6,41.8)'::point <@> '(106.7,35.1)'::point)*5280.*12.*2.54/100.)::numeric(20,5);
+    numeric    
+---------------
+ 1817254.87730
+(1 row)
+
+--
+-- Test getting a bounding box around points.
+--
+SELECT cube_ll_coord(earth_box(ll_to_earth(0,0),112000),1)::numeric(20,5),
+       cube_ll_coord(earth_box(ll_to_earth(0,0),112000),2)::numeric(20,5),
+       cube_ll_coord(earth_box(ll_to_earth(0,0),112000),3)::numeric(20,5),
+       cube_ur_coord(earth_box(ll_to_earth(0,0),112000),1)::numeric(20,5),
+       cube_ur_coord(earth_box(ll_to_earth(0,0),112000),2)::numeric(20,5),
+       cube_ur_coord(earth_box(ll_to_earth(0,0),112000),3)::numeric(20,5);
+ cube_ll_coord | cube_ll_coord | cube_ll_coord | cube_ur_coord | cube_ur_coord | cube_ur_coord 
+---------------+---------------+---------------+---------------+---------------+---------------
+ 6266169.43896 | -111998.56104 | -111998.56104 | 6490166.56104 |  111998.56104 |  111998.56104
+(1 row)
+
+SELECT cube_ll_coord(earth_box(ll_to_earth(0,0),pi()*earth()),1)::numeric(20,5),
+       cube_ll_coord(earth_box(ll_to_earth(0,0),pi()*earth()),2)::numeric(20,5),
+       cube_ll_coord(earth_box(ll_to_earth(0,0),pi()*earth()),3)::numeric(20,5),
+       cube_ur_coord(earth_box(ll_to_earth(0,0),pi()*earth()),1)::numeric(20,5),
+       cube_ur_coord(earth_box(ll_to_earth(0,0),pi()*earth()),2)::numeric(20,5),
+       cube_ur_coord(earth_box(ll_to_earth(0,0),pi()*earth()),3)::numeric(20,5);
+ cube_ll_coord  |  cube_ll_coord  |  cube_ll_coord  | cube_ur_coord  | cube_ur_coord  | cube_ur_coord  
+----------------+-----------------+-----------------+----------------+----------------+----------------
+ -6378168.00000 | -12756336.00000 | -12756336.00000 | 19134504.00000 | 12756336.00000 | 12756336.00000
+(1 row)
+
+SELECT cube_ll_coord(earth_box(ll_to_earth(0,0),10*earth()),1)::numeric(20,5),
+       cube_ll_coord(earth_box(ll_to_earth(0,0),10*earth()),2)::numeric(20,5),
+       cube_ll_coord(earth_box(ll_to_earth(0,0),10*earth()),3)::numeric(20,5),
+       cube_ur_coord(earth_box(ll_to_earth(0,0),10*earth()),1)::numeric(20,5),
+       cube_ur_coord(earth_box(ll_to_earth(0,0),10*earth()),2)::numeric(20,5),
+       cube_ur_coord(earth_box(ll_to_earth(0,0),10*earth()),3)::numeric(20,5);
+ cube_ll_coord  |  cube_ll_coord  |  cube_ll_coord  | cube_ur_coord  | cube_ur_coord  | cube_ur_coord  
+----------------+-----------------+-----------------+----------------+----------------+----------------
+ -6378168.00000 | -12756336.00000 | -12756336.00000 | 19134504.00000 | 12756336.00000 | 12756336.00000
+(1 row)
+
+--
+-- Test for points that should be in bounding boxes.
+--
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0,1))*1.00001) @>
+       ll_to_earth(0,1);
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0,0.1))*1.00001) @>
+       ll_to_earth(0,0.1);
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0,0.01))*1.00001) @>
+       ll_to_earth(0,0.01);
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0,0.001))*1.00001) @>
+       ll_to_earth(0,0.001);
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0,0.0001))*1.00001) @>
+       ll_to_earth(0,0.0001);
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0.0001,0.0001))*1.00001) @>
+       ll_to_earth(0.0001,0.0001);
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT earth_box(ll_to_earth(45,45),
+       earth_distance(ll_to_earth(45,45),ll_to_earth(45.0001,45.0001))*1.00001) @>
+       ll_to_earth(45.0001,45.0001);
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT earth_box(ll_to_earth(90,180),
+       earth_distance(ll_to_earth(90,180),ll_to_earth(90.0001,180.0001))*1.00001) @>
+       ll_to_earth(90.0001,180.0001);
+ ?column? 
+----------
+ t
+(1 row)
+
+--
+-- Test for points that shouldn't be in bounding boxes. Note that we need
+-- to make points way outside, since some points close may be in the box
+-- but further away than the distance we are testing.
+--
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0,1))*.57735) @>
+       ll_to_earth(0,1);
+ ?column? 
+----------
+ f
+(1 row)
+
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0,0.1))*.57735) @>
+       ll_to_earth(0,0.1);
+ ?column? 
+----------
+ f
+(1 row)
+
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0,0.01))*.57735) @>
+       ll_to_earth(0,0.01);
+ ?column? 
+----------
+ f
+(1 row)
+
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0,0.001))*.57735) @>
+       ll_to_earth(0,0.001);
+ ?column? 
+----------
+ f
+(1 row)
+
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0,0.0001))*.57735) @>
+       ll_to_earth(0,0.0001);
+ ?column? 
+----------
+ f
+(1 row)
+
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0.0001,0.0001))*.57735) @>
+       ll_to_earth(0.0001,0.0001);
+ ?column? 
+----------
+ f
+(1 row)
+
+SELECT earth_box(ll_to_earth(45,45),
+       earth_distance(ll_to_earth(45,45),ll_to_earth(45.0001,45.0001))*.57735) @>
+       ll_to_earth(45.0001,45.0001);
+ ?column? 
+----------
+ f
+(1 row)
+
+SELECT earth_box(ll_to_earth(90,180),
+       earth_distance(ll_to_earth(90,180),ll_to_earth(90.0001,180.0001))*.57735) @>
+       ll_to_earth(90.0001,180.0001);
+ ?column? 
+----------
+ f
+(1 row)
+
+--
+-- Test the recommended constraints.
+--
+SELECT cube_is_point(ll_to_earth(0,0));
+ cube_is_point 
+---------------
+ t
+(1 row)
+
+SELECT cube_dim(ll_to_earth(0,0)) <= 3;
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT abs(cube_distance(ll_to_earth(0,0), '(0)'::cube) / earth() - 1) <
+       '10e-12'::float8;
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT cube_is_point(ll_to_earth(30,60));
+ cube_is_point 
+---------------
+ t
+(1 row)
+
+SELECT cube_dim(ll_to_earth(30,60)) <= 3;
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT abs(cube_distance(ll_to_earth(30,60), '(0)'::cube) / earth() - 1) <
+       '10e-12'::float8;
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT cube_is_point(ll_to_earth(60,90));
+ cube_is_point 
+---------------
+ t
+(1 row)
+
+SELECT cube_dim(ll_to_earth(60,90)) <= 3;
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT abs(cube_distance(ll_to_earth(60,90), '(0)'::cube) / earth() - 1) <
+       '10e-12'::float8;
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT cube_is_point(ll_to_earth(-30,-90));
+ cube_is_point 
+---------------
+ t
+(1 row)
+
+SELECT cube_dim(ll_to_earth(-30,-90)) <= 3;
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT abs(cube_distance(ll_to_earth(-30,-90), '(0)'::cube) / earth() - 1) <
+       '10e-12'::float8;
+ ?column? 
+----------
+ t
+(1 row)
+
+--
+-- Now we are going to test extension create/drop scenarios.
+--
+-- list what's installed
+\dT
+                                                  List of data types
+ Schema |     Name      |                                         Description                                         
+--------+---------------+---------------------------------------------------------------------------------------------
+ public | cube          | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
+ public | earth         | 
+ public | gbtreekey16   | 
+ public | gbtreekey2    | 
+ public | gbtreekey32   | 
+ public | gbtreekey4    | 
+ public | gbtreekey8    | 
+ public | gbtreekey_var | 
+(8 rows)
+
+drop extension cube;  -- fail, earthdistance requires it
+ERROR:  cannot drop extension cube because other objects depend on it
+DETAIL:  extension earthdistance depends on extension cube
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+drop extension earthdistance;
+drop type cube;  -- fail, extension cube requires it
+ERROR:  cannot drop type cube because extension cube requires it
+HINT:  You can drop extension cube instead.
+-- list what's installed
+\dT
+                                                  List of data types
+ Schema |     Name      |                                         Description                                         
+--------+---------------+---------------------------------------------------------------------------------------------
+ public | cube          | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
+ public | gbtreekey16   | 
+ public | gbtreekey2    | 
+ public | gbtreekey32   | 
+ public | gbtreekey4    | 
+ public | gbtreekey8    | 
+ public | gbtreekey_var | 
+(7 rows)
+
+create table foo (f1 cube, f2 int);
+drop extension cube;  -- fail, foo.f1 requires it
+ERROR:  cannot drop extension cube because other objects depend on it
+DETAIL:  column f1 of table foo depends on type cube
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+drop table foo;
+drop extension cube;
+-- list what's installed
+\dT
+          List of data types
+ Schema |     Name      | Description 
+--------+---------------+-------------
+ public | gbtreekey16   | 
+ public | gbtreekey2    | 
+ public | gbtreekey32   | 
+ public | gbtreekey4    | 
+ public | gbtreekey8    | 
+ public | gbtreekey_var | 
+(6 rows)
+
+\df
+                                                     List of functions
+ Schema |          Name          | Result data type |                      Argument data types                       | Type 
+--------+------------------------+------------------+----------------------------------------------------------------+------
+ public | cash_dist              | money            | money, money                                                   | func
+ public | date_dist              | integer          | date, date                                                     | func
+ public | float4_dist            | real             | real, real                                                     | func
+ public | float8_dist            | double precision | double precision, double precision                             | func
+ public | gbt_bit_compress       | internal         | internal                                                       | func
+ public | gbt_bit_consistent     | boolean          | internal, bit, smallint, oid, internal                         | func
+ public | gbt_bit_penalty        | internal         | internal, internal, internal                                   | func
+ public | gbt_bit_picksplit      | internal         | internal, internal                                             | func
+ public | gbt_bit_same           | internal         | gbtreekey_var, gbtreekey_var, internal                         | func
+ public | gbt_bit_union          | gbtreekey_var    | internal, internal                                             | func
+ public | gbt_bool_compress      | internal         | internal                                                       | func
+ public | gbt_bool_consistent    | boolean          | internal, boolean, smallint, oid, internal                     | func
+ public | gbt_bool_fetch         | internal         | internal                                                       | func
+ public | gbt_bool_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_bool_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_bool_same          | internal         | gbtreekey2, gbtreekey2, internal                               | func
+ public | gbt_bool_union         | gbtreekey2       | internal, internal                                             | func
+ public | gbt_bpchar_compress    | internal         | internal                                                       | func
+ public | gbt_bpchar_consistent  | boolean          | internal, character, smallint, oid, internal                   | func
+ public | gbt_bytea_compress     | internal         | internal                                                       | func
+ public | gbt_bytea_consistent   | boolean          | internal, bytea, smallint, oid, internal                       | func
+ public | gbt_bytea_penalty      | internal         | internal, internal, internal                                   | func
+ public | gbt_bytea_picksplit    | internal         | internal, internal                                             | func
+ public | gbt_bytea_same         | internal         | gbtreekey_var, gbtreekey_var, internal                         | func
+ public | gbt_bytea_union        | gbtreekey_var    | internal, internal                                             | func
+ public | gbt_cash_compress      | internal         | internal                                                       | func
+ public | gbt_cash_consistent    | boolean          | internal, money, smallint, oid, internal                       | func
+ public | gbt_cash_distance      | double precision | internal, money, smallint, oid, internal                       | func
+ public | gbt_cash_fetch         | internal         | internal                                                       | func
+ public | gbt_cash_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_cash_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_cash_same          | internal         | gbtreekey16, gbtreekey16, internal                             | func
+ public | gbt_cash_union         | gbtreekey16      | internal, internal                                             | func
+ public | gbt_date_compress      | internal         | internal                                                       | func
+ public | gbt_date_consistent    | boolean          | internal, date, smallint, oid, internal                        | func
+ public | gbt_date_distance      | double precision | internal, date, smallint, oid, internal                        | func
+ public | gbt_date_fetch         | internal         | internal                                                       | func
+ public | gbt_date_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_date_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_date_same          | internal         | gbtreekey8, gbtreekey8, internal                               | func
+ public | gbt_date_union         | gbtreekey8       | internal, internal                                             | func
+ public | gbt_decompress         | internal         | internal                                                       | func
+ public | gbt_enum_compress      | internal         | internal                                                       | func
+ public | gbt_enum_consistent    | boolean          | internal, anyenum, smallint, oid, internal                     | func
+ public | gbt_enum_fetch         | internal         | internal                                                       | func
+ public | gbt_enum_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_enum_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_enum_same          | internal         | gbtreekey8, gbtreekey8, internal                               | func
+ public | gbt_enum_union         | gbtreekey8       | internal, internal                                             | func
+ public | gbt_float4_compress    | internal         | internal                                                       | func
+ public | gbt_float4_consistent  | boolean          | internal, real, smallint, oid, internal                        | func
+ public | gbt_float4_distance    | double precision | internal, real, smallint, oid, internal                        | func
+ public | gbt_float4_fetch       | internal         | internal                                                       | func
+ public | gbt_float4_penalty     | internal         | internal, internal, internal                                   | func
+ public | gbt_float4_picksplit   | internal         | internal, internal                                             | func
+ public | gbt_float4_same        | internal         | gbtreekey8, gbtreekey8, internal                               | func
+ public | gbt_float4_union       | gbtreekey8       | internal, internal                                             | func
+ public | gbt_float8_compress    | internal         | internal                                                       | func
+ public | gbt_float8_consistent  | boolean          | internal, double precision, smallint, oid, internal            | func
+ public | gbt_float8_distance    | double precision | internal, double precision, smallint, oid, internal            | func
+ public | gbt_float8_fetch       | internal         | internal                                                       | func
+ public | gbt_float8_penalty     | internal         | internal, internal, internal                                   | func
+ public | gbt_float8_picksplit   | internal         | internal, internal                                             | func
+ public | gbt_float8_same        | internal         | gbtreekey16, gbtreekey16, internal                             | func
+ public | gbt_float8_union       | gbtreekey16      | internal, internal                                             | func
+ public | gbt_inet_compress      | internal         | internal                                                       | func
+ public | gbt_inet_consistent    | boolean          | internal, inet, smallint, oid, internal                        | func
+ public | gbt_inet_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_inet_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_inet_same          | internal         | gbtreekey16, gbtreekey16, internal                             | func
+ public | gbt_inet_union         | gbtreekey16      | internal, internal                                             | func
+ public | gbt_int2_compress      | internal         | internal                                                       | func
+ public | gbt_int2_consistent    | boolean          | internal, smallint, smallint, oid, internal                    | func
+ public | gbt_int2_distance      | double precision | internal, smallint, smallint, oid, internal                    | func
+ public | gbt_int2_fetch         | internal         | internal                                                       | func
+ public | gbt_int2_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_int2_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_int2_same          | internal         | gbtreekey4, gbtreekey4, internal                               | func
+ public | gbt_int2_union         | gbtreekey4       | internal, internal                                             | func
+ public | gbt_int4_compress      | internal         | internal                                                       | func
+ public | gbt_int4_consistent    | boolean          | internal, integer, smallint, oid, internal                     | func
+ public | gbt_int4_distance      | double precision | internal, integer, smallint, oid, internal                     | func
+ public | gbt_int4_fetch         | internal         | internal                                                       | func
+ public | gbt_int4_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_int4_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_int4_same          | internal         | gbtreekey8, gbtreekey8, internal                               | func
+ public | gbt_int4_union         | gbtreekey8       | internal, internal                                             | func
+ public | gbt_int8_compress      | internal         | internal                                                       | func
+ public | gbt_int8_consistent    | boolean          | internal, bigint, smallint, oid, internal                      | func
+ public | gbt_int8_distance      | double precision | internal, bigint, smallint, oid, internal                      | func
+ public | gbt_int8_fetch         | internal         | internal                                                       | func
+ public | gbt_int8_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_int8_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_int8_same          | internal         | gbtreekey16, gbtreekey16, internal                             | func
+ public | gbt_int8_union         | gbtreekey16      | internal, internal                                             | func
+ public | gbt_intv_compress      | internal         | internal                                                       | func
+ public | gbt_intv_consistent    | boolean          | internal, interval, smallint, oid, internal                    | func
+ public | gbt_intv_decompress    | internal         | internal                                                       | func
+ public | gbt_intv_distance      | double precision | internal, interval, smallint, oid, internal                    | func
+ public | gbt_intv_fetch         | internal         | internal                                                       | func
+ public | gbt_intv_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_intv_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_intv_same          | internal         | gbtreekey32, gbtreekey32, internal                             | func
+ public | gbt_intv_union         | gbtreekey32      | internal, internal                                             | func
+ public | gbt_macad8_compress    | internal         | internal                                                       | func
+ public | gbt_macad8_consistent  | boolean          | internal, macaddr8, smallint, oid, internal                    | func
+ public | gbt_macad8_fetch       | internal         | internal                                                       | func
+ public | gbt_macad8_penalty     | internal         | internal, internal, internal                                   | func
+ public | gbt_macad8_picksplit   | internal         | internal, internal                                             | func
+ public | gbt_macad8_same        | internal         | gbtreekey16, gbtreekey16, internal                             | func
+ public | gbt_macad8_union       | gbtreekey16      | internal, internal                                             | func
+ public | gbt_macad_compress     | internal         | internal                                                       | func
+ public | gbt_macad_consistent   | boolean          | internal, macaddr, smallint, oid, internal                     | func
+ public | gbt_macad_fetch        | internal         | internal                                                       | func
+ public | gbt_macad_penalty      | internal         | internal, internal, internal                                   | func
+ public | gbt_macad_picksplit    | internal         | internal, internal                                             | func
+ public | gbt_macad_same         | internal         | gbtreekey16, gbtreekey16, internal                             | func
+ public | gbt_macad_union        | gbtreekey16      | internal, internal                                             | func
+ public | gbt_numeric_compress   | internal         | internal                                                       | func
+ public | gbt_numeric_consistent | boolean          | internal, numeric, smallint, oid, internal                     | func
+ public | gbt_numeric_penalty    | internal         | internal, internal, internal                                   | func
+ public | gbt_numeric_picksplit  | internal         | internal, internal                                             | func
+ public | gbt_numeric_same       | internal         | gbtreekey_var, gbtreekey_var, internal                         | func
+ public | gbt_numeric_union      | gbtreekey_var    | internal, internal                                             | func
+ public | gbt_oid_compress       | internal         | internal                                                       | func
+ public | gbt_oid_consistent     | boolean          | internal, oid, smallint, oid, internal                         | func
+ public | gbt_oid_distance       | double precision | internal, oid, smallint, oid, internal                         | func
+ public | gbt_oid_fetch          | internal         | internal                                                       | func
+ public | gbt_oid_penalty        | internal         | internal, internal, internal                                   | func
+ public | gbt_oid_picksplit      | internal         | internal, internal                                             | func
+ public | gbt_oid_same           | internal         | gbtreekey8, gbtreekey8, internal                               | func
+ public | gbt_oid_union          | gbtreekey8       | internal, internal                                             | func
+ public | gbt_text_compress      | internal         | internal                                                       | func
+ public | gbt_text_consistent    | boolean          | internal, text, smallint, oid, internal                        | func
+ public | gbt_text_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_text_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_text_same          | internal         | gbtreekey_var, gbtreekey_var, internal                         | func
+ public | gbt_text_union         | gbtreekey_var    | internal, internal                                             | func
+ public | gbt_time_compress      | internal         | internal                                                       | func
+ public | gbt_time_consistent    | boolean          | internal, time without time zone, smallint, oid, internal      | func
+ public | gbt_time_distance      | double precision | internal, time without time zone, smallint, oid, internal      | func
+ public | gbt_time_fetch         | internal         | internal                                                       | func
+ public | gbt_time_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_time_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_time_same          | internal         | gbtreekey16, gbtreekey16, internal                             | func
+ public | gbt_time_union         | gbtreekey16      | internal, internal                                             | func
+ public | gbt_timetz_compress    | internal         | internal                                                       | func
+ public | gbt_timetz_consistent  | boolean          | internal, time with time zone, smallint, oid, internal         | func
+ public | gbt_ts_compress        | internal         | internal                                                       | func
+ public | gbt_ts_consistent      | boolean          | internal, timestamp without time zone, smallint, oid, internal | func
+ public | gbt_ts_distance        | double precision | internal, timestamp without time zone, smallint, oid, internal | func
+ public | gbt_ts_fetch           | internal         | internal                                                       | func
+ public | gbt_ts_penalty         | internal         | internal, internal, internal                                   | func
+ public | gbt_ts_picksplit       | internal         | internal, internal                                             | func
+ public | gbt_ts_same            | internal         | gbtreekey16, gbtreekey16, internal                             | func
+ public | gbt_ts_union           | gbtreekey16      | internal, internal                                             | func
+ public | gbt_tstz_compress      | internal         | internal                                                       | func
+ public | gbt_tstz_consistent    | boolean          | internal, timestamp with time zone, smallint, oid, internal    | func
+ public | gbt_tstz_distance      | double precision | internal, timestamp with time zone, smallint, oid, internal    | func
+ public | gbt_uuid_compress      | internal         | internal                                                       | func
+ public | gbt_uuid_consistent    | boolean          | internal, uuid, smallint, oid, internal                        | func
+ public | gbt_uuid_fetch         | internal         | internal                                                       | func
+ public | gbt_uuid_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_uuid_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_uuid_same          | internal         | gbtreekey32, gbtreekey32, internal                             | func
+ public | gbt_uuid_union         | gbtreekey32      | internal, internal                                             | func
+ public | gbt_var_decompress     | internal         | internal                                                       | func
+ public | gbt_var_fetch          | internal         | internal                                                       | func
+ public | gbtreekey16_in         | gbtreekey16      | cstring                                                        | func
+ public | gbtreekey16_out        | cstring          | gbtreekey16                                                    | func
+ public | gbtreekey2_in          | gbtreekey2       | cstring                                                        | func
+ public | gbtreekey2_out         | cstring          | gbtreekey2                                                     | func
+ public | gbtreekey32_in         | gbtreekey32      | cstring                                                        | func
+ public | gbtreekey32_out        | cstring          | gbtreekey32                                                    | func
+ public | gbtreekey4_in          | gbtreekey4       | cstring                                                        | func
+ public | gbtreekey4_out         | cstring          | gbtreekey4                                                     | func
+ public | gbtreekey8_in          | gbtreekey8       | cstring                                                        | func
+ public | gbtreekey8_out         | cstring          | gbtreekey8                                                     | func
+ public | gbtreekey_var_in       | gbtreekey_var    | cstring                                                        | func
+ public | gbtreekey_var_out      | cstring          | gbtreekey_var                                                  | func
+ public | int2_dist              | smallint         | smallint, smallint                                             | func
+ public | int4_dist              | integer          | integer, integer                                               | func
+ public | int8_dist              | bigint           | bigint, bigint                                                 | func
+ public | interval_dist          | interval         | interval, interval                                             | func
+ public | oid_dist               | oid              | oid, oid                                                       | func
+ public | time_dist              | interval         | time without time zone, time without time zone                 | func
+ public | ts_dist                | interval         | timestamp without time zone, timestamp without time zone       | func
+ public | tstz_dist              | interval         | timestamp with time zone, timestamp with time zone             | func
+(188 rows)
+
+\do
+                                             List of operators
+ Schema | Name |        Left arg type        |       Right arg type        |   Result type    | Description 
+--------+------+-----------------------------+-----------------------------+------------------+-------------
+ public | <->  | bigint                      | bigint                      | bigint           | 
+ public | <->  | date                        | date                        | integer          | 
+ public | <->  | double precision            | double precision            | double precision | 
+ public | <->  | integer                     | integer                     | integer          | 
+ public | <->  | interval                    | interval                    | interval         | 
+ public | <->  | money                       | money                       | money            | 
+ public | <->  | oid                         | oid                         | oid              | 
+ public | <->  | real                        | real                        | real             | 
+ public | <->  | smallint                    | smallint                    | smallint         | 
+ public | <->  | timestamp without time zone | timestamp without time zone | interval         | 
+ public | <->  | timestamp with time zone    | timestamp with time zone    | interval         | 
+ public | <->  | time without time zone      | time without time zone      | interval         | 
+(12 rows)
+
+create schema c;
+create extension cube with schema c;
+-- list what's installed
+\dT public.*
+          List of data types
+ Schema |     Name      | Description 
+--------+---------------+-------------
+ public | gbtreekey16   | 
+ public | gbtreekey2    | 
+ public | gbtreekey32   | 
+ public | gbtreekey4    | 
+ public | gbtreekey8    | 
+ public | gbtreekey_var | 
+(6 rows)
+
+\df public.*
+                                                     List of functions
+ Schema |          Name          | Result data type |                      Argument data types                       | Type 
+--------+------------------------+------------------+----------------------------------------------------------------+------
+ public | cash_dist              | money            | money, money                                                   | func
+ public | date_dist              | integer          | date, date                                                     | func
+ public | float4_dist            | real             | real, real                                                     | func
+ public | float8_dist            | double precision | double precision, double precision                             | func
+ public | gbt_bit_compress       | internal         | internal                                                       | func
+ public | gbt_bit_consistent     | boolean          | internal, bit, smallint, oid, internal                         | func
+ public | gbt_bit_penalty        | internal         | internal, internal, internal                                   | func
+ public | gbt_bit_picksplit      | internal         | internal, internal                                             | func
+ public | gbt_bit_same           | internal         | gbtreekey_var, gbtreekey_var, internal                         | func
+ public | gbt_bit_union          | gbtreekey_var    | internal, internal                                             | func
+ public | gbt_bool_compress      | internal         | internal                                                       | func
+ public | gbt_bool_consistent    | boolean          | internal, boolean, smallint, oid, internal                     | func
+ public | gbt_bool_fetch         | internal         | internal                                                       | func
+ public | gbt_bool_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_bool_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_bool_same          | internal         | gbtreekey2, gbtreekey2, internal                               | func
+ public | gbt_bool_union         | gbtreekey2       | internal, internal                                             | func
+ public | gbt_bpchar_compress    | internal         | internal                                                       | func
+ public | gbt_bpchar_consistent  | boolean          | internal, character, smallint, oid, internal                   | func
+ public | gbt_bytea_compress     | internal         | internal                                                       | func
+ public | gbt_bytea_consistent   | boolean          | internal, bytea, smallint, oid, internal                       | func
+ public | gbt_bytea_penalty      | internal         | internal, internal, internal                                   | func
+ public | gbt_bytea_picksplit    | internal         | internal, internal                                             | func
+ public | gbt_bytea_same         | internal         | gbtreekey_var, gbtreekey_var, internal                         | func
+ public | gbt_bytea_union        | gbtreekey_var    | internal, internal                                             | func
+ public | gbt_cash_compress      | internal         | internal                                                       | func
+ public | gbt_cash_consistent    | boolean          | internal, money, smallint, oid, internal                       | func
+ public | gbt_cash_distance      | double precision | internal, money, smallint, oid, internal                       | func
+ public | gbt_cash_fetch         | internal         | internal                                                       | func
+ public | gbt_cash_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_cash_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_cash_same          | internal         | gbtreekey16, gbtreekey16, internal                             | func
+ public | gbt_cash_union         | gbtreekey16      | internal, internal                                             | func
+ public | gbt_date_compress      | internal         | internal                                                       | func
+ public | gbt_date_consistent    | boolean          | internal, date, smallint, oid, internal                        | func
+ public | gbt_date_distance      | double precision | internal, date, smallint, oid, internal                        | func
+ public | gbt_date_fetch         | internal         | internal                                                       | func
+ public | gbt_date_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_date_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_date_same          | internal         | gbtreekey8, gbtreekey8, internal                               | func
+ public | gbt_date_union         | gbtreekey8       | internal, internal                                             | func
+ public | gbt_decompress         | internal         | internal                                                       | func
+ public | gbt_enum_compress      | internal         | internal                                                       | func
+ public | gbt_enum_consistent    | boolean          | internal, anyenum, smallint, oid, internal                     | func
+ public | gbt_enum_fetch         | internal         | internal                                                       | func
+ public | gbt_enum_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_enum_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_enum_same          | internal         | gbtreekey8, gbtreekey8, internal                               | func
+ public | gbt_enum_union         | gbtreekey8       | internal, internal                                             | func
+ public | gbt_float4_compress    | internal         | internal                                                       | func
+ public | gbt_float4_consistent  | boolean          | internal, real, smallint, oid, internal                        | func
+ public | gbt_float4_distance    | double precision | internal, real, smallint, oid, internal                        | func
+ public | gbt_float4_fetch       | internal         | internal                                                       | func
+ public | gbt_float4_penalty     | internal         | internal, internal, internal                                   | func
+ public | gbt_float4_picksplit   | internal         | internal, internal                                             | func
+ public | gbt_float4_same        | internal         | gbtreekey8, gbtreekey8, internal                               | func
+ public | gbt_float4_union       | gbtreekey8       | internal, internal                                             | func
+ public | gbt_float8_compress    | internal         | internal                                                       | func
+ public | gbt_float8_consistent  | boolean          | internal, double precision, smallint, oid, internal            | func
+ public | gbt_float8_distance    | double precision | internal, double precision, smallint, oid, internal            | func
+ public | gbt_float8_fetch       | internal         | internal                                                       | func
+ public | gbt_float8_penalty     | internal         | internal, internal, internal                                   | func
+ public | gbt_float8_picksplit   | internal         | internal, internal                                             | func
+ public | gbt_float8_same        | internal         | gbtreekey16, gbtreekey16, internal                             | func
+ public | gbt_float8_union       | gbtreekey16      | internal, internal                                             | func
+ public | gbt_inet_compress      | internal         | internal                                                       | func
+ public | gbt_inet_consistent    | boolean          | internal, inet, smallint, oid, internal                        | func
+ public | gbt_inet_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_inet_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_inet_same          | internal         | gbtreekey16, gbtreekey16, internal                             | func
+ public | gbt_inet_union         | gbtreekey16      | internal, internal                                             | func
+ public | gbt_int2_compress      | internal         | internal                                                       | func
+ public | gbt_int2_consistent    | boolean          | internal, smallint, smallint, oid, internal                    | func
+ public | gbt_int2_distance      | double precision | internal, smallint, smallint, oid, internal                    | func
+ public | gbt_int2_fetch         | internal         | internal                                                       | func
+ public | gbt_int2_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_int2_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_int2_same          | internal         | gbtreekey4, gbtreekey4, internal                               | func
+ public | gbt_int2_union         | gbtreekey4       | internal, internal                                             | func
+ public | gbt_int4_compress      | internal         | internal                                                       | func
+ public | gbt_int4_consistent    | boolean          | internal, integer, smallint, oid, internal                     | func
+ public | gbt_int4_distance      | double precision | internal, integer, smallint, oid, internal                     | func
+ public | gbt_int4_fetch         | internal         | internal                                                       | func
+ public | gbt_int4_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_int4_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_int4_same          | internal         | gbtreekey8, gbtreekey8, internal                               | func
+ public | gbt_int4_union         | gbtreekey8       | internal, internal                                             | func
+ public | gbt_int8_compress      | internal         | internal                                                       | func
+ public | gbt_int8_consistent    | boolean          | internal, bigint, smallint, oid, internal                      | func
+ public | gbt_int8_distance      | double precision | internal, bigint, smallint, oid, internal                      | func
+ public | gbt_int8_fetch         | internal         | internal                                                       | func
+ public | gbt_int8_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_int8_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_int8_same          | internal         | gbtreekey16, gbtreekey16, internal                             | func
+ public | gbt_int8_union         | gbtreekey16      | internal, internal                                             | func
+ public | gbt_intv_compress      | internal         | internal                                                       | func
+ public | gbt_intv_consistent    | boolean          | internal, interval, smallint, oid, internal                    | func
+ public | gbt_intv_decompress    | internal         | internal                                                       | func
+ public | gbt_intv_distance      | double precision | internal, interval, smallint, oid, internal                    | func
+ public | gbt_intv_fetch         | internal         | internal                                                       | func
+ public | gbt_intv_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_intv_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_intv_same          | internal         | gbtreekey32, gbtreekey32, internal                             | func
+ public | gbt_intv_union         | gbtreekey32      | internal, internal                                             | func
+ public | gbt_macad8_compress    | internal         | internal                                                       | func
+ public | gbt_macad8_consistent  | boolean          | internal, macaddr8, smallint, oid, internal                    | func
+ public | gbt_macad8_fetch       | internal         | internal                                                       | func
+ public | gbt_macad8_penalty     | internal         | internal, internal, internal                                   | func
+ public | gbt_macad8_picksplit   | internal         | internal, internal                                             | func
+ public | gbt_macad8_same        | internal         | gbtreekey16, gbtreekey16, internal                             | func
+ public | gbt_macad8_union       | gbtreekey16      | internal, internal                                             | func
+ public | gbt_macad_compress     | internal         | internal                                                       | func
+ public | gbt_macad_consistent   | boolean          | internal, macaddr, smallint, oid, internal                     | func
+ public | gbt_macad_fetch        | internal         | internal                                                       | func
+ public | gbt_macad_penalty      | internal         | internal, internal, internal                                   | func
+ public | gbt_macad_picksplit    | internal         | internal, internal                                             | func
+ public | gbt_macad_same         | internal         | gbtreekey16, gbtreekey16, internal                             | func
+ public | gbt_macad_union        | gbtreekey16      | internal, internal                                             | func
+ public | gbt_numeric_compress   | internal         | internal                                                       | func
+ public | gbt_numeric_consistent | boolean          | internal, numeric, smallint, oid, internal                     | func
+ public | gbt_numeric_penalty    | internal         | internal, internal, internal                                   | func
+ public | gbt_numeric_picksplit  | internal         | internal, internal                                             | func
+ public | gbt_numeric_same       | internal         | gbtreekey_var, gbtreekey_var, internal                         | func
+ public | gbt_numeric_union      | gbtreekey_var    | internal, internal                                             | func
+ public | gbt_oid_compress       | internal         | internal                                                       | func
+ public | gbt_oid_consistent     | boolean          | internal, oid, smallint, oid, internal                         | func
+ public | gbt_oid_distance       | double precision | internal, oid, smallint, oid, internal                         | func
+ public | gbt_oid_fetch          | internal         | internal                                                       | func
+ public | gbt_oid_penalty        | internal         | internal, internal, internal                                   | func
+ public | gbt_oid_picksplit      | internal         | internal, internal                                             | func
+ public | gbt_oid_same           | internal         | gbtreekey8, gbtreekey8, internal                               | func
+ public | gbt_oid_union          | gbtreekey8       | internal, internal                                             | func
+ public | gbt_text_compress      | internal         | internal                                                       | func
+ public | gbt_text_consistent    | boolean          | internal, text, smallint, oid, internal                        | func
+ public | gbt_text_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_text_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_text_same          | internal         | gbtreekey_var, gbtreekey_var, internal                         | func
+ public | gbt_text_union         | gbtreekey_var    | internal, internal                                             | func
+ public | gbt_time_compress      | internal         | internal                                                       | func
+ public | gbt_time_consistent    | boolean          | internal, time without time zone, smallint, oid, internal      | func
+ public | gbt_time_distance      | double precision | internal, time without time zone, smallint, oid, internal      | func
+ public | gbt_time_fetch         | internal         | internal                                                       | func
+ public | gbt_time_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_time_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_time_same          | internal         | gbtreekey16, gbtreekey16, internal                             | func
+ public | gbt_time_union         | gbtreekey16      | internal, internal                                             | func
+ public | gbt_timetz_compress    | internal         | internal                                                       | func
+ public | gbt_timetz_consistent  | boolean          | internal, time with time zone, smallint, oid, internal         | func
+ public | gbt_ts_compress        | internal         | internal                                                       | func
+ public | gbt_ts_consistent      | boolean          | internal, timestamp without time zone, smallint, oid, internal | func
+ public | gbt_ts_distance        | double precision | internal, timestamp without time zone, smallint, oid, internal | func
+ public | gbt_ts_fetch           | internal         | internal                                                       | func
+ public | gbt_ts_penalty         | internal         | internal, internal, internal                                   | func
+ public | gbt_ts_picksplit       | internal         | internal, internal                                             | func
+ public | gbt_ts_same            | internal         | gbtreekey16, gbtreekey16, internal                             | func
+ public | gbt_ts_union           | gbtreekey16      | internal, internal                                             | func
+ public | gbt_tstz_compress      | internal         | internal                                                       | func
+ public | gbt_tstz_consistent    | boolean          | internal, timestamp with time zone, smallint, oid, internal    | func
+ public | gbt_tstz_distance      | double precision | internal, timestamp with time zone, smallint, oid, internal    | func
+ public | gbt_uuid_compress      | internal         | internal                                                       | func
+ public | gbt_uuid_consistent    | boolean          | internal, uuid, smallint, oid, internal                        | func
+ public | gbt_uuid_fetch         | internal         | internal                                                       | func
+ public | gbt_uuid_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_uuid_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_uuid_same          | internal         | gbtreekey32, gbtreekey32, internal                             | func
+ public | gbt_uuid_union         | gbtreekey32      | internal, internal                                             | func
+ public | gbt_var_decompress     | internal         | internal                                                       | func
+ public | gbt_var_fetch          | internal         | internal                                                       | func
+ public | gbtreekey16_in         | gbtreekey16      | cstring                                                        | func
+ public | gbtreekey16_out        | cstring          | gbtreekey16                                                    | func
+ public | gbtreekey2_in          | gbtreekey2       | cstring                                                        | func
+ public | gbtreekey2_out         | cstring          | gbtreekey2                                                     | func
+ public | gbtreekey32_in         | gbtreekey32      | cstring                                                        | func
+ public | gbtreekey32_out        | cstring          | gbtreekey32                                                    | func
+ public | gbtreekey4_in          | gbtreekey4       | cstring                                                        | func
+ public | gbtreekey4_out         | cstring          | gbtreekey4                                                     | func
+ public | gbtreekey8_in          | gbtreekey8       | cstring                                                        | func
+ public | gbtreekey8_out         | cstring          | gbtreekey8                                                     | func
+ public | gbtreekey_var_in       | gbtreekey_var    | cstring                                                        | func
+ public | gbtreekey_var_out      | cstring          | gbtreekey_var                                                  | func
+ public | int2_dist              | smallint         | smallint, smallint                                             | func
+ public | int4_dist              | integer          | integer, integer                                               | func
+ public | int8_dist              | bigint           | bigint, bigint                                                 | func
+ public | interval_dist          | interval         | interval, interval                                             | func
+ public | oid_dist               | oid              | oid, oid                                                       | func
+ public | time_dist              | interval         | time without time zone, time without time zone                 | func
+ public | ts_dist                | interval         | timestamp without time zone, timestamp without time zone       | func
+ public | tstz_dist              | interval         | timestamp with time zone, timestamp with time zone             | func
+(188 rows)
+
+\do public.*
+                                             List of operators
+ Schema | Name |        Left arg type        |       Right arg type        |   Result type    | Description 
+--------+------+-----------------------------+-----------------------------+------------------+-------------
+ public | <->  | bigint                      | bigint                      | bigint           | 
+ public | <->  | date                        | date                        | integer          | 
+ public | <->  | double precision            | double precision            | double precision | 
+ public | <->  | integer                     | integer                     | integer          | 
+ public | <->  | interval                    | interval                    | interval         | 
+ public | <->  | money                       | money                       | money            | 
+ public | <->  | oid                         | oid                         | oid              | 
+ public | <->  | real                        | real                        | real             | 
+ public | <->  | smallint                    | smallint                    | smallint         | 
+ public | <->  | timestamp without time zone | timestamp without time zone | interval         | 
+ public | <->  | timestamp with time zone    | timestamp with time zone    | interval         | 
+ public | <->  | time without time zone      | time without time zone      | interval         | 
+(12 rows)
+
+\dT c.*
+                                              List of data types
+ Schema |  Name  |                                         Description                                         
+--------+--------+---------------------------------------------------------------------------------------------
+ c      | c.cube | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
+(1 row)
+
+create table foo (f1 c.cube, f2 int);
+drop extension cube;  -- fail, foo.f1 requires it
+ERROR:  cannot drop extension cube because other objects depend on it
+DETAIL:  column f1 of table foo depends on type c.cube
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+drop schema c;  -- fail, cube requires it
+ERROR:  cannot drop schema c because other objects depend on it
+DETAIL:  extension cube depends on schema c
+column f1 of table foo depends on type c.cube
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+drop extension cube cascade;
+NOTICE:  drop cascades to column f1 of table foo
+\d foo
+                Table "public.foo"
+ Column |  Type   | Collation | Nullable | Default 
+--------+---------+-----------+----------+---------
+ f2     | integer |           |          | 
+
+-- list what's installed
+\dT public.*
+          List of data types
+ Schema |     Name      | Description 
+--------+---------------+-------------
+ public | gbtreekey16   | 
+ public | gbtreekey2    | 
+ public | gbtreekey32   | 
+ public | gbtreekey4    | 
+ public | gbtreekey8    | 
+ public | gbtreekey_var | 
+(6 rows)
+
+\df public.*
+                                                     List of functions
+ Schema |          Name          | Result data type |                      Argument data types                       | Type 
+--------+------------------------+------------------+----------------------------------------------------------------+------
+ public | cash_dist              | money            | money, money                                                   | func
+ public | date_dist              | integer          | date, date                                                     | func
+ public | float4_dist            | real             | real, real                                                     | func
+ public | float8_dist            | double precision | double precision, double precision                             | func
+ public | gbt_bit_compress       | internal         | internal                                                       | func
+ public | gbt_bit_consistent     | boolean          | internal, bit, smallint, oid, internal                         | func
+ public | gbt_bit_penalty        | internal         | internal, internal, internal                                   | func
+ public | gbt_bit_picksplit      | internal         | internal, internal                                             | func
+ public | gbt_bit_same           | internal         | gbtreekey_var, gbtreekey_var, internal                         | func
+ public | gbt_bit_union          | gbtreekey_var    | internal, internal                                             | func
+ public | gbt_bool_compress      | internal         | internal                                                       | func
+ public | gbt_bool_consistent    | boolean          | internal, boolean, smallint, oid, internal                     | func
+ public | gbt_bool_fetch         | internal         | internal                                                       | func
+ public | gbt_bool_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_bool_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_bool_same          | internal         | gbtreekey2, gbtreekey2, internal                               | func
+ public | gbt_bool_union         | gbtreekey2       | internal, internal                                             | func
+ public | gbt_bpchar_compress    | internal         | internal                                                       | func
+ public | gbt_bpchar_consistent  | boolean          | internal, character, smallint, oid, internal                   | func
+ public | gbt_bytea_compress     | internal         | internal                                                       | func
+ public | gbt_bytea_consistent   | boolean          | internal, bytea, smallint, oid, internal                       | func
+ public | gbt_bytea_penalty      | internal         | internal, internal, internal                                   | func
+ public | gbt_bytea_picksplit    | internal         | internal, internal                                             | func
+ public | gbt_bytea_same         | internal         | gbtreekey_var, gbtreekey_var, internal                         | func
+ public | gbt_bytea_union        | gbtreekey_var    | internal, internal                                             | func
+ public | gbt_cash_compress      | internal         | internal                                                       | func
+ public | gbt_cash_consistent    | boolean          | internal, money, smallint, oid, internal                       | func
+ public | gbt_cash_distance      | double precision | internal, money, smallint, oid, internal                       | func
+ public | gbt_cash_fetch         | internal         | internal                                                       | func
+ public | gbt_cash_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_cash_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_cash_same          | internal         | gbtreekey16, gbtreekey16, internal                             | func
+ public | gbt_cash_union         | gbtreekey16      | internal, internal                                             | func
+ public | gbt_date_compress      | internal         | internal                                                       | func
+ public | gbt_date_consistent    | boolean          | internal, date, smallint, oid, internal                        | func
+ public | gbt_date_distance      | double precision | internal, date, smallint, oid, internal                        | func
+ public | gbt_date_fetch         | internal         | internal                                                       | func
+ public | gbt_date_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_date_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_date_same          | internal         | gbtreekey8, gbtreekey8, internal                               | func
+ public | gbt_date_union         | gbtreekey8       | internal, internal                                             | func
+ public | gbt_decompress         | internal         | internal                                                       | func
+ public | gbt_enum_compress      | internal         | internal                                                       | func
+ public | gbt_enum_consistent    | boolean          | internal, anyenum, smallint, oid, internal                     | func
+ public | gbt_enum_fetch         | internal         | internal                                                       | func
+ public | gbt_enum_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_enum_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_enum_same          | internal         | gbtreekey8, gbtreekey8, internal                               | func
+ public | gbt_enum_union         | gbtreekey8       | internal, internal                                             | func
+ public | gbt_float4_compress    | internal         | internal                                                       | func
+ public | gbt_float4_consistent  | boolean          | internal, real, smallint, oid, internal                        | func
+ public | gbt_float4_distance    | double precision | internal, real, smallint, oid, internal                        | func
+ public | gbt_float4_fetch       | internal         | internal                                                       | func
+ public | gbt_float4_penalty     | internal         | internal, internal, internal                                   | func
+ public | gbt_float4_picksplit   | internal         | internal, internal                                             | func
+ public | gbt_float4_same        | internal         | gbtreekey8, gbtreekey8, internal                               | func
+ public | gbt_float4_union       | gbtreekey8       | internal, internal                                             | func
+ public | gbt_float8_compress    | internal         | internal                                                       | func
+ public | gbt_float8_consistent  | boolean          | internal, double precision, smallint, oid, internal            | func
+ public | gbt_float8_distance    | double precision | internal, double precision, smallint, oid, internal            | func
+ public | gbt_float8_fetch       | internal         | internal                                                       | func
+ public | gbt_float8_penalty     | internal         | internal, internal, internal                                   | func
+ public | gbt_float8_picksplit   | internal         | internal, internal                                             | func
+ public | gbt_float8_same        | internal         | gbtreekey16, gbtreekey16, internal                             | func
+ public | gbt_float8_union       | gbtreekey16      | internal, internal                                             | func
+ public | gbt_inet_compress      | internal         | internal                                                       | func
+ public | gbt_inet_consistent    | boolean          | internal, inet, smallint, oid, internal                        | func
+ public | gbt_inet_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_inet_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_inet_same          | internal         | gbtreekey16, gbtreekey16, internal                             | func
+ public | gbt_inet_union         | gbtreekey16      | internal, internal                                             | func
+ public | gbt_int2_compress      | internal         | internal                                                       | func
+ public | gbt_int2_consistent    | boolean          | internal, smallint, smallint, oid, internal                    | func
+ public | gbt_int2_distance      | double precision | internal, smallint, smallint, oid, internal                    | func
+ public | gbt_int2_fetch         | internal         | internal                                                       | func
+ public | gbt_int2_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_int2_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_int2_same          | internal         | gbtreekey4, gbtreekey4, internal                               | func
+ public | gbt_int2_union         | gbtreekey4       | internal, internal                                             | func
+ public | gbt_int4_compress      | internal         | internal                                                       | func
+ public | gbt_int4_consistent    | boolean          | internal, integer, smallint, oid, internal                     | func
+ public | gbt_int4_distance      | double precision | internal, integer, smallint, oid, internal                     | func
+ public | gbt_int4_fetch         | internal         | internal                                                       | func
+ public | gbt_int4_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_int4_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_int4_same          | internal         | gbtreekey8, gbtreekey8, internal                               | func
+ public | gbt_int4_union         | gbtreekey8       | internal, internal                                             | func
+ public | gbt_int8_compress      | internal         | internal                                                       | func
+ public | gbt_int8_consistent    | boolean          | internal, bigint, smallint, oid, internal                      | func
+ public | gbt_int8_distance      | double precision | internal, bigint, smallint, oid, internal                      | func
+ public | gbt_int8_fetch         | internal         | internal                                                       | func
+ public | gbt_int8_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_int8_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_int8_same          | internal         | gbtreekey16, gbtreekey16, internal                             | func
+ public | gbt_int8_union         | gbtreekey16      | internal, internal                                             | func
+ public | gbt_intv_compress      | internal         | internal                                                       | func
+ public | gbt_intv_consistent    | boolean          | internal, interval, smallint, oid, internal                    | func
+ public | gbt_intv_decompress    | internal         | internal                                                       | func
+ public | gbt_intv_distance      | double precision | internal, interval, smallint, oid, internal                    | func
+ public | gbt_intv_fetch         | internal         | internal                                                       | func
+ public | gbt_intv_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_intv_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_intv_same          | internal         | gbtreekey32, gbtreekey32, internal                             | func
+ public | gbt_intv_union         | gbtreekey32      | internal, internal                                             | func
+ public | gbt_macad8_compress    | internal         | internal                                                       | func
+ public | gbt_macad8_consistent  | boolean          | internal, macaddr8, smallint, oid, internal                    | func
+ public | gbt_macad8_fetch       | internal         | internal                                                       | func
+ public | gbt_macad8_penalty     | internal         | internal, internal, internal                                   | func
+ public | gbt_macad8_picksplit   | internal         | internal, internal                                             | func
+ public | gbt_macad8_same        | internal         | gbtreekey16, gbtreekey16, internal                             | func
+ public | gbt_macad8_union       | gbtreekey16      | internal, internal                                             | func
+ public | gbt_macad_compress     | internal         | internal                                                       | func
+ public | gbt_macad_consistent   | boolean          | internal, macaddr, smallint, oid, internal                     | func
+ public | gbt_macad_fetch        | internal         | internal                                                       | func
+ public | gbt_macad_penalty      | internal         | internal, internal, internal                                   | func
+ public | gbt_macad_picksplit    | internal         | internal, internal                                             | func
+ public | gbt_macad_same         | internal         | gbtreekey16, gbtreekey16, internal                             | func
+ public | gbt_macad_union        | gbtreekey16      | internal, internal                                             | func
+ public | gbt_numeric_compress   | internal         | internal                                                       | func
+ public | gbt_numeric_consistent | boolean          | internal, numeric, smallint, oid, internal                     | func
+ public | gbt_numeric_penalty    | internal         | internal, internal, internal                                   | func
+ public | gbt_numeric_picksplit  | internal         | internal, internal                                             | func
+ public | gbt_numeric_same       | internal         | gbtreekey_var, gbtreekey_var, internal                         | func
+ public | gbt_numeric_union      | gbtreekey_var    | internal, internal                                             | func
+ public | gbt_oid_compress       | internal         | internal                                                       | func
+ public | gbt_oid_consistent     | boolean          | internal, oid, smallint, oid, internal                         | func
+ public | gbt_oid_distance       | double precision | internal, oid, smallint, oid, internal                         | func
+ public | gbt_oid_fetch          | internal         | internal                                                       | func
+ public | gbt_oid_penalty        | internal         | internal, internal, internal                                   | func
+ public | gbt_oid_picksplit      | internal         | internal, internal                                             | func
+ public | gbt_oid_same           | internal         | gbtreekey8, gbtreekey8, internal                               | func
+ public | gbt_oid_union          | gbtreekey8       | internal, internal                                             | func
+ public | gbt_text_compress      | internal         | internal                                                       | func
+ public | gbt_text_consistent    | boolean          | internal, text, smallint, oid, internal                        | func
+ public | gbt_text_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_text_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_text_same          | internal         | gbtreekey_var, gbtreekey_var, internal                         | func
+ public | gbt_text_union         | gbtreekey_var    | internal, internal                                             | func
+ public | gbt_time_compress      | internal         | internal                                                       | func
+ public | gbt_time_consistent    | boolean          | internal, time without time zone, smallint, oid, internal      | func
+ public | gbt_time_distance      | double precision | internal, time without time zone, smallint, oid, internal      | func
+ public | gbt_time_fetch         | internal         | internal                                                       | func
+ public | gbt_time_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_time_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_time_same          | internal         | gbtreekey16, gbtreekey16, internal                             | func
+ public | gbt_time_union         | gbtreekey16      | internal, internal                                             | func
+ public | gbt_timetz_compress    | internal         | internal                                                       | func
+ public | gbt_timetz_consistent  | boolean          | internal, time with time zone, smallint, oid, internal         | func
+ public | gbt_ts_compress        | internal         | internal                                                       | func
+ public | gbt_ts_consistent      | boolean          | internal, timestamp without time zone, smallint, oid, internal | func
+ public | gbt_ts_distance        | double precision | internal, timestamp without time zone, smallint, oid, internal | func
+ public | gbt_ts_fetch           | internal         | internal                                                       | func
+ public | gbt_ts_penalty         | internal         | internal, internal, internal                                   | func
+ public | gbt_ts_picksplit       | internal         | internal, internal                                             | func
+ public | gbt_ts_same            | internal         | gbtreekey16, gbtreekey16, internal                             | func
+ public | gbt_ts_union           | gbtreekey16      | internal, internal                                             | func
+ public | gbt_tstz_compress      | internal         | internal                                                       | func
+ public | gbt_tstz_consistent    | boolean          | internal, timestamp with time zone, smallint, oid, internal    | func
+ public | gbt_tstz_distance      | double precision | internal, timestamp with time zone, smallint, oid, internal    | func
+ public | gbt_uuid_compress      | internal         | internal                                                       | func
+ public | gbt_uuid_consistent    | boolean          | internal, uuid, smallint, oid, internal                        | func
+ public | gbt_uuid_fetch         | internal         | internal                                                       | func
+ public | gbt_uuid_penalty       | internal         | internal, internal, internal                                   | func
+ public | gbt_uuid_picksplit     | internal         | internal, internal                                             | func
+ public | gbt_uuid_same          | internal         | gbtreekey32, gbtreekey32, internal                             | func
+ public | gbt_uuid_union         | gbtreekey32      | internal, internal                                             | func
+ public | gbt_var_decompress     | internal         | internal                                                       | func
+ public | gbt_var_fetch          | internal         | internal                                                       | func
+ public | gbtreekey16_in         | gbtreekey16      | cstring                                                        | func
+ public | gbtreekey16_out        | cstring          | gbtreekey16                                                    | func
+ public | gbtreekey2_in          | gbtreekey2       | cstring                                                        | func
+ public | gbtreekey2_out         | cstring          | gbtreekey2                                                     | func
+ public | gbtreekey32_in         | gbtreekey32      | cstring                                                        | func
+ public | gbtreekey32_out        | cstring          | gbtreekey32                                                    | func
+ public | gbtreekey4_in          | gbtreekey4       | cstring                                                        | func
+ public | gbtreekey4_out         | cstring          | gbtreekey4                                                     | func
+ public | gbtreekey8_in          | gbtreekey8       | cstring                                                        | func
+ public | gbtreekey8_out         | cstring          | gbtreekey8                                                     | func
+ public | gbtreekey_var_in       | gbtreekey_var    | cstring                                                        | func
+ public | gbtreekey_var_out      | cstring          | gbtreekey_var                                                  | func
+ public | int2_dist              | smallint         | smallint, smallint                                             | func
+ public | int4_dist              | integer          | integer, integer                                               | func
+ public | int8_dist              | bigint           | bigint, bigint                                                 | func
+ public | interval_dist          | interval         | interval, interval                                             | func
+ public | oid_dist               | oid              | oid, oid                                                       | func
+ public | time_dist              | interval         | time without time zone, time without time zone                 | func
+ public | ts_dist                | interval         | timestamp without time zone, timestamp without time zone       | func
+ public | tstz_dist              | interval         | timestamp with time zone, timestamp with time zone             | func
+(188 rows)
+
+\do public.*
+                                             List of operators
+ Schema | Name |        Left arg type        |       Right arg type        |   Result type    | Description 
+--------+------+-----------------------------+-----------------------------+------------------+-------------
+ public | <->  | bigint                      | bigint                      | bigint           | 
+ public | <->  | date                        | date                        | integer          | 
+ public | <->  | double precision            | double precision            | double precision | 
+ public | <->  | integer                     | integer                     | integer          | 
+ public | <->  | interval                    | interval                    | interval         | 
+ public | <->  | money                       | money                       | money            | 
+ public | <->  | oid                         | oid                         | oid              | 
+ public | <->  | real                        | real                        | real             | 
+ public | <->  | smallint                    | smallint                    | smallint         | 
+ public | <->  | timestamp without time zone | timestamp without time zone | interval         | 
+ public | <->  | timestamp with time zone    | timestamp with time zone    | interval         | 
+ public | <->  | time without time zone      | time without time zone      | interval         | 
+(12 rows)
+
+\dT c.*
+     List of data types
+ Schema | Name | Description 
+--------+------+-------------
+(0 rows)
+
+\df c.*
+                       List of functions
+ Schema | Name | Result data type | Argument data types | Type 
+--------+------+------------------+---------------------+------
+(0 rows)
+
+\do c.*
+                             List of operators
+ Schema | Name | Left arg type | Right arg type | Result type | Description 
+--------+------+---------------+----------------+-------------+-------------
+(0 rows)
+
+drop schema c;

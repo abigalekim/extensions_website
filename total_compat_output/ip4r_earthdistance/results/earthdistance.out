@@ -1,0 +1,2277 @@
+--
+--  Test earthdistance extension
+--
+-- In this file we also do some testing of extension create/drop scenarios.
+-- That's really exercising the core database's dependency logic, so ideally
+-- we'd do it in the core regression tests, but we can't for lack of suitable
+-- guaranteed-available extensions.  earthdistance is a good test case because
+-- it has a dependency on the cube extension.
+--
+CREATE EXTENSION earthdistance;  -- fail, must install cube first
+ERROR:  required extension "cube" is not installed
+HINT:  Use CREATE EXTENSION ... CASCADE to install required extensions too.
+CREATE EXTENSION cube;
+CREATE EXTENSION earthdistance;
+--
+-- The radius of the Earth we are using.
+--
+SELECT earth()::numeric(20,5);
+     earth     
+---------------
+ 6378168.00000
+(1 row)
+
+--
+-- Convert straight line distances to great circle distances.
+--
+SELECT (pi()*earth())::numeric(20,5);
+    numeric     
+----------------
+ 20037605.73216
+(1 row)
+
+SELECT sec_to_gc(0)::numeric(20,5);
+ sec_to_gc 
+-----------
+   0.00000
+(1 row)
+
+SELECT sec_to_gc(2*earth())::numeric(20,5);
+   sec_to_gc    
+----------------
+ 20037605.73216
+(1 row)
+
+SELECT sec_to_gc(10*earth())::numeric(20,5);
+   sec_to_gc    
+----------------
+ 20037605.73216
+(1 row)
+
+SELECT sec_to_gc(-earth())::numeric(20,5);
+ sec_to_gc 
+-----------
+   0.00000
+(1 row)
+
+SELECT sec_to_gc(1000)::numeric(20,5);
+ sec_to_gc  
+------------
+ 1000.00000
+(1 row)
+
+SELECT sec_to_gc(10000)::numeric(20,5);
+  sec_to_gc  
+-------------
+ 10000.00102
+(1 row)
+
+SELECT sec_to_gc(100000)::numeric(20,5);
+  sec_to_gc   
+--------------
+ 100001.02426
+(1 row)
+
+SELECT sec_to_gc(1000000)::numeric(20,5);
+   sec_to_gc   
+---------------
+ 1001027.07131
+(1 row)
+
+--
+-- Convert great circle distances to straight line distances.
+--
+SELECT gc_to_sec(0)::numeric(20,5);
+ gc_to_sec 
+-----------
+   0.00000
+(1 row)
+
+SELECT gc_to_sec(sec_to_gc(2*earth()))::numeric(20,5);
+   gc_to_sec    
+----------------
+ 12756336.00000
+(1 row)
+
+SELECT gc_to_sec(10*earth())::numeric(20,5);
+   gc_to_sec    
+----------------
+ 12756336.00000
+(1 row)
+
+SELECT gc_to_sec(pi()*earth())::numeric(20,5);
+   gc_to_sec    
+----------------
+ 12756336.00000
+(1 row)
+
+SELECT gc_to_sec(-1000)::numeric(20,5);
+ gc_to_sec 
+-----------
+   0.00000
+(1 row)
+
+SELECT gc_to_sec(1000)::numeric(20,5);
+ gc_to_sec  
+------------
+ 1000.00000
+(1 row)
+
+SELECT gc_to_sec(10000)::numeric(20,5);
+ gc_to_sec  
+------------
+ 9999.99898
+(1 row)
+
+SELECT gc_to_sec(100000)::numeric(20,5);
+  gc_to_sec  
+-------------
+ 99998.97577
+(1 row)
+
+SELECT gc_to_sec(1000000)::numeric(20,5);
+  gc_to_sec   
+--------------
+ 998976.08618
+(1 row)
+
+--
+-- Set coordinates using latitude and longitude.
+-- Extract each coordinate separately so we can round them.
+--
+SELECT cube_ll_coord(ll_to_earth(0,0),1)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(0,0),2)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(0,0),3)::numeric(20,5);
+ cube_ll_coord | cube_ll_coord | cube_ll_coord 
+---------------+---------------+---------------
+ 6378168.00000 |       0.00000 |       0.00000
+(1 row)
+
+SELECT cube_ll_coord(ll_to_earth(360,360),1)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(360,360),2)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(360,360),3)::numeric(20,5);
+ cube_ll_coord | cube_ll_coord | cube_ll_coord 
+---------------+---------------+---------------
+ 6378168.00000 |       0.00000 |       0.00000
+(1 row)
+
+SELECT cube_ll_coord(ll_to_earth(180,180),1)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(180,180),2)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(180,180),3)::numeric(20,5);
+ cube_ll_coord | cube_ll_coord | cube_ll_coord 
+---------------+---------------+---------------
+ 6378168.00000 |       0.00000 |       0.00000
+(1 row)
+
+SELECT cube_ll_coord(ll_to_earth(180,360),1)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(180,360),2)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(180,360),3)::numeric(20,5);
+ cube_ll_coord  | cube_ll_coord | cube_ll_coord 
+----------------+---------------+---------------
+ -6378168.00000 |       0.00000 |       0.00000
+(1 row)
+
+SELECT cube_ll_coord(ll_to_earth(-180,-360),1)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(-180,-360),2)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(-180,-360),3)::numeric(20,5);
+ cube_ll_coord  | cube_ll_coord | cube_ll_coord 
+----------------+---------------+---------------
+ -6378168.00000 |       0.00000 |       0.00000
+(1 row)
+
+SELECT cube_ll_coord(ll_to_earth(0,180),1)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(0,180),2)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(0,180),3)::numeric(20,5);
+ cube_ll_coord  | cube_ll_coord | cube_ll_coord 
+----------------+---------------+---------------
+ -6378168.00000 |       0.00000 |       0.00000
+(1 row)
+
+SELECT cube_ll_coord(ll_to_earth(0,-180),1)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(0,-180),2)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(0,-180),3)::numeric(20,5);
+ cube_ll_coord  | cube_ll_coord | cube_ll_coord 
+----------------+---------------+---------------
+ -6378168.00000 |       0.00000 |       0.00000
+(1 row)
+
+SELECT cube_ll_coord(ll_to_earth(90,0),1)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(90,0),2)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(90,0),3)::numeric(20,5);
+ cube_ll_coord | cube_ll_coord | cube_ll_coord 
+---------------+---------------+---------------
+       0.00000 |       0.00000 | 6378168.00000
+(1 row)
+
+SELECT cube_ll_coord(ll_to_earth(90,180),1)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(90,180),2)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(90,180),3)::numeric(20,5);
+ cube_ll_coord | cube_ll_coord | cube_ll_coord 
+---------------+---------------+---------------
+       0.00000 |       0.00000 | 6378168.00000
+(1 row)
+
+SELECT cube_ll_coord(ll_to_earth(-90,0),1)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(-90,0),2)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(-90,0),3)::numeric(20,5);
+ cube_ll_coord | cube_ll_coord | cube_ll_coord  
+---------------+---------------+----------------
+       0.00000 |       0.00000 | -6378168.00000
+(1 row)
+
+SELECT cube_ll_coord(ll_to_earth(-90,180),1)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(-90,180),2)::numeric(20,5),
+ cube_ll_coord(ll_to_earth(-90,180),3)::numeric(20,5);
+ cube_ll_coord | cube_ll_coord | cube_ll_coord  
+---------------+---------------+----------------
+       0.00000 |       0.00000 | -6378168.00000
+(1 row)
+
+--
+-- Test getting the latitude of a location.
+--
+SELECT latitude(ll_to_earth(0,0))::numeric(20,10);
+   latitude   
+--------------
+ 0.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(45,0))::numeric(20,10);
+   latitude    
+---------------
+ 45.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(90,0))::numeric(20,10);
+   latitude    
+---------------
+ 90.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(-45,0))::numeric(20,10);
+    latitude    
+----------------
+ -45.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(-90,0))::numeric(20,10);
+    latitude    
+----------------
+ -90.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(0,90))::numeric(20,10);
+   latitude   
+--------------
+ 0.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(45,90))::numeric(20,10);
+   latitude    
+---------------
+ 45.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(90,90))::numeric(20,10);
+   latitude    
+---------------
+ 90.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(-45,90))::numeric(20,10);
+    latitude    
+----------------
+ -45.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(-90,90))::numeric(20,10);
+    latitude    
+----------------
+ -90.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(0,180))::numeric(20,10);
+   latitude   
+--------------
+ 0.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(45,180))::numeric(20,10);
+   latitude    
+---------------
+ 45.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(90,180))::numeric(20,10);
+   latitude    
+---------------
+ 90.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(-45,180))::numeric(20,10);
+    latitude    
+----------------
+ -45.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(-90,180))::numeric(20,10);
+    latitude    
+----------------
+ -90.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(0,-90))::numeric(20,10);
+   latitude   
+--------------
+ 0.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(45,-90))::numeric(20,10);
+   latitude    
+---------------
+ 45.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(90,-90))::numeric(20,10);
+   latitude    
+---------------
+ 90.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(-45,-90))::numeric(20,10);
+    latitude    
+----------------
+ -45.0000000000
+(1 row)
+
+SELECT latitude(ll_to_earth(-90,-90))::numeric(20,10);
+    latitude    
+----------------
+ -90.0000000000
+(1 row)
+
+--
+-- Test getting the longitude of a location.
+--
+SELECT longitude(ll_to_earth(0,0))::numeric(20,10);
+  longitude   
+--------------
+ 0.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(45,0))::numeric(20,10);
+  longitude   
+--------------
+ 0.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(90,0))::numeric(20,10);
+  longitude   
+--------------
+ 0.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(-45,0))::numeric(20,10);
+  longitude   
+--------------
+ 0.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(-90,0))::numeric(20,10);
+  longitude   
+--------------
+ 0.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(0,90))::numeric(20,10);
+   longitude   
+---------------
+ 90.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(45,90))::numeric(20,10);
+   longitude   
+---------------
+ 90.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(90,90))::numeric(20,10);
+   longitude   
+---------------
+ 90.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(-45,90))::numeric(20,10);
+   longitude   
+---------------
+ 90.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(-90,90))::numeric(20,10);
+   longitude   
+---------------
+ 90.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(0,180))::numeric(20,10);
+   longitude    
+----------------
+ 180.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(45,180))::numeric(20,10);
+   longitude    
+----------------
+ 180.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(90,180))::numeric(20,10);
+   longitude    
+----------------
+ 180.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(-45,180))::numeric(20,10);
+   longitude    
+----------------
+ 180.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(-90,180))::numeric(20,10);
+   longitude    
+----------------
+ 180.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(0,-90))::numeric(20,10);
+   longitude    
+----------------
+ -90.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(45,-90))::numeric(20,10);
+   longitude    
+----------------
+ -90.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(90,-90))::numeric(20,10);
+   longitude    
+----------------
+ -90.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(-45,-90))::numeric(20,10);
+   longitude    
+----------------
+ -90.0000000000
+(1 row)
+
+SELECT longitude(ll_to_earth(-90,-90))::numeric(20,10);
+   longitude    
+----------------
+ -90.0000000000
+(1 row)
+
+--
+-- For the distance tests the following is some real life data.
+--
+-- Chicago has a latitude of 41.8 and a longitude of 87.6.
+-- Albuquerque has a latitude of 35.1 and a longitude of 106.7.
+-- (Note that latitude and longitude are specified differently
+-- in the cube based functions than for the point based functions.)
+--
+--
+-- Test getting the distance between two points using earth_distance.
+--
+SELECT earth_distance(ll_to_earth(0,0),ll_to_earth(0,0))::numeric(20,5);
+ earth_distance 
+----------------
+        0.00000
+(1 row)
+
+SELECT earth_distance(ll_to_earth(0,0),ll_to_earth(0,180))::numeric(20,5);
+ earth_distance 
+----------------
+ 20037605.73216
+(1 row)
+
+SELECT earth_distance(ll_to_earth(0,0),ll_to_earth(90,0))::numeric(20,5);
+ earth_distance 
+----------------
+ 10018802.86608
+(1 row)
+
+SELECT earth_distance(ll_to_earth(0,0),ll_to_earth(0,90))::numeric(20,5);
+ earth_distance 
+----------------
+ 10018802.86608
+(1 row)
+
+SELECT earth_distance(ll_to_earth(0,0),ll_to_earth(0,1))::numeric(20,5);
+ earth_distance 
+----------------
+   111320.03185
+(1 row)
+
+SELECT earth_distance(ll_to_earth(0,0),ll_to_earth(1,0))::numeric(20,5);
+ earth_distance 
+----------------
+   111320.03185
+(1 row)
+
+SELECT earth_distance(ll_to_earth(30,0),ll_to_earth(30,1))::numeric(20,5);
+ earth_distance 
+----------------
+    96405.66962
+(1 row)
+
+SELECT earth_distance(ll_to_earth(30,0),ll_to_earth(31,0))::numeric(20,5);
+ earth_distance 
+----------------
+   111320.03185
+(1 row)
+
+SELECT earth_distance(ll_to_earth(60,0),ll_to_earth(60,1))::numeric(20,5);
+ earth_distance 
+----------------
+    55659.48608
+(1 row)
+
+SELECT earth_distance(ll_to_earth(60,0),ll_to_earth(61,0))::numeric(20,5);
+ earth_distance 
+----------------
+   111320.03185
+(1 row)
+
+SELECT earth_distance(ll_to_earth(41.8,87.6),ll_to_earth(35.1,106.7))::numeric(20,5);
+ earth_distance 
+----------------
+  1819303.21265
+(1 row)
+
+SELECT (earth_distance(ll_to_earth(41.8,87.6),ll_to_earth(35.1,106.7))*
+      100./2.54/12./5280.)::numeric(20,5);
+  numeric   
+------------
+ 1130.46261
+(1 row)
+
+--
+-- Test getting the distance between two points using geo_distance.
+--
+SELECT geo_distance('(0,0)'::point,'(0,0)'::point)::numeric(20,5);
+ geo_distance 
+--------------
+      0.00000
+(1 row)
+
+SELECT geo_distance('(0,0)'::point,'(180,0)'::point)::numeric(20,5);
+ geo_distance 
+--------------
+  12436.77274
+(1 row)
+
+SELECT geo_distance('(0,0)'::point,'(0,90)'::point)::numeric(20,5);
+ geo_distance 
+--------------
+   6218.38637
+(1 row)
+
+SELECT geo_distance('(0,0)'::point,'(90,0)'::point)::numeric(20,5);
+ geo_distance 
+--------------
+   6218.38637
+(1 row)
+
+SELECT geo_distance('(0,0)'::point,'(1,0)'::point)::numeric(20,5);
+ geo_distance 
+--------------
+     69.09318
+(1 row)
+
+SELECT geo_distance('(0,0)'::point,'(0,1)'::point)::numeric(20,5);
+ geo_distance 
+--------------
+     69.09318
+(1 row)
+
+SELECT geo_distance('(0,30)'::point,'(1,30)'::point)::numeric(20,5);
+ geo_distance 
+--------------
+     59.83626
+(1 row)
+
+SELECT geo_distance('(0,30)'::point,'(0,31)'::point)::numeric(20,5);
+ geo_distance 
+--------------
+     69.09318
+(1 row)
+
+SELECT geo_distance('(0,60)'::point,'(1,60)'::point)::numeric(20,5);
+ geo_distance 
+--------------
+     34.54626
+(1 row)
+
+SELECT geo_distance('(0,60)'::point,'(0,61)'::point)::numeric(20,5);
+ geo_distance 
+--------------
+     69.09318
+(1 row)
+
+SELECT geo_distance('(87.6,41.8)'::point,'(106.7,35.1)'::point)::numeric(20,5);
+ geo_distance 
+--------------
+   1129.18983
+(1 row)
+
+SELECT (geo_distance('(87.6,41.8)'::point,'(106.7,35.1)'::point)*5280.*12.*2.54/100.)::numeric(20,5);
+    numeric    
+---------------
+ 1817254.87730
+(1 row)
+
+--
+-- Test getting the distance between two points using the <@> operator.
+--
+SELECT ('(0,0)'::point <@> '(0,0)'::point)::numeric(20,5);
+ numeric 
+---------
+ 0.00000
+(1 row)
+
+SELECT ('(0,0)'::point <@> '(180,0)'::point)::numeric(20,5);
+   numeric   
+-------------
+ 12436.77274
+(1 row)
+
+SELECT ('(0,0)'::point <@> '(0,90)'::point)::numeric(20,5);
+  numeric   
+------------
+ 6218.38637
+(1 row)
+
+SELECT ('(0,0)'::point <@> '(90,0)'::point)::numeric(20,5);
+  numeric   
+------------
+ 6218.38637
+(1 row)
+
+SELECT ('(0,0)'::point <@> '(1,0)'::point)::numeric(20,5);
+ numeric  
+----------
+ 69.09318
+(1 row)
+
+SELECT ('(0,0)'::point <@> '(0,1)'::point)::numeric(20,5);
+ numeric  
+----------
+ 69.09318
+(1 row)
+
+SELECT ('(0,30)'::point <@> '(1,30)'::point)::numeric(20,5);
+ numeric  
+----------
+ 59.83626
+(1 row)
+
+SELECT ('(0,30)'::point <@> '(0,31)'::point)::numeric(20,5);
+ numeric  
+----------
+ 69.09318
+(1 row)
+
+SELECT ('(0,60)'::point <@> '(1,60)'::point)::numeric(20,5);
+ numeric  
+----------
+ 34.54626
+(1 row)
+
+SELECT ('(0,60)'::point <@> '(0,61)'::point)::numeric(20,5);
+ numeric  
+----------
+ 69.09318
+(1 row)
+
+SELECT ('(87.6,41.8)'::point <@> '(106.7,35.1)'::point)::numeric(20,5);
+  numeric   
+------------
+ 1129.18983
+(1 row)
+
+SELECT (('(87.6,41.8)'::point <@> '(106.7,35.1)'::point)*5280.*12.*2.54/100.)::numeric(20,5);
+    numeric    
+---------------
+ 1817254.87730
+(1 row)
+
+--
+-- Test getting a bounding box around points.
+--
+SELECT cube_ll_coord(earth_box(ll_to_earth(0,0),112000),1)::numeric(20,5),
+       cube_ll_coord(earth_box(ll_to_earth(0,0),112000),2)::numeric(20,5),
+       cube_ll_coord(earth_box(ll_to_earth(0,0),112000),3)::numeric(20,5),
+       cube_ur_coord(earth_box(ll_to_earth(0,0),112000),1)::numeric(20,5),
+       cube_ur_coord(earth_box(ll_to_earth(0,0),112000),2)::numeric(20,5),
+       cube_ur_coord(earth_box(ll_to_earth(0,0),112000),3)::numeric(20,5);
+ cube_ll_coord | cube_ll_coord | cube_ll_coord | cube_ur_coord | cube_ur_coord | cube_ur_coord 
+---------------+---------------+---------------+---------------+---------------+---------------
+ 6266169.43896 | -111998.56104 | -111998.56104 | 6490166.56104 |  111998.56104 |  111998.56104
+(1 row)
+
+SELECT cube_ll_coord(earth_box(ll_to_earth(0,0),pi()*earth()),1)::numeric(20,5),
+       cube_ll_coord(earth_box(ll_to_earth(0,0),pi()*earth()),2)::numeric(20,5),
+       cube_ll_coord(earth_box(ll_to_earth(0,0),pi()*earth()),3)::numeric(20,5),
+       cube_ur_coord(earth_box(ll_to_earth(0,0),pi()*earth()),1)::numeric(20,5),
+       cube_ur_coord(earth_box(ll_to_earth(0,0),pi()*earth()),2)::numeric(20,5),
+       cube_ur_coord(earth_box(ll_to_earth(0,0),pi()*earth()),3)::numeric(20,5);
+ cube_ll_coord  |  cube_ll_coord  |  cube_ll_coord  | cube_ur_coord  | cube_ur_coord  | cube_ur_coord  
+----------------+-----------------+-----------------+----------------+----------------+----------------
+ -6378168.00000 | -12756336.00000 | -12756336.00000 | 19134504.00000 | 12756336.00000 | 12756336.00000
+(1 row)
+
+SELECT cube_ll_coord(earth_box(ll_to_earth(0,0),10*earth()),1)::numeric(20,5),
+       cube_ll_coord(earth_box(ll_to_earth(0,0),10*earth()),2)::numeric(20,5),
+       cube_ll_coord(earth_box(ll_to_earth(0,0),10*earth()),3)::numeric(20,5),
+       cube_ur_coord(earth_box(ll_to_earth(0,0),10*earth()),1)::numeric(20,5),
+       cube_ur_coord(earth_box(ll_to_earth(0,0),10*earth()),2)::numeric(20,5),
+       cube_ur_coord(earth_box(ll_to_earth(0,0),10*earth()),3)::numeric(20,5);
+ cube_ll_coord  |  cube_ll_coord  |  cube_ll_coord  | cube_ur_coord  | cube_ur_coord  | cube_ur_coord  
+----------------+-----------------+-----------------+----------------+----------------+----------------
+ -6378168.00000 | -12756336.00000 | -12756336.00000 | 19134504.00000 | 12756336.00000 | 12756336.00000
+(1 row)
+
+--
+-- Test for points that should be in bounding boxes.
+--
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0,1))*1.00001) @>
+       ll_to_earth(0,1);
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0,0.1))*1.00001) @>
+       ll_to_earth(0,0.1);
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0,0.01))*1.00001) @>
+       ll_to_earth(0,0.01);
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0,0.001))*1.00001) @>
+       ll_to_earth(0,0.001);
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0,0.0001))*1.00001) @>
+       ll_to_earth(0,0.0001);
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0.0001,0.0001))*1.00001) @>
+       ll_to_earth(0.0001,0.0001);
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT earth_box(ll_to_earth(45,45),
+       earth_distance(ll_to_earth(45,45),ll_to_earth(45.0001,45.0001))*1.00001) @>
+       ll_to_earth(45.0001,45.0001);
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT earth_box(ll_to_earth(90,180),
+       earth_distance(ll_to_earth(90,180),ll_to_earth(90.0001,180.0001))*1.00001) @>
+       ll_to_earth(90.0001,180.0001);
+ ?column? 
+----------
+ t
+(1 row)
+
+--
+-- Test for points that shouldn't be in bounding boxes. Note that we need
+-- to make points way outside, since some points close may be in the box
+-- but further away than the distance we are testing.
+--
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0,1))*.57735) @>
+       ll_to_earth(0,1);
+ ?column? 
+----------
+ f
+(1 row)
+
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0,0.1))*.57735) @>
+       ll_to_earth(0,0.1);
+ ?column? 
+----------
+ f
+(1 row)
+
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0,0.01))*.57735) @>
+       ll_to_earth(0,0.01);
+ ?column? 
+----------
+ f
+(1 row)
+
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0,0.001))*.57735) @>
+       ll_to_earth(0,0.001);
+ ?column? 
+----------
+ f
+(1 row)
+
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0,0.0001))*.57735) @>
+       ll_to_earth(0,0.0001);
+ ?column? 
+----------
+ f
+(1 row)
+
+SELECT earth_box(ll_to_earth(0,0),
+       earth_distance(ll_to_earth(0,0),ll_to_earth(0.0001,0.0001))*.57735) @>
+       ll_to_earth(0.0001,0.0001);
+ ?column? 
+----------
+ f
+(1 row)
+
+SELECT earth_box(ll_to_earth(45,45),
+       earth_distance(ll_to_earth(45,45),ll_to_earth(45.0001,45.0001))*.57735) @>
+       ll_to_earth(45.0001,45.0001);
+ ?column? 
+----------
+ f
+(1 row)
+
+SELECT earth_box(ll_to_earth(90,180),
+       earth_distance(ll_to_earth(90,180),ll_to_earth(90.0001,180.0001))*.57735) @>
+       ll_to_earth(90.0001,180.0001);
+ ?column? 
+----------
+ f
+(1 row)
+
+--
+-- Test the recommended constraints.
+--
+SELECT cube_is_point(ll_to_earth(0,0));
+ cube_is_point 
+---------------
+ t
+(1 row)
+
+SELECT cube_dim(ll_to_earth(0,0)) <= 3;
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT abs(cube_distance(ll_to_earth(0,0), '(0)'::cube) / earth() - 1) <
+       '10e-12'::float8;
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT cube_is_point(ll_to_earth(30,60));
+ cube_is_point 
+---------------
+ t
+(1 row)
+
+SELECT cube_dim(ll_to_earth(30,60)) <= 3;
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT abs(cube_distance(ll_to_earth(30,60), '(0)'::cube) / earth() - 1) <
+       '10e-12'::float8;
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT cube_is_point(ll_to_earth(60,90));
+ cube_is_point 
+---------------
+ t
+(1 row)
+
+SELECT cube_dim(ll_to_earth(60,90)) <= 3;
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT abs(cube_distance(ll_to_earth(60,90), '(0)'::cube) / earth() - 1) <
+       '10e-12'::float8;
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT cube_is_point(ll_to_earth(-30,-90));
+ cube_is_point 
+---------------
+ t
+(1 row)
+
+SELECT cube_dim(ll_to_earth(-30,-90)) <= 3;
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT abs(cube_distance(ll_to_earth(-30,-90), '(0)'::cube) / earth() - 1) <
+       '10e-12'::float8;
+ ?column? 
+----------
+ t
+(1 row)
+
+--
+-- Now we are going to test extension create/drop scenarios.
+--
+-- list what's installed
+\dT
+                                                List of data types
+ Schema |   Name    |                                         Description                                         
+--------+-----------+---------------------------------------------------------------------------------------------
+ public | cube      | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
+ public | earth     | 
+ public | ip4       | IPv4 address '#.#.#.#'
+ public | ip4r      | IPv4 range '#.#.#.#-#.#.#.#' or '#.#.#.#/#' or '#.#.#.#'
+ public | ip6       | IPv6 address 'xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx'
+ public | ip6r      | IPv6 range '#-#' or '#/#' or '#'
+ public | ipaddress | IPv4 or IPv6 address
+ public | iprange   | IPv4 or IPv6 range
+(8 rows)
+
+drop extension cube;  -- fail, earthdistance requires it
+ERROR:  cannot drop extension cube because other objects depend on it
+DETAIL:  extension earthdistance depends on extension cube
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+drop extension earthdistance;
+drop type cube;  -- fail, extension cube requires it
+ERROR:  cannot drop type cube because extension cube requires it
+HINT:  You can drop extension cube instead.
+-- list what's installed
+\dT
+                                                List of data types
+ Schema |   Name    |                                         Description                                         
+--------+-----------+---------------------------------------------------------------------------------------------
+ public | cube      | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
+ public | ip4       | IPv4 address '#.#.#.#'
+ public | ip4r      | IPv4 range '#.#.#.#-#.#.#.#' or '#.#.#.#/#' or '#.#.#.#'
+ public | ip6       | IPv6 address 'xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx'
+ public | ip6r      | IPv6 range '#-#' or '#/#' or '#'
+ public | ipaddress | IPv4 or IPv6 address
+ public | iprange   | IPv4 or IPv6 range
+(7 rows)
+
+create table foo (f1 cube, f2 int);
+drop extension cube;  -- fail, foo.f1 requires it
+ERROR:  cannot drop extension cube because other objects depend on it
+DETAIL:  column f1 of table foo depends on type cube
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+drop table foo;
+drop extension cube;
+-- list what's installed
+\dT
+                              List of data types
+ Schema |   Name    |                       Description                        
+--------+-----------+----------------------------------------------------------
+ public | ip4       | IPv4 address '#.#.#.#'
+ public | ip4r      | IPv4 range '#.#.#.#-#.#.#.#' or '#.#.#.#/#' or '#.#.#.#'
+ public | ip6       | IPv6 address 'xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx'
+ public | ip6r      | IPv6 range '#-#' or '#/#' or '#'
+ public | ipaddress | IPv4 or IPv6 address
+ public | iprange   | IPv4 or IPv6 range
+(6 rows)
+
+\df
+                                              List of functions
+ Schema |            Name             | Result data type |            Argument data types             | Type 
+--------+-----------------------------+------------------+--------------------------------------------+------
+ public | cidr                        | cidr             | ip4                                        | func
+ public | cidr                        | cidr             | ip4r                                       | func
+ public | cidr                        | cidr             | ip6                                        | func
+ public | cidr                        | cidr             | ip6r                                       | func
+ public | cidr                        | cidr             | ipaddress                                  | func
+ public | cidr                        | cidr             | iprange                                    | func
+ public | cidr_split                  | SETOF ip4r       | ip4r                                       | func
+ public | cidr_split                  | SETOF ip6r       | ip6r                                       | func
+ public | cidr_split                  | SETOF iprange    | iprange                                    | func
+ public | family                      | integer          | ip4                                        | func
+ public | family                      | integer          | ip4r                                       | func
+ public | family                      | integer          | ip6                                        | func
+ public | family                      | integer          | ip6r                                       | func
+ public | family                      | integer          | ipaddress                                  | func
+ public | family                      | integer          | iprange                                    | func
+ public | gip4r_compress              | internal         | internal                                   | func
+ public | gip4r_consistent            | boolean          | internal, ip4r, smallint, oid, internal    | func
+ public | gip4r_decompress            | internal         | internal                                   | func
+ public | gip4r_fetch                 | internal         | internal                                   | func
+ public | gip4r_penalty               | internal         | internal, internal, internal               | func
+ public | gip4r_picksplit             | internal         | internal, internal                         | func
+ public | gip4r_same                  | internal         | ip4r, ip4r, internal                       | func
+ public | gip4r_union                 | ip4r             | internal, internal                         | func
+ public | gip6r_compress              | internal         | internal                                   | func
+ public | gip6r_consistent            | boolean          | internal, ip6r, smallint, oid, internal    | func
+ public | gip6r_decompress            | internal         | internal                                   | func
+ public | gip6r_fetch                 | internal         | internal                                   | func
+ public | gip6r_penalty               | internal         | internal, internal, internal               | func
+ public | gip6r_picksplit             | internal         | internal, internal                         | func
+ public | gip6r_same                  | internal         | ip6r, ip6r, internal                       | func
+ public | gip6r_union                 | ip6r             | internal, internal                         | func
+ public | gipr_compress               | internal         | internal                                   | func
+ public | gipr_consistent             | boolean          | internal, iprange, smallint, oid, internal | func
+ public | gipr_decompress             | internal         | internal                                   | func
+ public | gipr_fetch                  | internal         | internal                                   | func
+ public | gipr_penalty                | internal         | internal, internal, internal               | func
+ public | gipr_picksplit              | internal         | internal, internal                         | func
+ public | gipr_same                   | internal         | iprange, iprange, internal                 | func
+ public | gipr_union                  | iprange          | internal, internal                         | func
+ public | in_range                    | boolean          | ip4, ip4, bigint, boolean, boolean         | func
+ public | in_range                    | boolean          | ip4, ip4, ip4, boolean, boolean            | func
+ public | in_range                    | boolean          | ip6, ip6, bigint, boolean, boolean         | func
+ public | in_range                    | boolean          | ip6, ip6, ip6, boolean, boolean            | func
+ public | ip4                         | ip4              | bigint                                     | func
+ public | ip4                         | ip4              | bit                                        | func
+ public | ip4                         | ip4              | bit varying                                | func
+ public | ip4                         | ip4              | bytea                                      | func
+ public | ip4                         | ip4              | double precision                           | func
+ public | ip4                         | ip4              | inet                                       | func
+ public | ip4                         | ip4              | ipaddress                                  | func
+ public | ip4                         | ip4              | numeric                                    | func
+ public | ip4                         | ip4              | text                                       | func
+ public | ip4_and                     | ip4              | ip4, ip4                                   | func
+ public | ip4_cmp                     | integer          | ip4, ip4                                   | func
+ public | ip4_contained_by            | boolean          | ip4, ip4r                                  | func
+ public | ip4_contained_by            | boolean          | ip4, iprange                               | func
+ public | ip4_contains                | boolean          | ip4r, ip4                                  | func
+ public | ip4_contains                | boolean          | iprange, ip4                               | func
+ public | ip4_eq                      | boolean          | ip4, ip4                                   | func
+ public | ip4_ge                      | boolean          | ip4, ip4                                   | func
+ public | ip4_gt                      | boolean          | ip4, ip4                                   | func
+ public | ip4_hash_extended           | bigint           | ip4, bigint                                | func
+ public | ip4_in                      | ip4              | cstring                                    | func
+ public | ip4_le                      | boolean          | ip4, ip4                                   | func
+ public | ip4_lt                      | boolean          | ip4, ip4                                   | func
+ public | ip4_minus_bigint            | ip4              | ip4, bigint                                | func
+ public | ip4_minus_int               | ip4              | ip4, integer                               | func
+ public | ip4_minus_ip4               | bigint           | ip4, ip4                                   | func
+ public | ip4_minus_numeric           | ip4              | ip4, numeric                               | func
+ public | ip4_neq                     | boolean          | ip4, ip4                                   | func
+ public | ip4_net_lower               | ip4              | ip4, integer                               | func
+ public | ip4_net_upper               | ip4              | ip4, integer                               | func
+ public | ip4_netmask                 | ip4              | integer                                    | func
+ public | ip4_not                     | ip4              | ip4                                        | func
+ public | ip4_or                      | ip4              | ip4, ip4                                   | func
+ public | ip4_out                     | cstring          | ip4                                        | func
+ public | ip4_plus_bigint             | ip4              | ip4, bigint                                | func
+ public | ip4_plus_int                | ip4              | ip4, integer                               | func
+ public | ip4_plus_numeric            | ip4              | ip4, numeric                               | func
+ public | ip4_recv                    | ip4              | internal                                   | func
+ public | ip4_send                    | bytea            | ip4                                        | func
+ public | ip4_xor                     | ip4              | ip4, ip4                                   | func
+ public | ip4hash                     | integer          | ip4                                        | func
+ public | ip4r                        | ip4r             | bit varying                                | func
+ public | ip4r                        | ip4r             | cidr                                       | func
+ public | ip4r                        | ip4r             | ip4                                        | func
+ public | ip4r                        | ip4r             | ip4, ip4                                   | func
+ public | ip4r                        | ip4r             | iprange                                    | func
+ public | ip4r                        | ip4r             | text                                       | func
+ public | ip4r_cmp                    | integer          | ip4r, ip4r                                 | func
+ public | ip4r_contained_by           | boolean          | ip4r, ip4r                                 | func
+ public | ip4r_contained_by_strict    | boolean          | ip4r, ip4r                                 | func
+ public | ip4r_contains               | boolean          | ip4r, ip4r                                 | func
+ public | ip4r_contains_strict        | boolean          | ip4r, ip4r                                 | func
+ public | ip4r_eq                     | boolean          | ip4r, ip4r                                 | func
+ public | ip4r_ge                     | boolean          | ip4r, ip4r                                 | func
+ public | ip4r_gt                     | boolean          | ip4r, ip4r                                 | func
+ public | ip4r_hash_extended          | bigint           | ip4r, bigint                               | func
+ public | ip4r_in                     | ip4r             | cstring                                    | func
+ public | ip4r_inter                  | ip4r             | ip4r, ip4r                                 | func
+ public | ip4r_le                     | boolean          | ip4r, ip4r                                 | func
+ public | ip4r_lt                     | boolean          | ip4r, ip4r                                 | func
+ public | ip4r_neq                    | boolean          | ip4r, ip4r                                 | func
+ public | ip4r_net_mask               | ip4r             | ip4, ip4                                   | func
+ public | ip4r_net_prefix             | ip4r             | ip4, integer                               | func
+ public | ip4r_out                    | cstring          | ip4r                                       | func
+ public | ip4r_overlaps               | boolean          | ip4r, ip4r                                 | func
+ public | ip4r_recv                   | ip4r             | internal                                   | func
+ public | ip4r_send                   | bytea            | ip4r                                       | func
+ public | ip4r_size                   | double precision | ip4r                                       | func
+ public | ip4r_size_exact             | numeric          | ip4r                                       | func
+ public | ip4r_union                  | ip4r             | ip4r, ip4r                                 | func
+ public | ip4rhash                    | integer          | ip4r                                       | func
+ public | ip6                         | ip6              | bit                                        | func
+ public | ip6                         | ip6              | bit varying                                | func
+ public | ip6                         | ip6              | bytea                                      | func
+ public | ip6                         | ip6              | inet                                       | func
+ public | ip6                         | ip6              | ipaddress                                  | func
+ public | ip6                         | ip6              | numeric                                    | func
+ public | ip6                         | ip6              | text                                       | func
+ public | ip6_and                     | ip6              | ip6, ip6                                   | func
+ public | ip6_cmp                     | integer          | ip6, ip6                                   | func
+ public | ip6_contained_by            | boolean          | ip6, ip6r                                  | func
+ public | ip6_contained_by            | boolean          | ip6, iprange                               | func
+ public | ip6_contains                | boolean          | ip6r, ip6                                  | func
+ public | ip6_contains                | boolean          | iprange, ip6                               | func
+ public | ip6_eq                      | boolean          | ip6, ip6                                   | func
+ public | ip6_ge                      | boolean          | ip6, ip6                                   | func
+ public | ip6_gt                      | boolean          | ip6, ip6                                   | func
+ public | ip6_hash_extended           | bigint           | ip6, bigint                                | func
+ public | ip6_in                      | ip6              | cstring                                    | func
+ public | ip6_le                      | boolean          | ip6, ip6                                   | func
+ public | ip6_lt                      | boolean          | ip6, ip6                                   | func
+ public | ip6_minus_bigint            | ip6              | ip6, bigint                                | func
+ public | ip6_minus_int               | ip6              | ip6, integer                               | func
+ public | ip6_minus_ip6               | numeric          | ip6, ip6                                   | func
+ public | ip6_minus_numeric           | ip6              | ip6, numeric                               | func
+ public | ip6_neq                     | boolean          | ip6, ip6                                   | func
+ public | ip6_net_lower               | ip6              | ip6, integer                               | func
+ public | ip6_net_upper               | ip6              | ip6, integer                               | func
+ public | ip6_netmask                 | ip6              | integer                                    | func
+ public | ip6_not                     | ip6              | ip6                                        | func
+ public | ip6_or                      | ip6              | ip6, ip6                                   | func
+ public | ip6_out                     | cstring          | ip6                                        | func
+ public | ip6_plus_bigint             | ip6              | ip6, bigint                                | func
+ public | ip6_plus_int                | ip6              | ip6, integer                               | func
+ public | ip6_plus_numeric            | ip6              | ip6, numeric                               | func
+ public | ip6_recv                    | ip6              | internal                                   | func
+ public | ip6_send                    | bytea            | ip6                                        | func
+ public | ip6_xor                     | ip6              | ip6, ip6                                   | func
+ public | ip6hash                     | integer          | ip6                                        | func
+ public | ip6r                        | ip6r             | bit varying                                | func
+ public | ip6r                        | ip6r             | cidr                                       | func
+ public | ip6r                        | ip6r             | ip6                                        | func
+ public | ip6r                        | ip6r             | ip6, ip6                                   | func
+ public | ip6r                        | ip6r             | iprange                                    | func
+ public | ip6r                        | ip6r             | text                                       | func
+ public | ip6r_cmp                    | integer          | ip6r, ip6r                                 | func
+ public | ip6r_contained_by           | boolean          | ip6r, ip6r                                 | func
+ public | ip6r_contained_by_strict    | boolean          | ip6r, ip6r                                 | func
+ public | ip6r_contains               | boolean          | ip6r, ip6r                                 | func
+ public | ip6r_contains_strict        | boolean          | ip6r, ip6r                                 | func
+ public | ip6r_eq                     | boolean          | ip6r, ip6r                                 | func
+ public | ip6r_ge                     | boolean          | ip6r, ip6r                                 | func
+ public | ip6r_gt                     | boolean          | ip6r, ip6r                                 | func
+ public | ip6r_hash_extended          | bigint           | ip6r, bigint                               | func
+ public | ip6r_in                     | ip6r             | cstring                                    | func
+ public | ip6r_inter                  | ip6r             | ip6r, ip6r                                 | func
+ public | ip6r_le                     | boolean          | ip6r, ip6r                                 | func
+ public | ip6r_lt                     | boolean          | ip6r, ip6r                                 | func
+ public | ip6r_neq                    | boolean          | ip6r, ip6r                                 | func
+ public | ip6r_net_mask               | ip6r             | ip6, ip6                                   | func
+ public | ip6r_net_prefix             | ip6r             | ip6, integer                               | func
+ public | ip6r_out                    | cstring          | ip6r                                       | func
+ public | ip6r_overlaps               | boolean          | ip6r, ip6r                                 | func
+ public | ip6r_recv                   | ip6r             | internal                                   | func
+ public | ip6r_send                   | bytea            | ip6r                                       | func
+ public | ip6r_size                   | double precision | ip6r                                       | func
+ public | ip6r_size_exact             | numeric          | ip6r                                       | func
+ public | ip6r_union                  | ip6r             | ip6r, ip6r                                 | func
+ public | ip6rhash                    | integer          | ip6r                                       | func
+ public | ipaddress                   | ipaddress        | bit                                        | func
+ public | ipaddress                   | ipaddress        | bit varying                                | func
+ public | ipaddress                   | ipaddress        | bytea                                      | func
+ public | ipaddress                   | ipaddress        | inet                                       | func
+ public | ipaddress                   | ipaddress        | ip4                                        | func
+ public | ipaddress                   | ipaddress        | ip6                                        | func
+ public | ipaddress                   | ipaddress        | text                                       | func
+ public | ipaddress_and               | ipaddress        | ipaddress, ipaddress                       | func
+ public | ipaddress_cmp               | integer          | ipaddress, ipaddress                       | func
+ public | ipaddress_contained_by      | boolean          | ipaddress, iprange                         | func
+ public | ipaddress_contains          | boolean          | iprange, ipaddress                         | func
+ public | ipaddress_eq                | boolean          | ipaddress, ipaddress                       | func
+ public | ipaddress_ge                | boolean          | ipaddress, ipaddress                       | func
+ public | ipaddress_gt                | boolean          | ipaddress, ipaddress                       | func
+ public | ipaddress_hash_extended     | bigint           | ipaddress, bigint                          | func
+ public | ipaddress_in                | ipaddress        | cstring                                    | func
+ public | ipaddress_le                | boolean          | ipaddress, ipaddress                       | func
+ public | ipaddress_lt                | boolean          | ipaddress, ipaddress                       | func
+ public | ipaddress_minus_bigint      | ipaddress        | ipaddress, bigint                          | func
+ public | ipaddress_minus_int         | ipaddress        | ipaddress, integer                         | func
+ public | ipaddress_minus_ipaddress   | numeric          | ipaddress, ipaddress                       | func
+ public | ipaddress_minus_numeric     | ipaddress        | ipaddress, numeric                         | func
+ public | ipaddress_neq               | boolean          | ipaddress, ipaddress                       | func
+ public | ipaddress_net_lower         | ipaddress        | ipaddress, integer                         | func
+ public | ipaddress_net_upper         | ipaddress        | ipaddress, integer                         | func
+ public | ipaddress_not               | ipaddress        | ipaddress                                  | func
+ public | ipaddress_or                | ipaddress        | ipaddress, ipaddress                       | func
+ public | ipaddress_out               | cstring          | ipaddress                                  | func
+ public | ipaddress_plus_bigint       | ipaddress        | ipaddress, bigint                          | func
+ public | ipaddress_plus_int          | ipaddress        | ipaddress, integer                         | func
+ public | ipaddress_plus_numeric      | ipaddress        | ipaddress, numeric                         | func
+ public | ipaddress_recv              | ipaddress        | internal                                   | func
+ public | ipaddress_send              | bytea            | ipaddress                                  | func
+ public | ipaddress_xor               | ipaddress        | ipaddress, ipaddress                       | func
+ public | ipaddresshash               | integer          | ipaddress                                  | func
+ public | iprange                     | iprange          | cidr                                       | func
+ public | iprange                     | iprange          | ip4                                        | func
+ public | iprange                     | iprange          | ip4, ip4                                   | func
+ public | iprange                     | iprange          | ip4r                                       | func
+ public | iprange                     | iprange          | ip6                                        | func
+ public | iprange                     | iprange          | ip6, ip6                                   | func
+ public | iprange                     | iprange          | ip6r                                       | func
+ public | iprange                     | iprange          | ipaddress                                  | func
+ public | iprange                     | iprange          | ipaddress, ipaddress                       | func
+ public | iprange                     | iprange          | text                                       | func
+ public | iprange_cmp                 | integer          | iprange, iprange                           | func
+ public | iprange_contained_by        | boolean          | iprange, iprange                           | func
+ public | iprange_contained_by_strict | boolean          | iprange, iprange                           | func
+ public | iprange_contains            | boolean          | iprange, iprange                           | func
+ public | iprange_contains_strict     | boolean          | iprange, iprange                           | func
+ public | iprange_eq                  | boolean          | iprange, iprange                           | func
+ public | iprange_ge                  | boolean          | iprange, iprange                           | func
+ public | iprange_gt                  | boolean          | iprange, iprange                           | func
+ public | iprange_hash                | integer          | iprange                                    | func
+ public | iprange_hash_extended       | bigint           | iprange, bigint                            | func
+ public | iprange_in                  | iprange          | cstring                                    | func
+ public | iprange_inter               | iprange          | iprange, iprange                           | func
+ public | iprange_le                  | boolean          | iprange, iprange                           | func
+ public | iprange_lt                  | boolean          | iprange, iprange                           | func
+ public | iprange_neq                 | boolean          | iprange, iprange                           | func
+ public | iprange_net_mask            | iprange          | ip4, ip4                                   | func
+ public | iprange_net_mask            | iprange          | ip6, ip6                                   | func
+ public | iprange_net_mask            | iprange          | ipaddress, ipaddress                       | func
+ public | iprange_net_prefix          | iprange          | ip4, integer                               | func
+ public | iprange_net_prefix          | iprange          | ip6, integer                               | func
+ public | iprange_net_prefix          | iprange          | ipaddress, integer                         | func
+ public | iprange_out                 | cstring          | iprange                                    | func
+ public | iprange_overlaps            | boolean          | iprange, iprange                           | func
+ public | iprange_recv                | iprange          | internal                                   | func
+ public | iprange_send                | bytea            | iprange                                    | func
+ public | iprange_size                | double precision | iprange                                    | func
+ public | iprange_size_exact          | numeric          | iprange                                    | func
+ public | iprange_union               | iprange          | iprange, iprange                           | func
+ public | iprangehash                 | integer          | iprange                                    | func
+ public | is_cidr                     | boolean          | ip4r                                       | func
+ public | is_cidr                     | boolean          | ip6r                                       | func
+ public | is_cidr                     | boolean          | iprange                                    | func
+ public | lower                       | ip4              | ip4r                                       | func
+ public | lower                       | ip6              | ip6r                                       | func
+ public | lower                       | ipaddress        | iprange                                    | func
+ public | masklen                     | integer          | ip4r                                       | func
+ public | masklen                     | integer          | ip6r                                       | func
+ public | masklen                     | integer          | iprange                                    | func
+ public | text                        | text             | ip4                                        | func
+ public | text                        | text             | ip4r                                       | func
+ public | text                        | text             | ip6                                        | func
+ public | text                        | text             | ip6r                                       | func
+ public | text                        | text             | ipaddress                                  | func
+ public | text                        | text             | iprange                                    | func
+ public | to_bigint                   | bigint           | ip4                                        | func
+ public | to_bit                      | bit varying      | ip4                                        | func
+ public | to_bit                      | bit varying      | ip4r                                       | func
+ public | to_bit                      | bit varying      | ip6                                        | func
+ public | to_bit                      | bit varying      | ip6r                                       | func
+ public | to_bit                      | bit varying      | ipaddress                                  | func
+ public | to_bit                      | bit varying      | iprange                                    | func
+ public | to_bytea                    | bytea            | ip4                                        | func
+ public | to_bytea                    | bytea            | ip6                                        | func
+ public | to_bytea                    | bytea            | ipaddress                                  | func
+ public | to_double                   | double precision | ip4                                        | func
+ public | to_numeric                  | numeric          | ip4                                        | func
+ public | to_numeric                  | numeric          | ip6                                        | func
+ public | to_numeric                  | numeric          | ipaddress                                  | func
+ public | upper                       | ip4              | ip4r                                       | func
+ public | upper                       | ip6              | ip6r                                       | func
+ public | upper                       | ipaddress        | iprange                                    | func
+(287 rows)
+
+\do
+                                List of operators
+ Schema | Name | Left arg type | Right arg type |   Result type    | Description 
+--------+------+---------------+----------------+------------------+-------------
+ public | #    | ip4           | ip4            | ip4              | 
+ public | #    | ip6           | ip6            | ip6              | 
+ public | #    | ipaddress     | ipaddress      | ipaddress        | 
+ public | &    | ip4           | ip4            | ip4              | 
+ public | &    | ip6           | ip6            | ip6              | 
+ public | &    | ipaddress     | ipaddress      | ipaddress        | 
+ public | &&   | ip4r          | ip4r           | boolean          | 
+ public | &&   | ip6r          | ip6r           | boolean          | 
+ public | &&   | iprange       | iprange        | boolean          | 
+ public | +    | ip4           | bigint         | ip4              | 
+ public | +    | ip4           | integer        | ip4              | 
+ public | +    | ip4           | numeric        | ip4              | 
+ public | +    | ip6           | bigint         | ip6              | 
+ public | +    | ip6           | integer        | ip6              | 
+ public | +    | ip6           | numeric        | ip6              | 
+ public | +    | ipaddress     | bigint         | ipaddress        | 
+ public | +    | ipaddress     | integer        | ipaddress        | 
+ public | +    | ipaddress     | numeric        | ipaddress        | 
+ public | -    | ip4           | bigint         | ip4              | 
+ public | -    | ip4           | integer        | ip4              | 
+ public | -    | ip4           | ip4            | bigint           | 
+ public | -    | ip4           | numeric        | ip4              | 
+ public | -    | ip6           | bigint         | ip6              | 
+ public | -    | ip6           | integer        | ip6              | 
+ public | -    | ip6           | ip6            | numeric          | 
+ public | -    | ip6           | numeric        | ip6              | 
+ public | -    | ipaddress     | bigint         | ipaddress        | 
+ public | -    | ipaddress     | integer        | ipaddress        | 
+ public | -    | ipaddress     | ipaddress      | numeric          | 
+ public | -    | ipaddress     | numeric        | ipaddress        | 
+ public | /    | ip4           | integer        | ip4r             | 
+ public | /    | ip4           | ip4            | ip4r             | 
+ public | /    | ip6           | integer        | ip6r             | 
+ public | /    | ip6           | ip6            | ip6r             | 
+ public | /    | ipaddress     | integer        | iprange          | 
+ public | /    | ipaddress     | ipaddress      | iprange          | 
+ public | <    | ip4           | ip4            | boolean          | 
+ public | <    | ip4r          | ip4r           | boolean          | 
+ public | <    | ip6           | ip6            | boolean          | 
+ public | <    | ip6r          | ip6r           | boolean          | 
+ public | <    | ipaddress     | ipaddress      | boolean          | 
+ public | <    | iprange       | iprange        | boolean          | 
+ public | <<   | ip4r          | ip4r           | boolean          | 
+ public | <<   | ip6r          | ip6r           | boolean          | 
+ public | <<   | iprange       | iprange        | boolean          | 
+ public | <<=  | ip4r          | ip4r           | boolean          | 
+ public | <<=  | ip6r          | ip6r           | boolean          | 
+ public | <<=  | iprange       | iprange        | boolean          | 
+ public | <=   | ip4           | ip4            | boolean          | 
+ public | <=   | ip4r          | ip4r           | boolean          | 
+ public | <=   | ip6           | ip6            | boolean          | 
+ public | <=   | ip6r          | ip6r           | boolean          | 
+ public | <=   | ipaddress     | ipaddress      | boolean          | 
+ public | <=   | iprange       | iprange        | boolean          | 
+ public | <>   | ip4           | ip4            | boolean          | 
+ public | <>   | ip4r          | ip4r           | boolean          | 
+ public | <>   | ip6           | ip6            | boolean          | 
+ public | <>   | ip6r          | ip6r           | boolean          | 
+ public | <>   | ipaddress     | ipaddress      | boolean          | 
+ public | <>   | iprange       | iprange        | boolean          | 
+ public | =    | ip4           | ip4            | boolean          | 
+ public | =    | ip4r          | ip4r           | boolean          | 
+ public | =    | ip6           | ip6            | boolean          | 
+ public | =    | ip6r          | ip6r           | boolean          | 
+ public | =    | ipaddress     | ipaddress      | boolean          | 
+ public | =    | iprange       | iprange        | boolean          | 
+ public | >    | ip4           | ip4            | boolean          | 
+ public | >    | ip4r          | ip4r           | boolean          | 
+ public | >    | ip6           | ip6            | boolean          | 
+ public | >    | ip6r          | ip6r           | boolean          | 
+ public | >    | ipaddress     | ipaddress      | boolean          | 
+ public | >    | iprange       | iprange        | boolean          | 
+ public | >=   | ip4           | ip4            | boolean          | 
+ public | >=   | ip4r          | ip4r           | boolean          | 
+ public | >=   | ip6           | ip6            | boolean          | 
+ public | >=   | ip6r          | ip6r           | boolean          | 
+ public | >=   | ipaddress     | ipaddress      | boolean          | 
+ public | >=   | iprange       | iprange        | boolean          | 
+ public | >>   | ip4r          | ip4r           | boolean          | 
+ public | >>   | ip6r          | ip6r           | boolean          | 
+ public | >>   | iprange       | iprange        | boolean          | 
+ public | >>=  | ip4r          | ip4r           | boolean          | 
+ public | >>=  | ip6r          | ip6r           | boolean          | 
+ public | >>=  | iprange       | iprange        | boolean          | 
+ public | @    |               | ip4r           | double precision | 
+ public | @    |               | ip6r           | double precision | 
+ public | @    |               | iprange        | double precision | 
+ public | @@   |               | ip4r           | numeric          | 
+ public | @@   |               | ip6r           | numeric          | 
+ public | @@   |               | iprange        | numeric          | 
+ public | |    | ip4           | ip4            | ip4              | 
+ public | |    | ip6           | ip6            | ip6              | 
+ public | |    | ipaddress     | ipaddress      | ipaddress        | 
+ public | ~    |               | ip4            | ip4              | 
+ public | ~    |               | ip6            | ip6              | 
+ public | ~    |               | ipaddress      | ipaddress        | 
+(96 rows)
+
+create schema c;
+create extension cube with schema c;
+-- list what's installed
+\dT public.*
+                              List of data types
+ Schema |   Name    |                       Description                        
+--------+-----------+----------------------------------------------------------
+ public | ip4       | IPv4 address '#.#.#.#'
+ public | ip4r      | IPv4 range '#.#.#.#-#.#.#.#' or '#.#.#.#/#' or '#.#.#.#'
+ public | ip6       | IPv6 address 'xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx'
+ public | ip6r      | IPv6 range '#-#' or '#/#' or '#'
+ public | ipaddress | IPv4 or IPv6 address
+ public | iprange   | IPv4 or IPv6 range
+(6 rows)
+
+\df public.*
+                                              List of functions
+ Schema |            Name             | Result data type |            Argument data types             | Type 
+--------+-----------------------------+------------------+--------------------------------------------+------
+ public | cidr                        | cidr             | ip4                                        | func
+ public | cidr                        | cidr             | ip4r                                       | func
+ public | cidr                        | cidr             | ip6                                        | func
+ public | cidr                        | cidr             | ip6r                                       | func
+ public | cidr                        | cidr             | ipaddress                                  | func
+ public | cidr                        | cidr             | iprange                                    | func
+ public | cidr_split                  | SETOF ip4r       | ip4r                                       | func
+ public | cidr_split                  | SETOF ip6r       | ip6r                                       | func
+ public | cidr_split                  | SETOF iprange    | iprange                                    | func
+ public | family                      | integer          | ip4                                        | func
+ public | family                      | integer          | ip4r                                       | func
+ public | family                      | integer          | ip6                                        | func
+ public | family                      | integer          | ip6r                                       | func
+ public | family                      | integer          | ipaddress                                  | func
+ public | family                      | integer          | iprange                                    | func
+ public | gip4r_compress              | internal         | internal                                   | func
+ public | gip4r_consistent            | boolean          | internal, ip4r, smallint, oid, internal    | func
+ public | gip4r_decompress            | internal         | internal                                   | func
+ public | gip4r_fetch                 | internal         | internal                                   | func
+ public | gip4r_penalty               | internal         | internal, internal, internal               | func
+ public | gip4r_picksplit             | internal         | internal, internal                         | func
+ public | gip4r_same                  | internal         | ip4r, ip4r, internal                       | func
+ public | gip4r_union                 | ip4r             | internal, internal                         | func
+ public | gip6r_compress              | internal         | internal                                   | func
+ public | gip6r_consistent            | boolean          | internal, ip6r, smallint, oid, internal    | func
+ public | gip6r_decompress            | internal         | internal                                   | func
+ public | gip6r_fetch                 | internal         | internal                                   | func
+ public | gip6r_penalty               | internal         | internal, internal, internal               | func
+ public | gip6r_picksplit             | internal         | internal, internal                         | func
+ public | gip6r_same                  | internal         | ip6r, ip6r, internal                       | func
+ public | gip6r_union                 | ip6r             | internal, internal                         | func
+ public | gipr_compress               | internal         | internal                                   | func
+ public | gipr_consistent             | boolean          | internal, iprange, smallint, oid, internal | func
+ public | gipr_decompress             | internal         | internal                                   | func
+ public | gipr_fetch                  | internal         | internal                                   | func
+ public | gipr_penalty                | internal         | internal, internal, internal               | func
+ public | gipr_picksplit              | internal         | internal, internal                         | func
+ public | gipr_same                   | internal         | iprange, iprange, internal                 | func
+ public | gipr_union                  | iprange          | internal, internal                         | func
+ public | in_range                    | boolean          | ip4, ip4, bigint, boolean, boolean         | func
+ public | in_range                    | boolean          | ip4, ip4, ip4, boolean, boolean            | func
+ public | in_range                    | boolean          | ip6, ip6, bigint, boolean, boolean         | func
+ public | in_range                    | boolean          | ip6, ip6, ip6, boolean, boolean            | func
+ public | ip4                         | ip4              | bigint                                     | func
+ public | ip4                         | ip4              | bit                                        | func
+ public | ip4                         | ip4              | bit varying                                | func
+ public | ip4                         | ip4              | bytea                                      | func
+ public | ip4                         | ip4              | double precision                           | func
+ public | ip4                         | ip4              | inet                                       | func
+ public | ip4                         | ip4              | ipaddress                                  | func
+ public | ip4                         | ip4              | numeric                                    | func
+ public | ip4                         | ip4              | text                                       | func
+ public | ip4_and                     | ip4              | ip4, ip4                                   | func
+ public | ip4_cmp                     | integer          | ip4, ip4                                   | func
+ public | ip4_contained_by            | boolean          | ip4, ip4r                                  | func
+ public | ip4_contained_by            | boolean          | ip4, iprange                               | func
+ public | ip4_contains                | boolean          | ip4r, ip4                                  | func
+ public | ip4_contains                | boolean          | iprange, ip4                               | func
+ public | ip4_eq                      | boolean          | ip4, ip4                                   | func
+ public | ip4_ge                      | boolean          | ip4, ip4                                   | func
+ public | ip4_gt                      | boolean          | ip4, ip4                                   | func
+ public | ip4_hash_extended           | bigint           | ip4, bigint                                | func
+ public | ip4_in                      | ip4              | cstring                                    | func
+ public | ip4_le                      | boolean          | ip4, ip4                                   | func
+ public | ip4_lt                      | boolean          | ip4, ip4                                   | func
+ public | ip4_minus_bigint            | ip4              | ip4, bigint                                | func
+ public | ip4_minus_int               | ip4              | ip4, integer                               | func
+ public | ip4_minus_ip4               | bigint           | ip4, ip4                                   | func
+ public | ip4_minus_numeric           | ip4              | ip4, numeric                               | func
+ public | ip4_neq                     | boolean          | ip4, ip4                                   | func
+ public | ip4_net_lower               | ip4              | ip4, integer                               | func
+ public | ip4_net_upper               | ip4              | ip4, integer                               | func
+ public | ip4_netmask                 | ip4              | integer                                    | func
+ public | ip4_not                     | ip4              | ip4                                        | func
+ public | ip4_or                      | ip4              | ip4, ip4                                   | func
+ public | ip4_out                     | cstring          | ip4                                        | func
+ public | ip4_plus_bigint             | ip4              | ip4, bigint                                | func
+ public | ip4_plus_int                | ip4              | ip4, integer                               | func
+ public | ip4_plus_numeric            | ip4              | ip4, numeric                               | func
+ public | ip4_recv                    | ip4              | internal                                   | func
+ public | ip4_send                    | bytea            | ip4                                        | func
+ public | ip4_xor                     | ip4              | ip4, ip4                                   | func
+ public | ip4hash                     | integer          | ip4                                        | func
+ public | ip4r                        | ip4r             | bit varying                                | func
+ public | ip4r                        | ip4r             | cidr                                       | func
+ public | ip4r                        | ip4r             | ip4                                        | func
+ public | ip4r                        | ip4r             | ip4, ip4                                   | func
+ public | ip4r                        | ip4r             | iprange                                    | func
+ public | ip4r                        | ip4r             | text                                       | func
+ public | ip4r_cmp                    | integer          | ip4r, ip4r                                 | func
+ public | ip4r_contained_by           | boolean          | ip4r, ip4r                                 | func
+ public | ip4r_contained_by_strict    | boolean          | ip4r, ip4r                                 | func
+ public | ip4r_contains               | boolean          | ip4r, ip4r                                 | func
+ public | ip4r_contains_strict        | boolean          | ip4r, ip4r                                 | func
+ public | ip4r_eq                     | boolean          | ip4r, ip4r                                 | func
+ public | ip4r_ge                     | boolean          | ip4r, ip4r                                 | func
+ public | ip4r_gt                     | boolean          | ip4r, ip4r                                 | func
+ public | ip4r_hash_extended          | bigint           | ip4r, bigint                               | func
+ public | ip4r_in                     | ip4r             | cstring                                    | func
+ public | ip4r_inter                  | ip4r             | ip4r, ip4r                                 | func
+ public | ip4r_le                     | boolean          | ip4r, ip4r                                 | func
+ public | ip4r_lt                     | boolean          | ip4r, ip4r                                 | func
+ public | ip4r_neq                    | boolean          | ip4r, ip4r                                 | func
+ public | ip4r_net_mask               | ip4r             | ip4, ip4                                   | func
+ public | ip4r_net_prefix             | ip4r             | ip4, integer                               | func
+ public | ip4r_out                    | cstring          | ip4r                                       | func
+ public | ip4r_overlaps               | boolean          | ip4r, ip4r                                 | func
+ public | ip4r_recv                   | ip4r             | internal                                   | func
+ public | ip4r_send                   | bytea            | ip4r                                       | func
+ public | ip4r_size                   | double precision | ip4r                                       | func
+ public | ip4r_size_exact             | numeric          | ip4r                                       | func
+ public | ip4r_union                  | ip4r             | ip4r, ip4r                                 | func
+ public | ip4rhash                    | integer          | ip4r                                       | func
+ public | ip6                         | ip6              | bit                                        | func
+ public | ip6                         | ip6              | bit varying                                | func
+ public | ip6                         | ip6              | bytea                                      | func
+ public | ip6                         | ip6              | inet                                       | func
+ public | ip6                         | ip6              | ipaddress                                  | func
+ public | ip6                         | ip6              | numeric                                    | func
+ public | ip6                         | ip6              | text                                       | func
+ public | ip6_and                     | ip6              | ip6, ip6                                   | func
+ public | ip6_cmp                     | integer          | ip6, ip6                                   | func
+ public | ip6_contained_by            | boolean          | ip6, ip6r                                  | func
+ public | ip6_contained_by            | boolean          | ip6, iprange                               | func
+ public | ip6_contains                | boolean          | ip6r, ip6                                  | func
+ public | ip6_contains                | boolean          | iprange, ip6                               | func
+ public | ip6_eq                      | boolean          | ip6, ip6                                   | func
+ public | ip6_ge                      | boolean          | ip6, ip6                                   | func
+ public | ip6_gt                      | boolean          | ip6, ip6                                   | func
+ public | ip6_hash_extended           | bigint           | ip6, bigint                                | func
+ public | ip6_in                      | ip6              | cstring                                    | func
+ public | ip6_le                      | boolean          | ip6, ip6                                   | func
+ public | ip6_lt                      | boolean          | ip6, ip6                                   | func
+ public | ip6_minus_bigint            | ip6              | ip6, bigint                                | func
+ public | ip6_minus_int               | ip6              | ip6, integer                               | func
+ public | ip6_minus_ip6               | numeric          | ip6, ip6                                   | func
+ public | ip6_minus_numeric           | ip6              | ip6, numeric                               | func
+ public | ip6_neq                     | boolean          | ip6, ip6                                   | func
+ public | ip6_net_lower               | ip6              | ip6, integer                               | func
+ public | ip6_net_upper               | ip6              | ip6, integer                               | func
+ public | ip6_netmask                 | ip6              | integer                                    | func
+ public | ip6_not                     | ip6              | ip6                                        | func
+ public | ip6_or                      | ip6              | ip6, ip6                                   | func
+ public | ip6_out                     | cstring          | ip6                                        | func
+ public | ip6_plus_bigint             | ip6              | ip6, bigint                                | func
+ public | ip6_plus_int                | ip6              | ip6, integer                               | func
+ public | ip6_plus_numeric            | ip6              | ip6, numeric                               | func
+ public | ip6_recv                    | ip6              | internal                                   | func
+ public | ip6_send                    | bytea            | ip6                                        | func
+ public | ip6_xor                     | ip6              | ip6, ip6                                   | func
+ public | ip6hash                     | integer          | ip6                                        | func
+ public | ip6r                        | ip6r             | bit varying                                | func
+ public | ip6r                        | ip6r             | cidr                                       | func
+ public | ip6r                        | ip6r             | ip6                                        | func
+ public | ip6r                        | ip6r             | ip6, ip6                                   | func
+ public | ip6r                        | ip6r             | iprange                                    | func
+ public | ip6r                        | ip6r             | text                                       | func
+ public | ip6r_cmp                    | integer          | ip6r, ip6r                                 | func
+ public | ip6r_contained_by           | boolean          | ip6r, ip6r                                 | func
+ public | ip6r_contained_by_strict    | boolean          | ip6r, ip6r                                 | func
+ public | ip6r_contains               | boolean          | ip6r, ip6r                                 | func
+ public | ip6r_contains_strict        | boolean          | ip6r, ip6r                                 | func
+ public | ip6r_eq                     | boolean          | ip6r, ip6r                                 | func
+ public | ip6r_ge                     | boolean          | ip6r, ip6r                                 | func
+ public | ip6r_gt                     | boolean          | ip6r, ip6r                                 | func
+ public | ip6r_hash_extended          | bigint           | ip6r, bigint                               | func
+ public | ip6r_in                     | ip6r             | cstring                                    | func
+ public | ip6r_inter                  | ip6r             | ip6r, ip6r                                 | func
+ public | ip6r_le                     | boolean          | ip6r, ip6r                                 | func
+ public | ip6r_lt                     | boolean          | ip6r, ip6r                                 | func
+ public | ip6r_neq                    | boolean          | ip6r, ip6r                                 | func
+ public | ip6r_net_mask               | ip6r             | ip6, ip6                                   | func
+ public | ip6r_net_prefix             | ip6r             | ip6, integer                               | func
+ public | ip6r_out                    | cstring          | ip6r                                       | func
+ public | ip6r_overlaps               | boolean          | ip6r, ip6r                                 | func
+ public | ip6r_recv                   | ip6r             | internal                                   | func
+ public | ip6r_send                   | bytea            | ip6r                                       | func
+ public | ip6r_size                   | double precision | ip6r                                       | func
+ public | ip6r_size_exact             | numeric          | ip6r                                       | func
+ public | ip6r_union                  | ip6r             | ip6r, ip6r                                 | func
+ public | ip6rhash                    | integer          | ip6r                                       | func
+ public | ipaddress                   | ipaddress        | bit                                        | func
+ public | ipaddress                   | ipaddress        | bit varying                                | func
+ public | ipaddress                   | ipaddress        | bytea                                      | func
+ public | ipaddress                   | ipaddress        | inet                                       | func
+ public | ipaddress                   | ipaddress        | ip4                                        | func
+ public | ipaddress                   | ipaddress        | ip6                                        | func
+ public | ipaddress                   | ipaddress        | text                                       | func
+ public | ipaddress_and               | ipaddress        | ipaddress, ipaddress                       | func
+ public | ipaddress_cmp               | integer          | ipaddress, ipaddress                       | func
+ public | ipaddress_contained_by      | boolean          | ipaddress, iprange                         | func
+ public | ipaddress_contains          | boolean          | iprange, ipaddress                         | func
+ public | ipaddress_eq                | boolean          | ipaddress, ipaddress                       | func
+ public | ipaddress_ge                | boolean          | ipaddress, ipaddress                       | func
+ public | ipaddress_gt                | boolean          | ipaddress, ipaddress                       | func
+ public | ipaddress_hash_extended     | bigint           | ipaddress, bigint                          | func
+ public | ipaddress_in                | ipaddress        | cstring                                    | func
+ public | ipaddress_le                | boolean          | ipaddress, ipaddress                       | func
+ public | ipaddress_lt                | boolean          | ipaddress, ipaddress                       | func
+ public | ipaddress_minus_bigint      | ipaddress        | ipaddress, bigint                          | func
+ public | ipaddress_minus_int         | ipaddress        | ipaddress, integer                         | func
+ public | ipaddress_minus_ipaddress   | numeric          | ipaddress, ipaddress                       | func
+ public | ipaddress_minus_numeric     | ipaddress        | ipaddress, numeric                         | func
+ public | ipaddress_neq               | boolean          | ipaddress, ipaddress                       | func
+ public | ipaddress_net_lower         | ipaddress        | ipaddress, integer                         | func
+ public | ipaddress_net_upper         | ipaddress        | ipaddress, integer                         | func
+ public | ipaddress_not               | ipaddress        | ipaddress                                  | func
+ public | ipaddress_or                | ipaddress        | ipaddress, ipaddress                       | func
+ public | ipaddress_out               | cstring          | ipaddress                                  | func
+ public | ipaddress_plus_bigint       | ipaddress        | ipaddress, bigint                          | func
+ public | ipaddress_plus_int          | ipaddress        | ipaddress, integer                         | func
+ public | ipaddress_plus_numeric      | ipaddress        | ipaddress, numeric                         | func
+ public | ipaddress_recv              | ipaddress        | internal                                   | func
+ public | ipaddress_send              | bytea            | ipaddress                                  | func
+ public | ipaddress_xor               | ipaddress        | ipaddress, ipaddress                       | func
+ public | ipaddresshash               | integer          | ipaddress                                  | func
+ public | iprange                     | iprange          | cidr                                       | func
+ public | iprange                     | iprange          | ip4                                        | func
+ public | iprange                     | iprange          | ip4, ip4                                   | func
+ public | iprange                     | iprange          | ip4r                                       | func
+ public | iprange                     | iprange          | ip6                                        | func
+ public | iprange                     | iprange          | ip6, ip6                                   | func
+ public | iprange                     | iprange          | ip6r                                       | func
+ public | iprange                     | iprange          | ipaddress                                  | func
+ public | iprange                     | iprange          | ipaddress, ipaddress                       | func
+ public | iprange                     | iprange          | text                                       | func
+ public | iprange_cmp                 | integer          | iprange, iprange                           | func
+ public | iprange_contained_by        | boolean          | iprange, iprange                           | func
+ public | iprange_contained_by_strict | boolean          | iprange, iprange                           | func
+ public | iprange_contains            | boolean          | iprange, iprange                           | func
+ public | iprange_contains_strict     | boolean          | iprange, iprange                           | func
+ public | iprange_eq                  | boolean          | iprange, iprange                           | func
+ public | iprange_ge                  | boolean          | iprange, iprange                           | func
+ public | iprange_gt                  | boolean          | iprange, iprange                           | func
+ public | iprange_hash                | integer          | iprange                                    | func
+ public | iprange_hash_extended       | bigint           | iprange, bigint                            | func
+ public | iprange_in                  | iprange          | cstring                                    | func
+ public | iprange_inter               | iprange          | iprange, iprange                           | func
+ public | iprange_le                  | boolean          | iprange, iprange                           | func
+ public | iprange_lt                  | boolean          | iprange, iprange                           | func
+ public | iprange_neq                 | boolean          | iprange, iprange                           | func
+ public | iprange_net_mask            | iprange          | ip4, ip4                                   | func
+ public | iprange_net_mask            | iprange          | ip6, ip6                                   | func
+ public | iprange_net_mask            | iprange          | ipaddress, ipaddress                       | func
+ public | iprange_net_prefix          | iprange          | ip4, integer                               | func
+ public | iprange_net_prefix          | iprange          | ip6, integer                               | func
+ public | iprange_net_prefix          | iprange          | ipaddress, integer                         | func
+ public | iprange_out                 | cstring          | iprange                                    | func
+ public | iprange_overlaps            | boolean          | iprange, iprange                           | func
+ public | iprange_recv                | iprange          | internal                                   | func
+ public | iprange_send                | bytea            | iprange                                    | func
+ public | iprange_size                | double precision | iprange                                    | func
+ public | iprange_size_exact          | numeric          | iprange                                    | func
+ public | iprange_union               | iprange          | iprange, iprange                           | func
+ public | iprangehash                 | integer          | iprange                                    | func
+ public | is_cidr                     | boolean          | ip4r                                       | func
+ public | is_cidr                     | boolean          | ip6r                                       | func
+ public | is_cidr                     | boolean          | iprange                                    | func
+ public | lower                       | ip4              | ip4r                                       | func
+ public | lower                       | ip6              | ip6r                                       | func
+ public | lower                       | ipaddress        | iprange                                    | func
+ public | masklen                     | integer          | ip4r                                       | func
+ public | masklen                     | integer          | ip6r                                       | func
+ public | masklen                     | integer          | iprange                                    | func
+ public | text                        | text             | ip4                                        | func
+ public | text                        | text             | ip4r                                       | func
+ public | text                        | text             | ip6                                        | func
+ public | text                        | text             | ip6r                                       | func
+ public | text                        | text             | ipaddress                                  | func
+ public | text                        | text             | iprange                                    | func
+ public | to_bigint                   | bigint           | ip4                                        | func
+ public | to_bit                      | bit varying      | ip4                                        | func
+ public | to_bit                      | bit varying      | ip4r                                       | func
+ public | to_bit                      | bit varying      | ip6                                        | func
+ public | to_bit                      | bit varying      | ip6r                                       | func
+ public | to_bit                      | bit varying      | ipaddress                                  | func
+ public | to_bit                      | bit varying      | iprange                                    | func
+ public | to_bytea                    | bytea            | ip4                                        | func
+ public | to_bytea                    | bytea            | ip6                                        | func
+ public | to_bytea                    | bytea            | ipaddress                                  | func
+ public | to_double                   | double precision | ip4                                        | func
+ public | to_numeric                  | numeric          | ip4                                        | func
+ public | to_numeric                  | numeric          | ip6                                        | func
+ public | to_numeric                  | numeric          | ipaddress                                  | func
+ public | upper                       | ip4              | ip4r                                       | func
+ public | upper                       | ip6              | ip6r                                       | func
+ public | upper                       | ipaddress        | iprange                                    | func
+(287 rows)
+
+\do public.*
+                                List of operators
+ Schema | Name | Left arg type | Right arg type |   Result type    | Description 
+--------+------+---------------+----------------+------------------+-------------
+ public | #    | ip4           | ip4            | ip4              | 
+ public | #    | ip6           | ip6            | ip6              | 
+ public | #    | ipaddress     | ipaddress      | ipaddress        | 
+ public | &    | ip4           | ip4            | ip4              | 
+ public | &    | ip6           | ip6            | ip6              | 
+ public | &    | ipaddress     | ipaddress      | ipaddress        | 
+ public | &&   | ip4r          | ip4r           | boolean          | 
+ public | &&   | ip6r          | ip6r           | boolean          | 
+ public | &&   | iprange       | iprange        | boolean          | 
+ public | +    | ip4           | bigint         | ip4              | 
+ public | +    | ip4           | integer        | ip4              | 
+ public | +    | ip4           | numeric        | ip4              | 
+ public | +    | ip6           | bigint         | ip6              | 
+ public | +    | ip6           | integer        | ip6              | 
+ public | +    | ip6           | numeric        | ip6              | 
+ public | +    | ipaddress     | bigint         | ipaddress        | 
+ public | +    | ipaddress     | integer        | ipaddress        | 
+ public | +    | ipaddress     | numeric        | ipaddress        | 
+ public | -    | ip4           | bigint         | ip4              | 
+ public | -    | ip4           | integer        | ip4              | 
+ public | -    | ip4           | ip4            | bigint           | 
+ public | -    | ip4           | numeric        | ip4              | 
+ public | -    | ip6           | bigint         | ip6              | 
+ public | -    | ip6           | integer        | ip6              | 
+ public | -    | ip6           | ip6            | numeric          | 
+ public | -    | ip6           | numeric        | ip6              | 
+ public | -    | ipaddress     | bigint         | ipaddress        | 
+ public | -    | ipaddress     | integer        | ipaddress        | 
+ public | -    | ipaddress     | ipaddress      | numeric          | 
+ public | -    | ipaddress     | numeric        | ipaddress        | 
+ public | /    | ip4           | integer        | ip4r             | 
+ public | /    | ip4           | ip4            | ip4r             | 
+ public | /    | ip6           | integer        | ip6r             | 
+ public | /    | ip6           | ip6            | ip6r             | 
+ public | /    | ipaddress     | integer        | iprange          | 
+ public | /    | ipaddress     | ipaddress      | iprange          | 
+ public | <    | ip4           | ip4            | boolean          | 
+ public | <    | ip4r          | ip4r           | boolean          | 
+ public | <    | ip6           | ip6            | boolean          | 
+ public | <    | ip6r          | ip6r           | boolean          | 
+ public | <    | ipaddress     | ipaddress      | boolean          | 
+ public | <    | iprange       | iprange        | boolean          | 
+ public | <<   | ip4r          | ip4r           | boolean          | 
+ public | <<   | ip6r          | ip6r           | boolean          | 
+ public | <<   | iprange       | iprange        | boolean          | 
+ public | <<=  | ip4r          | ip4r           | boolean          | 
+ public | <<=  | ip6r          | ip6r           | boolean          | 
+ public | <<=  | iprange       | iprange        | boolean          | 
+ public | <=   | ip4           | ip4            | boolean          | 
+ public | <=   | ip4r          | ip4r           | boolean          | 
+ public | <=   | ip6           | ip6            | boolean          | 
+ public | <=   | ip6r          | ip6r           | boolean          | 
+ public | <=   | ipaddress     | ipaddress      | boolean          | 
+ public | <=   | iprange       | iprange        | boolean          | 
+ public | <>   | ip4           | ip4            | boolean          | 
+ public | <>   | ip4r          | ip4r           | boolean          | 
+ public | <>   | ip6           | ip6            | boolean          | 
+ public | <>   | ip6r          | ip6r           | boolean          | 
+ public | <>   | ipaddress     | ipaddress      | boolean          | 
+ public | <>   | iprange       | iprange        | boolean          | 
+ public | =    | ip4           | ip4            | boolean          | 
+ public | =    | ip4r          | ip4r           | boolean          | 
+ public | =    | ip6           | ip6            | boolean          | 
+ public | =    | ip6r          | ip6r           | boolean          | 
+ public | =    | ipaddress     | ipaddress      | boolean          | 
+ public | =    | iprange       | iprange        | boolean          | 
+ public | >    | ip4           | ip4            | boolean          | 
+ public | >    | ip4r          | ip4r           | boolean          | 
+ public | >    | ip6           | ip6            | boolean          | 
+ public | >    | ip6r          | ip6r           | boolean          | 
+ public | >    | ipaddress     | ipaddress      | boolean          | 
+ public | >    | iprange       | iprange        | boolean          | 
+ public | >=   | ip4           | ip4            | boolean          | 
+ public | >=   | ip4r          | ip4r           | boolean          | 
+ public | >=   | ip6           | ip6            | boolean          | 
+ public | >=   | ip6r          | ip6r           | boolean          | 
+ public | >=   | ipaddress     | ipaddress      | boolean          | 
+ public | >=   | iprange       | iprange        | boolean          | 
+ public | >>   | ip4r          | ip4r           | boolean          | 
+ public | >>   | ip6r          | ip6r           | boolean          | 
+ public | >>   | iprange       | iprange        | boolean          | 
+ public | >>=  | ip4r          | ip4r           | boolean          | 
+ public | >>=  | ip6r          | ip6r           | boolean          | 
+ public | >>=  | iprange       | iprange        | boolean          | 
+ public | @    |               | ip4r           | double precision | 
+ public | @    |               | ip6r           | double precision | 
+ public | @    |               | iprange        | double precision | 
+ public | @@   |               | ip4r           | numeric          | 
+ public | @@   |               | ip6r           | numeric          | 
+ public | @@   |               | iprange        | numeric          | 
+ public | |    | ip4           | ip4            | ip4              | 
+ public | |    | ip6           | ip6            | ip6              | 
+ public | |    | ipaddress     | ipaddress      | ipaddress        | 
+ public | ~    |               | ip4            | ip4              | 
+ public | ~    |               | ip6            | ip6              | 
+ public | ~    |               | ipaddress      | ipaddress        | 
+(96 rows)
+
+\dT c.*
+                                              List of data types
+ Schema |  Name  |                                         Description                                         
+--------+--------+---------------------------------------------------------------------------------------------
+ c      | c.cube | multi-dimensional cube '(FLOAT-1, FLOAT-2, ..., FLOAT-N), (FLOAT-1, FLOAT-2, ..., FLOAT-N)'
+(1 row)
+
+create table foo (f1 c.cube, f2 int);
+drop extension cube;  -- fail, foo.f1 requires it
+ERROR:  cannot drop extension cube because other objects depend on it
+DETAIL:  column f1 of table foo depends on type c.cube
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+drop schema c;  -- fail, cube requires it
+ERROR:  cannot drop schema c because other objects depend on it
+DETAIL:  extension cube depends on schema c
+column f1 of table foo depends on type c.cube
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+drop extension cube cascade;
+NOTICE:  drop cascades to column f1 of table foo
+\d foo
+                Table "public.foo"
+ Column |  Type   | Collation | Nullable | Default 
+--------+---------+-----------+----------+---------
+ f2     | integer |           |          | 
+
+-- list what's installed
+\dT public.*
+                              List of data types
+ Schema |   Name    |                       Description                        
+--------+-----------+----------------------------------------------------------
+ public | ip4       | IPv4 address '#.#.#.#'
+ public | ip4r      | IPv4 range '#.#.#.#-#.#.#.#' or '#.#.#.#/#' or '#.#.#.#'
+ public | ip6       | IPv6 address 'xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx'
+ public | ip6r      | IPv6 range '#-#' or '#/#' or '#'
+ public | ipaddress | IPv4 or IPv6 address
+ public | iprange   | IPv4 or IPv6 range
+(6 rows)
+
+\df public.*
+                                              List of functions
+ Schema |            Name             | Result data type |            Argument data types             | Type 
+--------+-----------------------------+------------------+--------------------------------------------+------
+ public | cidr                        | cidr             | ip4                                        | func
+ public | cidr                        | cidr             | ip4r                                       | func
+ public | cidr                        | cidr             | ip6                                        | func
+ public | cidr                        | cidr             | ip6r                                       | func
+ public | cidr                        | cidr             | ipaddress                                  | func
+ public | cidr                        | cidr             | iprange                                    | func
+ public | cidr_split                  | SETOF ip4r       | ip4r                                       | func
+ public | cidr_split                  | SETOF ip6r       | ip6r                                       | func
+ public | cidr_split                  | SETOF iprange    | iprange                                    | func
+ public | family                      | integer          | ip4                                        | func
+ public | family                      | integer          | ip4r                                       | func
+ public | family                      | integer          | ip6                                        | func
+ public | family                      | integer          | ip6r                                       | func
+ public | family                      | integer          | ipaddress                                  | func
+ public | family                      | integer          | iprange                                    | func
+ public | gip4r_compress              | internal         | internal                                   | func
+ public | gip4r_consistent            | boolean          | internal, ip4r, smallint, oid, internal    | func
+ public | gip4r_decompress            | internal         | internal                                   | func
+ public | gip4r_fetch                 | internal         | internal                                   | func
+ public | gip4r_penalty               | internal         | internal, internal, internal               | func
+ public | gip4r_picksplit             | internal         | internal, internal                         | func
+ public | gip4r_same                  | internal         | ip4r, ip4r, internal                       | func
+ public | gip4r_union                 | ip4r             | internal, internal                         | func
+ public | gip6r_compress              | internal         | internal                                   | func
+ public | gip6r_consistent            | boolean          | internal, ip6r, smallint, oid, internal    | func
+ public | gip6r_decompress            | internal         | internal                                   | func
+ public | gip6r_fetch                 | internal         | internal                                   | func
+ public | gip6r_penalty               | internal         | internal, internal, internal               | func
+ public | gip6r_picksplit             | internal         | internal, internal                         | func
+ public | gip6r_same                  | internal         | ip6r, ip6r, internal                       | func
+ public | gip6r_union                 | ip6r             | internal, internal                         | func
+ public | gipr_compress               | internal         | internal                                   | func
+ public | gipr_consistent             | boolean          | internal, iprange, smallint, oid, internal | func
+ public | gipr_decompress             | internal         | internal                                   | func
+ public | gipr_fetch                  | internal         | internal                                   | func
+ public | gipr_penalty                | internal         | internal, internal, internal               | func
+ public | gipr_picksplit              | internal         | internal, internal                         | func
+ public | gipr_same                   | internal         | iprange, iprange, internal                 | func
+ public | gipr_union                  | iprange          | internal, internal                         | func
+ public | in_range                    | boolean          | ip4, ip4, bigint, boolean, boolean         | func
+ public | in_range                    | boolean          | ip4, ip4, ip4, boolean, boolean            | func
+ public | in_range                    | boolean          | ip6, ip6, bigint, boolean, boolean         | func
+ public | in_range                    | boolean          | ip6, ip6, ip6, boolean, boolean            | func
+ public | ip4                         | ip4              | bigint                                     | func
+ public | ip4                         | ip4              | bit                                        | func
+ public | ip4                         | ip4              | bit varying                                | func
+ public | ip4                         | ip4              | bytea                                      | func
+ public | ip4                         | ip4              | double precision                           | func
+ public | ip4                         | ip4              | inet                                       | func
+ public | ip4                         | ip4              | ipaddress                                  | func
+ public | ip4                         | ip4              | numeric                                    | func
+ public | ip4                         | ip4              | text                                       | func
+ public | ip4_and                     | ip4              | ip4, ip4                                   | func
+ public | ip4_cmp                     | integer          | ip4, ip4                                   | func
+ public | ip4_contained_by            | boolean          | ip4, ip4r                                  | func
+ public | ip4_contained_by            | boolean          | ip4, iprange                               | func
+ public | ip4_contains                | boolean          | ip4r, ip4                                  | func
+ public | ip4_contains                | boolean          | iprange, ip4                               | func
+ public | ip4_eq                      | boolean          | ip4, ip4                                   | func
+ public | ip4_ge                      | boolean          | ip4, ip4                                   | func
+ public | ip4_gt                      | boolean          | ip4, ip4                                   | func
+ public | ip4_hash_extended           | bigint           | ip4, bigint                                | func
+ public | ip4_in                      | ip4              | cstring                                    | func
+ public | ip4_le                      | boolean          | ip4, ip4                                   | func
+ public | ip4_lt                      | boolean          | ip4, ip4                                   | func
+ public | ip4_minus_bigint            | ip4              | ip4, bigint                                | func
+ public | ip4_minus_int               | ip4              | ip4, integer                               | func
+ public | ip4_minus_ip4               | bigint           | ip4, ip4                                   | func
+ public | ip4_minus_numeric           | ip4              | ip4, numeric                               | func
+ public | ip4_neq                     | boolean          | ip4, ip4                                   | func
+ public | ip4_net_lower               | ip4              | ip4, integer                               | func
+ public | ip4_net_upper               | ip4              | ip4, integer                               | func
+ public | ip4_netmask                 | ip4              | integer                                    | func
+ public | ip4_not                     | ip4              | ip4                                        | func
+ public | ip4_or                      | ip4              | ip4, ip4                                   | func
+ public | ip4_out                     | cstring          | ip4                                        | func
+ public | ip4_plus_bigint             | ip4              | ip4, bigint                                | func
+ public | ip4_plus_int                | ip4              | ip4, integer                               | func
+ public | ip4_plus_numeric            | ip4              | ip4, numeric                               | func
+ public | ip4_recv                    | ip4              | internal                                   | func
+ public | ip4_send                    | bytea            | ip4                                        | func
+ public | ip4_xor                     | ip4              | ip4, ip4                                   | func
+ public | ip4hash                     | integer          | ip4                                        | func
+ public | ip4r                        | ip4r             | bit varying                                | func
+ public | ip4r                        | ip4r             | cidr                                       | func
+ public | ip4r                        | ip4r             | ip4                                        | func
+ public | ip4r                        | ip4r             | ip4, ip4                                   | func
+ public | ip4r                        | ip4r             | iprange                                    | func
+ public | ip4r                        | ip4r             | text                                       | func
+ public | ip4r_cmp                    | integer          | ip4r, ip4r                                 | func
+ public | ip4r_contained_by           | boolean          | ip4r, ip4r                                 | func
+ public | ip4r_contained_by_strict    | boolean          | ip4r, ip4r                                 | func
+ public | ip4r_contains               | boolean          | ip4r, ip4r                                 | func
+ public | ip4r_contains_strict        | boolean          | ip4r, ip4r                                 | func
+ public | ip4r_eq                     | boolean          | ip4r, ip4r                                 | func
+ public | ip4r_ge                     | boolean          | ip4r, ip4r                                 | func
+ public | ip4r_gt                     | boolean          | ip4r, ip4r                                 | func
+ public | ip4r_hash_extended          | bigint           | ip4r, bigint                               | func
+ public | ip4r_in                     | ip4r             | cstring                                    | func
+ public | ip4r_inter                  | ip4r             | ip4r, ip4r                                 | func
+ public | ip4r_le                     | boolean          | ip4r, ip4r                                 | func
+ public | ip4r_lt                     | boolean          | ip4r, ip4r                                 | func
+ public | ip4r_neq                    | boolean          | ip4r, ip4r                                 | func
+ public | ip4r_net_mask               | ip4r             | ip4, ip4                                   | func
+ public | ip4r_net_prefix             | ip4r             | ip4, integer                               | func
+ public | ip4r_out                    | cstring          | ip4r                                       | func
+ public | ip4r_overlaps               | boolean          | ip4r, ip4r                                 | func
+ public | ip4r_recv                   | ip4r             | internal                                   | func
+ public | ip4r_send                   | bytea            | ip4r                                       | func
+ public | ip4r_size                   | double precision | ip4r                                       | func
+ public | ip4r_size_exact             | numeric          | ip4r                                       | func
+ public | ip4r_union                  | ip4r             | ip4r, ip4r                                 | func
+ public | ip4rhash                    | integer          | ip4r                                       | func
+ public | ip6                         | ip6              | bit                                        | func
+ public | ip6                         | ip6              | bit varying                                | func
+ public | ip6                         | ip6              | bytea                                      | func
+ public | ip6                         | ip6              | inet                                       | func
+ public | ip6                         | ip6              | ipaddress                                  | func
+ public | ip6                         | ip6              | numeric                                    | func
+ public | ip6                         | ip6              | text                                       | func
+ public | ip6_and                     | ip6              | ip6, ip6                                   | func
+ public | ip6_cmp                     | integer          | ip6, ip6                                   | func
+ public | ip6_contained_by            | boolean          | ip6, ip6r                                  | func
+ public | ip6_contained_by            | boolean          | ip6, iprange                               | func
+ public | ip6_contains                | boolean          | ip6r, ip6                                  | func
+ public | ip6_contains                | boolean          | iprange, ip6                               | func
+ public | ip6_eq                      | boolean          | ip6, ip6                                   | func
+ public | ip6_ge                      | boolean          | ip6, ip6                                   | func
+ public | ip6_gt                      | boolean          | ip6, ip6                                   | func
+ public | ip6_hash_extended           | bigint           | ip6, bigint                                | func
+ public | ip6_in                      | ip6              | cstring                                    | func
+ public | ip6_le                      | boolean          | ip6, ip6                                   | func
+ public | ip6_lt                      | boolean          | ip6, ip6                                   | func
+ public | ip6_minus_bigint            | ip6              | ip6, bigint                                | func
+ public | ip6_minus_int               | ip6              | ip6, integer                               | func
+ public | ip6_minus_ip6               | numeric          | ip6, ip6                                   | func
+ public | ip6_minus_numeric           | ip6              | ip6, numeric                               | func
+ public | ip6_neq                     | boolean          | ip6, ip6                                   | func
+ public | ip6_net_lower               | ip6              | ip6, integer                               | func
+ public | ip6_net_upper               | ip6              | ip6, integer                               | func
+ public | ip6_netmask                 | ip6              | integer                                    | func
+ public | ip6_not                     | ip6              | ip6                                        | func
+ public | ip6_or                      | ip6              | ip6, ip6                                   | func
+ public | ip6_out                     | cstring          | ip6                                        | func
+ public | ip6_plus_bigint             | ip6              | ip6, bigint                                | func
+ public | ip6_plus_int                | ip6              | ip6, integer                               | func
+ public | ip6_plus_numeric            | ip6              | ip6, numeric                               | func
+ public | ip6_recv                    | ip6              | internal                                   | func
+ public | ip6_send                    | bytea            | ip6                                        | func
+ public | ip6_xor                     | ip6              | ip6, ip6                                   | func
+ public | ip6hash                     | integer          | ip6                                        | func
+ public | ip6r                        | ip6r             | bit varying                                | func
+ public | ip6r                        | ip6r             | cidr                                       | func
+ public | ip6r                        | ip6r             | ip6                                        | func
+ public | ip6r                        | ip6r             | ip6, ip6                                   | func
+ public | ip6r                        | ip6r             | iprange                                    | func
+ public | ip6r                        | ip6r             | text                                       | func
+ public | ip6r_cmp                    | integer          | ip6r, ip6r                                 | func
+ public | ip6r_contained_by           | boolean          | ip6r, ip6r                                 | func
+ public | ip6r_contained_by_strict    | boolean          | ip6r, ip6r                                 | func
+ public | ip6r_contains               | boolean          | ip6r, ip6r                                 | func
+ public | ip6r_contains_strict        | boolean          | ip6r, ip6r                                 | func
+ public | ip6r_eq                     | boolean          | ip6r, ip6r                                 | func
+ public | ip6r_ge                     | boolean          | ip6r, ip6r                                 | func
+ public | ip6r_gt                     | boolean          | ip6r, ip6r                                 | func
+ public | ip6r_hash_extended          | bigint           | ip6r, bigint                               | func
+ public | ip6r_in                     | ip6r             | cstring                                    | func
+ public | ip6r_inter                  | ip6r             | ip6r, ip6r                                 | func
+ public | ip6r_le                     | boolean          | ip6r, ip6r                                 | func
+ public | ip6r_lt                     | boolean          | ip6r, ip6r                                 | func
+ public | ip6r_neq                    | boolean          | ip6r, ip6r                                 | func
+ public | ip6r_net_mask               | ip6r             | ip6, ip6                                   | func
+ public | ip6r_net_prefix             | ip6r             | ip6, integer                               | func
+ public | ip6r_out                    | cstring          | ip6r                                       | func
+ public | ip6r_overlaps               | boolean          | ip6r, ip6r                                 | func
+ public | ip6r_recv                   | ip6r             | internal                                   | func
+ public | ip6r_send                   | bytea            | ip6r                                       | func
+ public | ip6r_size                   | double precision | ip6r                                       | func
+ public | ip6r_size_exact             | numeric          | ip6r                                       | func
+ public | ip6r_union                  | ip6r             | ip6r, ip6r                                 | func
+ public | ip6rhash                    | integer          | ip6r                                       | func
+ public | ipaddress                   | ipaddress        | bit                                        | func
+ public | ipaddress                   | ipaddress        | bit varying                                | func
+ public | ipaddress                   | ipaddress        | bytea                                      | func
+ public | ipaddress                   | ipaddress        | inet                                       | func
+ public | ipaddress                   | ipaddress        | ip4                                        | func
+ public | ipaddress                   | ipaddress        | ip6                                        | func
+ public | ipaddress                   | ipaddress        | text                                       | func
+ public | ipaddress_and               | ipaddress        | ipaddress, ipaddress                       | func
+ public | ipaddress_cmp               | integer          | ipaddress, ipaddress                       | func
+ public | ipaddress_contained_by      | boolean          | ipaddress, iprange                         | func
+ public | ipaddress_contains          | boolean          | iprange, ipaddress                         | func
+ public | ipaddress_eq                | boolean          | ipaddress, ipaddress                       | func
+ public | ipaddress_ge                | boolean          | ipaddress, ipaddress                       | func
+ public | ipaddress_gt                | boolean          | ipaddress, ipaddress                       | func
+ public | ipaddress_hash_extended     | bigint           | ipaddress, bigint                          | func
+ public | ipaddress_in                | ipaddress        | cstring                                    | func
+ public | ipaddress_le                | boolean          | ipaddress, ipaddress                       | func
+ public | ipaddress_lt                | boolean          | ipaddress, ipaddress                       | func
+ public | ipaddress_minus_bigint      | ipaddress        | ipaddress, bigint                          | func
+ public | ipaddress_minus_int         | ipaddress        | ipaddress, integer                         | func
+ public | ipaddress_minus_ipaddress   | numeric          | ipaddress, ipaddress                       | func
+ public | ipaddress_minus_numeric     | ipaddress        | ipaddress, numeric                         | func
+ public | ipaddress_neq               | boolean          | ipaddress, ipaddress                       | func
+ public | ipaddress_net_lower         | ipaddress        | ipaddress, integer                         | func
+ public | ipaddress_net_upper         | ipaddress        | ipaddress, integer                         | func
+ public | ipaddress_not               | ipaddress        | ipaddress                                  | func
+ public | ipaddress_or                | ipaddress        | ipaddress, ipaddress                       | func
+ public | ipaddress_out               | cstring          | ipaddress                                  | func
+ public | ipaddress_plus_bigint       | ipaddress        | ipaddress, bigint                          | func
+ public | ipaddress_plus_int          | ipaddress        | ipaddress, integer                         | func
+ public | ipaddress_plus_numeric      | ipaddress        | ipaddress, numeric                         | func
+ public | ipaddress_recv              | ipaddress        | internal                                   | func
+ public | ipaddress_send              | bytea            | ipaddress                                  | func
+ public | ipaddress_xor               | ipaddress        | ipaddress, ipaddress                       | func
+ public | ipaddresshash               | integer          | ipaddress                                  | func
+ public | iprange                     | iprange          | cidr                                       | func
+ public | iprange                     | iprange          | ip4                                        | func
+ public | iprange                     | iprange          | ip4, ip4                                   | func
+ public | iprange                     | iprange          | ip4r                                       | func
+ public | iprange                     | iprange          | ip6                                        | func
+ public | iprange                     | iprange          | ip6, ip6                                   | func
+ public | iprange                     | iprange          | ip6r                                       | func
+ public | iprange                     | iprange          | ipaddress                                  | func
+ public | iprange                     | iprange          | ipaddress, ipaddress                       | func
+ public | iprange                     | iprange          | text                                       | func
+ public | iprange_cmp                 | integer          | iprange, iprange                           | func
+ public | iprange_contained_by        | boolean          | iprange, iprange                           | func
+ public | iprange_contained_by_strict | boolean          | iprange, iprange                           | func
+ public | iprange_contains            | boolean          | iprange, iprange                           | func
+ public | iprange_contains_strict     | boolean          | iprange, iprange                           | func
+ public | iprange_eq                  | boolean          | iprange, iprange                           | func
+ public | iprange_ge                  | boolean          | iprange, iprange                           | func
+ public | iprange_gt                  | boolean          | iprange, iprange                           | func
+ public | iprange_hash                | integer          | iprange                                    | func
+ public | iprange_hash_extended       | bigint           | iprange, bigint                            | func
+ public | iprange_in                  | iprange          | cstring                                    | func
+ public | iprange_inter               | iprange          | iprange, iprange                           | func
+ public | iprange_le                  | boolean          | iprange, iprange                           | func
+ public | iprange_lt                  | boolean          | iprange, iprange                           | func
+ public | iprange_neq                 | boolean          | iprange, iprange                           | func
+ public | iprange_net_mask            | iprange          | ip4, ip4                                   | func
+ public | iprange_net_mask            | iprange          | ip6, ip6                                   | func
+ public | iprange_net_mask            | iprange          | ipaddress, ipaddress                       | func
+ public | iprange_net_prefix          | iprange          | ip4, integer                               | func
+ public | iprange_net_prefix          | iprange          | ip6, integer                               | func
+ public | iprange_net_prefix          | iprange          | ipaddress, integer                         | func
+ public | iprange_out                 | cstring          | iprange                                    | func
+ public | iprange_overlaps            | boolean          | iprange, iprange                           | func
+ public | iprange_recv                | iprange          | internal                                   | func
+ public | iprange_send                | bytea            | iprange                                    | func
+ public | iprange_size                | double precision | iprange                                    | func
+ public | iprange_size_exact          | numeric          | iprange                                    | func
+ public | iprange_union               | iprange          | iprange, iprange                           | func
+ public | iprangehash                 | integer          | iprange                                    | func
+ public | is_cidr                     | boolean          | ip4r                                       | func
+ public | is_cidr                     | boolean          | ip6r                                       | func
+ public | is_cidr                     | boolean          | iprange                                    | func
+ public | lower                       | ip4              | ip4r                                       | func
+ public | lower                       | ip6              | ip6r                                       | func
+ public | lower                       | ipaddress        | iprange                                    | func
+ public | masklen                     | integer          | ip4r                                       | func
+ public | masklen                     | integer          | ip6r                                       | func
+ public | masklen                     | integer          | iprange                                    | func
+ public | text                        | text             | ip4                                        | func
+ public | text                        | text             | ip4r                                       | func
+ public | text                        | text             | ip6                                        | func
+ public | text                        | text             | ip6r                                       | func
+ public | text                        | text             | ipaddress                                  | func
+ public | text                        | text             | iprange                                    | func
+ public | to_bigint                   | bigint           | ip4                                        | func
+ public | to_bit                      | bit varying      | ip4                                        | func
+ public | to_bit                      | bit varying      | ip4r                                       | func
+ public | to_bit                      | bit varying      | ip6                                        | func
+ public | to_bit                      | bit varying      | ip6r                                       | func
+ public | to_bit                      | bit varying      | ipaddress                                  | func
+ public | to_bit                      | bit varying      | iprange                                    | func
+ public | to_bytea                    | bytea            | ip4                                        | func
+ public | to_bytea                    | bytea            | ip6                                        | func
+ public | to_bytea                    | bytea            | ipaddress                                  | func
+ public | to_double                   | double precision | ip4                                        | func
+ public | to_numeric                  | numeric          | ip4                                        | func
+ public | to_numeric                  | numeric          | ip6                                        | func
+ public | to_numeric                  | numeric          | ipaddress                                  | func
+ public | upper                       | ip4              | ip4r                                       | func
+ public | upper                       | ip6              | ip6r                                       | func
+ public | upper                       | ipaddress        | iprange                                    | func
+(287 rows)
+
+\do public.*
+                                List of operators
+ Schema | Name | Left arg type | Right arg type |   Result type    | Description 
+--------+------+---------------+----------------+------------------+-------------
+ public | #    | ip4           | ip4            | ip4              | 
+ public | #    | ip6           | ip6            | ip6              | 
+ public | #    | ipaddress     | ipaddress      | ipaddress        | 
+ public | &    | ip4           | ip4            | ip4              | 
+ public | &    | ip6           | ip6            | ip6              | 
+ public | &    | ipaddress     | ipaddress      | ipaddress        | 
+ public | &&   | ip4r          | ip4r           | boolean          | 
+ public | &&   | ip6r          | ip6r           | boolean          | 
+ public | &&   | iprange       | iprange        | boolean          | 
+ public | +    | ip4           | bigint         | ip4              | 
+ public | +    | ip4           | integer        | ip4              | 
+ public | +    | ip4           | numeric        | ip4              | 
+ public | +    | ip6           | bigint         | ip6              | 
+ public | +    | ip6           | integer        | ip6              | 
+ public | +    | ip6           | numeric        | ip6              | 
+ public | +    | ipaddress     | bigint         | ipaddress        | 
+ public | +    | ipaddress     | integer        | ipaddress        | 
+ public | +    | ipaddress     | numeric        | ipaddress        | 
+ public | -    | ip4           | bigint         | ip4              | 
+ public | -    | ip4           | integer        | ip4              | 
+ public | -    | ip4           | ip4            | bigint           | 
+ public | -    | ip4           | numeric        | ip4              | 
+ public | -    | ip6           | bigint         | ip6              | 
+ public | -    | ip6           | integer        | ip6              | 
+ public | -    | ip6           | ip6            | numeric          | 
+ public | -    | ip6           | numeric        | ip6              | 
+ public | -    | ipaddress     | bigint         | ipaddress        | 
+ public | -    | ipaddress     | integer        | ipaddress        | 
+ public | -    | ipaddress     | ipaddress      | numeric          | 
+ public | -    | ipaddress     | numeric        | ipaddress        | 
+ public | /    | ip4           | integer        | ip4r             | 
+ public | /    | ip4           | ip4            | ip4r             | 
+ public | /    | ip6           | integer        | ip6r             | 
+ public | /    | ip6           | ip6            | ip6r             | 
+ public | /    | ipaddress     | integer        | iprange          | 
+ public | /    | ipaddress     | ipaddress      | iprange          | 
+ public | <    | ip4           | ip4            | boolean          | 
+ public | <    | ip4r          | ip4r           | boolean          | 
+ public | <    | ip6           | ip6            | boolean          | 
+ public | <    | ip6r          | ip6r           | boolean          | 
+ public | <    | ipaddress     | ipaddress      | boolean          | 
+ public | <    | iprange       | iprange        | boolean          | 
+ public | <<   | ip4r          | ip4r           | boolean          | 
+ public | <<   | ip6r          | ip6r           | boolean          | 
+ public | <<   | iprange       | iprange        | boolean          | 
+ public | <<=  | ip4r          | ip4r           | boolean          | 
+ public | <<=  | ip6r          | ip6r           | boolean          | 
+ public | <<=  | iprange       | iprange        | boolean          | 
+ public | <=   | ip4           | ip4            | boolean          | 
+ public | <=   | ip4r          | ip4r           | boolean          | 
+ public | <=   | ip6           | ip6            | boolean          | 
+ public | <=   | ip6r          | ip6r           | boolean          | 
+ public | <=   | ipaddress     | ipaddress      | boolean          | 
+ public | <=   | iprange       | iprange        | boolean          | 
+ public | <>   | ip4           | ip4            | boolean          | 
+ public | <>   | ip4r          | ip4r           | boolean          | 
+ public | <>   | ip6           | ip6            | boolean          | 
+ public | <>   | ip6r          | ip6r           | boolean          | 
+ public | <>   | ipaddress     | ipaddress      | boolean          | 
+ public | <>   | iprange       | iprange        | boolean          | 
+ public | =    | ip4           | ip4            | boolean          | 
+ public | =    | ip4r          | ip4r           | boolean          | 
+ public | =    | ip6           | ip6            | boolean          | 
+ public | =    | ip6r          | ip6r           | boolean          | 
+ public | =    | ipaddress     | ipaddress      | boolean          | 
+ public | =    | iprange       | iprange        | boolean          | 
+ public | >    | ip4           | ip4            | boolean          | 
+ public | >    | ip4r          | ip4r           | boolean          | 
+ public | >    | ip6           | ip6            | boolean          | 
+ public | >    | ip6r          | ip6r           | boolean          | 
+ public | >    | ipaddress     | ipaddress      | boolean          | 
+ public | >    | iprange       | iprange        | boolean          | 
+ public | >=   | ip4           | ip4            | boolean          | 
+ public | >=   | ip4r          | ip4r           | boolean          | 
+ public | >=   | ip6           | ip6            | boolean          | 
+ public | >=   | ip6r          | ip6r           | boolean          | 
+ public | >=   | ipaddress     | ipaddress      | boolean          | 
+ public | >=   | iprange       | iprange        | boolean          | 
+ public | >>   | ip4r          | ip4r           | boolean          | 
+ public | >>   | ip6r          | ip6r           | boolean          | 
+ public | >>   | iprange       | iprange        | boolean          | 
+ public | >>=  | ip4r          | ip4r           | boolean          | 
+ public | >>=  | ip6r          | ip6r           | boolean          | 
+ public | >>=  | iprange       | iprange        | boolean          | 
+ public | @    |               | ip4r           | double precision | 
+ public | @    |               | ip6r           | double precision | 
+ public | @    |               | iprange        | double precision | 
+ public | @@   |               | ip4r           | numeric          | 
+ public | @@   |               | ip6r           | numeric          | 
+ public | @@   |               | iprange        | numeric          | 
+ public | |    | ip4           | ip4            | ip4              | 
+ public | |    | ip6           | ip6            | ip6              | 
+ public | |    | ipaddress     | ipaddress      | ipaddress        | 
+ public | ~    |               | ip4            | ip4              | 
+ public | ~    |               | ip6            | ip6              | 
+ public | ~    |               | ipaddress      | ipaddress        | 
+(96 rows)
+
+\dT c.*
+     List of data types
+ Schema | Name | Description 
+--------+------+-------------
+(0 rows)
+
+\df c.*
+                       List of functions
+ Schema | Name | Result data type | Argument data types | Type 
+--------+------+------------------+---------------------+------
+(0 rows)
+
+\do c.*
+                             List of operators
+ Schema | Name | Left arg type | Right arg type | Result type | Description 
+--------+------+---------------+----------------+-------------+-------------
+(0 rows)
+
+drop schema c;

@@ -1,0 +1,133 @@
+2023-07-25 13:31:30.780 UTC [3215105] LOG:  pgaudit extension initialized
+2023-07-25 13:31:30.957 UTC [3215105] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0, 64-bit
+2023-07-25 13:31:30.957 UTC [3215105] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-07-25 13:31:30.970 UTC [3215105] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-07-25 13:31:30.983 UTC [3215108] LOG:  database system was shut down at 2023-07-25 13:31:30 UTC
+2023-07-25 13:31:30.992 UTC [3215105] LOG:  database system is ready to accept connections
+2023-07-25 13:31:31.193 UTC [3215124] LOG:  AUDIT: SESSION,1,1,MISC,SET,,,SET pgaudit.log = 'all';,<not logged>
+2023-07-25 13:31:31.193 UTC [3215124] LOG:  AUDIT: SESSION,2,1,MISC,SET,,,SET pgaudit.log_client = ON;,<not logged>
+2023-07-25 13:31:31.216 UTC [3215124] LOG:  AUDIT: SESSION,6,1,MISC,RESET,,,RESET pgaudit.log_client;,<not logged>
+2023-07-25 13:31:31.217 UTC [3215124] LOG:  AUDIT: SESSION,7,1,DDL,DROP TABLE,TABLE,public.tmp,DROP TABLE tmp;,<not logged>
+2023-07-25 13:31:31.222 UTC [3215124] LOG:  AUDIT: SESSION,8,1,DDL,DROP TABLE,TABLE,public.tmp2,DROP TABLE tmp2;,<not logged>
+2023-07-25 13:31:31.454 UTC [3215128] WARNING:  AUDIT: SESSION,1,1,READ,SELECT,,,"SELECT *
+	  FROM test3, test2;",<not logged>
+2023-07-25 13:31:31.454 UTC [3215128] WARNING:  AUDIT: OBJECT,1,1,READ,SELECT,TABLE,public.test2,<previously logged>,<previously logged>
+2023-07-25 13:31:31.454 UTC [3215128] WARNING:  AUDIT: SESSION,2,1,READ,SELECT,,,"SELECT *
+	  FROM vw_test3, test2;",<not logged>
+2023-07-25 13:31:31.455 UTC [3215128] WARNING:  AUDIT: OBJECT,2,1,READ,SELECT,TABLE,public.test2,<previously logged>,<previously logged>
+2023-07-25 13:31:31.455 UTC [3215128] WARNING:  AUDIT: OBJECT,2,1,READ,SELECT,VIEW,public.vw_test3,<previously logged>,<previously logged>
+2023-07-25 13:31:31.455 UTC [3215128] WARNING:  AUDIT: SESSION,3,1,WRITE,INSERT,,,"WITH CTE AS
+	(
+		SELECT id
+		  FROM test2
+	)
+	INSERT INTO test3
+	SELECT id
+	  FROM cte;",<not logged>
+2023-07-25 13:31:31.455 UTC [3215128] WARNING:  AUDIT: OBJECT,3,1,WRITE,INSERT,TABLE,public.test3,<previously logged>,<previously logged>
+2023-07-25 13:31:31.455 UTC [3215128] WARNING:  AUDIT: OBJECT,3,1,READ,SELECT,TABLE,public.test2,<previously logged>,<previously logged>
+2023-07-25 13:31:31.455 UTC [3215128] WARNING:  AUDIT: SESSION,4,1,WRITE,INSERT,,,"WITH CTE AS
+	(
+		INSERT INTO test3 VALUES (1)
+					   RETURNING id
+	)
+	INSERT INTO test2
+	SELECT id
+	  FROM cte;",<not logged>
+2023-07-25 13:31:31.455 UTC [3215128] WARNING:  AUDIT: OBJECT,4,1,WRITE,INSERT,TABLE,public.test3,<previously logged>,<previously logged>
+2023-07-25 13:31:31.460 UTC [3215128] WARNING:  AUDIT: SESSION,5,1,READ,SELECT,,,SELECT test2_change(91),<not logged>
+2023-07-25 13:31:31.460 UTC [3215128] WARNING:  AUDIT: SESSION,5,2,WRITE,UPDATE,,,"UPDATE test2
+		   SET id = id + 1
+		 WHERE id = change_id",<not logged>
+2023-07-25 13:31:31.460 UTC [3215128] WARNING:  AUDIT: OBJECT,5,2,WRITE,UPDATE,TABLE,public.test2,<previously logged>,<previously logged>
+2023-07-25 13:31:31.462 UTC [3215128] WARNING:  AUDIT: SESSION,6,1,WRITE,INSERT,,,"WITH CTE AS
+	(
+		UPDATE test2
+		   SET id = 45
+		 WHERE id = 92
+		RETURNING id
+	)
+	INSERT INTO test3
+	SELECT id
+	  FROM cte;",<not logged>
+2023-07-25 13:31:31.462 UTC [3215128] WARNING:  AUDIT: OBJECT,6,1,WRITE,INSERT,TABLE,public.test3,<previously logged>,<previously logged>
+2023-07-25 13:31:31.462 UTC [3215128] WARNING:  AUDIT: OBJECT,6,1,WRITE,UPDATE,TABLE,public.test2,<previously logged>,<previously logged>
+2023-07-25 13:31:31.467 UTC [3215128] WARNING:  AUDIT: SESSION,7,1,WRITE,UPDATE,,,"WITH CTE AS
+	(
+		INSERT INTO test2 VALUES (37)
+					   RETURNING id
+	)
+	UPDATE test3
+	   SET id = cte.id
+	  FROM cte
+	 WHERE test3.id <> cte.id;",<not logged>
+2023-07-25 13:31:31.467 UTC [3215128] WARNING:  AUDIT: OBJECT,7,1,WRITE,INSERT,TABLE,public.test2,<previously logged>,<previously logged>
+2023-07-25 13:31:31.472 UTC [3215128] WARNING:  AUDIT: SESSION,8,1,READ,SELECT,,,"SELECT *
+	  FROM test2
+	 ORDER BY ID;",<not logged>
+2023-07-25 13:31:31.472 UTC [3215128] WARNING:  AUDIT: OBJECT,8,1,READ,SELECT,TABLE,public.test2,<previously logged>,<previously logged>
+2023-07-25 13:31:31.513 UTC [3215130] WARNING:  AUDIT: OBJECT,1,1,READ,SELECT,TABLE,public.test4,"SELECT name
+	  FROM public.test4;",<not logged>
+2023-07-25 13:31:31.518 UTC [3215130] WARNING:  AUDIT: OBJECT,2,1,WRITE,INSERT,TABLE,public.test4,"INSERT INTO public.test4 (name)
+					  VALUES ('test');",<not logged>
+2023-07-25 13:31:31.525 UTC [3215130] WARNING:  AUDIT: OBJECT,3,1,WRITE,UPDATE,TABLE,public.test4,"UPDATE public.test4
+	   SET id = 1;",<not logged>
+2023-07-25 13:31:31.529 UTC [3215130] WARNING:  AUDIT: OBJECT,4,1,WRITE,UPDATE,TABLE,public.test4,update public.test4 set name = 'foo' where name = 'bar';,<not logged>
+2023-07-25 13:31:31.836 UTC [3215139] ERROR:  schema "bogus" does not exist at character 14
+2023-07-25 13:31:31.836 UTC [3215139] QUERY:  CREATE TABLE bogus.test_block
+		(
+			id INT
+		)
+2023-07-25 13:31:31.836 UTC [3215139] CONTEXT:  PL/pgSQL function inline_code_block line 3 at SQL statement
+2023-07-25 13:31:31.836 UTC [3215139] STATEMENT:  DO $$
+	BEGIN
+		CREATE TABLE bogus.test_block
+		(
+			id INT
+		);
+	END $$;
+2023-07-25 13:31:31.981 UTC [3215106] LOG:  checkpoint starting: immediate force wait
+2023-07-25 13:31:32.183 UTC [3215106] LOG:  checkpoint complete: wrote 940 buffers (5.7%); 1 WAL file(s) added, 0 removed, 0 recycled; write=0.036 s, sync=0.043 s, total=0.202 s; sync files=269, longest=0.012 s, average=0.001 s; distance=8490 kB, estimate=8490 kB
+2023-07-25 13:31:32.771 UTC [3215140] ERROR:  schema "bogus" does not exist at character 14
+2023-07-25 13:31:32.771 UTC [3215140] QUERY:  CREATE TABLE bogus.test_block
+		(
+			id INT
+		)
+2023-07-25 13:31:32.771 UTC [3215140] CONTEXT:  PL/pgSQL function inline_code_block line 3 at SQL statement
+2023-07-25 13:31:32.771 UTC [3215140] STATEMENT:  DO $$
+	BEGIN
+		CREATE TABLE bogus.test_block
+		(
+			id INT
+		);
+	END $$;
+2023-07-25 13:31:32.926 UTC [3215106] LOG:  checkpoint starting: immediate force wait
+2023-07-25 13:31:32.996 UTC [3215106] LOG:  checkpoint complete: wrote 112 buffers (0.7%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.012 s, sync=0.019 s, total=0.071 s; sync files=83, longest=0.009 s, average=0.001 s; distance=4713 kB, estimate=8112 kB
+2023-07-25 13:31:33.327 UTC [3215143] WARNING:  AUDIT: SESSION,3,1,DDL,CREATE EXTENSION,,,CREATE EXTENSION pg_stat_statements;,<not logged>
+2023-07-25 13:31:33.357 UTC [3215143] WARNING:  AUDIT: SESSION,4,1,DDL,ALTER EXTENSION,,,ALTER EXTENSION pg_stat_statements UPDATE TO '1.10';,<not logged>
+2023-07-25 13:31:33.358 UTC [3215143] WARNING:  AUDIT: SESSION,5,1,DDL,DROP EXTENSION,,,DROP EXTENSION pg_stat_statements;,<not logged>
+2023-07-25 13:31:33.933 UTC [3215106] LOG:  checkpoint starting: immediate force wait
+2023-07-25 13:31:34.099 UTC [3215106] LOG:  checkpoint complete: wrote 1952 buffers (11.9%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.071 s, sync=0.069 s, total=0.167 s; sync files=574, longest=0.016 s, average=0.001 s; distance=13403 kB, estimate=13403 kB
+2023-07-25 13:31:34.114 UTC [3215106] LOG:  checkpoint starting: immediate force wait
+2023-07-25 13:31:34.165 UTC [3215106] LOG:  checkpoint complete: wrote 2 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.012 s, sync=0.011 s, total=0.051 s; sync files=2, longest=0.008 s, average=0.006 s; distance=2 kB, estimate=12063 kB
+2023-07-25 13:31:34.260 UTC [3215183] ERROR:  current user cannot be dropped
+2023-07-25 13:31:34.260 UTC [3215183] STATEMENT:  DROP USER su;
+2023-07-25 13:31:34.725 UTC [3215106] LOG:  checkpoint starting: immediate force wait
+2023-07-25 13:31:34.842 UTC [3215106] LOG:  checkpoint complete: wrote 1025 buffers (6.3%); 0 WAL file(s) added, 0 removed, 1 recycled; write=0.043 s, sync=0.037 s, total=0.118 s; sync files=296, longest=0.009 s, average=0.001 s; distance=9055 kB, estimate=11762 kB
+2023-07-25 13:31:34.900 UTC [3215106] LOG:  checkpoint starting: immediate force wait
+2023-07-25 13:31:34.953 UTC [3215106] LOG:  checkpoint complete: wrote 10 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.012 s, sync=0.011 s, total=0.053 s; sync files=7, longest=0.008 s, average=0.002 s; distance=45 kB, estimate=10591 kB
+2023-07-25 13:31:35.070 UTC [3215211] ERROR:  duplicate key value violates unique constraint "company_pkey"
+2023-07-25 13:31:35.070 UTC [3215211] DETAIL:  Key (id)=(1) already exists.
+2023-07-25 13:31:35.070 UTC [3215211] STATEMENT:  INSERT  INTO Company(ID, Name) VALUES (1, 'Percona');
+2023-07-25 13:31:35.311 UTC [3215231] ERROR:  division by zero
+2023-07-25 13:31:35.311 UTC [3215231] STATEMENT:  SELECT 1/0;
+2023-07-25 13:31:35.311 UTC [3215231] ERROR:  relation "unknown" does not exist at character 15
+2023-07-25 13:31:35.311 UTC [3215231] STATEMENT:  SELECT * FROM unknown;
+2023-07-25 13:31:35.311 UTC [3215231] ERROR:  syntax error at or near "ELECET" at character 1
+2023-07-25 13:31:35.311 UTC [3215231] STATEMENT:  ELECET * FROM unknown;
+2023-07-25 13:31:35.312 UTC [3215231] WARNING:  warning message
+2023-07-25 13:31:35.312 UTC [3215231] CONTEXT:  PL/pgSQL function inline_code_block line 3 at RAISE
+2023-07-25 13:31:35.444 UTC [3215245] ERROR:  role "su" already exists
+2023-07-25 13:31:35.444 UTC [3215245] STATEMENT:  CREATE USER su WITH SUPERUSER;
+2023-07-25 13:31:35.476 UTC [3215245] ERROR:  permission denied for function pg_stat_monitor_reset
+2023-07-25 13:31:35.476 UTC [3215245] STATEMENT:  SELECT pg_stat_monitor_reset();
