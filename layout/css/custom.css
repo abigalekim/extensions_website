@@ -7,10 +7,144 @@
 }
 
 body {
-    font-family: 'Futura', 'Trebuchet MS', Arial, sans-serif;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     line-height: 1.6;
     color: #333;
     background-color: #f8f9fa;
+}
+
+/* Footer styles */
+footer {
+  background-color: #f8f9fa;
+  margin-top: 3rem;
+  padding: 2rem 0;
+}
+
+.pt-4 {
+  padding-top: 1.5rem;
+}
+
+.pb-2 {
+  padding-bottom: 0.5rem;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+}
+
+.justify-content-end {
+  justify-content: flex-end;
+}
+
+.col-12 {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
+.text-end {
+  text-align: right;
+}
+
+footer img {
+  max-height: 40px;
+}
+
+/* Person affiliations */
+.person-affiliation {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0;
+    font-style: italic;
+}
+
+/* Clickable extension cards */
+.extension-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.extension-card-link:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+.extension-card-link h3 {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Source code line */
+.source-code-line {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 3rem; /* Add space after source code line */
+  font-size: 1.1rem; /* Increased font size */
+}
+
+.source-code-line a {
+  color: #6366f1;
+  text-decoration: none;
+  font-weight: 500; /* Make the link slightly bolder */
+}
+
+.source-code-line a:hover {
+  text-decoration: underline;
+}
+
+.code-icon {
+  width: 18px; /* Slightly larger icon */
+  height: 18px;
+  color: #6366f1;
+}
+
+/* Extensibility links */
+.extensibility-link {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.extensibility-link:hover {
+    text-decoration: underline;
+}
+
+/* Metrics table */
+.metrics-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+
+.metrics-table td {
+    padding: 0.5rem 1rem 0.5rem 0;
+    vertical-align: top;
+    border-bottom: 1px solid #eee;
+}
+
+.metrics-table td:first-child {
+    width: 60%;
+}
+
+.metrics-table td:last-child {
+    width: 40%;
+}
+
+/* Tooltip */
+.tooltip {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-color: #6c757d;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 12px;
+    line-height: 16px;
+    cursor: help;
+    margin-left: 0.25rem;
 }
 
 .container {
@@ -85,6 +219,17 @@ h3 a:hover {
 p {
     margin-bottom: 1.5rem;
     font-size: 1.1rem;
+}
+
+ul {
+    margin-bottom: 1.5rem;
+    padding-left: 2rem;
+}
+
+ul li {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
 }
 
 .extension-grid {
@@ -312,34 +457,34 @@ p {
 
 /* Extension header */
 .extension-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0rem; /* Increased spacing before analysis sections */
 }
 
 .extension-header h1 {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem; /* Space between heading and source code */
 }
 
 .code-icon {
-    text-decoration: none;
-    color: #6366f1;
-    transition: transform 0.2s ease, color 0.2s ease;
-    display: inline-flex;
-    align-items: center;
+  text-decoration: none;
+  color: #6366f1;
+  transition: transform 0.2s ease, color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
 }
 
 .code-icon:hover {
-    transform: scale(1.1);
-    color: #4f46e5;
+  transform: scale(1.1);
+  color: #4f46e5;
 }
 
 .code-icon .icon {
-    width: 24px;
-    height: 24px;
+  width: 24px;
+  height: 24px;
 }
 
 /* Analysis sections */
@@ -353,6 +498,20 @@ p {
     border-radius: 8px;
     border-left: 4px solid #3498db;
     margin-top: 1rem;
+}
+
+.analysis-box h4 {
+    color: #2c3e50;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 0.5rem;
+}
+
+.analysis-box h4:first-child {
+    margin-top: 0;
 }
 
 .analysis-box p {
@@ -385,10 +544,72 @@ p {
     font-size: 1.1rem;
 }
 
-footer {
-    background-color: #34495e;
-    color: white;
-    text-align: center;
-    padding: 2rem 0;
-    margin-top: 3rem;
+/* BibTeX section styles */
+.bibtex-section {
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.bibtex-toggle {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.bibtex-toggle:hover {
+  background-color: #2980b9;
+}
+
+.bibtex-content {
+  margin-top: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f8f9fa;
+}
+
+.bibtex-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background-color: #e9ecef;
+  border-bottom: 1px solid #ddd;
+  font-weight: 500;
+}
+
+.copy-button {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background-color 0.3s ease;
+}
+
+.copy-button:hover {
+  background-color: #5a6268;
+}
+
+.bibtex-code {
+  margin: 0;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 0 0 4px 4px;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  overflow-x: auto;
+}
+
+.bibtex-code code {
+  background: transparent;
+  padding: 0;
+  color: #333;
 }

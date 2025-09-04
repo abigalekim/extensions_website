@@ -159,6 +159,72 @@ def parse_mechanisms_csv(file_path):
     
     return mechanisms
 
+def parse_postgres_csv(file_path):
+    """Parse postgres CSV and return dictionary mapping extension to duplicate code info"""
+    postgres_data = {}
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                ext_name = row['Extension Name'].strip()
+                postgres_data[ext_name] = {
+                    'total_loc': row['Total LOC'].strip(),
+                    'copied_postgres_loc': row['Copied Postgres LOC'].strip(),
+                    'pct_copied_loc': row['Pct Copied LOC'].strip()
+                }
+    except FileNotFoundError:
+        print(f"Warning: {file_path} not found. Postgres duplicate code info will not be available.")
+    except Exception as e:
+        print(f"Error reading {file_path}: {e}")
+    
+    return postgres_data
+
+def parse_versioning_csv(file_path):
+    """Parse versioning CSV and return dictionary mapping extension to versioning info"""
+    versioning_data = {}
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                ext_name = row['Extension Name'].strip()
+                versioning_data[ext_name] = {
+                    'total_loc': row['Total LOC'].strip(),
+                    'versioning': row['Versioning?'].strip(),
+                    'versioning_loc': row['Versioning LOC'].strip(),
+                    'pct_versioning_loc': row['Pct Versioning LOC'].strip()
+                }
+    except FileNotFoundError:
+        print(f"Warning: {file_path} not found. Versioning info will not be available.")
+    except Exception as e:
+        print(f"Error reading {file_path}: {e}")
+    
+    return versioning_data
+
+def parse_version_list_csv(file_path):
+    """Parse version list CSV and return dictionary mapping extension to supported versions"""
+    version_data = {}
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                ext_name = row['Extension Name'].strip()
+                supported_versions = []
+                
+                # Check each version column
+                for version in ['V8', 'V9', 'V10', 'V11', 'V12', 'V13', 'V14', 'V15', 'V16']:
+                    if row.get(version, '').strip().lower() == 'yes':
+                        # Extract just the number (remove 'V' prefix)
+                        version_num = version[1:]
+                        supported_versions.append(version_num)
+                
+                version_data[ext_name] = supported_versions
+    except FileNotFoundError:
+        print(f"Warning: {file_path} not found. Version list info will not be available.")
+    except Exception as e:
+        print(f"Error reading {file_path}: {e}")
+    
+    return version_data
+
 def get_terminal_outputs(extension, failed_extensions):
     """Get terminal outputs for failed extension pairs"""
     terminal_outputs_by_extension = {}
@@ -234,6 +300,9 @@ def generate_website(csv_file_path, build_path="build", include_descriptions=Tru
     descriptions = parse_descriptions_csv("csvs/descriptions.csv")
     infos, all_extensions = parse_infos_csv("csvs/infos.csv")
     mechanisms = parse_mechanisms_csv("csvs/mechanisms.csv")
+    postgres_data = parse_postgres_csv("csvs/postgres.csv")
+    versioning_data = parse_versioning_csv("csvs/versioning.csv")
+    version_list_data = parse_version_list_csv("csvs/version_list.csv")
     
     extensions, matrix = parse_csv(csv_content)
     
@@ -254,7 +323,8 @@ def generate_website(csv_file_path, build_path="build", include_descriptions=Tru
             'description': descriptions.get(extension, 'No description available') if include_descriptions else '',
             'failed_extensions': failed_extensions,
             'has_compatibility_data': has_compatibility_data,
-            'include_descriptions': include_descriptions
+            'include_descriptions': include_descriptions,
+            'extensibility_types': infos.get(extension, {}).get('extensibility_types', ['None'])  # Add this line
         })
     
     # Create build directory and copy CSS files
@@ -274,6 +344,13 @@ def generate_website(csv_file_path, build_path="build", include_descriptions=Tru
         print("Portraits directory copied successfully")
     else:
         print("Warning: portraits directory not found")
+
+    # Copy files directory if it exists
+    if os.path.exists("files"):
+        shutil.copytree("files", os.path.join(build_path, "files"), dirs_exist_ok=True)
+        print("files directory copied successfully")
+    else:
+        print("Warning: files directory not found")
     
     # Generate index.html
     template = env.get_template('index.html')
@@ -309,6 +386,9 @@ def generate_website(csv_file_path, build_path="build", include_descriptions=Tru
                 terminal_outputs=terminal_outputs,
                 extensibility_types=infos.get(extension, {}).get('extensibility_types', ['None']),
                 system_components=mechanisms.get(extension, {}).get('system_components', ['None']),
+                postgres_data=postgres_data.get(extension, {}),
+                versioning_data=versioning_data.get(extension, {}),
+                version_list=version_list_data.get(extension, []),
                 has_compatibility_data=has_compatibility_data,
                 include_descriptions=include_descriptions
             ))

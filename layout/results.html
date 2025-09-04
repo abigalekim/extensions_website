@@ -1,50 +1,71 @@
 {% extends "base.html" %}
-
 {% block title %}PostgreSQL Extensions Analysis Registry{% endblock %}
-
 {% block content %}
 <h1>PostgreSQL Extensions Analysis Registry</h1>
-
 <div class="search-container">
     <input type="text" id="searchInput" placeholder="Search extensions..." class="search-input">
 </div>
-
 <div class="extension-grid" id="extensionGrid">
     {% for ext in extension_data %}
-    <div class="extension-card" data-extension="{{ ext.name|lower }}">
-        <h3><a href="{{ ext.name }}.html">{{ ext.name }}</a></h3>
-        {% if include_descriptions and ext.description %}
-        <p class="description">{{ ext.description }}</p>
-        {% endif %}
-        {% if ext.source_code %}
-        <p class="source-code"><a href="{{ ext.source_code }}" target="_blank">Source Code</a></p>
-        {% endif %}
-        {% if ext.has_compatibility_data %}
-        <div class="stats">
-            <p><strong>Failed Extensions:</strong> {{ ext.failed_extensions|length }}</p>
+    <a href="{{ ext.name }}.html" class="extension-card-link" 
+       data-extension="{{ ext.name|lower }}"
+       data-extensibility-types="{{ ext.extensibility_types|join(',')|lower if ext.extensibility_types else '' }}">
+        <div class="extension-card">
+            <h3>{{ ext.name }}</h3>
+            {% if include_descriptions and ext.description %}
+            <p class="description">{{ ext.description }}</p>
+            {% endif %}
         </div>
-        {% endif %}
-    </div>
+    </a>
     {% endfor %}
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('searchInput');
-    const extensionCards = document.querySelectorAll('.extension-card');
-
-    searchInput.addEventListener('input', function() {
-        const searchTerm = this.value.toLowerCase();
-        
+    const extensionCards = document.querySelectorAll('.extension-card-link');
+    
+    // Function to get URL parameter
+    function getUrlParameter(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+    }
+    
+    // Function to filter extensions
+    function filterExtensions(searchTerm, filterTerm) {
         extensionCards.forEach(function(card) {
             const extensionName = card.getAttribute('data-extension');
+            const extensibilityTypes = card.getAttribute('data-extensibility-types') || '';
             
-            if (extensionName.includes(searchTerm)) {
-                card.style.display = 'block';
-            } else {
-                card.style.display = 'none';
+            let showCard = true;
+            
+            // Apply search filter
+            if (searchTerm && !extensionName.includes(searchTerm.toLowerCase())) {
+                showCard = false;
             }
+            
+            // Apply extensibility type filter
+            if (filterTerm && !extensibilityTypes.includes(filterTerm.toLowerCase())) {
+                showCard = false;
+            }
+            
+            card.style.display = showCard ? 'block' : 'none';
         });
+    }
+    
+    // Check for filter parameter on page load
+    const filterParam = getUrlParameter('filter');
+    if (filterParam) {
+        filterExtensions('', filterParam);
+        // Optionally update the search input to show what's being filtered
+        searchInput.placeholder = `Filtering by: ${filterParam}`;
+    }
+    
+    // Handle search input
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value;
+        const currentFilter = getUrlParameter('filter');
+        filterExtensions(searchTerm, currentFilter);
     });
 });
 </script>

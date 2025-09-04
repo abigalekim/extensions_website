@@ -1,48 +1,129 @@
 {% extends "base.html" %}
-
 {% block title %}PostgreSQL Extension Analysis{% endblock %}
-
 {% block content %}
 <h1>PostgreSQL Extension Analysis</h1>
-
-<h2>About</h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-
-<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-
+<p>
+ This website contains the results ran by <i>ExtAnalyzer!</i> on PostgreSQL's extensibility ecosystem,
+ our extension analysis toolkit. The toolkit automatically downloads and installs 441 extensions
+ from PostgreSQL's contrib directory, cloud vendors (AWS RDS, Google Cloud SQL, Azure PostgreSQL),
+ and PostgreSQL Extension Network (PGXN).
+</p>
+<p>
+ We run four different analyses on each extension:
+</p>
+<ul>
+<li><b>Information Analysis:</b> Collects extensibility types and system components used in each extension.</li>
+<li><b>Duplicate Code Analysis:</b> Uses CPD to extract the number of lines each extension copies from PostgreSQL' source code. </li>
+<li><b>Versioning Analysis:</b> Extracts the number of lines of code each extension has encapsulated in the PG_VERSION_NUM macro.</li>
+<li><b>Compatibility Analysis:</b> Tests pairs of extensions for compatibility by running their unit tests with both installed.
+ For pairs of indexes and UDTs, we also try combining them by inserting instances of these UDTs into the indexes.
+</li>
+</ul>
+<p>
+ We discuss the results collected in our toolkit more in depth in our paper (below).
+</p>
 <h2>Papers</h2>
 <div class="paper-item">
-    <a href="https://www.vldb.org/pvldb/vol18/p1962-kim.pdf" target="_blank" class="paper-link">
-        <svg class="pdf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-            <polyline points="14,2 14,8 20,8"/>
-            <line x1="9" y1="13" x2="15" y2="13"/>
-            <line x1="9" y1="17" x2="15" y2="17"/>
-            <line x1="9" y1="9" x2="10" y2="9"/>
-        </svg>
-        A. Kim, M. Slot, Andersen David G., and A. Pavlo, "Anarchy in the Database: A Survey and Evaluation of Database Management System Extensibility," Proc. VLDB Endow., vol. 18, iss. 6, pp. 1962-1976, 2025.
-    </a>
+<a href="https://www.vldb.org/pvldb/vol18/p1962-kim.pdf" target="_blank" class="paper-link">
+<svg class="pdf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2-2V8z"/>
+<polyline points="14,2 14,8 20,8"/>
+<line x1="9" y1="13" x2="15" y2="13"/>
+<line x1="9" y1="17" x2="15" y2="17"/>
+<line x1="9" y1="9" x2="10" y2="9"/>
+</svg>
+ A. Kim, M. Slot, Andersen David G., and A. Pavlo, "Anarchy in the Database: A Survey and Evaluation of Database Management System Extensibility," Proc. VLDB Endow., vol. 18, iss. 6, pp. 1962-1976, 2025.
+</a>
+
+<!-- BibTeX section -->
+<div class="bibtex-section">
+  <button class="bibtex-toggle" onclick="toggleBibtex()">Show BibTeX</button>
+  <div id="bibtex-content" class="bibtex-content hidden">
+    <div class="bibtex-header">
+      <span>BibTeX Citation</span>
+      <button class="copy-button" onclick="copyBibtex()">Copy</button>
+    </div>
+    <pre class="bibtex-code"><code id="bibtex-text"></code></pre>
+  </div>
 </div>
 
 <h2>People</h2>
 <div class="people-grid">
-    <div class="person">
-        <img src="portraits/abigale.jpg" alt="Abigale Kim" class="person-photo">
-        <p class="person-name"><a href="https://abigalekim.github.io/" target="_blank">Abigale Kim</a></p>
-    </div>
-    <div class="person">
-        <img src="portraits/marco.jpg" alt="Marco Slot" class="person-photo">
-        <p class="person-name"><a href="https://www.linkedin.com/in/marcoslot/" target="_blank">Marco Slot</a></p>
-    </div>
-    <div class="person">
-        <img src="portraits/david.jpg" alt="David G. Andersen" class="person-photo">
-        <p class="person-name"><a href="https://www.cs.cmu.edu/~dga/" target="_blank">David G. Andersen</a></p>
-    </div>
-    <div class="person">
-        <img src="portraits/andy.jpg" alt="Andrew Pavlo" class="person-photo">
-        <p class="person-name"><a href="https://www.cs.cmu.edu/~pavlo/" target="_blank">Andrew Pavlo</a></p>
-    </div>
+<div class="person">
+<img src="portraits/abigale.jpg" alt="Abigale Kim" class="person-photo">
+<p class="person-name"><a href="https://abigalekim.github.io/" target="_blank">Abigale Kim</a></p>
+<p class="person-affiliation">University of Wisconsin–Madison</p>
 </div>
+<div class="person">
+<img src="portraits/marco.jpg" alt="Marco Slot" class="person-photo">
+<p class="person-name"><a href="https://www.linkedin.com/in/marcoslot/" target="_blank">Marco Slot</a></p>
+<p class="person-affiliation">Snowflake</p>
+</div>
+<div class="person">
+<img src="portraits/david.jpg" alt="David G. Andersen" class="person-photo">
+<p class="person-name"><a href="https://www.cs.cmu.edu/~dga/" target="_blank">David G. Andersen</a></p>
+<p class="person-affiliation">Carnegie Mellon University</p>
+</div>
+<div class="person">
+<img src="portraits/andy.jpg" alt="Andrew Pavlo" class="person-photo">
+<p class="person-name"><a href="https://www.cs.cmu.edu/~pavlo/" target="_blank">Andrew Pavlo</a></p>
+<p class="person-affiliation">Carnegie Mellon University</p>
+</div>
+</div>
+<br>
+<h2>Acknowledgements</h2>
+<p>
+ This paper would not have been possible without the help of the Carnegie Mellon Database Group. The authors would
+ also like to thank Erik Nordstrom for helping us support Timescale in the toolkit, and the people at the PostgreSQL
+ Development Conference 2024 for their amazing feedback and enthusiasm for the research!
+</p>
+
+<script>
+// Store BibTeX content in JavaScript
+const bibtexContent = `@article{kim25extensions,
+   author = \{Kim, Abigale and Slot, Marco and Andersen, David G., and Pavlo, Andrew\},
+   title = \{\{Anarchy in the Database: A Survey and Evaluation of Database Management System Extensibility\}\},
+   journal = \{Proc. {VLDB} Endow.\},
+   volume = \{18\},
+   number = \{6\},
+   pages = \{1962--1976\},
+   year = \{2025\},
+   url = \{https://www.vldb.org/pvldb/vol18/p1962-kim.pdf\},
+   doi = \{10.14778/3725688.3725719\},
+ }`;
+
+// Populate BibTeX content when page loads
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('bibtex-text').textContent = bibtexContent;
+});
+
+function toggleBibtex() {
+  const content = document.getElementById('bibtex-content');
+  const button = document.querySelector('.bibtex-toggle');
+  
+  if (content.classList.contains('hidden')) {
+    content.classList.remove('hidden');
+    button.textContent = 'Hide BibTeX';
+  } else {
+    content.classList.add('hidden');
+    button.textContent = 'Show BibTeX';
+  }
+}
+
+function copyBibtex() {
+  navigator.clipboard.writeText(bibtexContent).then(() => {
+    const button = document.querySelector('.copy-button');
+    const originalText = button.textContent;
+    button.textContent = 'Copied!';
+    button.style.background = '#28a745';
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.style.background = '';
+    }, 2000);
+  }).catch(() => {
+    // Fallback for older browsers
+    alert('Please manually copy the BibTeX citation');
+  });
+}
+</script>
 {% endblock %}

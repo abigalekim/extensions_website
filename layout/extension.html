@@ -4,17 +4,16 @@
 
 {% block content %}
 <div class="extension-header">
-    <h1>
-        {{ extension_name }}
-        {% if source_code %}
-        <a href="{{ source_code }}" target="_blank" class="code-icon" title="View Source Code">
-            <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0L19.2 12l-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
-            </svg>
-        </a>
-        {% endif %}
-    </h1>
+    <h1>{{ extension_name }}</h1>
 </div>
+{% if source_code %}
+<div class="source-code-line">
+    <svg class="code-icon" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0L19.2 12l-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+    </svg>
+    <a href="{{ source_code }}" target="_blank">{{ source_code }}</a>
+</div>
+{% endif %}
 
 <div class="extension-details">
     {% if include_descriptions and description %}
@@ -24,8 +23,100 @@
     <div class="analysis-section">
         <h3>Information Analysis</h3>
         <div class="analysis-box">
-            <p><strong>Extensibility Types:</strong> {{ extensibility_types|join(', ') }}</p>
-            <p><strong>System Components:</strong> {{ system_components|join(', ') }}</p>
+            <table class="metrics-table">
+                <tr>
+                    <td><strong>Extensibility Types:</strong></td>
+                    <td>
+                        {% for ext_type in extensibility_types %}
+                        {% if ext_type != 'None' %}
+                        <a href="results.html?filter={{ ext_type|urlencode }}" class="extensibility-link">{{ ext_type }}</a>{% if not loop.last %}, {% endif %}
+                        {% else %}
+                        {{ ext_type }}
+                        {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>System Components:</strong></td>
+                    <td>{{ system_components|join(', ') }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+    <div class="analysis-section">
+        <h3>Duplicate Code Analysis</h3>
+        <div class="analysis-box">
+            <table class="metrics-table">
+                {% if postgres_data %}
+                <tr>
+                    <td><strong>Total Lines of Code:</strong> <span class="tooltip" title="Number of lines of C/C++/Rust code in an extension. Does not include SQL.">?</span></td>
+                    <td>{{ postgres_data.total_loc or 'N/A' }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Lines of Duplicate Code:</strong> <span class="tooltip" title="Number of LOC an extension has copied from PostgreSQL to use in its own codebase.">?</span></td>
+                    <td>{{ postgres_data.copied_postgres_loc or '0' }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Percentage of Codebase:</strong> <span class="tooltip" title="Percentage of codebase consisting of duplicate code from PostgreSQL.">?</span></td>
+                    <td>{{ postgres_data.pct_copied_loc or '0' }}%</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td><strong>Total Lines of Code:</strong></td>
+                    <td>No data available</td>
+                </tr>
+                <tr>
+                    <td><strong>Lines of Duplicate Code:</strong></td>
+                    <td>No data available</td>
+                </tr>
+                <tr>
+                    <td><strong>Percentage of Codebase:</strong></td>
+                    <td>No data available</td>
+                </tr>
+                {% endif %}
+            </table>
+        </div>
+    </div>
+    
+    <div class="analysis-section">
+        <h3>Versioning Analysis</h3>
+        <div class="analysis-box">
+            <table class="metrics-table">
+                {% if versioning_data %}
+                <tr>
+                    <td><strong>Total Lines of Code:</strong> <span class="tooltip" title="Number of lines of C/C++/Rust code in an extension. Does not include SQL.">?</span></td>
+                    <td>{{ versioning_data.total_loc or 'N/A' }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Lines of Encapsulated Versioning Code:</strong> <span class="tooltip" title="Number of LOC encapsulated by #ifdef statements with PG_VERSION_NUM (a macro with a number representing the PostgreSQL version).">?</span></td>
+                    <td>{{ versioning_data.versioning_loc or '0' }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Percentage of Encapsulated Versioning Code in Codebase:</strong> <span class="tooltip" title="Percentage of codebase consisting of code inside the PG_VERSION_NUM #ifdef statements.">?</span></td>
+                    <td>{{ versioning_data.pct_versioning_loc or '0' }}%</td>
+                </tr>
+                {% if versioning_data.versioning_loc and versioning_data.versioning_loc != '0' %}
+                <tr>
+                    <td><strong>PostgreSQL Versions Cased On:</strong> <span class="tooltip" title="PostgreSQL versions cased on by an extension (the PG_VERSION_NUM values). ">?</span></td>
+                    <td>{{ version_list|join(',') if version_list else 'None' }}</td>
+                </tr>
+                {% endif %}
+                {% else %}
+                <tr>
+                    <td><strong>Total Lines of Code:</strong></td>
+                    <td>No data available</td>
+                </tr>
+                <tr>
+                    <td><strong>Lines of Encapsulated Versioning Code:</strong></td>
+                    <td>No data available</td>
+                </tr>
+                <tr>
+                    <td><strong>Percentage of Encapsulated Versioning Code in Codebase:</strong></td>
+                    <td>No data available</td>
+                </tr>
+                {% endif %}
+            </table>
         </div>
     </div>
     
@@ -33,8 +124,16 @@
     <div class="analysis-section">
         <h3>Compatibility Analysis</h3>
         <div class="analysis-box">
-            <p><strong>Failed Extensions:</strong> {{ failed_extensions|length }}</p>
-            <p><strong>Failure Rate:</strong> {{ "%.1f"|format(failure_rate) }}%</p>
+            <table class="metrics-table">
+                <tr>
+                    <td><strong>Number of Failed Extensions:</strong> </td>
+                    <td>{{ failed_extensions|length }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Failure Rate:</strong></td>
+                    <td>{{ "%.1f"|format(failure_rate) }}%</td>
+                </tr>
+            </table>
         </div>
     </div>
     
